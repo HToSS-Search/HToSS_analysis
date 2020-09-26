@@ -61,6 +61,11 @@ int main(int argc, char* argv[])
     TH1F* h_genParEta     {new TH1F("h_genParEta", "genPar #eta",  200, -7., 7.)}; 
     TH1F* h_genParPhi     {new TH1F("h_genParPhi", "genPar #phi",  100, -3.5, 3.5)};
     TH1F* h_genParE       {new TH1F("h_genParE",   "genPar energy",     1000, 0., 1000.)};
+	
+    TH1F* h_genParScalarPt      {new TH1F("h_genParScalarPt",  "genPar Scalar p_{T}", 1000, 0., 1000.)};
+    TH1F* h_genParScalarEta     {new TH1F("h_genParScalarEta", "genPar Scalar #eta",  200, -7., 7.)}; 
+    TH1F* h_genParScalarPhi     {new TH1F("h_genParScalarPhi", "genPar Scalar #phi",  100, -3.5, 3.5)};
+    TH1F* h_genParScalarE       {new TH1F("h_genParScalarE",   "genPar Scalar energy",     1000, 0., 1000.)};
 
     namespace po = boost::program_options;
 
@@ -174,18 +179,26 @@ int main(int argc, char* argv[])
             //////// GENERATOR PARTICLE STUFF
             for (Int_t k{0}; k < event.nGenPar; k++) {
 
+		
                 // get variables for this event that have been stored in ROOT nTuple tree
                 const Int_t pdgId    { std::abs(event.genParId[k]) };
                 const Float_t genParPt  { event.genParPt[k] };
                 const Float_t genParEta { event.genParEta[k] };
                 const Float_t genParPhi { event.genParPhi[k] };
                 const Float_t genParE   { event.genParE[k] };
-
-                // Fill out histogram with these variables
-                h_genParPt->Fill(genParPt);
-                h_genParPt->Fill(genParEta);
-                h_genParPt->Fill(genParPhi);
-                h_genParPt->Fill(genParE);
+		const bool isScalarGrandparent{ scalarGrandparent(event, k, 9000006); 
+					       
+		if (pdgId==211||pdgId==321){
+			if (isScalarGrandparent==true){
+			
+			// Fill out histogram with these variables
+			h_genParScalarPt->Fill(genParPt);
+                	h_genParScalarEta->Fill(genParEta);
+                	h_genParScalarPhi->Fill(genParPhi);
+                	h_genParScalarE->Fill(genParE);
+			}
+		}
+                
 
                 // Increment counter for pdgId found
 		pdgIdMap[pdgId]++;
@@ -224,6 +237,13 @@ int main(int argc, char* argv[])
     h_genParPhi->Write();
     h_genParE->Write();
     h_pdgId->Write();
+	    
+    h_genParScalarPt->Write();
+    h_genParScalarEta->Write();
+    h_genParScalarPhi->Write();
+    h_genParScalarE->Write();
+    
+	    
 
     // Safely close file
     outFile->Close();
