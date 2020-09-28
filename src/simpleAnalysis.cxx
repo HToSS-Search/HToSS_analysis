@@ -194,9 +194,9 @@ int main(int argc, char* argv[])
                 const Float_t genParE   { event.genParE[k] };
 		    
 		h_genParPt->Fill(genParPt);
-                h_genParPt->Fill(genParEta);
-                h_genParPt->Fill(genParPhi);
-                h_genParPt->Fill(genParE);
+                h_genParEta->Fill(genParEta);
+                h_genParPhi->Fill(genParPhi);
+                h_genParE->Fill(genParE);
 		    
 		const bool isScalarGrandparent{ scalarGrandparent(event, k, 9000006)}; 
 					      
