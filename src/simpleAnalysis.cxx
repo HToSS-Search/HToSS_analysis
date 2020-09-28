@@ -187,9 +187,11 @@ int main(int argc, char* argv[])
                 const Float_t genParPhi { event.genParPhi[k] };
                 const Float_t genParE   { event.genParE[k] };
 		const bool isScalarGrandparent{ scalarGrandparent(event, k, 9000006)}; 
-					       
-		if (pdgId==211||pdgId==321){
-			if (isScalarGrandparent==true){
+					      
+		if (isScalarGrandparent==true){
+			
+			if ((pdgId==211||pdgId==321)){
+			{
 			
 			// Fill out histogram with these variables
 			h_genParScalarPt->Fill(genParPt);
