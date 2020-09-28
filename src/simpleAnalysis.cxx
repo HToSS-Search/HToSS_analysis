@@ -191,7 +191,6 @@ int main(int argc, char* argv[])
 		if (isScalarGrandparent==true){
 			
 			if ((pdgId==211||pdgId==321)){
-			{
 			
 			// Fill out histogram with these variables
 			h_genParScalarPt->Fill(genParPt);
