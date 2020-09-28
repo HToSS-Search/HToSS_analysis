@@ -186,7 +186,11 @@ int main(int argc, char* argv[])
             //////// GENERATOR PARTICLE STUFF
             for (Int_t k{0}; k < event.nGenPar; k++) {
 
-		
+		h_genParPt->Fill(genParPt);
+                h_genParPt->Fill(genParEta);
+                h_genParPt->Fill(genParPhi);
+                h_genParPt->Fill(genParE);
+		    
                 // get variables for this event that have been stored in ROOT nTuple tree
                 const Int_t pdgId    { std::abs(event.genParId[k]) };
                 const Float_t genParPt  { event.genParPt[k] };
@@ -206,7 +210,7 @@ int main(int argc, char* argv[])
                 	h_genParScalarCKaonE->Fill(genParE);
 			}
 			//Charged pion from scalar decay
-			if (pdgId==321){
+			if (pdgId==211){
 			
 			h_genParScalarCPionPt->Fill(genParPt);
                 	h_genParScalarCPionEta->Fill(genParEta);
