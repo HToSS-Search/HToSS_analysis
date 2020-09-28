@@ -61,11 +61,18 @@ int main(int argc, char* argv[])
     TH1F* h_genParEta     {new TH1F("h_genParEta", "genPar #eta",  200, -7., 7.)}; 
     TH1F* h_genParPhi     {new TH1F("h_genParPhi", "genPar #phi",  100, -3.5, 3.5)};
     TH1F* h_genParE       {new TH1F("h_genParE",   "genPar energy",     1000, 0., 1000.)};
+
+    //Charged kaon from scalar decay
+    TH1F* h_genParScalarCKaonPt      {new TH1F("h_genParScalarCKaonPt",  "K^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
+    TH1F* h_genParScalarCKaonEta     {new TH1F("h_genParScalarCKaonEta", "K^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
+    TH1F* h_genParScalarCKaonPhi     {new TH1F("h_genParScalarCKaonPhi", "K^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
+    TH1F* h_genParScalarCKaonE       {new TH1F("h_genParScalarCKaonE",   "K^{#pm} from scalar decay energy",     1000, 0., 1000.)};
 	
-    TH1F* h_genParScalarPt      {new TH1F("h_genParScalarPt",  "genPar Scalar p_{T}", 1000, 0., 1000.)};
-    TH1F* h_genParScalarEta     {new TH1F("h_genParScalarEta", "genPar Scalar #eta",  200, -7., 7.)}; 
-    TH1F* h_genParScalarPhi     {new TH1F("h_genParScalarPhi", "genPar Scalar #phi",  100, -3.5, 3.5)};
-    TH1F* h_genParScalarE       {new TH1F("h_genParScalarE",   "genPar Scalar energy",     1000, 0., 1000.)};
+    //Charged pion from scalar decay
+    TH1F* h_genParScalarCPionPt      {new TH1F("h_genParScalarCPionPt",  "#pi^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
+    TH1F* h_genParScalarCPionEta     {new TH1F("h_genParScalarCPionEta", "#pi^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
+    TH1F* h_genParScalarCPionPhi     {new TH1F("h_genParScalarCPionPhi", "#pi^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
+    TH1F* h_genParScalarCPionE       {new TH1F("h_genParScalarCPionE",   "#pi^{#pm} from scalar decay energy",     1000, 0., 1000.)};
 
     namespace po = boost::program_options;
 
@@ -190,13 +197,21 @@ int main(int argc, char* argv[])
 					      
 		if (isScalarGrandparent==true){
 			
-			if ((pdgId==211||pdgId==321)){
+			//Charged kaon from scalar decay
+			if (pdgId==321){
 			
-			// Fill out histogram with these variables
-			h_genParScalarPt->Fill(genParPt);
-                	h_genParScalarEta->Fill(genParEta);
-                	h_genParScalarPhi->Fill(genParPhi);
-                	h_genParScalarE->Fill(genParE);
+			h_genParScalarCKaonPt->Fill(genParPt);
+                	h_genParScalarCKaonEta->Fill(genParEta);
+                	h_genParScalarCKaonPhi->Fill(genParPhi);
+                	h_genParScalarCKaonE->Fill(genParE);
+			}
+			//Charged pion from scalar decay
+			if (pdgId==321){
+			
+			h_genParScalarCPionPt->Fill(genParPt);
+                	h_genParScalarCPionEta->Fill(genParEta);
+                	h_genParScalarCPionPhi->Fill(genParPhi);
+                	h_genParScalarCPionE->Fill(genParE);
 			}
 		}
                 
@@ -239,12 +254,15 @@ int main(int argc, char* argv[])
     h_genParE->Write();
     h_pdgId->Write();
 	    
-    h_genParScalarPt->Write();
-    h_genParScalarEta->Write();
-    h_genParScalarPhi->Write();
-    h_genParScalarE->Write();
+    h_genParScalarCKaonPt->Write();
+    h_genParScalarCKaonEta->Write();
+    h_genParScalarCKaonPhi->Write();
+    h_genParScalarCKaonE->Write();
     
-	    
+    h_genParScalarCPionPt->Write();
+    h_genParScalarCPionEta->Write();
+    h_genParScalarCPionPhi->Write();
+    h_genParScalarCPionE->Write();
 
     // Safely close file
     outFile->Close();
