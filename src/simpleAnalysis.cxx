@@ -186,17 +186,18 @@ int main(int argc, char* argv[])
             //////// GENERATOR PARTICLE STUFF
             for (Int_t k{0}; k < event.nGenPar; k++) {
 
-		h_genParPt->Fill(genParPt);
-                h_genParPt->Fill(genParEta);
-                h_genParPt->Fill(genParPhi);
-                h_genParPt->Fill(genParE);
-		    
                 // get variables for this event that have been stored in ROOT nTuple tree
                 const Int_t pdgId    { std::abs(event.genParId[k]) };
                 const Float_t genParPt  { event.genParPt[k] };
                 const Float_t genParEta { event.genParEta[k] };
                 const Float_t genParPhi { event.genParPhi[k] };
                 const Float_t genParE   { event.genParE[k] };
+		    
+		h_genParPt->Fill(genParPt);
+                h_genParPt->Fill(genParEta);
+                h_genParPt->Fill(genParPhi);
+                h_genParPt->Fill(genParE);
+		    
 		const bool isScalarGrandparent{ scalarGrandparent(event, k, 9000006)}; 
 					      
 		if (isScalarGrandparent==true){
