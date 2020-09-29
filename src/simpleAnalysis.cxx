@@ -188,6 +188,8 @@ int main(int argc, char* argv[])
 
                 // get variables for this event that have been stored in ROOT nTuple tree
                 const Int_t pdgId    { std::abs(event.genParId[k]) };
+		const Int_t motherId     { std::abs(event.genParMotherId[k]) };
+		    
                 const Float_t genParPt  { event.genParPt[k] };
                 const Float_t genParEta { event.genParEta[k] };
                 const Float_t genParPhi { event.genParPhi[k] };
@@ -197,10 +199,12 @@ int main(int argc, char* argv[])
                 h_genParEta->Fill(genParEta);
                 h_genParPhi->Fill(genParPhi);
                 h_genParE->Fill(genParE);
+		
 		    
-		const bool isScalarGrandparent{ scalarGrandparent(event, k, 9000006)}; 
+		//Particles from scalar decay
+		const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)}; 
 					      
-		if (isScalarGrandparent==true){
+		if (motherId=9000006 && isScalarGrandparent==true){
 			
 			//Charged kaon from scalar decay
 			if (pdgId==321){
