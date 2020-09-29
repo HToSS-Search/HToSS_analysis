@@ -204,9 +204,14 @@ int main(int argc, char* argv[])
 		    
 		//Particles from scalar decay
 		const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)}; 
-					      
+		    
+		if (motherId==9000006){
+			std::cout << "scalar mother"<<std::endl;
+			pdgIdMapScalarMother[pdgId]++;
+		} 
+		    
 		if (isScalarGrandparent==true){
-			std::cout<<"in de loop met"<<pdgId<<motherId<<motherIndex"<<std::endl;
+			std::cout<<"in de loop"<<std::endl;
 			
 			//Charged kaon from scalar decay
 			if (pdgId==321){
@@ -229,6 +234,7 @@ int main(int argc, char* argv[])
 
                 // Increment counter for pdgId found
 		pdgIdMap[pdgId]++;
+		    
             }    
 
         } 
