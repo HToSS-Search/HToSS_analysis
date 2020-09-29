@@ -189,6 +189,7 @@ int main(int argc, char* argv[])
                 // get variables for this event that have been stored in ROOT nTuple tree
                 const Int_t pdgId    { std::abs(event.genParId[k]) };
 		const Int_t motherId     { std::abs(event.genParMotherId[k]) };
+		const Int_t motherIndex  { std::abs(event.genParMotherIndex[k]) };
 		    
                 const Float_t genParPt  { event.genParPt[k] };
                 const Float_t genParEta { event.genParEta[k] };
