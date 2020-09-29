@@ -204,7 +204,7 @@ int main(int argc, char* argv[])
 		//Particles from scalar decay
 		const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)}; 
 					      
-		if (motherId=9000006 && isScalarGrandparent==true){
+		if (isScalarGrandparent==true){
 			
 			//Charged kaon from scalar decay
 			if (pdgId==321){
