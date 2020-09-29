@@ -206,7 +206,7 @@ int main(int argc, char* argv[])
 		const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)}; 
 					      
 		if (isScalarGrandparent==true){
-			std::cout<<"in de loop"<<std::endl;
+			std::cout<<"in de loop met"<<pdgId<<motherId<<motherIndex"<<std::endl;
 			
 			//Charged kaon from scalar decay
 			if (pdgId==321){
@@ -423,8 +423,8 @@ bool scalarGrandparent (const AnalysisEvent event, const Int_t k, const Int_t gr
     else if (motherId == std::abs(grandparentId)) return true; // if mother is granparent being searched for, return true
     else {
         std::cout << "Going up the ladder ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
-        debugCounter++;
-        std::cout << "debugCounter: " << debugCounter << std::endl;
+   //   debugCounter++;
+   //   std::cout << "debugCounter: " << debugCounter << std::endl;
         return scalarGrandparent(event, motherIndex, grandparentId); // otherwise check mother's mother ...
     }
 }
