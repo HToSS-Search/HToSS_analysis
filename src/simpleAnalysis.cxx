@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 
     // Declare TH1F GenPar plots 
 	
-	TH1F* h_motherId      {new TH1F("h_motherId",  "motherId", 1000, 0., 1000.)};
+	TH1F* h_motherId      {new TH1F("h_motherId",  "motherId", 1000, 0., 100000006)};
 	
     TH1F* h_genParPt      {new TH1F("h_genParPt",  "genPar p_{T}", 1000, 0., 1000.)};
     TH1F* h_genParEta     {new TH1F("h_genParEta", "genPar #eta",  200, -7., 7.)}; 
@@ -212,11 +212,11 @@ int main(int argc, char* argv[])
 		const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)}; 
 		    
 		if (isScalarGrandparent==true){
-			std::cout<<"in de loop"<<std::endl;
+			std::cout<<"in de loop met naam van mama"<<motherId<<"dus scalar grandparent en pdgId"<<pdgId<<std::endl;
 			
 			//Charged kaon from scalar decay
 			if (pdgId==321){
-			
+			std::cout<<"charged kaon nu hist vullen"<<std::endl;
 			h_genParScalarCKaonPt->Fill(genParPt);
                 	h_genParScalarCKaonEta->Fill(genParEta);
                 	h_genParScalarCKaonPhi->Fill(genParPhi);
@@ -224,7 +224,7 @@ int main(int argc, char* argv[])
 			}
 			//Charged pion from scalar decay
 			if (pdgId==211){
-			
+			std::cout<<"charged pion nu hist vullen"<<std::endl;
 			h_genParScalarCPionPt->Fill(genParPt);
                 	h_genParScalarCPionEta->Fill(genParEta);
                 	h_genParScalarCPionPhi->Fill(genParPhi);
