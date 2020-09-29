@@ -57,6 +57,9 @@ int main(int argc, char* argv[])
     Long64_t totalEvents {0}; // Counter for total number of events
 
     // Declare TH1F GenPar plots 
+	
+	TH1F* h_motherId      {new TH1F("h_motherId",  "motherId", 1000, 0., 1000.)};
+	
     TH1F* h_genParPt      {new TH1F("h_genParPt",  "genPar p_{T}", 1000, 0., 1000.)};
     TH1F* h_genParEta     {new TH1F("h_genParEta", "genPar #eta",  200, -7., 7.)}; 
     TH1F* h_genParPhi     {new TH1F("h_genParPhi", "genPar #phi",  100, -3.5, 3.5)};
@@ -195,6 +198,9 @@ int main(int argc, char* argv[])
                 const Float_t genParEta { event.genParEta[k] };
                 const Float_t genParPhi { event.genParPhi[k] };
                 const Float_t genParE   { event.genParE[k] };
+		
+		h_motherId->Fill(motherId);
+		    
 		    
 		h_genParPt->Fill(genParPt);
                 h_genParEta->Fill(genParEta);
@@ -204,11 +210,6 @@ int main(int argc, char* argv[])
 		    
 		//Particles from scalar decay
 		const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)}; 
-		    
-		if (motherId==9000006){
-			std::cout << "scalar mother"<<std::endl;
-			pdgIdMapScalarMother[pdgId]++;
-		} 
 		    
 		if (isScalarGrandparent==true){
 			std::cout<<"in de loop"<<std::endl;
@@ -265,6 +266,9 @@ int main(int argc, char* argv[])
     outFile->cd();
 
     // Write histograms to file
+	
+	h_motherId->Write();
+	
     h_genParPt->Write();
     h_genParEta->Write();
     h_genParPhi->Write();
