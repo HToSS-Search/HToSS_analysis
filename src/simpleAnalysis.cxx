@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 
     // Declare TH1F GenPar plots 
 	
-	TH1F* h_motherId      {new TH1F("h_motherId",  "motherId", 1000, 0., 100000006)};
+    TH1F* h_motherId      {new TH1F("h_motherId",  "motherId", 1000, 0., 100000006)};
 	
     TH1F* h_genParPt      {new TH1F("h_genParPt",  "genPar p_{T}", 1000, 0., 1000.)};
     TH1F* h_genParEta     {new TH1F("h_genParEta", "genPar #eta",  200, -7., 7.)}; 
@@ -76,7 +76,13 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarCPionEta     {new TH1F("h_genParScalarCPionEta", "#pi^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
     TH1F* h_genParScalarCPionPhi     {new TH1F("h_genParScalarCPionPhi", "#pi^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarCPionE       {new TH1F("h_genParScalarCPionE",   "#pi^{#pm} from scalar decay energy",     1000, 0., 1000.)};
-
+	
+    //Muon from scalar decay
+    TH1F* h_genParScalarMuonPt      {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
+    TH1F* h_genParScalarMuonEta     {new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
+    TH1F* h_genParScalarMuonPhi     {new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
+    TH1F* h_genParScalarMuonE       {new TH1F("h_genParScalarMuonE",   "#mu^{#pm} from scalar decay energy",     1000, 0., 1000.)};
+	
     namespace po = boost::program_options;
 
     // command line configuration parsing magic!
@@ -200,8 +206,7 @@ int main(int argc, char* argv[])
                 const Float_t genParE   { event.genParE[k] };
 		
 		h_motherId->Fill(motherId);
-		    
-		    
+		       
 		h_genParPt->Fill(genParPt);
                 h_genParEta->Fill(genParEta);
                 h_genParPhi->Fill(genParPhi);
@@ -212,8 +217,16 @@ int main(int argc, char* argv[])
 		const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)}; 
 		    
 		if (isScalarGrandparent==true){
-			std::cout<<"in de loop met naam van mama"<<motherId<<"dus scalar grandparent en pdgId"<<pdgId<<std::endl;
+			std::cout<<"in de loop met naam van motherId"<<motherId<<"dus scalar grandparent en pdgId"<<pdgId<<std::endl;
 			
+			//Muon from scalar decay
+			if (pdgId==13){
+			std::cout<<"charged kaon nu hist vullen"<<std::endl;
+			h_genParScalarMuonPt->Fill(genParPt);
+                	h_genParScalarMuonEta->Fill(genParEta);
+                	h_genParScalarMuonPhi->Fill(genParPhi);
+                	h_genParScalarMuonE->Fill(genParE);
+			}
 			//Charged kaon from scalar decay
 			if (pdgId==321){
 			std::cout<<"charged kaon nu hist vullen"<<std::endl;
@@ -267,7 +280,7 @@ int main(int argc, char* argv[])
 
     // Write histograms to file
 	
-	h_motherId->Write();
+    h_motherId->Write();
 	
     h_genParPt->Write();
     h_genParEta->Write();
@@ -275,6 +288,11 @@ int main(int argc, char* argv[])
     h_genParE->Write();
     h_pdgId->Write();
 	    
+    h_genParScalarMuonPt->Write();
+    h_genParScalarMuonEta->Write();
+    h_genParScalarMuonPhi->Write();
+    h_genParScalarMuonE->Write();
+	
     h_genParScalarCKaonPt->Write();
     h_genParScalarCKaonEta->Write();
     h_genParScalarCKaonPhi->Write();
