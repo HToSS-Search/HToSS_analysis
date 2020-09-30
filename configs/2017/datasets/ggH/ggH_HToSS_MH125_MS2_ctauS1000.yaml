@@ -1,0 +1,13 @@
+name: "ggH_HToSS_MS2_ctauS1000"
+locations:
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/ggH/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS2_ctauS1000/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/ggH/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS2_ctauS1000_ext1/"
+total_events: 1223723
+cross_section: 21.46
+mc: true
+histogram: "ggH_HToSS_MS2_ctauS1000"
+colour: "#a65628"
+label: "ggH_HToSS_MS2_ctauS1000"
+plot_type: "f"
+
+

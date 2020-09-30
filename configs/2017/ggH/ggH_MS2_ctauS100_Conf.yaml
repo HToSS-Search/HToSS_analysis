@@ -1,0 +1,2 @@
+datasets:
+  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS100.yaml"

@@ -75,7 +75,7 @@ where you have yours. These files will need updating. I would recommend the use 
 # Running the program
 
 ```bash
-./bin/simpleAnalysis.exe -c configs/2017/ggH/ggH_SmuonHadronFiltered_MS2_ctauS10_Conf.yaml -o ggH_SmuonHadronFiltered_MS2_ctau10.root
+./bin/simpleAnalysis.exe -c configs/2017/ggH/ggH_MS2_ctauS10_Conf.yaml -o ggH_MS2_ctau10.root
 ```
 
 This first part is calling/running the program simpleAnalysis.exe. The part after '-c' is the command line arguement to use the configuration file.
