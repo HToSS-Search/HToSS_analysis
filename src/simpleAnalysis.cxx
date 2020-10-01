@@ -62,6 +62,12 @@ int main(int argc, char* argv[])
     TH1F* h_genParPhi     {new TH1F("h_genParPhi", "genPar #phi",  100, -3.5, 3.5)};
     TH1F* h_genParE       {new TH1F("h_genParE",   "genPar energy",     1000, 0., 1000.)};
 	
+    //Scalar decay
+    TH1F* h_genParScalarPt      {new TH1F("h_genParScalarPt",  "Scalar p_{T}", 1000, 0., 1000.)}; 
+    TH1F* h_genParScalarEta     {new TH1F("h_genParScalarEta", "Scalar #eta",  200, -7., 7.)}; 
+    TH1F* h_genParScalarPhi     {new TH1F("h_genParScalarPhi", "Scalar #phi",  100, -3.5, 3.5)};
+    TH1F* h_genParScalarE       {new TH1F("h_genParScalarE",   "Scalar decay energy",     1000, 0., 1000.)};
+	
     //Muon from scalar decay
     TH1F* h_genParScalarMuonPt      {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
     TH1F* h_genParScalarMuonEta     {new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
@@ -74,11 +80,11 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarCKaonPhi     {new TH1F("h_genParScalarCKaonPhi", "K^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarCKaonE       {new TH1F("h_genParScalarCKaonE",   "K^{#pm} from scalar decay energy",     1000, 0., 1000.)};
 	
-    //Neutral kaon from scalar decay
-    TH1F* h_genParScalarNKaonPt      {new TH1F("h_genParScalarNKaonPt",  "K^{0} from scalar decay p_{T}", 1000, 0., 1000.)}; 
-    TH1F* h_genParScalarNKaonEta     {new TH1F("h_genParScalarNKaonEta", "K^{0} from scalar decay #eta",  200, -7., 7.)}; 
-    TH1F* h_genParScalarNKaonPhi     {new TH1F("h_genParScalarNKaonPhi", "K^{0} from scalar decay #phi",  100, -3.5, 3.5)};
-    TH1F* h_genParScalarNKaonE       {new TH1F("h_genParScalarNKaonE",   "K^{0} from scalar decay energy",     1000, 0., 1000.)};
+    //K short from scalar decay
+    TH1F* h_genParScalarKShortPt      {new TH1F("h_genParScalarKShortPt",  "K^{0}_S from scalar decay p_{T}", 1000, 0., 1000.)}; 
+    TH1F* h_genParScalarKShortEta     {new TH1F("h_genParScalarKShortEta", "K^{0}_S from scalar decay #eta",  200, -7., 7.)}; 
+    TH1F* h_genParScalarKShortPhi     {new TH1F("h_genParScalarKShortPhi", "K^{0}_S from scalar decay #phi",  100, -3.5, 3.5)};
+    TH1F* h_genParScalarKShortE       {new TH1F("h_genParScalarKShortE",   "K^{0}_S from scalar decay energy",     1000, 0., 1000.)};
 	
     //Charged pion from scalar decay
     TH1F* h_genParScalarCPionPt      {new TH1F("h_genParScalarCPionPt",  "#pi^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
@@ -224,7 +230,13 @@ int main(int argc, char* argv[])
 		const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)}; 
 		    
 		if (isScalarGrandparent==true){
-			
+			//Scalar decay
+			if (pdgId==9000006){
+			h_genParScalarPt->Fill(genParPt);
+                	h_genParScalarEta->Fill(genParEta);
+                	h_genParScalarPhi->Fill(genParPhi);
+                	h_genParScalarE->Fill(genParE);
+			}
 			//Muon from scalar decay
 			if (pdgId==13){
 			h_genParScalarMuonPt->Fill(genParPt);
@@ -239,12 +251,12 @@ int main(int argc, char* argv[])
                 	h_genParScalarCKaonPhi->Fill(genParPhi);
                 	h_genParScalarCKaonE->Fill(genParE);
 			}
-			//Neutral kaon from scalar decay
-			if (pdgId==311){
-			h_genParScalarNKaonPt->Fill(genParPt);
-                	h_genParScalarNKaonEta->Fill(genParEta);
-                	h_genParScalarNKaonPhi->Fill(genParPhi);
-                	h_genParScalarNKaonE->Fill(genParE);
+			//K short from scalar decay
+			if (pdgId==310){
+			h_genParScalarKShortPt->Fill(genParPt);
+                	h_genParScalarKShortEta->Fill(genParEta);
+                	h_genParScalarKShortPhi->Fill(genParPhi);
+                	h_genParScalarKShortE->Fill(genParE);
 			}
 			//Charged pion from scalar decay
 			if (pdgId==211){
@@ -301,7 +313,12 @@ int main(int argc, char* argv[])
     h_genParPhi->Write();
     h_genParE->Write();
     h_pdgId->Write();
-	    
+	
+    h_genParScalarPt->Write();
+    h_genParScalarEta->Write();
+    h_genParScalarPhi->Write();
+    h_genParScalarE->Write();
+	
     h_genParScalarMuonPt->Write();
     h_genParScalarMuonEta->Write();
     h_genParScalarMuonPhi->Write();
@@ -312,10 +329,10 @@ int main(int argc, char* argv[])
     h_genParScalarCKaonPhi->Write();
     h_genParScalarCKaonE->Write();
 	
-    h_genParScalarNKaonPt->Write();
-    h_genParScalarNKaonEta->Write();
-    h_genParScalarNKaonPhi->Write();
-    h_genParScalarNKaonE->Write();
+    h_genParScalarKShortPt->Write();
+    h_genParScalarKShortEta->Write();
+    h_genParScalarKShortPhi->Write();
+    h_genParScalarKShortE->Write();
     
     h_genParScalarCPionPt->Write();
     h_genParScalarCPionEta->Write();
