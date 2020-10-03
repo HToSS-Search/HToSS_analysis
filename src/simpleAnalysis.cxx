@@ -30,6 +30,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <cmath>
 
 
 std::string pdgIdCode (const Int_t pdgId, const bool unicode = false); // declaring function called below main(); pdgIdCode translate stored numerical pdgId code into a string: unicode for output to string, or latex style for ROOT plotting
@@ -62,11 +63,21 @@ int main(int argc, char* argv[])
     TH1F* h_genParPhi     {new TH1F("h_genParPhi", "genPar #phi",  100, -3.5, 3.5)};
     TH1F* h_genParE       {new TH1F("h_genParE",   "genPar energy",     1000, 0., 1000.)};
 	
+    //Higgs boson
+    TH1F* h_genParHiggsPt      {new TH1F("h_genParHiggsPt",  "genPar h_0 p_{T}", 1000, 0., 1000.)};
+    TH1F* h_genParHiggsEta     {new TH1F("h_genParHiggsEta", "genPar h_0 #eta",  200, -7., 7.)}; 
+    TH1F* h_genParHiggsPhi     {new TH1F("h_genParHiggsPhi", "genPar h_0 #phi",  100, -3.5, 3.5)};
+    TH1F* h_genParHiggsE       {new TH1F("h_genParHiggsE",   "genPar h_0 energy",     1000, 0., 1000.)};
+	
     //Scalar decay
     TH1F* h_genParScalarPt      {new TH1F("h_genParScalarPt",  "Scalar p_{T}", 1000, 0., 1000.)}; 
     TH1F* h_genParScalarEta     {new TH1F("h_genParScalarEta", "Scalar #eta",  200, -7., 7.)}; 
     TH1F* h_genParScalarPhi     {new TH1F("h_genParScalarPhi", "Scalar #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarE       {new TH1F("h_genParScalarE",   "Scalar energy",     1000, 0., 1000.)};
+	
+    TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "#Delta#phi",100, -3.5, 3.5)};
+    TH1F* h_ScalarDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, -7., 7.)};
+    TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "#DeltaR",100, 0., 10.)}; 
 	
     //Muon from scalar decay
     TH1F* h_genParScalarMuonPt      {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
@@ -97,6 +108,8 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarNPionEta     {new TH1F("h_genParScalarNPionEta", "#pi^{0} from scalar decay #eta",  200, -7., 7.)}; 
     TH1F* h_genParScalarNPionPhi     {new TH1F("h_genParScalarNPionPhi", "#pi^{0} from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarNPionE       {new TH1F("h_genParScalarNPionE",   "#pi^{0} from scalar decay energy",     1000, 0., 1000.)};
+	
+	
 	
     namespace po = boost::program_options;
 
@@ -225,6 +238,13 @@ int main(int argc, char* argv[])
                 h_genParPhi->Fill(genParPhi);
                 h_genParE->Fill(genParE);
 		
+		//Higgs boson
+		if (pdgId==25){
+		h_genParHiggsPt->Fill(genParPt);
+		h_genParHiggsEta->Fill(genParEta);
+		h_genParHiggsPhi->Fill(genParPhi);
+		h_genParHiggsE->Fill(genParE);
+		}
 		    
 		//Particles from scalar decay
 		const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)}; 
@@ -236,6 +256,10 @@ int main(int argc, char* argv[])
                 	h_genParScalarEta->Fill(genParEta);
                 	h_genParScalarPhi->Fill(genParPhi);
                 	h_genParScalarE->Fill(genParE);
+				
+			h_ScalarDeltaPhi->Fill(genParPhi.DeltaPhi(genParPhi));
+			h_ScalarDeltaEta->Fill(genParEta.DeltaEta(genParEta));
+		        h_ScalarDeltaR->Fill(sqrt(genParPhi.DeltaPhi(genParPhi)+genParEta.DeltaEta(genParEta)));
 			}
 			//Muon from scalar decay
 			if (pdgId==13){
@@ -314,10 +338,19 @@ int main(int argc, char* argv[])
     h_genParE->Write();
     h_pdgId->Write();
 	
+    h_genParHiggsPt->Write();
+    h_genParHiggsEta->Write();
+    h_genParHiggsPhi->Write();
+    h_genParHiggsE->Write();
+	
     h_genParScalarPt->Write();
     h_genParScalarEta->Write();
     h_genParScalarPhi->Write();
     h_genParScalarE->Write();
+	
+    h_ScalarDeltaPhi->Write();
+    h_ScalarDeltaEta->Write();
+    h_ScalarDeltaR->Write();
 	
     h_genParScalarMuonPt->Write();
     h_genParScalarMuonEta->Write();
