@@ -222,7 +222,7 @@ int main(int argc, char* argv[])
 
             //////// GENERATOR PARTICLE STUFF
 		
-	    std::vector <int> nrofScalar //Number of scalar
+	    //std::vector <int> nrofScalar //Number of scalar
 		
             for (Int_t k{0}; k < event.nGenPar; k++) {
 
@@ -304,13 +304,13 @@ int main(int argc, char* argv[])
 		pdgIdMap[pdgId]++;
 		    
             }    
-		if (nrofScalar==2){ //Two-particle (scalar) correlations
+		//if (nrofScalar==2){ //Two-particle (scalar) correlations
 		//Use DeltaPhi (const TLorentzVector)
-		TLorentzVector nr1scalar;
-		TLorentzVector nr2scalar;
+		//TLorentzVector nr1scalar;
+		//TLorentzVector nr2scalar;
 			
-		h_ScalarDeltaR->Fill(std::abs(nr1scalar.DeltaR(nr2scalar)));//Get DeltaR between nr1scalar and nr2scalar
-		h_ScalarDeltaPhi->Fill(std::abs(nr1scalar.DeltaPhi(nr2scalar)));
+		//h_ScalarDeltaR->Fill(std::abs(nr1scalar.DeltaR(nr2scalar)));//Get DeltaR between nr1scalar and nr2scalar
+		//h_ScalarDeltaPhi->Fill(std::abs(nr1scalar.DeltaPhi(nr2scalar)));
 	        //h_ScalarDeltaR->Fill();
 		}
 
