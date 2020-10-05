@@ -304,9 +304,9 @@ int main(int argc, char* argv[])
 		pdgIdMap[pdgId]++;
 		    
             }    
-		if (nrofScalar==2){ //Two-particle (scalar) correlations
-		const int Scalar1=nrofScalar[0]; //Give the scalar index k
-		const int Scalar2=nrofScalar[1];
+		if (nrofScalar.size()==2){ //Two-particle (scalar) correlations
+		const int Scalar1 {nrofScalar[0]}; //Give the scalar index value k
+		const int Scalar2 {nrofScalar[1]};
 			
 		//Use DeltaPhi (const TLorentzVector)
 		//TLorentzVector nr1scalar;
