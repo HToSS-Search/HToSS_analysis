@@ -255,7 +255,7 @@ int main(int argc, char* argv[])
 		if (isScalarGrandparent==true){
 			//Scalar decay
 			if (pdgId==9000006){
-			nrofScalar.emplace_back(k)
+			//nrofScalar.emplace_back(k)
 				
 			h_genParScalarPt->Fill(genParPt);
                 	h_genParScalarEta->Fill(genParEta);
