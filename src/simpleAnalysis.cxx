@@ -30,7 +30,6 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <cmath>
 
 
 std::string pdgIdCode (const Int_t pdgId, const bool unicode = false); // declaring function called below main(); pdgIdCode translate stored numerical pdgId code into a string: unicode for output to string, or latex style for ROOT plotting
