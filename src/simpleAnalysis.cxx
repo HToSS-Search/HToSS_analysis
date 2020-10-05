@@ -77,6 +77,11 @@ int main(int argc, char* argv[])
     TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "Scalar #Delta#phi",100, 0., 3.5)};
     //TH1F* h_ScalarDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
     TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "Scalar #DeltaR",100, 0., 15.)}; 
+    
+    //Muon from scalar decay
+    TH1F* h_MuonDeltaPhi      {new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",100, 0., 3.5)};
+    //TH1F* h_ScalarDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
+    TH1F* h_MuonDeltaR        {new TH1F("h_MuonDeltaR", "Muon #DeltaR",100, 0., 15.)}; 
 	
     //Muon from scalar decay
     TH1F* h_genParScalarMuonPt      {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
@@ -100,6 +105,11 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarKShortEta     {new TH1F("h_genParScalarKShortEta", "K^{0}_S from scalar decay #eta",  200, -7., 7.)}; 
     TH1F* h_genParScalarKShortPhi     {new TH1F("h_genParScalarKShortPhi", "K^{0}_S from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarKShortE       {new TH1F("h_genParScalarKShortE",   "K^{0}_S from scalar decay energy",     1000, 0., 1000.)};
+	
+    //Pion from scalar decay
+    TH1F* h_PionDeltaPhi      {new TH1F("h_PionDeltaPhi", "Pion #Delta#phi",100, 0., 3.5)};
+    //TH1F* h_ScalarDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
+    TH1F* h_PionDeltaR        {new TH1F("h_PionDeltaR", "Pion #DeltaR",100, 0., 15.)}; 
 	
     //Charged pion from scalar decay
     TH1F* h_genParScalarCPionPt      {new TH1F("h_genParScalarCPionPt",  "#pi^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
@@ -227,7 +237,9 @@ int main(int argc, char* argv[])
             //////// GENERATOR PARTICLE STUFF
 		
 	    std::vector<int> nrofScalar; //Number of scalars
+            std::vector<int> nrofMuon;
             std::vector<int> nrofKaon;
+	    std::vector<int> nrofPion;
 		
             for (Int_t k{0}; k < event.nGenPar; k++) {
 
@@ -270,6 +282,7 @@ int main(int argc, char* argv[])
 		if (isScalarGrandparent==true){
 			//Muon from scalar decay
 			if (pdgId==13){
+			nrofMuon.emplace_back(k);
 			h_genParScalarMuonPt->Fill(genParPt);
                 	h_genParScalarMuonEta->Fill(genParEta);
                 	h_genParScalarMuonPhi->Fill(genParPhi);
@@ -292,6 +305,7 @@ int main(int argc, char* argv[])
 			}
 			//Charged pion from scalar decay
 			if (pdgId==211){
+			nrofPion.emplace_back(k);
 			h_genParScalarCPionPt->Fill(genParPt);
                 	h_genParScalarCPionEta->Fill(genParEta);
                 	h_genParScalarCPionPhi->Fill(genParPhi);
@@ -299,6 +313,7 @@ int main(int argc, char* argv[])
 			}
 			//Neutral pion from scalar decay
 			if (pdgId==111){
+			nrofPion.emplace_back(k);
 			h_genParScalarNPionPt->Fill(genParPt);
                 	h_genParScalarNPionEta->Fill(genParEta);
                 	h_genParScalarNPionPhi->Fill(genParPhi);
@@ -338,11 +353,43 @@ int main(int argc, char* argv[])
 		TLorentzVector nr1kaon;
 		TLorentzVector nr2kaon;
 			
-		nr1scalar.SetPtEtaPhiE(event.genParPt[Kaon1],event.genParEta[Kaon1],event.genParPhi[Kaon1],event.genParE[Kaon1]);
-		nr2scalar.SetPtEtaPhiE(event.genParPt[Kaon2],event.genParEta[Kaon2],event.genParPhi[Kaon2],event.genParE[Kaon2]);
+		nr1kaon.SetPtEtaPhiE(event.genParPt[Kaon1],event.genParEta[Kaon1],event.genParPhi[Kaon1],event.genParE[Kaon1]);
+		nr2kaon.SetPtEtaPhiE(event.genParPt[Kaon2],event.genParEta[Kaon2],event.genParPhi[Kaon2],event.genParE[Kaon2]);
 			
-		h_ScalarDeltaR->Fill(std::abs(nr1kaon.DeltaR(nr2kaon)));
-		h_ScalarDeltaPhi->Fill(std::abs(nr1kaon.DeltaPhi(nr2kaon)));
+		h_KaonDeltaR->Fill(std::abs(nr1kaon.DeltaR(nr2kaon)));
+		h_KaonDeltaPhi->Fill(std::abs(nr1kaon.DeltaPhi(nr2kaon)));
+	        //h_ScalarDeltaR->Fill();
+		}
+		
+		if (nrofMuon.size()==2){ //Two-particle (scalar) correlations
+		const int Muon1 {nrofMuon[0]}; 
+		const int Muon2 {nrofMuon[1]};
+			
+		//Use DeltaPhi (const TLorentzVector)
+		TLorentzVector nr1muon;
+		TLorentzVector nr2muon;
+			
+		nr1muon.SetPtEtaPhiE(event.genParPt[Muon1],event.genParEta[Muon1],event.genParPhi[Muon1],event.genParE[Muon1]);
+		nr2muon.SetPtEtaPhiE(event.genParPt[Muon2],event.genParEta[Muon2],event.genParPhi[Muon2],event.genParE[Muon2]);
+			
+		h_MuonDeltaR->Fill(std::abs(nr1muon.DeltaR(nr2muon)));
+		h_MuonDeltaPhi->Fill(std::abs(nr1muon.DeltaPhi(nr2muon)));
+	        //h_ScalarDeltaR->Fill();
+		}
+		
+		if (nrofPion.size()==2){ //Two-particle (scalar) correlations
+		const int Pion1 {nrofPion[0]}; 
+		const int Pion2 {nrofPion[1]};
+			
+		//Use DeltaPhi (const TLorentzVector)
+		TLorentzVector nr1pion;
+		TLorentzVector nr2pion;
+			
+		nr1pion.SetPtEtaPhiE(event.genParPt[Pion1],event.genParEta[Pion1],event.genParPhi[Pion1],event.genParE[Pion1]);
+		nr2pion.SetPtEtaPhiE(event.genParPt[Pion2],event.genParEta[Pion2],event.genParPhi[Pion2],event.genParE[Pion2]);
+			
+		h_PionDeltaR->Fill(std::abs(nr1pion.DeltaR(nr2pion)));
+		h_PionDeltaPhi->Fill(std::abs(nr1pion.DeltaPhi(nr2pion)));
 	        //h_ScalarDeltaR->Fill();
 		}
 
@@ -393,6 +440,10 @@ int main(int argc, char* argv[])
     h_ScalarDeltaR->Write();
     h_ScalarDeltaPhi->Write();
     //h_ScalarDeltaEta->Write();
+   
+    h_MuonDeltaR->Write();
+    h_MuonDeltaPhi->Write();
+    //h_ScalarDeltaEta->Write();
     
     h_genParScalarMuonPt->Write();
     h_genParScalarMuonEta->Write();
@@ -413,6 +464,10 @@ int main(int argc, char* argv[])
     h_genParScalarKShortPhi->Write();
     h_genParScalarKShortE->Write();
     
+    h_PionDeltaR->Write();
+    h_PionDeltaPhi->Write();
+    //h_ScalarDeltaEta->Write();
+	
     h_genParScalarCPionPt->Write();
     h_genParScalarCPionEta->Write();
     h_genParScalarCPionPhi->Write();
