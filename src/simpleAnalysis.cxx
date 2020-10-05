@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
     // declare some variables used for config and dataset parsing
     std::string config;	
     std::vector<Dataset> datasets;
-    std::vector<int> nrofScalar; //Number of scalars
+
     double totalLumi;
     double usePreLumi;
 
@@ -221,8 +221,8 @@ int main(int argc, char* argv[])
 
             //////// GENERATOR PARTICLE STUFF
 		
-	    
-		
+	    std::vector<int> nrofScalar; //Number of scalars
+
             for (Int_t k{0}; k < event.nGenPar; k++) {
 
                 // get variables for this event that have been stored in ROOT nTuple tree
