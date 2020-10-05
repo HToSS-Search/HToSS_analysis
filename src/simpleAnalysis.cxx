@@ -75,8 +75,8 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarE       {new TH1F("h_genParScalarE",   "Scalar energy",     1000, 0., 1000.)};
 	
     TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "#Delta#phi",100, -3.5, 3.5)};
-    TH1F* h_ScalarDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, -7., 7.)};
-    TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "#DeltaR",100, 0., 10.)}; 
+    //TH1F* h_ScalarDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, -7., 7.)};
+    TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "#DeltaR",100, 0., 15.)}; 
 	
     //Muon from scalar decay
     TH1F* h_genParScalarMuonPt      {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
@@ -365,10 +365,10 @@ int main(int argc, char* argv[])
     h_genParScalarPhi->Write();
     h_genParScalarE->Write();
 	
+    h_ScalarDeltaR->Write();
     h_ScalarDeltaPhi->Write();
-    h_ScalarDeltaEta->Write();
-    //h_ScalarDeltaR->Write();
-	
+    //h_ScalarDeltaEta->Write();
+    
     h_genParScalarMuonPt->Write();
     h_genParScalarMuonEta->Write();
     h_genParScalarMuonPhi->Write();
