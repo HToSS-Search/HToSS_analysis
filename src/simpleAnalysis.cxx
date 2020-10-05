@@ -365,8 +365,8 @@ int main(int argc, char* argv[])
     h_genParScalarPhi->Write();
     h_genParScalarE->Write();
 	
-    //h_ScalarDeltaPhi->Write();
-    //h_ScalarDeltaEta->Write();
+    h_ScalarDeltaPhi->Write();
+    h_ScalarDeltaEta->Write();
     //h_ScalarDeltaR->Write();
 	
     h_genParScalarMuonPt->Write();
