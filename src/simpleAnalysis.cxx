@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
     double usePreLumi;
 
     std::map<int, int> pdgIdMap; // declare map of int, int - first int corresponds to pdgId, second will note how many times a particle with that pdgId has been found
-
+    std::vector<int> nrofScalar //Number of scalars
     std::string outFileString{"plots/distributions/output.root"}; // 
     const bool is2016_ {false}; // analysis framework is setup to run over multiple years - as we are considering 2017 conditions currently, this is set to false for safety.
     int numFiles; // Max umber of input dataset files to read in. Defaut is all
@@ -221,7 +221,7 @@ int main(int argc, char* argv[])
 
             //////// GENERATOR PARTICLE STUFF
 		
-	    std::vector<int> nrofScalar //Number of scalars
+	    
 		
             for (Int_t k{0}; k < event.nGenPar; k++) {
 
