@@ -309,11 +309,15 @@ int main(int argc, char* argv[])
 		const int Scalar2 {nrofScalar[1]};
 			
 		//Use DeltaPhi (const TLorentzVector)
-		//TLorentzVector nr1scalar;
-		//TLorentzVector nr2scalar;
+		TLorentzVector nr1scalar;
+		TLorentzVector nr2scalar;
 			
-		//h_ScalarDeltaR->Fill(std::abs(nr1scalar.DeltaR(nr2scalar)));//Get DeltaR between nr1scalar and nr2scalar
-		//h_ScalarDeltaPhi->Fill(std::abs(nr1scalar.DeltaPhi(nr2scalar)));
+		//Make four-vector by SetPtEtaPhiE, related to scalar index value
+		nr1scalar.SetPtEtaPhiE(event.genParPt[Scalar1],event.genParEta[Scalar1],event.genParPhi[Scalar1],event.genParE[Scalar1]);
+		nr2scalar.SetPtEtaPhiE(event.genParPt[Scalar2],event.genParEta[Scalar2],event.genParPhi[Scalar2],event.genParE[Scalar2]);
+			
+		h_ScalarDeltaR->Fill(std::abs(nr1scalar.DeltaR(nr2scalar)));//Get DeltaR between nr1scalar and nr2scalar
+		h_ScalarDeltaPhi->Fill(std::abs(nr1scalar.DeltaPhi(nr2scalar)));
 	        //h_ScalarDeltaR->Fill();
 		}
 
