@@ -221,7 +221,7 @@ int main(int argc, char* argv[])
 
             //////// GENERATOR PARTICLE STUFF
 		
-	    std::vector <int> nrofScalar //Number of scalars
+	   // std::vector <int> nrofScalar //Number of scalars
 		
             for (Int_t k{0}; k < event.nGenPar; k++) {
 
