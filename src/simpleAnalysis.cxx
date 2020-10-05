@@ -221,6 +221,9 @@ int main(int argc, char* argv[])
 
 
             //////// GENERATOR PARTICLE STUFF
+		
+	    std::vector <int> nrofScalar //Number of scalar
+		
             for (Int_t k{0}; k < event.nGenPar; k++) {
 
                 // get variables for this event that have been stored in ROOT nTuple tree
@@ -252,14 +255,12 @@ int main(int argc, char* argv[])
 		if (isScalarGrandparent==true){
 			//Scalar decay
 			if (pdgId==9000006){
+			nrofScalar.emplace_back(k)
+				
 			h_genParScalarPt->Fill(genParPt);
                 	h_genParScalarEta->Fill(genParEta);
                 	h_genParScalarPhi->Fill(genParPhi);
                 	h_genParScalarE->Fill(genParE);
-				
-			h_ScalarDeltaPhi->Fill(genParPhi.DeltaPhi(genParPhi));
-			h_ScalarDeltaEta->Fill(genParEta.DeltaEta(genParEta));
-		        h_ScalarDeltaR->Fill(sqrt(genParPhi.DeltaPhi(genParPhi)+genParEta.DeltaEta(genParEta)));
 			}
 			//Muon from scalar decay
 			if (pdgId==13){
@@ -303,6 +304,15 @@ int main(int argc, char* argv[])
 		pdgIdMap[pdgId]++;
 		    
             }    
+		if (nrofScalar==2){ //Two-particle (scalar) correlations
+		//Use DeltaPhi (const TLorentzVector)
+		TLorentzVector nr1scalar;
+		TLorentzVector nr2scalar;
+			
+		h_ScalarDeltaR->Fill(std::abs(nr1scalar.DeltaR(nr2scalar)));//Get DeltaR between nr1scalar and nr2scalar
+		h_ScalarDeltaPhi->Fill(std::abs(nr1scalar.DeltaPhi(nr2scalar)));
+	        //h_ScalarDeltaR->Fill();
+		}
 
         } 
     }
