@@ -45,11 +45,11 @@ int main(int argc, char* argv[])
     // declare some variables used for config and dataset parsing
     std::string config;	
     std::vector<Dataset> datasets;
+    std::vector<int> nrofScalar; //Number of scalars
     double totalLumi;
     double usePreLumi;
 
     std::map<int, int> pdgIdMap; // declare map of int, int - first int corresponds to pdgId, second will note how many times a particle with that pdgId has been found
-    //std::vector<int> nrofScalar //Number of scalars
     std::string outFileString{"plots/distributions/output.root"}; // 
     const bool is2016_ {false}; // analysis framework is setup to run over multiple years - as we are considering 2017 conditions currently, this is set to false for safety.
     int numFiles; // Max umber of input dataset files to read in. Defaut is all
