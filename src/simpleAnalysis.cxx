@@ -250,7 +250,7 @@ int main(int argc, char* argv[])
 		    
 		//Scalar decay
 		if (pdgId==9000006){
-		nrofScalar.emplace_back(k);
+		nrofScalar.emplace_back(k); //Store the scalar index k in nrofScalar
 				
 		h_genParScalarPt->Fill(genParPt);
                 h_genParScalarEta->Fill(genParEta);
@@ -304,7 +304,10 @@ int main(int argc, char* argv[])
 		pdgIdMap[pdgId]++;
 		    
             }    
-		//if (nrofScalar==2){ //Two-particle (scalar) correlations
+		if (nrofScalar==2){ //Two-particle (scalar) correlations
+		const int Scalar1=nrofScalar[0]; //Give the scalar index k
+		const int Scalar2=nrofScalar[1];
+			
 		//Use DeltaPhi (const TLorentzVector)
 		//TLorentzVector nr1scalar;
 		//TLorentzVector nr2scalar;
@@ -312,7 +315,7 @@ int main(int argc, char* argv[])
 		//h_ScalarDeltaR->Fill(std::abs(nr1scalar.DeltaR(nr2scalar)));//Get DeltaR between nr1scalar and nr2scalar
 		//h_ScalarDeltaPhi->Fill(std::abs(nr1scalar.DeltaPhi(nr2scalar)));
 	        //h_ScalarDeltaR->Fill();
-		//}
+		}
 
         } 
     }
