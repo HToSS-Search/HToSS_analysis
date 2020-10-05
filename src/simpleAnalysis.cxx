@@ -311,7 +311,7 @@ int main(int argc, char* argv[])
 		//h_ScalarDeltaR->Fill(std::abs(nr1scalar.DeltaR(nr2scalar)));//Get DeltaR between nr1scalar and nr2scalar
 		//h_ScalarDeltaPhi->Fill(std::abs(nr1scalar.DeltaPhi(nr2scalar)));
 	        //h_ScalarDeltaR->Fill();
-		}
+		//}
 
         } 
     }
