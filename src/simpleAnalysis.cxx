@@ -74,9 +74,9 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarPhi     {new TH1F("h_genParScalarPhi", "Scalar #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarE       {new TH1F("h_genParScalarE",   "Scalar energy",     1000, 0., 1000.)};
 	
-    TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "#Delta#phi",100, -3.5, 3.5)};
-    //TH1F* h_ScalarDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, -7., 7.)};
-    TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "#DeltaR",100, 0., 15.)}; 
+    TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "Scalar #Delta#phi",100, 0., 3.5)};
+    //TH1F* h_ScalarDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
+    TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "Scalar #DeltaR",100, 0., 15.)}; 
 	
     //Muon from scalar decay
     TH1F* h_genParScalarMuonPt      {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
@@ -84,6 +84,11 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarMuonPhi     {new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarMuonE       {new TH1F("h_genParScalarMuonE",   "#mu^{#pm} from scalar decay energy",     1000, 0., 1000.)};
 
+    //Kaon from scalar decay
+    TH1F* h_KaonDeltaPhi      {new TH1F("h_KaonDeltaPhi", "Kaon #Delta#phi",100, 0., 3.5)};
+    //TH1F* h_ScalarDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
+    TH1F* h_KaonDeltaR        {new TH1F("h_KaonDeltaR", "Kaon #DeltaR",100, 0., 15.)}; 
+	
     //Charged kaon from scalar decay
     TH1F* h_genParScalarCKaonPt      {new TH1F("h_genParScalarCKaonPt",  "K^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
     TH1F* h_genParScalarCKaonEta     {new TH1F("h_genParScalarCKaonEta", "K^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
@@ -222,7 +227,8 @@ int main(int argc, char* argv[])
             //////// GENERATOR PARTICLE STUFF
 		
 	    std::vector<int> nrofScalar; //Number of scalars
-
+            std::vector<int> nrofKaon;
+		
             for (Int_t k{0}; k < event.nGenPar; k++) {
 
                 // get variables for this event that have been stored in ROOT nTuple tree
@@ -271,6 +277,7 @@ int main(int argc, char* argv[])
 			}
 			//Charged kaon from scalar decay
 			if (pdgId==321){
+			nrofKaon.emplace_back(k);
 			h_genParScalarCKaonPt->Fill(genParPt);
                 	h_genParScalarCKaonEta->Fill(genParEta);
                 	h_genParScalarCKaonPhi->Fill(genParPhi);
@@ -318,6 +325,24 @@ int main(int argc, char* argv[])
 			
 		h_ScalarDeltaR->Fill(std::abs(nr1scalar.DeltaR(nr2scalar)));//Get DeltaR between nr1scalar and nr2scalar
 		h_ScalarDeltaPhi->Fill(std::abs(nr1scalar.DeltaPhi(nr2scalar)));
+	        //h_ScalarDeltaR->Fill();
+		}
+		
+		//Now same procedure for kaons,pions,muons,Kshort
+		
+		if (nrofKaon.size()==2){ //Two-particle (scalar) correlations
+		const int Kaon1 {nrofKaon[0]}; 
+		const int Kaon2 {nrofKaon[1]};
+			
+		//Use DeltaPhi (const TLorentzVector)
+		TLorentzVector nr1kaon;
+		TLorentzVector nr2kaon;
+			
+		nr1scalar.SetPtEtaPhiE(event.genParPt[Kaon1],event.genParEta[Kaon1],event.genParPhi[Kaon1],event.genParE[Kaon1]);
+		nr2scalar.SetPtEtaPhiE(event.genParPt[Kaon2],event.genParEta[Kaon2],event.genParPhi[Kaon2],event.genParE[Kaon2]);
+			
+		h_ScalarDeltaR->Fill(std::abs(nr1kaon.DeltaR(nr2kaon)));
+		h_ScalarDeltaPhi->Fill(std::abs(nr1kaon.DeltaPhi(nr2kaon)));
 	        //h_ScalarDeltaR->Fill();
 		}
 
@@ -373,6 +398,10 @@ int main(int argc, char* argv[])
     h_genParScalarMuonEta->Write();
     h_genParScalarMuonPhi->Write();
     h_genParScalarMuonE->Write();
+
+    h_KaonDeltaR->Write();
+    h_KaonDeltaPhi->Write();
+    //h_ScalarDeltaEta->Write();
 	
     h_genParScalarCKaonPt->Write();
     h_genParScalarCKaonEta->Write();
@@ -541,9 +570,9 @@ bool scalarGrandparent (const AnalysisEvent event, const Int_t k, const Int_t gr
     if (motherId == 0 || motherIndex == -1) return false; // if no parent, then mother Id is null and there's no index, quit search
     else if (motherId == std::abs(grandparentId)) return true; // if mother is granparent being searched for, return true
     else {
-        std::cout << "Going up the ladder ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
-   //   debugCounter++;
-   //   std::cout << "debugCounter: " << debugCounter << std::endl;
+    //   std::cout << "Going up the ladder ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
+    //   debugCounter++;
+    //   std::cout << "debugCounter: " << debugCounter << std::endl;
         return scalarGrandparent(event, motherIndex, grandparentId); // otherwise check mother's mother ...
     }
 }
