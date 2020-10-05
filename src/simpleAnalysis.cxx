@@ -221,7 +221,7 @@ int main(int argc, char* argv[])
 
             //////// GENERATOR PARTICLE STUFF
 		
-	    //std::vector <int> nrofScalar //Number of scalar
+	    std::vector <int> nrofScalar //Number of scalars
 		
             for (Int_t k{0}; k < event.nGenPar; k++) {
 
@@ -248,19 +248,20 @@ int main(int argc, char* argv[])
 		h_genParHiggsE->Fill(genParE);
 		}
 		    
+		//Scalar decay
+		if (pdgId==9000006){
+		nrofScalar.emplace_back(k)
+				
+		h_genParScalarPt->Fill(genParPt);
+                h_genParScalarEta->Fill(genParEta);
+                h_genParScalarPhi->Fill(genParPhi);
+                h_genParScalarE->Fill(genParE);
+		}  
+		    
 		//Particles from scalar decay
 		const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)}; 
 		    
 		if (isScalarGrandparent==true){
-			//Scalar decay
-			if (pdgId==9000006){
-			//nrofScalar.emplace_back(k)
-				
-			h_genParScalarPt->Fill(genParPt);
-                	h_genParScalarEta->Fill(genParEta);
-                	h_genParScalarPhi->Fill(genParPhi);
-                	h_genParScalarE->Fill(genParE);
-			}
 			//Muon from scalar decay
 			if (pdgId==13){
 			h_genParScalarMuonPt->Fill(genParPt);
