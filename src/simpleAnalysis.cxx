@@ -338,8 +338,8 @@ int main(int argc, char* argv[])
 		const int Scalar2 {nrofScalar[1]};
 			
 		//Use DeltaPhi (const TLorentzVector)
-		const TLorentzVector nr1scalar;
-		const TLorentzVector nr2scalar;
+		TLorentzVector nr1scalar;
+		TLorentzVector nr2scalar;
 			
 		//Make four-vector by SetPtEtaPhiE, related to scalar index value
 		nr1scalar.SetPtEtaPhiE(event.genParPt[Scalar1],event.genParEta[Scalar1],event.genParPhi[Scalar1],event.genParE[Scalar1]);
@@ -355,8 +355,8 @@ int main(int argc, char* argv[])
 		const int Higgs2 {nrofHiggs[1]};
 			
 		//Use DeltaPhi (const TLorentzVector)
-		const TLorentzVector nr1higgs;
-		const TLorentzVector nr2higgs;
+		TLorentzVector nr1higgs;
+		TLorentzVector nr2higgs;
 			
 		nr1higgs.SetPtEtaPhiE(event.genParPt[Higgs1],event.genParEta[Higgs1],event.genParPhi[Higgs1],event.genParE[Higgs1]);
 		nr2higgs.SetPtEtaPhiE(event.genParPt[Higgs2],event.genParEta[Higgs2],event.genParPhi[Higgs2],event.genParE[Higgs2]);
@@ -373,8 +373,8 @@ int main(int argc, char* argv[])
 		const int Kaon2 {nrofKaon[1]};
 			
 		//Use DeltaPhi (const TLorentzVector)
-		const TLorentzVector nr1kaon;
-		const TLorentzVector nr2kaon;
+		TLorentzVector nr1kaon;
+		TLorentzVector nr2kaon;
 			
 		nr1kaon.SetPtEtaPhiE(event.genParPt[Kaon1],event.genParEta[Kaon1],event.genParPhi[Kaon1],event.genParE[Kaon1]);
 		nr2kaon.SetPtEtaPhiE(event.genParPt[Kaon2],event.genParEta[Kaon2],event.genParPhi[Kaon2],event.genParE[Kaon2]);
@@ -389,8 +389,8 @@ int main(int argc, char* argv[])
 		const int Muon2 {nrofMuon[1]};
 			
 		//Use DeltaPhi (const TLorentzVector)
-		const TLorentzVector nr1muon;
-		const TLorentzVector nr2muon;
+		TLorentzVector nr1muon;
+		TLorentzVector nr2muon;
 			
 		nr1muon.SetPtEtaPhiE(event.genParPt[Muon1],event.genParEta[Muon1],event.genParPhi[Muon1],event.genParE[Muon1]);
 		nr2muon.SetPtEtaPhiE(event.genParPt[Muon2],event.genParEta[Muon2],event.genParPhi[Muon2],event.genParE[Muon2]);
@@ -405,8 +405,8 @@ int main(int argc, char* argv[])
 		const int Pion2 {nrofPion[1]};
 			
 		//Use DeltaPhi (const TLorentzVector)
-		const TLorentzVector nr1pion;
-		const TLorentzVector nr2pion;
+		TLorentzVector nr1pion;
+		TLorentzVector nr2pion;
 			
 		nr1pion.SetPtEtaPhiE(event.genParPt[Pion1],event.genParEta[Pion1],event.genParPhi[Pion1],event.genParE[Pion1]);
 		nr2pion.SetPtEtaPhiE(event.genParPt[Pion2],event.genParEta[Pion2],event.genParPhi[Pion2],event.genParE[Pion2]);
