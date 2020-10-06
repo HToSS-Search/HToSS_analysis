@@ -63,6 +63,10 @@ int main(int argc, char* argv[])
     TH1F* h_genParE       {new TH1F("h_genParE",   "genPar energy",     1000, 0., 1000.)};
 	
     //Higgs boson
+    TH1F* h_HiggsDeltaPhi      {new TH1F("h_HiggsDeltaPhi", "Scalar #Delta#phi",1000, -3.5, 3.5)};
+    //TH1F* h_HiggsDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
+    TH1F* h_HiggsDeltaR        {new TH1F("h_HiggsDeltaR", "Scalar #DeltaR",1000,-10., 10.)}; 
+	
     TH1F* h_genParHiggsPt      {new TH1F("h_genParHiggsPt",  "genPar h_0 p_{T}", 1000, 0., 1000.)};
     TH1F* h_genParHiggsEta     {new TH1F("h_genParHiggsEta", "genPar h_0 #eta",  200, -7., 7.)}; 
     TH1F* h_genParHiggsPhi     {new TH1F("h_genParHiggsPhi", "genPar h_0 #phi",  100, -3.5, 3.5)};
@@ -74,14 +78,14 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarPhi     {new TH1F("h_genParScalarPhi", "Scalar #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarE       {new TH1F("h_genParScalarE",   "Scalar energy",     1000, 0., 1000.)};
 	
-    TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "Scalar #Delta#phi",100, 0., 3.5)};
+    TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "Scalar #Delta#phi",1000, -3.5, 3.5)};
     //TH1F* h_ScalarDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
-    TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "Scalar #DeltaR",100, 0., 15.)}; 
+    TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "Scalar #DeltaR",1000,-10., 10.)}; 
     
     //Muon from scalar decay
-    TH1F* h_MuonDeltaPhi      {new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",100, 0., 3.5)};
-    //TH1F* h_ScalarDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
-    TH1F* h_MuonDeltaR        {new TH1F("h_MuonDeltaR", "Muon #DeltaR",100, 0., 15.)}; 
+    TH1F* h_MuonDeltaPhi      {new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",2000, -3.5, 3.5)};
+    //TH1F* h_MuonDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
+    TH1F* h_MuonDeltaR        {new TH1F("h_MuonDeltaR", "Muon #DeltaR",2000, -10., 10.)}; 
 	
     //Muon from scalar decay
     TH1F* h_genParScalarMuonPt      {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
@@ -90,9 +94,9 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarMuonE       {new TH1F("h_genParScalarMuonE",   "#mu^{#pm} from scalar decay energy",     1000, 0., 1000.)};
 
     //Kaon from scalar decay
-    TH1F* h_KaonDeltaPhi      {new TH1F("h_KaonDeltaPhi", "Kaon #Delta#phi",100, 0., 3.5)};
-    //TH1F* h_ScalarDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
-    TH1F* h_KaonDeltaR        {new TH1F("h_KaonDeltaR", "Kaon #DeltaR",100, 0., 15.)}; 
+    TH1F* h_KaonDeltaPhi      {new TH1F("h_KaonDeltaPhi", "Kaon #Delta#phi",2000, -3.5, 3.5)};
+    //TH1F* h_KaonDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
+    TH1F* h_KaonDeltaR        {new TH1F("h_KaonDeltaR", "Kaon #DeltaR",2000, -10., 10.)}; 
 	
     //Charged kaon from scalar decay
     TH1F* h_genParScalarCKaonPt      {new TH1F("h_genParScalarCKaonPt",  "K^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
@@ -107,9 +111,9 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarKShortE       {new TH1F("h_genParScalarKShortE",   "K^{0}_S from scalar decay energy",     1000, 0., 1000.)};
 	
     //Pion from scalar decay
-    TH1F* h_PionDeltaPhi      {new TH1F("h_PionDeltaPhi", "Pion #Delta#phi",100, 0., 3.5)};
-    //TH1F* h_ScalarDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
-    TH1F* h_PionDeltaR        {new TH1F("h_PionDeltaR", "Pion #DeltaR",100, 0., 15.)}; 
+    TH1F* h_PionDeltaPhi      {new TH1F("h_PionDeltaPhi", "Pion #Delta#phi",2000, -3.5, 3.5)};
+    //TH1F* h_PionDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
+    TH1F* h_PionDeltaR        {new TH1F("h_PionDeltaR", "Pion #DeltaR",2000, -10., 10.)}; 
 	
     //Charged pion from scalar decay
     TH1F* h_genParScalarCPionPt      {new TH1F("h_genParScalarCPionPt",  "#pi^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
@@ -240,6 +244,7 @@ int main(int argc, char* argv[])
             std::vector<int> nrofMuon;
             std::vector<int> nrofKaon;
 	    std::vector<int> nrofPion;
+	    std::vector<int> nrofHiggs;
 		
             for (Int_t k{0}; k < event.nGenPar; k++) {
 
@@ -260,6 +265,7 @@ int main(int argc, char* argv[])
 		
 		//Higgs boson
 		if (pdgId==25){
+		nrofHiggs.emplace_back(k);
 		h_genParHiggsPt->Fill(genParPt);
 		h_genParHiggsEta->Fill(genParEta);
 		h_genParHiggsPhi->Fill(genParPhi);
@@ -298,6 +304,7 @@ int main(int argc, char* argv[])
 			}
 			//K short from scalar decay
 			if (pdgId==310){
+			nrofKaon.emplace_back(k); //Together with kaon in angular differences
 			h_genParScalarKShortPt->Fill(genParPt);
                 	h_genParScalarKShortEta->Fill(genParEta);
                 	h_genParScalarKShortPhi->Fill(genParPhi);
@@ -331,15 +338,31 @@ int main(int argc, char* argv[])
 		const int Scalar2 {nrofScalar[1]};
 			
 		//Use DeltaPhi (const TLorentzVector)
-		TLorentzVector nr1scalar;
-		TLorentzVector nr2scalar;
+		const TLorentzVector nr1scalar;
+		const TLorentzVector nr2scalar;
 			
 		//Make four-vector by SetPtEtaPhiE, related to scalar index value
 		nr1scalar.SetPtEtaPhiE(event.genParPt[Scalar1],event.genParEta[Scalar1],event.genParPhi[Scalar1],event.genParE[Scalar1]);
 		nr2scalar.SetPtEtaPhiE(event.genParPt[Scalar2],event.genParEta[Scalar2],event.genParPhi[Scalar2],event.genParE[Scalar2]);
 			
-		h_ScalarDeltaR->Fill(std::abs(nr1scalar.DeltaR(nr2scalar)));//Get DeltaR between nr1scalar and nr2scalar
-		h_ScalarDeltaPhi->Fill(std::abs(nr1scalar.DeltaPhi(nr2scalar)));
+		h_ScalarDeltaR->Fill(nr1scalar.DeltaR(nr2scalar));//Get DeltaR between nr1scalar and nr2scalar
+		h_ScalarDeltaPhi->Fill(nr1scalar.DeltaPhi(nr2scalar));
+	        //h_ScalarDeltaR->Fill();
+		}
+		
+		if (nrofHiggs.size()==2){ //Two-particle (scalar) correlations
+		const int Higgs1 {nrofHiggs[0]}; 
+		const int Higgs2 {nrofHiggs[1]};
+			
+		//Use DeltaPhi (const TLorentzVector)
+		const TLorentzVector nr1higgs;
+		const TLorentzVector nr2higgs;
+			
+		nr1higgs.SetPtEtaPhiE(event.genParPt[Higgs1],event.genParEta[Higgs1],event.genParPhi[Higgs1],event.genParE[Higgs1]);
+		nr2higgs.SetPtEtaPhiE(event.genParPt[Higgs2],event.genParEta[Higgs2],event.genParPhi[Higgs2],event.genParE[Higgs2]);
+			
+		h_HiggsDeltaR->Fill(nr1higgs.DeltaR(nr2higgs));
+		h_HiggsDeltaPhi->Fill(nr1higgs.DeltaPhi(nr2higgs));
 	        //h_ScalarDeltaR->Fill();
 		}
 		
@@ -350,14 +373,14 @@ int main(int argc, char* argv[])
 		const int Kaon2 {nrofKaon[1]};
 			
 		//Use DeltaPhi (const TLorentzVector)
-		TLorentzVector nr1kaon;
-		TLorentzVector nr2kaon;
+		const TLorentzVector nr1kaon;
+		const TLorentzVector nr2kaon;
 			
 		nr1kaon.SetPtEtaPhiE(event.genParPt[Kaon1],event.genParEta[Kaon1],event.genParPhi[Kaon1],event.genParE[Kaon1]);
 		nr2kaon.SetPtEtaPhiE(event.genParPt[Kaon2],event.genParEta[Kaon2],event.genParPhi[Kaon2],event.genParE[Kaon2]);
 			
-		h_KaonDeltaR->Fill(std::abs(nr1kaon.DeltaR(nr2kaon)));
-		h_KaonDeltaPhi->Fill(std::abs(nr1kaon.DeltaPhi(nr2kaon)));
+		h_KaonDeltaR->Fill(nr1kaon.DeltaR(nr2kaon));
+		h_KaonDeltaPhi->Fill(nr1kaon.DeltaPhi(nr2kaon));
 	        //h_ScalarDeltaR->Fill();
 		}
 		
@@ -366,14 +389,14 @@ int main(int argc, char* argv[])
 		const int Muon2 {nrofMuon[1]};
 			
 		//Use DeltaPhi (const TLorentzVector)
-		TLorentzVector nr1muon;
-		TLorentzVector nr2muon;
+		const TLorentzVector nr1muon;
+		const TLorentzVector nr2muon;
 			
 		nr1muon.SetPtEtaPhiE(event.genParPt[Muon1],event.genParEta[Muon1],event.genParPhi[Muon1],event.genParE[Muon1]);
 		nr2muon.SetPtEtaPhiE(event.genParPt[Muon2],event.genParEta[Muon2],event.genParPhi[Muon2],event.genParE[Muon2]);
 			
-		h_MuonDeltaR->Fill(std::abs(nr1muon.DeltaR(nr2muon)));
-		h_MuonDeltaPhi->Fill(std::abs(nr1muon.DeltaPhi(nr2muon)));
+		h_MuonDeltaR->Fill(nr1muon.DeltaR(nr2muon));
+		h_MuonDeltaPhi->Fill(nr1muon.DeltaPhi(nr2muon));
 	        //h_ScalarDeltaR->Fill();
 		}
 		
@@ -382,14 +405,14 @@ int main(int argc, char* argv[])
 		const int Pion2 {nrofPion[1]};
 			
 		//Use DeltaPhi (const TLorentzVector)
-		TLorentzVector nr1pion;
-		TLorentzVector nr2pion;
+		const TLorentzVector nr1pion;
+		const TLorentzVector nr2pion;
 			
 		nr1pion.SetPtEtaPhiE(event.genParPt[Pion1],event.genParEta[Pion1],event.genParPhi[Pion1],event.genParE[Pion1]);
 		nr2pion.SetPtEtaPhiE(event.genParPt[Pion2],event.genParEta[Pion2],event.genParPhi[Pion2],event.genParE[Pion2]);
 			
-		h_PionDeltaR->Fill(std::abs(nr1pion.DeltaR(nr2pion)));
-		h_PionDeltaPhi->Fill(std::abs(nr1pion.DeltaPhi(nr2pion)));
+		h_PionDeltaR->Fill(nr1pion.DeltaR(nr2pion));
+		h_PionDeltaPhi->Fill(nr1pion.DeltaPhi(nr2pion));
 	        //h_ScalarDeltaR->Fill();
 		}
 
@@ -427,6 +450,10 @@ int main(int argc, char* argv[])
     h_genParE->Write();
     h_pdgId->Write();
 	
+    h_HiggsDeltaR->Write();
+    h_HiggsDeltaPhi->Write();
+    //h_HiggsDeltaEta->Write();
+	
     h_genParHiggsPt->Write();
     h_genParHiggsEta->Write();
     h_genParHiggsPhi->Write();
@@ -443,7 +470,7 @@ int main(int argc, char* argv[])
    
     h_MuonDeltaR->Write();
     h_MuonDeltaPhi->Write();
-    //h_ScalarDeltaEta->Write();
+    //h_MuonDeltaEta->Write();
     
     h_genParScalarMuonPt->Write();
     h_genParScalarMuonEta->Write();
@@ -452,7 +479,7 @@ int main(int argc, char* argv[])
 
     h_KaonDeltaR->Write();
     h_KaonDeltaPhi->Write();
-    //h_ScalarDeltaEta->Write();
+    //h_KaonDeltaEta->Write();
 	
     h_genParScalarCKaonPt->Write();
     h_genParScalarCKaonEta->Write();
@@ -466,7 +493,7 @@ int main(int argc, char* argv[])
     
     h_PionDeltaR->Write();
     h_PionDeltaPhi->Write();
-    //h_ScalarDeltaEta->Write();
+    //h_PionDeltaEta->Write();
 	
     h_genParScalarCPionPt->Write();
     h_genParScalarCPionEta->Write();
