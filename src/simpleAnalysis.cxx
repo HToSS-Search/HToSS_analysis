@@ -63,6 +63,7 @@ int main(int argc, char* argv[])
     TH1F* h_genParE       {new TH1F("h_genParE",   "genPar energy",     1000, 0., 1000.)};
 	
     //Higgs boson
+    TH1F* h_HiggsInvMass      {new TH1F("h_HiggsInvMass",  "h_0 Inv Mass", 1000, 0., 1000.)};
     TH1F* h_HiggsDeltaPhi      {new TH1F("h_HiggsDeltaPhi", "Scalar #Delta#phi",1000, -3.5, 3.5)};
     //TH1F* h_HiggsDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
     TH1F* h_HiggsDeltaR        {new TH1F("h_HiggsDeltaR", "Scalar #DeltaR",1000,-10., 10.)}; 
@@ -364,6 +365,8 @@ int main(int argc, char* argv[])
 		h_HiggsDeltaR->Fill(nr1higgs.DeltaR(nr2higgs));
 		h_HiggsDeltaPhi->Fill(nr1higgs.DeltaPhi(nr2higgs));
 	        //h_ScalarDeltaR->Fill();
+			
+	        h_HiggsInvMass->Fill(nr1higgs.M()+nr2higgs.M());
 		}
 		
 		//Now same procedure for kaons,pions,muons,Kshort
@@ -453,6 +456,7 @@ int main(int argc, char* argv[])
     h_HiggsDeltaR->Write();
     h_HiggsDeltaPhi->Write();
     //h_HiggsDeltaEta->Write();
+    h_HiggsInvMass->Write();
 	
     h_genParHiggsPt->Write();
     h_genParHiggsEta->Write();
