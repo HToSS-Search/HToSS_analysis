@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
     TH1F* h_genParE       {new TH1F("h_genParE",   "genPar energy",     1000, 0., 1000.)};
 	
     //Higgs boson
-    TH1F* h_HiggsInvMass      {new TH1F("h_HiggsInvMass",  "h_0 Inv Mass", 1000, 0., 1000.)};
+    TH1F* h_HiggsInvMass      {new TH1F("h_HiggsInvMass",  "h_0 Invariant mass", 1000, 0., 1000.)};
     TH1F* h_HiggsDeltaPhi      {new TH1F("h_HiggsDeltaPhi", "Scalar #Delta#phi",1000, -3.5, 3.5)};
     //TH1F* h_HiggsDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
     TH1F* h_HiggsDeltaR        {new TH1F("h_HiggsDeltaR", "Scalar #DeltaR",1000,-10., 10.)}; 
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarE       {new TH1F("h_genParScalarE",   "Scalar energy",     1000, 0., 1000.)};
 	
     TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "Scalar #Delta#phi",1000, -3.5, 3.5)};
-    //TH1F* h_ScalarDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
+    TH1F* h_ScalarInvMass      {new TH1F("h_ScalarInvMass", "Scalar Invariant mass",200, 0., 7.)};
     TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "Scalar #DeltaR",1000,-10., 10.)}; 
     
     //Muon from scalar decay
@@ -348,7 +348,7 @@ int main(int argc, char* argv[])
 			
 		h_ScalarDeltaR->Fill(nr1scalar.DeltaR(nr2scalar));//Get DeltaR between nr1scalar and nr2scalar
 		h_ScalarDeltaPhi->Fill(nr1scalar.DeltaPhi(nr2scalar));
-	        //h_ScalarDeltaR->Fill();
+	        h_ScalarInvMass->Fill(nr1scalar.M()+nr2scalar.M());
 		}
 		
 		if (nrofHiggs.size()==2){ //Two-particle (scalar) correlations
@@ -470,7 +470,7 @@ int main(int argc, char* argv[])
 	
     h_ScalarDeltaR->Write();
     h_ScalarDeltaPhi->Write();
-    //h_ScalarDeltaEta->Write();
+    h_ScalarInvMass->Write();
    
     h_MuonDeltaR->Write();
     h_MuonDeltaPhi->Write();
