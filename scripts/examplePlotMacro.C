@@ -30,7 +30,8 @@ void examplePlotMacro() {
     //h_genParPt->GetXaxis()->SetTitle("p_{T} GeV"); // set a title for the x-axis
     //h_genParPt->GetXaxis()->SetRangeUser(0.0, 200.); // change the x-axis range to 0-200
 
-    h_genParPt->Draw(); // draw histo on canvas
+    histogram->Draw();
+    //h_genParPt->Draw(); // draw histo on canvas
     canvy->Draw(); // draw canvas!
 
     // save canvas with drawn histogram
