@@ -9,7 +9,7 @@
 #include "TStyle.h"
 #include "TLatex.h"
 
-#include <string>
+//#include <string>
 #include <iostream>
 
 void examplePlotMacro() {
@@ -17,7 +17,7 @@ void examplePlotMacro() {
     TFile inFile("ggH_MS2_ctau10.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
     
     std::cout << "Enter in name of histogram: ";
-    string histogram;
+    //string histogram;
     std::cin >> histogram;
     //TH1F* h_genParPt = (TH1F*)inFile.Get("h_genParPt"); // Load in histogram
     TH1F* histogram = (TH1F*)inFile.Get("histogram");
