@@ -1,36 +1,36 @@
 cuts:
     tightMuons:
-        pt: 20
-        ptLeading: 29
-        eta: 2.4
-        relIso: 0.15
+        pt: 0
+        ptLeading: 0
+        eta: 5.0
+        relIso: 0.0
         number: 0
     looseMuons:
-        pt: 20
-        ptLeading: 29
-        eta: 2.4
-        relIso: 0.25
+        pt: 0
+        ptLeading: 0
+        eta: 5.0
+        relIso: 0.0
         number: 0
     tightElectrons:
-        pt: 25
-        ptLeading: 38
-        eta: 2.5
+        pt: 0
+        ptLeading: 5.0
+        eta: 5.0
         relIso: 0.107587
         number: 2
     looseElectrons:
-        pt: 15
-        ptLeading: 38
-        eta: 2.5
-        relIso: 0.107587
+        pt: 0
+        ptLeading: 0
+        eta: 5.0
+        relIso: 0.107587.
         number: 2
     jets:
-        pt: 30
+        pt: 0
         eta: 4.7
-        numJets: 4
-        maxJets: 6
-        numbJets: 1
-        maxbJets: 2
-        maxbJetEta: 2.5
+        numJets: 0
+        maxJets: 20
+        numbJets: 0
+        maxbJets: 20
+        maxbJetEta: 5.0
 
 trigLabel: "e"
 plotPostfix: "ee"

@@ -26,42 +26,42 @@ Cuts::Cuts(const bool doPlots,
     , invertLepCut_{invertLepCut}
     , is2016_{is2016}
 
-    , numTightEle_{3}
-    , tightElePt_{15.}
-    , tightElePtLeading_{35.}
-    , tightEleEta_{2.5}
+    , numTightEle_{0}
+    , tightElePt_{0.}
+    , tightElePtLeading_{0.}
+    , tightEleEta_{5.0}
     , tightEleRelIso_{0.107587}
 
-    , numLooseEle_{3}
-    , looseElePt_{15.}
-    , looseElePtLeading_{35.}
-    , looseEleEta_{2.5}
+    , numLooseEle_{0}
+    , looseElePt_{0.}
+    , looseElePtLeading_{0.}
+    , looseEleEta_{5.0}
     , looseEleRelIso_{0.15}
 
     , numTightMu_{0}
-    , tightMuonPt_{12.}
-    , tightMuonPtLeading_{27.}
-    , tightMuonEta_{2.4}
+    , tightMuonPt_{0.}
+    , tightMuonPtLeading_{0.}
+    , tightMuonEta_{5.0}
     , tightMuonRelIso_{0.15}
 
     , numLooseMu_{0}
-    , looseMuonPt_{12.}
-    , looseMuonPtLeading_{27.}
-    , looseMuonEta_{2.4}
+    , looseMuonPt_{0.}
+    , looseMuonPtLeading_{0.}
+    , looseMuonEta_{5.0}
     , looseMuonRelIso_{0.25}
 
-    , invZMassCut_{20.}
-    , invWMassCut_{20.}
+    , invZMassCut_{999999.}
+    , invWMassCut_{999999.}
 
-    , numJets_{2}
-    , maxJets_{4}
-    , jetPt_{30.}
+    , numJets_{0}
+    , maxJets_{20}
+    , jetPt_{0.}
     , jetEta_{5.0}
     , jetIDDo_{true}
 
-    , numbJets_{1}
-    , maxbJets_{2}
-    , maxbJetEta_{2.5}
+    , numbJets_{0}
+    , maxbJets_{20}
+    , maxbJetEta_{5.0}
 
     , bDiscCut_{is2016 ? 0.8484f : 0.8838f}
 
@@ -97,9 +97,6 @@ Cuts::Cuts(const bool doPlots,
 
     if (!is2016_)
     {
-        std::cout << "lumi set for Runs B-F: " << lumiRunsBCDEF_ << std::endl;
-        std::cout << "lumi set for Runs G-H: " << lumiRunsGH_ << std::endl;
-
         std::cout << "\nLoad 2017 electron SFs from root file ... "
                   << std::endl;
 
@@ -140,6 +137,9 @@ Cuts::Cuts(const bool doPlots,
     {
         std::cout << "\nLoad 2016 electron SFs from root file ... "
                   << std::endl;
+
+        std::cout << "lumi set for Runs B-F: " << lumiRunsBCDEF_ << std::endl;
+        std::cout << "lumi set for Runs G-H: " << lumiRunsGH_ << std::endl;
 
         // Single electron HLT SF
         electronHltFile =
@@ -540,7 +540,7 @@ bool Cuts::makeLeptonCuts(
         postLepSelTree_->Fill();
     }
 
-    event.muonMomentumSF = getRochesterSFs(event);
+//    event.muonMomentumSF = getRochesterSFs(event);
 
     if (!getDileptonZCand(
             event, event.electronIndexTight, event.muonIndexTight))
@@ -548,7 +548,7 @@ bool Cuts::makeLeptonCuts(
         return false;
     }
 
-    eventWeight *= getLeptonWeight(event, syst);
+//    eventWeight *= getLeptonWeight(event, syst);
 
     if (doPlots_ || fillCutFlow_)
     {
