@@ -125,7 +125,7 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[])
         po::value<int>(&systToRun)->default_value(0),
         "Mask for systematics to be run. 65535 enables all systematics.")(
         "channels,k",
-        po::value<int>(&channelsToRun)->default_value(0),
+        po::value<int>(&channelsToRun)->default_value(2),
         "Mask describing the channels to be run over. The mask "
         "is the sum of each channel's mask, which are:\n"
         "    ee        - 1\n"

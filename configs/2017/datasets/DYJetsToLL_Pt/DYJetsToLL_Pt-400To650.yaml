@@ -1,7 +1,7 @@
 name: "DYJetsToLL_Pt-400To650"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/DYJetsToLL_Pt-400To650/"
-total_events: 
+total_events: 1854553
 cross_section: 0.436041144
 mc: true
 histogram: "Zjets"
