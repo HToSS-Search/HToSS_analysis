@@ -1,6 +1,6 @@
 name: "tHq"
 locations:
-    - "/scratch/data/tZqSkimsRun2017/tHq/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/tHq/"
 total_events: 3381548
 cross_section: 0.3184
 mc: true

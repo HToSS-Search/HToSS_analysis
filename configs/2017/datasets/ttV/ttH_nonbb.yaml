@@ -1,7 +1,6 @@
 name: "ttH_nonbb"
 locations:
-    # - "/scratch/data/tZqSkimsRun2017/ttH_nonbb/"
-    - "/scratch/data/tZqSkimsRun2017/ttH_nonbb_ext/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/ttH_nonbb/"
 total_events: 8241489
 cross_section: 0.5638
 mc: true

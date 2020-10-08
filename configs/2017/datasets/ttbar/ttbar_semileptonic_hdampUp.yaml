@@ -1,6 +1,6 @@
 name: "ttbar_semileptonic_hdampUp"
 locations:
-    - "/scratch/data/tZqSkimsRun2017/ttbar_semileptonic_hdampUP/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/ttbar_semileptonic_hdampUP/"
 total_events: 23977012
 cross_section: 365.34
 mc: true

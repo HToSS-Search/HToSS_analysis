@@ -1,11 +1,11 @@
 name: "mumuRun2017"
 locations:
-    - "/data0/data/TopPhysics/postTriggerSkims2017/mumuRun2017B/"
-    - "/data0/data/TopPhysics/postTriggerSkims2017/mumuRun2017C/"
-    - "/data0/data/TopPhysics/postTriggerSkims2017/mumuRun2017D/"
-    - "/data0/data/TopPhysics/postTriggerSkims2017/mumuRun2017E/"
-    - "/data0/data/TopPhysics/postTriggerSkims2017/mumuRun2017F/"
-luminosity: 41528
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/mumuRun2017B/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/mumuRun2017C/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/mumuRun2017D/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/mumuRun2017E/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/mumuRun2017F/"
+luminosity: 41528.
 mc: false
 histogram: "data"
 label: "Data"

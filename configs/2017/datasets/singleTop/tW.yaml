@@ -1,6 +1,6 @@
 name: "tW"
 locations:
-    - "/scratch/data/tZqSkimsRun2017/tW"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/tW/"
 total_events: 7945242
 cross_section: 34.91
 mc: true

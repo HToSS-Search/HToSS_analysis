@@ -1,6 +1,6 @@
 name: "ttbar_2l2v_hdampDown"
 locations:
-    - "/scratch/data/tZqSkimsRun2017/ttbar_2l2v_hdampDOWN/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/ttbar_2l2v_hdampDOWN/"
 total_events: 5476459
 cross_section: 88.29
 mc: true

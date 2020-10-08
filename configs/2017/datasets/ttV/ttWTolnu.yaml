@@ -1,6 +1,6 @@
 name: "ttWTolnu"
 locations:
-    - "/scratch/data/tZqSkimsRun2017/ttWTolnu/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/ttW_lnu/"
 total_events: 4919674
 cross_section: 0.2198
 mc: true

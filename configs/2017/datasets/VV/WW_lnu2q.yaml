@@ -1,6 +1,6 @@
 name: "WW_lnu2q"
 locations:
-    - "/scratch/data/tZqSkimsRun2017/WW_lnu2q/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/WW_lnu2q/"
 total_events: 8785360
 cross_section: 45.99
 mc: true

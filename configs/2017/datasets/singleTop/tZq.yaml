@@ -1,8 +1,8 @@
 name: "tZq"
 locations:
-    - "/scratch/data/tZqSkimsRun2017/tZq_ll/"
-total_events: 13308207
-cross_section: 0.07358
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/tZq_ll_4f_ckm/"
+total_events: 13276146
+cross_section: 0.0758
 mc: true
 histogram: "tZq"
 colour: "#999999"

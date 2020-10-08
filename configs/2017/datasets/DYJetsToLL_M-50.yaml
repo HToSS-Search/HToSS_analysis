@@ -1,8 +1,8 @@
 name: "DYJetsToLL_M-50"
 locations:
-    - "/scratch/data/tZqSkimsRun2017/DYJetsToLL_M-50/"
-    - "/scratch/data/tZqSkimsRun2017/DYJetsToLL_M-50_ext1/"
-total_events: 209889821
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/DYJetsToLL_M-50/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/DYJetsToLL_M-50_ext1/"
+total_events: 209747524
 cross_section: 6529.0
 mc: true
 histogram: "Zjets"

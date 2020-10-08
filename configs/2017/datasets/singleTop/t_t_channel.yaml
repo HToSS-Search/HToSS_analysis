@@ -1,8 +1,8 @@
 name: "t_t_channel"
 locations:
-    - "/scratch/data/tZqSkimsRun2017/t_t_channel"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/t_t_channel/"
 total_events: 122688200
-cross_section: 136.02
+cross_section: 113.3
 mc: true
 histogram: "SingleTop"
 colour: "#ff99cc"

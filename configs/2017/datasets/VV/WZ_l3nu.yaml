@@ -1,8 +1,8 @@
-name: "WZ_3lnu"
+name: "WZ_l3nu"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/WZ_3lnu/"
-total_events: 10987679
-cross_section: 5.052
+total_events:  3796028
+cross_section: 3.054
 mc: true
 histogram: "VV"
 colour: "#ff9933"

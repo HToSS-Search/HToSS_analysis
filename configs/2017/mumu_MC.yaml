@@ -17,6 +17,7 @@ datasets:
   - "configs/2017/datasets/VV/WZ_2l2q.yaml"
   - "configs/2017/datasets/VV/WZ_3lnu.yaml"
   - "configs/2017/datasets/VV/WZ_lnu2q.yaml"
+  - "configs/2017/datasets/VV/WZ_l3nu.yaml"
   - "configs/2017/datasets/VV/ZZ_2l2nu.yaml"
   - "configs/2017/datasets/VV/ZZ_2l2q.yaml"
   - "configs/2017/datasets/VV/ZZ_4l.yaml"

@@ -1,6 +1,6 @@
 name: "ZG_lnug"
 locations:
-    - "/scratch/data/tZqSkimsRun2017/ZG_llg"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/ZG_llg"
 total_events: 30490034
 cross_section: 51.5
 mc: true
