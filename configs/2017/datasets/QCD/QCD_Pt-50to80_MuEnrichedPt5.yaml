@@ -1,0 +1,10 @@
+name: "QCD_Pt-50to80_MuEnrichedPt5"
+locations:
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/QCD_Pt-50to80_MuEnrichedPt5/"
+total_events: 24068613
+cross_section: 376600.0
+mc: true
+histogram: "ttbar"
+colour: "#cc0000"
+label: "t#bar{t}"
+plot_type: "f"

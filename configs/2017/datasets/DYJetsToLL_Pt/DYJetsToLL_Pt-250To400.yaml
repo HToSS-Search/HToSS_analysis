@@ -1,0 +1,10 @@
+name: "DYJetsToLL_Pt-250To400"
+locations:
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/DYJetsToLL_Pt-250To400/"
+total_events: 20970944
+cross_section: 3.228256512
+mc: true
+histogram: "Zjets"
+colour: "#006699"
+label: "Z+jets"
+plot_type: "f"
