@@ -6,6 +6,19 @@ channelName: "mumu"
 datasets:
 # HToSS
   - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS1_ctauS10.yaml"
+# QCD
+  - "configs/2017/datasets/QCD/QCD_Pt-15to20_MuEnrichedPt5.yaml"
+  - "configs/2017/datasets/QCD/QCD_Pt-20to30_MuEnrichedPt5.yaml"
+  - "configs/2017/datasets/QCD/QCD_Pt-30to50_MuEnrichedPt5.yaml"
+  - "configs/2017/datasets/QCD/QCD_Pt-50to80_MuEnrichedPt5.yaml"
+  - "configs/2017/datasets/QCD/QCD_Pt-80to120_MuEnrichedPt5.yaml"
+  - "configs/2017/datasets/QCD/QCD_Pt-120to170_MuEnrichedPt5.yaml"
+  - "configs/2017/datasets/QCD/QCD_Pt-170to300_MuEnrichedPt5.yaml"
+  - "configs/2017/datasets/QCD/QCD_Pt-300to470_MuEnrichedPt5.yaml"
+  - "configs/2017/datasets/QCD/QCD_Pt-470to600_MuEnrichedPt5.yaml"
+  - "configs/2017/datasets/QCD/QCD_Pt-600to800_MuEnrichedPt5.yaml"
+  - "configs/2017/datasets/QCD/QCD_Pt-800to1000_MuEnrichedPt5.yaml"
+  - "configs/2017/datasets/QCD/QCD_Pt-1000toInf_MuEnrichedPt5.yaml"
 # Z+jets
   - "configs/2017/datasets/DYJetsToLL_Pt/DYJetsToLL_Pt-0To50.yaml"
   - "configs/2017/datasets/DYJetsToLL_Pt/DYJetsToLL_Pt-50To100.yaml"

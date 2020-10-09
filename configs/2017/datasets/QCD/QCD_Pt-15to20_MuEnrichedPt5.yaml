@@ -1,7 +1,7 @@
 name: "QCD_Pt-15to20_MuEnrichedPt5"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/QCD_Pt-15to20_MuEnrichedPt5/"
-total_events: 
+total_events: 5859904
 cross_section: 2799000.0
 mc: true
 histogram: "ttbar"
