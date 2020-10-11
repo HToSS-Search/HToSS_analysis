@@ -355,8 +355,8 @@ int main(int argc, char* argv[])
 		TVector3 nr1;
 		TVector3 nr2;
 		
-		nr1.SetXYZ(event.genParVx[nr1],event.genParVy[nr1],event.genParVz[nr1]);
-		nr2.SetXYZ(event.genParVx[nr2],event.genParVy[nr2],event.genParVz[nr2]);
+		nr1.SetXYZ(event.genParVx[Scalar1],event.genParVy[Scalar1],event.genParVz[Scalar1]);
+		nr2.SetXYZ(event.genParVx[Scalar2],event.genParVy[Scalar2],event.genParVz[Scalar2]);
 			
 		h_Scalar3DAngle->Fill(nr1.Angle(nr2));
 				   
