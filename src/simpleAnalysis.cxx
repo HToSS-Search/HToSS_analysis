@@ -125,7 +125,8 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarNPionPhi     {new TH1F("h_genParScalarNPionPhi", "#pi^{0} from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarNPionE       {new TH1F("h_genParScalarNPionE",   "#pi^{0} from scalar decay energy",     1000, 0., 1000.)};
 	
-	
+    //Vertex position
+    TH2F* h_VertexPosXY {new TH2F("h_VertexPos", "Vertex Position XY, 1000, 0,1000,1000,0,1000)};
 	
     namespace po = boost::program_options;
 
@@ -255,6 +256,9 @@ int main(int argc, char* argv[])
                 const Float_t genParEta { event.genParEta[k] };
                 const Float_t genParPhi { event.genParPhi[k] };
                 const Float_t genParE   { event.genParE[k] };
+		const Float_t genParVx {event.genParVx[k]};
+		const Float_t genParVy {event.genParVy[k]};
+		    
 		const bool ownParent {pdgId == motherId ? true : false}; 
 		
 		h_genParPt->Fill(genParPt);
@@ -292,6 +296,7 @@ int main(int argc, char* argv[])
                 	h_genParScalarMuonEta->Fill(genParEta);
                 	h_genParScalarMuonPhi->Fill(genParPhi);
                 	h_genParScalarMuonE->Fill(genParE);
+		        h_VertexPosXY->Fill(genParVx,genParVy);
 			}
 			//Charged kaon from scalar decay
 			if (pdgId==321){
@@ -300,6 +305,7 @@ int main(int argc, char* argv[])
                 	h_genParScalarCKaonEta->Fill(genParEta);
                 	h_genParScalarCKaonPhi->Fill(genParPhi);
                 	h_genParScalarCKaonE->Fill(genParE);
+			h_VertexPosXY->Fill(genParVx,genParVy);
 			}
 			//K short from scalar decay
 			if (pdgId==310){
@@ -308,6 +314,7 @@ int main(int argc, char* argv[])
                 	h_genParScalarKShortEta->Fill(genParEta);
                 	h_genParScalarKShortPhi->Fill(genParPhi);
                 	h_genParScalarKShortE->Fill(genParE);
+			h_VertexPosXY->Fill(genParVx,genParVy);
 			}
 			//Charged pion from scalar decay
 			if (pdgId==211){
@@ -316,6 +323,7 @@ int main(int argc, char* argv[])
                 	h_genParScalarCPionEta->Fill(genParEta);
                 	h_genParScalarCPionPhi->Fill(genParPhi);
                 	h_genParScalarCPionE->Fill(genParE);
+			h_VertexPosXY->Fill(genParVx,genParVy);
 			}
 			//Neutral pion from scalar decay
 			if (pdgId==111){
@@ -324,6 +332,7 @@ int main(int argc, char* argv[])
                 	h_genParScalarNPionEta->Fill(genParEta);
                 	h_genParScalarNPionPhi->Fill(genParPhi);
                 	h_genParScalarNPionE->Fill(genParE);
+			h_VertexPosXY->Fill(genParVx,genParVy);
 			}
 		}
                 
@@ -515,7 +524,8 @@ int main(int argc, char* argv[])
     h_genParScalarNPionEta->Write();
     h_genParScalarNPionPhi->Write();
     h_genParScalarNPionE->Write();
-
+		
+    h_VertexPosXY->Write();
     // Safely close file
     outFile->Close();
 
