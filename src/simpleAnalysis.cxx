@@ -3,6 +3,7 @@
 #include "TFile.h"
 #include "TH1F.h"
 #include "TH1I.h"
+#include "TH2I.h"
 #include "TLegend.h"
 #include "TStyle.h"
 #include "TASImage.h"
@@ -126,7 +127,7 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarNPionE       {new TH1F("h_genParScalarNPionE",   "#pi^{0} from scalar decay energy",     1000, 0., 1000.)};
 	
     //Vertex position
-    TH2F* h_VertexPosXY {new TH2F("h_VertexPos", "Vertex Position XY", 1000, 0,1000,1000,0,1000)};
+    TH2I* h_VertexPosXY {new TH2I("h_VertexPos", "Vertex Position XY", 1000, 0,1000,1000,0,1000)};
 	
     namespace po = boost::program_options;
 
@@ -251,13 +252,14 @@ int main(int argc, char* argv[])
                 const Int_t pdgId    { std::abs(event.genParId[k]) };
 		const Int_t motherId     { std::abs(event.genParMotherId[k]) };
 		const Int_t motherIndex  { std::abs(event.genParMotherIndex[k]) };
+		const Int_t genParVx {event.genParVx[k]};
+		const Int_t genParVy {event.genParVy[k]};
 		    
                 const Float_t genParPt  { event.genParPt[k] };
                 const Float_t genParEta { event.genParEta[k] };
                 const Float_t genParPhi { event.genParPhi[k] };
                 const Float_t genParE   { event.genParE[k] };
-		const Float_t genParVx {event.genParVx[k]};
-		const Float_t genParVy {event.genParVy[k]};
+		
 		    
 		const bool ownParent {pdgId == motherId ? true : false}; 
 		
