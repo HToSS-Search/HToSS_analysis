@@ -126,7 +126,7 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarNPionE       {new TH1F("h_genParScalarNPionE",   "#pi^{0} from scalar decay energy",     1000, 0., 1000.)};
 	
     //Vertex position
-    TH2F* h_VertexPosXY {new TH2F("h_VertexPos", "Vertex Position XY, 1000, 0,1000,1000,0,1000)};
+    TH2F* h_VertexPosXY {new TH2F("h_VertexPos", "Vertex Position XY", 1000, 0,1000,1000,0,1000)};
 	
     namespace po = boost::program_options;
 
