@@ -25,7 +25,7 @@ datasets:
   - "configs/2017/datasets/DYJetsToLL_Pt/DYJetsToLL_Pt-400To650.yaml"
   - "configs/2017/datasets/DYJetsToLL_Pt/DYJetsToLL_Pt-650ToInf.yaml"
 # ttbar
-  - "configs/2017/datasets/ttbar/ttbar_2l2v.yaml"
+  - "configs/2017/datasets/ttbar/ttbar_2l2nu.yaml"
   - "configs/2017/datasets/ttbar/ttbar_hadronic.yaml"
   - "configs/2017/datasets/ttbar/ttbar_semileptonic.yaml"
 # VV

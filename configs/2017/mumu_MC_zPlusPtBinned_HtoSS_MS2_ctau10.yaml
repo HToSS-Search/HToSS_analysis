@@ -27,7 +27,7 @@ datasets:
   - "configs/2017/datasets/DYJetsToLL_Pt/DYJetsToLL_Pt-400To650.yaml"
   - "configs/2017/datasets/DYJetsToLL_Pt/DYJetsToLL_Pt-650ToInf.yaml"
 # ttbar
-  - "configs/2017/datasets/ttbar/ttbar_2l2v.yaml"
+  - "configs/2017/datasets/ttbar/ttbar_2l2nu.yaml"
   - "configs/2017/datasets/ttbar/ttbar_hadronic.yaml"
   - "configs/2017/datasets/ttbar/ttbar_semileptonic.yaml"
 # VV
@@ -36,7 +36,7 @@ datasets:
   - "configs/2017/datasets/VV/WZ_2l2q.yaml"
   - "configs/2017/datasets/VV/WZ_3lnu.yaml"
   - "configs/2017/datasets/VV/WZ_lnu2q.yaml"
-  - "configs/2017/datasets/VV/WZ_l3nu.yaml"
+##  - "configs/2017/datasets/VV/WZ_l3nu.yaml"
   - "configs/2017/datasets/VV/ZZ_2l2nu.yaml"
   - "configs/2017/datasets/VV/ZZ_2l2q.yaml"
   - "configs/2017/datasets/VV/ZZ_4l.yaml"
@@ -46,7 +46,7 @@ datasets:
   - "configs/2017/datasets/singleTop/tHq.yaml"
   - "configs/2017/datasets/singleTop/t_s_channel.yaml"
   - "configs/2017/datasets/singleTop/t_t_channel.yaml"
-  - "configs/2017/datasets/singleTop/tbar_t_channel.yaml"
+###  - "configs/2017/datasets/singleTop/tbar_t_channel.yaml"
   - "configs/2017/datasets/singleTop/tW.yaml"
   - "configs/2017/datasets/singleTop/tbarW.yaml"
   - "configs/2017/datasets/singleTop/tWZ.yaml"
@@ -59,7 +59,7 @@ datasets:
   - "configs/2017/datasets/ttV/ttZToll.yaml"
   - "configs/2017/datasets/ttV/ttZ2q.yaml"
   - "configs/2017/datasets/ttV/ttH_bb.yaml"
-  - "configs/2017/datasets/ttV/ttH_nonbb.yaml"
+###  - "configs/2017/datasets/ttV/ttH_nonbb.yaml"
   - "configs/2017/datasets/ttV/ttgamma.yaml"
 # VVV
   - "configs/2017/datasets/VVV/WWW.yaml"

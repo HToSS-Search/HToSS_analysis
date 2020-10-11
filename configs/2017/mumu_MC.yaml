@@ -8,7 +8,7 @@ datasets:
   - "configs/2017/datasets/DYJetsToLL_M-10to50.yaml"
   - "configs/2017/datasets/DYJetsToLL_M-50.yaml"
 # ttbar
-  - "configs/2017/datasets/ttbar/ttbar_2l2v.yaml"
+  - "configs/2017/datasets/ttbar/ttbar_2l2nu.yaml"
   - "configs/2017/datasets/ttbar/ttbar_hadronic.yaml"
   - "configs/2017/datasets/ttbar/ttbar_semileptonic.yaml"
 # VV
