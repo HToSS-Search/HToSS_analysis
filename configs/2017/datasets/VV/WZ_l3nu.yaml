@@ -1,6 +1,6 @@
 name: "WZ_l3nu"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/WZ_l3nu/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/WZ_l3nu/"
 total_events:  4994395
 cross_section: 3.054
 mc: true
