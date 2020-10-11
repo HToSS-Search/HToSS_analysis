@@ -65,7 +65,6 @@ int main(int argc, char* argv[])
     //Higgs boson
     TH1F* h_HiggsInvMass      {new TH1F("h_HiggsInvMass",  "h_0 Invariant mass", 1000, 0., 1000.)};
     TH1F* h_HiggsDeltaPhi      {new TH1F("h_HiggsDeltaPhi", "Scalar #Delta#phi",1000, -3.5, 3.5)};
-    //TH1F* h_HiggsDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
     TH1F* h_HiggsDeltaR        {new TH1F("h_HiggsDeltaR", "Scalar #DeltaR",1000,-10., 10.)}; 
 	
     TH1F* h_genParHiggsPt      {new TH1F("h_genParHiggsPt",  "genPar h_0 p_{T}", 1000, 0., 1000.)};
@@ -82,11 +81,10 @@ int main(int argc, char* argv[])
     TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "Scalar #Delta#phi",1000, -3.5, 3.5)};
     TH1F* h_ScalarInvMass      {new TH1F("h_ScalarInvMass", "Scalar Invariant mass",200, 0., 7.)};
     TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "Scalar #DeltaR",1000,-10., 10.)}; 
-    TH1F* h_Scalar3DAngle        {new TH1F("h_ScalarDeltaR", "Scalar 3D Angle",1000,-10., 10.)}; 
+    TH1F* h_Scalar3DAngle        {new TH1F("h_Scalar3DAngle", "Scalar 3D Angle",1000,-10., 10.)}; 
 	
     //Muon from scalar decay
     TH1F* h_MuonDeltaPhi      {new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",2000, -3.5, 3.5)};
-    //TH1F* h_MuonDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
     TH1F* h_MuonDeltaR        {new TH1F("h_MuonDeltaR", "Muon #DeltaR",2000, -10., 10.)}; 
 	
     //Muon from scalar decay
@@ -97,7 +95,6 @@ int main(int argc, char* argv[])
 
     //Kaon from scalar decay
     TH1F* h_KaonDeltaPhi      {new TH1F("h_KaonDeltaPhi", "Kaon #Delta#phi",2000, -3.5, 3.5)};
-    //TH1F* h_KaonDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
     TH1F* h_KaonDeltaR        {new TH1F("h_KaonDeltaR", "Kaon #DeltaR",2000, -10., 10.)}; 
 	
     //Charged kaon from scalar decay
@@ -114,7 +111,6 @@ int main(int argc, char* argv[])
 	
     //Pion from scalar decay
     TH1F* h_PionDeltaPhi      {new TH1F("h_PionDeltaPhi", "Pion #Delta#phi",2000, -3.5, 3.5)};
-    //TH1F* h_PionDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
     TH1F* h_PionDeltaR        {new TH1F("h_PionDeltaR", "Pion #DeltaR",2000, -10., 10.)}; 
 	
     //Charged pion from scalar decay
@@ -259,6 +255,7 @@ int main(int argc, char* argv[])
                 const Float_t genParEta { event.genParEta[k] };
                 const Float_t genParPhi { event.genParPhi[k] };
                 const Float_t genParE   { event.genParE[k] };
+		const bool ownParent {pdgId == motherId ? true : false}; 
 		
 		h_genParPt->Fill(genParPt);
                 h_genParEta->Fill(genParEta);
@@ -266,7 +263,7 @@ int main(int argc, char* argv[])
                 h_genParE->Fill(genParE);
 		
 		//Higgs boson
-		if (pdgId==25){
+		if (pdgId==25 && !ownParent){
 		nrofHiggs.emplace_back(k);
 		h_genParHiggsPt->Fill(genParPt);
 		h_genParHiggsEta->Fill(genParEta);
