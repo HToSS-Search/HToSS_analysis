@@ -82,7 +82,8 @@ int main(int argc, char* argv[])
     TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "Scalar #Delta#phi",1000, -3.5, 3.5)};
     TH1F* h_ScalarInvMass      {new TH1F("h_ScalarInvMass", "Scalar Invariant mass",200, 0., 7.)};
     TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "Scalar #DeltaR",1000,-10., 10.)}; 
-    
+    TH1F* h_Scalar3DAngle        {new TH1F("h_ScalarDeltaR", "Scalar 3D Angle",1000,-10., 10.)}; 
+	
     //Muon from scalar decay
     TH1F* h_MuonDeltaPhi      {new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",2000, -3.5, 3.5)};
     //TH1F* h_MuonDeltaEta      {new TH1F("h_ScalarDeltaEta", "#Delta#eta",200, 0., 7.)};
@@ -348,7 +349,17 @@ int main(int argc, char* argv[])
 			
 		h_ScalarDeltaR->Fill(nr1scalar.DeltaR(nr2scalar));//Get DeltaR between nr1scalar and nr2scalar
 		h_ScalarDeltaPhi->Fill(nr1scalar.DeltaPhi(nr2scalar));
-	        h_ScalarInvMass->Fill(nr1scalar.M()+nr2scalar.M());
+	        h_ScalarInvMass->Fill((nr1scalar+nr2scalar).M());
+			
+		//3D angle
+		TVector3 nr1;
+		TVector3 nr2;
+		
+		nr1.SetXYZ(event.genParVx[nr1],event.genParVy[nr1],event.genParVz[nr1]);
+		nr2.SetXYZ(event.genParVx[nr2],event.genParVy[nr2],event.genParVz[nr2]);
+			
+		h_Scalar3DAngle->Fill(nr1.Angle(nr2));
+				   
 		}
 		
 		if (nrofHiggs.size()==2){ //Two-particle (scalar) correlations
@@ -364,9 +375,7 @@ int main(int argc, char* argv[])
 			
 		h_HiggsDeltaR->Fill(nr1higgs.DeltaR(nr2higgs));
 		h_HiggsDeltaPhi->Fill(nr1higgs.DeltaPhi(nr2higgs));
-	        //h_ScalarDeltaR->Fill();
-			
-	        h_HiggsInvMass->Fill(nr1higgs.M()+nr2higgs.M());
+	        h_HiggsInvMass->Fill((nr1higgs+nr2higgs).M());
 		}
 		
 		//Now same procedure for kaons,pions,muons,Kshort
@@ -471,6 +480,7 @@ int main(int argc, char* argv[])
     h_ScalarDeltaR->Write();
     h_ScalarDeltaPhi->Write();
     h_ScalarInvMass->Write();
+    h_Scalar3DAngle->Write();
    
     h_MuonDeltaR->Write();
     h_MuonDeltaPhi->Write();
