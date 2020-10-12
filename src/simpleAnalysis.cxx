@@ -67,7 +67,6 @@ int main(int argc, char* argv[])
     TH1F* h_HiggsInvMass      {new TH1F("h_HiggsInvMass",  "h_0 Invariant mass", 1000, 0., 1000.)};
     TH1F* h_HiggsDeltaPhi      {new TH1F("h_HiggsDeltaPhi", "Scalar #Delta#phi",1000, -3.5, 3.5)};
     TH1F* h_HiggsDeltaR        {new TH1F("h_HiggsDeltaR", "Scalar #DeltaR",1000,-10., 10.)}; 
-	
     TH1F* h_genParHiggsPt      {new TH1F("h_genParHiggsPt",  "genPar h_0 p_{T}", 1000, 0., 1000.)};
     TH1F* h_genParHiggsEta     {new TH1F("h_genParHiggsEta", "genPar h_0 #eta",  200, -7., 7.)}; 
     TH1F* h_genParHiggsPhi     {new TH1F("h_genParHiggsPhi", "genPar h_0 #phi",  100, -3.5, 3.5)};
@@ -78,7 +77,6 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarEta     {new TH1F("h_genParScalarEta", "Scalar #eta",  200, -7., 7.)}; 
     TH1F* h_genParScalarPhi     {new TH1F("h_genParScalarPhi", "Scalar #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarE       {new TH1F("h_genParScalarE",   "Scalar energy",     1000, 0., 1000.)};
-	
     TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "Scalar #Delta#phi",1000, -3.5, 3.5)};
     TH1F* h_ScalarInvMass      {new TH1F("h_ScalarInvMass", "Scalar Invariant mass",200, 0., 7.)};
     TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "Scalar #DeltaR",1000,-10., 10.)}; 
@@ -87,22 +85,20 @@ int main(int argc, char* argv[])
     //Muon from scalar decay
     TH1F* h_MuonDeltaPhi      {new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",2000, -3.5, 3.5)};
     TH1F* h_MuonDeltaR        {new TH1F("h_MuonDeltaR", "Muon #DeltaR",2000, -10., 10.)}; 
-	
-    //Muon from scalar decay
     TH1F* h_genParScalarMuonPt      {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
     TH1F* h_genParScalarMuonEta     {new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
     TH1F* h_genParScalarMuonPhi     {new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarMuonE       {new TH1F("h_genParScalarMuonE",   "#mu^{#pm} from scalar decay energy",     1000, 0., 1000.)};
-
+    TH1F* h_Muon3DAngle        {new TH1F("h_Muon3DAngle", "Muon 3D Angle",1000,-10., 10.)}; 
+	
     //Kaon from scalar decay
     TH1F* h_KaonDeltaPhi      {new TH1F("h_KaonDeltaPhi", "Kaon #Delta#phi",2000, -3.5, 3.5)};
     TH1F* h_KaonDeltaR        {new TH1F("h_KaonDeltaR", "Kaon #DeltaR",2000, -10., 10.)}; 
-	
-    //Charged kaon from scalar decay
     TH1F* h_genParScalarCKaonPt      {new TH1F("h_genParScalarCKaonPt",  "K^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
     TH1F* h_genParScalarCKaonEta     {new TH1F("h_genParScalarCKaonEta", "K^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
     TH1F* h_genParScalarCKaonPhi     {new TH1F("h_genParScalarCKaonPhi", "K^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarCKaonE       {new TH1F("h_genParScalarCKaonE",   "K^{#pm} from scalar decay energy",     1000, 0., 1000.)};
+    TH1F* h_Kaon3DAngle        {new TH1F("h_Kaon3DAngle", "Kaon 3D Angle",1000,-10., 10.)}; 
 	
     //K short from scalar decay
     TH1F* h_genParScalarKShortPt      {new TH1F("h_genParScalarKShortPt",  "K^{0}_S from scalar decay p_{T}", 1000, 0., 1000.)}; 
@@ -113,21 +109,18 @@ int main(int argc, char* argv[])
     //Pion from scalar decay
     TH1F* h_PionDeltaPhi      {new TH1F("h_PionDeltaPhi", "Pion #Delta#phi",2000, -3.5, 3.5)};
     TH1F* h_PionDeltaR        {new TH1F("h_PionDeltaR", "Pion #DeltaR",2000, -10., 10.)}; 
-	
-    //Charged pion from scalar decay
     TH1F* h_genParScalarCPionPt      {new TH1F("h_genParScalarCPionPt",  "#pi^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
     TH1F* h_genParScalarCPionEta     {new TH1F("h_genParScalarCPionEta", "#pi^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
     TH1F* h_genParScalarCPionPhi     {new TH1F("h_genParScalarCPionPhi", "#pi^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarCPionE       {new TH1F("h_genParScalarCPionE",   "#pi^{#pm} from scalar decay energy",     1000, 0., 1000.)};
-	
-    //Neutral pion from scalar decay
     TH1F* h_genParScalarNPionPt      {new TH1F("h_genParScalarNPionPt",  "#pi^{0} from scalar decay p_{T}", 1000, 0., 1000.)}; 
     TH1F* h_genParScalarNPionEta     {new TH1F("h_genParScalarNPionEta", "#pi^{0} from scalar decay #eta",  200, -7., 7.)}; 
     TH1F* h_genParScalarNPionPhi     {new TH1F("h_genParScalarNPionPhi", "#pi^{0} from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarNPionE       {new TH1F("h_genParScalarNPionE",   "#pi^{0} from scalar decay energy",     1000, 0., 1000.)};
+    TH1F* h_Pion3DAngle        {new TH1F("h_Pion3DAngle", "Pion 3D Angle",1000,-10., 10.)}; 
 	
     //Vertex position
-    TH2I* h_VertexPosXY {new TH2I("h_VertexPos", "Vertex Position XY", 1000, 0,1000,1000,0,1000)};
+    TH2I* h_VertexPosXY {new TH2I("h_VertexPos", "Vertex Position XY", 350, -150,150,350,-150,150)};
 	
     namespace po = boost::program_options;
 
@@ -401,7 +394,16 @@ int main(int argc, char* argv[])
 			
 		h_KaonDeltaR->Fill(nr1kaon.DeltaR(nr2kaon));
 		h_KaonDeltaPhi->Fill(nr1kaon.DeltaPhi(nr2kaon));
-	        //h_ScalarDeltaR->Fill();
+			
+		//3D angle
+		TVector3 nr1;
+		TVector3 nr2;
+		
+		nr1.SetXYZ(event.genParVx[Scalar1],event.genParVy[Scalar1],event.genParVz[Scalar1]);
+		nr2.SetXYZ(event.genParVx[Scalar2],event.genParVy[Scalar2],event.genParVz[Scalar2]);
+			
+		h_Kaon3DAngle->Fill(nr1.Angle(nr2));
+	    
 		}
 		
 		if (nrofMuon.size()==2){ //Two-particle (scalar) correlations
@@ -417,7 +419,15 @@ int main(int argc, char* argv[])
 			
 		h_MuonDeltaR->Fill(nr1muon.DeltaR(nr2muon));
 		h_MuonDeltaPhi->Fill(nr1muon.DeltaPhi(nr2muon));
-	        //h_ScalarDeltaR->Fill();
+	      
+		//3D angle
+		TVector3 nr1;
+		TVector3 nr2;
+		
+		nr1.SetXYZ(event.genParVx[Scalar1],event.genParVy[Scalar1],event.genParVz[Scalar1]);
+		nr2.SetXYZ(event.genParVx[Scalar2],event.genParVy[Scalar2],event.genParVz[Scalar2]);
+			
+		h_Muon3DAngle->Fill(nr1.Angle(nr2));
 		}
 		
 		if (nrofPion.size()==2){ //Two-particle (scalar) correlations
@@ -433,12 +443,22 @@ int main(int argc, char* argv[])
 			
 		h_PionDeltaR->Fill(nr1pion.DeltaR(nr2pion));
 		h_PionDeltaPhi->Fill(nr1pion.DeltaPhi(nr2pion));
-	        //h_ScalarDeltaR->Fill();
+	       
+		//3D angle
+		TVector3 nr1;
+		TVector3 nr2;
+		
+		nr1.SetXYZ(event.genParVx[Scalar1],event.genParVy[Scalar1],event.genParVz[Scalar1]);
+		nr2.SetXYZ(event.genParVx[Scalar2],event.genParVy[Scalar2],event.genParVz[Scalar2]);
+			
+		h_Pion3DAngle->Fill(nr1.Angle(nr2));
 		}
 
         } 
     }
-            /// END GENERATOR PARTICLE STUFF
+    
+	
+    /// END GENERATOR PARTICLE STUFF
 
     std::cout << std::endl;
     std::cout << "Total no. of events:\t\t\t" << totalEvents << std::endl;
@@ -472,9 +492,7 @@ int main(int argc, char* argv[])
 	
     h_HiggsDeltaR->Write();
     h_HiggsDeltaPhi->Write();
-    //h_HiggsDeltaEta->Write();
     h_HiggsInvMass->Write();
-	
     h_genParHiggsPt->Write();
     h_genParHiggsEta->Write();
     h_genParHiggsPhi->Write();
@@ -484,7 +502,6 @@ int main(int argc, char* argv[])
     h_genParScalarEta->Write();
     h_genParScalarPhi->Write();
     h_genParScalarE->Write();
-	
     h_ScalarDeltaR->Write();
     h_ScalarDeltaPhi->Write();
     h_ScalarInvMass->Write();
@@ -492,21 +509,19 @@ int main(int argc, char* argv[])
    
     h_MuonDeltaR->Write();
     h_MuonDeltaPhi->Write();
-    //h_MuonDeltaEta->Write();
-    
     h_genParScalarMuonPt->Write();
     h_genParScalarMuonEta->Write();
     h_genParScalarMuonPhi->Write();
     h_genParScalarMuonE->Write();
-
+    h_Muon3DAngle->Write();
+	
     h_KaonDeltaR->Write();
     h_KaonDeltaPhi->Write();
-    //h_KaonDeltaEta->Write();
-	
     h_genParScalarCKaonPt->Write();
     h_genParScalarCKaonEta->Write();
     h_genParScalarCKaonPhi->Write();
     h_genParScalarCKaonE->Write();
+    h_Kaon3DAngle->Write();
 	
     h_genParScalarKShortPt->Write();
     h_genParScalarKShortEta->Write();
@@ -515,19 +530,19 @@ int main(int argc, char* argv[])
     
     h_PionDeltaR->Write();
     h_PionDeltaPhi->Write();
-    //h_PionDeltaEta->Write();
-	
     h_genParScalarCPionPt->Write();
     h_genParScalarCPionEta->Write();
     h_genParScalarCPionPhi->Write();
     h_genParScalarCPionE->Write();
-	
     h_genParScalarNPionPt->Write();
     h_genParScalarNPionEta->Write();
     h_genParScalarNPionPhi->Write();
     h_genParScalarNPionE->Write();
-		
+    h_Pion3DAngle->Write();
+	
     h_VertexPosXY->Write();
+    
+	
     // Safely close file
     outFile->Close();
 
