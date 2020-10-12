@@ -65,8 +65,8 @@ int main(int argc, char* argv[])
 	
     //Higgs boson
     TH1F* h_HiggsInvMass      {new TH1F("h_HiggsInvMass",  "h_0 Invariant mass", 1000, 0., 1000.)};
-    TH1F* h_HiggsDeltaPhi      {new TH1F("h_HiggsDeltaPhi", "Scalar #Delta#phi",1000, -3.5, 3.5)};
-    TH1F* h_HiggsDeltaR        {new TH1F("h_HiggsDeltaR", "Scalar #DeltaR",1000,-10., 10.)}; 
+    TH1F* h_HiggsDeltaPhi      {new TH1F("h_HiggsDeltaPhi", "Scalar #Delta#phi",1500, -3.5, 3.5)};
+    TH1F* h_HiggsDeltaR        {new TH1F("h_HiggsDeltaR", "Scalar #DeltaR",1500,-10., 10.)}; 
     TH1F* h_genParHiggsPt      {new TH1F("h_genParHiggsPt",  "genPar h_0 p_{T}", 1000, 0., 1000.)};
     TH1F* h_genParHiggsEta     {new TH1F("h_genParHiggsEta", "genPar h_0 #eta",  200, -7., 7.)}; 
     TH1F* h_genParHiggsPhi     {new TH1F("h_genParHiggsPhi", "genPar h_0 #phi",  100, -3.5, 3.5)};
@@ -77,14 +77,14 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarEta     {new TH1F("h_genParScalarEta", "Scalar #eta",  200, -7., 7.)}; 
     TH1F* h_genParScalarPhi     {new TH1F("h_genParScalarPhi", "Scalar #phi",  100, -3.5, 3.5)};
     TH1F* h_genParScalarE       {new TH1F("h_genParScalarE",   "Scalar energy",     1000, 0., 1000.)};
-    TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "Scalar #Delta#phi",1000, -3.5, 3.5)};
+    TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "Scalar #Delta#phi",1500, -3.5, 3.5)};
     TH1F* h_ScalarInvMass      {new TH1F("h_ScalarInvMass", "Scalar Invariant mass",200, 0., 7.)};
-    TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "Scalar #DeltaR",1000,-10., 10.)}; 
+    TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "Scalar #DeltaR",1500,-10., 10.)}; 
     TH1F* h_Scalar3DAngle        {new TH1F("h_Scalar3DAngle", "Scalar 3D Angle",1000,-10., 10.)}; 
 	
     //Muon from scalar decay
-    TH1F* h_MuonDeltaPhi      {new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",2000, -3.5, 3.5)};
-    TH1F* h_MuonDeltaR        {new TH1F("h_MuonDeltaR", "Muon #DeltaR",2000, -10., 10.)}; 
+    TH1F* h_MuonDeltaPhi      {new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",2500, -3.5, 3.5)};
+    TH1F* h_MuonDeltaR        {new TH1F("h_MuonDeltaR", "Muon #DeltaR",2500, -10., 10.)}; 
     TH1F* h_genParScalarMuonPt      {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
     TH1F* h_genParScalarMuonEta     {new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
     TH1F* h_genParScalarMuonPhi     {new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
@@ -92,8 +92,8 @@ int main(int argc, char* argv[])
     TH1F* h_Muon3DAngle        {new TH1F("h_Muon3DAngle", "Muon 3D Angle",1000,-10., 10.)}; 
 	
     //Kaon from scalar decay
-    TH1F* h_KaonDeltaPhi      {new TH1F("h_KaonDeltaPhi", "Kaon #Delta#phi",2000, -3.5, 3.5)};
-    TH1F* h_KaonDeltaR        {new TH1F("h_KaonDeltaR", "Kaon #DeltaR",2000, -10., 10.)}; 
+    TH1F* h_KaonDeltaPhi      {new TH1F("h_KaonDeltaPhi", "Kaon #Delta#phi",2500, -3.5, 3.5)};
+    TH1F* h_KaonDeltaR        {new TH1F("h_KaonDeltaR", "Kaon #DeltaR",2500, -10., 10.)}; 
     TH1F* h_genParScalarCKaonPt      {new TH1F("h_genParScalarCKaonPt",  "K^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
     TH1F* h_genParScalarCKaonEta     {new TH1F("h_genParScalarCKaonEta", "K^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
     TH1F* h_genParScalarCKaonPhi     {new TH1F("h_genParScalarCKaonPhi", "K^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
@@ -107,8 +107,8 @@ int main(int argc, char* argv[])
     TH1F* h_genParScalarKShortE       {new TH1F("h_genParScalarKShortE",   "K^{0}_S from scalar decay energy",     1000, 0., 1000.)};
 	
     //Pion from scalar decay
-    TH1F* h_PionDeltaPhi      {new TH1F("h_PionDeltaPhi", "Pion #Delta#phi",2000, -3.5, 3.5)};
-    TH1F* h_PionDeltaR        {new TH1F("h_PionDeltaR", "Pion #DeltaR",2000, -10., 10.)}; 
+    TH1F* h_PionDeltaPhi      {new TH1F("h_PionDeltaPhi", "Pion #Delta#phi",2500, -3.5, 3.5)};
+    TH1F* h_PionDeltaR        {new TH1F("h_PionDeltaR", "Pion #DeltaR",2500, -10., 10.)}; 
     TH1F* h_genParScalarCPionPt      {new TH1F("h_genParScalarCPionPt",  "#pi^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
     TH1F* h_genParScalarCPionEta     {new TH1F("h_genParScalarCPionEta", "#pi^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
     TH1F* h_genParScalarCPionPhi     {new TH1F("h_genParScalarCPionPhi", "#pi^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
