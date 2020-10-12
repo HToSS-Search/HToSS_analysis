@@ -399,8 +399,8 @@ int main(int argc, char* argv[])
 		TVector3 nr1;
 		TVector3 nr2;
 		
-		nr1.SetXYZ(event.genParVx[Scalar1],event.genParVy[Scalar1],event.genParVz[Scalar1]);
-		nr2.SetXYZ(event.genParVx[Scalar2],event.genParVy[Scalar2],event.genParVz[Scalar2]);
+		nr1.SetXYZ(event.genParVx[Kaon1],event.genParVy[Kaon1],event.genParVz[Kaon1]);
+		nr2.SetXYZ(event.genParVx[Kaon2],event.genParVy[Kaon2],event.genParVz[Kaon2]);
 			
 		h_Kaon3DAngle->Fill(nr1.Angle(nr2));
 	    
@@ -424,8 +424,8 @@ int main(int argc, char* argv[])
 		TVector3 nr1;
 		TVector3 nr2;
 		
-		nr1.SetXYZ(event.genParVx[Scalar1],event.genParVy[Scalar1],event.genParVz[Scalar1]);
-		nr2.SetXYZ(event.genParVx[Scalar2],event.genParVy[Scalar2],event.genParVz[Scalar2]);
+		nr1.SetXYZ(event.genParVx[Muon1],event.genParVy[Muon1],event.genParVz[Muon1]);
+		nr2.SetXYZ(event.genParVx[Muon2],event.genParVy[Muon2],event.genParVz[Muon2]);
 			
 		h_Muon3DAngle->Fill(nr1.Angle(nr2));
 		}
@@ -448,8 +448,8 @@ int main(int argc, char* argv[])
 		TVector3 nr1;
 		TVector3 nr2;
 		
-		nr1.SetXYZ(event.genParVx[Scalar1],event.genParVy[Scalar1],event.genParVz[Scalar1]);
-		nr2.SetXYZ(event.genParVx[Scalar2],event.genParVy[Scalar2],event.genParVz[Scalar2]);
+		nr1.SetXYZ(event.genParVx[Pion1],event.genParVy[Pion1],event.genParVz[Pion1]);
+		nr2.SetXYZ(event.genParVx[Pion2],event.genParVy[Pion2],event.genParVz[Pion2]);
 			
 		h_Pion3DAngle->Fill(nr1.Angle(nr2));
 		}
