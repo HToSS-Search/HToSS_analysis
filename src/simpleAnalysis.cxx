@@ -541,7 +541,10 @@ int main(int argc, char* argv[])
     h_Pion3DAngle->Write();
 	
     h_VertexPosXY->Write();
-    
+    h_VertexPosXY->GetXaxis()->SetTitle("Vertex position x"); // set a title for the x-axis
+    h_VertexPosXY->GetXaxis()->SetRangeUser(-150., 150.); 
+    h_VertexPosXY->GetYaxis()->SetTitle("Vertex position y"); // set a title for the y-axis
+    h_VertexPosXY->GetYaxis()->SetRangeUser(-150., 150.); 
 	
     // Safely close file
     outFile->Close();
