@@ -483,10 +483,11 @@ bool Cuts::makeLeptonCuts(
     }
 
     event.muonIndexTight = getTightMuons(event);
-    if (event.muonIndexTight.size() != numTightMu_)
+/*    if (event.muonIndexTight.size() != numTightMu_)
     {
         return false;
     }
+*/
     event.muonIndexLoose = getLooseMuons(event);
     if (event.muonIndexLoose.size() != numLooseMu_)
     {

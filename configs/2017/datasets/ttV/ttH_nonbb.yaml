@@ -1,7 +1,7 @@
 name: "ttH_nonbb"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/ttH_nonbb/"
-total_events: 8241489
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/ttH_nonbb/"
+total_events: 7167505
 cross_section: 0.5638
 mc: true
 histogram: "ttV"

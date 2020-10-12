@@ -19,7 +19,7 @@
 // For debugging. *sigh*
 #include <iostream>
 
-const bool BLIND_PLOTS(false);
+const bool BLIND_PLOTS(true);
 const bool writeExtraText(true);
 
 HistogramPlotter::HistogramPlotter(std::vector<std::string> legOrder,
