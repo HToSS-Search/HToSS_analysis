@@ -28,10 +28,11 @@ void examplePlotMacro() {
     //histogram->GetXaxis()->SetTitle("p_{T} GeV"); // set a title for the x-axis
     //histogram->GetXaxis()->SetRangeUser(0.0, 200.); 
     h_VertexPosXY->GetXaxis()->SetTitle("Vertex position x"); // set a title for the x-axis
-    h_VertexPosXY->GetXaxis()->SetRangeUser(0.0, 200.); // change the x-axis range to 0-200
+    h_VertexPosXY->GetXaxis()->SetRangeUser(-150., 150.); // change the x-axis range to 0-200
+    //h_VertexPosXY->GetXaxis()->SetRangeUser(0.0, 200.); // change the x-axis range to 0-200
     
     h_VertexPosXY->GetYaxis()->SetTitle("Vertex position y"); // set a title for the x-axis
-    h_VertexPosXY->GetYaxis()->SetRangeUser(0.0, 200.); // change the x-axis range to 0-200
+    h_VertexPosXY->GetYaxis()->SetRangeUser(-150., 150.); // change the x-axis range to 0-200
 
     //histogram->Draw();
     h_VertexPosXY->Draw(); // draw histo on canvas
