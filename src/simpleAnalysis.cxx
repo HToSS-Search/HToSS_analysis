@@ -120,7 +120,7 @@ int main(int argc, char* argv[])
     TH1F* h_Pion3DAngle        {new TH1F("h_Pion3DAngle", "Pion 3D Angle",1000,-10., 10.)}; 
 	
     //Vertex position
-    TH2I* h_VertexPosXY {new TH2I("h_VertexPos", "Vertex Position XY", 350, -150,150,350,-150,150)};
+    TH2I* h_VertexPosXY {new TH2I("h_VertexPosXY", "Vertex Position XY", 350, -150,150,350,-150,150)};
 	
     namespace po = boost::program_options;
 
