@@ -285,75 +285,55 @@ void Cuts::parse_config(const std::string confName)
               << numTightEle_ << " electrons" << std::endl;
 }
 
-bool Cuts::makeCuts(AnalysisEvent& event,
-                    double& eventWeight,
-                    std::map<std::string, std::shared_ptr<Plots>>& plotMap,
-                    TH1D& cutFlow,
-                    const int systToRun)
-{
-    if (!skipTrigger_)
-    {
-        if (!triggerCuts(event, eventWeight, systToRun))
-        {
-            return false; // Do trigger cuts
-        }
+bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::string, std::shared_ptr<Plots>>& plotMap, TH1D& cutFlow, const int systToRun) {
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+    if (!skipTrigger_) {
+        if (!triggerCuts(event, eventWeight, systToRun))  return false; // Do trigger cuts
     }
 
-    if (!metFilters(event))
-    {
-        return false;
-    }
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
-    // Make lepton cuts. If the trigLabel contains d, we are in the ttbar CR
-    // so the Z mass cut is skipped
-    if (!makeLeptonCuts(event, eventWeight, plotMap, cutFlow, systToRun))
-    {
-        return false;
-    }
+    if (!metFilters(event)) return false;
 
-    std::tie(event.jetIndex, event.jetSmearValue) =
-        makeJetCuts(event, systToRun, eventWeight, true);
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
-    if (event.jetIndex.size() < numJets_)
-    {
-        return false;
-    }
-    if (event.jetIndex.size() > maxJets_)
-    {
-        return false;
-    }
+    // Make lepton cuts. If the trigLabel contains d, we are in the ttbar CR so the Z mass cut is skipped
+    if (!makeLeptonCuts(event, eventWeight, plotMap, cutFlow, systToRun)) return false;
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+    std::tie(event.jetIndex, event.jetSmearValue) =  makeJetCuts(event, systToRun, eventWeight, true);
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+    if (event.jetIndex.size() < numJets_) return false;
+    if (event.jetIndex.size() > maxJets_) return false;
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     event.bTagIndex = makeBCuts(event, event.jetIndex, systToRun);
 
-    if (doPlots_ || fillCutFlow_)
-    {
-        cutFlow.Fill(2.5, eventWeight);
-    }
-    if (doPlots_)
-    {
-        plotMap["jetSel"]->fillAllPlots(event, eventWeight);
-    }
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
-    if (event.bTagIndex.size() < numbJets_)
-    {
-        return false;
-    }
-    if (event.bTagIndex.size() > maxbJets_)
-    {
-        return false;
-    }
-    if (doPlots_)
-    {
-        plotMap["bTag"]->fillAllPlots(event, eventWeight);
-    }
-    if (doPlots_ || fillCutFlow_)
-    {
-        cutFlow.Fill(3.5, eventWeight);
-    }
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(2.5, eventWeight);
+    if (doPlots_) plotMap["jetSel"]->fillAllPlots(event, eventWeight);
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+    if (event.bTagIndex.size() < numbJets_) return false;
+    if (event.bTagIndex.size() > maxbJets_) return false;
+    if (doPlots_) plotMap["bTag"]->fillAllPlots(event, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(3.5, eventWeight);
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     // Do wMass stuff
     double invWmass{0.};
     invWmass = getWbosonQuarksCand(event, event.jetIndex, systToRun);
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     // Debug chi2 cut
     //   double topMass = getTopMass(event);
@@ -366,34 +346,20 @@ bool Cuts::makeCuts(AnalysisEvent& event,
     //   if ( chi2 >= 2.0 ) return false; //signal region
 
     // Signal Region W mass cut
-    if (!isZplusCR_)
-    {
-        if (std::abs(invWmass) > invWMassCut_)
-        {
-            return false;
-        }
-    }
+    if (!isZplusCR_) if (std::abs(invWmass) > invWMassCut_) return false;
+
     // Z+jets Control Region
-    else
-    {
-        if (std::abs(invWmass) <= invWMassCut_)
-        {
-            return false;
-        }
-        if (event.metPF2PATEt >= metDileptonCut_)
-        {
-            return false;
-        }
+    else {
+        if (std::abs(invWmass) <= invWMassCut_) return false;
+        if (event.metPF2PATEt >= metDileptonCut_) return false;
     }
 
-    if (doPlots_)
-    {
-        plotMap["wMass"]->fillAllPlots(event, eventWeight);
-    }
-    if (doPlots_ || fillCutFlow_)
-    {
-        cutFlow.Fill(4.5, eventWeight);
-    }
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+    if (doPlots_) plotMap["wMass"]->fillAllPlots(event, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(4.5, eventWeight);
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     return true;
 }
@@ -465,17 +431,22 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
 
     ////Do lepton selection.
 
-    event.electronIndexTight = getTightEles(event);
-    if (event.electronIndexTight.size() != numTightEle_) return false;
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
-    event.electronIndexLoose = getLooseEles(event);
-    if (event.electronIndexLoose.size() != numLooseEle_) return false;
+//    event.electronIndexTight = getTightEles(event);
+//    if (event.electronIndexTight.size() != numTightEle_) return false;
 
-    event.muonIndexTight = getTightMuons(event);
-//    if (event.muonIndexTight.size() != numTightMu_) return false;
+//    event.electronIndexLoose = getLooseEles(event);
+//    if (event.electronIndexLoose.size() != numLooseEle_) return false;
+
+//    event.muonIndexTight = getTightMuons(event);
+    event.muonIndexTight = getLooseMuons(event);
+    if (event.muonIndexTight.size() != numTightMu_) return false;
 
     event.muonIndexLoose = getLooseMuons(event);
     if (event.muonIndexLoose.size() != numLooseMu_) return false;
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     // If making NPL shape postLepSkim, MC leptons must BOTH be prompt
     if (isNPL_ && numTightEle_ == 2 && isMC_) { // if ee channel
@@ -490,6 +461,8 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
         if (!event.genMuonPF2PATPromptFinalState[event.zPairIndex.second]) return false;
     }
 
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
     if (isNPL_ && numTightEle_ == 1 && numTightMu_ == 1 && isMC_)
     { // if emu channel
         eventWeight *= -1.0;
@@ -497,19 +470,29 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
         if (!event.genMuonPF2PATPromptFinalState[event.zPairIndex.second]) return false;
     }
 
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
     // This is to make some skims for faster running. Do lepSel and save some
     // files.
     if (postLepSelTree_) postLepSelTree_->Fill();
 
 //    event.muonMomentumSF = getRochesterSFs(event);
 
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
     if ( !getDileptonCand(event, event.electronIndexTight, event.muonIndexTight) ) return false;
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
 //    eventWeight *= getLeptonWeight(event, syst);
 
     if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, syst, eventWeight, false);
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
     if (doPlots_) plotMap["lepSel"]->fillAllPlots(event, eventWeight);
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
     if (doPlots_ || fillCutFlow_) cutFlow.Fill(0.5, eventWeight);
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     if (isNPL_) { // if is NPL channel
         double eeWeight{1.0};
@@ -547,13 +530,17 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
         }
     }
 
-    if (std::abs((event.zPairLeptons.first + event.zPairLeptons.second).M() - 91.1) > invZMassCut_ && !skipZCut) {
-        return false;
-    }
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+    if ( (event.zPairLeptons.first + event.zPairLeptons.second).M() > invZMassCut_ && !skipZCut ) return false;
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, syst, eventWeight, false);
     if (doPlots_) plotMap["zMass"]->fillAllPlots(event, eventWeight);
     if (doPlots_ || fillCutFlow_) cutFlow.Fill(1.5, eventWeight);
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     return true;
 }
@@ -756,34 +743,19 @@ std::vector<int> Cuts::getLooseMuons(const AnalysisEvent& event) const
     return muons;
 }
 
-bool Cuts::getDileptonCand(AnalysisEvent& event,
-                            const std::vector<int> electrons,
-                            const std::vector<int> muons) const
-{
-    // Check if there are at least two electrons first. Otherwise use muons.
+bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int> electrons, const std::vector<int> muons) const {    // Check if there are at least two electrons first. Otherwise use muons.
 
-    if (electrons.size() == 2)
-    {
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+    if (electrons.size() == 2) {
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         event.muonLeads = false;
 
-        if (!invertLepCut_)
-        {
-            if (event.elePF2PATCharge[electrons[0]]
-                    * event.elePF2PATCharge[electrons[1]]
-                >= 0)
-            {
-                return false; // check electron pair have correct charge.
-            }
+        if (!invertLepCut_) {
+            if (event.elePF2PATCharge[electrons[0]] * event.elePF2PATCharge[electrons[1]] >= 0) return false; // check electron pair have correct charge.
         }
-        else
-        {
-            if (!(event.elePF2PATCharge[electrons[0]]
-                      * event.elePF2PATCharge[electrons[1]]
-                  >= 0))
-            {
-                return false; // check electron pair have correct charge for
-                              // same sign control region.
-            }
+        else {
+            if (!(event.elePF2PATCharge[electrons[0]] * event.elePF2PATCharge[electrons[1]] >= 0)) return false; // check electron pair have correct charge for same sign control region.
         }
 
         const TLorentzVector lepton1{event.elePF2PATPX[electrons[0]],
@@ -795,16 +767,14 @@ bool Cuts::getDileptonCand(AnalysisEvent& event,
                                      event.elePF2PATPZ[electrons[1]],
                                      event.elePF2PATE[electrons[1]]};
 
-        if (lepton1.Pt() > lepton2.Pt())
-        {
+        if (lepton1.Pt() > lepton2.Pt()) {
             event.zPairLeptons.first = lepton1;
             event.zPairIndex.first = electrons[0];
 
             event.zPairLeptons.second = lepton2;
             event.zPairIndex.second = electrons[1];
         }
-        else
-        {
+        else {
             event.zPairLeptons.first = lepton2;
             event.zPairIndex.first = electrons[1];
 
@@ -812,28 +782,24 @@ bool Cuts::getDileptonCand(AnalysisEvent& event,
             event.zPairIndex.second = electrons[0];
         }
 
-        event.zPairRelIso.first =
-            event.elePF2PATComRelIsoRho[event.zPairIndex.first];
-        event.zPairRelIso.second =
-            event.elePF2PATComRelIsoRho[event.zPairIndex.second];
+        event.zPairRelIso.first = event.elePF2PATComRelIsoRho[event.zPairIndex.first];
+        event.zPairRelIso.second = event.elePF2PATComRelIsoRho[event.zPairIndex.second];
 
         return true;
     } // end electron if
 
-    else if (muons.size() == 2)
-    {
+    else if (muons.size() == 2) {
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         event.muonLeads = true;
 
         if (!invertLepCut_) {
-            if (event.muonPF2PATCharge[muons[0]] * event.muonPF2PATCharge[muons[1]] >= 0){
-                return false;
-            }
+            if (event.muonPF2PATCharge[muons[0]] * event.muonPF2PATCharge[muons[1]] >= 0) return false;
         }
         else {
-            if (!(event.muonPF2PATCharge[muons[0]] * event.muonPF2PATCharge[muons[1]] >= 0)) {
-                return false;
-            }
+            if (!(event.muonPF2PATCharge[muons[0]] * event.muonPF2PATCharge[muons[1]] >= 0)) return false;
         }
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
         TLorentzVector lepton1{event.muonPF2PATPX[muons[0]],
                                event.muonPF2PATPY[muons[0]],
@@ -844,41 +810,30 @@ bool Cuts::getDileptonCand(AnalysisEvent& event,
                                event.muonPF2PATPZ[muons[1]],
                                event.muonPF2PATE[muons[1]]};
 
-        lepton1 *= event.muonMomentumSF.at(0);
-        lepton2 *= event.muonMomentumSF.at(1);
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
-        event.zPairLeptons.first =
-            lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
-        event.zPairIndex.first =
-            lepton1.Pt() > lepton2.Pt() ? muons[0] : muons[1];
+//        lepton1 *= event.muonMomentumSF.at(0);
+//        lepton2 *= event.muonMomentumSF.at(1);
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+        event.zPairLeptons.first = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
+        event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[0] : muons[1];
         event.zPairRelIso.first = event.muonPF2PATComRelIsodBeta[muons[0]];
-        event.zPairLeptons.second =
-            lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
+        event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
         event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[1]];
-        event.zPairIndex.second =
-            lepton1.Pt() > lepton2.Pt() ? muons[1] : muons[0];
+        event.zPairIndex.second = lepton1.Pt() > lepton2.Pt() ? muons[1] : muons[0];
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         return true;
     }
 
-    else if (electrons.size() == 1 && muons.size() == 1)
-    {
-        if (!invertLepCut_)
-        {
-            if (event.elePF2PATCharge[electrons[0]]
-                    * event.muonPF2PATCharge[muons[1]]
-                >= 0)
-            {
-                return false;
-            }
+    else if (electrons.size() == 1 && muons.size() == 1) {
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+        if (!invertLepCut_) {
+            if (event.elePF2PATCharge[electrons[0]] * event.muonPF2PATCharge[muons[1]] >= 0) return false;
         }
-        else
-        {
-            if (!(event.elePF2PATCharge[electrons[0]]
-                      * event.muonPF2PATCharge[muons[1]]
-                  >= 0))
-            {
-                return false;
-            }
+        else {
+            if (!(event.elePF2PATCharge[electrons[0]] * event.muonPF2PATCharge[muons[1]] >= 0)) return false;
         }
 
         TLorentzVector lepton1{event.elePF2PATPX[electrons[0]],
@@ -889,10 +844,9 @@ bool Cuts::getDileptonCand(AnalysisEvent& event,
                                event.muonPF2PATPY[muons[0]],
                                event.muonPF2PATPZ[muons[0]],
                                event.muonPF2PATE[muons[0]]};
-        lepton2 *= event.muonMomentumSF.at(0);
+//        lepton2 *= event.muonMomentumSF.at(0);
 
-        if (lepton1.Pt() >= lepton2.Pt())  // electron leads
-        {
+        if (lepton1.Pt() >= lepton2.Pt()) { // electron leads
             event.muonLeads = false;
 
             event.zPairLeptons.first = lepton1;
@@ -903,8 +857,7 @@ bool Cuts::getDileptonCand(AnalysisEvent& event,
             event.zPairIndex.second = muons[0];
             event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[0]];
         }
-        else
-        {
+        else {
             event.muonLeads = true;
 
             event.zPairLeptons.first = lepton2;
@@ -918,8 +871,8 @@ bool Cuts::getDileptonCand(AnalysisEvent& event,
 
         return true;
     }
-    else
-    {
+    else {
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         return false; // Not dilepton candidate if this is the case ...
     }
 }

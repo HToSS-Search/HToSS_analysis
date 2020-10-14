@@ -8,24 +8,12 @@
 #include <iomanip>
 #include <iostream>
 
-Plots::Plots(const std::vector<std::string> titles,
-             const std::vector<std::string> names,
-             const std::vector<float> xMins,
-             const std::vector<float> xMaxs,
-             const std::vector<int> nBins,
-             const std::vector<std::string> fillExps,
-             const std::vector<std::string> xAxisLabels,
-             const std::vector<int> cutStage,
-             const unsigned thisCutStage,
-             const std::string postfixName)
-{
-    // Get the function pointer map for later custopmisation. This is gonna be
-    // great, I promise.
+Plots::Plots(const std::vector<std::string> titles, const std::vector<std::string> names, const std::vector<float> xMins, const std::vector<float> xMaxs, const std::vector<int> nBins, const std::vector<std::string> fillExps, const std::vector<std::string> xAxisLabels,
+             const std::vector<int> cutStage, const unsigned thisCutStage,  const std::string postfixName) { // Get the function pointer map for later custopmisation. This is gonna be great, I promise.
     const auto functionMap{getFncMap()};
 
     plotPoint = std::vector<plot>(names.size());
-    for (unsigned i{0}; i < names.size(); i++)
-    {
+    for (unsigned i{0}; i < names.size(); i++) {
         std::string plotName = names[i] + "_" + postfixName;
         plotPoint[i].name = plotName;
         plotPoint[i].title = titles[i];
@@ -45,20 +33,14 @@ Plots::Plots(const std::vector<std::string> titles,
 Plots::~Plots()
 {
     for (unsigned i{0}; i < plotPoint.size(); i++)
-    {
         delete plotPoint[i].plotHist;
-    }
 }
 
-std::unordered_map<std::string,
-                   std::function<std::vector<float>(const AnalysisEvent&)>>
-    Plots::getFncMap() const
-{
+std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisEvent&)>> Plots::getFncMap() const {
     return {
         {"lep1Pt",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             if (event.electronIndexTight.size() > 1)
-             {
+             if (event.electronIndexTight.size() > 1) {
                  TLorentzVector tempVec{
                      event.elePF2PATPX[event.electronIndexTight[0]],
                      event.elePF2PATPY[event.electronIndexTight[0]],
@@ -66,39 +48,34 @@ std::unordered_map<std::string,
                      event.elePF2PATE[event.electronIndexTight[0]]};
                  return {tempVec.Pt()};
              }
-             else
-             {
+             else {
                  TLorentzVector tempVec{
                      event.muonPF2PATPX[event.muonIndexTight[0]],
                      event.muonPF2PATPY[event.muonIndexTight[0]],
                      event.muonPF2PATPZ[event.muonIndexTight[0]],
                      event.muonPF2PATE[event.muonIndexTight[0]]};
-                 tempVec *= event.muonMomentumSF[0];
+//                 tempVec *= event.muonMomentumSF[0];
                  return {tempVec.Pt()};
              }
          }},
         {"lep1Eta",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             if (event.electronIndexTight.size() > 1)
-             {
-                 return {std::abs(
-                     event.elePF2PATSCEta[event.electronIndexTight[0]])};
+             if (event.electronIndexTight.size() > 1) {
+                 return {std::abs(event.elePF2PATSCEta[event.electronIndexTight[0]])};
              }
-             else
-             {
+             else {
                  TLorentzVector tempVec{
                      event.muonPF2PATPX[event.muonIndexTight[0]],
                      event.muonPF2PATPY[event.muonIndexTight[0]],
                      event.muonPF2PATPZ[event.muonIndexTight[0]],
                      event.muonPF2PATE[event.muonIndexTight[0]]};
-                 tempVec *= event.muonMomentumSF[0];
+//                 tempVec *= event.muonMomentumSF[0];
                  return {tempVec.Eta()};
              }
          }},
         {"lep2Pt",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             if (event.electronIndexTight.size() > 1)
-             {
+             if (event.electronIndexTight.size() > 1) {
                  TLorentzVector tempVec{
                      event.elePF2PATPX[event.electronIndexTight[1]],
                      event.elePF2PATPY[event.electronIndexTight[1]],
@@ -106,92 +83,81 @@ std::unordered_map<std::string,
                      event.elePF2PATE[event.electronIndexTight[1]]};
                  return {tempVec.Pt()};
              }
-             else
-             {
+             else {
                  TLorentzVector tempVec{
                      event.muonPF2PATPX[event.muonIndexTight[1]],
                      event.muonPF2PATPY[event.muonIndexTight[1]],
                      event.muonPF2PATPZ[event.muonIndexTight[1]],
                      event.muonPF2PATE[event.muonIndexTight[1]]};
-                 tempVec *= event.muonMomentumSF[1];
+//                 tempVec *= event.muonMomentumSF[1];
                  return {tempVec.Pt()};
              }
          }},
         {"lep2Eta",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             if (event.electronIndexTight.size() > 1)
-             {
+             if (event.electronIndexTight.size() > 1) {
                  return {std::abs(
                      event.elePF2PATSCEta[event.electronIndexTight[1]])};
              }
-             else
-             {
+             else {
                  TLorentzVector tempVec{
                      event.muonPF2PATPX[event.muonIndexTight[1]],
                      event.muonPF2PATPY[event.muonIndexTight[1]],
                      event.muonPF2PATPZ[event.muonIndexTight[1]],
                      event.muonPF2PATE[event.muonIndexTight[1]]};
-                 tempVec *= event.muonMomentumSF[1];
+//                 tempVec *= event.muonMomentumSF[1];
                  return {tempVec.Pt()};
              }
          }},
         {"lep1RelIso",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             if (event.electronIndexTight.size() > 1)
-             {
+             if (event.electronIndexTight.size() > 1) {
                  return {
                      event.elePF2PATComRelIsoRho[event.electronIndexTight[0]]};
              }
-             else
-             {
+             else {
                  return {
                      event.muonPF2PATComRelIsodBeta[event.muonIndexTight[0]]};
              }
          }},
         {"lep2RelIso",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             if (event.electronIndexTight.size() > 1)
-             {
+             if (event.electronIndexTight.size() > 1) {
                  return {
                      event.elePF2PATComRelIsoRho[event.electronIndexTight[1]]};
              }
-             else
-             {
+             else {
                  return {
                      event.muonPF2PATComRelIsodBeta[event.muonIndexTight[1]]};
              }
          }},
         {"lep1Phi",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             if (event.electronIndexTight.size() > 1)
-             {
+             if (event.electronIndexTight.size() > 1) {
                  return {event.elePF2PATPhi[event.electronIndexTight[0]]};
              }
-             else
-             {
+             else {
                  TLorentzVector tempVec{
                      event.muonPF2PATPX[event.muonIndexTight[0]],
                      event.muonPF2PATPY[event.muonIndexTight[0]],
                      event.muonPF2PATPZ[event.muonIndexTight[0]],
                      event.muonPF2PATE[event.muonIndexTight[0]]};
-                 tempVec *= event.muonMomentumSF[0];
+//                 tempVec *= event.muonMomentumSF[0];
                  return {tempVec.Phi()};
              }
          }},
         {"lep2Phi",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             if (event.electronIndexTight.size() > 1)
-             {
+             if (event.electronIndexTight.size() > 1) {
                  return {event.elePF2PATPhi[event.electronIndexTight[1]]};
              }
-             else
-             {
+             else {
                  TLorentzVector tempVec{
                      event.muonPF2PATPX[event.muonIndexTight[1]],
                      event.muonPF2PATPY[event.muonIndexTight[1]],
                      event.muonPF2PATPZ[event.muonIndexTight[1]],
                      event.muonPF2PATE[event.muonIndexTight[1]]};
-                 tempVec *= event.muonMomentumSF[1];
+//                 tempVec *= event.muonMomentumSF[1];
                  return {tempVec.Phi()};
              }
          }},
@@ -1537,12 +1503,9 @@ std::unordered_map<std::string,
 
 void Plots::fillAllPlots(const AnalysisEvent& event, const double eventWeight)
 {
-    for (unsigned i{0}; i < plotPoint.size(); i++)
-    {
-        if (plotPoint[i].fillPlot)
-        {
-            for (const auto& val : (this->plotPoint[i].fillExp)(event))
-            {
+    for (unsigned i{0}; i < plotPoint.size(); i++) {
+        if (plotPoint[i].fillPlot) {
+            for (const auto& val : (this->plotPoint[i].fillExp)(event)) {
                 plotPoint[i].plotHist->Fill(val, eventWeight);
             }
         }
