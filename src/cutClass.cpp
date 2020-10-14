@@ -287,53 +287,33 @@ void Cuts::parse_config(const std::string confName)
 
 bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::string, std::shared_ptr<Plots>>& plotMap, TH1D& cutFlow, const int systToRun) {
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-
     if (!skipTrigger_) {
         if (!triggerCuts(event, eventWeight, systToRun))  return false; // Do trigger cuts
     }
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-
     if (!metFilters(event)) return false;
-
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     // Make lepton cuts. If the trigLabel contains d, we are in the ttbar CR so the Z mass cut is skipped
     if (!makeLeptonCuts(event, eventWeight, plotMap, cutFlow, systToRun)) return false;
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-
     std::tie(event.jetIndex, event.jetSmearValue) =  makeJetCuts(event, systToRun, eventWeight, true);
-
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     if (event.jetIndex.size() < numJets_) return false;
     if (event.jetIndex.size() > maxJets_) return false;
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-
     event.bTagIndex = makeBCuts(event, event.jetIndex, systToRun);
-
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     if (doPlots_ || fillCutFlow_) cutFlow.Fill(2.5, eventWeight);
     if (doPlots_) plotMap["jetSel"]->fillAllPlots(event, eventWeight);
-
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     if (event.bTagIndex.size() < numbJets_) return false;
     if (event.bTagIndex.size() > maxbJets_) return false;
     if (doPlots_) plotMap["bTag"]->fillAllPlots(event, eventWeight);
     if (doPlots_ || fillCutFlow_) cutFlow.Fill(3.5, eventWeight);
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-
     // Do wMass stuff
     double invWmass{0.};
     invWmass = getWbosonQuarksCand(event, event.jetIndex, systToRun);
-
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     // Debug chi2 cut
     //   double topMass = getTopMass(event);
@@ -354,12 +334,8 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         if (event.metPF2PATEt >= metDileptonCut_) return false;
     }
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-
     if (doPlots_) plotMap["wMass"]->fillAllPlots(event, eventWeight);
     if (doPlots_ || fillCutFlow_) cutFlow.Fill(4.5, eventWeight);
-
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     return true;
 }
@@ -431,8 +407,6 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
 
     ////Do lepton selection.
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-
 //    event.electronIndexTight = getTightEles(event);
 //    if (event.electronIndexTight.size() != numTightEle_) return false;
 
@@ -445,8 +419,6 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     event.muonIndexLoose = getLooseMuons(event);
     if (event.muonIndexLoose.size() != numLooseMu_) return false;
-
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     // If making NPL shape postLepSkim, MC leptons must BOTH be prompt
     if (isNPL_ && numTightEle_ == 2 && isMC_) { // if ee channel
@@ -461,8 +433,6 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         if (!event.genMuonPF2PATPromptFinalState[event.zPairIndex.second]) return false;
     }
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-
     if (isNPL_ && numTightEle_ == 1 && numTightMu_ == 1 && isMC_)
     { // if emu channel
         eventWeight *= -1.0;
@@ -470,29 +440,20 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         if (!event.genMuonPF2PATPromptFinalState[event.zPairIndex.second]) return false;
     }
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-
     // This is to make some skims for faster running. Do lepSel and save some
     // files.
     if (postLepSelTree_) postLepSelTree_->Fill();
 
 //    event.muonMomentumSF = getRochesterSFs(event);
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-
     if ( !getDileptonCand(event, event.electronIndexTight, event.muonIndexTight) ) return false;
-
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
 //    eventWeight *= getLeptonWeight(event, syst);
 
     if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, syst, eventWeight, false);
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
     if (doPlots_) plotMap["lepSel"]->fillAllPlots(event, eventWeight);
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
     if (doPlots_ || fillCutFlow_) cutFlow.Fill(0.5, eventWeight);
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     if (isNPL_) { // if is NPL channel
         double eeWeight{1.0};
@@ -530,17 +491,11 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         }
     }
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-
     if ( (event.zPairLeptons.first + event.zPairLeptons.second).M() > invZMassCut_ && !skipZCut ) return false;
-
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, syst, eventWeight, false);
     if (doPlots_) plotMap["zMass"]->fillAllPlots(event, eventWeight);
     if (doPlots_ || fillCutFlow_) cutFlow.Fill(1.5, eventWeight);
-
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     return true;
 }
@@ -745,10 +700,7 @@ std::vector<int> Cuts::getLooseMuons(const AnalysisEvent& event) const
 
 bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int> electrons, const std::vector<int> muons) const {    // Check if there are at least two electrons first. Otherwise use muons.
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-
     if (electrons.size() == 2) {
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         event.muonLeads = false;
 
         if (!invertLepCut_) {
@@ -789,7 +741,6 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
     } // end electron if
 
     else if (muons.size() == 2) {
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         event.muonLeads = true;
 
         if (!invertLepCut_) {
@@ -798,8 +749,6 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         else {
             if (!(event.muonPF2PATCharge[muons[0]] * event.muonPF2PATCharge[muons[1]] >= 0)) return false;
         }
-
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
         TLorentzVector lepton1{event.muonPF2PATPX[muons[0]],
                                event.muonPF2PATPY[muons[0]],
@@ -810,12 +759,10 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
                                event.muonPF2PATPZ[muons[1]],
                                event.muonPF2PATE[muons[1]]};
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
 //        lepton1 *= event.muonMomentumSF.at(0);
 //        lepton2 *= event.muonMomentumSF.at(1);
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
         event.zPairLeptons.first = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
         event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[0] : muons[1];
@@ -823,12 +770,10 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
         event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[1]];
         event.zPairIndex.second = lepton1.Pt() > lepton2.Pt() ? muons[1] : muons[0];
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         return true;
     }
 
     else if (electrons.size() == 1 && muons.size() == 1) {
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         if (!invertLepCut_) {
             if (event.elePF2PATCharge[electrons[0]] * event.muonPF2PATCharge[muons[1]] >= 0) return false;
         }
@@ -872,7 +817,6 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         return true;
     }
     else {
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         return false; // Not dilepton candidate if this is the case ...
     }
 }
