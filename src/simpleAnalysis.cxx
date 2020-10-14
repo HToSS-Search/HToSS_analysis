@@ -252,9 +252,9 @@ int main(int argc, char* argv[])
                 const Int_t pdgId    { std::abs(event.genParId[k]) };
 		const Int_t motherId     { std::abs(event.genParMotherId[k]) };
 		const Int_t motherIndex  { std::abs(event.genParMotherIndex[k]) };
-		 Int_t genParVx {event.genParVx[k]};
-		 Int_t genParVy {event.genParVy[k]};
-		 Int_t genParVz {event.genParVz[k]};
+		const Int_t genParVx {event.genParVx[k]};
+		const Int_t genParVy {event.genParVy[k]};
+		const Int_t genParVz {event.genParVz[k]};
 		    
                 const Float_t genParPt  { event.genParPt[k] };
                 const Float_t genParEta { event.genParEta[k] };
@@ -414,7 +414,7 @@ int main(int argc, char* argv[])
 		angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
 		angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
 		
-		std::cout<<"angle 1 muon "<<angle1<<"angle 2 muon "<<angle2<<std::endl;
+		//std::cout<<"angle 1 muon "<<angle1<<"angle 2 muon "<<angle2<<std::endl;
 			
 		h_Muon3DAngle->Fill(angle1.Angle(angle2));
 		}
@@ -439,7 +439,7 @@ int main(int argc, char* argv[])
 		
 		angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
 		angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-		std::cout<<"angle 1 kaon "<<angle1<<"angle 2 kaon "<<angle2<<std::endl;	
+		//std::cout<<"angle 1 kaon "<<angle1<<"angle 2 kaon "<<angle2<<std::endl;	
 		h_Kaon3DAngle->Fill(nr1.Angle(nr2));
 	    
 		}
@@ -464,7 +464,7 @@ int main(int argc, char* argv[])
 		
 		angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
 		angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-				std::cout<<"angle 1 kshort "<<angle1<<"angle 2 kshort "<<angle2<<std::endl;	
+		//		std::cout<<"angle 1 kshort "<<angle1<<"angle 2 kshort "<<angle2<<std::endl;	
 	
 		h_KShort3DAngle->Fill(angle1.Angle(angle2));
 		}
@@ -490,7 +490,7 @@ int main(int argc, char* argv[])
 		
 		angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
 		angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-				std::cout<<"angle 1 pion "<<angle1<<"angle 2 pion "<<angle2<<std::endl;	
+		//		std::cout<<"angle 1 pion "<<angle1<<"angle 2 pion "<<angle2<<std::endl;	
 	
 		h_Pion3DAngle->Fill(angle1.Angle(angle2));
 		}
