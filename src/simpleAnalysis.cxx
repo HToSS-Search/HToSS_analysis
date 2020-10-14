@@ -411,7 +411,8 @@ int main(int argc, char* argv[])
 		//3D angle
 		//TVector3 angle1;
 		//TVector3 angle2;
-		
+		TLorentzVector angle1;
+		TLorentzVector angle2;
 		angle1.SetVect(TVector3(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1])); 
 		angle2.SetVect(TVector3(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2])); 
 		/*angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
