@@ -440,7 +440,7 @@ int main(int argc, char* argv[])
 		angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
 		angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
 		//std::cout<<"angle 1 kaon "<<angle1<<"angle 2 kaon "<<angle2<<std::endl;	
-		h_Kaon3DAngle->Fill(nr1.Angle(nr2));
+		h_Kaon3DAngle->Fill(angle1.Angle(angle2));
 	    
 		}
 		
