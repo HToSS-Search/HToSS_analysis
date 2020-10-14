@@ -11,6 +11,7 @@
 #include "TMVA/Timer.h"
 #include "TTree.h"
 #include "TLorentzVector.h"
+#include "TVector3.h"
 #include "TString.h"
 #include "config_parser.hpp"
 
@@ -385,7 +386,7 @@ int main(int argc, char* argv[])
 		angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
 		angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
 			
-		h_Scalar3DAngle->Fill(angle1.Angle(angle2.Vect()));		   
+		h_Scalar3DAngle->Fill(angle1.Angle(angle2));		   
 		}
 		
 		
@@ -416,7 +417,7 @@ int main(int argc, char* argv[])
 		
 		//std::cout<<"angle 1 muon "<<angle1<<"angle 2 muon "<<angle2<<std::endl;
 			
-		h_Muon3DAngle->Fill(angle1.Angle(angle2.Vect()));
+		h_Muon3DAngle->Fill(angle1.Angle(angle2));
 		}
 		
 		if (nrofKaon.size()==2){ //Two-particle (scalar) correlations
@@ -440,7 +441,7 @@ int main(int argc, char* argv[])
 		angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
 		angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
 		//std::cout<<"angle 1 kaon "<<angle1<<"angle 2 kaon "<<angle2<<std::endl;	
-		h_Kaon3DAngle->Fill(angle1.Angle(angle2.Vect()));
+		h_Kaon3DAngle->Fill(angle1.Angle(angle2));
 	    
 		}
 		
@@ -466,7 +467,7 @@ int main(int argc, char* argv[])
 		angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
 		//		std::cout<<"angle 1 kshort "<<angle1<<"angle 2 kshort "<<angle2<<std::endl;	
 	
-		h_KShort3DAngle->Fill(angle1.Angle(angle2.Vect()));
+		h_KShort3DAngle->Fill(angle1.Angle(angle2));
 		}
 		
 		
@@ -492,7 +493,7 @@ int main(int argc, char* argv[])
 		angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
 		//		std::cout<<"angle 1 pion "<<angle1<<"angle 2 pion "<<angle2<<std::endl;	
 	
-		h_Pion3DAngle->Fill(angle1.Angle(angle2.Vect()));
+		h_Pion3DAngle->Fill(angle1.Angle(angle2));
 		}
 
         } 
