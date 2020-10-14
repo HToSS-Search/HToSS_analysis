@@ -3,13 +3,13 @@ cuts:
         pt: 0
         ptLeading: 0
         eta: 5.0
-        relIso: 0.0
-        number: 0
+        relIso: 100.0
+        number: 2
     looseMuons:
         pt: 0
         ptLeading: 0
         eta: 5.0
-        relIso: 0.0
+        relIso: 100.0
         number: 2
     tightElectrons:
         pt: 0

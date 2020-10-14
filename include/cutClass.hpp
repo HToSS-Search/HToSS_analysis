@@ -39,7 +39,7 @@ class Cuts
         getTightMuons(const AnalysisEvent& event) const;
     [[gnu::pure]] std::vector<int>
         getLooseMuons(const AnalysisEvent& event) const;
-    bool getDileptonZCand(AnalysisEvent& event,
+    bool getDileptonCand(AnalysisEvent& event,
                           const std::vector<int> electrons,
                           const std::vector<int> muons) const;
     double getWbosonQuarksCand(AnalysisEvent& event,

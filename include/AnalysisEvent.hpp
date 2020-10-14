@@ -3527,6 +3527,7 @@ inline bool AnalysisEvent::muEGTrig() const
 inline bool AnalysisEvent::mumuTrig() const
 {
     return is2016_ ? (eventRun < 280919
+// 2016 triggers
                       && (HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v2 > 0
                           || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v3 > 0
                           || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v4 > 0
@@ -3541,6 +3542,7 @@ inline bool AnalysisEvent::mumuTrig() const
                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2 > 0
                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v3 > 0
                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v6 > 0
+//2017 triggers
                    : HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v8 > 0
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v9 > 0
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v10 > 0
