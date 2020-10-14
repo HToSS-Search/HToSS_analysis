@@ -252,9 +252,9 @@ int main(int argc, char* argv[])
                 const Int_t pdgId    { std::abs(event.genParId[k]) };
 		const Int_t motherId     { std::abs(event.genParMotherId[k]) };
 		const Int_t motherIndex  { std::abs(event.genParMotherIndex[k]) };
-		const Int_t genParVx {event.genParVx[k]};
-		const Int_t genParVy {event.genParVy[k]};
-		const Int_t genParVz {event.genParVz[k]};
+		 Int_t genParVx {event.genParVx[k]};
+		 Int_t genParVy {event.genParVy[k]};
+		 Int_t genParVz {event.genParVz[k]};
 		    
                 const Float_t genParPt  { event.genParPt[k] };
                 const Float_t genParEta { event.genParEta[k] };
