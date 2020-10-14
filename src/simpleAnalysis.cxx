@@ -409,11 +409,13 @@ int main(int argc, char* argv[])
 		h_MuonDeltaPhi->Fill(nr1.DeltaPhi(nr2));
 	      
 		//3D angle
-		TVector3 angle1;
-		TVector3 angle2;
+		//TVector3 angle1;
+		//TVector3 angle2;
 		
-		angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
-		angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
+		angle1.SetVect(TVector3(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1])); 
+		angle2.SetVect(TVector3(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2])); 
+		/*angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
+		angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);*/
 		
 		//std::cout<<"angle 1 muon "<<angle1<<"angle 2 muon "<<angle2<<std::endl;
 			
