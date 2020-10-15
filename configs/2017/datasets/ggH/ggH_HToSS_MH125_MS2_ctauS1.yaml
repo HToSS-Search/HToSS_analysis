@@ -2,7 +2,7 @@ name: "ggH_HToSS_MS2_ctauS1"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/ggH/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS2_ctauS1/"
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/ggH/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS2_ctauS1_ext1/"
-total_events: 1223331
+total_events: 1225998
 cross_section: 21.46
 mc: true
 histogram: "ggH_HToSS_MS2_ctauS1"
