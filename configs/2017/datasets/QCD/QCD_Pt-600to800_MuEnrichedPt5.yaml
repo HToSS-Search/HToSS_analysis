@@ -1,10 +1,10 @@
 name: "QCD_Pt-600to800_MuEnrichedPt5"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/QCD_Pt-600to800_MuEnrichedPt5/"
-total_events: 17212144
+total_events: 17263676
 cross_section: 25.31
 mc: true
-histogram: "ttbar"
-colour: "#cc0000"
-label: "t#bar{t}"
+histogram: "QCD"
+colour: "#993399"
+label: "QCD"
 plot_type: "f"
