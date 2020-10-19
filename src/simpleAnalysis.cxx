@@ -538,8 +538,8 @@ int main(int argc, char* argv[])
                 const Float_t muonRecEta { event.muonPF2PATEta[k] };
                 const Float_t muonRecPhi { event.muonPF2PATPhi[k] };
                 const Float_t muonRecE   { event.muonPF2PATE[k] };
-			
-		std::vector<int> nrofmuonRec;
+		
+		
 		 
 			
 			
@@ -552,13 +552,20 @@ int main(int argc, char* argv[])
 			
 			
 		//Muon reconstruction from scalar decay
-			
+			std::vector<int> nrofmuonRec;
+
 			h_muonRecPt->Fill(muonRecPt);
                 	h_muonRecEta->Fill(muonRecEta);
                 	h_muonRecPhi->Fill(muonRecPhi);
 			h_muonRecE->Fill(muonRecE);
+			
 			nrofmuonRec.emplace_back(k);
 			
+			//Sorting momentum
+			Float_t n = sizeof(muonRecPt)/sizeof(muonRecPt[0]);
+			std::sort(muonRecPt, muonRecPt+n, greater<Float_t>());
+			std::cout<<"highest "<<muonRecPt[0]<<"second highest "<<muonRecPt[1]<<std::endl;
+				
 			if(nrofmuonRec.size()==2){
 			const int Nr1 {nrofmuonRec[0]}; 
 			const int Nr2 {nrofmuonRec[1]};
