@@ -1518,7 +1518,7 @@ void Plots::saveAllPlots()
     {
         plotPoint[i].plotHist->SaveAs(
             ("plots/" + plotPoint[i].name + ".root").c_str());
-        //    plotPoint[i].plotHist->SaveAs(("plots/"+plotPoint[i].name +
-        //    ".pdf").c_str());
+            plotPoint[i].plotHist->SaveAs(("plots/"+plotPoint[i].name +
+            ".pdf").c_str());
     }
 }
