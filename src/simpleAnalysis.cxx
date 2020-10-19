@@ -129,6 +129,11 @@ int main(int argc, char* argv[])
     TH2I* h_VertexPosXY {new TH2I("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
     TH2I* h_VertexPosRZ {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, -20,20,100,-250,250)};
 	
+    //Reconstruction histograms
+    TH1F* h_muonRecPt      {new TH1F("h_muonRecPt",  "#mu^{#pm} reconstruction p_{T}", 1000, 0., 1000.)}; 
+    TH1F* h_muonRecEta     {new TH1F("h_muonRecEta", "#mu^{#pm} reconstruction #eta",  200, -7., 7.)}; 
+    TH1F* h_muonRecPhi     {new TH1F("h_muonRecPhi", "#mu^{#pm} reconstruction #phi",  100, -3.5, 3.5)};
+	
     namespace po = boost::program_options;
 
     // command line configuration parsing magic!
@@ -511,6 +516,30 @@ int main(int argc, char* argv[])
 	
 	
     /// END GENERATOR PARTICLE STUFF
+	
+	
+    /// Muon Reconstruction
+	for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
+		
+		const Int_t muonRecPdgId { std::abs(event.genMuonPF2PATPdgId[k]) };
+		
+                const Float_t muonRecPt  { event.genMuonPF2PATPT[k] };
+                const Float_t muonRecEta { event.genMuonPF2PATEta[k] };
+                const Float_t muonRecPhi { event.genMuonPF2PATPhi[k] };
+              //  const Float_t muonRecE   { event.[k] };
+		 
+		//Muon reconstruction from scalar decay
+		if(muonRecPdgId==13){
+		h_muonRecPt->Fill(muonRecPt);
+                h_muonRecEta->Fill(muonRecEta);
+                h_muonRecPhi->Fill(muonRecPhi);
+              //  h_genParE->Fill(genParE);
+			
+		}
+		
+		
+		
+	}
 
     std::cout << std::endl;
     std::cout << "Total no. of events:\t\t\t" << totalEvents << std::endl;
@@ -604,6 +633,11 @@ int main(int argc, char* argv[])
     h_VertexPosRZ->GetXaxis()->SetTitle("Vertex position R"); 
     h_VertexPosRZ->GetYaxis()->SetTitle("Vertex position z"); 
   
+    //Reconstruction
+    h_muonRecPt->Write();
+    h_muonRecEta->Write();
+    h_muonRecPhi->Write();
+	
     // Safely close file
     outFile->Close();
 
@@ -757,4 +791,3 @@ bool scalarGrandparent (const AnalysisEvent event, const Int_t k, const Int_t gr
         return scalarGrandparent(event, motherIndex, grandparentId); // otherwise check mother's mother ...
     }
 }
-
