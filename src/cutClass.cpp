@@ -312,8 +312,8 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     if (doPlots_ || fillCutFlow_) cutFlow.Fill(3.5, eventWeight);
 
     // Do wMass stuff
-    double invWmass{0.};
-    invWmass = getWbosonQuarksCand(event, event.jetIndex, systToRun);
+//    double invWmass{0.};
+//    invWmass = getWbosonQuarksCand(event, event.jetIndex, systToRun);
 
     // Debug chi2 cut
     //   double topMass = getTopMass(event);
@@ -326,16 +326,16 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     //   if ( chi2 >= 2.0 ) return false; //signal region
 
     // Signal Region W mass cut
-    if (!isZplusCR_) if (std::abs(invWmass) > invWMassCut_) return false;
+//    if (!isZplusCR_) if (std::abs(invWmass) > invWMassCut_) return false;
 
     // Z+jets Control Region
-    else {
+/*    else {
         if (std::abs(invWmass) <= invWMassCut_) return false;
         if (event.metPF2PATEt >= metDileptonCut_) return false;
     }
-
-    if (doPlots_) plotMap["wMass"]->fillAllPlots(event, eventWeight);
-    if (doPlots_ || fillCutFlow_) cutFlow.Fill(4.5, eventWeight);
+*/
+//    if (doPlots_) plotMap["wMass"]->fillAllPlots(event, eventWeight);
+//    if (doPlots_ || fillCutFlow_) cutFlow.Fill(4.5, eventWeight);
 
     return true;
 }

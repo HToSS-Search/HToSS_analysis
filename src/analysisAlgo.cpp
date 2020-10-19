@@ -401,7 +401,7 @@ void AnalysisAlgo::setupPlots()
     stageNames.emplace_back(std::make_pair("zMass", "Z Mass Cuts"));
     stageNames.emplace_back(std::make_pair("jetSel", "Jet Cuts"));
     stageNames.emplace_back(std::make_pair("bTag", "b-tag Cuts"));
-    stageNames.emplace_back(std::make_pair("wMass", "W Mass Cuts"));
+//    stageNames.emplace_back(std::make_pair("wMass", "W Mass Cuts"));
 }
 
 void AnalysisAlgo::runMainAnalysis()
