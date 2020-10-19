@@ -507,19 +507,11 @@ int main(int argc, char* argv[])
 	
 		h_Pion3DAngle->Fill(angle1.Angle(angle2));
 		}
-
-        } 
-    }
-    
-	
-	
-	
-	
-    /// END GENERATOR PARTICLE STUFF
-	
-	
-    /// Muon Reconstruction
-	for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
+		
+		/// END GENERATOR PARTICLE STUFF
+		
+		 /// Muon Reconstruction
+		for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
 		
 		const Int_t muonRecPdgId { std::abs(event.genMuonPF2PATPdgId[k]) };
 		
@@ -529,17 +521,28 @@ int main(int argc, char* argv[])
               //  const Float_t muonRecE   { event.[k] };
 		 
 		//Muon reconstruction from scalar decay
-		if(muonRecPdgId==13){
-		h_muonRecPt->Fill(muonRecPt);
-                h_muonRecEta->Fill(muonRecEta);
-                h_muonRecPhi->Fill(muonRecPhi);
-              //  h_genParE->Fill(genParE);
+			if(muonRecPdgId==13){
+			h_muonRecPt->Fill(muonRecPt);
+                	h_muonRecEta->Fill(muonRecEta);
+                	h_muonRecPhi->Fill(muonRecPhi);
+              		//  h_genParE->Fill(genParE);
 			
+			}
+		
+		
+		
 		}
-		
-		
-		
-	}
+        } 
+    }
+    
+	
+	
+	
+	
+
+	
+	
+   
 
     std::cout << std::endl;
     std::cout << "Total no. of events:\t\t\t" << totalEvents << std::endl;
