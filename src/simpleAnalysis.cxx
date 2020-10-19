@@ -535,6 +535,7 @@ int main(int argc, char* argv[])
                 	h_muonRecEta->Fill(muonRecEta);
                 	h_muonRecPhi->Fill(muonRecPhi);
 			h_muonRecE->Fill(muonRecE);
+			nrofmuonRec.emplace_back(k);
 			
 			if(nrofmuonRec.size()==2){
 			const int Nr1 {nrofmuonRec[0]}; 
