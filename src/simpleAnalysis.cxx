@@ -563,9 +563,9 @@ int main(int argc, char* argv[])
 			nrofmuonRec.emplace_back(k);
 			
 			//Sorting momentum
-			int n = sizeof(muonRecPt)/sizeof(muonRecPt{0});
+			/*int n = sizeof(muonRecPt)/sizeof(muonRecPt{0});
 			std::sort(muonRecPt, muonRecPt+n, greater<int>());
-			std::cout<<"highest "<<muonRecPt{0}<<"second highest "<<muonRecPt{1}<<std::endl;
+			std::cout<<"highest "<<muonRecPt{0}<<"second highest "<<muonRecPt{1}<<std::endl;*/
 				
 			if(nrofmuonRec.size()==2){
 			const int Nr1 {nrofmuonRec[0]}; 
