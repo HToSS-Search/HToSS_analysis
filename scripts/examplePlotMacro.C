@@ -11,8 +11,8 @@
 
  void examplePlotMacro(std::string histogram) {
 
-     TFile inFile(std::string histogram); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
-     TH1F* h_genParPt = (TH1F*)inFile.Get(std::string histogram); // Load in histogram
+     TFile inFile(histogram); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
+     TH1F* h_genParPt = (TH1F*)inFile.Get(histogram); // Load in histogram
 
      TCanvas* canvy = new TCanvas ("canvy", "canvy", 50, 50, 800, 600); // Canvas to draw histogram on
      gPad->SetLogy(); // set log scale for y-axis on for objects drawn on the canvas from this point on
@@ -24,7 +24,7 @@
      canvy->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canvy->SaveAs(std::string histogram.gif); // .pdf and other formats work too!
+     canvy->SaveAs(histogram.gif); // .pdf and other formats work too!
 
      delete canvy;
  }
