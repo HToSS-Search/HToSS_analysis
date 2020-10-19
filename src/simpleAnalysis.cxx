@@ -13,6 +13,7 @@
 #include "TLorentzVector.h"
 #include "TVector3.h"
 #include "TString.h"
+#include <bits/stdc++.h>
 #include "config_parser.hpp"
 
 #include <boost/filesystem.hpp>
@@ -562,9 +563,9 @@ int main(int argc, char* argv[])
 			nrofmuonRec.emplace_back(k);
 			
 			//Sorting momentum
-			Float_t n = sizeof(muonRecPt)/sizeof(muonRecPt[0]);
-			std::sort(muonRecPt, muonRecPt+n, greater<Float_t>());
-			std::cout<<"highest "<<muonRecPt[0]<<"second highest "<<muonRecPt[1]<<std::endl;
+			int n = sizeof(muonRecPt)/sizeof(muonRecPt{0});
+			std::sort(muonRecPt, muonRecPt+n, greater<int>());
+			std::cout<<"highest "<<muonRecPt{0}<<"second highest "<<muonRecPt{1}<<std::endl;
 				
 			if(nrofmuonRec.size()==2){
 			const int Nr1 {nrofmuonRec[0]}; 
