@@ -129,6 +129,12 @@ int main(int argc, char* argv[])
     TH2I* h_VertexPosXY {new TH2I("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
     TH2I* h_VertexPosRZ {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, -20,20,100,-250,250)};
 	
+	
+	
+	
+	
+	
+	
     //RECONSTRUCTION histograms
 	
     //Muon reco
@@ -138,6 +144,13 @@ int main(int argc, char* argv[])
     TH1F* h_muonRecE       {new TH1F("h_muonRecE",   "#mu^{#pm} reconstruction energy",     1000, 0., 1000.)};
     TH1F* h_muonRecDeltaR        {new TH1F("h_muonRecDeltaR", "Muon reconstruction #DeltaR",2500, -10., 10.)}; 
     TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
+    TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
+    TH1F* h_muonRecInvMass     {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",1000, 0, 500)};
+	
+	
+	
+	
+	
 	
 	
 	
@@ -529,6 +542,16 @@ int main(int argc, char* argv[])
 			
 		std::vector<int> nrofmuonRec;
 		 
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		//Muon reconstruction from scalar decay
 			
 			h_muonRecPt->Fill(muonRecPt);
@@ -550,6 +573,12 @@ int main(int argc, char* argv[])
 			
 			h_muonRecDeltaR->Fill(nr1.DeltaR(nr2));
 			h_muonRecDeltaPhi->Fill(nr1.DeltaPhi(nr2));	
+			
+			//Invariant mass
+			TLorentzVector InvMass1  {event.muonPF2PATPX[Nr1], event.muonPF2PATPY[Nr1], event.muonPF2PATPZ[Nr1], event.muonPF2PATE[Nr1]};
+			TLorentzVector InvMass2  {event.muonPF2PATPX[Nr2], event.muonPF2PATPY[Nr2], event.muonPF2PATPZ[Nr2], event.muonPF2PATE[Nr2]};
+			
+			h_muonRecInvMass->Fill((InvMass1+InvMass2).M());
 			}
 		}
         } 
@@ -660,9 +689,10 @@ int main(int argc, char* argv[])
     h_muonRecPt->Write();
     h_muonRecEta->Write();
     h_muonRecPhi->Write();
+    h_muonRecE->Write();
     h_muonRecDeltaR->Write();
     h_muonRecDeltaPhi->Write();
-
+    h_muonRecInvMass->Write();
 	
     // Safely close file
     outFile->Close();
