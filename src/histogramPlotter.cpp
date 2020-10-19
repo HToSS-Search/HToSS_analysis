@@ -20,7 +20,7 @@
 #include <iostream>
 
 const bool BLIND_PLOTS(true);
-const bool writeExtraText(true);
+const bool writeExtraText(false);
 
 HistogramPlotter::HistogramPlotter(std::vector<std::string> legOrder,
                                    std::vector<std::string> plotOrder,
@@ -525,7 +525,8 @@ void HistogramPlotter::setOutputFolder(std::string output)
 
 void HistogramPlotter::CMS_lumi(TPad* pad, int posX)
 {
-    TString cmsText = "CMS";
+//    TString cmsText = "CMS";
+    TString cmsText = "";
     float cmsTextFont = 61; // default is helvetic-bold
     TString extraText = "Preliminary";
     //  TString extraText   = "WORK IN PROGRESS";
