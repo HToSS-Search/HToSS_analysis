@@ -724,6 +724,10 @@ class AnalysisEvent
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v2;
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3;
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4;
+
+//    Int_t HLT_DoubleL2Mu50_v2;
+//    Int_t HLT_DoubleMu43NoFiltersNoVtx_v3;
+//    Int_t HLT_DoubleMu48NoFiltersNoVtx_v3;
 /*
     Int_t HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v1;
     Int_t HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v2;
@@ -810,6 +814,7 @@ class AnalysisEvent
     Int_t HLT_Photon50_HoverELoose_v9;
     Int_t HLT_Photon60_HoverELoose_v9;
 */
+/*
     // 2016 MET Triggers
     Int_t HLT_MET200_v1;
     Int_t HLT_MET200_v2;
@@ -857,8 +862,9 @@ class AnalysisEvent
     Int_t HLT_PFHT300_PFMET110_v4;
     Int_t HLT_PFHT300_PFMET110_v5;
     Int_t HLT_PFHT300_PFMET110_v6;
-
+*/
     // 2017 MET triggers
+/*
     Int_t HLT_MET105_IsoTrk50_v1;
     Int_t HLT_MET105_IsoTrk50_v3;
     Int_t HLT_MET105_IsoTrk50_v4;
@@ -873,6 +879,7 @@ class AnalysisEvent
     Int_t HLT_MET120_IsoTrk50_v6;
     Int_t HLT_MET120_IsoTrk50_v7;
     Int_t HLT_MET120_IsoTrk50_v8;
+*/
     Int_t HLT_HT430_DisplacedDijet40_DisplacedTrack_v10; // Already in Displaced Jets trigger list
     Int_t HLT_HT430_DisplacedDijet40_DisplacedTrack_v11;
     Int_t HLT_HT430_DisplacedDijet40_DisplacedTrack_v5;
@@ -909,6 +916,7 @@ class AnalysisEvent
     Int_t HLT_HT750_DisplacedDijet80_Inclusive_v6;
     Int_t HLT_HT750_DisplacedDijet80_Inclusive_v7;
     Int_t HLT_HT750_DisplacedDijet80_Inclusive_v9;
+/*
     Int_t HLT_PFMET120_PFMHT120_IDTight_HFCleaned_v1;
     Int_t HLT_PFMET120_PFMHT120_IDTight_HFCleaned_v2;
     Int_t HLT_PFMET120_PFMHT120_IDTight_L1ETMnoHF_v10;
@@ -1041,7 +1049,7 @@ class AnalysisEvent
     Int_t HLT_PFHT800_PFMET85_PFMHT85_IDTight_v7;
     Int_t HLT_PFHT800_PFMET85_PFMHT85_IDTight_v8;
     Int_t HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9;
-
+*/
     // MET Filters
     // 2016
     Int_t Flag_ecalLaserCorrFilter;
@@ -1078,6 +1086,8 @@ class AnalysisEvent
     Int_t genParNumDaughters[NGENPARMAX];
     Int_t genParDaughterId1[NGENPARMAX];
     Int_t genParDaughterId2[NGENPARMAX];
+//    Int_t genParDaughter1Index[NGENPARMAX];
+//    Int_t genParDaughter2Index[NGENPARMAX];
     Int_t genParStatus[NGENPARMAX];
     Int_t genParCharge[NGENPARMAX];
     Int_t eventRun;
@@ -1760,6 +1770,11 @@ class AnalysisEvent
     TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v2;
     TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3;
     TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4;
+
+//    TBranch* b_HLT_DoubleL2Mu50_v2;
+//    TBranch* b_HLT_DoubleMu43NoFiltersNoVtx_v3;
+//    TBranch* b_HLT_DoubleMu48NoFiltersNoVtx_v3;
+
 /*
     TBranch* b_HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v1;
     TBranch* b_HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v2;
@@ -1836,7 +1851,7 @@ class AnalysisEvent
     TBranch* b_HLT_Photon50_HoverELoose_v9;
     TBranch* b_HLT_Photon60_HoverELoose_v9;
 */
-
+/*
     TBranch* b_HLT_MET200_v1;
     TBranch* b_HLT_MET200_v2;
     TBranch* b_HLT_MET200_v3;
@@ -1898,6 +1913,7 @@ class AnalysisEvent
     TBranch* b_HLT_MET120_IsoTrk50_v6;
     TBranch* b_HLT_MET120_IsoTrk50_v7;
     TBranch* b_HLT_MET120_IsoTrk50_v8;
+*/
     TBranch* b_HLT_HT430_DisplacedDijet40_DisplacedTrack_v10; // Already in Displaced Jets trigger list
     TBranch* b_HLT_HT430_DisplacedDijet40_DisplacedTrack_v11;
     TBranch* b_HLT_HT430_DisplacedDijet40_DisplacedTrack_v5;
@@ -1934,6 +1950,7 @@ class AnalysisEvent
     TBranch* b_HLT_HT750_DisplacedDijet80_Inclusive_v6;
     TBranch* b_HLT_HT750_DisplacedDijet80_Inclusive_v7;
     TBranch* b_HLT_HT750_DisplacedDijet80_Inclusive_v9;
+/*
     TBranch* b_HLT_PFMET120_PFMHT120_IDTight_HFCleaned_v1;
     TBranch* b_HLT_PFMET120_PFMHT120_IDTight_HFCleaned_v2;
     TBranch* b_HLT_PFMET120_PFMHT120_IDTight_L1ETMnoHF_v10;
@@ -2066,7 +2083,7 @@ class AnalysisEvent
     TBranch* b_HLT_PFHT800_PFMET85_PFMHT85_IDTight_v7;
     TBranch* b_HLT_PFHT800_PFMET85_PFMHT85_IDTight_v8;
     TBranch* b_HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9;
-
+*/
     TBranch* b_Flag_HBHENoiseFilter;
     TBranch* b_Flag_HBHENoiseIsoFilter;
     TBranch* b_Flag_globalTightHalo2016Filter;
@@ -2097,6 +2114,8 @@ class AnalysisEvent
     TBranch* b_genParNumDaughters; //!
     TBranch* b_genParDaughterId1; //!
     TBranch* b_genParDaughterId2; //!
+//    TBranch* b_genParDaughter1Index; //!
+//    TBranch* b_genParDaughter2Index; //!
     TBranch* b_genParStatus; //!
     TBranch* b_genParCharge; //!
     TBranch* b_eventRun; //!
@@ -2923,6 +2942,11 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
        fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v2", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v2, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v2);
        fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3);
        fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4);
+
+//       fChain->SetBranchAddress("HLT_DoubleL2Mu50_v2", &HLT_DoubleL2Mu50_v2, &b_HLT_DoubleL2Mu50_v2);
+//       fChain->SetBranchAddress("HLT_DoubleMu43NoFiltersNoVtx_v3", &HLT_DoubleMu43NoFiltersNoVtx_v3, &b_HLT_DoubleMu43NoFiltersNoVtx_v3);
+//       fChain->SetBranchAddress("HLT_DoubleMu48NoFiltersNoVtx_v3", &HLT_DoubleMu48NoFiltersNoVtx_v3, &b_HLT_DoubleMu48NoFiltersNoVtx_v3);
+
 /*
        fChain->SetBranchAddress("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v1", &HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v1, &b_HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v1);
        fChain->SetBranchAddress("HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v2", &HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v2, &b_HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v2);
@@ -3017,6 +3041,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
    //MET trigger branches
    if (is2016)
    {
+/*
        fChain->SetBranchAddress("HLT_MET200_v1", &HLT_MET200_v1, &b_HLT_MET200_v1);
        fChain->SetBranchAddress("HLT_MET200_v2", &HLT_MET200_v2, &b_HLT_MET200_v2);
        fChain->SetBranchAddress("HLT_MET200_v3", &HLT_MET200_v3, &b_HLT_MET200_v3);
@@ -3063,9 +3088,11 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
        fChain->SetBranchAddress("HLT_PFHT300_PFMET110_v4", &HLT_PFHT300_PFMET110_v4, &b_HLT_PFHT300_PFMET110_v4);
        fChain->SetBranchAddress("HLT_PFHT300_PFMET110_v5", &HLT_PFHT300_PFMET110_v5, &b_HLT_PFHT300_PFMET110_v5);
        fChain->SetBranchAddress("HLT_PFHT300_PFMET110_v6", &HLT_PFHT300_PFMET110_v6, &b_HLT_PFHT300_PFMET110_v6);
+*/
    }
    else
    { // 2017
+/*
        fChain->SetBranchAddress("HLT_MET105_IsoTrk50_v1", &HLT_MET105_IsoTrk50_v1, &b_HLT_MET105_IsoTrk50_v1);
        fChain->SetBranchAddress("HLT_MET105_IsoTrk50_v3", &HLT_MET105_IsoTrk50_v3, &b_HLT_MET105_IsoTrk50_v3);
        fChain->SetBranchAddress("HLT_MET105_IsoTrk50_v4", &HLT_MET105_IsoTrk50_v4, &b_HLT_MET105_IsoTrk50_v4);
@@ -3080,6 +3107,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
        fChain->SetBranchAddress("HLT_MET120_IsoTrk50_v6", &HLT_MET120_IsoTrk50_v6, &b_HLT_MET120_IsoTrk50_v6);
        fChain->SetBranchAddress("HLT_MET120_IsoTrk50_v7", &HLT_MET120_IsoTrk50_v7, &b_HLT_MET120_IsoTrk50_v7);
        fChain->SetBranchAddress("HLT_MET120_IsoTrk50_v8", &HLT_MET120_IsoTrk50_v8, &b_HLT_MET120_IsoTrk50_v8);
+*/
        fChain->SetBranchAddress("HLT_HT430_DisplacedDijet40_DisplacedTrack_v10", &HLT_HT430_DisplacedDijet40_DisplacedTrack_v10, &b_HLT_HT430_DisplacedDijet40_DisplacedTrack_v10); // Already in Displaced Jets trigger list
        fChain->SetBranchAddress("HLT_HT430_DisplacedDijet40_DisplacedTrack_v11", &HLT_HT430_DisplacedDijet40_DisplacedTrack_v11, &b_HLT_HT430_DisplacedDijet40_DisplacedTrack_v11);
        fChain->SetBranchAddress("HLT_HT430_DisplacedDijet40_DisplacedTrack_v5", &HLT_HT430_DisplacedDijet40_DisplacedTrack_v5, &b_HLT_HT430_DisplacedDijet40_DisplacedTrack_v5);
@@ -3116,6 +3144,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
        fChain->SetBranchAddress("HLT_HT750_DisplacedDijet80_Inclusive_v6", &HLT_HT750_DisplacedDijet80_Inclusive_v6, &b_HLT_HT750_DisplacedDijet80_Inclusive_v6);
        fChain->SetBranchAddress("HLT_HT750_DisplacedDijet80_Inclusive_v7", &HLT_HT750_DisplacedDijet80_Inclusive_v7, &b_HLT_HT750_DisplacedDijet80_Inclusive_v7);
        fChain->SetBranchAddress("HLT_HT750_DisplacedDijet80_Inclusive_v9", &HLT_HT750_DisplacedDijet80_Inclusive_v9, &b_HLT_HT750_DisplacedDijet80_Inclusive_v9);
+/*
        fChain->SetBranchAddress("HLT_PFMET120_PFMHT120_IDTight_HFCleaned_v1", &HLT_PFMET120_PFMHT120_IDTight_HFCleaned_v1, &b_HLT_PFMET120_PFMHT120_IDTight_HFCleaned_v1);
        fChain->SetBranchAddress("HLT_PFMET120_PFMHT120_IDTight_HFCleaned_v2", &HLT_PFMET120_PFMHT120_IDTight_HFCleaned_v2, &b_HLT_PFMET120_PFMHT120_IDTight_HFCleaned_v2);
        fChain->SetBranchAddress("HLT_PFMET120_PFMHT120_IDTight_L1ETMnoHF_v10", &HLT_PFMET120_PFMHT120_IDTight_L1ETMnoHF_v10, &b_HLT_PFMET120_PFMHT120_IDTight_L1ETMnoHF_v10);
@@ -3248,6 +3277,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
        fChain->SetBranchAddress("HLT_PFHT800_PFMET85_PFMHT85_IDTight_v7", &HLT_PFHT800_PFMET85_PFMHT85_IDTight_v7, &b_HLT_PFHT800_PFMET85_PFMHT85_IDTight_v7);
        fChain->SetBranchAddress("HLT_PFHT800_PFMET85_PFMHT85_IDTight_v8", &HLT_PFHT800_PFMET85_PFMHT85_IDTight_v8, &b_HLT_PFHT800_PFMET85_PFMHT85_IDTight_v8);
        fChain->SetBranchAddress("HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9", &HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9, &b_HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9);
+*/
    }
    //MET filter branches
    if (is2016)
@@ -3287,6 +3317,8 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
        fChain->SetBranchAddress("genParNumDaughters", genParNumDaughters, &b_genParNumDaughters);
        fChain->SetBranchAddress("genParDaughterId1", genParDaughterId1, &b_genParDaughterId1);
        fChain->SetBranchAddress("genParDaughterId2", genParDaughterId2, &b_genParDaughterId2);
+//       fChain->SetBranchAddress("genParDaughter1Index", genParDaughter1Index, &b_genParDaughter1Index);
+//       fChain->SetBranchAddress("genParDaughter2Index", genParDaughter2Index, &b_genParDaughter2Index);
        fChain->SetBranchAddress("genParStatus", genParStatus, &b_genParStatus);
        fChain->SetBranchAddress("genParCharge", genParCharge, &b_genParCharge);
    }
@@ -3495,6 +3527,7 @@ inline bool AnalysisEvent::muEGTrig() const
 inline bool AnalysisEvent::mumuTrig() const
 {
     return is2016_ ? (eventRun < 280919
+// 2016 triggers
                       && (HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v2 > 0
                           || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v3 > 0
                           || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v4 > 0
@@ -3509,6 +3542,7 @@ inline bool AnalysisEvent::mumuTrig() const
                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2 > 0
                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v3 > 0
                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v6 > 0
+//2017 triggers
                    : HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v8 > 0
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v9 > 0
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v10 > 0
