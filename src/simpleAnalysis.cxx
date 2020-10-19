@@ -546,8 +546,8 @@ int main(int argc, char* argv[])
     h_genParHiggsEta->Write();
     h_genParHiggsPhi->Write();
     h_genParHiggsE->Write();
-    h_HiggsDeltaR->Write();
-    h_HiggsDeltaPhi->Write();
+    /*h_HiggsDeltaR->Write();
+    h_HiggsDeltaPhi->Write();*/
     h_HiggsInvMass->Write();
 	
     h_genParScalarPt->Write();
