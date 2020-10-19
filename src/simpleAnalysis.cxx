@@ -69,8 +69,8 @@ int main(int argc, char* argv[])
     TH1F* h_genParHiggsEta     {new TH1F("h_genParHiggsEta", "genPar h_0 #eta",  200, -7., 7.)}; 
     TH1F* h_genParHiggsPhi     {new TH1F("h_genParHiggsPhi", "genPar h_0 #phi",  100, -3.5, 3.5)};
     TH1F* h_genParHiggsE       {new TH1F("h_genParHiggsE",   "genPar h_0 energy",     1000, 0., 1000.)};
-    TH1F* h_HiggsDeltaR        {new TH1F("h_HiggsDeltaR", "Scalar #DeltaR",1500,-10., 10.)}; 
-    TH1F* h_HiggsDeltaPhi      {new TH1F("h_HiggsDeltaPhi", "Scalar #Delta#phi",1500, -3.5, 3.5)};
+    /*TH1F* h_HiggsDeltaR        {new TH1F("h_HiggsDeltaR", "Scalar #DeltaR",1500,-10., 10.)}; 
+    TH1F* h_HiggsDeltaPhi      {new TH1F("h_HiggsDeltaPhi", "Scalar #Delta#phi",1500, -3.5, 3.5)};*/
     TH1F* h_HiggsInvMass      {new TH1F("h_HiggsInvMass",  "h_0 Invariant mass", 1000, 0., 1000.)};
     
     //Scalar decay
@@ -127,7 +127,7 @@ int main(int argc, char* argv[])
     
     //Vertex position: muons, kaons, kshort, pions
     TH2I* h_VertexPosXY {new TH2I("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
-    TH2I* h_VertexPosRZ {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, -150,150,100,-150,150)};
+    TH2I* h_VertexPosRZ {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, -20,20,100,-250,250)};
 	
     namespace po = boost::program_options;
 
@@ -262,20 +262,27 @@ int main(int argc, char* argv[])
                 const Float_t genParPhi { event.genParPhi[k] };
                 const Float_t genParE   { event.genParE[k] };
 		 
-		const bool ownParent {pdgId == motherId ? true : false}; 
-		
+		//const bool ownParent {pdgId == motherId ? true : false}; 
+		const bool ownParent {if(pdgId == motherId){return true;}else{return false;}};
+		   
+		//Invariant masses
+		//const TLorentzVector genMass {event.PX[k], event.PY[k], event.PZ[k], event.E[k]};
+
 		h_genParPt->Fill(genParPt);
                 h_genParEta->Fill(genParEta);
                 h_genParPhi->Fill(genParPhi);
                 h_genParE->Fill(genParE);
 		
 		//Higgs boson
-		if (pdgId==25 && !ownParent){
+		if (pdgId==25 && !ownParent){ //First entry Higgs - to obtain mass correctly
 		nrofHiggs.emplace_back(k);
 		h_genParHiggsPt->Fill(genParPt);
 		h_genParHiggsEta->Fill(genParEta);
 		h_genParHiggsPhi->Fill(genParPhi);
 		h_genParHiggsE->Fill(genParE);
+		
+		/*for()
+		h_HiggsInvMass->Fill(.first.M()); //[0]=.first*/
 		}
 		    
 		//Scalar decay
