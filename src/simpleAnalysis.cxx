@@ -262,8 +262,8 @@ int main(int argc, char* argv[])
                 const Float_t genParPhi { event.genParPhi[k] };
                 const Float_t genParE   { event.genParE[k] };
 		 
-		//const bool ownParent {pdgId == motherId ? true : false}; 
-		const bool ownParent {if(pdgId == motherId){return true;}else{return false;}};
+		const bool ownParent {pdgId == motherId ? true : false}; 
+		//const bool ownParent {if(pdgId == motherId){return true;}else{return false;}};
 		   
 		//Invariant masses
 		//const TLorentzVector genMass {event.PX[k], event.PY[k], event.PZ[k], event.E[k]};
