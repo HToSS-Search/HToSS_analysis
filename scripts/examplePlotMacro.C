@@ -9,9 +9,16 @@
  #include "TStyle.h"
  #include "TLatex.h"
 
- void examplePlotMacro(std::string histogram) {
+main(){
+ 
+     std::string histogram;
+     std::cin>>histogram;
+     examplePlotMacro(histogram)
+}
 
-     TFile inFile(histogram); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
+ void examplePlotMacro(std::string histogram) {  
+  
+     TFile inFile("ggH_MS2_ctau10.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
      TH1F* h_genParPt = (TH1F*)inFile.Get(histogram); // Load in histogram
 
      TCanvas* canvy = new TCanvas ("canvy", "canvy", 50, 50, 800, 600); // Canvas to draw histogram on
