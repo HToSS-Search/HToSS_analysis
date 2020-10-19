@@ -129,10 +129,17 @@ int main(int argc, char* argv[])
     TH2I* h_VertexPosXY {new TH2I("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
     TH2I* h_VertexPosRZ {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, -20,20,100,-250,250)};
 	
-    //Reconstruction histograms
+    //RECONSTRUCTION histograms
+	
+    //Muon reco
     TH1F* h_muonRecPt      {new TH1F("h_muonRecPt",  "#mu^{#pm} reconstruction p_{T}", 1000, 0., 1000.)}; 
     TH1F* h_muonRecEta     {new TH1F("h_muonRecEta", "#mu^{#pm} reconstruction #eta",  200, -7., 7.)}; 
     TH1F* h_muonRecPhi     {new TH1F("h_muonRecPhi", "#mu^{#pm} reconstruction #phi",  100, -3.5, 3.5)};
+    TH1F* h_muonRecE       {new TH1F("h_muonRecE",   "#mu^{#pm} reconstruction energy",     1000, 0., 1000.)};
+    TH1F* h_muonRecDeltaR        {new TH1F("h_muonRecDeltaR", "Muon reconstruction #DeltaR",2500, -10., 10.)}; 
+    TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
+	
+	
 	
     namespace po = boost::program_options;
 
@@ -513,24 +520,36 @@ int main(int argc, char* argv[])
 		 /// Muon Reconstruction
 		for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
 		
-		const Int_t muonRecPdgId { std::abs(event.genMuonPF2PATPdgId[k]) };
+		//const Int_t muonRecPdgId { std::abs(event.genMuonPF2PATPdgId[k]) };
 		
-                const Float_t muonRecPt  { event.genMuonPF2PATPT[k] };
-                const Float_t muonRecEta { event.genMuonPF2PATEta[k] };
-                const Float_t muonRecPhi { event.genMuonPF2PATPhi[k] };
-              //  const Float_t muonRecE   { event.[k] };
+                const Float_t muonRecPt  { event.muonPF2PATPt[k] };
+                const Float_t muonRecEta { event.muonPF2PATEta[k] };
+                const Float_t muonRecPhi { event.muonPF2PATPhi[k] };
+                const Float_t muonRecE   { event.muonPF2PATE[k] };
+			
+		std::vector<int> nrofmuonRec;
 		 
 		//Muon reconstruction from scalar decay
-			if(muonRecPdgId==13){
+			
 			h_muonRecPt->Fill(muonRecPt);
                 	h_muonRecEta->Fill(muonRecEta);
                 	h_muonRecPhi->Fill(muonRecPhi);
-              		//  h_genParE->Fill(genParE);
+			h_muonRecE->Fill(muonRecE);
 			
+			if(nrofmuonRec.size()==2){
+			const int Nr1 {nrofmuonRec[0]}; 
+			const int Nr2 {nrofmuonRec[1]};
+			
+			//Use DeltaPhi (const TLorentzVector)
+			TLorentzVector nr1;
+			TLorentzVector nr2;
+			
+			nr1.SetPtEtaPhiE(event.muonPF2PATPt[Nr1],event.muonPF2PATEta[Nr1],event.muonPF2PATPhi[Nr1],event.muonPF2PATE[Nr1]);
+			nr2.SetPtEtaPhiE(event.muonPF2PATPt[Nr2],event.muonPF2PATEta[Nr2],event.muonPF2PATPhi[Nr2],event.muonPF2PATE[Nr2]);
+			
+			h_muonRecDeltaR->Fill(nr1.DeltaR(nr2));
+			h_muonRecDeltaPhi->Fill(nr1.DeltaPhi(nr2));	
 			}
-		
-		
-		
 		}
         } 
     }
@@ -640,6 +659,9 @@ int main(int argc, char* argv[])
     h_muonRecPt->Write();
     h_muonRecEta->Write();
     h_muonRecPhi->Write();
+    h_muonRecDeltaR->Write();
+    h_muonRecDeltaPhi->Write();
+
 	
     // Safely close file
     outFile->Close();
