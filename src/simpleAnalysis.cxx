@@ -144,7 +144,6 @@ int main(int argc, char* argv[])
     TH1F* h_muonRecE       {new TH1F("h_muonRecE",   "#mu^{#pm} reconstruction energy",     1000, 0., 1000.)};
     TH1F* h_muonRecDeltaR        {new TH1F("h_muonRecDeltaR", "Muon reconstruction #DeltaR",2500, -10., 10.)}; 
     TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
-    TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
     TH1F* h_muonRecInvMass     {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",1000, 0, 500)};
 	
 	
