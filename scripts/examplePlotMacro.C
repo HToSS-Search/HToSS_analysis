@@ -9,7 +9,7 @@
  #include "TStyle.h"
  #include "TLatex.h"
 
- void examplePlotMacro() {
+ void examplePlotMacro(std::string histogram) {
 
      TFile inFile(std::string histogram); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
      TH1F* h_genParPt = (TH1F*)inFile.Get(std::string histogram); // Load in histogram
