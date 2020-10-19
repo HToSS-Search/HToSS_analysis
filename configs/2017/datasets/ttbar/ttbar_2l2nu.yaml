@@ -1,6 +1,6 @@
 name: "ttbar_2l2v"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/ttbar_2l2v/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/ttbar/ttbar_2l2v/"
 total_events: 69155808
 cross_section: 88.29
 mc: true
