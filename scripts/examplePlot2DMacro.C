@@ -16,14 +16,14 @@
    
      TCanvas* canv2 = new TCanvas ("canv2", "canv2", 50, 50, 800, 600); // Canvas to draw histogram on
   
-     gPad->SetLogy(); // set log scale for y-axis on for objects drawn on the canvas from this point on
+     //gPad->SetLogy(); // set log scale for y-axis on for objects drawn on the canvas from this point on
 
      h_VertexPosXY->GetXaxis()->SetTitle("Vertex Position X"); // set a title for the x-axis
      h_VertexPosXY->GetXaxis()->SetRangeUser(0.0, 200.); // change the x-axis range to 0-200
      h_VertexPosXY->GetYaxis()->SetTitle("Vertex Position Y"); 
      h_VertexPosXY->GetYaxis()->SetRangeUser(0.0, 200.); //
  
-      h_VertexPosXY->Draw("colz"); // draw histo on canvas
+     h_VertexPosXY->Draw("colz"); // draw histo on canvas
      canv2->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
