@@ -837,6 +837,28 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
                  return {event.muonPF2PATDBPV[event.muonIndexTight[1]]};
              }
          }},
+        {"lep1DZ",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             if (event.electronIndexTight.size() > 1)
+             {
+                 return {event.elePF2PATDZPV[event.electronIndexTight[0]]};
+             }
+             else
+             {
+                 return {event.muonPF2PATDZPV[event.muonIndexTight[0]]};
+             }
+         }},
+        {"lep2DZ",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             if (event.electronIndexTight.size() > 1)
+             {
+                 return {event.elePF2PATD0PV[event.electronIndexTight[1]]};
+             }
+             else
+             {
+                 return {event.muonPF2PATDZPV[event.muonIndexTight[1]]};
+             }
+         }},
         {"lep1DBD0",
          [](const AnalysisEvent& event) -> std::vector<float> {
              if (event.electronIndexTight.size() > 1)

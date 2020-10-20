@@ -5,7 +5,7 @@ plots:
     xMin: 0.
     nBins: 20
     fillExp: "lep1Pt"
-    xAxisLabel: "p_{T} lep 1 (GeV/c)"
+    xAxisLabel: "p_{T} lepton 1 (GeV/c)"
     cutStage: 0
   - title: "Second Lepton p_{T}"
     name: "lep2Pt"
@@ -13,7 +13,7 @@ plots:
     xMin: 0.
     nBins: 20
     fillExp: "lep2Pt"
-    xAxisLabel: "p_{T} lep 2 (GeV/c)"
+    xAxisLabel: "p_{T} lepton 2 (GeV/c)"
     cutStage: 0
   - title: "Leading Lepton #phi"
     name: "lep1Phi"
@@ -21,7 +21,7 @@ plots:
     xMin: -3.2
     nBins: 40
     fillExp: "lep1Phi"
-    xAxisLabel: "#phi lep 1"
+    xAxisLabel: "#phi leptpm 1"
     cutStage: 0
   - title: "Second Lepton #phi"
     name: "lep2Phi"
@@ -29,7 +29,7 @@ plots:
     xMin: -3.2
     nBins: 40
     fillExp: "lep2Phi"
-    xAxisLabel: "#phi_{T} lep 2"
+    xAxisLabel: "#phi_{T} lepton 2"
     cutStage: 0
   - title: "Leading Lepton #eta"
     name: "lep1Eta"
@@ -37,7 +37,7 @@ plots:
     xMin: 0.
     nBins: 30
     fillExp: "lep1Eta"
-    xAxisLabel: "#eta lep 1"
+    xAxisLabel: "#eta lepton 1"
     cutStage: 0
   - title: "Second Lepton #eta"
     name: "lep2Eta"
@@ -45,39 +45,55 @@ plots:
     xMin: 0.
     nBins: 30
     fillExp: "lep2Eta"
-    xAxisLabel: "#eta lep 2"
+    xAxisLabel: "#eta lepton 2"
     cutStage: 0
   - title: "Leading Lepton Relative Isolation"
     name: "lep1RelIso"
-    xMax: 0.2
+    xMax: 1.0
     xMin: 0.
     nBins: 500
     fillExp: "lep1RelIso"
-    xAxisLabel: "RelIso lep 1"
+    xAxisLabel: "RelIso lepton 1"
     cutStage: 0
   - title: "Second Lepton Relative Isolation"
     name: "lep2RelIso"
-    xMax: 0.2
+    xMax: 1.0
     xMin: 0.
     nBins: 500
     fillExp: "lep2RelIso"
-    xAxisLabel: "RelIso lep 2"
+    xAxisLabel: "RelIso lepton 2"
     cutStage: 0
-  - title: "Leading Lepton D0"
+  - title: "Leading Lepton d_{0}"
     name: "lep1D0"
-    xMax: 0.1
+    xMax: 1.0
     xMin: 0.
-    nBins: 100
+    nBins: 500
     fillExp: "lep1D0"
-    xAxisLabel: "lep 1 D0"
+    xAxisLabel: "lepton 1 d_{0}"
     cutStage: 0
-  - title: "Second Lepton D0"
+  - title: "Second Lepton d_{0}"
     name: "lep2D0"
-    xMax: 0.1
+    xMax: 1.0
     xMin: 0.
-    nBins: 100
+    nBins: 500
     fillExp: "lep2D0"
-    xAxisLabel: "lep 2 D0"
+    xAxisLabel: "lepton 2 D0"
+    cutStage: 0
+  - title: "Leading Lepton d_{Z}"
+    name: "lep1DZ"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep1DZ"
+    xAxisLabel: "lepton 1 d_{Z}"
+    cutStage: 0
+  - title: "Second Lepton d_{Z}"
+    name: "lep2DZ"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep2DZ"
+    xAxisLabel: "lepton 2 d_{z}"
     cutStage: 0
   - title: "E_{T}^{miss}"
     name: "met"
@@ -89,9 +105,9 @@ plots:
     cutStage: 0
   - title: "Number of Tight Jets"
     name: "numbJets"
-    xMax: 8.5
+    xMax: 20.5
     xMin: -0.5
-    nBins: 9
+    nBins: 21
     fillExp: "numbJets"
     xAxisLabel: "Number of tight jets"
     cutStage: 0
@@ -274,8 +290,8 @@ plots:
   - title: "Number of b-tagged Jets"
     name: "numbBJets"
     xMin: -0.5
-    xMax: 8.5
-    nBins: 9
+    xMax: 20.5
+    nBins: 21
     fillExp: "numbBJets"
     xAxisLabel: "Number of b tags"
     cutStage: 2
@@ -351,7 +367,7 @@ plots:
     fillExp: "zLepton2RelIso"
     xAxisLabel: "RelIso Z lepton 2"
     cutStage: 0
-  - title: "Invariant Z Mass"
+  - title: "Dilepton Invariant Mass"
     name: "zPairMass"
     xMin: 50.
     xMax: 140.
@@ -359,21 +375,21 @@ plots:
     fillExp: "zPairMass"
     xAxisLabel: "m_{ll} (GeV/c^{2})"
     cutStage: 0
-  - title: "Z p_{T}"
+  - title: "Dilepton p_{T}"
     name: "zPairPt"
     xMin: 0.
     xMax: 400.
     nBins: 20
     fillExp: "zPairPt"
-    xAxisLabel: "p_{T} Z pair (GeV/c)"
+    xAxisLabel: "p_{T} dilepton (GeV/c)"
     cutStage: 0
-  - title: "Z #eta"
+  - title: "Dilepton #eta"
     name: "zPairEta"
     xMin: 0.
     xMax: 5.
     nBins: 30
     fillExp: "zPairEta"
-    xAxisLabel: "#eta Z pair"
+    xAxisLabel: "#eta dilepton"
     cutStage: 0
   - title: "Z #phi"
     name: "zPairPhi"
@@ -381,7 +397,7 @@ plots:
     xMax: -3.2
     nBins: 40
     fillExp: "zPairPhi"
-    xAxisLabel: "#phi Z pair"
+    xAxisLabel: "#phi dilepton"
     cutStage: 0
   - title: "Invariant Top Mass"
     name: "topMass"
