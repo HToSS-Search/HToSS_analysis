@@ -13,7 +13,6 @@
 #include "TLorentzVector.h"
 #include "TVector3.h"
 #include "TString.h"
-#include <bits/stdc++.h>
 #include "config_parser.hpp"
 
 #include <boost/filesystem.hpp>
@@ -70,8 +69,6 @@ int main(int argc, char* argv[])
     TH1F* h_genParHiggsEta     {new TH1F("h_genParHiggsEta", "genPar h_0 #eta",  200, -7., 7.)}; 
     TH1F* h_genParHiggsPhi     {new TH1F("h_genParHiggsPhi", "genPar h_0 #phi",  100, -3.5, 3.5)};
     TH1F* h_genParHiggsE       {new TH1F("h_genParHiggsE",   "genPar h_0 energy",     1000, 0., 1000.)};
-    /*TH1F* h_HiggsDeltaR        {new TH1F("h_HiggsDeltaR", "Scalar #DeltaR",1500,-10., 10.)}; 
-    TH1F* h_HiggsDeltaPhi      {new TH1F("h_HiggsDeltaPhi", "Scalar #Delta#phi",1500, -3.5, 3.5)};*/
     TH1F* h_HiggsInvMass      {new TH1F("h_HiggsInvMass",  "h_0 Invariant mass", 1000, 0., 1000.)};
     
     //Scalar decay
@@ -380,21 +377,6 @@ int main(int argc, char* argv[])
 		pdgIdMap[pdgId]++;
 		    
             }    
-		/*if (nrofHiggs.size()==2){ //Two-particle (scalar) correlations
-		const int Nr1 {nrofHiggs[0]}; 
-		const int Nr2 {nrofHiggs[1]};
-			
-		//Use DeltaPhi (const TLorentzVector)
-		TLorentzVector nr1;
-		TLorentzVector nr2;
-			
-		nr1.SetPtEtaPhiE(event.genParPt[Nr1],event.genParEta[Nr1],event.genParPhi[Nr1],event.genParE[Nr1]);
-		nr2.SetPtEtaPhiE(event.genParPt[Nr2],event.genParEta[Nr2],event.genParPhi[Nr2],event.genParE[Nr2]);
-			
-		h_HiggsDeltaR->Fill(nr1.DeltaR(nr2));
-		h_HiggsDeltaPhi->Fill(nr1.DeltaPhi(nr2));
-	        h_HiggsInvMass->Fill((nr1+nr2).M());
-		}*/
 		
 		if (nrofScalar.size()==2){ //Two-particle (scalar) correlations
 		const int Nr1 {nrofScalar[0]}; //Give the scalar index value k
@@ -420,8 +402,6 @@ int main(int argc, char* argv[])
 			
 		h_Scalar3DAngle->Fill(angle1.Angle(angle2));		   
 		}
-		
-		
 		
 		
 		//Now same procedure for kaons,pions,muons,Kshort
@@ -540,19 +520,7 @@ int main(int argc, char* argv[])
                 const Float_t muonRecPhi { event.muonPF2PATPhi[k] };
                 const Float_t muonRecE   { event.muonPF2PATE[k] };
 		
-		
-		 
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		//Muon reconstruction from scalar decay
 			std::vector<int> nrofmuonRec;
 
 			h_muonRecPt->Fill(muonRecPt);
@@ -634,8 +602,6 @@ int main(int argc, char* argv[])
     h_genParHiggsEta->Write();
     h_genParHiggsPhi->Write();
     h_genParHiggsE->Write();
-    /*h_HiggsDeltaR->Write();
-    h_HiggsDeltaPhi->Write();*/
     h_HiggsInvMass->Write();
 	
     h_genParScalarPt->Write();
