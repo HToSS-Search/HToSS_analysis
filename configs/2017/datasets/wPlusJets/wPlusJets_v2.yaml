@@ -1,7 +1,7 @@
 name: "wPlusJets"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/Wjets_v2/"
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/Wjets_v2_ext1/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/Wjets/Wjets_v2/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/Wjets/Wjets_v2_ext1/"
 mc: true
 total_events: 77700506
 cross_section: 52940.0

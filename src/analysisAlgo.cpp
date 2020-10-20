@@ -397,8 +397,8 @@ void AnalysisAlgo::setupPlots()
 {
     // Do a little initialisation for the plots here. Will later on be done in a
     // config file. Initialise plot stage names.
-    stageNames.emplace_back(std::make_pair("lepSel", "Lepton Cuts"));
-    stageNames.emplace_back(std::make_pair("zMass", "Z Mass Cuts"));
+    stageNames.emplace_back(std::make_pair("lepSel", "Muon Cuts"));
+    stageNames.emplace_back(std::make_pair("zMass", "m_{#mu#mu} Cuts"));
     stageNames.emplace_back(std::make_pair("jetSel", "Jet Cuts"));
     stageNames.emplace_back(std::make_pair("bTag", "b-tag Cuts"));
 //    stageNames.emplace_back(std::make_pair("wMass", "W Mass Cuts"));

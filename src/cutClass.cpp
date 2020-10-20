@@ -1356,32 +1356,7 @@ bool Cuts::triggerCuts(const AnalysisEvent& event,
 // Does event pass MET Filter
 bool Cuts::metFilters(const AnalysisEvent& event) const
 {
-    if (event.Flag_HBHENoiseFilter <= 0 || event.Flag_HBHENoiseIsoFilter <= 0
-        || event.Flag_globalTightHalo2016Filter <= 0
-        || event.Flag_EcalDeadCellTriggerPrimitiveFilter <= 0
-        || event.Flag_goodVertices <= 0)
-    {
-        return false;
-    }
-
-    if (is2016_
-        && (event.Flag_ecalLaserCorrFilter <= 0
-            || event.Flag_chargedHadronTrackResolutionFilter <= 0
-            || event.Flag_muonBadTrackFilter <= 0
-            || (!isMC_ && event.Flag_noBadMuons <= 0)))
-    {
-        return false;
-    }
-
-    if (!is2016_
-        && (event.Flag_BadPFMuonFilter <= 0
-            || event.Flag_BadChargedCandidateFilter <= 0
-            || event.Flag_ecalBadCalibFilter <= 0))
-    {
-        return false;
-    }
-
-    return true;
+    return event.metFilters();
 }
 
 double Cuts::deltaPhi(const double phi1, const double phi2)
