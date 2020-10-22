@@ -399,102 +399,6 @@ plots:
     fillExp: "zPairPhi"
     xAxisLabel: "#phi dilepton"
     cutStage: 0
-  - title: "Invariant Top Mass"
-    name: "topMass"
-    xMin: 0.
-    xMax: 500.
-    nBins: 25
-    fillExp: "topMass"
-    xAxisLabel: "mass_{top} (GeV/c^{2})"
-    cutStage: 3
-  - title: "Top p_{T}"
-    name: "topPt"
-    xMin: 0.
-    xMax: 1000.
-    nBins: 100
-    fillExp: "topPt"
-    xAxisLabel: "p_{T}^{top} (GeV/c)"
-    cutStage: 3
-  - title: "Top #eta"
-    name: "topEta"
-    xMin: 0.
-    xMax: 5.
-    nBins: 30
-    fillExp: "topEta"
-    xAxisLabel: "#eta_{top}"
-    cutStage: 3
-  - title: "Top #phi"
-    name: "topPhi"
-    xMin: -3.2
-    xMax: 3.2
-    nBins: 40
-    fillExp: "topPhi"
-    xAxisLabel: "#phi_{top}"
-    cutStage: 3
-  - title: "Leading W jet p_{T}"
-    name: "wQuark1Pt"
-    xMin: 0.
-    xMax: 200.
-    nBins: 50
-    fillExp: "wQuark1Pt"
-    xAxisLabel: "p_{T} w quark 1 (GeV/c)"
-    cutStage: 3
-  - title: "Second W Jet p_{T}"
-    name: "wQuark2Pt"
-    xMin: 0.
-    xMax: 200.
-    nBins: 50
-    fillExp: "wQuark2Pt"
-    xAxisLabel: "p_{T} w quark 2 (GeV/c)"
-    cutStage: 3
-  - title: "Leading W Jet #eta"
-    name: "wQuark1Eta"
-    xMin: 0.
-    xMax: 5.
-    nBins: 30
-    fillExp: "wQuark1Eta"
-    xAxisLabel: "#eta w quark 1"
-    cutStage: 3
-  - title: "Second W Jet #eta"
-    name: "wQuark2Eta"
-    xMin: 0.
-    xMax: 5.
-    nBins: 30
-    fillExp: "wQuark2Eta"
-    xAxisLabel: "#eta w quark 2"
-    cutStage: 3
-  - title: "Leading W Jet #phi"
-    name: "wQuark1Phi"
-    xMin: -3.2
-    xMax: 3.2
-    nBins: 25
-    fillExp: "wQuark1Phi"
-    xAxisLabel: "#phi w quark 1"
-    cutStage: 3
-  - title: "Second W Jet #phi"
-    name: "wQuark2Phi"
-    xMin: -3.2
-    xMax: 3.2
-    nBins: 25
-    fillExp: "wQuark2Phi"
-    xAxisLabel: "#phi w quark 2"
-    cutStage: 3
-  - title: "Invariant W Mass"
-    name: "wPairMass"
-    xMin: 0.
-    xMax: 200.
-    nBins: 25
-    fillExp: "wPairMass"
-    xAxisLabel: "m_{jj'} (GeV)"
-    cutStage: 3
-  - title: "Transverse W Mass"
-    name: "wTransverseMass"
-    xMin: 0.
-    xMax: 130.
-    nBins: 25
-    fillExp: "wTransverseMass"
-    xAxisLabel: "Wm_{T} (GeV)"
-    cutStage: 3
   - title: "#Delta(R) between Leading Jets"
     name: "jjDelR"
     xMin: 0.
@@ -535,7 +439,7 @@ plots:
     fillExp: "zLepDelR"
     xAxisLabel: "zLepDelR"
     cutStage: 1
-  - title: "#Delta(phi) between Z Leptons"
+  - title: "#Delta(#phi) between Z Leptons"
     name: "zLepDelPhi"
     xMin: 0.
     xMax: 3.2
@@ -551,7 +455,7 @@ plots:
     fillExp: "zLep1BjetDelR"
     xAxisLabel: "zLep1BjetDelR"
     cutStage: 3
-  - title: "#Delta(phi) between Leading Z Lepton and b-Jet"
+  - title: "#Delta(#phi) between Leading Z Lepton and b-Jet"
     name: "zLep1BjetDelPhi"
     xMin: 0.
     xMax: 3.2
@@ -567,7 +471,7 @@ plots:
     fillExp: "zLep2BjetDelR"
     xAxisLabel: "zSecond Lepton BjetDelR"
     cutStage: 3
-  - title: "#Delta(Phi) between Second Z Lepton and b-Jet"
+  - title: "#Delta(#phi) between Second Z Lepton and b-Jet"
     name: "zLep2BjetDelPhi"
     xMin: 0.
     xMax: 3.2

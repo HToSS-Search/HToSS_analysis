@@ -1,4 +1,4 @@
-name: "ttbar_2l2v"
+name: "ttbar_2l2nu"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/ttbar/ttbar_2l2nu/"
 total_events: 69155808

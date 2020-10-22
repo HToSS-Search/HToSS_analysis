@@ -1,6 +1,6 @@
 name: "WWW"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/WWW/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/VVV/WWW/"
 total_events: 232300
 cross_section: 0.2086
 mc: true

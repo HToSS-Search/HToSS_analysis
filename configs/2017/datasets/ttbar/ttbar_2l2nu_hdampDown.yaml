@@ -1,4 +1,4 @@
-name: "ttbar_2l2v_hdampDown"
+name: "ttbar_2l2nu_hdampDown"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/ttbar_2l2nu_hdampDOWN/"
 total_events: 5476459
