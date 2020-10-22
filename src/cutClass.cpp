@@ -50,7 +50,7 @@ Cuts::Cuts(const bool doPlots,
     , looseMuonEta_{5.0}
     , looseMuonRelIso_{0.25}
 
-    , invZMassCut_{999999.}
+    , invZMassCut_{10.}
     , invWMassCut_{999999.}
 
     , numJets_{0}
@@ -658,40 +658,22 @@ std::vector<int> Cuts::getTightMuons(const AnalysisEvent& event) const
 std::vector<int> Cuts::getLooseMuons(const AnalysisEvent& event) const
 {
     std::vector<int> muons;
-    if (is2016_)
-    {
-        for (int i{0}; i < event.numMuonPF2PAT; i++)
-        {
-            if (!event.muonPF2PATIsPFMuon[i])
-                continue;
+    if (is2016_) {
+        for (int i{0}; i < event.numMuonPF2PAT; i++) {
+            if (!event.muonPF2PATIsPFMuon[i]) continue;
 
-            if (muons.size() < 1
-                && event.muonPF2PATPt[i] <= looseMuonPtLeading_)
-                continue;
-            else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= looseMuonPt_)
-                continue;
+            if (muons.size() < 1 && event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
+            else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= looseMuonPt_) continue;
 
-            if (std::abs(event.muonPF2PATEta[i]) >= looseMuonEta_)
-                continue;
-            if (event.muonPF2PATComRelIsodBeta[i] >= looseMuonRelIso_)
-                continue;
-            if (event.muonPF2PATGlobalID[i] || event.muonPF2PATTrackID[i])
-                muons.emplace_back(i);
+            if (std::abs(event.muonPF2PATEta[i]) >= looseMuonEta_) continue;
+            if (event.muonPF2PATComRelIsodBeta[i] >= looseMuonRelIso_)  continue;
+            if (event.muonPF2PATGlobalID[i] || event.muonPF2PATTrackID[i])  muons.emplace_back(i);
         }
     }
-    else
-    {
-        for (int i{0}; i < event.numMuonPF2PAT; i++)
-        {
-            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i]
-                && event.muonPF2PATPfIsoLoose[i]
-                && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_)
-            {
-                if (event.muonPF2PATPt[i]
-                    >= (muons.empty() ? looseMuonPtLeading_ : looseMuonPt_))
-                {
-                    muons.emplace_back(i);
-                }
+    else {
+        for (int i{0}; i < event.numMuonPF2PAT; i++)  {
+            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] /*&& event.muonPF2PATPfIsoLoose[i]*/ && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
+                if (event.muonPF2PATPt[i] >= (muons.empty() ? looseMuonPtLeading_ : looseMuonPt_)) muons.emplace_back(i);
             }
         }
     }

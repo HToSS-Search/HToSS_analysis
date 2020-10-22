@@ -369,9 +369,9 @@ plots:
     cutStage: 0
   - title: "Dilepton Invariant Mass"
     name: "zPairMass"
-    xMin: 50.
+    xMin: 0.
     xMax: 140.
-    nBins: 20
+    nBins: 30
     fillExp: "zPairMass"
     xAxisLabel: "m_{ll} (GeV/c^{2})"
     cutStage: 0
