@@ -1,6 +1,6 @@
 name: "tbar_t_channel"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/tbar_t_channel/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/singleTop/tbar_t_channel/"
 total_events: 64818800
 cross_section: 67.91
 mc: true

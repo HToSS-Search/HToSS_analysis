@@ -1,6 +1,6 @@
 name: "t_s_channel"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/t_s_channel/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/singleTop/t_s_channel/"
 total_events: 9883805
 cross_section: 3.74
 mc: true
