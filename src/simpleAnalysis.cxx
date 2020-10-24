@@ -523,7 +523,6 @@ int main(int argc, char* argv[])
 		
 	  //Two highest momentum muons: deltaR,deltaPhi
 	  std::sort(muonRecPt,muonRecPt+event.numMuonPF2PAT,std::greater<Float_t>());
-		std::cout<<"hoogste momentum "<<muonRecPt[0]<<std::endl;
 	  const Float_t maxPt {muonRecPt[0] muonRecPt[1]};
 	}		
 	  //Sorting momentum
