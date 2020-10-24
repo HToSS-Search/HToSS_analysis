@@ -285,10 +285,7 @@ int main(int argc, char* argv[])
 	  const Float_t genParE   { event.genParE[k] };
 		 
 	  const bool ownParent {pdgId == motherId ? true : false}; 
-	  //const bool ownParent {if(pdgId == motherId){return true;}else{return false;}};
-		   
-	  //Invariant masses
-	  //const TLorentzVector genMass {event.PX[k], event.PY[k], event.PZ[k], event.E[k]};
+	  //meaning: const bool ownParent {if(pdgId == motherId){return true;}else{return false;}};
 
 	  h_genParPt->Fill(genParPt);
 	  h_genParEta->Fill(genParEta);
@@ -302,9 +299,6 @@ int main(int argc, char* argv[])
 	    h_genParHiggsEta->Fill(genParEta);
 	    h_genParHiggsPhi->Fill(genParPhi);
 	    h_genParHiggsE->Fill(genParE);
-		
-	    /*for()
-	      h_HiggsInvMass->Fill(.first.M()); //[0]=.first*/
 	  }
 		    
 	  //Scalar decay
@@ -321,14 +315,14 @@ int main(int argc, char* argv[])
 		    
 	  if (isScalarGrandparent==true){
 	    //Muon from scalar decay
-	    if (pdgId==13){
+	    if (pdgId==13 && !ownParent){
 	      nrofMuon.emplace_back(k);
 	      h_genParScalarMuonPt->Fill(genParPt);
 	      h_genParScalarMuonEta->Fill(genParEta);
 	      h_genParScalarMuonPhi->Fill(genParPhi);
 	      h_genParScalarMuonE->Fill(genParE);
 	      h_VertexPosXY->Fill(genParVx,genParVy);
-	      h_VertexPosRZ->Fill(sqrt(genParVx^2+genParVy^2),genParVz);
+	      h_VertexPosRZ->Fill(std::abs(genParVz),sqrt(genParVx^2+genParVy^2));
 	    }
 	    //Charged kaon from scalar decay
 	    if (pdgId==321){
@@ -338,7 +332,7 @@ int main(int argc, char* argv[])
 	      h_genParScalarCKaonPhi->Fill(genParPhi);
 	      h_genParScalarCKaonE->Fill(genParE);
 	      h_VertexPosXY->Fill(genParVx,genParVy);
-	      h_VertexPosRZ->Fill(sqrt(genParVx^2+genParVy^2),genParVz);
+	      h_VertexPosRZ->Fill(std::abs(genParVz),sqrt(genParVx^2+genParVy^2));
 	    }
 	    //K short from scalar decay
 	    if (pdgId==310){
@@ -348,7 +342,7 @@ int main(int argc, char* argv[])
 	      h_genParScalarKShortPhi->Fill(genParPhi);
 	      h_genParScalarKShortE->Fill(genParE);
 	      h_VertexPosXY->Fill(genParVx,genParVy);
-	      h_VertexPosRZ->Fill(sqrt(genParVx^2+genParVy^2),genParVz);
+	      h_VertexPosRZ->Fill(std::abs(genParVz),sqrt(genParVx^2+genParVy^2));
 	    }
 	    //Charged pion from scalar decay
 	    if (pdgId==211){
@@ -358,7 +352,7 @@ int main(int argc, char* argv[])
 	      h_genParScalarCPionPhi->Fill(genParPhi);
 	      h_genParScalarCPionE->Fill(genParE);
 	      h_VertexPosXY->Fill(genParVx,genParVy);
-	      h_VertexPosRZ->Fill(sqrt(genParVx^2+genParVy^2),genParVz);
+	      h_VertexPosRZ->Fill(std::abs(genParVz),sqrt(genParVx^2+genParVy^2));
 	    }
 	    //Neutral pion from scalar decay
 	    if (pdgId==111){
@@ -368,7 +362,7 @@ int main(int argc, char* argv[])
 	      h_genParScalarNPionPhi->Fill(genParPhi);
 	      h_genParScalarNPionE->Fill(genParE);
 	      h_VertexPosXY->Fill(genParVx,genParVy);
-	      h_VertexPosRZ->Fill(sqrt(genParVx^2+genParVy^2),genParVz);
+	      h_VertexPosRZ->Fill(std::abs(genParVz),sqrt(genParVx^2+genParVy^2));
 	    }
 	  }
                 
@@ -452,7 +446,7 @@ int main(int argc, char* argv[])
 		
 	  angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
 	  angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-	  //std::cout<<"angle 1 kaon "<<angle1<<"angle 2 kaon "<<angle2<<std::endl;	
+	  	
 	  h_Kaon3DAngle->Fill(angle1.Angle(angle2));
 	    
 	}
@@ -503,62 +497,62 @@ int main(int argc, char* argv[])
 		
 	  angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
 	  angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-	  //		std::cout<<"angle 1 pion "<<angle1<<"angle 2 pion "<<angle2<<std::endl;	
-	
+	  
 	  h_Pion3DAngle->Fill(angle1.Angle(angle2));
 	}
 		
 	/// END GENERATOR PARTICLE STUFF
 
-
+	
 	/// Muon Reconstruction
+	std::vector<int> nrofmuonRec;
+	
 	for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
-		
-	  //const Int_t muonRecPdgId { std::abs(event.genMuonPF2PATPdgId[k]) };
 		
 	  const Float_t muonRecPt  { event.muonPF2PATPt[k] };
 	  const Float_t muonRecEta { event.muonPF2PATEta[k] };
 	  const Float_t muonRecPhi { event.muonPF2PATPhi[k] };
 	  const Float_t muonRecE   { event.muonPF2PATE[k] };
 		
-			
-	  std::vector<int> nrofmuonRec;
-
 	  h_muonRecPt->Fill(muonRecPt);
 	  h_muonRecEta->Fill(muonRecEta);
 	  h_muonRecPhi->Fill(muonRecPhi);
 	  h_muonRecE->Fill(muonRecE);
 			
 	  nrofmuonRec.emplace_back(k);
-			
+		
+	  //Two highest momentum muons: deltaR,deltaPhi
+	  std::sort(muonRecPt,muonRecPt+event.numMuonPF2PAT,std::greater<Float_t>());
+		std::cout<<"hoogste momentum "<<muonRecPt[0]<<std::endl;
+	  const Float_t maxPt {muonRecPt[0] muonRecPt[1]};
+	}		
 	  //Sorting momentum
 	  /*int n = sizeof(muonRecPt)/sizeof(muonRecPt{0});
 	    std::sort(muonRecPt, muonRecPt+n, greater<int>());
 	    std::cout<<"highest "<<muonRecPt{0}<<"second highest "<<muonRecPt{1}<<std::endl;*/
 
-	  if(nrofmuonRec.size()==2){
-	    const int Nr1 {nrofmuonRec[0]}; 
-	    const int Nr2 {nrofmuonRec[1]};
+	if(nrofmuonRec.size()==2){
+	  const int Nr1 {nrofmuonRec[0]}; 
+	  const int Nr2 {nrofmuonRec[1]};
 			
-	    //Use DeltaPhi (const TLorentzVector)
-	    TLorentzVector nr1;
-	    TLorentzVector nr2;
+	  //Use DeltaPhi (const TLorentzVector)
+	  TLorentzVector nr1;
+	  TLorentzVector nr2;
 			
-	    nr1.SetPtEtaPhiE(event.muonPF2PATPt[Nr1],event.muonPF2PATEta[Nr1],event.muonPF2PATPhi[Nr1],event.muonPF2PATE[Nr1]);
-	    nr2.SetPtEtaPhiE(event.muonPF2PATPt[Nr2],event.muonPF2PATEta[Nr2],event.muonPF2PATPhi[Nr2],event.muonPF2PATE[Nr2]);
+	  nr1.SetPtEtaPhiE(event.muonPF2PATPt[Nr1],event.muonPF2PATEta[Nr1],event.muonPF2PATPhi[Nr1],event.muonPF2PATE[Nr1]);
+	  nr2.SetPtEtaPhiE(event.muonPF2PATPt[Nr2],event.muonPF2PATEta[Nr2],event.muonPF2PATPhi[Nr2],event.muonPF2PATE[Nr2]);
 			
-	    h_muonRecDeltaR->Fill(nr1.DeltaR(nr2));
-	    h_muonRecDeltaPhi->Fill(nr1.DeltaPhi(nr2));	
+	  h_muonRecDeltaR->Fill(nr1.DeltaR(nr2));
+	  h_muonRecDeltaPhi->Fill(nr1.DeltaPhi(nr2));	
 			
-	    //Invariant mass
-	    TLorentzVector lVecMu1  {event.muonPF2PATPX[Nr1], event.muonPF2PATPY[Nr1], event.muonPF2PATPZ[Nr1], event.muonPF2PATE[Nr1]};
-	    TLorentzVector lVecMu2  {event.muonPF2PATPX[Nr2], event.muonPF2PATPY[Nr2], event.muonPF2PATPZ[Nr2], event.muonPF2PATE[Nr2]};
+	  //Invariant mass
+	  TLorentzVector lVecMu1  {event.muonPF2PATPX[Nr1], event.muonPF2PATPY[Nr1], event.muonPF2PATPZ[Nr1], event.muonPF2PATE[Nr1]};
+	  TLorentzVector lVecMu2  {event.muonPF2PATPX[Nr2], event.muonPF2PATPY[Nr2], event.muonPF2PATPZ[Nr2], event.muonPF2PATE[Nr2]};
 
-	    h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
-	  }
+	  h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
 	}
       } 
-    }
+  }
     
 	
 	
