@@ -515,7 +515,7 @@ int main(int argc, char* argv[])
 	  const Float_t muonRecPhi { event.muonPF2PATPhi[k] };
 	  const Float_t muonRecE   { event.muonPF2PATE[k] };
 		
-	  h_muonRecPt->Fill(muonRecPt);
+	  h_muonRecPt->Fill(muonRecPt[event.numMuonPF2PAT]);
 	  h_muonRecEta->Fill(muonRecEta);
 	  h_muonRecPhi->Fill(muonRecPhi);
 	  h_muonRecE->Fill(muonRecE);
