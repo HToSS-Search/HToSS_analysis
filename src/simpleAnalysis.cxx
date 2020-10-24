@@ -510,12 +510,12 @@ int main(int argc, char* argv[])
 	
 	for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
 		
-	  const Float_t muonRecPt[event.numMuonPF2PAT]  { event.muonPF2PATPt[k] };
+	  const Float_t muonRecPt  { event.muonPF2PATPt[k] };
 	  const Float_t muonRecEta { event.muonPF2PATEta[k] };
 	  const Float_t muonRecPhi { event.muonPF2PATPhi[k] };
 	  const Float_t muonRecE   { event.muonPF2PATE[k] };
 		
-	  h_muonRecPt->Fill(muonRecPt[event.numMuonPF2PAT]);
+	  h_muonRecPt->Fill(muonRecPt);
 	  h_muonRecEta->Fill(muonRecEta);
 	  h_muonRecPhi->Fill(muonRecPhi);
 	  h_muonRecE->Fill(muonRecE);
@@ -523,7 +523,7 @@ int main(int argc, char* argv[])
 	  nrofmuonRec.emplace_back(k);
 		
 	  //Two highest momentum muons: deltaR,deltaPhi
-	  std::sort(muonRecPt,muonRecPt+(event.numMuonPF2PAT));
+	//  std::sort(muonRecPt,muonRecPt+(event.numMuonPF2PAT));
 	 // const Float_t maxPt { muonRecPt[((event.numMuonPF2PAT)-1)] muonRecPt[event.numMuonPF2PAT] };
 		
 	  /*if(muTrig){ //If single particle consistent with trigger value
