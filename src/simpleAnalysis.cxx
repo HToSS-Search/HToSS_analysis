@@ -125,7 +125,7 @@ int main(int argc, char* argv[])
     
   //Vertex position: muons, kaons, kshort, pions
   TH2I* h_VertexPosXY {new TH2I("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
-  TH2I* h_VertexPosRZ {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, -20,20,100,-250,250)};
+  TH2I* h_VertexPosRZ {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250)};
 	
 	
 	
@@ -143,7 +143,7 @@ int main(int argc, char* argv[])
   TH1F* h_muonRecDeltaR        {new TH1F("h_muonRecDeltaR", "Muon reconstruction #DeltaR",2500, -10., 10.)}; 
   TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
   TH1F* h_muonRecInvMass     {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",1000, 0, 500)};
-	
+  TH1F* h_muonCut      {new TH1F("h_muonCut",  "Single #mu^{#pm} reconstruction p_{T} cut", 1000, 0., 1000.)}; 	
 	
 	
 	
@@ -506,6 +506,7 @@ int main(int argc, char* argv[])
 	
 	/// Muon Reconstruction
 	std::vector<int> nrofmuonRec;
+	std::vector<int> muonTrigger;
 	
 	for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
 		
@@ -522,9 +523,22 @@ int main(int argc, char* argv[])
 	  nrofmuonRec.emplace_back(k);
 		
 	  //Two highest momentum muons: deltaR,deltaPhi
-	  std::sort(muonRecPt,muonRecPt+(event.numMuonPF2PAT));
-	  //const Float_t maxPt { muonRecPt[0] muonRecPt[1] };
-	}		
+	  //std::sort(muonRecPt,muonRecPt+(event.numMuonPF2PAT));
+	  //const Float_t maxPt { muonRecPt[(event.numMuonPF2PAT-1)] muonRecPt[event.numMuonPF2PAT] };
+		
+	  if(muTrig){ //If single particle consistent with trigger value
+	    
+	    //Apply cut value
+	    muonTrigger.emplace_back(k); //Take its index
+	    
+	    for (Int_t j{0}; j<muonTrigger.size(); j++){
+		
+		if(muonTrigger[j]>30){  //Trigger cut at 27GeV
+		  h_muonCut->Fill(muonRecPt); 	
+		}       
+	    }	  
+	  }	
+	} //Muon reconstruction for loop		
 
 	if(nrofmuonRec.size()==2){
 	  const int Nr1 {nrofmuonRec[0]}; 
@@ -546,17 +560,15 @@ int main(int argc, char* argv[])
 
 	  h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
 	}
-      } 
-  }
+	      
+	      
+      } //Loop over all events
+  } //Loop over all datatsets
     
 	
 	
 	
 	
-
-	
-	
-   
 
   std::cout << std::endl;
   std::cout << "Total no. of events:\t\t\t" << totalEvents << std::endl;
@@ -656,6 +668,8 @@ int main(int argc, char* argv[])
   h_muonRecDeltaR->Write();
   h_muonRecDeltaPhi->Write();
   h_muonRecInvMass->Write();
+  h_muonCut->Write();
+	
 	
   // Safely close file
   outFile->Close();
