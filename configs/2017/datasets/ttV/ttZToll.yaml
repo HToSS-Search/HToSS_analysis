@@ -1,6 +1,6 @@
 name: "ttZToll"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/ttZ_ll/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/ttV/ttZ_ll/"
 total_events: 11092000
 cross_section: 0.2432
 mc: true

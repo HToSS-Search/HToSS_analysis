@@ -1,6 +1,6 @@
 name: "ZZ_4l"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/ZZ_4l/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/VV/ZZ_4l/"
 total_events:  6964071
 cross_section: 1.325
 mc: true

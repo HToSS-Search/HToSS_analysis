@@ -1,6 +1,6 @@
 name: "WW_2l2nu"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/WW_2l2nu/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/VV/WW_2l2nu/"
 total_events: 2000000
 cross_section: 11.08
 mc: true

@@ -1,6 +1,6 @@
 name: "ttbar_2l2nu_hdampUp"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017/ttbar_2l2nu_hdampUP/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/ttbar/ttbar_2l2nu_hdampUP/"
 total_events: 3288128
 cross_section: 88.29
 mc: true
