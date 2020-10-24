@@ -524,10 +524,10 @@ int main(int argc, char* argv[])
 		
 	  //Two highest momentum muons: deltaR,deltaPhi
 	  int siZe=nrofmuonRec.size();
-	  std::sort(muonRecPt,muonRecPt+siZe);
+	  //std::sort(muonRecPt,muonRecPt+siZe);
 	 // const Float_t maxPt { muonRecPt[((event.numMuonPF2PAT)-1)] muonRecPt[event.numMuonPF2PAT] };
 		
-	  /*if(muTrig){ //If single particle consistent with trigger value
+	  if(muTrig()){ //If single particle consistent with trigger value
 	    
 	    //Apply cut value
 	    muonTrigger.emplace_back(k); //Take its index
@@ -538,7 +538,7 @@ int main(int argc, char* argv[])
 		  h_muonCut->Fill(muonRecPt); 	
 		}       
 	    }	  
-	  }*/	
+	  }	
 	} //Muon reconstruction for loop		
 
 	if(nrofmuonRec.size()==2){
