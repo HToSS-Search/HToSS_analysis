@@ -510,7 +510,7 @@ int main(int argc, char* argv[])
 	
 	for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
 		
-	  const Float_t muonRecPt  { event.muonPF2PATPt[k] };
+	  const Float_t muonRecPt[event.numMuonPF2PAT]  { event.muonPF2PATPt[k] };
 	  const Float_t muonRecEta { event.muonPF2PATEta[k] };
 	  const Float_t muonRecPhi { event.muonPF2PATPhi[k] };
 	  const Float_t muonRecE   { event.muonPF2PATE[k] };
@@ -523,10 +523,10 @@ int main(int argc, char* argv[])
 	  nrofmuonRec.emplace_back(k);
 		
 	  //Two highest momentum muons: deltaR,deltaPhi
-	  //std::sort(muonRecPt,muonRecPt+(event.numMuonPF2PAT));
+	  std::sort(muonRecPt,muonRecPt+(event.numMuonPF2PAT));
 	  //const Float_t maxPt { muonRecPt[(event.numMuonPF2PAT-1)] muonRecPt[event.numMuonPF2PAT] };
 		
-	  if(muTrig){ //If single particle consistent with trigger value
+	  /*if(muTrig){ //If single particle consistent with trigger value
 	    
 	    //Apply cut value
 	    muonTrigger.emplace_back(k); //Take its index
@@ -536,7 +536,7 @@ int main(int argc, char* argv[])
 		if(muonTrigger[j]>30){  //Trigger cut at 27GeV
 		  h_muonCut->Fill(muonRecPt); 	
 		}       
-	    }	  
+	    }*/	  
 	  }	
 	} //Muon reconstruction for loop		
 
