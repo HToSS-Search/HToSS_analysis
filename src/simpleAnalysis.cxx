@@ -524,7 +524,7 @@ int main(int argc, char* argv[])
 		
 	  //Two highest momentum muons: deltaR,deltaPhi
 	  std::sort(muonRecPt,muonRecPt+(event.numMuonPF2PAT));
-	  const Float_t maxPt { muonRecPt[((event.numMuonPF2PAT)-1)] muonRecPt[event.numMuonPF2PAT] };
+	 // const Float_t maxPt { muonRecPt[((event.numMuonPF2PAT)-1)] muonRecPt[event.numMuonPF2PAT] };
 		
 	  /*if(muTrig){ //If single particle consistent with trigger value
 	    
