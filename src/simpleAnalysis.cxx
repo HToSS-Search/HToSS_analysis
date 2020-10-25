@@ -520,7 +520,9 @@ int main(int argc, char* argv[])
 	std::vector<Float_t> sortPhi;
 	std::vector<Float_t> sortE;
 	      
-	
+	std::pair<Float_t,Int_t> muonLast;
+	std::pair<Float_t,Int_t> muon2Last;    
+	      
 	for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
 		
 	  const Float_t muonRecPt  { event.muonPF2PATPt[k] };
@@ -541,9 +543,8 @@ int main(int argc, char* argv[])
 	  maxVector.emplace_back(maximum);
 	  
 	  std::sort(maxVector.begin(),maxVector.end(),compare); 
-	  std::pair<Float_t,Int_t> muonLast;
+	 
           muonLast=maxVector.end()[-1];
-	  std::pair<Float_t,Int_t> muon2Last;
           muon2Last=maxVector.end()[-2];
 		
 	  /*sortEta.emplace_back(muonRecEta);
