@@ -542,7 +542,7 @@ int main(int argc, char* argv[])
 	} //Muon reconstruction for loop		
 	
 	
-	h_muonDiv->h_muonCut.Divide(h_muonRecPt);
+	h_muonDiv->Fill(h_muonCut.Divide(h_muonRecPt));
 	      
 	if(nrofmuonRec.size()==2){
 	  const int Nr1 {nrofmuonRec[0]}; 
