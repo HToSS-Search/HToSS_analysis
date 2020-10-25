@@ -505,8 +505,10 @@ int main(int argc, char* argv[])
 
 	
 	/// Muon Reconstruction
-	std::vector<int> nrofmuonRec;
-	std::vector<int> muonTrigger;
+	std::vector<Int_t> nrofmuonRec;
+	std::vector<Int_t> muonTrigger;
+	std::vector<pair<Float_t,Int_t>> maxVector;
+	      
 	std::vector<Float_t> sortPt;
 	std::vector<Float_t> sortEta;
 	std::vector<Float_t> sortPhi;
@@ -526,13 +528,17 @@ int main(int argc, char* argv[])
 	  h_muonRecE->Fill(muonRecE);
 		
 	  nrofmuonRec.emplace_back(k);
-
-	  //Two highest momentum muons: deltaR,deltaPhi
-	  sortPt.emplace_back(muonRecPt);
-	  sortEta.emplace_back(muonRecEta);
-	  sortPhi.emplace_back(muonRecPhi);
-	  sortE.emplace_back(muonRecE);
 		
+          //Two highest momentum muons: deltaR,deltaPhi
+          sortPt.emplace_back(muonRecPt);
+		
+	  std::pair <muonRecPt,k> maximum;
+	  maxVector.emplace_back(maximum);
+		
+	  /*sortEta.emplace_back(muonRecEta);
+	  sortPhi.emplace_back(muonRecPhi);
+	  sortE.emplace_back(muonRecE);*/
+
 	  if(event.muTrig()){ //If single particle consistent with trigger value
 	    
 	    //Apply cut value
@@ -545,8 +551,8 @@ int main(int argc, char* argv[])
 		}       
 	    }
 	  }	
-	} //Muon reconstruction for loop		
-	 
+	} //Muon reconstruction for loop
+	      	
 	std::sort(sortPt.begin(),sortPt.end());
 	std::sort(sortEta.begin(),sortEta.end());
 	std::sort(sortPhi.begin(),sortPhi.end());
