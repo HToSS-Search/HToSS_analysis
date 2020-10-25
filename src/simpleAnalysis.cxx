@@ -523,7 +523,7 @@ int main(int argc, char* argv[])
 	  nrofmuonRec.emplace_back(k);
 		
 	  //Two highest momentum muons: deltaR,deltaPhi
-	  int siZe=nrofmuonRec.size();
+	  const Float_t siZe=nrofmuonRec.size();
 	  std::sort(muonRecPt,muonRecPt+siZe);
 	 // const Float_t maxPt { muonRecPt[((event.numMuonPF2PAT)-1)] muonRecPt[event.numMuonPF2PAT] };
 		
