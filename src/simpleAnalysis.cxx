@@ -562,7 +562,8 @@ int main(int argc, char* argv[])
 	} //Muon reconstruction for loop
 	
 	h_muonDiv->Fill(h_muonCut->Divide(h_muonRecPt));
-	   
+	
+	//DeltaR, DeltaPhi for two highest p_T
 	TLorentzVector muonRec1;
 	TLorentzVector muonRec2;
 	      
@@ -571,27 +572,13 @@ int main(int argc, char* argv[])
 			
 	h_muonRecDeltaR->Fill(muonRec1.DeltaR(muonRec2));
 	h_muonRecDeltaPhi->Fill(muonRec1.DeltaPhi(muonRec2));	
-	      
-	/*if(nrofmuonRec.size()==2){
-	  const int Nr1 {nrofmuonRec[0]}; 
-	  const int Nr2 {nrofmuonRec[1]};
 			
-	  //Use DeltaPhi (const TLorentzVector)
-	  TLorentzVector nr1;
-	  TLorentzVector nr2;
-			
-	  nr1.SetPtEtaPhiE(event.muonPF2PATPt[Nr1],event.muonPF2PATEta[Nr1],event.muonPF2PATPhi[Nr1],event.muonPF2PATE[Nr1]);
-	  nr2.SetPtEtaPhiE(event.muonPF2PATPt[Nr2],event.muonPF2PATEta[Nr2],event.muonPF2PATPhi[Nr2],event.muonPF2PATE[Nr2]);
-			
-	  h_muonRecDeltaR->Fill(nr1.DeltaR(nr2));
-	  h_muonRecDeltaPhi->Fill(nr1.DeltaPhi(nr2));	
-			
-	  //Invariant mass
-	  TLorentzVector lVecMu1  {event.muonPF2PATPX[Nr1], event.muonPF2PATPY[Nr1], event.muonPF2PATPZ[Nr1], event.muonPF2PATE[Nr1]};
-	  TLorentzVector lVecMu2  {event.muonPF2PATPX[Nr2], event.muonPF2PATPY[Nr2], event.muonPF2PATPZ[Nr2], event.muonPF2PATE[Nr2]};
+	//Invariant mass for two highest p_T
+	TLorentzVector lVecMu1  {event.muonPF2PATPX[std::get<1>(muonLast)], event.muonPF2PATPY[std::get<1>(muonLast)], event.muonPF2PATPZ[std::get<1>(muonLast)], event.muonPF2PATE[std::get<1>(muonLast)]};
+	TLorentzVector lVecMu2  {event.muonPF2PATPX[std::get<1>(muon2Last)], event.muonPF2PATPY[std::get<1>(muon2Last)], event.muonPF2PATPZ[std::get<1>(muon2Last)], event.muonPF2PATE[std::get<1>(muon2Last)]};
 
-	  h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
-	}*/
+	h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
+	
 	      
 	      
       } //Loop over all events
