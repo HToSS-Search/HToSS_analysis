@@ -144,7 +144,7 @@ int main(int argc, char* argv[])
   TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
   TH1F* h_muonRecInvMass     {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",1000, 0, 500)};
   TH1F* h_muonCut      {new TH1F("h_muonCut",  "Single #mu^{#pm} reconstruction p_{T} cut", 1000, 0., 1000.)}; 	
-	
+  TH1F* h_muonDiv    {new TH1F("h_muonDiv",  "Single #mu^{#pm} reconstruction p_{T} divide", 1000, 0., 1000.)}; 
 	
 	
 	
@@ -523,9 +523,9 @@ int main(int argc, char* argv[])
 	  nrofmuonRec.emplace_back(k);
 		
 	  //Two highest momentum muons: deltaR,deltaPhi
-	  const Float_t siZe=nrofmuonRec.size();
-	  std::sort(muonRecPt,muonRecPt+siZe);
-	 // const Float_t maxPt { muonRecPt[((event.numMuonPF2PAT)-1)] muonRecPt[event.numMuonPF2PAT] };
+	  const int siZe=nrofmuonRec.size();
+	 // std::sort(muonRecPt,muonRecPt+siZe);
+	 // const Float_t maxPt { muonRecPt[(siZe-1)] muonRecPt[siZe] };
 		
 	  if(event.muTrig()){ //If single particle consistent with trigger value
 	    
@@ -537,10 +537,13 @@ int main(int argc, char* argv[])
 		if(muonTrigger[j]>30){  //Trigger cut at 27GeV
 		  h_muonCut->Fill(muonRecPt); 	
 		}       
-	    }	  
+	    }
 	  }	
 	} //Muon reconstruction for loop		
-
+	
+	
+	h_muonDiv->h_muonCut.Divide(h_muonRecPt);
+	      
 	if(nrofmuonRec.size()==2){
 	  const int Nr1 {nrofmuonRec[0]}; 
 	  const int Nr2 {nrofmuonRec[1]};
@@ -670,6 +673,7 @@ int main(int argc, char* argv[])
   h_muonRecDeltaPhi->Write();
   h_muonRecInvMass->Write();
   h_muonCut->Write();
+  h_muonDiv->Write();
 	
 	
   // Safely close file
