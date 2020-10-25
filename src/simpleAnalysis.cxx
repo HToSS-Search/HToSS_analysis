@@ -507,7 +507,7 @@ int main(int argc, char* argv[])
 	/// Muon Reconstruction
 	std::vector<int> nrofmuonRec;
 	std::vector<int> muonTrigger;
-	std::vector<Float_t> maxPt;
+	std::vector<Float_t> sortPt;
 	
 	
 	for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
@@ -525,9 +525,7 @@ int main(int argc, char* argv[])
 	  nrofmuonRec.emplace_back(k);
 		
 	  //Two highest momentum muons: deltaR,deltaPhi
-	  maxPt.emplace_back(muonRecPt);
-	  std::sort(maxPt.begin(),maxPt.end());
-	 // const Float_t maxPt { muonRecPt[(siZe-1)] muonRecPt[siZe] };
+	  sortPt.emplace_back(muonRecPt);
 		
 	  if(event.muTrig()){ //If single particle consistent with trigger value
 	    
@@ -542,8 +540,11 @@ int main(int argc, char* argv[])
 	    }
 	  }	
 	} //Muon reconstruction for loop		
-	
-	
+	 
+	std::sort(sortPt.begin(),sortPt.end());
+	const Float_t maxPt[2]={sortPt[(end-1)],sortPt[end]};
+	std::cout<<maxPt[1]<<"and max value "<<maxPt[2]"<<std::cout;
+	      
 	h_muonDiv->Fill(h_muonCut->Divide(h_muonRecPt));
 	      
 	if(nrofmuonRec.size()==2){
