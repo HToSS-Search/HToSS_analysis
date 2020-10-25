@@ -546,11 +546,7 @@ int main(int argc, char* argv[])
 	 
           muonLast=maxVector.end()[-1];
           muon2Last=maxVector.end()[-2];
-		
-	  /*sortEta.emplace_back(muonRecEta);
-	  sortPhi.emplace_back(muonRecPhi);
-	  sortE.emplace_back(muonRecE);*/
-
+	
 	  if(event.muTrig()){ //If single particle consistent with trigger value
 	    
 	    //Apply cut value
@@ -564,18 +560,17 @@ int main(int argc, char* argv[])
 	    }
 	  }	
 	} //Muon reconstruction for loop
-	 
+	
+	h_muonDiv->Fill(h_muonCut->Divide(h_muonRecPt));
+	   
 	TLorentzVector muonRec1;
 	TLorentzVector muonRec2;
 	      
-	muonRec1.SetPtEtaPhiE(std::get<0>(muonLast),muonRecEta[std::get<1>(muonLast)],muonRecPhi[std::get<1>(muonLast)],muonRecE[std::get<1>(muonLast)]);
-	muonRec2.SetPtEtaPhiE(std::get<0>(muon2Last),muonRecEta[std::get<1>(muon2Last)],muonRecPhi[std::get<1>(muon2Last)],muonRecE[std::get<1>(muon2Last)]);
+	muonRec1.SetPtEtaPhiE(std::get<0>(muonLast),event.muonPF2PATEta[std::get<1>(muonLast)],event.muonPF2PATPhi[std::get<1>(muonLast)],event.muonPF2PATE[std::get<1>(muonLast)]);
+	muonRec2.SetPtEtaPhiE(std::get<0>(muon2Last),event.muonPF2PATEta[std::get<1>(muon2Last)],event.muonPF2PATPhi[std::get<1>(muon2Last)],event.muonPF2PATE[std::get<1>(muon2Last)]);
 			
 	h_muonRecDeltaR->Fill(muonRec1.DeltaR(muonRec2));
 	h_muonRecDeltaPhi->Fill(muonRec1.DeltaPhi(muonRec2));	
-	      
-	    
-	h_muonDiv->Fill(h_muonCut->Divide(h_muonRecPt));
 	      
 	/*if(nrofmuonRec.size()==2){
 	  const int Nr1 {nrofmuonRec[0]}; 
