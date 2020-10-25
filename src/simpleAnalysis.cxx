@@ -542,8 +542,8 @@ int main(int argc, char* argv[])
 	} //Muon reconstruction for loop		
 	 
 	std::sort(sortPt.begin(),sortPt.end());
-	const Float_t maxPt[2]={sortPt[(end-1)],sortPt[end]};
-	std::cout<<maxPt[1]<<"and max value "<<maxPt[2]"<<std::cout;
+	const Float_t maxPt[2]={sortPt.end()[-2],sortPt.end()[-1]};
+	std::cout<<maxPt[1]<<"and max value "<<maxPt[2]<<std::cout;
 	      
 	h_muonDiv->Fill(h_muonCut->Divide(h_muonRecPt));
 	      
