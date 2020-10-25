@@ -508,7 +508,10 @@ int main(int argc, char* argv[])
 	std::vector<int> nrofmuonRec;
 	std::vector<int> muonTrigger;
 	std::vector<Float_t> sortPt;
-	
+	std::vector<Float_t> sortEta;
+	std::vector<Float_t> sortPhi;
+	std::vector<Float_t> sortE;
+	      
 	
 	for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
 		
@@ -521,11 +524,14 @@ int main(int argc, char* argv[])
 	  h_muonRecEta->Fill(muonRecEta);
 	  h_muonRecPhi->Fill(muonRecPhi);
 	  h_muonRecE->Fill(muonRecE);
-			
-	  nrofmuonRec.emplace_back(k);
 		
+	  nrofmuonRec.emplace_back(k);
+
 	  //Two highest momentum muons: deltaR,deltaPhi
 	  sortPt.emplace_back(muonRecPt);
+	  sortEta.emplace_back(muonRecEta);
+	  sortPhi.emplace_back(muonRecPhi);
+	  sortE.emplace_back(muonRecE);
 		
 	  if(event.muTrig()){ //If single particle consistent with trigger value
 	    
@@ -542,12 +548,25 @@ int main(int argc, char* argv[])
 	} //Muon reconstruction for loop		
 	 
 	std::sort(sortPt.begin(),sortPt.end());
-	const Float_t maxPt[2]={sortPt.end()[-2],sortPt.end()[-1]};
-	std::cout<<maxPt[1]<<"and max value "<<maxPt[2]<<std::cout;
+	std::sort(sortEta.begin(),sortEta.end());
+	std::sort(sortPhi.begin(),sortPhi.end());
+	std::sort(sortE.begin(),sortE.end());
 	      
+	const Float_t maxPt[2]={sortPt.end()[-2],sortPt.end()[-1]};
+	  
+	TLorentzVector muonRec1;
+	TLorentzVector muonRec2;
+	      
+	muonRec1.SetPtEtaPhiE(sortPt.end()[-1],sortEta.end()[-1],sortPhi.end()[-1],sortE.end()[-1]);
+	muonRec2.SetPtEtaPhiE(sortPt.end()[-2],sortEta.end()[-2],sortPhi.end()[-2],sortE.end()[-2]);
+			
+	h_muonRecDeltaR->Fill(muonRec1.DeltaR(muonRec2));
+	h_muonRecDeltaPhi->Fill(muonRec1.DeltaPhi(muonRec2));	
+	      
+	    
 	h_muonDiv->Fill(h_muonCut->Divide(h_muonRecPt));
 	      
-	if(nrofmuonRec.size()==2){
+	/*if(nrofmuonRec.size()==2){
 	  const int Nr1 {nrofmuonRec[0]}; 
 	  const int Nr2 {nrofmuonRec[1]};
 			
@@ -566,7 +585,7 @@ int main(int argc, char* argv[])
 	  TLorentzVector lVecMu2  {event.muonPF2PATPX[Nr2], event.muonPF2PATPY[Nr2], event.muonPF2PATPZ[Nr2], event.muonPF2PATE[Nr2]};
 
 	  h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
-	}
+	}*/
 	      
 	      
       } //Loop over all events
