@@ -532,7 +532,7 @@ int main(int argc, char* argv[])
           //Two highest momentum muons: deltaR,deltaPhi
           sortPt.emplace_back(muonRecPt);
 		
-	  std::pair <muonRecPt,k> maximum;
+	  std::pair<muonRecPt,k> maximum;
 	  maxVector.emplace_back(maximum);
 		
 	  /*sortEta.emplace_back(muonRecEta);
