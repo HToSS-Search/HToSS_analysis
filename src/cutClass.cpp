@@ -1202,6 +1202,8 @@ bool Cuts::triggerCuts(const AnalysisEvent& event,
 
     // double muon triggers
     const bool mumuTrig{event.mumuTrig()};
+    const bool mumuL2Trig{event.mumuL2Trig()};
+    const bool mumuNoVtxTrig{event.mumuNoVtxTrig()};
 
     // single electron triggers
 //    const bool eTrig{event.eTrig()};
@@ -1327,7 +1329,7 @@ bool Cuts::triggerCuts(const AnalysisEvent& event,
     if (channel == "mumu") {
         // Trigger logic for double + single triggers
 //        if ( (mumuTrig || muTrig) && !(eeTrig || muEGTrig || eTrig)) { // Old tZq logic
-        if ( mumuTrig || muTrig ) {
+        if ( mumuTrig || muTrig || mumuL2Trig || mumuNoVtxTrig ) {
             if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
             return true;
         }
