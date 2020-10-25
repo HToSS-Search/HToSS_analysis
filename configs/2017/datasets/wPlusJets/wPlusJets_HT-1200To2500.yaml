@@ -1,0 +1,10 @@
+name: "WJetsToLNu_HT-1200To2500"
+locations:
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/Wjets/Wjets_HT_1200To2500/"
+total_events: 20258624
+cross_section: 1.074
+mc: true
+histogram: "wJets"
+colour: "#ffff33"
+label: "W+jets"
+plot_type: "f"

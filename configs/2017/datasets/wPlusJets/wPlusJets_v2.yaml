@@ -1,4 +1,4 @@
-name: "wPlusJets"
+name: "wPlusJets_v2"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/Wjets/Wjets_v2/"
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/Wjets/Wjets_v2_ext1/"
