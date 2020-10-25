@@ -531,7 +531,8 @@ int main(int argc, char* argv[])
 	    
 	    //Apply cut value
 	    muonTrigger.emplace_back(k); //Take its index
-	    
+	    std::cout<<muonTrigger<<std::endl;
+		  
 	    for (Int_t j{0}; j<muonTrigger.size(); j++){
 		
 		if(muonTrigger[j]>30){  //Trigger cut at 27GeV
