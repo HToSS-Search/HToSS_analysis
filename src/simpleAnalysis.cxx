@@ -507,7 +507,7 @@ int main(int argc, char* argv[])
 	/// Muon Reconstruction
 	std::vector<Int_t> nrofmuonRec;
 	std::vector<Int_t> muonTrigger;
-	std::vector<pair<Float_t,Int_t>> maxVector;
+	std::vector<std::pair<Float_t,Int_t>> maxVector;
 	      
 	std::vector<Float_t> sortPt;
 	std::vector<Float_t> sortEta;
