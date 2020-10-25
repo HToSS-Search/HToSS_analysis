@@ -37,6 +37,12 @@
 std::string pdgIdCode (const Int_t pdgId, const bool unicode = false); // declaring function called below main(); pdgIdCode translate stored numerical pdgId code into a string: unicode for output to string, or latex style for ROOT plotting
 bool scalarGrandparent(const AnalysisEvent event, const Int_t k, const Int_t pdgId_);
 
+//Sorting based on first digit of std::pair
+bool compare(std::pair<Float_t,Int_t>&i, std::pair<Float_t,Int_t>&j) 
+{ 
+    return i.first < j.first; 
+}
+
 namespace fs = boost::filesystem;
 
 int main(int argc, char* argv[])
@@ -860,9 +866,4 @@ bool scalarGrandparent (const AnalysisEvent event, const Int_t k, const Int_t gr
     //   std::cout << "debugCounter: " << debugCounter << std::endl;
     return scalarGrandparent(event, motherIndex, grandparentId); // otherwise check mother's mother ...
   }
-}
-
-bool compare(std::pair<Float_t,Int_t>&i, std::pair<Float_t,Int_t>&j) 
-{ 
-    return i.first < j.first; 
 }
