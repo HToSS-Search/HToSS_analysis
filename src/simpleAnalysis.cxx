@@ -541,7 +541,11 @@ int main(int argc, char* argv[])
 	  maxVector.emplace_back(maximum);
 	  
 	  std::sort(maxVector.begin(),maxVector.end(),compare); 
-	  std::vector<std::pair<Float_t,Int_t>> maxPt[2]={maxVector.end()[-2],maxVector.end()[-1]};
+	  std::pair<Float_t,Int_t> muonLast;
+          muonLast=maxVector.end()[-1];
+		
+		
+		//std::vector<std::pair<Float_t,Int_t>> maxPt[2]={maxVector.end()[-2],maxVector.end()[-1]};
 	  
 	  /*sortEta.emplace_back(muonRecEta);
 	  sortPhi.emplace_back(muonRecPhi);
@@ -561,7 +565,7 @@ int main(int argc, char* argv[])
 	  }	
 	} //Muon reconstruction for loop
 	      	
-	std::sort(sortPt.begin(),sortPt.end());
+	
 	std::sort(sortEta.begin(),sortEta.end());
 	std::sort(sortPhi.begin(),sortPhi.end());
 	std::sort(sortE.begin(),sortE.end());
