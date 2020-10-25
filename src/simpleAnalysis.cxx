@@ -543,10 +543,9 @@ int main(int argc, char* argv[])
 	  std::sort(maxVector.begin(),maxVector.end(),compare); 
 	  std::pair<Float_t,Int_t> muonLast;
           muonLast=maxVector.end()[-1];
+	  std::pair<Float_t,Int_t> muon2Last;
+          muon2Last=maxVector.end()[-2];
 		
-		
-		//std::vector<std::pair<Float_t,Int_t>> maxPt[2]={maxVector.end()[-2],maxVector.end()[-1]};
-	  
 	  /*sortEta.emplace_back(muonRecEta);
 	  sortPhi.emplace_back(muonRecPhi);
 	  sortE.emplace_back(muonRecE);*/
@@ -564,19 +563,12 @@ int main(int argc, char* argv[])
 	    }
 	  }	
 	} //Muon reconstruction for loop
-	      	
-	
-	std::sort(sortEta.begin(),sortEta.end());
-	std::sort(sortPhi.begin(),sortPhi.end());
-	std::sort(sortE.begin(),sortE.end());
-	      
-	
-	  
+	 
 	TLorentzVector muonRec1;
 	TLorentzVector muonRec2;
 	      
-	muonRec1.SetPtEtaPhiE(sortPt.end()[-1],sortEta.end()[-1],sortPhi.end()[-1],sortE.end()[-1]);
-	muonRec2.SetPtEtaPhiE(sortPt.end()[-2],sortEta.end()[-2],sortPhi.end()[-2],sortE.end()[-2]);
+	muonRec1.SetPtEtaPhiE(std::get<0>(muonLast),muonRecEta[std::get<1>(muonLast)],muonRecPhi[std::get<1>(muonLast)],muonRecE[std::get<1>(muonLast)]);
+	muonRec2.SetPtEtaPhiE(std::get<0>(muon2Last),muonRecEta[std::get<1>(muon2Last)],muonRecPhi[std::get<1>(muon2Last)],muonRecE[std::get<1>(muon2Last)]);
 			
 	h_muonRecDeltaR->Fill(muonRec1.DeltaR(muonRec2));
 	h_muonRecDeltaPhi->Fill(muonRec1.DeltaPhi(muonRec2));	
