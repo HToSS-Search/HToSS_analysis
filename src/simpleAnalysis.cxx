@@ -506,7 +506,10 @@ int main(int argc, char* argv[])
 	
 	/// Muon Reconstruction
 	std::vector<int> nrofmuonRec;
+	Int_t siZe=nrofmuonRec.size();
 	std::vector<int> muonTrigger;
+	std::vector<Float_t> maxPt;
+	
 	
 	for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
 		
@@ -523,20 +526,8 @@ int main(int argc, char* argv[])
 	  nrofmuonRec.emplace_back(k);
 		
 	  //Two highest momentum muons: deltaR,deltaPhi
-	  Int_t siZe=nrofmuonRec.size();
-	
-	  const Float_t maxPt {};
-	  for(Int_t i=0; i<siZe;i++){
-		  for(Int_t j=i+1; j<siZe;j++){
-			  if(muonRecPt[i]<muonRecPt[j]){
-				  maxPt=muonRecPt[i];
-				  muonRecPt[i]=muonRecPt[j];
-				  muonRecPt[j]=maxPt;
-			  }
-		  }
-	  }
-				  
-	 // std::sort(muonRecPt,muonRecPt+siZe);
+	  maxPt.emplace_back(muonRecPt);
+	  std::sort(maxPt,maxPt+siZe);
 	 // const Float_t maxPt { muonRecPt[(siZe-1)] muonRecPt[siZe] };
 		
 	  if(event.muTrig()){ //If single particle consistent with trigger value
