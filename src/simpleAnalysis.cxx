@@ -526,12 +526,12 @@ int main(int argc, char* argv[])
 	  Int_t siZe=nrofmuonRec.size();
 	
 	  const Float_t maxPt {};
-	  for(Int_t i=0,i<siZe,i++){
-		  for(Int_t j=i+1, j<siZe,j++){
-			  if(muonRecPt{i}<muonRecPt{j}){
-				  maxPt=muonRecPt{i};
-				  muonRecPt{i}=muonRecPt{j};
-				  muonRecPt{j}=maxPt;
+	  for(Int_t i=0; i<siZe;i++){
+		  for(Int_t j=i+1; j<siZe;j++){
+			  if(muonRecPt[i]<muonRecPt[j]){
+				  maxPt=muonRecPt[i];
+				  muonRecPt[i]=muonRecPt[j];
+				  muonRecPt[j]=maxPt;
 			  }
 		  }
 	  }
