@@ -513,9 +513,9 @@ int main(int argc, char* argv[])
 	/// Muon Reconstruction
 	std::vector<Int_t> nrofmuonRec;
 	std::vector<Int_t> muonTrigger;
+	
 	std::vector<std::pair<Float_t,Int_t>> maxVector;
-	      
-	std::vector<Float_t> sortPt;
+	
 	std::vector<Float_t> sortEta;
 	std::vector<Float_t> sortPhi;
 	std::vector<Float_t> sortE;
@@ -536,14 +536,13 @@ int main(int argc, char* argv[])
 	  nrofmuonRec.emplace_back(k);
 		
           //Two highest momentum muons: deltaR,deltaPhi
-          sortPt.emplace_back(muonRecPt);
-		
 	  std::pair<Float_t,Int_t> maximum;
 	  maximum=std::make_pair(muonRecPt,k);
 	  maxVector.emplace_back(maximum);
 	  
 	  std::sort(maxVector.begin(),maxVector.end(),compare); 
-		
+	  std::vector<std::pair<Float_t,Int_t>> maxPt[2]={maxVector.end()[-2],maxVector.end()[-1]};
+	  
 	  /*sortEta.emplace_back(muonRecEta);
 	  sortPhi.emplace_back(muonRecPhi);
 	  sortE.emplace_back(muonRecE);*/
@@ -567,7 +566,7 @@ int main(int argc, char* argv[])
 	std::sort(sortPhi.begin(),sortPhi.end());
 	std::sort(sortE.begin(),sortE.end());
 	      
-	const Float_t maxPt[2]={sortPt.end()[-2],sortPt.end()[-1]};
+	
 	  
 	TLorentzVector muonRec1;
 	TLorentzVector muonRec2;
