@@ -535,6 +535,8 @@ int main(int argc, char* argv[])
 	  std::pair<Float_t,Int_t> maximum;
 	  maximum=std::make_pair(muonRecPt,k);
 	  maxVector.emplace_back(maximum);
+	  
+	  std::sort(maxVector.begin(),maxVector.end(),compare); 
 		
 	  /*sortEta.emplace_back(muonRecEta);
 	  sortPhi.emplace_back(muonRecPhi);
@@ -858,4 +860,9 @@ bool scalarGrandparent (const AnalysisEvent event, const Int_t k, const Int_t gr
     //   std::cout << "debugCounter: " << debugCounter << std::endl;
     return scalarGrandparent(event, motherIndex, grandparentId); // otherwise check mother's mother ...
   }
+}
+
+bool compare(std::pair<Float_t,Int_t>&i, std::pair<Float_t,Int_t>&j) 
+{ 
+    return i.first < j.first; 
 }
