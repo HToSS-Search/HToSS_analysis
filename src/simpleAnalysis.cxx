@@ -3,7 +3,7 @@
 #include "TFile.h"
 #include "TH1F.h"
 #include "TH1I.h"
-#include "TH2I.h"
+#include "TH2F.h"
 #include "TLegend.h"
 #include "TStyle.h"
 #include "TASImage.h"
@@ -543,9 +543,9 @@ int main(int argc, char* argv[])
 	  
 	
 	       if(event.muTrig()){ //Single muon trigger passed
-	         
+	       std::cout << "got through single muon trigger "<< std::endl; 
 		 if(event.muonPF2PATLooseCutId[k]==-1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
-	         
+	         std::cout << "passed loose Id cut and eta cut (single) "<< std::endl; 
 	           muonSingleTrigger.emplace_back(k); //Take its index 
 			 
 		 }
@@ -553,9 +553,9 @@ int main(int argc, char* argv[])
 	       }
 		
 	       if(event.mumuTrig()){ //Double muon trigger passed
-	    
+	    std::cout << "got through double muon trigger "<< std::endl; 
 	         if(event.muonPF2PATLooseCutId[k]==-1 && std::abs(muonRecEta)<2.4){ 
-	         
+	           std::cout << "passed loose Id cut and eta cut (double)"<< std::endl; 
 	           muonDoubleTrigger.emplace_back(k); 
 			 
 		 }
@@ -571,7 +571,7 @@ int main(int argc, char* argv[])
 	
 	   //Single muon trigger is passed
 	   if(muonSingleTrigger.size()==2){
-		
+		  std::cout << "passed size 2 single muon "<< std::endl; 
 	     for(Int_t j{0}; j<muonSingleTrigger.size(); j++){
                 
 		if(event.muonPF2PATPt[muonSingleTrigger[j]]>30){  //Cut above 27GeV
@@ -584,7 +584,7 @@ int main(int argc, char* argv[])
 	
 	   //Double muon trigger is passed
 	   if(muonDoubleTrigger.size()==2){
-		   
+		    std::cout << "passed size 2 double muon "<< std::endl; 
 	     const int Nr1 {muonDoubleTrigger[0]}; 
 	     const int Nr2 {muonDoubleTrigger[1]};
 	
