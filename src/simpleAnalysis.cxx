@@ -518,12 +518,13 @@ int main(int argc, char* argv[])
 	std::vector<Float_t> sortE;
 	      
 	std::pair<Float_t,Int_t> muonLast;
-	std::pair<Float_t,Int_t> muon2Last;    
+	std::pair<Float_t,Int_t> muon2Last; 
+	       std::pair<Float_t,Int_t> maximum;
 	
-	
+	 if(event.metFilters()){
 	for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
 		
-	    if(event.metFilters()){	
+	   	
 		    
 	      const Float_t muonRecPt  { event.muonPF2PATPt[k] };
 	      const Float_t muonRecEta { event.muonPF2PATEta[k] };
@@ -538,16 +539,13 @@ int main(int argc, char* argv[])
 	      nrofmuonRec.emplace_back(k);
 		
               //Two highest momentum muons: deltaR,deltaPhi
-	      std::pair<Float_t,Int_t> maximum;
+	     
 	      maximum=std::make_pair(muonRecPt,k);
 	      maxVector.emplace_back(maximum);
 	  
-	      std::sort(maxVector.begin(),maxVector.end(),compare); 
-	 
-              muonLast=maxVector.end()[-1];
-              muon2Last=maxVector.end()[-2];
+	     
 	
-	      if(event.muTrig()){ //If single particle consistent with trigger value
+	      /*if(event.muTrig()){ //If single particle consistent with trigger value
 	    
 	        //Apply cut value
 	        muonSingleTrigger.emplace_back(k); //Take its index
@@ -558,7 +556,7 @@ int main(int argc, char* argv[])
 	        
 	      }
 		
-	      /*if(event.mumuTrig() && nrofmuonRec.size()==2){ //If double particle consistent with trigger value
+	      if(event.mumuTrig() && nrofmuonRec.size()==2){ //If double particle consistent with trigger value
 	    
 	        //Apply cut value
 	        muonDoubleTrigger.emplace_back(k); //Take its index
@@ -573,8 +571,12 @@ int main(int argc, char* argv[])
 	        }
 	      }*/
 		    
-	    }//MET filter
-	} //Muon reconstruction for loop
+	    }//Muon reconstruction for loop
+		  std::sort(maxVector.begin(),maxVector.end(),compare); 
+	 
+              muonLast=maxVector.end()[-1];
+              muon2Last=maxVector.end()[-2];
+	}//MET filter 
 	
 	h_muonDiv->Fill(h_muonCut->Divide(h_muonRecPt));
 	
