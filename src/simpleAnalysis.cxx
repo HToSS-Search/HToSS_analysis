@@ -547,7 +547,7 @@ int main(int argc, char* argv[])
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 	         std::cout << "passed loose Id cut and eta cut (single) "<< std::endl; 
 	           muonSingleTrigger.emplace_back(k); //Take its index 
-		std::cout << "waarden van single trigger"<< muonSingleTrigger<<std::endl; 	 
+		std::cout << "waarden van single trigger"<< muonSingleTrigger.size()<<std::endl; 	 
 		 }
 		       
 	       }
@@ -557,7 +557,7 @@ int main(int argc, char* argv[])
 	         if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ 
 	           std::cout << "passed loose Id cut and eta cut (double)"<< std::endl; 
 	           muonDoubleTrigger.emplace_back(k); 
-			std::cout << "waarden van double trigger"<< muonDoubleTrigger<<std::endl;  
+			std::cout << "waarden van double trigger"<< muonDoubleTrigger.size()<<std::endl;  
 		 }
 		       
 	       }
