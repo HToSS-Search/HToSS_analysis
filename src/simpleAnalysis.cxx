@@ -519,64 +519,81 @@ int main(int argc, char* argv[])
 	      
 	std::pair<Float_t,Int_t> muonLast;
 	std::pair<Float_t,Int_t> muon2Last; 
-	       std::pair<Float_t,Int_t> maximum;
+	std::pair<Float_t,Int_t> maximum;
 	
-	 if(event.metFilters()){
-	for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
-		
-	   	
-		    
-	      const Float_t muonRecPt  { event.muonPF2PATPt[k] };
-	      const Float_t muonRecEta { event.muonPF2PATEta[k] };
-	      const Float_t muonRecPhi { event.muonPF2PATPhi[k] };
-	      const Float_t muonRecE   { event.muonPF2PATE[k] };
-		
-	      h_muonRecPt->Fill(muonRecPt);
-	      h_muonRecEta->Fill(muonRecEta);
-	      h_muonRecPhi->Fill(muonRecPhi);
-	      h_muonRecE->Fill(muonRecE);
-		
-	      nrofmuonRec.emplace_back(k);
-		
-              //Two highest momentum muons: deltaR,deltaPhi
-	     
-	      maximum=std::make_pair(muonRecPt,k);
-	      maxVector.emplace_back(maximum);
+	if(event.metFilters()){
 	  
-	     
-	
-	      /*if(event.muTrig()){ //If single particle consistent with trigger value
-	    
-	        //Apply cut value
-	        muonSingleTrigger.emplace_back(k); //Take its index
-		
-		if(muonRecPt>30){  //Cut above 27GeV
-		  h_muonCut->Fill(muonRecPt); 	
-		}       
-	        
-	      }
-		
-	      if(event.mumuTrig() && nrofmuonRec.size()==2){ //If double particle consistent with trigger value
-	    
-	        //Apply cut value
-	        muonDoubleTrigger.emplace_back(k); //Take its index
-		  
-	        for (Int_t j{0}; j<muonTrigger.size(); j++){
-		
-		    if(std::max(muonRecPt[j])>20 && [j]>11){  //Cut for leading muon above 17GeV, subleading muon above 8GeV
-		  
-		      h_muonCut->Fill(muonRecPt); 	
-			
-		    }       
-	        }
-	      }*/
+	   for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
 		    
-	    }//Muon reconstruction for loop
-		  std::sort(maxVector.begin(),maxVector.end(),compare); 
-	 
-              muonLast=maxVector.end()[-1];
-              muon2Last=maxVector.end()[-2];
+	       const Float_t muonRecPt  { event.muonPF2PATPt[k] };
+	       const Float_t muonRecEta { event.muonPF2PATEta[k] };
+	       const Float_t muonRecPhi { event.muonPF2PATPhi[k] };
+	       const Float_t muonRecE   { event.muonPF2PATE[k] };
+		
+	       h_muonRecPt->Fill(muonRecPt);
+	       h_muonRecEta->Fill(muonRecEta);
+	       h_muonRecPhi->Fill(muonRecPhi);
+	       h_muonRecE->Fill(muonRecE);
+		
+	       nrofmuonRec.emplace_back(k);
+		
+               //Two highest momentum muons: deltaR,deltaPhi
+	       maximum=std::make_pair(muonRecPt,k);
+	       maxVector.emplace_back(maximum);
+	  
+	
+	       if(event.muTrig()){ //Single muon trigger passed
+	         
+		 if(event.muonPF2PATLooseCutId[k]==-1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
+	         
+	           muonSingleTrigger.emplace_back(k); //Take its index 
+			 
+		 }
+		       
+	       }
+		
+	       if(event.mumuTrig()){ //Double muon trigger passed
+	    
+	         if(event.muonPF2PATLooseCutId[k]==-1 && std::abs(muonRecEta)<2.4){ 
+	         
+	           muonDoubleTrigger.emplace_back(k); 
+			 
+		 }
+		       
+	       }
+		    
+	   }//Muon reconstruction for loop
+
+	   //Part 2 of highest p_T selection for deltaR, deltaPhi
+	   std::sort(maxVector.begin(),maxVector.end(),compare); 
+           muonLast=maxVector.end()[-1];
+           muon2Last=maxVector.end()[-2];
+	
+	   //Single muon trigger is passed
+	   if(muonSingleTrigger.size()==2){
+		
+	     for(Int_t j{0}; j<muonSingleTrigger.size(); j++){
+                
+		if(event.muonPF2PATPt[j]>30){  //Cut above 27GeV
+	        h_muonCut->Fill(muonRecPt); 	
+	        } 
+		     
+	     } 
+		   
+	   } 
+	
+	   //Double muon trigger is passed
+	   /*if(muonDoubleTrigger.size()==2){
+	     const int Nr1 {muonDoubleTrigger[0]}; 
+	     const int Nr2 {muonDoubleTrigger[1]};
+	
+             
+             
+	   }*/
+		
 	}//MET filter 
+	      
+	//Out of MET filter OK, because information from inside loop
 	
 	h_muonDiv->Fill(h_muonCut->Divide(h_muonRecPt));
 	
@@ -595,7 +612,6 @@ int main(int argc, char* argv[])
 	TLorentzVector lVecMu2  {event.muonPF2PATPX[std::get<1>(muon2Last)], event.muonPF2PATPY[std::get<1>(muon2Last)], event.muonPF2PATPZ[std::get<1>(muon2Last)], event.muonPF2PATE[std::get<1>(muon2Last)]};
 
 	h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
-	
 	      
 	      
       } //Loop over all events
@@ -687,15 +703,15 @@ int main(int argc, char* argv[])
   h_PionDeltaPhi->Write();
   h_Pion3DAngle->Write();
 	
-  h_VertexPosXY->Write();
   h_VertexPosXY->GetXaxis()->SetTitle("Vertex position x"); // set a title for the x-axis
   h_VertexPosXY->GetXaxis()->SetRangeUser(-150., 150.); 
   h_VertexPosXY->GetYaxis()->SetTitle("Vertex position y"); // set a title for the y-axis
   h_VertexPosXY->GetYaxis()->SetRangeUser(-150., 150.); 
-  h_VertexPosRZ->Write();
+  h_VertexPosXY->Write();
   h_VertexPosRZ->GetXaxis()->SetTitle("Vertex position R"); 
   h_VertexPosRZ->GetYaxis()->SetTitle("Vertex position z"); 
-  
+  h_VertexPosRZ->Write();
+	
   //Reconstruction
   h_muonRecPt->Write();
   h_muonRecEta->Write();
@@ -706,6 +722,7 @@ int main(int argc, char* argv[])
   h_muonRecInvMass->Write();
   h_muonCut->Write();
   h_muonDiv->Write();
+	
 	
 	
   // Safely close file
