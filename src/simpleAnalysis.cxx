@@ -90,6 +90,7 @@ int main(int argc, char* argv[])
   //Muon from scalar decay
   TH1F* h_genParScalarMuonPt      {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
   TH1F* h_genParScalarMuonCutPt      {new TH1F("h_genParScalarMuonCutPt",  "#mu^{#pm} from scalar decay p_{T} cut", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonDivPt      {new TH1F("h_genParScalarMuonDivPt",  "#mu^{#pm} from scalar decay p_{T} divide", 1000, 0., 1000.)};
 	
   TH1F* h_genParScalarMuonEta     {new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
   TH1F* h_genParScalarMuonPhi     {new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
@@ -648,7 +649,9 @@ int main(int argc, char* argv[])
 		
 	}//MET filter 
 	
-	//h_muonDiv->Fill(h_muonCut->Divide(h_muonRecPt));
+	h_muonDiv=(TH1F*)h_muonCut->Clone();
+	h_muonDiv->Divide(h_muonRecPt);
+	
 	
 	//DeltaR, DeltaPhi for two highest p_T
 	TLorentzVector muonRec1;
@@ -722,6 +725,7 @@ int main(int argc, char* argv[])
    
   h_genParScalarMuonPt->Write();
   h_genParScalarMuonCutPt->Write();
+  h_genParScalarMuonDivPt->Write();
 		
   h_genParScalarMuonEta->Write();
   h_genParScalarMuonPhi->Write();
