@@ -130,12 +130,8 @@ int main(int argc, char* argv[])
   // Declare TH2I plots 
     
   //Vertex position: muons, kaons, kshort, pions
-  TH2F* h_VertexPosXY {new TH2I("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
-  TH2F* h_VertexPosRZ {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250)};
-	
-	
-	
-	
+  TH2F* h_VertexPosXY {new TH2F("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
+  TH2F* h_VertexPosRZ {new TH2F("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250)};
 	
 	
 	
@@ -512,7 +508,8 @@ int main(int argc, char* argv[])
 	
 	/// Muon Reconstruction
 	std::vector<Int_t> nrofmuonRec;
-	std::vector<Int_t> muonTrigger;
+	std::vector<Int_t> muonSingleTrigger;
+	std::vector<Int_t> muonDoubleTrigger;
 	
 	std::vector<std::pair<Float_t,Int_t>> maxVector;
 	
@@ -522,43 +519,61 @@ int main(int argc, char* argv[])
 	      
 	std::pair<Float_t,Int_t> muonLast;
 	std::pair<Float_t,Int_t> muon2Last;    
-	      
+	
+	
 	for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
 		
-	  const Float_t muonRecPt  { event.muonPF2PATPt[k] };
-	  const Float_t muonRecEta { event.muonPF2PATEta[k] };
-	  const Float_t muonRecPhi { event.muonPF2PATPhi[k] };
-	  const Float_t muonRecE   { event.muonPF2PATE[k] };
+	    if(event.metFilters()){	
+		    
+	      const Float_t muonRecPt  { event.muonPF2PATPt[k] };
+	      const Float_t muonRecEta { event.muonPF2PATEta[k] };
+	      const Float_t muonRecPhi { event.muonPF2PATPhi[k] };
+	      const Float_t muonRecE   { event.muonPF2PATE[k] };
 		
-	  h_muonRecPt->Fill(muonRecPt);
-	  h_muonRecEta->Fill(muonRecEta);
-	  h_muonRecPhi->Fill(muonRecPhi);
-	  h_muonRecE->Fill(muonRecE);
+	      h_muonRecPt->Fill(muonRecPt);
+	      h_muonRecEta->Fill(muonRecEta);
+	      h_muonRecPhi->Fill(muonRecPhi);
+	      h_muonRecE->Fill(muonRecE);
 		
-	  nrofmuonRec.emplace_back(k);
+	      nrofmuonRec.emplace_back(k);
 		
-          //Two highest momentum muons: deltaR,deltaPhi
-	  std::pair<Float_t,Int_t> maximum;
-	  maximum=std::make_pair(muonRecPt,k);
-	  maxVector.emplace_back(maximum);
+              //Two highest momentum muons: deltaR,deltaPhi
+	      std::pair<Float_t,Int_t> maximum;
+	      maximum=std::make_pair(muonRecPt,k);
+	      maxVector.emplace_back(maximum);
 	  
-	  std::sort(maxVector.begin(),maxVector.end(),compare); 
+	      std::sort(maxVector.begin(),maxVector.end(),compare); 
 	 
-          muonLast=maxVector.end()[-1];
-          muon2Last=maxVector.end()[-2];
+              muonLast=maxVector.end()[-1];
+              muon2Last=maxVector.end()[-2];
 	
-	  if(event.muTrig()){ //If single particle consistent with trigger value
+	      if(event.muTrig()){ //If single particle consistent with trigger value
 	    
-	    //Apply cut value
-	    muonTrigger.emplace_back(k); //Take its index
-		  
-	    for (Int_t j{0}; j<muonTrigger.size(); j++){
+	        //Apply cut value
+	        muonSingleTrigger.emplace_back(k); //Take its index
 		
-		if(muonTrigger[j]>30){  //Trigger cut at 27GeV
+		if(muonRecPt>30){  //Cut above 27GeV
 		  h_muonCut->Fill(muonRecPt); 	
 		}       
-	    }
-	  }	
+	        
+	      }
+		
+	      /*if(event.mumuTrig() && nrofmuonRec.size()==2){ //If double particle consistent with trigger value
+	    
+	        //Apply cut value
+	        muonDoubleTrigger.emplace_back(k); //Take its index
+		  
+	        for (Int_t j{0}; j<muonTrigger.size(); j++){
+		
+		    if(std::max(muonRecPt[j])>20 && [j]>11){  //Cut for leading muon above 17GeV, subleading muon above 8GeV
+		  
+		      h_muonCut->Fill(muonRecPt); 	
+			
+		    }       
+	        }
+	      }*/
+		    
+	    }//MET filter
 	} //Muon reconstruction for loop
 	
 	h_muonDiv->Fill(h_muonCut->Divide(h_muonRecPt));
