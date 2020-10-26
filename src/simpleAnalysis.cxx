@@ -130,8 +130,8 @@ int main(int argc, char* argv[])
   // Declare TH2I plots 
     
   //Vertex position: muons, kaons, kshort, pions
-  TH2I* h_VertexPosXY {new TH2I("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
-  TH2I* h_VertexPosRZ {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250)};
+  TH2F* h_VertexPosXY {new TH2I("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
+  TH2F* h_VertexPosRZ {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250)};
 	
 	
 	
