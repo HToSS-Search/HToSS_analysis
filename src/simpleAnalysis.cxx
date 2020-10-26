@@ -263,7 +263,6 @@ int main(int argc, char* argv[])
 
 
 	//////// GENERATOR PARTICLE STUFF
-		
 	std::vector<int> nrofHiggs;
 	std::vector<int> nrofScalar; //Number of scalars
 	std::vector<int> nrofMuon;
@@ -316,6 +315,7 @@ int main(int argc, char* argv[])
 	  const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)}; 
 		    
 	  if (isScalarGrandparent==true){
+		  
 	    //Muon from scalar decay
 	    if (pdgId==13 && !ownParent){
 	      nrofMuon.emplace_back(k);
@@ -473,7 +473,6 @@ int main(int argc, char* argv[])
 		
 	  angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
 	  angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-	  //		std::cout<<"angle 1 kshort "<<angle1<<"angle 2 kshort "<<angle2<<std::endl;	
 	
 	  h_KShort3DAngle->Fill(angle1.Angle(angle2));
 	}
@@ -510,7 +509,8 @@ int main(int argc, char* argv[])
 	std::vector<Int_t> nrofmuonRec;
 	std::vector<Int_t> muonSingleTrigger;
 	std::vector<Int_t> muonDoubleTrigger;
-	
+	std::vector<Int_t> passedMuons {};
+	      
 	std::vector<std::pair<Float_t,Int_t>> maxVector;
 	
 	std::vector<Float_t> sortEta;
@@ -520,7 +520,10 @@ int main(int argc, char* argv[])
 	std::pair<Float_t,Int_t> muonLast;
 	std::pair<Float_t,Int_t> muon2Last; 
 	std::pair<Float_t,Int_t> maximum;
-	
+	      
+	if(!event.metFilter()) continue;  // Event doesn't pass metFilter
+	if(!event.muTrig() && !event.mumuTrig()) continue; // Event doesn't pass ANY muon trigger
+	      
 	if(event.metFilters()){
 	  
 	   for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
@@ -541,23 +544,25 @@ int main(int argc, char* argv[])
 	       maximum=std::make_pair(muonRecPt,k);
 	       maxVector.emplace_back(maximum);
 	  
-	
+		   
 	       if(event.muTrig()){ //Single muon trigger passed
-	       std::cout << "got through single muon trigger and loose id cut value -1? "<< event.muonPF2PATLooseCutId[k]<< std::endl; 
+	     
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
-	         std::cout << "passed loose Id cut and eta cut (single) "<< std::endl; 
+	       //  std::cout << "passed loose Id cut and eta cut (single) "<< std::endl; 
 	           muonSingleTrigger.emplace_back(k); //Take its index 
-		std::cout << "waarden van single trigger"<< muonSingleTrigger.size()<<std::endl; 	 
+	           passedMuons.push_back(k);
+		//std::cout << "waarden van single trigger"<< muonSingleTrigger.size()<<std::endl; 	 
 		 }
 		       
 	       }
 		
 	       if(event.mumuTrig()){ //Double muon trigger passed
-	    std::cout << "got through double muon trigger and loose id cut value -1?"<< event.muonPF2PATLooseCutId[k]<< std::endl; 
+	  
 	         if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ 
-	           std::cout << "passed loose Id cut and eta cut (double)"<< std::endl; 
+	        //   std::cout << "passed loose Id cut and eta cut (double)"<< std::endl; 
 	           muonDoubleTrigger.emplace_back(k); 
-			std::cout << "waarden van double trigger"<< muonDoubleTrigger.size()<<std::endl;  
+		   passedMuons.push_back(k);
+		//	std::cout << "waarden van double trigger"<< muonDoubleTrigger.size()<<std::endl;  
 		 }
 		       
 	       }
@@ -569,7 +574,22 @@ int main(int argc, char* argv[])
            muonLast=maxVector.end()[-1];
            muon2Last=maxVector.end()[-2];
 	
-	std::cout << "muon single trigger size "<< muonSingleTrigger.size()<<std::endl; 
+	   /*for(Int_t m{0};m<passedMuons.size();m++){
+	  
+	      if(event.genMuonPF2PATMotherId[passedMuons[m]]==scalarParticleId){
+		      
+		      
+	      }
+	      
+	      if(event.genMuonPF2PATPromptFinalState[passedMuons[m]]==1){
+		      
+	      }
+	      	   
+		   
+	   }*/
+		
+		
+	/*std::cout << "muon single trigger size "<< muonSingleTrigger.size()<<std::endl; 
 	   //Single muon trigger is passed
 	   if(muonSingleTrigger.size()==2){
 		  std::cout << "passed size 2 single muon "<< std::endl; 
@@ -607,7 +627,7 @@ int main(int argc, char* argv[])
 		     }	     
 	     }
              
-	   }
+	   }*/
 		
 	}//MET filter 
 	
