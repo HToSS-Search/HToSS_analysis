@@ -89,6 +89,8 @@ int main(int argc, char* argv[])
 	
   //Muon from scalar decay
   TH1F* h_genParScalarMuonPt      {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
+  TH1F* h_genParScalarMuonCutPt      {new TH1F("h_genParScalarMuonCutPt",  "#mu^{#pm} from scalar decay p_{T} cut", 1000, 0., 1000.)};
+	
   TH1F* h_genParScalarMuonEta     {new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
   TH1F* h_genParScalarMuonPhi     {new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
   TH1F* h_genParScalarMuonE       {new TH1F("h_genParScalarMuonE",   "#mu^{#pm} from scalar decay energy",     1000, 0., 1000.)};
@@ -269,7 +271,8 @@ int main(int argc, char* argv[])
 	std::vector<int> nrofKaon;
 	std::vector<int> nrofKShort;
 	std::vector<int> nrofPion;
-	   
+	
+	
 	for (Int_t k{0}; k < event.nGenPar; k++) {
 
 	  // get variables for this event that have been stored in ROOT nTuple tree
@@ -315,16 +318,32 @@ int main(int argc, char* argv[])
 	  const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)}; 
 		    
 	  if (isScalarGrandparent==true){
+	      
+	      //gen-muon with no filters
+	     if (pdgId==13 && !ownParent){    
+	        nrofMuon.emplace_back(k);
+	        h_genParScalarMuonPt->Fill(genParPt);
+	        h_genParScalarMuonEta->Fill(genParEta);
+	        h_genParScalarMuonPhi->Fill(genParPhi);
+	        h_genParScalarMuonE->Fill(genParE);
+	        h_VertexPosXY->Fill(genParVx,genParVy);
+	        h_VertexPosRZ->Fill(std::abs(genParVz),sqrt(genParVx^2+genParVy^2));      
+	     }
 		  
-	    //Muon from scalar decay
-	    if (pdgId==13 && !ownParent){
-	      nrofMuon.emplace_back(k);
-	      h_genParScalarMuonPt->Fill(genParPt);
-	      h_genParScalarMuonEta->Fill(genParEta);
-	      h_genParScalarMuonPhi->Fill(genParPhi);
-	      h_genParScalarMuonE->Fill(genParE);
-	      h_VertexPosXY->Fill(genParVx,genParVy);
-	      h_VertexPosRZ->Fill(std::abs(genParVz),sqrt(genParVx^2+genParVy^2));
+	    //gen-muon with filters  
+	    if(pdgId==13 && !ownParent){//Muon from scalar decay
+	      
+	      if (event.metFilters()){
+		      
+	         if(event.muTrig()){
+	           h_genParScalarMuonCutPt->Fill(genParPt);
+		 }
+		 if(event.mumuTrig()){
+	           h_genParScalarMuonCutPt->Fill(genParPt);
+		 }
+		      
+	      }
+		    
 	    }
 	    //Charged kaon from scalar decay
 	    if (pdgId==321){
@@ -367,7 +386,6 @@ int main(int argc, char* argv[])
 	      h_VertexPosRZ->Fill(std::abs(genParVz),sqrt(genParVx^2+genParVy^2));
 	    }
 	  }
-                
 
 	  // Increment counter for pdgId found
 	  pdgIdMap[pdgId]++;
@@ -545,10 +563,11 @@ int main(int argc, char* argv[])
 	       if(event.muTrig()){ //Single muon trigger passed
 	     
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
-	       //  std::cout << "passed loose Id cut and eta cut (single) "<< std::endl; 
+	      
 	           muonSingleTrigger.emplace_back(k); //Take its index 
 	           passedMuons.push_back(k);
-		//std::cout << "waarden van single trigger"<< muonSingleTrigger.size()<<std::endl; 	 
+		   h_muonCut->Fill(muonRecPt);
+			 
 		 }
 		       
 	       }
@@ -556,10 +575,11 @@ int main(int argc, char* argv[])
 	       if(event.mumuTrig()){ //Double muon trigger passed
 	  
 	         if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ 
-	        //   std::cout << "passed loose Id cut and eta cut (double)"<< std::endl; 
+	     
 	           muonDoubleTrigger.emplace_back(k); 
 		   passedMuons.push_back(k);
-		//	std::cout << "waarden van double trigger"<< muonDoubleTrigger.size()<<std::endl;  
+		   h_muonCut->Fill(muonRecPt);
+		
 		 }
 		       
 	       }
@@ -701,6 +721,8 @@ int main(int argc, char* argv[])
   h_Scalar3DAngle->Write();
    
   h_genParScalarMuonPt->Write();
+  h_genParScalarMuonCutPt->Write();
+		
   h_genParScalarMuonEta->Write();
   h_genParScalarMuonPhi->Write();
   h_genParScalarMuonE->Write();
