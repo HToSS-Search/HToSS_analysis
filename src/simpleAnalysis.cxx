@@ -391,8 +391,12 @@ int main(int argc, char* argv[])
 	  // Increment counter for pdgId found
 	  pdgIdMap[pdgId]++;
 		    
-	}    
-		
+	}  
+	      
+	h_muonDiv=(TH1F*)h_genParScalarMuonCutPt->Clone();
+	h_muonDiv->Divide(h_genParScalarMuonPt);
+	h_muonDiv->SetTitle("After/before cut");
+	      
 	if (nrofScalar.size()==2){ //Two-particle (scalar) correlations
 	  const int Nr1 {nrofScalar[0]}; //Give the scalar index value k
 	  const int Nr2 {nrofScalar[1]};
@@ -651,7 +655,7 @@ int main(int argc, char* argv[])
 	
 	h_muonDiv=(TH1F*)h_muonCut->Clone();
 	h_muonDiv->Divide(h_muonRecPt);
-	
+	h_muonDiv->SetTitle("After/before cut");
 	
 	//DeltaR, DeltaPhi for two highest p_T
 	TLorentzVector muonRec1;
