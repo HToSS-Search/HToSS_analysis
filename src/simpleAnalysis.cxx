@@ -547,7 +547,7 @@ int main(int argc, char* argv[])
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 	         std::cout << "passed loose Id cut and eta cut (single) "<< std::endl; 
 	           muonSingleTrigger.emplace_back(k); //Take its index 
-			 
+		std::cout << "waarden van single trigger"<< muonSingleTrigger<<std::endl; 	 
 		 }
 		       
 	       }
@@ -557,7 +557,7 @@ int main(int argc, char* argv[])
 	         if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ 
 	           std::cout << "passed loose Id cut and eta cut (double)"<< std::endl; 
 	           muonDoubleTrigger.emplace_back(k); 
-			 
+			std::cout << "waarden van double trigger"<< muonDoubleTrigger<<std::endl;  
 		 }
 		       
 	       }
@@ -569,6 +569,7 @@ int main(int argc, char* argv[])
            muonLast=maxVector.end()[-1];
            muon2Last=maxVector.end()[-2];
 	
+	std::cout << "muon single trigger size "<< muonSingleTrigger.size()<<std::endl; 
 	   //Single muon trigger is passed
 	   if(muonSingleTrigger.size()==2){
 		  std::cout << "passed size 2 single muon "<< std::endl; 
@@ -581,7 +582,7 @@ int main(int argc, char* argv[])
 	     } 
 		   
 	   } 
-	
+	std::cout << "muon double trigger size "<< muonDoubleTrigger.size()<<std::endl; 
 	   //Double muon trigger is passed
 	   if(muonDoubleTrigger.size()==2){
 		    std::cout << "passed size 2 double muon "<< std::endl; 
