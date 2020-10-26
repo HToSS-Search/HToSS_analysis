@@ -574,8 +574,8 @@ int main(int argc, char* argv[])
 		
 	     for(Int_t j{0}; j<muonSingleTrigger.size(); j++){
                 
-		if(event.muonPF2PATPt[j]>30){  //Cut above 27GeV
-	        h_muonCut->Fill(muonRecPt); 	
+		if(event.muonPF2PATPt[muonSingleTrigger[j]]>30){  //Cut above 27GeV
+	        h_muonCut->Fill(event.muonPF2PATPt[muonSingleTrigger[j]]); 	
 	        } 
 		     
 	     } 
