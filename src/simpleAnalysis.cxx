@@ -596,7 +596,7 @@ int main(int argc, char* argv[])
 			    h_muonCut->Fill(event.muonPF2PATPt[Nr2]); 
 			     
 		     }
-	     } elseif(event.muonPF2PATPt[Nr1]<event.muonPF2PATPt[Nr2]){   
+	     } else if(event.muonPF2PATPt[Nr1]<event.muonPF2PATPt[Nr2]){   
 	             
 		     if(event.muonPF2PATPt[Nr2]>20 && event.muonPF2PATPt[Nr1]>11){
 			     
