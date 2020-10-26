@@ -393,9 +393,9 @@ int main(int argc, char* argv[])
 		    
 	}  
 	      
-	h_muonDiv=(TH1F*)h_genParScalarMuonCutPt->Clone();
-	h_muonDiv->Divide(h_genParScalarMuonPt);
-	h_muonDiv->SetTitle("After/before cut");
+	h_genParScalarMuonDivPt=(TH1F*)h_genParScalarMuonCutPt->Clone();
+	h_genParScalarMuonDivPt->Divide(h_genParScalarMuonPt);
+	h_genParScalarMuonDivPt->SetTitle("After/before cut");
 	      
 	if (nrofScalar.size()==2){ //Two-particle (scalar) correlations
 	  const int Nr1 {nrofScalar[0]}; //Give the scalar index value k
