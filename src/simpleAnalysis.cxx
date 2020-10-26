@@ -521,9 +521,6 @@ int main(int argc, char* argv[])
 	std::pair<Float_t,Int_t> muon2Last; 
 	std::pair<Float_t,Int_t> maximum;
 	      
-	if(!event.metFilter()) continue;  // Event doesn't pass metFilter
-	if(!event.muTrig() && !event.mumuTrig()) continue; // Event doesn't pass ANY muon trigger
-	      
 	if(event.metFilters()){
 	  
 	   for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
