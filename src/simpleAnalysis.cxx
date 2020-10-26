@@ -543,7 +543,7 @@ int main(int argc, char* argv[])
 	  
 	
 	       if(event.muTrig()){ //Single muon trigger passed
-	       std::cout << "got through single muon trigger "<< std::endl; 
+	       std::cout << "got through single muon trigger and loose id cut value -1? "<< event.muonPF2PATLooseCutId[k]<< std::endl; 
 		 if(event.muonPF2PATLooseCutId[k]==-1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 	         std::cout << "passed loose Id cut and eta cut (single) "<< std::endl; 
 	           muonSingleTrigger.emplace_back(k); //Take its index 
@@ -553,7 +553,7 @@ int main(int argc, char* argv[])
 	       }
 		
 	       if(event.mumuTrig()){ //Double muon trigger passed
-	    std::cout << "got through double muon trigger "<< std::endl; 
+	    std::cout << "got through double muon trigger and loose id cut value -1?"<< event.muonPF2PATLooseCutId[k]<< std::endl; 
 	         if(event.muonPF2PATLooseCutId[k]==-1 && std::abs(muonRecEta)<2.4){ 
 	           std::cout << "passed loose Id cut and eta cut (double)"<< std::endl; 
 	           muonDoubleTrigger.emplace_back(k); 
