@@ -574,7 +574,7 @@ int main(int argc, char* argv[])
 	   if(muonSingleTrigger.size()==2){
 		  std::cout << "passed size 2 single muon "<< std::endl; 
 	     for(Int_t j{0}; j<muonSingleTrigger.size(); j++){
-                
+                std::cout<<"pt 1 "<<event.muonPF2PATPt[muonSingleTrigger[0]]<<"pt 2 "<<event.muonPF2PATPt[muonSingleTrigger[1]]<<std::endl;
 		if(event.muonPF2PATPt[muonSingleTrigger[j]]>30){  //Cut above 27GeV
 	        h_muonCut->Fill(event.muonPF2PATPt[muonSingleTrigger[j]]); 	
 	        } 
@@ -588,7 +588,7 @@ int main(int argc, char* argv[])
 		    std::cout << "passed size 2 double muon "<< std::endl; 
 	     const int Nr1 {muonDoubleTrigger[0]}; 
 	     const int Nr2 {muonDoubleTrigger[1]};
-	
+	std::cout<<"pt 1 "<<event.muonPF2PATPt[Nr1]<<"pt 2 "<<event.muonPF2PATPt[Nr2]<<std::endl;
              if(event.muonPF2PATPt[Nr1]>event.muonPF2PATPt[Nr2]){
 		     
 		     if(event.muonPF2PATPt[Nr1]>20 && event.muonPF2PATPt[Nr2]>11){
