@@ -592,10 +592,8 @@ int main(int argc, char* argv[])
 	   }*/
 		
 	}//MET filter 
-	      
-	//Out of MET filter OK, because information from inside loop
 	
-	h_muonDiv->Fill(h_muonCut->Divide(h_muonRecPt));
+	//h_muonDiv->Fill(h_muonCut->Divide(h_muonRecPt));
 	
 	//DeltaR, DeltaPhi for two highest p_T
 	TLorentzVector muonRec1;
