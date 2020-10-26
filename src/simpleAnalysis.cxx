@@ -583,13 +583,30 @@ int main(int argc, char* argv[])
 	   } 
 	
 	   //Double muon trigger is passed
-	   /*if(muonDoubleTrigger.size()==2){
+	   if(muonDoubleTrigger.size()==2){
+		   
 	     const int Nr1 {muonDoubleTrigger[0]}; 
 	     const int Nr2 {muonDoubleTrigger[1]};
 	
+             if(event.muonPF2PATPt[Nr1]>event.muonPF2PATPt[Nr2]){
+		     
+		     if(event.muonPF2PATPt[Nr1]>20 && event.muonPF2PATPt[Nr2]>11){
+			     
+			    h_muonCut->Fill(event.muonPF2PATPt[Nr1]);  
+			    h_muonCut->Fill(event.muonPF2PATPt[Nr2]); 
+			     
+		     }
+	     } elseif(event.muonPF2PATPt[Nr1]<event.muonPF2PATPt[Nr2]){   
+	             
+		     if(event.muonPF2PATPt[Nr2]>20 && event.muonPF2PATPt[Nr1]>11){
+			     
+			    h_muonCut->Fill(event.muonPF2PATPt[Nr1]);  
+			    h_muonCut->Fill(event.muonPF2PATPt[Nr2]); 
+			     
+		     }	     
+	     }
              
-             
-	   }*/
+	   }
 		
 	}//MET filter 
 	
