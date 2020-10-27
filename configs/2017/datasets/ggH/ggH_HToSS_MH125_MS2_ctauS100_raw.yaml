@@ -1,0 +1,13 @@
+name: "ggH_HToSS_MS2_ctauS100"
+locations:
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/ggH_noSkimCuts/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS2_ctauS100/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/ggH_noSkimCuts/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS2_ctauS100_ext1/"
+total_events: 1224097
+cross_section: 21.46
+mc: true
+histogram: "ggH_HToSS_MS2_ctauS100"
+colour: "#a65628"
+label: "H#rightarrowS#bar{S} M_{S}=2 c_{#tau}=100"
+plot_type: "f"
+
+
