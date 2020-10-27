@@ -69,28 +69,15 @@ int main(int argc, char* argv[])
     TH2F* h_dxyVsDz1            {new TH2F("h_dxyVsDz1", "dxy vs dz leading lepton; d_{xy} (cm); d_{z} (cm)", 500, 0., 1., 500, 0., 1.)};
     TH2F* h_dxyVsDz2            {new TH2F("h_dxyVsDz2", "dxy vs dz leading lepton; d_{xy} (cm); d_{z} (cm)", 500, 0., 1., 500, 0., 1.)};
 
-    TProfile* p_leadingMuonsFromScalar       {new TProfile("p_leadingMuonsFromScalar",       "Leading muons with motherId = scalarId", 2, 0.5, 2.5)};
-    TProfile* p_leadingMuonsPromptFinalState {new TProfile("p_leadingMuonsPromptFinalState", "Leading muons with PromptFinalState flag", 2, 0.5, 2.5)};
-    TProfile* p_leadingMuonsHardProcess      {new TProfile("p_leadingMuonsHardProcess",      "Leading muons withHardProcess flag", 2, 0.5, 2.5)};
+    TProfile* p_leadingMuonsProfile          {new TProfile("p_leadingMuonsProfile", "", 3, 0.5, 3.5)};
+    TProfile* p_subleadingMuonsProfile       {new TProfile("p_subleadingMuonsProfile", "", 3, 0.5, 3.5)};
 
-    p_leadingMuonsFromScalar->GetXaxis()->SetBinLabel(1, "Scalar parent");
-    p_leadingMuonsFromScalar->GetXaxis()->SetBinLabel(2, "!Scalar parent");
-    p_leadingMuonsPromptFinalState->GetXaxis()->SetBinLabel(1, "PromptFinalState");
-    p_leadingMuonsPromptFinalState->GetXaxis()->SetBinLabel(2, "!PromptFinalState");
-    p_leadingMuonsHardProcess->GetXaxis()->SetBinLabel(1, "HardProcess");
-    p_leadingMuonsHardProcess->GetXaxis()->SetBinLabel(2, "!HardProcess");
-
-    TProfile* p_subleadingMuonsFromScalar       {new TProfile("p_subleadingMuonsFromScalar",       "Subleading muons with motherId = scalarId", 2, 0.5, 2.5)};
-    TProfile* p_subleadingMuonsPromptFinalState {new TProfile("p_subleadingMuonsPromptFinalState", "Subleading muons with PromptFinalState flag", 2, 0.5, 2.5)};
-    TProfile* p_subleadingMuonsHardProcess      {new TProfile("p_subleadingMuonsHardProcess",      "Subleading muons withHardProcess flag", 2, 0.5, 2.5)};
-
-    p_subleadingMuonsFromScalar->GetXaxis()->SetBinLabel(1, "Scalar parent");
-    p_subleadingMuonsFromScalar->GetXaxis()->SetBinLabel(2, "!Scalar parent");
-    p_subleadingMuonsPromptFinalState->GetXaxis()->SetBinLabel(1, "PromptFinalState");
-    p_subleadingMuonsPromptFinalState->GetXaxis()->SetBinLabel(2, "!PromptFinalState");
-    p_subleadingMuonsHardProcess->GetXaxis()->SetBinLabel(1, "HardProcess");
-    p_subleadingMuonsHardProcess->GetXaxis()->SetBinLabel(2, "!HardProcess");
-
+    p_leadingMuonsProfile->GetXaxis()->SetBinLabel(1, "Scalar parentage");
+    p_leadingMuonsProfile->GetXaxis()->SetBinLabel(2, "PromptFinalState");
+    p_leadingMuonsProfile->GetXaxis()->SetBinLabel(2, "HardProcess");
+    p_subleadingMuonsProfile->GetXaxis()->SetBinLabel(1, "Scalar parentage");
+    p_subleadingMuonsProfile->GetXaxis()->SetBinLabel(2, "PromptFinalState");
+    p_subleadingMuonsProfile->GetXaxis()->SetBinLabel(2, "HardProcess");
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
@@ -236,13 +223,13 @@ int main(int argc, char* argv[])
             const int genMuonFromScalar1 { event.genMuonPF2PATMotherId[index1] == 9000006 ? 1 : 0 };
             const int genMuonFromScalar2 { event.genMuonPF2PATMotherId[index2] == 9000006 ? 1 : 0 };
 
-            p_leadingMuonsFromScalar->Fill( 1.0, genMuonFromScalar1 );
-      	    p_leadingMuonsPromptFinalState->Fill( 1.0, event.genMuonPF2PATPromptFinalState[index1] );
-      	    p_leadingMuonsHardProcess->Fill( 1.0, event.genMuonPF2PATHardProcess[index1] );
+            p_leadingMuonsProfile->Fill( 1.0, genMuonFromScalar1 );
+      	    p_leadingMuonsProfile->Fill( 2.0, event.genMuonPF2PATPromptFinalState[index1] );
+      	    p_leadingMuonsProfile->Fill( 3.0, event.genMuonPF2PATHardProcess[index1] );
 
-            p_subleadingMuonsFromScalar->Fill( 1.0, genMuonFromScalar2 );
-      	    p_subleadingMuonsPromptFinalState->Fill( 1.0, event.genMuonPF2PATPromptFinalState[index2] );
-      	    p_subleadingMuonsHardProcess->Fill( 1.0, event.genMuonPF2PATHardProcess[index2] );
+            p_subleadingMuonsProfile->Fill( 1.0, genMuonFromScalar2 );
+      	    p_subleadingMuonsProfile->Fill( 2.0, event.genMuonPF2PATPromptFinalState[index2] );
+      	    p_subleadingMuonsProfile->Fill( 3.0, event.genMuonPF2PATHardProcess[index2] );
 
         } // end event loop
     } // end dataset loop
@@ -260,12 +247,8 @@ int main(int argc, char* argv[])
     h_dxyVsDz1->Write();
     h_dxyVsDz2->Write();
 
-    p_leadingMuonsFromScalar->Write();
-    p_leadingMuonsPromptFinalState->Write();
-    p_leadingMuonsHardProcess->Write();
-    p_subleadingMuonsFromScalar->Write();
-    p_subleadingMuonsPromptFinalState->Write();
-    p_subleadingMuonsHardProcess->Write();
+    p_leadingMuonsProfile->Write();
+    p_subleadingMuonsProfile->Write();
 
     outFile->Close();
 
