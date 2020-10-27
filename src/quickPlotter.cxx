@@ -3,6 +3,7 @@
 #include "TFile.h"
 #include "TH1F.h"
 #include "TH2F.h"
+#include "TProfile.h"
 #include "TLegend.h"
 #include "TStyle.h"
 #include "TASImage.h"
@@ -58,10 +59,38 @@ int main(int argc, char* argv[])
     const std::regex mask{".*\\.root"};
 
     // Histos
+    TH1F* h_numMuons                   {new TH1F("h_numMuons",                 "number of reco muons in the event", 21, -0.5, 20.5)};
+    TH1F* h_numMuonsFromScalar         {new TH1F("h_numMuonsFromScalar",       "number of reco muons with motherId = scalarId", 21, -0.5, 20.5)};
+    TH1F* h_numMuonsPromptFinalState   {new TH1F("h_numMuonsPromptFinalState", "number of reco muons with PromptFinalState flag", 21, -0.5, 20.5)};
+    TH1F* h_numMuonsHardProcess        {new TH1F("h_numMuonsHardProcess",      "number of reco muons with HardProcess flag", 21, -0.5, 20.5)};
+
     TH2F* h_relIsoVsEta1        {new TH2F("h_relIsoVsEta1", "rel iso vs leading lepton #eta; #eta; rel iso" , 300, -3., 3., 100, 0., 1.0)};
     TH2F* h_relIsoVsEta2        {new TH2F("h_relIsoVsEta2", "rel iso vs subleading lepton #eta; #eta; rel iso" , 300, -3., 3., 100, 0., 1.0)};
-    TH2F* h_dxyVsDz1            {new TH2F("h_dxyVsDz1", "dxy vs dz leading lepton; d_{xy} (cm); d_{z} (cm)", 100, 0., 1., 100, 0., 1.)};
-    TH2F* h_dxyVsDz2            {new TH2F("h_dxyVsDz2", "dxy vs dz leading lepton; d_{xy} (cm); d_{z} (cm)", 100, 0., 1., 100, 0., 1.)};
+    TH2F* h_dxyVsDz1            {new TH2F("h_dxyVsDz1", "dxy vs dz leading lepton; d_{xy} (cm); d_{z} (cm)", 500, 0., 1., 500, 0., 1.)};
+    TH2F* h_dxyVsDz2            {new TH2F("h_dxyVsDz2", "dxy vs dz leading lepton; d_{xy} (cm); d_{z} (cm)", 500, 0., 1., 500, 0., 1.)};
+
+    TProfile* p_leadingMuonsFromScalar       {new TProfile("p_leadingMuonsFromScalar",       "Leading muons with motherId = scalarId", 2, 0.5, 2.5)};
+    TProfile* p_leadingMuonsPromptFinalState {new TProfile("p_leadingMuonsPromptFinalState", "Leading muons with PromptFinalState flag", 2, 0.5, 2.5)};
+    TProfile* p_leadingMuonsHardProcess      {new TProfile("p_leadingMuonsHardProcess",      "Leading muons withHardProcess flag", 2, 0.5, 2.5)};
+
+    p_leadingMuonsFromScalar->GetXaxis()->SetBinLabel(1, "Scalar parent");
+    p_leadingMuonsFromScalar->GetXaxis()->SetBinLabel(2, "!Scalar parent");
+    p_leadingMuonsPromptFinalState->GetXaxis()->SetBinLabel(1, "PromptFinalState");
+    p_leadingMuonsPromptFinalState->GetXaxis()->SetBinLabel(2, "!PromptFinalState");
+    p_leadingMuonsHardProcess->GetXaxis()->SetBinLabel(1, "HardProcess");
+    p_leadingMuonsHardProcess->GetXaxis()->SetBinLabel(2, "!HardProcess");
+
+    TProfile* p_subleadingMuonsFromScalar       {new TProfile("p_subleadingMuonsFromScalar",       "Subleading muons with motherId = scalarId", 2, 0.5, 2.5)};
+    TProfile* p_subleadingMuonsPromptFinalState {new TProfile("p_subleadingMuonsPromptFinalState", "Subleading muons with PromptFinalState flag", 2, 0.5, 2.5)};
+    TProfile* p_subleadingMuonsHardProcess      {new TProfile("p_subleadingMuonsHardProcess",      "Subleading muons withHardProcess flag", 2, 0.5, 2.5)};
+
+    p_subleadingMuonsFromScalar->GetXaxis()->SetBinLabel(1, "Scalar parent");
+    p_subleadingMuonsFromScalar->GetXaxis()->SetBinLabel(2, "!Scalar parent");
+    p_subleadingMuonsPromptFinalState->GetXaxis()->SetBinLabel(1, "PromptFinalState");
+    p_subleadingMuonsPromptFinalState->GetXaxis()->SetBinLabel(2, "!PromptFinalState");
+    p_subleadingMuonsHardProcess->GetXaxis()->SetBinLabel(1, "HardProcess");
+    p_subleadingMuonsHardProcess->GetXaxis()->SetBinLabel(2, "!HardProcess");
+
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
@@ -172,6 +201,22 @@ int main(int argc, char* argv[])
             if (! ( event.mumuTrig() || event.muTrig() ) ) continue;
 
             std::vector<int> looseMuonIndex = getLooseMuons(event);
+
+            h_numMuons->Fill(looseMuonIndex.size());
+
+            int numMuonsFromScalar{0}, numMuonsPromptFinalState{0}, numMuonsHardProcess{0};
+
+            for ( auto it = looseMuonIndex.begin(); it != looseMuonIndex.end(); it++ ) {
+      	       	if (event.genMuonPF2PATMotherId[*it] == 9000006) numMuonsFromScalar++;
+                if (event.genMuonPF2PATPromptFinalState[*it]) numMuonsPromptFinalState++;
+      	       	if (event.genMuonPF2PATHardProcess[*it]) numMuonsHardProcess++;
+            }
+
+            h_numMuonsFromScalar->Fill(numMuonsFromScalar);
+            h_numMuonsPromptFinalState->Fill(numMuonsPromptFinalState);
+            h_numMuonsHardProcess->Fill(numMuonsHardProcess);
+            
+
             if ( looseMuonIndex.size() != 2 ) continue;
 
             if ( !getDileptonCand( event, looseMuonIndex) ) continue;
@@ -188,16 +233,40 @@ int main(int argc, char* argv[])
             h_dxyVsDz1->Fill ( event.muonPF2PATDZPV[index1], event.muonPF2PATDBPV[index1], eventWeight );
             h_dxyVsDz2->Fill ( event.muonPF2PATDZPV[index2], event.muonPF2PATDBPV[index2], eventWeight );
 
+            const int genMuonFromScalar1 { event.genMuonPF2PATMotherId[index1] == 9000006 ? 1 : 0 };
+            const int genMuonFromScalar2 { event.genMuonPF2PATMotherId[index2] == 9000006 ? 1 : 0 };
+
+            p_leadingMuonsFromScalar->Fill( 1.0, genMuonFromScalar1 );
+      	    p_leadingMuonsPromptFinalState->Fill( 1.0, event.genMuonPF2PATPromptFinalState[index1] );
+      	    p_leadingMuonsHardProcess->Fill( 1.0, event.genMuonPF2PATHardProcess[index1] );
+
+            p_subleadingMuonsFromScalar->Fill( 1.0, genMuonFromScalar2 );
+      	    p_subleadingMuonsPromptFinalState->Fill( 1.0, event.genMuonPF2PATPromptFinalState[index2] );
+      	    p_subleadingMuonsHardProcess->Fill( 1.0, event.genMuonPF2PATHardProcess[index2] );
+
         } // end event loop
     } // end dataset loop
 
     TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
     outFile->cd();
 
+    h_numMuons->Write();
+    h_numMuonsFromScalar->Write();
+    h_numMuonsPromptFinalState->Write();
+    h_numMuonsHardProcess->Write();
+
     h_relIsoVsEta1->Write();
     h_relIsoVsEta2->Write();
     h_dxyVsDz1->Write();
     h_dxyVsDz2->Write();
+
+    p_leadingMuonsFromScalar->Write();
+    p_leadingMuonsPromptFinalState->Write();
+    p_leadingMuonsHardProcess->Write();
+    p_subleadingMuonsFromScalar->Write();
+    p_subleadingMuonsPromptFinalState->Write();
+    p_subleadingMuonsHardProcess->Write();
+
     outFile->Close();
 
 //    std::cout << "Max nGenPar: " << maxGenPars << std::endl;    
