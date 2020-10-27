@@ -106,7 +106,7 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
                      event.muonPF2PATPZ[event.muonIndexTight[1]],
                      event.muonPF2PATE[event.muonIndexTight[1]]};
 //                 tempVec *= event.muonMomentumSF[1];
-                 return {tempVec.Pt()};
+                 return {tempVec.Eta()};
              }
          }},
         {"lep1RelIso",
@@ -1044,6 +1044,11 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
          [](const AnalysisEvent& event) -> std::vector<float> {
              return {
                  event.zPairLeptons.first.DeltaPhi(event.zPairLeptons.second)};
+         }},
+        {"zLepDelZ",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             return {
+                 event.zPairLeptons.first.Z() - event.zPairLeptons.second.Z()};
          }},
         {"zLep1Quark1DelR",
          [](const AnalysisEvent& event) -> std::vector<float> {

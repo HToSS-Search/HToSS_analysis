@@ -3,7 +3,7 @@ plots:
     name: "lep1Pt"
     xMax: 200.
     xMin: 0.
-    nBins: 20
+    nBins: 200
     fillExp: "lep1Pt"
     xAxisLabel: "p_{T} lepton 1 (GeV/c)"
     cutStage: 0
@@ -11,7 +11,7 @@ plots:
     name: "lep2Pt"
     xMax: 200.
     xMin: 0.
-    nBins: 20
+    nBins: 200
     fillExp: "lep2Pt"
     xAxisLabel: "p_{T} lepton 2 (GeV/c)"
     cutStage: 0
@@ -19,7 +19,7 @@ plots:
     name: "lep1Phi"
     xMax: 3.2
     xMin: -3.2
-    nBins: 40
+    nBins: 300
     fillExp: "lep1Phi"
     xAxisLabel: "#phi leptpm 1"
     cutStage: 0
@@ -27,7 +27,7 @@ plots:
     name: "lep2Phi"
     xMax: 3.2
     xMin: -3.2
-    nBins: 40
+    nBins: 300
     fillExp: "lep2Phi"
     xAxisLabel: "#phi_{T} lepton 2"
     cutStage: 0
@@ -35,7 +35,7 @@ plots:
     name: "lep1Eta"
     xMax: 3.
     xMin: 0.
-    nBins: 30
+    nBins: 120
     fillExp: "lep1Eta"
     xAxisLabel: "#eta lepton 1"
     cutStage: 0
@@ -43,7 +43,7 @@ plots:
     name: "lep2Eta"
     xMax: 3.
     xMin: 0.
-    nBins: 30
+    nBins: 120
     fillExp: "lep2Eta"
     xAxisLabel: "#eta lepton 2"
     cutStage: 0
@@ -115,7 +115,7 @@ plots:
     name: "totalJetPt"
     xMax: 300.
     xMin: 0.
-    nBins: 35
+    nBins: 300
     fillExp: "totalJetPt"
     xAxisLabel: "p_{T} total jets (GeV/c)"
     cutStage: 0
@@ -370,7 +370,7 @@ plots:
   - title: "Dilepton Invariant Mass"
     name: "zPairMass"
     xMin: 0.
-    xMax: 140.
+    xMax: 11.
     nBins: 30
     fillExp: "zPairMass"
     xAxisLabel: "m_{ll} (GeV/c^{2})"
@@ -379,7 +379,7 @@ plots:
     name: "zPairPt"
     xMin: 0.
     xMax: 400.
-    nBins: 20
+    nBins: 40
     fillExp: "zPairPt"
     xAxisLabel: "p_{T} dilepton (GeV/c)"
     cutStage: 0
@@ -387,7 +387,7 @@ plots:
     name: "zPairEta"
     xMin: 0.
     xMax: 5.
-    nBins: 30
+    nBins: 60
     fillExp: "zPairEta"
     xAxisLabel: "#eta dilepton"
     cutStage: 0
@@ -395,7 +395,7 @@ plots:
     name: "zPairPhi"
     xMin: 3.2
     xMax: -3.2
-    nBins: 40
+    nBins: 80
     fillExp: "zPairPhi"
     xAxisLabel: "#phi dilepton"
     cutStage: 0
@@ -431,21 +431,29 @@ plots:
     fillExp: "wwDelPhi"
     xAxisLabel: "wwDelPhi"
     cutStage: 3
-  - title: "#Delta(R) between Z Leptons"
+  - title: "#Delta(R) between the leptons"
     name: "zLepDelR"
     xMin: 0.
     xMax: 8.5
     nBins: 100
     fillExp: "zLepDelR"
-    xAxisLabel: "zLepDelR"
+    xAxisLabel: "#Delta(r) (cm) between the leptons"
     cutStage: 1
-  - title: "#Delta(#phi) between Z Leptons"
+  - title: "#Delta(#phi) between the leptons"
     name: "zLepDelPhi"
     xMin: 0.
     xMax: 3.2
     nBins: 100
     fillExp: "zLepDelPhi"
-    xAxisLabel: "zLepDelPhi"
+    xAxisLabel: "#Delta(#phi) between the leptons"
+    cutStage: 1
+  - title: "#Delta(Z) between the leptons"
+    name: "zLepDelZ"
+    xMin: 0.
+    xMax: 3.2
+    nBins: 100
+    fillExp: "zLepDelZ"
+    xAxisLabel: "#Delta(z) (cm) between the leptons"
     cutStage: 1
   - title: "#Delta(R) between Leading Z Lepton and b-Jet"
     name: "zLep1BjetDelR"

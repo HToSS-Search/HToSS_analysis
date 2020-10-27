@@ -24,7 +24,7 @@ cuts:
         relIso: 0.107587
         number: 0
     jets:
-        pt: 0
+        pt: 30
         eta: 4.7
         numJets: 0
         maxJets: 20

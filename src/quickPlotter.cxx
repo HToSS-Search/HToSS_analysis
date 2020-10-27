@@ -58,8 +58,10 @@ int main(int argc, char* argv[])
     const std::regex mask{".*\\.root"};
 
     // Histos
-    TH2F* h_relIsoVsEta1        {new TH2F("h_relIsoVsEta1", "rel iso vs leading lepton #eta" , 100, 0., 1.0, 300, 0., 3.0)};
-    TH2F* h_relIsoVsEta2        {new TH2F("h_relIsoVsEta2", "rel iso vs subleading lepton #eta" , 100, 0., 1.0, 300, 0., 3.0)};
+    TH2F* h_relIsoVsEta1        {new TH2F("h_relIsoVsEta1", "rel iso vs leading lepton #eta; #eta; rel iso" , 300, -3., 3., 100, 0., 1.0)};
+    TH2F* h_relIsoVsEta2        {new TH2F("h_relIsoVsEta2", "rel iso vs subleading lepton #eta; #eta; rel iso" , 300, -3., 3., 100, 0., 1.0)};
+    TH2F* h_dxyVsDz1            {new TH2F("h_dxyVsDz1", "dxy vs dz leading lepton; d_{xy} (cm); d_{z} (cm)", 100, 0., 1., 100, 0., 1.)};
+    TH2F* h_dxyVsDz2            {new TH2F("h_dxyVsDz2", "dxy vs dz leading lepton; d_{xy} (cm); d_{z} (cm)", 100, 0., 1., 100, 0., 1.)};
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
@@ -178,8 +180,13 @@ int main(int argc, char* argv[])
 
             eventWeight *= datasetWeight;
 
-            h_relIsoVsEta1->Fill( event.zPairRelIso.first,  event.zPairLeptons.first.Eta(), eventWeight );
-            h_relIsoVsEta2->Fill( event.zPairRelIso.second, event.zPairLeptons.second.Eta(), eventWeight );
+            const int index1 {event.zPairIndex.first}, index2 {event.zPairIndex.second};
+
+            h_relIsoVsEta1->Fill( event.zPairLeptons.first.Eta(),  event.zPairRelIso.first, eventWeight );
+            h_relIsoVsEta2->Fill( event.zPairLeptons.second.Eta(), event.zPairRelIso.second, eventWeight );
+
+            h_dxyVsDz1->Fill ( event.muonPF2PATDZPV[index1], event.muonPF2PATDBPV[index1], eventWeight );
+            h_dxyVsDz2->Fill ( event.muonPF2PATDZPV[index2], event.muonPF2PATDBPV[index2], eventWeight );
 
         } // end event loop
     } // end dataset loop
@@ -189,7 +196,8 @@ int main(int argc, char* argv[])
 
     h_relIsoVsEta1->Write();
     h_relIsoVsEta2->Write();
-
+    h_dxyVsDz1->Write();
+    h_dxyVsDz2->Write();
     outFile->Close();
 
 //    std::cout << "Max nGenPar: " << maxGenPars << std::endl;    

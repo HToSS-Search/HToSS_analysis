@@ -2,7 +2,7 @@
 #include "TChain.h"
 #include "TFile.h"
 #include "TH1F.h"
-#include "TH1I.h"
+#include "TH1D.h"
 #include "TLegend.h"
 #include "TStyle.h"
 #include "TASImage.h"
