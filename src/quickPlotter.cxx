@@ -74,10 +74,10 @@ int main(int argc, char* argv[])
 
     p_leadingMuonsProfile->GetXaxis()->SetBinLabel(1, "Scalar parentage");
     p_leadingMuonsProfile->GetXaxis()->SetBinLabel(2, "PromptFinalState");
-    p_leadingMuonsProfile->GetXaxis()->SetBinLabel(2, "HardProcess");
+    p_leadingMuonsProfile->GetXaxis()->SetBinLabel(3, "HardProcess");
     p_subleadingMuonsProfile->GetXaxis()->SetBinLabel(1, "Scalar parentage");
     p_subleadingMuonsProfile->GetXaxis()->SetBinLabel(2, "PromptFinalState");
-    p_subleadingMuonsProfile->GetXaxis()->SetBinLabel(2, "HardProcess");
+    p_subleadingMuonsProfile->GetXaxis()->SetBinLabel(3, "HardProcess");
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
