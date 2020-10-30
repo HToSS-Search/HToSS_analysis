@@ -1,6 +1,6 @@
 name: "WZZ"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/VVV/WZZ/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/VVV/WZZ/"
 total_events: 250000
 cross_section: 0.05565
 mc: true
