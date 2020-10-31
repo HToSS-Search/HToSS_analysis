@@ -64,7 +64,8 @@ int main(int argc, char* argv[])
   Long64_t nEvents; // Max number of events to consider per dataset. Default is set in config file, but can be overriden with command line arguements
   Long64_t totalEvents {0}; // Counter for total number of events
 
-  // Declare TH1F GenPar plots 
+  // Declare TH1F GenPar plots
+	
   TH1F* h_genParPt      {new TH1F("h_genParPt",  "genPar p_{T}", 1000, 0., 1000.)};
   TH1F* h_genParEta     {new TH1F("h_genParEta", "genPar #eta",  200, -7., 7.)}; 
   TH1F* h_genParPhi     {new TH1F("h_genParPhi", "genPar #phi",  100, -3.5, 3.5)};
@@ -75,7 +76,7 @@ int main(int argc, char* argv[])
   TH1F* h_genParHiggsEta     {new TH1F("h_genParHiggsEta", "genPar h_0 #eta",  200, -7., 7.)}; 
   TH1F* h_genParHiggsPhi     {new TH1F("h_genParHiggsPhi", "genPar h_0 #phi",  100, -3.5, 3.5)};
   TH1F* h_genParHiggsE       {new TH1F("h_genParHiggsE",   "genPar h_0 energy",     1000, 0., 1000.)};
-  TH1F* h_HiggsInvMass      {new TH1F("h_HiggsInvMass",  "h_0 Invariant mass", 1000, 0., 1000.)};
+  TH1F* h_HiggsInvMass       {new TH1F("h_HiggsInvMass",  "h_0 Invariant mass", 1000, 0., 1000.)};
     
   //Scalar decay
   TH1F* h_genParScalarPt      {new TH1F("h_genParScalarPt",  "Scalar p_{T}", 1000, 0., 1000.)}; 
@@ -84,38 +85,38 @@ int main(int argc, char* argv[])
   TH1F* h_genParScalarE       {new TH1F("h_genParScalarE",   "Scalar energy",     1000, 0., 1000.)};
   TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "Scalar #DeltaR",1500,-10., 10.)}; 
   TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "Scalar #Delta#phi",1500, -3.5, 3.5)};
-  TH1F* h_ScalarInvMass      {new TH1F("h_ScalarInvMass", "Scalar Invariant mass",200, 0., 7.)};
-  TH1F* h_Scalar3DAngle        {new TH1F("h_Scalar3DAngle", "Scalar 3D Angle",1000,-10., 10.)}; 
+  TH1F* h_ScalarInvMass       {new TH1F("h_ScalarInvMass", "Scalar Invariant mass",200, 0., 7.)};
+  TH1F* h_Scalar3DAngle       {new TH1F("h_Scalar3DAngle", "Scalar 3D Angle",1000,-10., 10.)}; 
 	
   //Muon from scalar decay
-  TH1F* h_genParScalarMuonPt      {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
+  TH1F* h_genParScalarMuonPt         {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
   TH1F* h_genParScalarMuonCutPt      {new TH1F("h_genParScalarMuonCutPt",  "#mu^{#pm} from scalar decay p_{T} cut", 1000, 0., 1000.)};
   TH1F* h_genParScalarMuonDivPt      {new TH1F("h_genParScalarMuonDivPt",  "#mu^{#pm} from scalar decay p_{T} divide", 100, 0., 1000.)};
 	
   TH1F* h_genParScalarMuonEta     {new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
   TH1F* h_genParScalarMuonPhi     {new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
   TH1F* h_genParScalarMuonE       {new TH1F("h_genParScalarMuonE",   "#mu^{#pm} from scalar decay energy",     1000, 0., 1000.)};
-  TH1F* h_MuonDeltaR        {new TH1F("h_MuonDeltaR", "Muon #DeltaR",2500, -10., 10.)}; 
-  TH1F* h_MuonDeltaPhi      {new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",2500, -3.5, 3.5)};
-  TH1F* h_Muon3DAngle        {new TH1F("h_Muon3DAngle", "Muon 3D Angle",1000,-10., 10.)}; 
+  TH1F* h_MuonDeltaR              {new TH1F("h_MuonDeltaR", "Muon #DeltaR",2500, -10., 10.)}; 
+  TH1F* h_MuonDeltaPhi            {new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",2500, -3.5, 3.5)};
+  TH1F* h_Muon3DAngle             {new TH1F("h_Muon3DAngle", "Muon 3D Angle",1000,-10., 10.)}; 
 	
   //Kaon from scalar decay
   TH1F* h_genParScalarCKaonPt      {new TH1F("h_genParScalarCKaonPt",  "K^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
   TH1F* h_genParScalarCKaonEta     {new TH1F("h_genParScalarCKaonEta", "K^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
   TH1F* h_genParScalarCKaonPhi     {new TH1F("h_genParScalarCKaonPhi", "K^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
   TH1F* h_genParScalarCKaonE       {new TH1F("h_genParScalarCKaonE",   "K^{#pm} from scalar decay energy",     1000, 0., 1000.)};
-  TH1F* h_KaonDeltaR        {new TH1F("h_KaonDeltaR", "Kaon #DeltaR",2500, -10., 10.)}; 
-  TH1F* h_KaonDeltaPhi      {new TH1F("h_KaonDeltaPhi", "Kaon #Delta#phi",2500, -3.5, 3.5)};
-  TH1F* h_Kaon3DAngle        {new TH1F("h_Kaon3DAngle", "Kaon 3D Angle",1000,-10., 10.)}; 
+  TH1F* h_KaonDeltaR               {new TH1F("h_KaonDeltaR", "Kaon #DeltaR",2500, -10., 10.)}; 
+  TH1F* h_KaonDeltaPhi             {new TH1F("h_KaonDeltaPhi", "Kaon #Delta#phi",2500, -3.5, 3.5)};
+  TH1F* h_Kaon3DAngle              {new TH1F("h_Kaon3DAngle", "Kaon 3D Angle",1000,-10., 10.)}; 
 	
   //K short from scalar decay
   TH1F* h_genParScalarKShortPt      {new TH1F("h_genParScalarKShortPt",  "K^{0}_S from scalar decay p_{T}", 1000, 0., 1000.)}; 
   TH1F* h_genParScalarKShortEta     {new TH1F("h_genParScalarKShortEta", "K^{0}_S from scalar decay #eta",  200, -7., 7.)}; 
   TH1F* h_genParScalarKShortPhi     {new TH1F("h_genParScalarKShortPhi", "K^{0}_S from scalar decay #phi",  100, -3.5, 3.5)};
   TH1F* h_genParScalarKShortE       {new TH1F("h_genParScalarKShortE",   "K^{0}_S from scalar decay energy",     1000, 0., 1000.)};
-  TH1F* h_KShortDeltaR        {new TH1F("h_KShortDeltaR", "K^{0}_S #DeltaR",2500, -10., 10.)}; 
-  TH1F* h_KShortDeltaPhi      {new TH1F("h_KShortDeltaPhi", "K^{0}_S #Delta#phi",2500, -3.5, 3.5)};
-  TH1F* h_KShort3DAngle        {new TH1F("h_KShort3DAngle", "K^{0}_S 3D Angle",1000,-10., 10.)}; 
+  TH1F* h_KShortDeltaR              {new TH1F("h_KShortDeltaR", "K^{0}_S #DeltaR",2500, -10., 10.)}; 
+  TH1F* h_KShortDeltaPhi            {new TH1F("h_KShortDeltaPhi", "K^{0}_S #Delta#phi",2500, -3.5, 3.5)};
+  TH1F* h_KShort3DAngle             {new TH1F("h_KShort3DAngle", "K^{0}_S 3D Angle",1000,-10., 10.)}; 
 	
   //Pion from scalar decay
   TH1F* h_genParScalarCPionPt      {new TH1F("h_genParScalarCPionPt",  "#pi^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
@@ -126,9 +127,31 @@ int main(int argc, char* argv[])
   TH1F* h_genParScalarNPionEta     {new TH1F("h_genParScalarNPionEta", "#pi^{0} from scalar decay #eta",  200, -7., 7.)}; 
   TH1F* h_genParScalarNPionPhi     {new TH1F("h_genParScalarNPionPhi", "#pi^{0} from scalar decay #phi",  100, -3.5, 3.5)};
   TH1F* h_genParScalarNPionE       {new TH1F("h_genParScalarNPionE",   "#pi^{0} from scalar decay energy",     1000, 0., 1000.)};
-  TH1F* h_PionDeltaR        {new TH1F("h_PionDeltaR", "Pion #DeltaR",2500, -10., 10.)}; 
-  TH1F* h_PionDeltaPhi      {new TH1F("h_PionDeltaPhi", "Pion #Delta#phi",2500, -3.5, 3.5)};
-  TH1F* h_Pion3DAngle        {new TH1F("h_Pion3DAngle", "Pion 3D Angle",1000,-10., 10.)}; 
+  TH1F* h_PionDeltaR               {new TH1F("h_PionDeltaR", "Pion #DeltaR",2500, -10., 10.)}; 
+  TH1F* h_PionDeltaPhi             {new TH1F("h_PionDeltaPhi", "Pion #Delta#phi",2500, -3.5, 3.5)};
+  TH1F* h_Pion3DAngle              {new TH1F("h_Pion3DAngle", "Pion 3D Angle",1000,-10., 10.)}; 
+  
+  //RECONSTRUCTION histograms	
+  //Muon reco
+  TH1F* h_muonRecPt            {new TH1F("h_muonRecPt",  "#mu^{#pm} reconstruction p_{T}", 1000, 0., 1000.)}; 
+  TH1F* h_muonRecEta           {new TH1F("h_muonRecEta", "#mu^{#pm} reconstruction #eta",  200, -7., 7.)}; 
+  TH1F* h_muonRecPhi           {new TH1F("h_muonRecPhi", "#mu^{#pm} reconstruction #phi",  100, -3.5, 3.5)};
+  TH1F* h_muonRecE             {new TH1F("h_muonRecE",   "#mu^{#pm} reconstruction energy",     1000, 0., 1000.)};
+  TH1F* h_muonRecDeltaR        {new TH1F("h_muonRecDeltaR", "Muon reconstruction #DeltaR",2500, -10., 10.)}; 
+  TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
+  TH1F* h_muonRecInvMass       {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",1000, 0, 500)};
+  TH1F* h_muonCut              {new TH1F("h_muonCut",  "Single #mu^{#pm} reconstruction p_{T} cut", 1000, 0., 1000.)}; 	
+  TH1F* h_muonDiv              {new TH1F("h_muonDiv",  "Single #mu^{#pm} reconstruction p_{T} divide", 100, 0., 1000.)}; 
+	
+  //Packed candidates 
+  TH1F* h_packedCPt    {new TH1F("h_packedCPt",  "Packed Candidate p_{T}", 1000, 0., 1000.)}; 
+  TH1F* h_packedCDxy   {new TH1F("h_packedCDxy", "Packed Candidate Dxy", 500,  -200., 200.)};
+  TH1F* h_packedCDz    {new TH1F("h_packedCDz",  "Packed Candidate Dz", 1500, -500., 500.)};
+  TH1F* h_packedCVx    {new TH1F("h_packedCVx",  "Packed Candidate track vx", 500,  -150., 150.)};
+  TH1F* h_packedCVy    {new TH1F("h_packedCVy",  "Packed Candidate track vy", 500,  -150., 150.)};
+  TH1F* h_packedCVxy   {new TH1F("h_packedCVxy", "Packed Candidate track vxy", 500,  -150., 150.)};
+  TH1F* h_packedCVz    {new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.)};
+
 	
   // Declare TH2I plots 
     
@@ -137,24 +160,7 @@ int main(int argc, char* argv[])
   TH2F* h_VertexPosRZ {new TH2F("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250)};
 	
 	
-	
-  //RECONSTRUCTION histograms
-	
-  //Muon reco
-  TH1F* h_muonRecPt      {new TH1F("h_muonRecPt",  "#mu^{#pm} reconstruction p_{T}", 1000, 0., 1000.)}; 
-  TH1F* h_muonRecEta     {new TH1F("h_muonRecEta", "#mu^{#pm} reconstruction #eta",  200, -7., 7.)}; 
-  TH1F* h_muonRecPhi     {new TH1F("h_muonRecPhi", "#mu^{#pm} reconstruction #phi",  100, -3.5, 3.5)};
-  TH1F* h_muonRecE       {new TH1F("h_muonRecE",   "#mu^{#pm} reconstruction energy",     1000, 0., 1000.)};
-  TH1F* h_muonRecDeltaR        {new TH1F("h_muonRecDeltaR", "Muon reconstruction #DeltaR",2500, -10., 10.)}; 
-  TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
-  TH1F* h_muonRecInvMass     {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",1000, 0, 500)};
-  TH1F* h_muonCut      {new TH1F("h_muonCut",  "Single #mu^{#pm} reconstruction p_{T} cut", 1000, 0., 1000.)}; 	
-  TH1F* h_muonDiv    {new TH1F("h_muonDiv",  "Single #mu^{#pm} reconstruction p_{T} divide", 100, 0., 1000.)}; 
-	
-	
-	
-	
-	
+ 	
 	
   namespace po = boost::program_options;
 
@@ -265,6 +271,11 @@ int main(int argc, char* argv[])
 	event.GetEntry(i);      
 
 
+	      
+	      
+	      
+	      
+	      
 	//////// GENERATOR PARTICLE STUFF
 	std::vector<int> nrofHiggs;
 	std::vector<int> nrofScalar; //Number of scalars
@@ -328,7 +339,7 @@ int main(int argc, char* argv[])
 	        h_genParScalarMuonPhi->Fill(genParPhi);
 	        h_genParScalarMuonE->Fill(genParE);
 	        h_VertexPosXY->Fill(genParVx,genParVy);
-	        h_VertexPosRZ->Fill(std::abs(genParVz),sqrt(genParVx^2+genParVy^2));      
+	        h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));      
 	     }
 		  
 	    //gen-muon with filters  
@@ -354,7 +365,7 @@ int main(int argc, char* argv[])
 	      h_genParScalarCKaonPhi->Fill(genParPhi);
 	      h_genParScalarCKaonE->Fill(genParE);
 	      h_VertexPosXY->Fill(genParVx,genParVy);
-	      h_VertexPosRZ->Fill(std::abs(genParVz),sqrt(genParVx^2+genParVy^2));
+	      h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
 	    }
 	    //K short from scalar decay
 	    if (pdgId==310){
@@ -364,7 +375,7 @@ int main(int argc, char* argv[])
 	      h_genParScalarKShortPhi->Fill(genParPhi);
 	      h_genParScalarKShortE->Fill(genParE);
 	      h_VertexPosXY->Fill(genParVx,genParVy);
-	      h_VertexPosRZ->Fill(std::abs(genParVz),sqrt(genParVx^2+genParVy^2));
+	      h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
 	    }
 	    //Charged pion from scalar decay
 	    if (pdgId==211){
@@ -374,7 +385,7 @@ int main(int argc, char* argv[])
 	      h_genParScalarCPionPhi->Fill(genParPhi);
 	      h_genParScalarCPionE->Fill(genParE);
 	      h_VertexPosXY->Fill(genParVx,genParVy);
-	      h_VertexPosRZ->Fill(std::abs(genParVz),sqrt(genParVx^2+genParVy^2));
+	      h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
 	    }
 	    //Neutral pion from scalar decay
 	    if (pdgId==111){
@@ -384,7 +395,7 @@ int main(int argc, char* argv[])
 	      h_genParScalarNPionPhi->Fill(genParPhi);
 	      h_genParScalarNPionE->Fill(genParE);
 	      h_VertexPosXY->Fill(genParVx,genParVy);
-	      h_VertexPosRZ->Fill(std::abs(genParVz),sqrt(genParVx^2+genParVy^2));
+	      h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
 	    }
 	  }
 
@@ -528,22 +539,18 @@ int main(int argc, char* argv[])
 	/// END GENERATOR PARTICLE STUFF
 
 	
+	      
+	      
+	      
+	      
+	      
+	      
 	/// Muon Reconstruction
 	std::vector<Int_t> nrofmuonRec;
 	std::vector<Int_t> muonSingleTrigger;
 	std::vector<Int_t> muonDoubleTrigger;
 	std::vector<Int_t> passedMuons {};
-	      
-	//std::vector<std::pair<Float_t,Int_t>> maxVector;
-	
-	//std::vector<Float_t> sortEta;
-	//std::vector<Float_t> sortPhi;
-	//std::vector<Float_t> sortE;
-	      
-	//std::pair<Float_t,Int_t> muonLast;
-	//std::pair<Float_t,Int_t> muon2Last; 
-	//std::pair<Float_t,Int_t> maximum;
-	      
+
 	if(event.metFilters()){
 	  
 	   for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
@@ -557,14 +564,8 @@ int main(int argc, char* argv[])
 	       h_muonRecEta->Fill(muonRecEta);
 	       h_muonRecPhi->Fill(muonRecPhi);
 	       h_muonRecE->Fill(muonRecE);
-		
-	       nrofmuonRec.emplace_back(k);
-		
-               //Two highest momentum muons: deltaR,deltaPhi
-	       //maximum=std::make_pair(muonRecPt,k);
-	       //maxVector.emplace_back(maximum);
+		   
 	  
-		 std::cout<<" is pt al gesorteerd? "<<muonRecPt<<"kijk naar k van het event "<<k<<std::endl;  
 	       if(event.muTrig()){ //Single muon trigger passed
 	     
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
@@ -591,11 +592,6 @@ int main(int argc, char* argv[])
 		    
 	   }//Muon reconstruction for loop
 
-	   //Part 2 of highest p_T selection for deltaR, deltaPhi
-	  // std::sort(maxVector.begin(),maxVector.end(),compare); 
-	//	std::cout<<"gesorteerde vector met pt "<<maxVector<<std::endl;
-          // muonLast=maxVector.end()[-1];std::cout<<"voorlaatste element "<<maxVector.end()[-1]<<std::endl;
-          // muon2Last=maxVector.end()[-2];std::cout<<"laatste element "<<maxVector.end()[-2]<<std::endl;
 	
 	   /*for(Int_t m{0};m<passedMuons.size();m++){
 	  
@@ -659,43 +655,62 @@ int main(int argc, char* argv[])
 	h_muonDiv->SetTitle("After/before cut");
 	
 	//DeltaR, DeltaPhi for two highest p_T
-	/*TLorentzVector muonRec1;
-	TLorentzVector muonRec2;
-	      
-	muonRec1.SetPtEtaPhiE(std::get<0>(muonLast),event.muonPF2PATEta[std::get<1>(muonLast)],event.muonPF2PATPhi[std::get<1>(muonLast)],event.muonPF2PATE[std::get<1>(muonLast)]);
-	muonRec2.SetPtEtaPhiE(std::get<0>(muon2Last),event.muonPF2PATEta[std::get<1>(muon2Last)],event.muonPF2PATPhi[std::get<1>(muon2Last)],event.muonPF2PATE[std::get<1>(muon2Last)]);
-			
-	h_muonRecDeltaR->Fill(muonRec1.DeltaR(muonRec2));
-	h_muonRecDeltaPhi->Fill(muonRec1.DeltaPhi(muonRec2));	
-			
-	//Invariant mass for two highest p_T
-	TLorentzVector lVecMu1  {event.muonPF2PATPX[std::get<1>(muonLast)], event.muonPF2PATPY[std::get<1>(muonLast)], event.muonPF2PATPZ[std::get<1>(muonLast)], event.muonPF2PATE[std::get<1>(muonLast)]};
-	TLorentzVector lVecMu2  {event.muonPF2PATPX[std::get<1>(muon2Last)], event.muonPF2PATPY[std::get<1>(muon2Last)], event.muonPF2PATPZ[std::get<1>(muon2Last)], event.muonPF2PATE[std::get<1>(muon2Last)]};
-
-	h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );*/
-	     
+	if(event.muTrig() || event.mumuTrig()){
 	TLorentzVector muonRec1;
 	TLorentzVector muonRec2;
 	      
-	muonRec1.SetPtEtaPhiE(event.muonPF2PATPt[(event.numMuonPF2PAT-1)],event.muonPF2PATEta[(event.numMuonPF2PAT-1)],event.muonPF2PATPhi[(event.numMuonPF2PAT-1)],event.muonPF2PATE[(event.numMuonPF2PAT-1)]);
-	muonRec2.SetPtEtaPhiE(event.muonPF2PATPt[event.numMuonPF2PAT],event.muonPF2PATEta[event.numMuonPF2PAT],event.muonPF2PATPhi[event.numMuonPF2PAT],event.muonPF2PATE[event.numMuonPF2PAT]);
+	muonRec1.SetPtEtaPhiE(event.muonPF2PATPt[0],event.muonPF2PATEta[0],event.muonPF2PATPhi[0],event.muonPF2PATE[0]);
+	muonRec2.SetPtEtaPhiE(event.muonPF2PATPt[1],event.muonPF2PATEta[1],event.muonPF2PATPhi[1],event.muonPF2PATE[1]);
 			
 	h_muonRecDeltaR->Fill(muonRec1.DeltaR(muonRec2));
 	h_muonRecDeltaPhi->Fill(muonRec1.DeltaPhi(muonRec2));	
 			
 	//Invariant mass for two highest p_T
-	TLorentzVector lVecMu1  {event.muonPF2PATPX[(event.numMuonPF2PAT-1)], event.muonPF2PATPY[(event.numMuonPF2PAT-1)], event.muonPF2PATPZ[(event.numMuonPF2PAT-1)], event.muonPF2PATE[(event.numMuonPF2PAT-1)]};
-	TLorentzVector lVecMu2  {event.muonPF2PATPX[event.numMuonPF2PAT], event.muonPF2PATPY[event.numMuonPF2PAT], event.muonPF2PATPZ[event.numMuonPF2PAT], event.muonPF2PATE[event.numMuonPF2PAT]};
+	TLorentzVector lVecMu1  {event.muonPF2PATPX[0], event.muonPF2PATPY[0], event.muonPF2PATPZ[0], event.muonPF2PATE[0]};
+	TLorentzVector lVecMu2  {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]};
 
 	h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
+	}   
+	      
+	      
+	      
+	      
+	      
+	      
+	//Packed candidates  
+        for (Int_t k{0};k<numPackedCands;k++) {
+	 
+	  Int_t packedId {event.packedCandsPdgId[k]};
+	  Int_t packedCharge {event.packedCandsCharge[k]};
+	    
+	  const TLorentzVector packedC {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]};
+	  h_packedCPt->Fill(packedC.Pt());
+	      
+	  h_packedCDxy->Fill(packedCandsDxy[k]);
+	  h_packedCDz->Fill(packedCandsDz[k]);
+	  
+	  if(event.packedCandsHasTrackDetails[k]){
+		  
+	    h_packedCVx->Fill(event.packedCandsPseudoTrkVx[k]);
+            h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
+            h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
+	    h_packedCVxy->Fill(std::sqrt(event.packedCandsPseudoTrkVx[k]^2+event.packedCandsPseudoTrkVy[k]^2));
+		  
+	  }
+	  
+        }
+	      
+	      
+	      
+	      
+	      
+	      
 	      
 	      
       } //Loop over all events
+	    
   } //Loop over all datatsets
-    
-	
-	
-	
+    	
 	
 
   std::cout << std::endl;
@@ -722,18 +737,21 @@ int main(int argc, char* argv[])
   outFile->cd();
 
   // Write histograms to file
+  h_genParPt->GetXaxis()->SetTitle("GeV");
   h_genParPt->Write();
   h_genParEta->Write();
   h_genParPhi->Write();
   h_genParE->Write();
   h_pdgId->Write();
-	
+ 
+  h_genParHiggsPt->GetXaxis()->SetTitle("GeV");
   h_genParHiggsPt->Write();
   h_genParHiggsEta->Write();
   h_genParHiggsPhi->Write();
   h_genParHiggsE->Write();
   h_HiggsInvMass->Write();
 	
+  h_genParScalarPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarPt->Write();
   h_genParScalarEta->Write();
   h_genParScalarPhi->Write();
@@ -742,9 +760,12 @@ int main(int argc, char* argv[])
   h_ScalarDeltaPhi->Write();
   h_ScalarInvMass->Write();
   h_Scalar3DAngle->Write();
-   
+  
+  h_genParScalarMuonPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonPt->Write();
+  h_genParScalarMuonCutPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonCutPt->Write();
+  h_genParScalarMuonDivPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonDivPt->Write();
 		
   h_genParScalarMuonEta->Write();
@@ -754,6 +775,7 @@ int main(int argc, char* argv[])
   h_MuonDeltaPhi->Write();
   h_Muon3DAngle->Write();
 	
+  h_genParScalarCKaonPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarCKaonPt->Write();
   h_genParScalarCKaonEta->Write();
   h_genParScalarCKaonPhi->Write();
@@ -762,6 +784,7 @@ int main(int argc, char* argv[])
   h_KaonDeltaPhi->Write();
   h_Kaon3DAngle->Write();
 
+  h_genParScalarKShortPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarKShortPt->Write();
   h_genParScalarKShortEta->Write();
   h_genParScalarKShortPhi->Write();
@@ -769,11 +792,13 @@ int main(int argc, char* argv[])
   h_KShortDeltaR->Write();
   h_KShortDeltaPhi->Write();
   h_KShort3DAngle->Write();
-    
+	
+  h_genParScalarCPionPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarCPionPt->Write();
   h_genParScalarCPionEta->Write();
   h_genParScalarCPionPhi->Write();
   h_genParScalarCPionE->Write();
+  h_genParScalarNPionPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarNPionPt->Write();
   h_genParScalarNPionEta->Write();
   h_genParScalarNPionPhi->Write();
@@ -787,11 +812,12 @@ int main(int argc, char* argv[])
   h_VertexPosXY->GetYaxis()->SetTitle("Vertex position y"); // set a title for the y-axis
   h_VertexPosXY->GetYaxis()->SetRangeUser(-150., 150.); 
   h_VertexPosXY->Write();
-  h_VertexPosRZ->GetXaxis()->SetTitle("Vertex position R"); 
-  h_VertexPosRZ->GetYaxis()->SetTitle("Vertex position z"); 
+  h_VertexPosRZ->GetXaxis()->SetTitle("Vertex position z"); 
+  h_VertexPosRZ->GetYaxis()->SetTitle("R"); 
   h_VertexPosRZ->Write();
 	
   //Reconstruction
+  h_muonRecPt->GetXaxis()->SetTitle("GeV");
   h_muonRecPt->Write();
   h_muonRecEta->Write();
   h_muonRecPhi->Write();
@@ -799,10 +825,16 @@ int main(int argc, char* argv[])
   h_muonRecDeltaR->Write();
   h_muonRecDeltaPhi->Write();
   h_muonRecInvMass->Write();
+  h_muonCut->GetXaxis()->SetTitle("GeV");
   h_muonCut->Write();
+  h_muonDiv->GetXaxis()->SetTitle("GeV");
   h_muonDiv->Write();
 	
-	
+  //Packed Candidates
+  h_packedCPt->GetXaxis()->SetTitle("GeV");
+  h_packedCPt->Write();
+  h_packedCDxy->Write();
+  h_packedCDz->Write();
 	
   // Safely close file
   outFile->Close();
