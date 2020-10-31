@@ -534,15 +534,15 @@ int main(int argc, char* argv[])
 	std::vector<Int_t> muonDoubleTrigger;
 	std::vector<Int_t> passedMuons {};
 	      
-	std::vector<std::pair<Float_t,Int_t>> maxVector;
+	//std::vector<std::pair<Float_t,Int_t>> maxVector;
 	
-	std::vector<Float_t> sortEta;
-	std::vector<Float_t> sortPhi;
-	std::vector<Float_t> sortE;
+	//std::vector<Float_t> sortEta;
+	//std::vector<Float_t> sortPhi;
+	//std::vector<Float_t> sortE;
 	      
-	std::pair<Float_t,Int_t> muonLast;
-	std::pair<Float_t,Int_t> muon2Last; 
-	std::pair<Float_t,Int_t> maximum;
+	//std::pair<Float_t,Int_t> muonLast;
+	//std::pair<Float_t,Int_t> muon2Last; 
+	//std::pair<Float_t,Int_t> maximum;
 	      
 	if(event.metFilters()){
 	  
@@ -561,10 +561,10 @@ int main(int argc, char* argv[])
 	       nrofmuonRec.emplace_back(k);
 		
                //Two highest momentum muons: deltaR,deltaPhi
-	       maximum=std::make_pair(muonRecPt,k);
-	       maxVector.emplace_back(maximum);
+	       //maximum=std::make_pair(muonRecPt,k);
+	       //maxVector.emplace_back(maximum);
 	  
-		 std::cout<<" is pt al gesorteerd? (kijk naar eerste element van paren "<<muonRecPt<<std::endl;  
+		 std::cout<<" is pt al gesorteerd? "<<muonRecPt<<std::endl;  
 	       if(event.muTrig()){ //Single muon trigger passed
 	     
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
@@ -592,10 +592,10 @@ int main(int argc, char* argv[])
 	   }//Muon reconstruction for loop
 
 	   //Part 2 of highest p_T selection for deltaR, deltaPhi
-	   std::sort(maxVector.begin(),maxVector.end(),compare); 
+	  // std::sort(maxVector.begin(),maxVector.end(),compare); 
 	//	std::cout<<"gesorteerde vector met pt "<<maxVector<<std::endl;
-           muonLast=maxVector.end()[-1];std::cout<<"voorlaatste element "<<maxVector.end()[-1]<<std::endl;
-           muon2Last=maxVector.end()[-2];std::cout<<"laatste element "<<maxVector.end()[-2]<<std::endl;
+          // muonLast=maxVector.end()[-1];std::cout<<"voorlaatste element "<<maxVector.end()[-1]<<std::endl;
+          // muon2Last=maxVector.end()[-2];std::cout<<"laatste element "<<maxVector.end()[-2]<<std::endl;
 	
 	   /*for(Int_t m{0};m<passedMuons.size();m++){
 	  
@@ -659,7 +659,7 @@ int main(int argc, char* argv[])
 	h_muonDiv->SetTitle("After/before cut");
 	
 	//DeltaR, DeltaPhi for two highest p_T
-	TLorentzVector muonRec1;
+	/*TLorentzVector muonRec1;
 	TLorentzVector muonRec2;
 	      
 	muonRec1.SetPtEtaPhiE(std::get<0>(muonLast),event.muonPF2PATEta[std::get<1>(muonLast)],event.muonPF2PATPhi[std::get<1>(muonLast)],event.muonPF2PATE[std::get<1>(muonLast)]);
@@ -671,6 +671,21 @@ int main(int argc, char* argv[])
 	//Invariant mass for two highest p_T
 	TLorentzVector lVecMu1  {event.muonPF2PATPX[std::get<1>(muonLast)], event.muonPF2PATPY[std::get<1>(muonLast)], event.muonPF2PATPZ[std::get<1>(muonLast)], event.muonPF2PATE[std::get<1>(muonLast)]};
 	TLorentzVector lVecMu2  {event.muonPF2PATPX[std::get<1>(muon2Last)], event.muonPF2PATPY[std::get<1>(muon2Last)], event.muonPF2PATPZ[std::get<1>(muon2Last)], event.muonPF2PATE[std::get<1>(muon2Last)]};
+
+	h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );*/
+	     
+	TLorentzVector muonRec1;
+	TLorentzVector muonRec2;
+	      
+	muonRec1.SetPtEtaPhiE(event.muonPF2PATPt[(event.numMuonPF2PAT-1)],event.muonPF2PATEta[(event.numMuonPF2PAT-1)],event.muonPF2PATPhi[(event.numMuonPF2PAT-1)],event.muonPF2PATE[(event.numMuonPF2PAT-1)]);
+	muonRec2.SetPtEtaPhiE(,event.muonPF2PATEta[event.numMuonPF2PAT],event.muonPF2PATPhi[event.numMuonPF2PAT],event.muonPF2PATE[event.numMuonPF2PAT]);
+			
+	h_muonRecDeltaR->Fill(muonRec1.DeltaR(muonRec2));
+	h_muonRecDeltaPhi->Fill(muonRec1.DeltaPhi(muonRec2));	
+			
+	//Invariant mass for two highest p_T
+	TLorentzVector lVecMu1  {event.muonPF2PATPX[(event.numMuonPF2PAT-1)], event.muonPF2PATPY[(event.numMuonPF2PAT-1)], event.muonPF2PATPZ[(event.numMuonPF2PAT-1)], event.muonPF2PATE[(event.numMuonPF2PAT-1)]};
+	TLorentzVector lVecMu2  {event.muonPF2PATPX[event.numMuonPF2PAT], event.muonPF2PATPY[event.numMuonPF2PAT], event.muonPF2PATPZ[event.numMuonPF2PAT], event.muonPF2PATE[event.numMuonPF2PAT]};
 
 	h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
 	      
