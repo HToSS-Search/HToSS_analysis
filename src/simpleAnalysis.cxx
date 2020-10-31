@@ -149,8 +149,9 @@ int main(int argc, char* argv[])
   TH1F* h_packedCDz    {new TH1F("h_packedCDz",  "Packed Candidate Dz", 1500, -500., 500.)};
   TH1F* h_packedCVx    {new TH1F("h_packedCVx",  "Packed Candidate track vx", 500,  -150., 150.)};
   TH1F* h_packedCVy    {new TH1F("h_packedCVy",  "Packed Candidate track vy", 500,  -150., 150.)};
-  TH1F* h_packedCVxy   {new TH1F("h_packedCVxy", "Packed Candidate track vxy", 500,  -150., 150.)};
   TH1F* h_packedCVz    {new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.)};
+  TH1F* h_packedCVxy   {new TH1F("h_packedCVxy", "Packed Candidate track vxy", 500,  -150., 150.)};
+ 
 
 	
   // Declare TH2I plots 
@@ -678,7 +679,7 @@ int main(int argc, char* argv[])
 	      
 	      
 	//Packed candidates  
-        for (Int_t k{0};k<numPackedCands;k++) {
+        for (Int_t k{0};k<event.numPackedCands;k++) {
 	 
 	  Int_t packedId {event.packedCandsPdgId[k]};
 	  Int_t packedCharge {event.packedCandsCharge[k]};
@@ -694,7 +695,9 @@ int main(int argc, char* argv[])
 	    h_packedCVx->Fill(event.packedCandsPseudoTrkVx[k]);
             h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
             h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
-	    h_packedCVxy->Fill(std::sqrt(event.packedCandsPseudoTrkVx[k]^2+event.packedCandsPseudoTrkVy[k]^2));
+	    
+	    Float_t pCVxy=std::sqrt(event.packedCandsPseudoTrkVx[k]^2+event.packedCandsPseudoTrkVy[k]^2);
+	    h_packedCVxy->Fill(pCVxy);
 		  
 	  }
 	  
@@ -835,6 +838,11 @@ int main(int argc, char* argv[])
   h_packedCPt->Write();
   h_packedCDxy->Write();
   h_packedCDz->Write();
+  h_packedCVx->Write();
+  h_packedCVy->Write();
+  h_packedCVz->Write();
+  h_packedCVxy->Write();
+	
 	
   // Safely close file
   outFile->Close();
