@@ -678,7 +678,7 @@ int main(int argc, char* argv[])
 	TLorentzVector muonRec2;
 	      
 	muonRec1.SetPtEtaPhiE(event.muonPF2PATPt[(event.numMuonPF2PAT-1)],event.muonPF2PATEta[(event.numMuonPF2PAT-1)],event.muonPF2PATPhi[(event.numMuonPF2PAT-1)],event.muonPF2PATE[(event.numMuonPF2PAT-1)]);
-	muonRec2.SetPtEtaPhiE(,event.muonPF2PATEta[event.numMuonPF2PAT],event.muonPF2PATPhi[event.numMuonPF2PAT],event.muonPF2PATE[event.numMuonPF2PAT]);
+	muonRec2.SetPtEtaPhiE(event.muonPF2PATPt[event.numMuonPF2PAT],event.muonPF2PATEta[event.numMuonPF2PAT],event.muonPF2PATPhi[event.numMuonPF2PAT],event.muonPF2PATE[event.numMuonPF2PAT]);
 			
 	h_muonRecDeltaR->Fill(muonRec1.DeltaR(muonRec2));
 	h_muonRecDeltaPhi->Fill(muonRec1.DeltaPhi(muonRec2));	
