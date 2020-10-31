@@ -687,8 +687,8 @@ int main(int argc, char* argv[])
 	  const TLorentzVector packedC {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]};
 	  h_packedCPt->Fill(packedC.Pt());
 	      
-	  h_packedCDxy->Fill(packedCandsDxy[k]);
-	  h_packedCDz->Fill(packedCandsDz[k]);
+	  h_packedCDxy->Fill(event.packedCandsDxy[k]);
+	  h_packedCDz->Fill(event.packedCandsDz[k]);
 	  
 	  if(event.packedCandsHasTrackDetails[k]){
 		  
@@ -696,7 +696,7 @@ int main(int argc, char* argv[])
             h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
             h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
 	    
-	    Float_t pCVxy=std::sqrt(event.packedCandsPseudoTrkVx[k]^2+event.packedCandsPseudoTrkVy[k]^2);
+	    Float_t pCVxy=std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]);
 	    h_packedCVxy->Fill(pCVxy);
 		  
 	  }
