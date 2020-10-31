@@ -593,7 +593,7 @@ int main(int argc, char* argv[])
 
 	   //Part 2 of highest p_T selection for deltaR, deltaPhi
 	   std::sort(maxVector.begin(),maxVector.end(),compare); 
-		std::cout<<"gesorteerde vector met pt "<<maxVector<<std::endl;
+	//	std::cout<<"gesorteerde vector met pt "<<maxVector<<std::endl;
            muonLast=maxVector.end()[-1];std::cout<<"voorlaatste element "<<maxVector.end()[-1]<<std::endl;
            muon2Last=maxVector.end()[-2];std::cout<<"laatste element "<<maxVector.end()[-2]<<std::endl;
 	
