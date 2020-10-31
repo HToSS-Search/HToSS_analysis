@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
   //Muon from scalar decay
   TH1F* h_genParScalarMuonPt      {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
   TH1F* h_genParScalarMuonCutPt      {new TH1F("h_genParScalarMuonCutPt",  "#mu^{#pm} from scalar decay p_{T} cut", 1000, 0., 1000.)};
-  TH1F* h_genParScalarMuonDivPt      {new TH1F("h_genParScalarMuonDivPt",  "#mu^{#pm} from scalar decay p_{T} divide", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonDivPt      {new TH1F("h_genParScalarMuonDivPt",  "#mu^{#pm} from scalar decay p_{T} divide", 100, 0., 1000.)};
 	
   TH1F* h_genParScalarMuonEta     {new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
   TH1F* h_genParScalarMuonPhi     {new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
@@ -149,7 +149,7 @@ int main(int argc, char* argv[])
   TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
   TH1F* h_muonRecInvMass     {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",1000, 0, 500)};
   TH1F* h_muonCut      {new TH1F("h_muonCut",  "Single #mu^{#pm} reconstruction p_{T} cut", 1000, 0., 1000.)}; 	
-  TH1F* h_muonDiv    {new TH1F("h_muonDiv",  "Single #mu^{#pm} reconstruction p_{T} divide", 1000, 0., 1000.)}; 
+  TH1F* h_muonDiv    {new TH1F("h_muonDiv",  "Single #mu^{#pm} reconstruction p_{T} divide", 100, 0., 1000.)}; 
 	
 	
 	
@@ -564,7 +564,7 @@ int main(int argc, char* argv[])
 	       maximum=std::make_pair(muonRecPt,k);
 	       maxVector.emplace_back(maximum);
 	  
-		   
+		 std::cout<<" is pt al gesorteerd? (kijk naar eerste element van paren "<<maximum<<std::endl;  
 	       if(event.muTrig()){ //Single muon trigger passed
 	     
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
@@ -593,8 +593,9 @@ int main(int argc, char* argv[])
 
 	   //Part 2 of highest p_T selection for deltaR, deltaPhi
 	   std::sort(maxVector.begin(),maxVector.end(),compare); 
-           muonLast=maxVector.end()[-1];
-           muon2Last=maxVector.end()[-2];
+		std::cout<<"gesorteerde vector met pt "<<maxVector<<std::endl;
+           muonLast=maxVector.end()[-1];std::cout<<"voorlaatste element "<<maxVector.end()[-1]<<std::endl;
+           muon2Last=maxVector.end()[-2];std::cout<<"laatste element "<<maxVector.end()[-2]<<std::endl;
 	
 	   /*for(Int_t m{0};m<passedMuons.size();m++){
 	  
