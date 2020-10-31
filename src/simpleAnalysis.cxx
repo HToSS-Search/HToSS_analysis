@@ -564,7 +564,7 @@ int main(int argc, char* argv[])
 	       //maximum=std::make_pair(muonRecPt,k);
 	       //maxVector.emplace_back(maximum);
 	  
-		 std::cout<<" is pt al gesorteerd? "<<muonRecPt<<std::endl;  
+		 std::cout<<" is pt al gesorteerd? "<<muonRecPt<<"kijk naar k van het event "<<k<<std::endl;  
 	       if(event.muTrig()){ //Single muon trigger passed
 	     
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
