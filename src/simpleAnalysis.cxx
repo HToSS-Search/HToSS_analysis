@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
   //Muon from scalar decay
   TH1F* h_genParScalarMuonPt         {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
   TH1F* h_genParScalarMuonCutPt      {new TH1F("h_genParScalarMuonCutPt",  "#mu^{#pm} from scalar decay p_{T} cut", 1000, 0., 1000.)};
-  TH1F* h_genParScalarMuonDivPt      {new TH1F("h_genParScalarMuonDivPt",  "#mu^{#pm} from scalar decay p_{T} divide", 100, 0., 1000.)};
+  TH1F* h_genParScalarMuonDivPt      {new TH1F("h_genParScalarMuonDivPt",  "#mu^{#pm} from scalar decay p_{T} divide", 1000, 0., 1000.)};
 	
   TH1F* h_genParScalarMuonEta     {new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
   TH1F* h_genParScalarMuonPhi     {new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
   TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
   TH1F* h_muonRecInvMass       {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",1000, 0, 500)};
   TH1F* h_muonCut              {new TH1F("h_muonCut",  "Single #mu^{#pm} reconstruction p_{T} cut", 1000, 0., 1000.)}; 	
-  TH1F* h_muonDiv              {new TH1F("h_muonDiv",  "Single #mu^{#pm} reconstruction p_{T} divide", 100, 0., 1000.)}; 
+  TH1F* h_muonDiv              {new TH1F("h_muonDiv",  "Single #mu^{#pm} reconstruction p_{T} divide", 1000, 0., 1000.)}; 
 	
   //Packed candidates 
   TH1F* h_packedCPt    {new TH1F("h_packedCPt",  "Packed Candidate p_{T}", 1000, 0., 1000.)}; 
@@ -152,7 +152,13 @@ int main(int argc, char* argv[])
   TH1F* h_packedCVz    {new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.)};
   TH1F* h_packedCVxy   {new TH1F("h_packedCVxy", "Packed Candidate track vxy", 500,  -150., 150.)};
  
-
+  //Iso tracks
+  TH1F* h_isoTracksDeltaR        {new TH1F("h_isoTracksDeltaR", "IsoTracks #DeltaR",2500, -10., 10.)}; 
+  TH1F* h_isoTracksDeltaPhi      {new TH1F("h_isoTracksDeltaPhi", "IsoTracks #Delta#phi",2500, -3.5, 3.5)};
+  TH1F* h_isoTracksInvMass       {new TH1F("h_isoTracksInvMass", "IsoTracks invariant mass",1000, 0, 500)};	
+	
+	
+	
 	
   // Declare TH2I plots 
     
@@ -335,7 +341,7 @@ int main(int argc, char* argv[])
 	      //gen-muon with no filters
 	     if (pdgId==13 && !ownParent){    
 	        nrofMuon.emplace_back(k);
-	        h_genParScalarMuonPt->Fill(genParPt);
+	        //h_genParScalarMuonPt->Fill(genParPt);
 	        h_genParScalarMuonEta->Fill(genParEta);
 	        h_genParScalarMuonPhi->Fill(genParPhi);
 	        h_genParScalarMuonE->Fill(genParE);
@@ -348,11 +354,12 @@ int main(int argc, char* argv[])
 	      
 	      if (event.metFilters()){
 		      
-	         if(event.muTrig()){
+		 h_genParScalarMuonPt->Fill(genParPt);
+		      
+	         if(event.muTrig() || event.mumuTrig()){
+			 
 	           h_genParScalarMuonCutPt->Fill(genParPt);
-		 }
-		 if(event.mumuTrig()){
-	           h_genParScalarMuonCutPt->Fill(genParPt);
+			 
 		 }
 		      
 	      }
@@ -548,48 +555,35 @@ int main(int argc, char* argv[])
 	      
 	/// Muon Reconstruction
 	std::vector<Int_t> nrofmuonRec;
-	std::vector<Int_t> muonSingleTrigger;
-	std::vector<Int_t> muonDoubleTrigger;
 	std::vector<Int_t> passedMuons {};
 
 	if(event.metFilters()){
 	  
 	   for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
 		    
-	       const Float_t muonRecPt  { event.muonPF2PATPt[k] };
-	       const Float_t muonRecEta { event.muonPF2PATEta[k] };
-	       const Float_t muonRecPhi { event.muonPF2PATPhi[k] };
-	       const Float_t muonRecE   { event.muonPF2PATE[k] };
-		
+	       const Float_t muonRecPt   { event.muonPF2PATPt[k] };
+	       const Float_t muonRecEta  { event.muonPF2PATEta[k] };
+	       const Float_t muonRecPhi  { event.muonPF2PATPhi[k] };
+	       const Float_t muonRecE    { event.muonPF2PATE[k] };
+	       //const Int_t muonRecCharge {event.muonPF2PATCharge[k]};
+		   
 	       h_muonRecPt->Fill(muonRecPt);
 	       h_muonRecEta->Fill(muonRecEta);
 	       h_muonRecPhi->Fill(muonRecPhi);
 	       h_muonRecE->Fill(muonRecE);
-		   
-	  
-	       if(event.muTrig()){ //Single muon trigger passed
+		      
+	       if(event.muTrig() || event.mumuTrig()){ //Single of double muon trigger passed
 	     
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 	      
-	           muonSingleTrigger.emplace_back(k); //Take its index 
-	           passedMuons.push_back(k);
+	           passedMuons.push_back(k); //Take its index
 		   h_muonCut->Fill(muonRecPt);
 			 
 		 }
 		       
 	       }
 		
-	       if(event.mumuTrig()){ //Double muon trigger passed
-	  
-	         if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ 
-	     
-	           muonDoubleTrigger.emplace_back(k); 
-		   passedMuons.push_back(k);
-		   h_muonCut->Fill(muonRecPt);
-		
-		 }
-		       
-	       }
+	       
 		    
 	   }//Muon reconstruction for loop
 
@@ -654,23 +648,33 @@ int main(int argc, char* argv[])
 	h_muonDiv=(TH1F*)h_muonCut->Clone();
 	h_muonDiv->Divide(h_muonRecPt);
 	h_muonDiv->SetTitle("After/before cut");
-	
+
 	//DeltaR, DeltaPhi for two highest p_T
 	if(event.muTrig() || event.mumuTrig()){
-	TLorentzVector muonRec1;
-	TLorentzVector muonRec2;
-	      
-	muonRec1.SetPtEtaPhiE(event.muonPF2PATPt[0],event.muonPF2PATEta[0],event.muonPF2PATPhi[0],event.muonPF2PATE[0]);
-	muonRec2.SetPtEtaPhiE(event.muonPF2PATPt[1],event.muonPF2PATEta[1],event.muonPF2PATPhi[1],event.muonPF2PATE[1]);
+	  
+	std::cout<<" charge van hoogste pt "<<event.muonPF2PATCharge[0]<<std::endl;
+	std::cout<<" charge van 2e hoogste pt "<<event.muonPF2PATCharge[1]<<std::endl;
+	
+	  if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){ //Electric charge control
+	    
+	    std::cout<<" controle tegengestelde lading ok "<<std::endl;
+		
+            TLorentzVector muonRec1;
+	    TLorentzVector muonRec2;
+		  
+	    muonRec1.SetPtEtaPhiE(event.muonPF2PATPt[0],event.muonPF2PATEta[0],event.muonPF2PATPhi[0],event.muonPF2PATE[0]);
+	    muonRec2.SetPtEtaPhiE(event.muonPF2PATPt[1],event.muonPF2PATEta[1],event.muonPF2PATPhi[1],event.muonPF2PATE[1]);
 			
-	h_muonRecDeltaR->Fill(muonRec1.DeltaR(muonRec2));
-	h_muonRecDeltaPhi->Fill(muonRec1.DeltaPhi(muonRec2));	
+	    h_muonRecDeltaR->Fill(muonRec1.DeltaR(muonRec2));
+	    h_muonRecDeltaPhi->Fill(muonRec1.DeltaPhi(muonRec2));	
 			
-	//Invariant mass for two highest p_T
-	TLorentzVector lVecMu1  {event.muonPF2PATPX[0], event.muonPF2PATPY[0], event.muonPF2PATPZ[0], event.muonPF2PATE[0]};
-	TLorentzVector lVecMu2  {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]};
+	    //Invariant mass for two highest p_T
+	    TLorentzVector lVecMu1  {event.muonPF2PATPX[0], event.muonPF2PATPY[0], event.muonPF2PATPZ[0], event.muonPF2PATE[0]};
+	    TLorentzVector lVecMu2  {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]};
 
-	h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
+	    h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
+	  }
+		
 	}   
 	      
 	      
@@ -681,30 +685,67 @@ int main(int argc, char* argv[])
 	//Packed candidates  
         for (Int_t k{0};k<event.numPackedCands;k++) {
 	 
-	  Int_t packedId {event.packedCandsPdgId[k]};
-	  Int_t packedCharge {event.packedCandsCharge[k]};
-	    
+	  const Int_t packedId {event.packedCandsPdgId[k]};
+		std::cout<<" id van packed candidate "<<packedId<<std::endl;
+		
 	  const TLorentzVector packedC {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]};
-	  h_packedCPt->Fill(packedC.Pt());
-	      
+	  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]}; 
+		
 	  h_packedCDxy->Fill(event.packedCandsDxy[k]);
 	  h_packedCDz->Fill(event.packedCandsDz[k]);
 	  
 	  if(event.packedCandsHasTrackDetails[k]){
-		  
+		
+	    TVector3 packedCPt {event.packedCandsPseudoTrkPx[k],event.packedCandsPseudoTrkPy[k],event.packedCandsPseudoTrkPz[k]};
+	    h_packedCPt->Fill(packedCPt.Pt());
+	 
 	    h_packedCVx->Fill(event.packedCandsPseudoTrkVx[k]);
             h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
             h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
 	    
-	    Float_t pCVxy=std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]);
-	    h_packedCVxy->Fill(pCVxy);
+	    //const Float_t pCVxy=std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]);
+	    //h_packedCVxy->Fill(pCVxy);
 		  
 	  }
 	  
         }
 	      
+	
+	 
 	      
+	//Iso tracks  
 	      
+	TLorentzVector iso1;
+	TLorentzVector iso2;
+	      
+	iso1.SetPtEtaPhiE(event.isoTracksPt[0],event.isoTracksEta[0],event.isoTracksPhi[0],event.isoTracksE[0]);
+	iso2.SetPtEtaPhiE(event.isoTracksPt[1],event.isoTracksEta[1],event.isoTracksPhi[1],event.isoTracksE[1]);
+	
+	Float_t dR=iso1.DeltaR(iso2);
+	h_isoTracksDeltaR->Fill(dR);
+	h_isoTracksDeltaPhi->Fill(iso1.DeltaPhi(iso2));
+	      
+	for (Int_t k{0}; k<event.numIsolatedTracks;k++){
+	  
+            /*const TLorentzVector isoTracks {event.isoTracksPx[k],event.isoTracksPy[k],event.isoTracksPz[k],event.isoTracksE[k]};
+		
+	    const Float_t isoTracksPt  { event.isoTracksPt[k] };
+	    const Float_t isoTracksEta { event.isoTracksEta[k] };
+	    const Float_t isoTracksPhi { event.isoTracksPhi[k] };
+	    const Float_t isoTracksE   { event.isoTracksE[k] };*/
+		
+	    const Int_t  isoTracksId     {event.isoTracksPdgId[k]};
+	    const Int_t  isoTracksCharge {event.isoTracksCharge[k]};
+		
+	    if((isoTracksCharge!=0) && (dR>0.2)){ //Tracks don't match muons, no neutral particles
+		        
+	      //Invariant mass for two highest p_T
+	      TLorentzVector isoTrack1  {event.isoTracksPx[0],event.isoTracksPy[0],event.isoTracksPz[0],event.isoTracksE[0]};
+	      TLorentzVector isoTrack2  {event.isoTracksPx[1],event.isoTracksPy[1],event.isoTracksPz[1],event.isoTracksE[1]};
+
+	      h_isoTracksInvMass->Fill((isoTrack1+isoTrack2).M());    
+	    }
+	}
 	      
 	      
 	      
@@ -842,6 +883,12 @@ int main(int argc, char* argv[])
   h_packedCVy->Write();
   h_packedCVz->Write();
   h_packedCVxy->Write();
+
+  //Iso tracks
+  h_isoTracksDeltaR->Write();
+  h_isoTracksDeltaPhi->Write();
+  h_isoTracksInvMass->Write();
+	
 	
 	
   // Safely close file
