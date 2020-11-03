@@ -1,6 +1,6 @@
 name: "QCD_Pt-80to120_MuEnrichedPt5"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/QCD/QCD_Pt-80to120_MuEnrichedPt5/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/QCD/QCD_Pt-80to120_MuEnrichedPt5/"
 total_events: 23248995
 cross_section: 88930.0
 mc: true

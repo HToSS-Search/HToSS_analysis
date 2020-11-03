@@ -1,6 +1,6 @@
 name: "ttH_bb"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/ttV/ttH_bb/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/ttV/ttH_bb/"
 total_events: 8000000
 cross_section: 0.5269
 mc: true

@@ -33,7 +33,7 @@
 
 std::string pythiaStatus (const Int_t status);
 std::string pdgIdCode (const Int_t status, const bool unicode = false);
-bool scalarGrandparent(const AnalysisEvent event, const Int_t k, const Int_t pdgId_);
+bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
 
 uint debugCounter;
 
@@ -1511,7 +1511,7 @@ std::string pdgIdCode (const Int_t parId, const bool unicode) {
    return particle;
 }
 
-bool scalarGrandparent (const AnalysisEvent event, const Int_t k, const Int_t grandparentId) {
+bool scalarGrandparent (const AnalysisEvent& event, const Int_t& k, const Int_t& grandparentId) {
 
     const Int_t pdgId        { std::abs(event.genParId[k]) };
     const Int_t numDaughters { event.genParNumDaughters[k] };
@@ -1521,6 +1521,7 @@ bool scalarGrandparent (const AnalysisEvent event, const Int_t k, const Int_t gr
 
     if (motherId == 0 || motherIndex == -1) return false; // if no parent, then mother Id is null and there's no index, quit search
     else if (motherId == std::abs(grandparentId)) return true; // if mother is granparent being searched for, return true
+    else if (motherIndex > event.NGENPARMAX) return false; // index exceeds stored genParticle range, return false for safety
     else {
 //        std::cout << "Going up the ladder ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
 //        debugCounter++;
