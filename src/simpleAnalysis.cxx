@@ -35,7 +35,7 @@
 #include <cmath>
 
 std::string pdgIdCode (const Int_t pdgId, const bool unicode = false); // declaring function called below main(); pdgIdCode translate stored numerical pdgId code into a string: unicode for output to string, or latex style for ROOT plotting
-bool scalarGrandparent(const AnalysisEvent event, const Int_t k, const Int_t pdgId_);
+bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
 
 //Sorting based on first digit of std::pair
 bool compare(std::pair<Float_t,Int_t>&i, std::pair<Float_t,Int_t>&j) 
@@ -1027,7 +1027,7 @@ std::string pdgIdCode (const Int_t parId, const bool unicode) {
 }
 
 
-bool scalarGrandparent (const AnalysisEvent event, const Int_t k, const Int_t grandparentId) {
+bool scalarGrandparent (const AnalysisEvent& event, const Int_t& k, const Int_t& grandparentId) {
 
   const Int_t pdgId        { std::abs(event.genParId[k]) };
   const Int_t numDaughters { event.genParNumDaughters[k] };

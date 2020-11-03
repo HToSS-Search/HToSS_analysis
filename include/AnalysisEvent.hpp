@@ -184,7 +184,9 @@ class AnalysisEvent
     Float_t muonPF2PATTrkKick[NMUONSMAX];
     Float_t muonPF2PATSegmentCompatibility[NMUONSMAX];
     Float_t muonPF2PATDBPV[NMUONSMAX];
+    Float_t muonPF2PATDBPVError[NMUONSMAX];
     Float_t muonPF2PATDZPV[NMUONSMAX];
+    Float_t muonPF2PATDZPVError[NMUONSMAX];
     Float_t genMuonPF2PATPT[NMUONSMAX];
     Float_t genMuonPF2PATET[NMUONSMAX];
     Float_t genMuonPF2PATPX[NMUONSMAX];
@@ -1252,7 +1254,9 @@ class AnalysisEvent
     TBranch* b_muonPF2PATTrkKick; //!
     TBranch* b_muonPF2PATSegmentCompatibility; //!
     TBranch* b_muonPF2PATDBPV; //!
+    TBranch* b_muonPF2PATDBPVError; //!
     TBranch* b_muonPF2PATDZPV; //!
+    TBranch* b_muonPF2PATDZPVError; //!
     TBranch* b_genMuonPF2PATPT; //!
     TBranch* b_genMuonPF2PATET; //!
     TBranch* b_genMuonPF2PATPX; //!
@@ -2387,7 +2391,9 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
    fChain->SetBranchAddress("muonPF2PATTrkKick", muonPF2PATTrkKick, &b_muonPF2PATTrkKick);
    fChain->SetBranchAddress("muonPF2PATSegmentCompatibility", muonPF2PATSegmentCompatibility, &b_muonPF2PATSegmentCompatibility);
    fChain->SetBranchAddress("muonPF2PATDBPV", muonPF2PATDBPV, &b_muonPF2PATDBPV);
+   fChain->SetBranchAddress("muonPF2PATDBPVError", muonPF2PATDBPVError, &b_muonPF2PATDBPVError);
    fChain->SetBranchAddress("muonPF2PATDZPV", muonPF2PATDZPV, &b_muonPF2PATDZPV);
+   fChain->SetBranchAddress("muonPF2PATDZPVError", muonPF2PATDZPVError, &b_muonPF2PATDZPVError);
    fChain->SetBranchAddress("muonPF2PATVldPixHits", muonPF2PATVldPixHits, &b_muonPF2PATVldPixHits);
    fChain->SetBranchAddress("muonPF2PATMatchedStations", muonPF2PATMatchedStations, &b_muonPF2PATMatchedStations);
    if (isMC)
