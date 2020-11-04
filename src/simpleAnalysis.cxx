@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
   TH1F* h_genParScalarE       {new TH1F("h_genParScalarE",   "Scalar energy",     1000, 0., 1000.)};
   TH1F* h_ScalarDeltaR        {new TH1F("h_ScalarDeltaR", "Scalar #DeltaR",1500,-10., 10.)}; 
   TH1F* h_ScalarDeltaPhi      {new TH1F("h_ScalarDeltaPhi", "Scalar #Delta#phi",1500, -3.5, 3.5)};
-  TH1F* h_ScalarInvMass       {new TH1F("h_ScalarInvMass", "Scalar Invariant mass",200, 0., 7.)};
+  TH1F* h_ScalarInvMass       {new TH1F("h_ScalarInvMass", "Scalar Invariant mass",1000, 0., 7.)};
   TH1F* h_Scalar3DAngle       {new TH1F("h_Scalar3DAngle", "Scalar 3D Angle",1000,-10., 10.)}; 
 	
   //Muon from scalar decay
@@ -152,9 +152,7 @@ int main(int argc, char* argv[])
   TH1F* h_packedCVz    {new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.)};
  
   //Iso tracks
-  TH1F* h_isoTracksDeltaR        {new TH1F("h_isoTracksDeltaR", "IsoTracks #DeltaR",2500, -10., 10.)}; 
-  TH1F* h_isoTracksDeltaPhi      {new TH1F("h_isoTracksDeltaPhi", "IsoTracks #Delta#phi",2500, -3.5, 3.5)};
-  TH1F* h_isoTracksInvMass       {new TH1F("h_isoTracksInvMass", "IsoTracks invariant mass",1000, 0, 500)};	
+  TH1F* h_isoTracksPt    {new TH1F("h_isoTracksPt",  "Iso tracks p_{T}", 1000, 0., 1000.)}; 	
 	
 	
 	
@@ -162,8 +160,8 @@ int main(int argc, char* argv[])
   // Declare TH2I plots 
     
   //Vertex position: muons, kaons, kshort, pions
-  TH2F* h_VertexPosXY {new TH2F("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
-  TH2F* h_VertexPosRZ {new TH2F("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250)};
+  TH2I* h_VertexPosXY {new TH2I("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
+  TH2I* h_VertexPosRZ {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250)};
 	
 	
  	
@@ -294,7 +292,7 @@ int main(int argc, char* argv[])
 	for (Int_t k{0}; k < event.nGenPar; k++) {
 
 	  // get variables for this event that have been stored in ROOT nTuple tree
-	  const Int_t pdgId    { std::abs(event.genParId[k]) };
+	  const Int_t pdgId        { std::abs(event.genParId[k]) };
 	  const Int_t motherId     { std::abs(event.genParMotherId[k]) };
 	  const Int_t motherIndex  { std::abs(event.genParMotherIndex[k]) };
 	  const Int_t genParVx {event.genParVx[k]};
@@ -564,7 +562,7 @@ int main(int argc, char* argv[])
 	       const Float_t muonRecE    { event.muonPF2PATE[k] };
 	       //const Int_t muonRecCharge {event.muonPF2PATCharge[k]};
 		   
-	       h_muonRecPt->Fill(muonRecPt);
+	       h_muonRecPt->Fill(muonRecPt);//Question: place these inside trigger loop?
 	       h_muonRecEta->Fill(muonRecEta);
 	       h_muonRecPhi->Fill(muonRecPhi);
 	       h_muonRecE->Fill(muonRecE);
@@ -572,8 +570,6 @@ int main(int argc, char* argv[])
 	       if(event.muTrig() || event.mumuTrig()){ //Single of double muon trigger passed
 	
 	  	 if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){ //Electric charge control
-	    
-	    	   std::cout<<" controle tegengestelde lading ok "<<std::endl;
 		
             	   TLorentzVector muonRec1;
 	   	   TLorentzVector muonRec2;
@@ -593,8 +589,6 @@ int main(int argc, char* argv[])
 		 } //Question loose id cut +... inside electric charge control? bringing them together?
 		       
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
-	           
-	           std::cout<<"binnen de loose id loop "<<std::endl;
 			 
 	           passedMuons.push_back(k); //Take its index
 		   h_muonCut->Fill(muonRecPt);
@@ -680,6 +674,9 @@ int main(int argc, char* argv[])
 	  //Id of 211 or -211: Charged pions
 		
 	  const TLorentzVector packedC {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]};
+	  
+	  const Float_t packedCandsE {event.packedCandsE[k]};	
+		std::cout<<"Verify pion mass "<<packedCandsE<<std::endl;
 	  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]}; 
 		
 	  h_packedCDxy->Fill(event.packedCandsDxy[k]);
@@ -687,12 +684,22 @@ int main(int argc, char* argv[])
 	  
 	  if(event.packedCandsHasTrackDetails[k]){
 		
-	    TVector3 packedCPt {event.packedCandsPseudoTrkPx[k],event.packedCandsPseudoTrkPy[k],event.packedCandsPseudoTrkPz[k]};
-	    h_packedCPt->Fill(packedCPt.Pt());
+	    if(packedCandsPseudoTrkCharge!=0){ //Tracks don't match muons, no neutral particles
+	      
+	      TVector3 packedCPt {event.packedCandsPseudoTrkPx[k],event.packedCandsPseudoTrkPy[k],event.packedCandsPseudoTrkPz[k]};
+	      h_packedCPt->Fill(packedCPt.Pt());
 	 
-	    h_packedCVx->Fill(event.packedCandsPseudoTrkVx[k]);
-            h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
-            h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
+	      h_packedCVx->Fill(event.packedCandsPseudoTrkVx[k]);
+              h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
+              h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
+	      
+	      /*//Invariant mass for two highest p_T
+	      TLorentzVector isoTrack1  {event.isoTracksPx[0],event.isoTracksPy[0],event.isoTracksPz[0],event.isoTracksE[0]};
+	      TLorentzVector isoTrack2  {event.isoTracksPx[1],event.isoTracksPy[1],event.isoTracksPz[1],event.isoTracksE[1]};
+
+	      h_isoTracksInvMass->Fill((isoTrack1+isoTrack2).M());*/   
+	    }
+	    
 	    
 		  
 	  }
@@ -705,7 +712,7 @@ int main(int argc, char* argv[])
 	      
 	//Iso tracks  
 	      
-	TLorentzVector iso1;
+	/*TLorentzVector iso1; //Question: deltaR from reco muons or packed candidates
 	TLorentzVector iso2;
 	      
 	iso1.SetPtEtaPhiE(event.isoTracksPt[0],event.isoTracksEta[0],event.isoTracksPhi[0],event.isoTracksE[0]);
@@ -713,28 +720,22 @@ int main(int argc, char* argv[])
 	
 	Float_t dR=iso1.DeltaR(iso2);
 	h_isoTracksDeltaR->Fill(dR);
-	h_isoTracksDeltaPhi->Fill(iso1.DeltaPhi(iso2));
+	h_isoTracksDeltaPhi->Fill(iso1.DeltaPhi(iso2));*/
 	      
 	for (Int_t k{0}; k<event.numIsolatedTracks;k++){
 	  
-            /*const TLorentzVector isoTracks {event.isoTracksPx[k],event.isoTracksPy[k],event.isoTracksPz[k],event.isoTracksE[k]};
+            const TLorentzVector isoTracks {event.isoTracksPx[k],event.isoTracksPy[k],event.isoTracksPz[k],event.isoTracksE[k]};
 		
 	    const Float_t isoTracksPt  { event.isoTracksPt[k] };
+	    h_isoTracksPt->Fill(isoTracksPt);
+		
 	    const Float_t isoTracksEta { event.isoTracksEta[k] };
 	    const Float_t isoTracksPhi { event.isoTracksPhi[k] };
 	    const Float_t isoTracksE   { event.isoTracksE[k] };*/
 		
 	    const Int_t  isoTracksId     {event.isoTracksPdgId[k]};
 	    const Int_t  isoTracksCharge {event.isoTracksCharge[k]};
-		
-	    if((isoTracksCharge!=0) && (dR>0.2)){ //Tracks don't match muons, no neutral particles
-		        
-	      //Invariant mass for two highest p_T
-	      TLorentzVector isoTrack1  {event.isoTracksPx[0],event.isoTracksPy[0],event.isoTracksPz[0],event.isoTracksE[0]};
-	      TLorentzVector isoTrack2  {event.isoTracksPx[1],event.isoTracksPy[1],event.isoTracksPz[1],event.isoTracksE[1]};
-
-	      h_isoTracksInvMass->Fill((isoTrack1+isoTrack2).M());    
-	    }
+	
 	}
 	      
 	      
@@ -877,10 +878,8 @@ int main(int argc, char* argv[])
   h_packedCVz->Write();
 
   //Iso tracks
-  h_isoTracksDeltaR->Write();
-  h_isoTracksDeltaPhi->Write();
-  h_isoTracksInvMass->GetXaxis()->SetTitle("GeV");
-  h_isoTracksInvMass->Write();
+  h_isoTracksPt->GetXaxis()->SetTitle("GeV");
+  h_isoTracksPt->Write();
 	
 	
 	
