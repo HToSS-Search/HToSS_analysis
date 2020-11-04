@@ -731,7 +731,7 @@ int main(int argc, char* argv[])
 		
 	    const Float_t isoTracksEta { event.isoTracksEta[k] };
 	    const Float_t isoTracksPhi { event.isoTracksPhi[k] };
-	    const Float_t isoTracksE   { event.isoTracksE[k] };*/
+	    const Float_t isoTracksE   { event.isoTracksE[k] };
 		
 	    const Int_t  isoTracksId     {event.isoTracksPdgId[k]};
 	    const Int_t  isoTracksCharge {event.isoTracksCharge[k]};
