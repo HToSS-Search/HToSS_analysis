@@ -431,8 +431,8 @@ int main(int argc, char* argv[])
 		
 	  //Invariant mass
 		
-	  const Float_t genParPt1  {event.genParPt[Nr1]};
-	  const Float_t genParPt2  {event.genParPt[Nr2]};
+	  Float_t genParPt1  {event.genParPt[Nr1]};
+	  Float_t genParPt2  {event.genParPt[Nr2]};
 		
 	  TLorentzVector invnr1 {genParPt1.Px(),genParPt1.Py(),genParPt1.Pz(),event.genParE[Nr1]};
 	  TLorentzVector invnr2 {genParPt2.Px(),genParPt2.Py(),genParPt2.Pz(),event.genParE[Nr2]};
@@ -440,8 +440,8 @@ int main(int argc, char* argv[])
 	  h_ScalarInvMass->Fill((invnr1+invnr2).M());
 			
 	  //3D angle
-	  TVector3 angle1 {event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]}; //No actual angle
-	  TVector3 angle2 {event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]};
+	  TVector3 angle1 (event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]); //No actual angle
+	  TVector3 angle2 (event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
 		
 		//std::cout<<angle1<<" en "<<angle2<<std::endl;
 		
