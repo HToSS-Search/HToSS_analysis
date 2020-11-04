@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
   //Muon from scalar decay
   TH1F* h_genParScalarMuonPt         {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
   TH1F* h_genParScalarMuonCutPt      {new TH1F("h_genParScalarMuonCutPt",  "#mu^{#pm} from scalar decay p_{T} cut", 1000, 0., 1000.)};
-  TH1F* h_genParScalarMuonDivPt      {new TH1F("h_genParScalarMuonDivPt",  "#mu^{#pm} from scalar decay p_{T} divide", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonDivPt      {new TH1F("h_genParScalarMuonDivPt",  "#mu^{#pm} from scalar decay p_{T} divide", 300, 0., 1000.)};
 	
   TH1F* h_genParScalarMuonEta     {new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
   TH1F* h_genParScalarMuonPhi     {new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
   TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
   TH1F* h_muonRecInvMass       {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",1000, 0, 500)};
   TH1F* h_muonCut              {new TH1F("h_muonCut",  "Single #mu^{#pm} reconstruction p_{T} cut", 1000, 0., 1000.)}; 	
-  TH1F* h_muonDiv              {new TH1F("h_muonDiv",  "Single #mu^{#pm} reconstruction p_{T} divide", 1000, 0., 1000.)}; 
+  TH1F* h_muonDiv              {new TH1F("h_muonDiv",  "Single #mu^{#pm} reconstruction p_{T} divide", 300, 0., 1000.)}; 
 	
   //Packed candidates 
   TH1F* h_packedCPt    {new TH1F("h_packedCPt",  "Packed Candidate p_{T}", 1000, 0., 1000.)}; 
@@ -338,33 +338,31 @@ int main(int argc, char* argv[])
 		    
 	  if (isScalarGrandparent==true){
 	      
-	      //gen-muon with no filters
-	     if (pdgId==13 && !ownParent){    
+	      //Muon from scalar decay
+	     if (pdgId==13 && !ownParent){  
+		     
 	        nrofMuon.emplace_back(k);
-	        //h_genParScalarMuonPt->Fill(genParPt);
+	        
 	        h_genParScalarMuonEta->Fill(genParEta);
 	        h_genParScalarMuonPhi->Fill(genParPhi);
 	        h_genParScalarMuonE->Fill(genParE);
 	        h_VertexPosXY->Fill(genParVx,genParVy);
-	        h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));      
+	        h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));   
+		     
+		if (event.metFilters()){ //Question1
+		      
+		   h_genParScalarMuonPt->Fill(genParPt);
+		      
+	           if(event.muTrig() || event.mumuTrig()){
+			 
+	             h_genParScalarMuonCutPt->Fill(genParPt);
+			 
+		   }
+		      
+	        }
+		     
 	     }
-		  
-	    //gen-muon with filters  
-	    if(pdgId==13 && !ownParent){//Muon from scalar decay
-	      
-	      if (event.metFilters()){
-		      
-		 h_genParScalarMuonPt->Fill(genParPt);
-		      
-	         if(event.muTrig() || event.mumuTrig()){
-			 
-	           h_genParScalarMuonCutPt->Fill(genParPt);
-			 
-		 }
-		      
-	      }
-		    
-	    }
+		 
 	    //Charged kaon from scalar decay
 	    if (pdgId==321){
 	      nrofKaon.emplace_back(k);
@@ -415,12 +413,13 @@ int main(int argc, char* argv[])
 	h_genParScalarMuonDivPt=(TH1F*)h_genParScalarMuonCutPt->Clone();
 	h_genParScalarMuonDivPt->Divide(h_genParScalarMuonPt);
 	h_genParScalarMuonDivPt->SetTitle("After/before cut");
+	    
 	      
 	if (nrofScalar.size()==2){ //Two-particle (scalar) correlations
 	  const int Nr1 {nrofScalar[0]}; //Give the scalar index value k
 	  const int Nr2 {nrofScalar[1]};
 			
-	  //Use DeltaPhi (const TLorentzVector)
+	  //DeltaR, DeltaPhi
 	  TLorentzVector nr1;
 	  TLorentzVector nr2;
 			
@@ -429,26 +428,29 @@ int main(int argc, char* argv[])
 			
 	  h_ScalarDeltaR->Fill(nr1.DeltaR(nr2));//Get DeltaR between nr1scalar and nr2scalar
 	  h_ScalarDeltaPhi->Fill(nr1.DeltaPhi(nr2));
-	  h_ScalarInvMass->Fill((nr1+nr2).M());
+		
+	  //Invariant mass	
+	  TLorentzVector invnr1 {event.genParPt[Nr1].Px(),event.genParPt[Nr1].Py(),event.genParPt[Nr1].Pz(),event.genParE[Nr1]};
+	  TLorentzVector invnr2 {event.genParPt[Nr2].Px(),event.genParPt[Nr2].Py(),event.genParPt[Nr2].Pz(),event.genParE[Nr2]};
+			
+	  h_ScalarInvMass->Fill((invnr1+invnr2).M());
 			
 	  //3D angle
-	  TVector3 angle1; //No actual angle
-	  TVector3 angle2;
+	  TVector3 angle1 {event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]}; //No actual angle
+	  TVector3 angle2 {event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]};
 		
-	  angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
-	  angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-			
+		std::cout<<angle1<<" en "<<angle2<<std::endl;
+		
 	  h_Scalar3DAngle->Fill(angle1.Angle(angle2));		   
 	}
 		
 		
 	//Now same procedure for kaons,pions,muons,Kshort
 		
-	if (nrofMuon.size()==2){ //Two-particle (scalar) correlations
+	if (nrofMuon.size()==2){ 
 	  const int Nr1 {nrofMuon[0]}; 
 	  const int Nr2 {nrofMuon[1]};
 			
-	  //Use DeltaPhi (const TLorentzVector)
 	  TLorentzVector nr1;
 	  TLorentzVector nr2;
 			
@@ -459,22 +461,16 @@ int main(int argc, char* argv[])
 	  h_MuonDeltaPhi->Fill(nr1.DeltaPhi(nr2));
 	      
 	  //3D angle
-	  TVector3 angle1(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
-	  TVector3 angle2(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-	
-	  //angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
-	  //angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-		
-	  //std::cout<<"angle 1 muon "<<angle1<<"angle 2 muon "<<angle2<<std::endl;
-			
+	  TVector3 angle1 {event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]};
+	  TVector3 angle2 {event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]};
+
 	  h_Muon3DAngle->Fill(angle1.Angle(angle2));
 	}
 		
-	if (nrofKaon.size()==2){ //Two-particle (scalar) correlations
+	if (nrofKaon.size()==2){ 
 	  const int Nr1 {nrofKaon[0]}; 
 	  const int Nr2 {nrofKaon[1]};
-			
-	  //Use DeltaPhi (const TLorentzVector)
+	
 	  TLorentzVector nr1;
 	  TLorentzVector nr2;
 			
@@ -495,11 +491,10 @@ int main(int argc, char* argv[])
 	    
 	}
 		
-	if (nrofKShort.size()==2){ //Two-particle (scalar) correlations
+	if (nrofKShort.size()==2){ 
 	  const int Nr1 {nrofKShort[0]}; 
 	  const int Nr2 {nrofKShort[1]};
 			
-	  //Use DeltaPhi (const TLorentzVector)
 	  TLorentzVector nr1;
 	  TLorentzVector nr2;
 			
@@ -520,11 +515,10 @@ int main(int argc, char* argv[])
 	}
 		
 		
-	if (nrofPion.size()==2){ //Two-particle (scalar) correlations
+	if (nrofPion.size()==2){ 
 	  const int Nr1 {nrofPion[0]}; 
 	  const int Nr2 {nrofPion[1]};
-			
-	  //Use DeltaPhi (const TLorentzVector)
+	
 	  TLorentzVector nr1;
 	  TLorentzVector nr2;
 			
@@ -553,7 +547,7 @@ int main(int argc, char* argv[])
 	      
 	      
 	      
-	/// Muon Reconstruction
+	/// BEGIN Muon Reconstruction
 	std::vector<Int_t> nrofmuonRec;
 	std::vector<Int_t> passedMuons {};
 
@@ -574,18 +568,42 @@ int main(int argc, char* argv[])
 		      
 	       if(event.muTrig() || event.mumuTrig()){ //Single of double muon trigger passed
 	     
+		 std::cout<<" charge van hoogste pt "<<event.muonPF2PATCharge[0]<<std::endl;
+		 std::cout<<" charge van 2e hoogste pt "<<event.muonPF2PATCharge[1]<<std::endl;
+	
+	  	 //if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){ //Electric charge control
+	    
+	    	   std::cout<<" controle tegengestelde lading nog testen "<<std::endl;
+		
+            	   TLorentzVector muonRec1;
+	   	   TLorentzVector muonRec2;
+		  
+	   	   muonRec1.SetPtEtaPhiE(event.muonPF2PATPt[0],event.muonPF2PATEta[0],event.muonPF2PATPhi[0],event.muonPF2PATE[0]);
+	   	   muonRec2.SetPtEtaPhiE(event.muonPF2PATPt[1],event.muonPF2PATEta[1],event.muonPF2PATPhi[1],event.muonPF2PATE[1]);
+			
+	   	   h_muonRecDeltaR->Fill(muonRec1.DeltaR(muonRec2));
+	 	   h_muonRecDeltaPhi->Fill(muonRec1.DeltaPhi(muonRec2));	
+			
+	  	   //Invariant mass for two highest p_T
+	    	   TLorentzVector lVecMu1  {event.muonPF2PATPX[0], event.muonPF2PATPY[0], event.muonPF2PATPZ[0], event.muonPF2PATE[0]};
+	 	   TLorentzVector lVecMu2  {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]};
+
+	   	   h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
+		       
+		 //} 
+		       
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
-	      
+	           
+	           std::cout<<"binnen de trigger loop "<<std::endl;
+			 
 	           passedMuons.push_back(k); //Take its index
 		   h_muonCut->Fill(muonRecPt);
 			 
 		 }
 		       
 	       }
-		
-	       
-		    
-	   }//Muon reconstruction for loop
+			    
+	   }//end of for-loop k
 
 	
 	   /*for(Int_t m{0};m<passedMuons.size();m++){
@@ -643,46 +661,19 @@ int main(int argc, char* argv[])
              
 	   }*/
 		
-	}//MET filter 
+	}//END of MET filter 
 	
 	h_muonDiv=(TH1F*)h_muonCut->Clone();
 	h_muonDiv->Divide(h_muonRecPt);
 	h_muonDiv->SetTitle("After/before cut");
 
-	//DeltaR, DeltaPhi for two highest p_T
-	if(event.muTrig() || event.mumuTrig()){
-	  
-	std::cout<<" charge van hoogste pt "<<event.muonPF2PATCharge[0]<<std::endl;
-	std::cout<<" charge van 2e hoogste pt "<<event.muonPF2PATCharge[1]<<std::endl;
-	
-	  if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){ //Electric charge control
-	    
-	    std::cout<<" controle tegengestelde lading ok "<<std::endl;
-		
-            TLorentzVector muonRec1;
-	    TLorentzVector muonRec2;
-		  
-	    muonRec1.SetPtEtaPhiE(event.muonPF2PATPt[0],event.muonPF2PATEta[0],event.muonPF2PATPhi[0],event.muonPF2PATE[0]);
-	    muonRec2.SetPtEtaPhiE(event.muonPF2PATPt[1],event.muonPF2PATEta[1],event.muonPF2PATPhi[1],event.muonPF2PATE[1]);
-			
-	    h_muonRecDeltaR->Fill(muonRec1.DeltaR(muonRec2));
-	    h_muonRecDeltaPhi->Fill(muonRec1.DeltaPhi(muonRec2));	
-			
-	    //Invariant mass for two highest p_T
-	    TLorentzVector lVecMu1  {event.muonPF2PATPX[0], event.muonPF2PATPY[0], event.muonPF2PATPZ[0], event.muonPF2PATE[0]};
-	    TLorentzVector lVecMu2  {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]};
-
-	    h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
-	  }
-		
-	}   
+	//END Muon Reconstruction
 	      
 	      
 	      
 	      
 	      
-	      
-	//Packed candidates  
+	//BEGIN Packed candidates  
         for (Int_t k{0};k<event.numPackedCands;k++) {
 	 
 	  const Int_t packedId {event.packedCandsPdgId[k]};
@@ -710,7 +701,8 @@ int main(int argc, char* argv[])
 	  
         }
 	      
-	
+	//END Packed Candidates
+	      
 	 
 	      
 	//Iso tracks  
@@ -793,6 +785,7 @@ int main(int argc, char* argv[])
   h_genParHiggsEta->Write();
   h_genParHiggsPhi->Write();
   h_genParHiggsE->Write();
+  h_HiggsInvMass->GetXaxis()->SetTitle("GeV");
   h_HiggsInvMass->Write();
 	
   h_genParScalarPt->GetXaxis()->SetTitle("GeV");
@@ -802,6 +795,7 @@ int main(int argc, char* argv[])
   h_genParScalarE->Write();
   h_ScalarDeltaR->Write();
   h_ScalarDeltaPhi->Write();
+  h_ScalarInvMass->GetXaxis()->SetTitle("GeV");
   h_ScalarInvMass->Write();
   h_Scalar3DAngle->Write();
   
@@ -868,6 +862,7 @@ int main(int argc, char* argv[])
   h_muonRecE->Write();
   h_muonRecDeltaR->Write();
   h_muonRecDeltaPhi->Write();
+  h_muonRecInvMass->GetXaxis()->SetTitle("GeV");
   h_muonRecInvMass->Write();
   h_muonCut->GetXaxis()->SetTitle("GeV");
   h_muonCut->Write();
@@ -887,6 +882,7 @@ int main(int argc, char* argv[])
   //Iso tracks
   h_isoTracksDeltaR->Write();
   h_isoTracksDeltaPhi->Write();
+  h_isoTracksInvMass->GetXaxis()->SetTitle("GeV");
   h_isoTracksInvMass->Write();
 	
 	
