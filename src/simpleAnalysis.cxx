@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
 	
   //Muon from scalar decay
   TH1F* h_genParScalarMuonPt         {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
-  TH1F* h_genParScalarMuonCutPt      {new TH1F("h_genParScalarMuonCutPt",  "#mu^{#pm} from scalar decay p_{T} cut", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonCutPt      {new TH1F("h_genParScalarMuonCutPt",  "#mu^{#pm} from scalar decay p_{T} cut", 100, 0., 1000.)};
   TH1F* h_genParScalarMuonDivPt      {new TH1F("h_genParScalarMuonDivPt",  "#mu^{#pm} from scalar decay p_{T} divide", 300, 0., 1000.)};
 	
   TH1F* h_genParScalarMuonEta     {new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
   TH1F* h_muonRecDeltaR        {new TH1F("h_muonRecDeltaR", "Muon reconstruction #DeltaR",2500, -10., 10.)}; 
   TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
   TH1F* h_muonRecInvMass       {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",1000, 0, 500)};
-  TH1F* h_muonCut              {new TH1F("h_muonCut",  "Single #mu^{#pm} reconstruction p_{T} cut", 1000, 0., 1000.)}; 	
+  TH1F* h_muonCut              {new TH1F("h_muonCut",  "Single #mu^{#pm} reconstruction p_{T} cut", 100, 0., 1000.)}; 	
   TH1F* h_muonDiv              {new TH1F("h_muonDiv",  "Single #mu^{#pm} reconstruction p_{T} divide", 300, 0., 1000.)}; 
 	
   //Packed candidates 
