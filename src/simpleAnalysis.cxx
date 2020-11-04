@@ -150,7 +150,6 @@ int main(int argc, char* argv[])
   TH1F* h_packedCVx    {new TH1F("h_packedCVx",  "Packed Candidate track vx", 500,  -150., 150.)};
   TH1F* h_packedCVy    {new TH1F("h_packedCVy",  "Packed Candidate track vy", 500,  -150., 150.)};
   TH1F* h_packedCVz    {new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.)};
-  TH1F* h_packedCVxy   {new TH1F("h_packedCVxy", "Packed Candidate track vxy", 500,  -150., 150.)};
  
   //Iso tracks
   TH1F* h_isoTracksDeltaR        {new TH1F("h_isoTracksDeltaR", "IsoTracks #DeltaR",2500, -10., 10.)}; 
@@ -571,13 +570,10 @@ int main(int argc, char* argv[])
 	       h_muonRecE->Fill(muonRecE);
 		      
 	       if(event.muTrig() || event.mumuTrig()){ //Single of double muon trigger passed
-	     
-		 std::cout<<" charge van hoogste pt "<<event.muonPF2PATCharge[0]<<std::endl;
-		 std::cout<<" charge van 2e hoogste pt "<<event.muonPF2PATCharge[1]<<std::endl;
 	
-	  	 //if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){ //Electric charge control
+	  	 if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){ //Electric charge control
 	    
-	    	   std::cout<<" controle tegengestelde lading nog testen "<<std::endl;
+	    	   std::cout<<" controle tegengestelde lading ok "<<std::endl;
 		
             	   TLorentzVector muonRec1;
 	   	   TLorentzVector muonRec2;
@@ -594,11 +590,11 @@ int main(int argc, char* argv[])
 
 	   	   h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
 		       
-		 //} 
+		 } //Question loose id cut +... inside electric charge control? bringing them together?
 		       
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 	           
-	           std::cout<<"binnen de trigger loop "<<std::endl;
+	           std::cout<<"binnen de loose id loop "<<std::endl;
 			 
 	           passedMuons.push_back(k); //Take its index
 		   h_muonCut->Fill(muonRecPt);
@@ -680,8 +676,8 @@ int main(int argc, char* argv[])
 	//BEGIN Packed candidates  
         for (Int_t k{0};k<event.numPackedCands;k++) {
 	 
-	  const Int_t packedId {event.packedCandsPdgId[k]};
-		std::cout<<" id van packed candidate "<<packedId<<std::endl;
+	  const Int_t packedId {event.packedCandsPdgId[k]}; 
+	  //Id of 211 or -211: Charged pions
 		
 	  const TLorentzVector packedC {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]};
 	  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]}; 
@@ -698,8 +694,6 @@ int main(int argc, char* argv[])
             h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
             h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
 	    
-	    //const Float_t pCVxy=std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]);
-	    //h_packedCVxy->Fill(pCVxy);
 		  
 	  }
 	  
@@ -881,7 +875,6 @@ int main(int argc, char* argv[])
   h_packedCVx->Write();
   h_packedCVy->Write();
   h_packedCVz->Write();
-  h_packedCVxy->Write();
 
   //Iso tracks
   h_isoTracksDeltaR->Write();
