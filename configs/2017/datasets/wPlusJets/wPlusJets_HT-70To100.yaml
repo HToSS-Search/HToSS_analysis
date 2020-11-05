@@ -1,6 +1,6 @@
 name: "WJetsToLNu_HT-70To100"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/Wjets/Wjets_HT_70To100/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/Wjets/Wjets_HT_70To100/"
 total_events: 22255124
 cross_section: 1292.0
 mc: true
