@@ -834,7 +834,7 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
              }
              else
              {
-                 return { (event.muonPF2PATDBPV[event.muonIndexTight[0]])/(event.muonPF2PATDBPVError[event.muonIndexTight[0]] + 1.0e-06) };
+                 return { (std::abs(event.muonPF2PATDBPV[event.muonIndexTight[0]]))/(event.muonPF2PATDBPVError[event.muonIndexTight[0]] + 1.0e-06) };
              }
          }},
         {"lep2D0",
@@ -856,7 +856,7 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
              }
              else
              {
-              	 return { (event.muonPF2PATDBPV[event.muonIndexTight[1]])/(event.muonPF2PATDBPVError[event.muonIndexTight[1]] + 1.0e-06) };
+              	 return { (std::abs(event.muonPF2PATDBPV[event.muonIndexTight[1]]))/(event.muonPF2PATDBPVError[event.muonIndexTight[1]] + 1.0e-06) };
              }
          }},
         {"lep1DZ",
@@ -878,7 +878,7 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
              }
              else
              {
-              	 return { (event.muonPF2PATDZPV[event.muonIndexTight[1]])/(event.muonPF2PATDZPVError[event.muonIndexTight[1]] + 1.0e-06) };
+              	 return { (std::abs(event.muonPF2PATDZPV[event.muonIndexTight[0]]))/(event.muonPF2PATDZPVError[event.muonIndexTight[0]] + 1.0e-06) };
              }
          }},
         {"lep2DZ",
@@ -900,7 +900,7 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
              }
              else
              {
-              	 return { (event.muonPF2PATDZPV[event.muonIndexTight[1]])/(event.muonPF2PATDZPVError[event.muonIndexTight[1]] + 1.0e-06) };
+              	 return { (std::abs(event.muonPF2PATDZPV[event.muonIndexTight[1]]))/(event.muonPF2PATDZPVError[event.muonIndexTight[1]] + 1.0e-06) };
              }
          }},
         {"lep1DBD0",

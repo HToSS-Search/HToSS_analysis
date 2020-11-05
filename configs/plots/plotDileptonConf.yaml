@@ -65,35 +65,67 @@ plots:
     cutStage: 0
   - title: "Leading Lepton d_{0}"
     name: "lep1D0"
-    xMax: 1.0
+    xMax: 5.0
     xMin: 0.
     nBins: 500
     fillExp: "lep1D0"
     xAxisLabel: "lepton 1 d_{0}"
     cutStage: 0
+  - title: "Leading Lepton d_{0} Significance"
+    name: "lep1D0Sig"
+    xMax: 50.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep1D0Sig"
+    xAxisLabel: "lepton 1 d_{0} significance"
+    cutStage: 0
   - title: "Second Lepton d_{0}"
     name: "lep2D0"
-    xMax: 1.0
+    xMax: 5.0
     xMin: 0.
     nBins: 500
     fillExp: "lep2D0"
     xAxisLabel: "lepton 2 D0"
     cutStage: 0
+  - title: "Second Lepton d_{0} Significance"
+    name: "lep2D0Sig"
+    xMax: 50.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep2D0Sig"
+    xAxisLabel: "lepton 2 d_{0} significance"
+    cutStage: 0
   - title: "Leading Lepton d_{Z}"
     name: "lep1DZ"
-    xMax: 1.0
+    xMax: 5.0
     xMin: 0.
     nBins: 500
     fillExp: "lep1DZ"
     xAxisLabel: "lepton 1 d_{Z}"
     cutStage: 0
+  - title: "Leading Lepton d_{Z} Significance"
+    name: "lep1DZSig"
+    xMax: 50.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep1DZSig"
+    xAxisLabel: "lepton 1 d_{Z} significance"
+    cutStage: 0
   - title: "Second Lepton d_{Z}"
     name: "lep2DZ"
-    xMax: 1.0
+    xMax: 5.0
     xMin: 0.
     nBins: 500
     fillExp: "lep2DZ"
     xAxisLabel: "lepton 2 d_{z}"
+    cutStage: 0
+  - title: "Second Lepton d_{Z} Significance"
+    name: "lep2DZSig"
+    xMax: 50.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep2DZSig"
+    xAxisLabel: "lepton 2 d_{Z} significance"
     cutStage: 0
   - title: "E_{T}^{miss}"
     name: "met"
