@@ -1,6 +1,6 @@
 name: "tZq"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/singleTop/tZq_ll_4f_ckm/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/singleTop/tZq_ll_4f_ckm/"
 total_events: 13276146
 cross_section: 0.0758
 mc: true

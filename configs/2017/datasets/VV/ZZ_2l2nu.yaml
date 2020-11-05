@@ -1,6 +1,6 @@
 name: "ZZ_2l2nu"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/VV/ZZ_2l2nu/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/VV/ZZ_2l2nu/"
 total_events:  8744768
 cross_section: 0.5644
 mc: true

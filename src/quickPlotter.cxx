@@ -61,7 +61,17 @@ int main(int argc, char* argv[])
     Long64_t totalEvents {0};
     const std::regex mask{".*\\.root"};
 
-    // Histos
+    // Gen Histos
+
+    TProfile* p_kaonAncestry           {new TProfile("p_kaonAncestry", "Intermediate ancestry of charged kaons from scalar decays", 5, 0.5, 5.5)};
+
+    p_kaonAncestry->GetXaxis()->SetBinLabel(1, "No D meson");
+    p_kaonAncestry->GetXaxis()->SetBinLabel(2, "D inc");
+    p_kaonAncestry->GetXaxis()->SetBinLabel(3, "D#pm");
+    p_kaonAncestry->GetXaxis()->SetBinLabel(4, "D0");
+    p_kaonAncestry->GetXaxis()->SetBinLabel(5, "D^{#pm}_{S}");
+
+    // Reco Histos
     TH1F* h_numMuons                   {new TH1F("h_numMuons",                 "number of reco muons in the event", 21, -0.5, 20.5)};
     TH1F* h_numMuonsFromScalar         {new TH1F("h_numMuonsFromScalar",       "number of reco muons with motherId = scalarId", 21, -0.5, 20.5)};
     TH1F* h_numMuonsPromptFinalState   {new TH1F("h_numMuonsPromptFinalState", "number of reco muons with PromptFinalState flag", 21, -0.5, 20.5)};
@@ -228,6 +238,26 @@ int main(int argc, char* argv[])
 
             event.GetEntry(i);
 
+            // gen particle loop
+            for ( Int_t k{0}; k < event.nGenPar; k++ ) {
+                const int pid { std::abs(event.genParId[k]) };
+                if (pid != 321) continue;
+
+                const bool isScalarGrandparent {scalarGrandparent(event,k,9000006)}; 
+                if ( !isScalarGrandparent ) continue;
+
+                const bool isChargedDmesonGrandparent {scalarGrandparent(event,k, 411)};
+                const bool isNeutralDmesonGrandparent {scalarGrandparent(event,k, 421)};
+                const bool isChargedDshortGrandparent {scalarGrandparent(event,k, 431)};
+
+                p_kaonAncestry->Fill(1.0, (!isChargedDmesonGrandparent && !isNeutralDmesonGrandparent && !isChargedDshortGrandparent) );
+                p_kaonAncestry->Fill(2.0, (isChargedDmesonGrandparent || isNeutralDmesonGrandparent || isChargedDshortGrandparent) );
+                p_kaonAncestry->Fill(3.0,isChargedDmesonGrandparent);
+                p_kaonAncestry->Fill(4.0,isNeutralDmesonGrandparent);
+                p_kaonAncestry->Fill(5.0,isChargedDshortGrandparent);
+          
+            }
+
             float eventWeight = 1.;
 
             if (!event.metFilters()) continue;
@@ -242,6 +272,7 @@ int main(int argc, char* argv[])
 
             int numMuonsFromScalar{0}, numMuonsPromptFinalState{0}, numMuonsHardProcess{0};
 
+            // reco muon loop
             for ( auto it = looseMuonIndex.begin(); it != looseMuonIndex.end(); it++ ) {
       	       	if (event.genMuonPF2PATMotherId[*it] == 9000006) numMuonsFromScalar++;
                 if (event.genMuonPF2PATPromptFinalState[*it]) numMuonsPromptFinalState++;
@@ -289,7 +320,7 @@ int main(int argc, char* argv[])
                     h_nonpromptMuonPdgId->Fill(std::abs(event.genMuonPF2PATPdgId[*it]));
                     h_nonpromptMuonMotherId->Fill(motherId);
                 }
-            }
+            } // end reco muon loop
 
             h_numMuonsFromScalar->Fill(numMuonsFromScalar);
             h_numMuonsPromptFinalState->Fill(numMuonsPromptFinalState);
@@ -334,6 +365,8 @@ int main(int argc, char* argv[])
 
     TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
     outFile->cd();
+
+    p_kaonAncestry->Write();
 
     h_numMuons->Write();
     h_numMuonsFromScalar->Write();

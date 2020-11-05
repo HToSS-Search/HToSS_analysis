@@ -1,6 +1,6 @@
 name: "tW"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/singleTop/tW/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/singleTop/tW/"
 total_events: 7945242
 cross_section: 34.91
 mc: true

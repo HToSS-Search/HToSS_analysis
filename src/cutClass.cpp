@@ -403,7 +403,7 @@ std::vector<double> Cuts::getRochesterSFs(const AnalysisEvent& event) const
 }
 
 // Make lepton cuts. Will become customisable in a config later on.
-bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<std::string, std::shared_ptr<Plots>>& plotMap, TH1D& cutFlow, const int syst, const bool skipZCut) {
+bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<std::string, std::shared_ptr<Plots>>& plotMap, TH1D& cutFlow, const int& syst, const bool& skipZCut) {
 
     ////Do lepton selection.
 
@@ -680,7 +680,7 @@ std::vector<int> Cuts::getLooseMuons(const AnalysisEvent& event) const
     return muons;
 }
 
-bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int> electrons, const std::vector<int> muons) const {    // Check if there are at least two electrons first. Otherwise use muons.
+bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& electrons, const std::vector<int>& muons) const {    // Check if there are at least two electrons first. Otherwise use muons.
 
     if (electrons.size() == 2) {
         event.muonLeads = false;
@@ -804,8 +804,8 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int> electron
 }
 
 double Cuts::getWbosonQuarksCand(AnalysisEvent& event,
-                                 const std::vector<int> jets,
-                                 const int syst) const
+                                 const std::vector<int>& jets,
+                                 const int& syst) const
 {
     auto closestWmass{std::numeric_limits<double>::infinity()};
     if (jets.size() > 2)
@@ -1182,7 +1182,7 @@ std::vector<int> Cuts::makeBCuts(const AnalysisEvent& event,
 
 bool Cuts::triggerCuts(const AnalysisEvent& event,
                        double& eventWeight,
-                       const int syst) const
+                       const int& syst) const
 {
     if (skipTrigger_)
     {
@@ -1344,21 +1344,21 @@ bool Cuts::metFilters(const AnalysisEvent& event) const
     return event.metFilters();
 }
 
-double Cuts::deltaPhi(const double phi1, const double phi2)
+double Cuts::deltaPhi(const double& phi1, const double& phi2)
 {
     return std::atan2(std::sin(phi1 - phi2), std::cos(phi1 - phi2));
 }
 
-double Cuts::deltaR(const double eta1,
-                    const double phi1,
-                    const double eta2,
-                    const double phi2)
+double Cuts::deltaR(const double& eta1,
+                    const double& phi1,
+                    const double& eta2,
+                    const double& phi2)
 {
     return std::sqrt(std::pow(eta1 - eta2, 2)
                      + std::pow(deltaPhi(phi1, phi2), 2));
 }
 
-double Cuts::getLeptonWeight(const AnalysisEvent& event, const int syst) const
+double Cuts::getLeptonWeight(const AnalysisEvent& event, const int& syst) const
 {
     // If number of electrons is > 1  then both z pair are electrons, so get
     // their weight
@@ -1400,7 +1400,7 @@ double Cuts::getLeptonWeight(const AnalysisEvent& event, const int syst) const
     return leptonWeight;
 }
 
-double Cuts::eleSF(const double pt, const double eta, const int syst) const
+double Cuts::eleSF(const double& pt, const double& eta, const int& syst) const
 {
     const double maxPt{h_eleSFs->GetYaxis()->GetXmax() - 0.1};
     const double minRecoPt{h_eleReco->GetYaxis()->GetXmin() + 0.1};
@@ -1453,7 +1453,7 @@ double Cuts::eleSF(const double pt, const double eta, const int syst) const
     return eleIdSF * eleRecoSF;
 }
 
-double Cuts::muonSF(const double pt, const double eta, const int syst) const
+double Cuts::muonSF(const double& pt, const double& eta, const int& syst) const
 {
     if (!is2016_)
     {
@@ -1662,9 +1662,9 @@ void Cuts::initialiseJECCors()
     }
 }
 
-double Cuts::getJECUncertainty(const double pt,
-                               const double eta,
-                               const int syst) const
+double Cuts::getJECUncertainty(const double& pt,
+                               const double& eta,
+                               const int& syst) const
 {
     if (!(syst == 4 || syst == 8))
     {
@@ -1702,9 +1702,9 @@ double Cuts::getJECUncertainty(const double pt,
 }
 
 std::pair<TLorentzVector, double> Cuts::getJetLVec(const AnalysisEvent& event,
-                                                   const int index,
-                                                   const int syst,
-                                                   const bool initialRun) const
+                                                   const int& index,
+                                                   const int& syst,
+                                                   const bool& initialRun) const
 {
     static constexpr double MIN_JET_ENERGY{1e-2};
     TLorentzVector returnJet;
@@ -1842,7 +1842,7 @@ std::pair<TLorentzVector, double> Cuts::getJetLVec(const AnalysisEvent& event,
 }
 
 double
-    Cuts::jet2016PtSimRes(const double pt, const double eta, const double rho)
+    Cuts::jet2016PtSimRes(const double& pt, const double& eta, const double& rho)
 {
     if (pt < 15 || pt > 3000)
     {
@@ -2061,7 +2061,7 @@ double
 }
 
 double
-    Cuts::jet2017PtSimRes(const double pt, const double eta, const double rho)
+    Cuts::jet2017PtSimRes(const double& pt, const double& eta, const double& rho)
 {
     if (pt < 15 || pt > 3000)
     {
@@ -2279,7 +2279,7 @@ double
     }
 }
 
-std::pair<double, double> Cuts::jet2016SFs(const double eta)
+std::pair<double, double> Cuts::jet2016SFs(const double& eta)
 {
     // https://twiki.cern.ch/twiki/bin/viewauth/CMS/JetResolution#JER_Uncertainty
     constexpr std::array<double, 14> etaBinEdges{0,
@@ -2320,7 +2320,7 @@ std::pair<double, double> Cuts::jet2016SFs(const double eta)
     }
 }
 
-std::pair<double, double> Cuts::jet2017SFs(const double eta)
+std::pair<double, double> Cuts::jet2017SFs(const double& eta)
 {
     // https://twiki.cern.ch/twiki/bin/viewauth/CMS/JetResolution#JER_Uncertainty
     constexpr std::array<double, 14> etaBinEdges{0,
@@ -2362,8 +2362,8 @@ std::pair<double, double> Cuts::jet2017SFs(const double eta)
 }
 
 void Cuts::getBWeight(const AnalysisEvent& event,
-                      const TLorentzVector jet,
-                      const int index,
+                      const TLorentzVector& jet,
+                      const int& index,
                       double& mcTag,
                       double& mcNoTag,
                       double& dataTag,

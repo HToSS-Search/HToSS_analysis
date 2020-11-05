@@ -20,8 +20,8 @@ class Cuts
                         double& eventWeight,
                         std::map<std::string, std::shared_ptr<Plots>>& plotMap,
                         TH1D& cutFlow,
-                        const int syst,
-                        const bool skipZCut = false);
+                        const int& syst,
+                        const bool& skipZCut = false);
     std::pair<std::vector<int>, std::vector<double>>
         makeJetCuts(const AnalysisEvent& event,
                     const int syst,
@@ -40,23 +40,23 @@ class Cuts
     [[gnu::pure]] std::vector<int>
         getLooseMuons(const AnalysisEvent& event) const;
     bool getDileptonCand(AnalysisEvent& event,
-                          const std::vector<int> electrons,
-                          const std::vector<int> muons) const;
+                          const std::vector<int>& electrons,
+                          const std::vector<int>& muons) const;
     double getWbosonQuarksCand(AnalysisEvent& event,
-                               const std::vector<int> jets,
-                               const int syst) const;
+                               const std::vector<int>& jets,
+                               const int& syst) const;
 
     [[gnu::const]] double getTopMass(const AnalysisEvent& event) const;
     bool triggerCuts(const AnalysisEvent& event,
                      double& eventWeight,
-                     const int syst = 0) const;
+                     const int& syst = 0) const;
     [[gnu::const]] bool metFilters(const AnalysisEvent& event) const;
 
     std::vector<double> getRochesterSFs(const AnalysisEvent& event) const;
     // Function to get lepton SF
-    double getLeptonWeight(const AnalysisEvent& event, const int syst) const;
-    double eleSF(const double pt, const double eta, const int syst) const;
-    double muonSF(const double pt, const double eta, const int syst) const;
+    double getLeptonWeight(const AnalysisEvent& event, const int& syst) const;
+    double eleSF(const double& pt, const double& eta, const int& syst) const;
+    double muonSF(const double& pt, const double& eta, const int& syst) const;
 
     // set to true to fill in histograms/spit out other info
     bool doPlots_;
@@ -128,19 +128,19 @@ class Cuts
     std::vector<std::vector<double>> jecSFUp_;
     std::vector<std::vector<double>> jecSFDown_;
     void initialiseJECCors();
-    [[gnu::pure]] double getJECUncertainty(const double pt,
-                                           const double eta,
-                                           const int syst) const;
+    [[gnu::pure]] double getJECUncertainty(const double& pt,
+                                           const double& eta,
+                                           const int& syst) const;
     std::pair<TLorentzVector, double> getJetLVec(const AnalysisEvent& event,
-                                                 const int index,
-                                                 const int syst,
-                                                 const bool initialRun) const;
+                                                 const int& index,
+                                                 const int& syst,
+                                                 const bool& initialRun) const;
     static double
-        jet2016PtSimRes(const double pt, const double eta, const double rho);
+        jet2016PtSimRes(const double& pt, const double& eta, const double& rho);
     static double
-        jet2017PtSimRes(const double pt, const double eta, const double rho);
-    [[gnu::const]] static std::pair<double, double> jet2016SFs(const double eta);
-    static std::pair<double, double> jet2017SFs(const double eta);
+        jet2017PtSimRes(const double& pt, const double& eta, const double& rho);
+    [[gnu::const]] static std::pair<double, double> jet2016SFs(const double& eta);
+    static std::pair<double, double> jet2017SFs(const double& eta);
 
     // Sets whether to do MC or data cuts. Set every time a new dataset is
     // processed in the main loop.
@@ -170,8 +170,8 @@ class Cuts
         getBSF(const int flavour, const int type, const double pt) const;
 
     void getBWeight(const AnalysisEvent& event,
-                    const TLorentzVector jet,
-                    const int index,
+                    const TLorentzVector& jet,
+                    const int& index,
                     double& mcTag,
                     double& mcNoTag,
                     double& dataTag,
@@ -292,11 +292,11 @@ class Cuts
 
     // Simple deltaR function, because the reco namespace doesn't work or
     // something
-    [[gnu::const]] static double deltaR(const double eta1,
-                                        const double phi1,
-                                        const double eta2,
-                                        const double phi2);
-    [[gnu::const]] static double deltaPhi(const double phi1, const double phi2);
+    [[gnu::const]] static double deltaR(const double& eta1,
+                                        const double& phi1,
+                                        const double& eta2,
+                                        const double& phi2);
+    [[gnu::const]] static double deltaPhi(const double& phi1, const double& phi2);
 
 };
 
