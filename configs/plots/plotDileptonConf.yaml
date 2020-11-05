@@ -65,7 +65,7 @@ plots:
     cutStage: 0
   - title: "Leading Lepton d_{0}"
     name: "lep1D0"
-    xMax: 5.0
+    xMax: 1.0
     xMin: 0.
     nBins: 500
     fillExp: "lep1D0"
@@ -81,7 +81,7 @@ plots:
     cutStage: 0
   - title: "Second Lepton d_{0}"
     name: "lep2D0"
-    xMax: 5.0
+    xMax: 1.0
     xMin: 0.
     nBins: 500
     fillExp: "lep2D0"
@@ -97,7 +97,7 @@ plots:
     cutStage: 0
   - title: "Leading Lepton d_{Z}"
     name: "lep1DZ"
-    xMax: 5.0
+    xMax: 1.0
     xMin: 0.
     nBins: 500
     fillExp: "lep1DZ"
@@ -113,7 +113,7 @@ plots:
     cutStage: 0
   - title: "Second Lepton d_{Z}"
     name: "lep2DZ"
-    xMax: 5.0
+    xMax: 1.0
     xMin: 0.
     nBins: 500
     fillExp: "lep2DZ"
