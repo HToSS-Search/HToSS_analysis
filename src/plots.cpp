@@ -823,7 +823,18 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
              }
              else
              {
-                 return {event.muonPF2PATDBPV[event.muonIndexTight[0]]};
+              	 return {event.muonPF2PATDBPV[event.muonIndexTight[0]]};
+             }
+         }},
+        {"lep1D0Sig",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             if (event.electronIndexTight.size() > 1)
+             {
+                 return {event.elePF2PATImpactTransSignificance[event.electronIndexTight[0]]};
+             }
+             else
+             {
+                 return { (event.muonPF2PATDBPV[event.muonIndexTight[0]])/(event.muonPF2PATDBPVError[event.muonIndexTight[0]] + 1.0e-06) };
              }
          }},
         {"lep2D0",
@@ -837,6 +848,17 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
                  return {event.muonPF2PATDBPV[event.muonIndexTight[1]]};
              }
          }},
+        {"lep2D0Sig",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             if (event.electronIndexTight.size() > 1)
+             {
+                 return {event.elePF2PATImpactTransSignificance[event.electronIndexTight[1]]};
+             }
+             else
+             {
+              	 return { (event.muonPF2PATDBPV[event.muonIndexTight[1]])/(event.muonPF2PATDBPVError[event.muonIndexTight[1]] + 1.0e-06) };
+             }
+         }},
         {"lep1DZ",
          [](const AnalysisEvent& event) -> std::vector<float> {
              if (event.electronIndexTight.size() > 1)
@@ -848,15 +870,37 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
                  return {event.muonPF2PATDZPV[event.muonIndexTight[0]]};
              }
          }},
+        {"lep1DZSig",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             if (event.electronIndexTight.size() > 1)
+             {
+                 return {event.elePF2PATImpact3DSignificance[event.electronIndexTight[0]]};
+             }
+             else
+             {
+              	 return { (event.muonPF2PATDZPV[event.muonIndexTight[1]])/(event.muonPF2PATDZPVError[event.muonIndexTight[1]] + 1.0e-06) };
+             }
+         }},
         {"lep2DZ",
          [](const AnalysisEvent& event) -> std::vector<float> {
              if (event.electronIndexTight.size() > 1)
              {
-                 return {event.elePF2PATD0PV[event.electronIndexTight[1]]};
+                 return {event.elePF2PATDZPV[event.electronIndexTight[1]]};
              }
              else
              {
                  return {event.muonPF2PATDZPV[event.muonIndexTight[1]]};
+             }
+         }},
+        {"lep2DZSig",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             if (event.electronIndexTight.size() > 1)
+             {
+                 return {event.elePF2PATImpact3DSignificance[event.electronIndexTight[1]]};
+             }
+             else
+             {
+              	 return { (event.muonPF2PATDZPV[event.muonIndexTight[1]])/(event.muonPF2PATDZPVError[event.muonIndexTight[1]] + 1.0e-06) };
              }
          }},
         {"lep1DBD0",
