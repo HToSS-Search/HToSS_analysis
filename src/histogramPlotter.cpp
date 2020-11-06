@@ -310,6 +310,7 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
             plotMap[*plot_iter]->SetFillStyle(4000);
             plotMap[*plot_iter]->SetLineColor(dsetMap_[*plot_iter].colour);
             plotMap[*plot_iter]->SetStats(false);
+            plotMap[*plot_iter]->SetTitle("");
             if ( emptyOverlay ) emptyOverlay = false;
             continue;
        	}
