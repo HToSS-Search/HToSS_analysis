@@ -409,12 +409,12 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
         else if (dsetMap_[*plot_iter].legType == "l") {
             max = TMath::Max(Double_t(max), Double_t(plotMap[*plot_iter]->GetMaximum()));
             if ( firstPlot ) {
-                plotMap[*plot_iter]->Draw("");
+                plotMap[*plot_iter]->Draw("HIST x0");
                 firstOverlayName = *plot_iter;
       	       	firstPlot = false; 
        	    }
        	    else {
-                plotMap[*plot_iter]->Draw("same");
+                plotMap[*plot_iter]->Draw("HIST x0 same");
        	    }
        }
     }
@@ -436,6 +436,7 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
         }
     }
     else if ( !emptyOverlay ) {
+        plotMap[firstOverlayName]->SetMinimum(0.0);
         plotMap[firstOverlayName]->SetMaximum(max * 1.1);
         plotMap[firstOverlayName]->GetXaxis()->SetNdivisions(6, 5, 0);
         plotMap[firstOverlayName]->GetYaxis()->SetNdivisions(6, 5, 0);
@@ -447,6 +448,7 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
         }
     }
     else if ( !emptyData) {
+        plotMap["data"]->SetMinimum(0.0);
         plotMap["data"]->SetMaximum(max * 1.1);
         plotMap["data"]->GetXaxis()->SetNdivisions(6, 5, 0);
         plotMap["data"]->GetYaxis()->SetNdivisions(6, 5, 0);

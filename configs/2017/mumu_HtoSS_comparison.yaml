@@ -4,6 +4,9 @@ outputFolder: "plots/2017/HToSS/"
 outputPostfix: "mumu"
 channelName: "mumu"
 datasets:
+# W+jets
+#  - "configs/2017/datasets/wPlusJets/wPlusJets_v2.yaml"
+
 # HToSS
   - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS1_ctauS1_overlay.yaml"
   - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS1_ctauS10_overlay.yaml"
@@ -13,4 +16,3 @@ datasets:
   - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS10_overlay.yaml"
   - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS100_overlay.yaml"
   - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS1000_overlay.yaml"
-
