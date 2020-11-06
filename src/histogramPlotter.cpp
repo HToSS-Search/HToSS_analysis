@@ -287,9 +287,6 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
 
     // Do a few colour changing things and add MC to the stack.
     for (auto plot_iter = plotOrder_.rbegin(); plot_iter != plotOrder_.rend(); plot_iter++) {
-        plotMap[*plot_iter]->SetFillColor(dsetMap_[*plot_iter].colour);
-        plotMap[*plot_iter]->SetLineColor(kBlack);
-        plotMap[*plot_iter]->SetLineWidth(1);
         if ( dsetMap_[*plot_iter].legType == "p" ) {
             plotMap[*plot_iter]->SetMarkerStyle(20);
             plotMap[*plot_iter]->SetMarkerSize(0.9);
@@ -298,6 +295,9 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
             continue;
         }
         else if ( dsetMap_[*plot_iter].legType == "f" ) {
+            plotMap[*plot_iter]->SetFillColor(dsetMap_[*plot_iter].colour);
+            plotMap[*plot_iter]->SetLineColor(kBlack);
+            plotMap[*plot_iter]->SetLineWidth(1);
             mcStack->Add(plotMap[*plot_iter]);
             if ( emptyStack ) emptyStack = false;
             continue;
@@ -305,6 +305,7 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
         else if ( dsetMap_[*plot_iter].legType == "l" ) {
             plotMap[*plot_iter]->SetMarkerSize(0.0);
             plotMap[*plot_iter]->SetLineWidth(1.);
+            plotMap[*plot_iter]->SetLineColor(dsetMap_[*plot_iter].colour);
             if ( emptyOverlay ) emptyOverlay = false;
             continue;
        	}
