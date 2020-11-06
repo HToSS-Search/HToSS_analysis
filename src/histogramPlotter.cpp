@@ -298,14 +298,28 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
         plotMap[*plot_iter]->SetFillColor(dsetMap_[*plot_iter].colour);
         plotMap[*plot_iter]->SetLineColor(kBlack);
         plotMap[*plot_iter]->SetLineWidth(1);
-        if (*plot_iter == "data")
+        if ( dsetMap_[*plot_iter].legType == "p" )
         {
-            plotMap["data"]->SetMarkerStyle(20);
-            plotMap["data"]->SetMarkerSize(0.9);
-            plotMap["data"]->SetMarkerColor(kBlack);
+            plotMap[*plot_iter]->SetMarkerStyle(20);
+            plotMap[*plot_iter]->SetMarkerSize(0.9);
+            plotMap[*plot_iter]->SetMarkerColor(kBlack);
             continue;
         }
-        mcStack->Add(plotMap[*plot_iter]);
+        else if ( dsetMap_[*plot_iter].legType == "f" )
+        {
+            mcStack->Add(plotMap[*plot_iter]);
+            continue;
+        }
+        else if ( dsetMap_[*plot_iter].legType == "l" )
+        {
+//            mcStack->Add(plotMap[*plot_iter]);
+            continue;
+       	}
+        else {
+              std::cout << "NON-VALID PLOT TYPE PROVIDED FOR " << dsetMap_[*plot_iter].legLabel.c_str() << " - ASSUMING MC" << std::endl;
+              mcStack->Add(plotMap[*plot_iter]);
+              continue;
+        }
     }
 
     if (!BLIND_PLOTS)

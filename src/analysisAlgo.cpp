@@ -80,7 +80,7 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[])
         po::value<std::string>(&postfix)->default_value("default"),
         "Set postfix for plots. Overrides the config file.")(
         "lumi,l",
-        po::value<double>(&usePreLumi)->required(),
+        po::value<double>(&usePreLumi)->default_value(41528.),
         "Lumi to scale MC plots to.")(
         "cutConf,x",
         po::value<std::string>(&cutConfName),

@@ -8,5 +8,5 @@ mc: true
 histogram: "ggH_HToSS_MS1_ctauS1000"
 colour: "#006699"
 label: "H#rightarrowS#bar{S} M_{S}=1 c_{#tau}=1000"
-plot_type: "o"
+plot_type: "l"
 

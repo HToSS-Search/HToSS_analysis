@@ -8,6 +8,6 @@ mc: true
 histogram: "ggH_HToSS_MS2_ctauS10"
 colour: "#ff99cc"
 label: "H#rightarrowS#bar{S} M_{S}=2 c_{#tau}=10"
-plot_type: "o"
+plot_type: "l"
 
 

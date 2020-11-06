@@ -73,10 +73,7 @@ class AnalysisAlgo
     Cuts* cutObj;
 
     // Plotting stuff
-    std::map<
-        std::string,
-        std::map<std::string, std::map<std::string, std::shared_ptr<Plots>>>>
-        plotsMap;
+    std::map<std::string, std::map<std::string, std::map<std::string, std::shared_ptr<Plots>>>> plotsMap;
     std::map<std::string, TH1D*> cutFlowMap;
 
     std::vector<std::pair<std::string, std::string>> stageNames;
