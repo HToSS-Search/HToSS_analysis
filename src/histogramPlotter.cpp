@@ -291,6 +291,7 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
             plotMap[*plot_iter]->SetMarkerStyle(20);
             plotMap[*plot_iter]->SetMarkerSize(0.9);
             plotMap[*plot_iter]->SetMarkerColor(kBlack);
+            plotMap[*plot_iter]->SetStats(false);
             if ( emptyData ) emptyData = false;
             continue;
         }
@@ -298,6 +299,7 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
             plotMap[*plot_iter]->SetFillColor(dsetMap_[*plot_iter].colour);
             plotMap[*plot_iter]->SetLineColor(kBlack);
             plotMap[*plot_iter]->SetLineWidth(1);
+            plotMap[*plot_iter]->SetStats(false);
             mcStack->Add(plotMap[*plot_iter]);
             if ( emptyStack ) emptyStack = false;
             continue;
@@ -305,7 +307,9 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
         else if ( dsetMap_[*plot_iter].legType == "l" ) {
             plotMap[*plot_iter]->SetMarkerSize(0.0);
             plotMap[*plot_iter]->SetLineWidth(1.);
+            plotMap[*plot_iter]->SetFillStyle(4000);
             plotMap[*plot_iter]->SetLineColor(dsetMap_[*plot_iter].colour);
+            plotMap[*plot_iter]->SetStats(false);
             if ( emptyOverlay ) emptyOverlay = false;
             continue;
        	}
