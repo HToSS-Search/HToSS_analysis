@@ -274,45 +274,38 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
     legend_->SetFillStyle(0);
     legend_->SetBorderSize(0);
     //  legend_->SetFillColor(kWhite);
-    for (auto leg_iter = legOrder_.begin(); leg_iter != legOrder_.end();
-         leg_iter++)
-    {
-        legend_->AddEntry(plotMap[*leg_iter],
-                          dsetMap_[*leg_iter].legLabel.c_str(),
-                          dsetMap_[*leg_iter].legType.c_str());
+    for (auto leg_iter = legOrder_.begin(); leg_iter != legOrder_.end(); leg_iter++) {
+        legend_->AddEntry(plotMap[*leg_iter], dsetMap_[*leg_iter].legLabel.c_str(), dsetMap_[*leg_iter].legType.c_str());
     }
 
     std::string xAxisLabel{""};
-    if (xAxisLabels.size() < 2)
-    {
-        xAxisLabel = xAxisLabels[0];
-    }
+    if (xAxisLabels.size() < 2) xAxisLabel = xAxisLabels[0];
 
-    // Initialise the stack
-    THStack* mcStack{new THStack{
-        plotName.c_str(), (plotTitle + ";" + xAxisLabel + ";Events").c_str()}};
+    // Initialise the stack and set histos flag
+    THStack* mcStack{new THStack{plotName.c_str(), (plotTitle + ";" + xAxisLabel + ";Events").c_str()}};
+    bool emptyStack {true}, emptyData{true}, emptyOverlay{true};
+
     // Do a few colour changing things and add MC to the stack.
-    for (auto plot_iter = plotOrder_.rbegin(); plot_iter != plotOrder_.rend();
-         plot_iter++)
-    {
+    for (auto plot_iter = plotOrder_.rbegin(); plot_iter != plotOrder_.rend(); plot_iter++) {
         plotMap[*plot_iter]->SetFillColor(dsetMap_[*plot_iter].colour);
         plotMap[*plot_iter]->SetLineColor(kBlack);
         plotMap[*plot_iter]->SetLineWidth(1);
-        if ( dsetMap_[*plot_iter].legType == "p" )
-        {
+        if ( dsetMap_[*plot_iter].legType == "p" ) {
             plotMap[*plot_iter]->SetMarkerStyle(20);
             plotMap[*plot_iter]->SetMarkerSize(0.9);
             plotMap[*plot_iter]->SetMarkerColor(kBlack);
+            if ( emptyData ) emptyData = false;
             continue;
         }
-        else if ( dsetMap_[*plot_iter].legType == "f" )
-        {
+        else if ( dsetMap_[*plot_iter].legType == "f" ) {
             mcStack->Add(plotMap[*plot_iter]);
+            if ( emptyStack ) emptyStack = false;
             continue;
         }
-        else if ( dsetMap_[*plot_iter].legType == "l" )
-        {
-//            mcStack->Add(plotMap[*plot_iter]);
+        else if ( dsetMap_[*plot_iter].legType == "l" ) {
+            plotMap[*plot_iter]->SetMarkerSize(0.0);
+            plotMap[*plot_iter]->SetLineWidth(1.);
+            if ( emptyOverlay ) emptyOverlay = false;
             continue;
        	}
         else {
@@ -322,13 +315,11 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
         }
     }
 
-    if (!BLIND_PLOTS)
-    {
+    if (!BLIND_PLOTS) {
         // Initialise ratio plots
         ratioHisto = dynamic_cast<TH1D*>(plotMap["data"]->Clone());
         ratioHisto->Sumw2();
-        ratioHisto->Divide(
-            ratioHisto, dynamic_cast<TH1D*>(mcStack->GetStack()->Last()), 1, 1);
+        ratioHisto->Divide(ratioHisto, dynamic_cast<TH1D*>(mcStack->GetStack()->Last()), 1, 1);
 
         ratioHisto->SetMarkerStyle(20);
         ratioHisto->SetMarkerSize(0.85);
@@ -349,21 +340,11 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
 
     std::string canvasName = plotName + subLabel + postfix_;
     int pos = 0;
-    if (writeExtraText)
-    {
-        canvasName += "-prelim";
-    }
-    if (!is2016_)
-    {
-        canvasName += "-2017";
-    }
-    else
-    {
-        canvasName += "-2016";
-    }
+    if (writeExtraText) canvasName += "-prelim";
+    if (!is2016_) canvasName += "-2017";
+    else canvasName += "-2016";
 
-    TCanvas* canvy =
-        new TCanvas((canvasName).c_str(), (canvasName).c_str(), 50, 50, W, H);
+    TCanvas* canvy = new TCanvas((canvasName).c_str(), (canvasName).c_str(), 50, 50, W, H);
     canvy->cd();
 
     canvy->SetFillColor(0);
@@ -395,11 +376,9 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
         canvy_1->SetTicky(0);
     }
 
-    mcStack->Draw("HIST");
-
-    if (!BLIND_PLOTS)
-    {
-        mcStack->GetHistogram()->GetXaxis()->SetLabelOffset(999);
+    if ( !emptyStack ) {
+        mcStack->Draw("HIST");
+        if (!BLIND_PLOTS) mcStack->GetHistogram()->GetXaxis()->SetLabelOffset(999);
     }
 
     setLabelThree("");
@@ -407,37 +386,85 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
     //  labelTwo_->Draw();
     //  labelOne_->Draw();
 
-    float max = mcStack->GetMaximum();
-    if (plotMap.find("data") != plotMap.end())
-    {
-        max = TMath::Max(mcStack->GetMaximum(), plotMap["data"]->GetMaximum());
-        plotMap["data"]->Draw("e x0, same");
+    bool firstPlot {true};
+    std::string firstOverlayName {};
+    double max {0.0};
+    if ( !emptyStack ) { 
+        max = mcStack->GetMaximum();
+        firstPlot = false;
     }
 
-    mcStack->SetMaximum(max * 1.1);
-    mcStack->GetXaxis()->SetNdivisions(6, 5, 0);
-    mcStack->GetYaxis()->SetNdivisions(6, 5, 0);
-    mcStack->GetYaxis()->SetTitleOffset(L / W * 8.6);
-
-    if (xAxisLabels.size() > 1)
-    {
-        for (unsigned i{1}; i <= xAxisLabels.size(); i++)
-        {
-            if (!BLIND_PLOTS)
-            {
-                mcStack->GetXaxis()->SetBinLabel(i, "");
+    for (auto plot_iter = plotOrder_.rbegin(); plot_iter != plotOrder_.rend(); plot_iter++) {
+        if (dsetMap_[*plot_iter].legType == "p") {
+            max = TMath::Max(Double_t(max), Double_t(plotMap[*plot_iter]->GetMaximum()));
+            if ( firstPlot ) {
+                plotMap["data"]->Draw("e x0");
+                firstPlot = false;
             }
-            else
-            {
-                mcStack->GetXaxis()->SetBinLabel(i, xAxisLabels[i - 1].c_str());
+            else {
+                plotMap["data"]->Draw("e x0, same");
             }
         }
+        else if (dsetMap_[*plot_iter].legType == "l") {
+            max = TMath::Max(Double_t(max), Double_t(plotMap[*plot_iter]->GetMaximum()));
+            if ( firstPlot ) {
+                plotMap[*plot_iter]->Draw("");
+                firstOverlayName = *plot_iter;
+      	       	firstPlot = false; 
+       	    }
+       	    else {
+                plotMap[*plot_iter]->Draw("same");
+       	    }
+       }
+    }
+
+    if ( !emptyStack ) {
+        mcStack->SetMaximum(max * 1.1);
+        mcStack->GetXaxis()->SetNdivisions(6, 5, 0);
+        mcStack->GetYaxis()->SetNdivisions(6, 5, 0);
+        mcStack->GetYaxis()->SetTitleOffset(L / W * 8.6);
+        if (xAxisLabels.size() > 1) {
+            for (unsigned i{1}; i <= xAxisLabels.size(); i++) {
+                if (!BLIND_PLOTS) {
+                    mcStack->GetXaxis()->SetBinLabel(i, "");
+                }
+                else {
+                    mcStack->GetXaxis()->SetBinLabel(i, xAxisLabels[i - 1].c_str());
+                }
+            }
+        }
+    }
+    else if ( !emptyOverlay ) {
+        plotMap[firstOverlayName]->SetMaximum(max * 1.1);
+        plotMap[firstOverlayName]->GetXaxis()->SetNdivisions(6, 5, 0);
+        plotMap[firstOverlayName]->GetYaxis()->SetNdivisions(6, 5, 0);
+        plotMap[firstOverlayName]->GetYaxis()->SetTitleOffset(L / W * 8.6);
+        if (xAxisLabels.size() > 1) {
+            for (unsigned i{1}; i <= xAxisLabels.size(); i++) {
+                plotMap[firstOverlayName]->GetXaxis()->SetBinLabel(i, xAxisLabels[i - 1].c_str());
+            }
+        }
+    }
+    else if ( !emptyData) {
+        plotMap["data"]->SetMaximum(max * 1.1);
+        plotMap["data"]->GetXaxis()->SetNdivisions(6, 5, 0);
+        plotMap["data"]->GetYaxis()->SetNdivisions(6, 5, 0);
+        plotMap["data"]->GetYaxis()->SetTitleOffset(L / W * 8.6);
+        if (xAxisLabels.size() > 1) {
+            for (unsigned i{1}; i <= xAxisLabels.size(); i++) {
+                plotMap["data"]->GetXaxis()->SetBinLabel(i, xAxisLabels[i - 1].c_str());
+            }
+        }
+    }
+    else {
+        std::cout << "This shouldn't occur - means there are no plots to be plotted." << std::endl;
+	std::cout << "Program should have crashed by now! Serious bug ..." << std::endl;
+        exit(999);
     }
 
     legend_->Draw();
 
-    if (!BLIND_PLOTS)
-    {
+    if (!BLIND_PLOTS) {
         // Bottom ratio plots
         canvy->cd();
         canvy_2 = new TPad("canvy_2", "newpad2", 0.01, 0.01, 0.99, 0.3275);
@@ -464,12 +491,9 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
         ratioHisto->GetXaxis()->SetNdivisions(6, 5, 0);
         ratioHisto->GetYaxis()->SetNdivisions(6, 5, 0);
 
-        if (xAxisLabels.size() > 1)
-        {
-            for (unsigned i{1}; i <= xAxisLabels.size(); i++)
-            {
-                ratioHisto->GetXaxis()->SetBinLabel(i,
-                                                    xAxisLabels[i - 1].c_str());
+        if (xAxisLabels.size() > 1) {
+            for (unsigned i{1}; i <= xAxisLabels.size(); i++) {
+                ratioHisto->GetXaxis()->SetBinLabel(i, xAxisLabels[i - 1].c_str());
             }
         }
 
@@ -494,23 +518,20 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
     }
 
     // writing the lumi information and the CMS "logo"
-    if (BLIND_PLOTS)
-    {
+    if (BLIND_PLOTS) {
         CMS_lumi(canvy, pos);
         canvy->Update();
         canvy->RedrawAxis();
         canvy->Draw();
     }
-    else
-    {
+    else  {
         CMS_lumi(canvy_1, pos);
         canvy_1->Update();
         canvy_1->RedrawAxis();
         canvy_1->Draw();
     }
     // Save the plots.
-    for (unsigned ext_it = 0; ext_it < extensions_.size(); ext_it++)
-    {
+    for (unsigned ext_it = 0; ext_it < extensions_.size(); ext_it++) {
         canvy->SaveAs((outputFolder_ + plotName + extensions_[ext_it]).c_str());
     }
 
