@@ -161,7 +161,8 @@ int main(int argc, char* argv[])
   TH1F* h_packedCVz    {new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.)};
   TH2I* h_displacedXY  {new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150)};
   TH2I* h_displacedRZ  {new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250)};	
-  TH1F* h_matchDeltaR  {new TH1F("h_matchDeltaR", "#DeltaR reconstructed muon and track candidate",2500, -10., 10.)}; 
+  TH1F* h_matchDeltaR  {new TH1F("h_matchDeltaR", "#DeltaR reconstructed muon and track candidate",2500, -10., 10.)};
+  TH1F* h_massAssump   {new TH1F("h_massAssump",  "Mass assumption", 1000, 0., 1000.)};
 	
   //Iso tracks
   TH1F* h_isoTracksPt  {new TH1F("h_isoTracksPt",  "Iso tracks p_{T}", 1000, 0., 1000.)}; 	
@@ -935,7 +936,9 @@ int main(int argc, char* argv[])
   h_displacedRZ->GetYaxis()->SetTitle("R");
   h_displacedRZ->Write();
   h_matchDeltaR->Write();
-
+  h_massAssump->GetXaxis()->SetTitle("GeV");
+  h_massAssump->Write();
+	
   //Iso tracks
   h_isoTracksPt->GetXaxis()->SetTitle("GeV");
   h_isoTracksPt->Write();
