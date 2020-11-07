@@ -98,6 +98,7 @@ int main(int argc, char* argv[])
   TH1F* h_genParScalarMuonE       {new TH1F("h_genParScalarMuonE",   "#mu^{#pm} from scalar decay energy",     1000, 0., 1000.)};
   TH1F* h_MuonDeltaR              {new TH1F("h_MuonDeltaR", "Muon #DeltaR",2500, -10., 10.)}; 
   TH1F* h_MuonDeltaPhi            {new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",2500, -3.5, 3.5)};
+  TH1F* h_MuonInvMass             {new TH1F("h_MuonInvMass", "Muon Invariant mass",1000, 0., 7.)};
   TH1F* h_Muon3DAngle             {new TH1F("h_Muon3DAngle", "Muon 3D Angle",1000,-10., 10.)}; 
 	
   //Kaon from scalar decay
@@ -107,6 +108,7 @@ int main(int argc, char* argv[])
   TH1F* h_genParScalarCKaonE       {new TH1F("h_genParScalarCKaonE",   "K^{#pm} from scalar decay energy",     1000, 0., 1000.)};
   TH1F* h_KaonDeltaR               {new TH1F("h_KaonDeltaR", "Kaon #DeltaR",2500, -10., 10.)}; 
   TH1F* h_KaonDeltaPhi             {new TH1F("h_KaonDeltaPhi", "Kaon #Delta#phi",2500, -3.5, 3.5)};
+  TH1F* h_KaonInvMass              {new TH1F("h_KaonInvMass", "Kaon Invariant mass",1000, 0., 7.)};
   TH1F* h_Kaon3DAngle              {new TH1F("h_Kaon3DAngle", "Kaon 3D Angle",1000,-10., 10.)}; 
 	
   //K short from scalar decay
@@ -116,6 +118,7 @@ int main(int argc, char* argv[])
   TH1F* h_genParScalarKShortE       {new TH1F("h_genParScalarKShortE",   "K^{0}_S from scalar decay energy",     1000, 0., 1000.)};
   TH1F* h_KShortDeltaR              {new TH1F("h_KShortDeltaR", "K^{0}_S #DeltaR",2500, -10., 10.)}; 
   TH1F* h_KShortDeltaPhi            {new TH1F("h_KShortDeltaPhi", "K^{0}_S #Delta#phi",2500, -3.5, 3.5)};
+  TH1F* h_KShortInvMass             {new TH1F("h_KShortInvMass", "K^{0}_S Invariant mass",1000, 0., 7.)};
   TH1F* h_KShort3DAngle             {new TH1F("h_KShort3DAngle", "K^{0}_S 3D Angle",1000,-10., 10.)}; 
 	
   //Pion from scalar decay
@@ -129,6 +132,7 @@ int main(int argc, char* argv[])
   TH1F* h_genParScalarNPionE       {new TH1F("h_genParScalarNPionE",   "#pi^{0} from scalar decay energy",     1000, 0., 1000.)};
   TH1F* h_PionDeltaR               {new TH1F("h_PionDeltaR", "Pion #DeltaR",2500, -10., 10.)}; 
   TH1F* h_PionDeltaPhi             {new TH1F("h_PionDeltaPhi", "Pion #Delta#phi",2500, -3.5, 3.5)};
+  TH1F* h_PionInvMass              {new TH1F("h_PionInvMass", "Pion Invariant mass",1000, 0., 7.)};	
   TH1F* h_Pion3DAngle              {new TH1F("h_Pion3DAngle", "Pion 3D Angle",1000,-10., 10.)}; 
   
   //RECONSTRUCTION histograms	
@@ -346,7 +350,7 @@ int main(int argc, char* argv[])
 	        h_VertexPosXY->Fill(genParVx,genParVy);
 	        h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));   
 		     
-		if (event.metFilters()){ //Question1
+		if (event.metFilters()){ 
 		      
 		   h_genParScalarMuonPt->Fill(genParPt);
 		      
@@ -410,7 +414,7 @@ int main(int argc, char* argv[])
 	h_genParScalarMuonDivPt=(TH1F*)h_genParScalarMuonCutPt->Clone();
 	h_genParScalarMuonDivPt->Divide(h_genParScalarMuonPt);
 	h_genParScalarMuonDivPt->SetTitle("After/before cut");
-	    
+	      
 	      
 	if (nrofScalar.size()==2){ //Two-particle (scalar) correlations
 	  const int Nr1 {nrofScalar[0]}; //Give the scalar index value k
@@ -427,20 +431,11 @@ int main(int argc, char* argv[])
 	  h_ScalarDeltaPhi->Fill(nr1.DeltaPhi(nr2));
 		
 	  //Invariant mass
-		
-	  Float_t genParPt1  {event.genParPt[Nr1]};
-	  Float_t genParPt2  {event.genParPt[Nr2]};
-		
-	  //TLorentzVector invnr1 {genParPt1.Px(),genParPt1.Py(),genParPt1.Pz(),event.genParE[Nr1]};
-	  //TLorentzVector invnr2 {genParPt2.Px(),genParPt2.Py(),genParPt2.Pz(),event.genParE[Nr2]};
-			
-	  //h_ScalarInvMass->Fill((invnr1+invnr2).M());
+	  h_ScalarInvMass->Fill((nr1+nr2).M());
 			
 	  //3D angle
 	  TVector3 angle1 (event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]); //No actual angle
 	  TVector3 angle2 (event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-		
-		//std::cout<<angle1<<" en "<<angle2<<std::endl;
 		
 	  h_Scalar3DAngle->Fill(angle1.Angle(angle2));		   
 	}
@@ -460,7 +455,10 @@ int main(int argc, char* argv[])
 			
 	  h_MuonDeltaR->Fill(nr1.DeltaR(nr2));
 	  h_MuonDeltaPhi->Fill(nr1.DeltaPhi(nr2));
-	      
+	  
+	  //Invariant mass
+	  h_MuonInvMass->Fill((nr1+nr2).M());
+		
 	  //3D angle
 	  TVector3 angle1 (event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
 	  TVector3 angle2 (event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
@@ -480,7 +478,10 @@ int main(int argc, char* argv[])
 			
 	  h_KaonDeltaR->Fill(nr1.DeltaR(nr2));
 	  h_KaonDeltaPhi->Fill(nr1.DeltaPhi(nr2));
-			
+		
+	  //Invariant mass
+	  h_KaonInvMass->Fill((nr1+nr2).M());
+		
 	  //3D angle
 	  TVector3 angle1;
 	  TVector3 angle2;
@@ -504,6 +505,9 @@ int main(int argc, char* argv[])
 			
 	  h_KShortDeltaR->Fill(nr1.DeltaR(nr2));
 	  h_KShortDeltaPhi->Fill(nr1.DeltaPhi(nr2));
+		
+	  //Invariant mass
+	  h_KShortInvMass->Fill((nr1+nr2).M());
 	      
 	  //3D angle
 	  TVector3 angle1;
@@ -528,6 +532,9 @@ int main(int argc, char* argv[])
 			
 	  h_PionDeltaR->Fill(nr1.DeltaR(nr2));
 	  h_PionDeltaPhi->Fill(nr1.DeltaPhi(nr2));
+		
+	  //Invariant mass
+	  h_PionInvMass->Fill((nr1+nr2).M());
 	       
 	  //3D angle
 	  TVector3 angle1;
@@ -586,7 +593,7 @@ int main(int argc, char* argv[])
 
 	   	   h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
 		       
-		 } //Question loose id cut +... inside electric charge control? bringing them together?
+		 } 
 		       
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 			 
@@ -667,50 +674,50 @@ int main(int argc, char* argv[])
 	      
 	      
 	      
-	//BEGIN Packed candidates  
-        for (Int_t k{0};k<event.numPackedCands;k++) {
-	 
-	  const Int_t packedId {event.packedCandsPdgId[k]}; 
-	  //Id of 211 or -211: Charged pions
+	//BEGIN Packed candidates 
+	if(event.metFilters()){
 		
-	  const TLorentzVector packedC {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]};
+          for (Int_t k{0};k<event.numPackedCands;k++) {
+	 
+	      const Int_t packedId {event.packedCandsPdgId[k]}; 
+	      //Id of 211 or -211: Charged pions
+		
+	      const TLorentzVector packedC {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]};
 	  
-	  const Float_t packedCandsE {event.packedCandsE[k]};	
+	      const Float_t packedCandsE {event.packedCandsE[k]};	
 		std::cout<<"Verify pion mass "<<packedCandsE<<std::endl;
-	  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]}; 
+	      const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]}; 
 		
-	  h_packedCDxy->Fill(event.packedCandsDxy[k]);
-	  h_packedCDz->Fill(event.packedCandsDz[k]);
+	      h_packedCDxy->Fill(event.packedCandsDxy[k]);
+	      h_packedCDz->Fill(event.packedCandsDz[k]);
 	  
-	  if(event.packedCandsHasTrackDetails[k]){
+	      if(event.packedCandsHasTrackDetails[k]){
 		
-	    if(packedCandsPseudoTrkCharge!=0){ //Tracks don't match muons, no neutral particles
+	        if(packedCandsPseudoTrkCharge!=0){ //Tracks don't match muons, no neutral particles
 	      
-	      TVector3 packedCPt {event.packedCandsPseudoTrkPx[k],event.packedCandsPseudoTrkPy[k],event.packedCandsPseudoTrkPz[k]};
-	      h_packedCPt->Fill(packedCPt.Pt());
+	          TVector3 packedCPt {event.packedCandsPseudoTrkPx[k],event.packedCandsPseudoTrkPy[k],event.packedCandsPseudoTrkPz[k]};
+	          h_packedCPt->Fill(packedCPt.Pt());
 	 
-	      h_packedCVx->Fill(event.packedCandsPseudoTrkVx[k]);
-              h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
-              h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
+	          h_packedCVx->Fill(event.packedCandsPseudoTrkVx[k]);
+                  h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
+                  h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
 	      
-	      /*//Invariant mass for two highest p_T
-	      TLorentzVector isoTrack1  {event.isoTracksPx[0],event.isoTracksPy[0],event.isoTracksPz[0],event.isoTracksE[0]};
-	      TLorentzVector isoTrack2  {event.isoTracksPx[1],event.isoTracksPy[1],event.isoTracksPz[1],event.isoTracksE[1]};
+	          /*//Invariant mass for two highest p_T
+	          TLorentzVector isoTrack1  {event.isoTracksPx[0],event.isoTracksPy[0],event.isoTracksPz[0],event.isoTracksE[0]};
+	          TLorentzVector isoTrack2  {event.isoTracksPx[1],event.isoTracksPy[1],event.isoTracksPz[1],event.isoTracksE[1]};
 
-	      h_isoTracksInvMass->Fill((isoTrack1+isoTrack2).M());*/   
-	    }
+	          h_isoTracksInvMass->Fill((isoTrack1+isoTrack2).M());*/   
+	        }
 	    
-	    
-		  
-	  }
+	      }
 	  
-        }
-	      
+          }
+	}     
 	//END Packed Candidates
 	      
 	 
 	      
-	//Iso tracks  
+	//Isolated tracks  
 	      
 	/*TLorentzVector iso1; //Question: deltaR from reco muons or packed candidates
 	TLorentzVector iso2;
@@ -721,21 +728,24 @@ int main(int argc, char* argv[])
 	Float_t dR=iso1.DeltaR(iso2);
 	h_isoTracksDeltaR->Fill(dR);
 	h_isoTracksDeltaPhi->Fill(iso1.DeltaPhi(iso2));*/
-	      
-	for (Int_t k{0}; k<event.numIsolatedTracks;k++){
-	  
-            const TLorentzVector isoTracks {event.isoTracksPx[k],event.isoTracksPy[k],event.isoTracksPz[k],event.isoTracksE[k]};
-		
-	    const Float_t isoTracksPt  { event.isoTracksPt[k] };
-	    h_isoTracksPt->Fill(isoTracksPt);
-		
-	    const Float_t isoTracksEta { event.isoTracksEta[k] };
-	    const Float_t isoTracksPhi { event.isoTracksPhi[k] };
-	    const Float_t isoTracksE   { event.isoTracksE[k] };
-		
-	    const Int_t  isoTracksId     {event.isoTracksPdgId[k]};
-	    const Int_t  isoTracksCharge {event.isoTracksCharge[k]};
 	
+	if(event.metFilters()){
+		
+	  for (Int_t k{0}; k<event.numIsolatedTracks;k++){
+	  
+              const TLorentzVector isoTracks {event.isoTracksPx[k],event.isoTracksPy[k],event.isoTracksPz[k],event.isoTracksE[k]};
+		
+	      const Float_t isoTracksPt  { event.isoTracksPt[k] };
+	      h_isoTracksPt->Fill(isoTracksPt);
+		
+	      const Float_t isoTracksEta { event.isoTracksEta[k] };
+	      const Float_t isoTracksPhi { event.isoTracksPhi[k] };
+	      const Float_t isoTracksE   { event.isoTracksE[k] };
+		
+	      const Int_t  isoTracksId     {event.isoTracksPdgId[k]};
+	      const Int_t  isoTracksCharge {event.isoTracksCharge[k]};
+	
+	  }
 	}
 	      
 	      
@@ -810,6 +820,8 @@ int main(int argc, char* argv[])
   h_genParScalarMuonE->Write();
   h_MuonDeltaR->Write();
   h_MuonDeltaPhi->Write();
+  h_MuonInvMass->GetXaxis()->SetTitle("GeV");
+  h_MuonInvMass->Write();
   h_Muon3DAngle->Write();
 	
   h_genParScalarCKaonPt->GetXaxis()->SetTitle("GeV");
@@ -819,6 +831,8 @@ int main(int argc, char* argv[])
   h_genParScalarCKaonE->Write();
   h_KaonDeltaR->Write();
   h_KaonDeltaPhi->Write();
+  h_KaonInvMass->GetXaxis()->SetTitle("GeV");
+  h_KaonInvMass->Write();
   h_Kaon3DAngle->Write();
 
   h_genParScalarKShortPt->GetXaxis()->SetTitle("GeV");
@@ -828,6 +842,8 @@ int main(int argc, char* argv[])
   h_genParScalarKShortE->Write();
   h_KShortDeltaR->Write();
   h_KShortDeltaPhi->Write();
+  h_KShortInvMass->GetXaxis()->SetTitle("GeV");
+  h_KShortInvMass->Write();
   h_KShort3DAngle->Write();
 	
   h_genParScalarCPionPt->GetXaxis()->SetTitle("GeV");
@@ -842,6 +858,8 @@ int main(int argc, char* argv[])
   h_genParScalarNPionE->Write();
   h_PionDeltaR->Write();
   h_PionDeltaPhi->Write();
+  h_PionInvMass->GetXaxis()->SetTitle("GeV");
+  h_PionInvMass->Write();
   h_Pion3DAngle->Write();
 	
   h_VertexPosXY->GetXaxis()->SetTitle("Vertex position x"); // set a title for the x-axis
