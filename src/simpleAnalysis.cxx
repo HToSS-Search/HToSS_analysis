@@ -135,6 +135,11 @@ int main(int argc, char* argv[])
   TH1F* h_PionInvMass              {new TH1F("h_PionInvMass", "Pion Invariant mass",1000, 0., 7.)};	
   TH1F* h_Pion3DAngle              {new TH1F("h_Pion3DAngle", "Pion 3D Angle",1000,-10., 10.)}; 
   
+    
+  //Vertex position: muons, kaons, kshort, pions
+  TH2I* h_VertexPosXY  {new TH2I("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
+  TH2I* h_VertexPosRZ  {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250)};
+	
   //RECONSTRUCTION histograms	
   //Muon reco
   TH1F* h_muonRecPt            {new TH1F("h_muonRecPt",  "#mu^{#pm} reconstruction p_{T}", 1000, 0., 1000.)}; 
@@ -154,20 +159,14 @@ int main(int argc, char* argv[])
   TH1F* h_packedCVx    {new TH1F("h_packedCVx",  "Packed Candidate track vx", 500,  -150., 150.)};
   TH1F* h_packedCVy    {new TH1F("h_packedCVy",  "Packed Candidate track vy", 500,  -150., 150.)};
   TH1F* h_packedCVz    {new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.)};
- 
-  TH1F* h_matchDeltaR   {new TH1F("h_matchDeltaR", "#DeltaR reconstructed muon and track candidate",2500, -10., 10.)}; 
+  TH2I* h_displacedXY  {new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150)};
+  TH2I* h_displacedRZ  {new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250)};	
+  TH1F* h_matchDeltaR  {new TH1F("h_matchDeltaR", "#DeltaR reconstructed muon and track candidate",2500, -10., 10.)}; 
 	
   //Iso tracks
-  TH1F* h_isoTracksPt    {new TH1F("h_isoTracksPt",  "Iso tracks p_{T}", 1000, 0., 1000.)}; 	
+  TH1F* h_isoTracksPt  {new TH1F("h_isoTracksPt",  "Iso tracks p_{T}", 1000, 0., 1000.)}; 	
 	
 	
-	
-	
-  // Declare TH2I plots 
-    
-  //Vertex position: muons, kaons, kshort, pions
-  TH2I* h_VertexPosXY {new TH2I("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
-  TH2I* h_VertexPosRZ {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250)};
 	
 	
  	
@@ -721,12 +720,18 @@ int main(int argc, char* argv[])
 	          h_packedCVx->Fill(event.packedCandsPseudoTrkVx[k]);
                   h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
                   h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
-	      
-	          /*//Invariant mass for two highest p_T
-	          TLorentzVector isoTrack1  {event.isoTracksPx[0],event.isoTracksPy[0],event.isoTracksPz[0],event.isoTracksE[0]};
+	          
+		  //Displacement from interaction point
+		  h_displacedXY->Fill(event.packedCandsPseudoTrkVx[k],event.packedCandsPseudoTrkVy[k]);
+	          h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
+	          
+		  //Invariant mass for two highest p_T
+	          /*TLorentzVector isoTrack1  {event.isoTracksPx[0],event.isoTracksPy[0],event.isoTracksPz[0],event.isoTracksE[0]};
 	          TLorentzVector isoTrack2  {event.isoTracksPx[1],event.isoTracksPy[1],event.isoTracksPz[1],event.isoTracksE[1]};
 
-	          h_isoTracksInvMass->Fill((isoTrack1+isoTrack2).M());*/   
+	          h_isoTracksInvMass->Fill((isoTrack1+isoTrack2).M());*/ 
+			
+		  
 	        }
 	    
 	      }
@@ -921,7 +926,12 @@ int main(int argc, char* argv[])
   h_packedCVx->Write();
   h_packedCVy->Write();
   h_packedCVz->Write();
-	
+  h_displacedXY->GetXaxis()->SetTitle("Vertex position x"); 
+  h_displacedXY->GetYaxis()->SetTitle("Vertex position y");
+  h_displacedXY-Write();
+  h_displacedRZ->GetXaxis()->SetTitle("Vertex position z"); 
+  h_displacedRZ->GetYaxis()->SetTitle("R");
+  h_displacedRZ->Write();
   h_matchDeltaR->Write();
 
   //Iso tracks
