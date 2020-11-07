@@ -701,19 +701,20 @@ int main(int argc, char* argv[])
 	      //Id of 211 or -211: Charged pions
 		
 	      const TLorentzVector packedC {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]};
-	  
-	      const Float_t packedCandsE {event.packedCandsE[k]};	
-		std::cout<<"Verify pion mass "<<packedCandsE<<std::endl;
-	      const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]}; 
-		
+	    
 	      h_packedCDxy->Fill(event.packedCandsDxy[k]);
 	      h_packedCDz->Fill(event.packedCandsDz[k]);
 	  
+	      const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]}; 
 	      if(event.packedCandsHasTrackDetails[k]){
 		
 	        if(packedCandsPseudoTrkCharge!=0){ //Tracks don't match muons, no neutral particles
-	      
+	            
+	          h_massAssump->Fill(packedC.M());
+			std::cout<<"Mass assumption "<<packedC.M()<<std::endl;
+		  	
 		  nrofPacked.emplace_back(k);
+			
 	          TVector3 packedCPt {event.packedCandsPseudoTrkPx[k],event.packedCandsPseudoTrkPy[k],event.packedCandsPseudoTrkPz[k]};
 	          h_packedCPt->Fill(packedCPt.Pt());
 	 
@@ -726,7 +727,8 @@ int main(int argc, char* argv[])
 	          h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
 	          
 		  //Invariant mass for two highest p_T
-	          /*TLorentzVector isoTrack1  {event.isoTracksPx[0],event.isoTracksPy[0],event.isoTracksPz[0],event.isoTracksE[0]};
+	          
+			/*TLorentzVector isoTrack1  {event.isoTracksPx[0],event.isoTracksPy[0],event.isoTracksPz[0],event.isoTracksE[0]};
 	          TLorentzVector isoTrack2  {event.isoTracksPx[1],event.isoTracksPy[1],event.isoTracksPz[1],event.isoTracksE[1]};
 
 	          h_isoTracksInvMass->Fill((isoTrack1+isoTrack2).M());*/ 
@@ -928,7 +930,7 @@ int main(int argc, char* argv[])
   h_packedCVz->Write();
   h_displacedXY->GetXaxis()->SetTitle("Vertex position x"); 
   h_displacedXY->GetYaxis()->SetTitle("Vertex position y");
-  h_displacedXY-Write();
+  h_displacedXY->Write();
   h_displacedRZ->GetXaxis()->SetTitle("Vertex position z"); 
   h_displacedRZ->GetYaxis()->SetTitle("R");
   h_displacedRZ->Write();
