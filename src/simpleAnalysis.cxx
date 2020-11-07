@@ -433,7 +433,10 @@ int main(int argc, char* argv[])
 	  h_ScalarDeltaPhi->Fill(nr1.DeltaPhi(nr2));
 		
 	  //Invariant mass
-	  h_ScalarInvMass->Fill((nr1+nr2).M());
+	  TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
+	  TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
+	  
+	  h_ScalarInvMass->Fill((mass1+mass2).M());
 			
 	  //3D angle
 	  TVector3 angle1 (event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]); //No actual angle
@@ -459,8 +462,11 @@ int main(int argc, char* argv[])
 	  h_MuonDeltaPhi->Fill(nr1.DeltaPhi(nr2));
 	  
 	  //Invariant mass
-	  h_MuonInvMass->Fill((nr1+nr2).M());
-		
+	  TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
+	  TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
+	  
+	  h_MuonInvMass->Fill((mass1+mass2).M());
+	  
 	  //3D angle
 	  TVector3 angle1 (event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
 	  TVector3 angle2 (event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
@@ -482,7 +488,10 @@ int main(int argc, char* argv[])
 	  h_KaonDeltaPhi->Fill(nr1.DeltaPhi(nr2));
 		
 	  //Invariant mass
-	  h_KaonInvMass->Fill((nr1+nr2).M());
+	  TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
+	  TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
+	  
+	  h_KaonInvMass->Fill((mass1+mass2).M());
 		
 	  //3D angle
 	  TVector3 angle1;
@@ -509,7 +518,10 @@ int main(int argc, char* argv[])
 	  h_KShortDeltaPhi->Fill(nr1.DeltaPhi(nr2));
 		
 	  //Invariant mass
-	  h_KShortInvMass->Fill((nr1+nr2).M());
+	  TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
+	  TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
+	  
+	  h_KShortInvMass->Fill((mass1+mass2).M());
 	      
 	  //3D angle
 	  TVector3 angle1;
@@ -536,7 +548,10 @@ int main(int argc, char* argv[])
 	  h_PionDeltaPhi->Fill(nr1.DeltaPhi(nr2));
 		
 	  //Invariant mass
-	  h_PionInvMass->Fill((nr1+nr2).M());
+	  TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
+	  TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
+	  
+	  h_PionInvMass->Fill((mass1+mass2).M());
 	       
 	  //3D angle
 	  TVector3 angle1;
@@ -721,7 +736,7 @@ int main(int argc, char* argv[])
 	//END Packed Candidates
 		
 	      
-	if ((nrofmuonRec.size()+nrofPacked.size())==2){ 
+	if ((nrofmuonRec.size()+nrofPacked.size())==2){ //this is not right...
 	  const int Nr1 {nrofmuonRec[0]}; 
 	  const int Nr2 {nrofPacked[0]};
 			
