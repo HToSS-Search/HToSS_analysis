@@ -421,14 +421,14 @@ class AnalysisEvent
 */
     static constexpr size_t NPACKEDCANDSMAX{700};
     Int_t numPackedCands;
-//    Float_t packedCandsPt[NPACKEDCANDSMAX];
+    Float_t packedCandsPt[NPACKEDCANDSMAX];
     Float_t packedCandsPx[NPACKEDCANDSMAX];
     Float_t packedCandsPy[NPACKEDCANDSMAX];
     Float_t packedCandsPz[NPACKEDCANDSMAX];
     Float_t packedCandsE[NPACKEDCANDSMAX];
-//    Float_t packedCandsEta[NPACKEDCANDSMAX];
+    Float_t packedCandsEta[NPACKEDCANDSMAX];
 //    Float_t packedCandsTheta[NPACKEDCANDSMAX];
-//    Float_t packedCandsPhi[NPACKEDCANDSMAX];
+    Float_t packedCandsPhi[NPACKEDCANDSMAX];
     Int_t packedCandsCharge[NPACKEDCANDSMAX];
     Int_t packedCandsPdgId[NPACKEDCANDSMAX];
 //    Float_t packedCandsTime[NPACKEDCANDSMAX];
