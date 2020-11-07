@@ -155,6 +155,8 @@ int main(int argc, char* argv[])
   TH1F* h_packedCVy    {new TH1F("h_packedCVy",  "Packed Candidate track vy", 500,  -150., 150.)};
   TH1F* h_packedCVz    {new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.)};
  
+  TH1F* h_matchDeltaR   {new TH1F("h_matchDeltaR", "#DeltaR reconstructed muon and track candidate",2500, -10., 10.)}; 
+	
   //Iso tracks
   TH1F* h_isoTracksPt    {new TH1F("h_isoTracksPt",  "Iso tracks p_{T}", 1000, 0., 1000.)}; 	
 	
@@ -557,7 +559,6 @@ int main(int argc, char* argv[])
 	      
 	/// BEGIN Muon Reconstruction
 	std::vector<Int_t> nrofmuonRec;
-	std::vector<Int_t> passedMuons {};
 
 	if(event.metFilters()){
 	  
@@ -597,7 +598,7 @@ int main(int argc, char* argv[])
 		       
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 			 
-	           passedMuons.push_back(k); //Take its index
+	           nrofmuonRec.emplace_back(k); //Take its index
 		   h_muonCut->Fill(muonRecPt);
 			 
 		 }
@@ -675,6 +676,9 @@ int main(int argc, char* argv[])
 	      
 	      
 	//BEGIN Packed candidates 
+	      
+	std::vector<Int_t> nrofPacked;
+	      
 	if(event.metFilters()){
 		
           for (Int_t k{0};k<event.numPackedCands;k++) {
@@ -695,6 +699,7 @@ int main(int argc, char* argv[])
 		
 	        if(packedCandsPseudoTrkCharge!=0){ //Tracks don't match muons, no neutral particles
 	      
+		  nrofPacked.emplace_back(k);
 	          TVector3 packedCPt {event.packedCandsPseudoTrkPx[k],event.packedCandsPseudoTrkPy[k],event.packedCandsPseudoTrkPz[k]};
 	          h_packedCPt->Fill(packedCPt.Pt());
 	 
@@ -714,21 +719,28 @@ int main(int argc, char* argv[])
           }
 	}     
 	//END Packed Candidates
+		
 	      
-	 
+	if ((nrofmuonRec.size()+nrofPacked.size())==2){ 
+	  const int Nr1 {nrofmuonRec[0]}; 
+	  const int Nr2 {nrofPacked[0]};
+			
+	  TLorentzVector nr1;
+	  TLorentzVector nr2;
+		
+	  nr1.SetPtEtaPhiE(event.muonPF2PATPt[Nr1],event.muonPF2PATEta[Nr1],event.muonPF2PATPhi[Nr1],event.muonPF2PATE[Nr1]);
+	  nr2.SetPtEtaPhiE(event.packedCandsPt[Nr2],event.packedCandsEta[Nr2],event.packedCandsPhi[Nr2],event.packedCandsE[Nr2]);
+			
+	  h_matchDeltaR->Fill(nr1.DeltaR(nr2));
+		
+	}
+	      
+	      
+	      
+	      
 	      
 	//Isolated tracks  
 	      
-	/*TLorentzVector iso1; //Question: deltaR from reco muons or packed candidates
-	TLorentzVector iso2;
-	      
-	iso1.SetPtEtaPhiE(event.isoTracksPt[0],event.isoTracksEta[0],event.isoTracksPhi[0],event.isoTracksE[0]);
-	iso2.SetPtEtaPhiE(event.isoTracksPt[1],event.isoTracksEta[1],event.isoTracksPhi[1],event.isoTracksE[1]);
-	
-	Float_t dR=iso1.DeltaR(iso2);
-	h_isoTracksDeltaR->Fill(dR);
-	h_isoTracksDeltaPhi->Fill(iso1.DeltaPhi(iso2));*/
-	
 	if(event.metFilters()){
 		
 	  for (Int_t k{0}; k<event.numIsolatedTracks;k++){
@@ -894,6 +906,8 @@ int main(int argc, char* argv[])
   h_packedCVx->Write();
   h_packedCVy->Write();
   h_packedCVz->Write();
+	
+  h_matchDeltaR->Write();
 
   //Iso tracks
   h_isoTracksPt->GetXaxis()->SetTitle("GeV");
