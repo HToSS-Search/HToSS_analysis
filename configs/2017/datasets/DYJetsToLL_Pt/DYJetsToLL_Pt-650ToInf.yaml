@@ -1,6 +1,6 @@
 name: "DYJetsToLL_Pt-650ToInf"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/DYJetsToLL_Pt/DYJetsToLL_Pt-650ToInf/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/DYJetsToLL_Pt/DYJetsToLL_Pt-650ToInf/"
 total_events: 1885153
 cross_section: 0.040981055
 mc: true
