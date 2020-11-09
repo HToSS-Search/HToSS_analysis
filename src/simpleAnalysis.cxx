@@ -38,7 +38,7 @@ std::string pdgIdCode (const Int_t pdgId, const bool unicode = false); // declar
 bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
 
 Float_t MatchdeltaR(const Float_t& eta1, const Float_t& phi1,const Float_t& eta2, const Float_t& phi2){
-return std::sqrt(std::pow(eta1-eta2,2)+std::pow(deltaPhi(phi1,phi2),2));
+return std::sqrt(std::pow(eta1-eta2,2)+std::pow(DeltaPhi(phi1,phi2),2));
 };
 
 namespace fs = boost::filesystem;
