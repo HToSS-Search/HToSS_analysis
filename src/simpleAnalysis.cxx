@@ -37,11 +37,9 @@
 std::string pdgIdCode (const Int_t pdgId, const bool unicode = false); // declaring function called below main(); pdgIdCode translate stored numerical pdgId code into a string: unicode for output to string, or latex style for ROOT plotting
 bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
 
-//Sorting based on first digit of std::pair
-bool compare(std::pair<Float_t,Int_t>&i, std::pair<Float_t,Int_t>&j) 
-{ 
-    return i.first < j.first; 
-}
+Float_t AnalysisEvent::deltaR(const Float_t& eta1, const Float_t& phi1,const Float_t& eta2, const Float_t& phi2){
+return std::sqrt(std::pow(eta1-eta2,2)+std::pow(deltaPhi(phi1,phi2),2));
+};
 
 namespace fs = boost::filesystem;
 
@@ -742,22 +740,24 @@ int main(int argc, char* argv[])
           }
 	}     
 	//END Packed Candidates
+	
+	/*if(nrofmuonRec.size()==1 && nrofPacked.size()==1){
+	
+	//Per event: highest momentum, stored in iteration 0     
+	const int Nr1 {nrofmuonRec[0]}; 
+	const int Nr2 {nrofPacked[0]};
+	
+	Float_t deltaR
+	TLorentzVector nr1;
+	TLorentzVector nr2;
 		
-	      
-	if ((nrofmuonRec.size()+nrofPacked.size())==2){ //this is not right...
-	  const int Nr1 {nrofmuonRec[0]}; 
-	  const int Nr2 {nrofPacked[0]};
+	nr1.SetPtEtaPhiE(event.muonPF2PATPt[Nr1],event.muonPF2PATEta[Nr1],event.muonPF2PATPhi[Nr1],event.muonPF2PATE[Nr1]);
+	nr2.SetPtEtaPhiE(event.packedCandsPt[Nr2],event.packedCandsEta[Nr2],event.packedCandsPhi[Nr2],event.packedCandsE[Nr2]);
 			
-	  TLorentzVector nr1;
-	  TLorentzVector nr2;
-		
-	  nr1.SetPtEtaPhiE(event.muonPF2PATPt[Nr1],event.muonPF2PATEta[Nr1],event.muonPF2PATPhi[Nr1],event.muonPF2PATE[Nr1]);
-	  nr2.SetPtEtaPhiE(event.packedCandsPt[Nr2],event.packedCandsEta[Nr2],event.packedCandsPhi[Nr2],event.packedCandsE[Nr2]);
-			
-	  h_matchDeltaR->Fill(nr1.DeltaR(nr2));
-		
-	}
-	      
+	h_matchDeltaR->Fill(nr1.DeltaR(nr2));
+	}*/	
+
+	h_matchDeltaR->Fill(deltaR(event.muonPF2PATEta[nrofmuonRec[0]],event.muonPF2PATPhi[nrofmuonRec[0]],event.packedCandsEta[nrofPacked[0]],event.packedCandsPhi[nrofPacked[0]]));   
 	      
 	      
 	      
