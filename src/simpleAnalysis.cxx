@@ -37,7 +37,7 @@
 std::string pdgIdCode (const Int_t pdgId, const bool unicode = false); // declaring function called below main(); pdgIdCode translate stored numerical pdgId code into a string: unicode for output to string, or latex style for ROOT plotting
 bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
 
-Float_t AnalysisEvent::deltaR(const Float_t& eta1, const Float_t& phi1,const Float_t& eta2, const Float_t& phi2){
+Float_t MatchdeltaR(const Float_t& eta1, const Float_t& phi1,const Float_t& eta2, const Float_t& phi2){
 return std::sqrt(std::pow(eta1-eta2,2)+std::pow(deltaPhi(phi1,phi2),2));
 };
 
@@ -757,7 +757,7 @@ int main(int argc, char* argv[])
 	h_matchDeltaR->Fill(nr1.DeltaR(nr2));
 	}*/	
 
-	h_matchDeltaR->Fill(deltaR(event.muonPF2PATEta[nrofmuonRec[0]],event.muonPF2PATPhi[nrofmuonRec[0]],event.packedCandsEta[nrofPacked[0]],event.packedCandsPhi[nrofPacked[0]]));   
+	h_matchDeltaR->Fill(MatchdeltaR(event.muonPF2PATEta[nrofmuonRec[0]],event.muonPF2PATPhi[nrofmuonRec[0]],event.packedCandsEta[nrofPacked[0]],event.packedCandsPhi[nrofPacked[0]]));   
 	      
 	      
 	      
