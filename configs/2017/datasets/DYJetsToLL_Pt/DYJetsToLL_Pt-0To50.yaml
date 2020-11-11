@@ -1,7 +1,7 @@
 name: "DYJetsToLL_Pt-0To50"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/DYJetsToLL_Pt/DYJetsToLL_Pt-0To50/"
-total_events: 93453248
+total_events: 93590460
 cross_section: 5352.57924
 mc: true
 histogram: "Zjets"
