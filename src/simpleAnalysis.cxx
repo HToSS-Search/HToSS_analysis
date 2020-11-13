@@ -739,18 +739,19 @@ int main(int argc, char* argv[])
 	
 	      
 	//MATCHING RECO TO PACKED CAND
-	for (Int_t m=nrofPacked.begin(); m=nrofPacked.end();m++) { //Looping over charged packed cand with tracking details, MET
-	    for (Int_t n=nrofmuonRec.begin(); n=nrofmuonRec.end();n++){ //Reco muon with loose ID cut and |eta| < 2.4, MET, single or double trigger pass
+	vector<Int_t>::iterator m; vector<Int_t>::iterator n; 
+	for (m=nrofPacked.begin(); m!=nrofPacked.end();m++) { //Looping over charged packed cand with tracking details, MET
+	    for (n=nrofmuonRec.begin(); n!=nrofmuonRec.end();n++){ //Reco muon with loose ID cut and |eta| < 2.4, MET, single or double trigger pass
 		
-		const TLorentzVector packedC {event.packedCandsPx[m],event.packedCandsPy[m],event.packedCandsPz[m],event.packedCandsE[m]};
+		const TLorentzVector packedC {event.packedCandsPx[*m],event.packedCandsPy[*m],event.packedCandsPz[*m],event.packedCandsE[*m]};
 		h_massAssump->Fill(packedC.M());
 		std::cout<<"Mass assumption "<<packedC.M()<<std::endl;
 		    
 		TLorentzVector nr1;
 	        TLorentzVector nr2;
 			
-	        nr1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[m],event.packedCandsPseudoTrkEta[m],event.packedCandsPseudoTrkPhi[m],packedC.M());
-	        nr2.SetPtEtaPhiE(event.muonPF2PATPt[n],event.muonPF2PATEta[n],event.muonPF2PATPhi[n],event.muonPF2PATE[n]);
+	        nr1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[*m],event.packedCandsPseudoTrkEta[*m],event.packedCandsPseudoTrkPhi[*m],packedC.M());
+	        nr2.SetPtEtaPhiE(event.muonPF2PATPt[*n],event.muonPF2PATEta[*n],event.muonPF2PATPhi[*n],event.muonPF2PATE[*n]);
 			
 	        h_matchDeltaR->Fill(nr1.DeltaR(nr2));
 		    
