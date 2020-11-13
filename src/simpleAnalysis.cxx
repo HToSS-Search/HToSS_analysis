@@ -764,14 +764,14 @@ int main(int argc, char* argv[])
 		  
 		  std::cout<<"deltaR smaller than 0.2"<<std::endl;
 		 
-		  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[m]};
-		  const Int_t packedCandsCharge {event.packedCandsCharge[m]};
-		  const Int_t muonPF2PATCharge[n];
+		  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[*m]};
+		  const Int_t packedCandsCharge {event.packedCandsCharge[*m]};
+		  const Int_t muonPF2PATCharge[*n];
 			
 		  if(packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonPF2PATCharge){
 		  
 	            std::cout<<"it's a match!"<<std::endl;
-		    matchMuon.emplace_back(m);
+		    matchMuon.emplace_back(*m);
 		  
 		  }
 			
