@@ -448,12 +448,12 @@ class AnalysisEvent
 //    Float_t packedCandsDzError[NPACKEDCANDSMAX];
 //    Float_t packedCandsDxyError[NPACKEDCANDSMAX];
 //    Float_t packedCandsTimeError[NPACKEDCANDSMAX];
-//    Float_t packedCandsPseudoTrkPt[NPACKEDCANDSMAX];
+    Float_t packedCandsPseudoTrkPt[NPACKEDCANDSMAX];
     Float_t packedCandsPseudoTrkPx[NPACKEDCANDSMAX];
     Float_t packedCandsPseudoTrkPy[NPACKEDCANDSMAX];
     Float_t packedCandsPseudoTrkPz[NPACKEDCANDSMAX];
-//    Float_t packedCandsPseudoTrkEta[NPACKEDCANDSMAX];
-//    Float_t packedCandsPseudoTrkPhi[NPACKEDCANDSMAX];
+    Float_t packedCandsPseudoTrkEta[NPACKEDCANDSMAX];
+    Float_t packedCandsPseudoTrkPhi[NPACKEDCANDSMAX];
     Int_t packedCandsPseudoTrkCharge[NPACKEDCANDSMAX];
     Float_t packedCandsPseudoTrkVx[NPACKEDCANDSMAX];
     Float_t packedCandsPseudoTrkVy[NPACKEDCANDSMAX];
