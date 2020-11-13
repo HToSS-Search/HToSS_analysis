@@ -768,7 +768,7 @@ int main(int argc, char* argv[])
 		  const Int_t packedCandsCharge {event.packedCandsCharge[*m]};
 		  const Int_t muonRecCharge     {event.muonPF2PATCharge[*n]};
 			
-		  if(packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonPF2PATCharge){
+		  if(packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonRecCharge){
 		  
 	            std::cout<<"it's a match!"<<std::endl;
 		    matchMuon.emplace_back(*m);
