@@ -766,7 +766,7 @@ int main(int argc, char* argv[])
 		 
 		  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[*m]};
 		  const Int_t packedCandsCharge {event.packedCandsCharge[*m]};
-		  const Int_t muonPF2PATCharge[*n];
+		  const Int_t muonRecCharge     {event.muonPF2PATCharge[*n]};
 			
 		  if(packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonPF2PATCharge){
 		  
