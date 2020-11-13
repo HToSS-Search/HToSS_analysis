@@ -705,7 +705,7 @@ int main(int argc, char* argv[])
 	      h_packedCDxy->Fill(event.packedCandsDxy[k]);
 	      h_packedCDz->Fill(event.packedCandsDz[k]);
 	  
-	      if(event.muTrig() || event.mumuTrigg()){	  
+	      if(event.muTrig() || event.mumuTrig()){	  
 	      
 		if(event.packedCandsHasTrackDetails[k]){
 		
