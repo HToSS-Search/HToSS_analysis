@@ -37,9 +37,6 @@
 std::string pdgIdCode (const Int_t pdgId, const bool unicode = false); // declaring function called below main(); pdgIdCode translate stored numerical pdgId code into a string: unicode for output to string, or latex style for ROOT plotting
 bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
 
-//Float_t MatchdeltaR(const Float_t& eta1, const Float_t& phi1,const Float_t& eta2, const Float_t& phi2){
-//return std::sqrt(std::pow(eta1-eta2,2)+std::pow(phi1-phi2,2));
-//};
 
 namespace fs = boost::filesystem;
 
@@ -151,7 +148,9 @@ int main(int argc, char* argv[])
   TH1F* h_muonDiv              {new TH1F("h_muonDiv",  "Single #mu^{#pm} reconstruction p_{T} divide", 300, 0., 1000.)}; 
 	
   //Packed candidates 
-  TH1F* h_packedCPt    {new TH1F("h_packedCPt",  "Packed Candidate p_{T}", 1000, 0., 1000.)}; 
+  TH1F* h_packedCPt    {new TH1F("h_packedCPt",  "Packed Candidate p_{T}", 1000, 0., 1000.)};
+  TH1F* h_packedCEta   {new TH1F("h_packedCEta", "Packed Candidate #eta",  200, -7., 7.)}; 
+  TH1F* h_packedCPhi   {new TH1F("h_packedCPhi", "Packed Candidate #phi",  100, -3.5, 3.5)};
   TH1F* h_packedCDxy   {new TH1F("h_packedCDxy", "Packed Candidate Dxy", 500,  -200., 200.)};
   TH1F* h_packedCDz    {new TH1F("h_packedCDz",  "Packed Candidate Dz", 1500, -500., 500.)};
   TH1F* h_packedCVx    {new TH1F("h_packedCVx",  "Packed Candidate track vx", 500,  -150., 150.)};
@@ -159,8 +158,12 @@ int main(int argc, char* argv[])
   TH1F* h_packedCVz    {new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.)};
   TH2I* h_displacedXY  {new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150)};
   TH2I* h_displacedRZ  {new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250)};	
-  TH1F* h_matchDeltaR  {new TH1F("h_matchDeltaR", "#DeltaR reconstructed muon and track candidate",2500, -10., 10.)};
+  
+	
+  //Matching
   TH1F* h_massAssump   {new TH1F("h_massAssump",  "Mass assumption", 1000, 0., 1000.)};
+  TH1F* h_matchDeltaR  {new TH1F("h_matchDeltaR", "#DeltaR reconstructed muon and track candidate",2500, -10., 10.)};
+	
 	
   //Iso tracks
   TH1F* h_isoTracksPt  {new TH1F("h_isoTracksPt",  "Iso tracks p_{T}", 1000, 0., 1000.)}; 	
@@ -699,24 +702,22 @@ int main(int argc, char* argv[])
 	      const Int_t packedId {event.packedCandsPdgId[k]}; 
 	      //Id of 211 or -211: Charged pions
 		
-	      const TLorentzVector packedC {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]};
-	    
 	      h_packedCDxy->Fill(event.packedCandsDxy[k]);
 	      h_packedCDz->Fill(event.packedCandsDz[k]);
 	  
-	      const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]}; 
 	      if(event.packedCandsHasTrackDetails[k]){
 		
-	        if(packedCandsPseudoTrkCharge!=0){ //Tracks don't match muons, no neutral particles
-	            
-	          h_massAssump->Fill(packedC.M());
-			std::cout<<"Mass assumption "<<packedC.M()<<std::endl;
-		  	
+		const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]}; 
+	        if(packedCandsPseudoTrkCharge!=0){ //No neutral particles, only charged
+	           
 		  nrofPacked.emplace_back(k);
 			
-	          TVector3 packedCPt {event.packedCandsPseudoTrkPx[k],event.packedCandsPseudoTrkPy[k],event.packedCandsPseudoTrkPz[k]};
-	          h_packedCPt->Fill(packedCPt.Pt());
-	 
+	          //TVector3 packedCPt {event.packedCandsPseudoTrkPx[k],event.packedCandsPseudoTrkPy[k],event.packedCandsPseudoTrkPz[k]};
+	          //h_packedCPt->Fill(packedCPt.Pt());
+		  h_packedCPt->Fill(event.packedCandsPseudoTrkPt[k]);
+	 	  h_packedCEta->Fill(event.packedCandsPseudoTrkEta[k]);
+	          h_packedCPhi->Fill(event.packedCandsPseudoTrkPhi[k]);
+			
 	          h_packedCVx->Fill(event.packedCandsPseudoTrkVx[k]);
                   h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
                   h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
@@ -724,15 +725,7 @@ int main(int argc, char* argv[])
 		  //Displacement from interaction point
 		  h_displacedXY->Fill(event.packedCandsPseudoTrkVx[k],event.packedCandsPseudoTrkVy[k]);
 	          h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
-	          
-		  //Invariant mass for two highest p_T
-	          
-			/*TLorentzVector isoTrack1  {event.isoTracksPx[0],event.isoTracksPy[0],event.isoTracksPz[0],event.isoTracksE[0]};
-	          TLorentzVector isoTrack2  {event.isoTracksPx[1],event.isoTracksPy[1],event.isoTracksPz[1],event.isoTracksE[1]};
-
-	          h_isoTracksInvMass->Fill((isoTrack1+isoTrack2).M());*/ 
-			
-		  
+	         
 	        }
 	    
 	      }
@@ -740,15 +733,29 @@ int main(int argc, char* argv[])
           }
 	}     
 	//END Packed Candidates
-		
-        //Float_t deltar=MatchdeltaR(event.muonPF2PATEta[nrofmuonRec[0]],event.muonPF2PATPhi[nrofmuonRec[0]],event.packedCandsEta[nrofPacked[0]],event.packedCandsPhi[nrofPacked[0]])
-	//h_matchDeltaR->Fill(deltar);   
-	/*if(<0.2){
-		
-		
-	}*/
+	
+	
 	      
+	
 	      
+	//MATCHING RECO TO PACKED CAND
+	for (auto m=nrofPacked.begin(); m!=nrofPacked.end();m++) { //Looping over charged packed cand with tracking details, MET
+	    for (auto n=nrofmuonRec.begin(); n!=nrofmuonRec.end();n++){ //Reco muon with loose ID cut and |eta| < 2.4, MET, single or double trigger pass
+		
+		const TLorentzVector packedC {event.packedCandsPx[m],event.packedCandsPy[m],event.packedCandsPz[m],event.packedCandsE[m]};
+		h_massAssump->Fill(packedC.M());
+		std::cout<<"Mass assumption "<<packedC.M()<<std::endl;
+		    
+		TLorentzVector nr1;
+	        TLorentzVector nr2;
+			
+	        nr1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[m],event.packedCandsPseudoTrkEta[m],event.packedCandsPseudoTrkPhi[m],packedC.M());
+	        nr2.SetPtEtaPhiE(event.muonRecPt[n],event.muonRecEta[n],event.muonRecPhi[n],event.muonRecE[n]);
+			
+	        h_matchDeltaR->Fill(nr1.DeltaR(nr2));
+		    
+	    }   
+	}
 	      
 	//Isolated tracks  
 	      
@@ -912,6 +919,8 @@ int main(int argc, char* argv[])
   //Packed Candidates
   h_packedCPt->GetXaxis()->SetTitle("GeV");
   h_packedCPt->Write();
+  h_packedCEta->Write();
+  h_packedCPhi->Write();
   h_packedCDxy->Write();
   h_packedCDz->Write();
   h_packedCVx->Write();
@@ -923,9 +932,13 @@ int main(int argc, char* argv[])
   h_displacedRZ->GetXaxis()->SetTitle("Vertex position z"); 
   h_displacedRZ->GetYaxis()->SetTitle("R");
   h_displacedRZ->Write();
-  h_matchDeltaR->Write();
+  
+	
+  //Matching
   h_massAssump->GetXaxis()->SetTitle("GeV");
   h_massAssump->Write();
+  h_matchDeltaR->Write();
+	
 	
   //Iso tracks
   h_isoTracksPt->GetXaxis()->SetTitle("GeV");
