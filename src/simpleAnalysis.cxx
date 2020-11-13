@@ -705,29 +705,32 @@ int main(int argc, char* argv[])
 	      h_packedCDxy->Fill(event.packedCandsDxy[k]);
 	      h_packedCDz->Fill(event.packedCandsDz[k]);
 	  
-	      if(event.packedCandsHasTrackDetails[k]){
+	      if(event.muTrig() || event.mumuTrigg()){	  
+	      
+		if(event.packedCandsHasTrackDetails[k]){
 		
-		const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]}; 
-	        if(packedCandsPseudoTrkCharge!=0){ //No neutral particles, only charged
+		  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]};
+		  const Int_t packedCandsCharge {event.packedCandsCharge[k]};
+	          if(packedCandsCharge!=0 && packedCandsPseudoTrkCharge!=0){ //No neutral particles as they don't leave tracks, only charged
 	           
-		  nrofPacked.emplace_back(k);
+		    nrofPacked.emplace_back(k);
 			
-	          //TVector3 packedCPt {event.packedCandsPseudoTrkPx[k],event.packedCandsPseudoTrkPy[k],event.packedCandsPseudoTrkPz[k]};
-	          //h_packedCPt->Fill(packedCPt.Pt());
-		  h_packedCPt->Fill(event.packedCandsPseudoTrkPt[k]);
-	 	  h_packedCEta->Fill(event.packedCandsPseudoTrkEta[k]);
-	          h_packedCPhi->Fill(event.packedCandsPseudoTrkPhi[k]);
+	            //TVector3 packedCPt {event.packedCandsPseudoTrkPx[k],event.packedCandsPseudoTrkPy[k],event.packedCandsPseudoTrkPz[k]};
+	            //h_packedCPt->Fill(packedCPt.Pt());
+		    h_packedCPt->Fill(event.packedCandsPseudoTrkPt[k]);
+	 	    h_packedCEta->Fill(event.packedCandsPseudoTrkEta[k]);
+	            h_packedCPhi->Fill(event.packedCandsPseudoTrkPhi[k]);
 			
-	          h_packedCVx->Fill(event.packedCandsPseudoTrkVx[k]);
-                  h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
-                  h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
+	            h_packedCVx->Fill(event.packedCandsPseudoTrkVx[k]);
+                    h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
+                    h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
 	          
-		  //Displacement from interaction point
-		  h_displacedXY->Fill(event.packedCandsPseudoTrkVx[k],event.packedCandsPseudoTrkVy[k]);
-	          h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
+		    //Displacement from interaction point
+		    h_displacedXY->Fill(event.packedCandsPseudoTrkVx[k],event.packedCandsPseudoTrkVy[k]);
+	            h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
 	         
+	          }
 	        }
-	    
 	      }
 	  
           }
@@ -738,25 +741,46 @@ int main(int argc, char* argv[])
 	      
 	
 	      
-	//MATCHING RECO TO PACKED CAND
+	//MATCHING RECO MUON TO PACKED CAND
+	      
+	std::vector<Int_t> matchMuon;//Store the matched muons
 	std::vector<Int_t>::iterator m; std::vector<Int_t>::iterator n; 
-	for (m=nrofPacked.begin(); m!=nrofPacked.end();m++) { //Looping over charged packed cand with tracking details, MET
+	for (m=nrofPacked.begin(); m!=nrofPacked.end();m++) { //Looping over charged packed cand with tracking details, MET, single or double trigger pass
 	    for (n=nrofmuonRec.begin(); n!=nrofmuonRec.end();n++){ //Reco muon with loose ID cut and |eta| < 2.4, MET, single or double trigger pass
 		
 		const TLorentzVector packedC {event.packedCandsPx[*m],event.packedCandsPy[*m],event.packedCandsPz[*m],event.packedCandsE[*m]};
 		h_massAssump->Fill(packedC.M());
-		std::cout<<"Mass assumption "<<packedC.M()<<std::endl;
+		//std::cout<<"Mass assumption "<<packedC.M()<<std::endl;
 		    
 		TLorentzVector nr1;
 	        TLorentzVector nr2;
 			
 	        nr1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[*m],event.packedCandsPseudoTrkEta[*m],event.packedCandsPseudoTrkPhi[*m],packedC.M());
 	        nr2.SetPtEtaPhiE(event.muonPF2PATPt[*n],event.muonPF2PATEta[*n],event.muonPF2PATPhi[*n],event.muonPF2PATE[*n]);
-			
-	        h_matchDeltaR->Fill(nr1.DeltaR(nr2));
+		
+		h_matchDeltaR->Fill(nr1.DeltaR(nr2));
 		    
+		if(nr1.DeltaR(nr2)<0.2){
+		  
+		  std::cout<<"deltaR smaller than 0.2"<<std::endl;
+		 
+		  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[m]};
+		  const Int_t packedCandsCharge {event.packedCandsCharge[m]};
+		  const Int_t muonPF2PATCharge[n];
+			
+		  if(packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonPF2PATCharge){
+		  
+	            std::cout<<"it's a match!"<<std::endl;
+		    matchMuon.emplace_back(m);
+		  
+		  }
+			
+		}    
 	    }   
 	}
+	   
+	      
+	      
 	      
 	//Isolated tracks  
 	      
