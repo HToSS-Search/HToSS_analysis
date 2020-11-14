@@ -144,8 +144,10 @@ int main(int argc, char* argv[])
   TH1F* h_muonRecDeltaR        {new TH1F("h_muonRecDeltaR", "Muon reconstruction #DeltaR",2500, -10., 10.)}; 
   TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
   TH1F* h_muonRecInvMass       {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",1000, 0, 500)};
-  TH1F* h_muonCut              {new TH1F("h_muonCut",  "Single #mu^{#pm} reconstruction p_{T} cut", 1000, 0., 1000.)}; 	
-  TH1F* h_muonDiv              {new TH1F("h_muonDiv",  "Single #mu^{#pm} reconstruction p_{T} divide", 300, 0., 1000.)}; 
+  TH1F* h_muonCutSingle        {new TH1F("h_muonCutSingle",  "Single #mu^{#pm} reconstruction p_{T} selection", 1000, 0., 1000.)}; 	
+  TH1F* h_muonCutDouble        {new TH1F("h_muonCutDouble",  "Double #mu^{#pm} reconstruction p_{T} selection", 1000, 0., 1000.)}; 	
+  TH1F* h_muonDivSingle        {new TH1F("h_muonDivSingle",  "Single #mu^{#pm} reconstruction p_{T} divide", 300, 0., 1000.)}; 
+  TH1F* h_muonDivDouble        {new TH1F("h_muonDivDouble",  "Double #mu^{#pm} reconstruction p_{T} divide", 300, 0., 1000.)}; 
 	
   //Packed candidates 
   TH1F* h_packedCPt    {new TH1F("h_packedCPt",  "Packed Candidate p_{T}", 1000, 0., 1000.)};
@@ -580,19 +582,21 @@ int main(int argc, char* argv[])
 	  
 	   for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
 	     
-	       if(event.muTrig() || event.mumuTrig()){ //Single of double muon trigger passed
+	       //Single of double muon trigger passed
 		       
-	         const Float_t muonRecPt   { event.muonPF2PATPt[k] };
-	         const Float_t muonRecEta  { event.muonPF2PATEta[k] };
-	         const Float_t muonRecPhi  { event.muonPF2PATPhi[k] };
-	         const Float_t muonRecE    { event.muonPF2PATE[k] };
-	         //const Int_t muonRecCharge {event.muonPF2PATCharge[k]};
+	       const Float_t muonRecPt   { event.muonPF2PATPt[k] };
+	       const Float_t muonRecEta  { event.muonPF2PATEta[k] };
+	       const Float_t muonRecPhi  { event.muonPF2PATPhi[k] };
+	       const Float_t muonRecE    { event.muonPF2PATE[k] };
+	       //const Int_t muonRecCharge {event.muonPF2PATCharge[k]};
 		   
-	         h_muonRecPt->Fill(muonRecPt);
-	         h_muonRecEta->Fill(muonRecEta);
-	         h_muonRecPhi->Fill(muonRecPhi);
-	         h_muonRecE->Fill(muonRecE);
-		      
+	       h_muonRecPt->Fill(muonRecPt);
+	       h_muonRecEta->Fill(muonRecEta);
+	       h_muonRecPhi->Fill(muonRecPhi);
+	       h_muonRecE->Fill(muonRecE);
+		   
+	       if(event.muTrig() || event.mumuTrig()){   
+		       
 	  	 if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){ //Electric charge control
 		
             	   TLorentzVector muonRec1;
@@ -611,11 +615,27 @@ int main(int argc, char* argv[])
 	   	   h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
 		       
 		 } 
+	       } 
+	
+	       if(event.muTrig()){
 		       
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 			 
 	           nrofmuonRec.emplace_back(k); //Take its index
-		   h_muonCut->Fill(muonRecPt);
+		   h_muonCutSingle->Fill(event.muonPF2PATPt[0]);
+	           h_muonCutSingle->Fill(event.muonPF2PATPt[1]);
+			 
+		 }
+		       
+	       }
+		
+	       if(event.mumuTrig()){
+		       
+		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
+			 
+	           nrofmuonRec.emplace_back(k); //Take its index
+		   h_muonCutDouble->Fill(event.muonPF2PATPt[0]);
+	           h_muonCutDouble->Fill(event.muonPF2PATPt[1]);
 			 
 		 }
 		       
@@ -681,9 +701,13 @@ int main(int argc, char* argv[])
 		
 	}//END of MET filter 
 	
-	h_muonDiv=(TH1F*)h_muonCut->Clone();
-	h_muonDiv->Divide(h_muonRecPt);
-	h_muonDiv->SetTitle("After/before cut");
+	h_muonDivSingle=(TH1F*)h_muonCutSingle->Clone();
+	h_muonDivSingle->Divide(h_muonRecPt);
+	h_muonDivSingle->SetTitle("After/before cut");
+	      
+	h_muonDivDouble=(TH1F*)h_muonCutDouble->Clone();
+	h_muonDivDouble->Divide(h_muonRecPt);
+	h_muonDivDouble->SetTitle("After/before cut");
 
 	//END Muon Reconstruction
 	      
@@ -751,7 +775,7 @@ int main(int argc, char* argv[])
 		
 		const TLorentzVector packedC {event.packedCandsPseudoTrkPx[*m],event.packedCandsPseudoTrkPy[*m],event.packedCandsPseudoTrkPz[*m],event.packedCandsE[*m]};
 		h_massAssump->Fill(packedC.M());
-		//std::cout<<"Mass assumption "<<packedC.M()<<std::endl;
+		std::cout<<"Mass assumption "<<packedC.M()<<std::endl;
 		    
 		TLorentzVector nr1;
 	        TLorentzVector nr2;
@@ -939,10 +963,14 @@ int main(int argc, char* argv[])
   h_muonRecDeltaPhi->Write();
   h_muonRecInvMass->GetXaxis()->SetTitle("GeV");
   h_muonRecInvMass->Write();
-  h_muonCut->GetXaxis()->SetTitle("GeV");
-  h_muonCut->Write();
-  h_muonDiv->GetXaxis()->SetTitle("GeV");
-  h_muonDiv->Write();
+  h_muonCutSingle->GetXaxis()->SetTitle("GeV");
+  h_muonCutSingle->Write();
+  h_muonDivSingle->GetXaxis()->SetTitle("GeV");
+  h_muonDivSingle->Write();
+  h_muonCutDouble->GetXaxis()->SetTitle("GeV");
+  h_muonCutDouble->Write();
+  h_muonDivDouble->GetXaxis()->SetTitle("GeV");
+  h_muonDivDouble->Write();
 	
   //Packed Candidates
   h_packedCPt->GetXaxis()->SetTitle("GeV");
