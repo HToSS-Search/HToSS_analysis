@@ -163,7 +163,7 @@ int main(int argc, char* argv[])
   
 	
   //Matching
-  TH1F* h_massAssump   {new TH1F("h_massAssump",  "Mass assumption", 1000, 0., 1000.)};
+  TH1F* h_massAssump   {new TH1F("h_massAssump",  "Mass assumption", 5000, 0., 1.)};
   TH1F* h_matchDeltaR  {new TH1F("h_matchDeltaR", "#DeltaR reconstructed muon and track candidate",2500, -10., 10.)};
 	
 	
@@ -738,9 +738,7 @@ int main(int argc, char* argv[])
 	          if(packedCandsCharge!=0 && packedCandsPseudoTrkCharge!=0){ //No neutral particles as they don't leave tracks, only charged
 	           
 		    nrofPacked.emplace_back(k);
-			
-	            //TVector3 packedCPt {event.packedCandsPseudoTrkPx[k],event.packedCandsPseudoTrkPy[k],event.packedCandsPseudoTrkPz[k]};
-	            //h_packedCPt->Fill(packedCPt.Pt());
+
 		    h_packedCPt->Fill(event.packedCandsPseudoTrkPt[k]);
 	 	    h_packedCEta->Fill(event.packedCandsPseudoTrkEta[k]);
 	            h_packedCPhi->Fill(event.packedCandsPseudoTrkPhi[k]);
@@ -797,12 +795,18 @@ int main(int argc, char* argv[])
 			
 		    if(packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonRecCharge){
 		  
-	              std::cout<<"it's a match!"<<std::endl;
-		      matchMuon.emplace_back(*m);
-			    
+	              if(packedC.M()>0.13 && packedC.M()<0.14){//Only charged pions
+			      
+			std::cout<<"Mass assumption voor match "<<packedC.M()<<std::endl;    
+	                std::cout<<"it's a match!"<<std::endl;
+		        matchMuon.emplace_back(*m);
+			      
+		      }    
 		    }	
 		  }  
-		}    
+		}   
+		    
+		    
 	    }   
 	}
 	   
