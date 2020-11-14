@@ -65,6 +65,7 @@ int main(int argc, char* argv[])
   TH1F* h_genParEta     {new TH1F("h_genParEta", "genPar #eta",  200, -7., 7.)}; 
   TH1F* h_genParPhi     {new TH1F("h_genParPhi", "genPar #phi",  100, -3.5, 3.5)};
   TH1F* h_genParE       {new TH1F("h_genParE",   "genPar energy",     1000, 0., 1000.)};
+  TH1I* h_VertexPosR    {new TH2I("h_VertexPosR", "Vertex position R",100,0,250)};
 	
   //Higgs boson
   TH1F* h_genParHiggsPt      {new TH1F("h_genParHiggsPt",  "genPar h_0 p_{T}", 1000, 0., 1000.)};
@@ -350,7 +351,8 @@ int main(int argc, char* argv[])
 	        h_genParScalarMuonPhi->Fill(genParPhi);
 	        h_genParScalarMuonE->Fill(genParE);
 	        h_VertexPosXY->Fill(genParVx,genParVy);
-	        h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));   
+	        h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
+		h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
 		     
 		if (event.metFilters()){ 
 		      
@@ -375,6 +377,7 @@ int main(int argc, char* argv[])
 	      h_genParScalarCKaonE->Fill(genParE);
 	      h_VertexPosXY->Fill(genParVx,genParVy);
 	      h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
+	      h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
 	    }
 	    //K short from scalar decay
 	    if (pdgId==310){
@@ -385,6 +388,7 @@ int main(int argc, char* argv[])
 	      h_genParScalarKShortE->Fill(genParE);
 	      h_VertexPosXY->Fill(genParVx,genParVy);
 	      h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
+              h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
 	    }
 	    //Charged pion from scalar decay
 	    if (pdgId==211){
@@ -395,6 +399,7 @@ int main(int argc, char* argv[])
 	      h_genParScalarCPionE->Fill(genParE);
 	      h_VertexPosXY->Fill(genParVx,genParVy);
 	      h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
+	      h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
 	    }
 	    //Neutral pion from scalar decay
 	    if (pdgId==111){
@@ -405,6 +410,7 @@ int main(int argc, char* argv[])
 	      h_genParScalarNPionE->Fill(genParE);
 	      h_VertexPosXY->Fill(genParVx,genParVy);
 	      h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
+	      h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
 	    }
 	  }
 
@@ -869,6 +875,7 @@ int main(int argc, char* argv[])
   h_genParPhi->Write();
   h_genParE->Write();
   h_pdgId->Write();
+  h_VertexPosR->Write();
  
   h_genParHiggsPt->GetXaxis()->SetTitle("GeV");
   h_genParHiggsPt->Write();
