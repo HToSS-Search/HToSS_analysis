@@ -579,20 +579,20 @@ int main(int argc, char* argv[])
 	if(event.metFilters()){
 	  
 	   for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
-		    
-	       const Float_t muonRecPt   { event.muonPF2PATPt[k] };
-	       const Float_t muonRecEta  { event.muonPF2PATEta[k] };
-	       const Float_t muonRecPhi  { event.muonPF2PATPhi[k] };
-	       const Float_t muonRecE    { event.muonPF2PATE[k] };
-	       //const Int_t muonRecCharge {event.muonPF2PATCharge[k]};
-		   
-	       h_muonRecPt->Fill(muonRecPt);//Question: place these inside trigger loop?
-	       h_muonRecEta->Fill(muonRecEta);
-	       h_muonRecPhi->Fill(muonRecPhi);
-	       h_muonRecE->Fill(muonRecE);
-		      
+	     
 	       if(event.muTrig() || event.mumuTrig()){ //Single of double muon trigger passed
-	
+		       
+	         const Float_t muonRecPt   { event.muonPF2PATPt[k] };
+	         const Float_t muonRecEta  { event.muonPF2PATEta[k] };
+	         const Float_t muonRecPhi  { event.muonPF2PATPhi[k] };
+	         const Float_t muonRecE    { event.muonPF2PATE[k] };
+	         //const Int_t muonRecCharge {event.muonPF2PATCharge[k]};
+		   
+	         h_muonRecPt->Fill(muonRecPt);
+	         h_muonRecEta->Fill(muonRecEta);
+	         h_muonRecPhi->Fill(muonRecPhi);
+	         h_muonRecE->Fill(muonRecE);
+		      
 	  	 if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){ //Electric charge control
 		
             	   TLorentzVector muonRec1;
@@ -699,13 +699,13 @@ int main(int argc, char* argv[])
 		
           for (Int_t k{0};k<event.numPackedCands;k++) {
 	 
-	      const Int_t packedId {event.packedCandsPdgId[k]}; 
-	      //Id of 211 or -211: Charged pions
-		
-	      h_packedCDxy->Fill(event.packedCandsDxy[k]);
-	      h_packedCDz->Fill(event.packedCandsDz[k]);
-	  
 	      if(event.muTrig() || event.mumuTrig()){	  
+	        
+		const Int_t packedId {event.packedCandsPdgId[k]}; 
+	        //Id of 211 or -211: Charged pions
+		
+	        h_packedCDxy->Fill(event.packedCandsDxy[k]);
+	        h_packedCDz->Fill(event.packedCandsDz[k]);  
 	      
 		if(event.packedCandsHasTrackDetails[k]){
 		
@@ -745,10 +745,11 @@ int main(int argc, char* argv[])
 	      
 	std::vector<Int_t> matchMuon;//Store the matched muons
 	std::vector<Int_t>::iterator m; std::vector<Int_t>::iterator n; 
+	      
 	for (m=nrofPacked.begin(); m!=nrofPacked.end();m++) { //Looping over charged packed cand with tracking details, MET, single or double trigger pass
 	    for (n=nrofmuonRec.begin(); n!=nrofmuonRec.end();n++){ //Reco muon with loose ID cut and |eta| < 2.4, MET, single or double trigger pass
 		
-		const TLorentzVector packedC {event.packedCandsPx[*m],event.packedCandsPy[*m],event.packedCandsPz[*m],event.packedCandsE[*m]};
+		const TLorentzVector packedC {event.packedCandsPseudoTrkPx[*m],event.packedCandsPseudoTrkPy[*m],event.packedCandsPseudoTrkPz[*m],event.packedCandsE[*m]};
 		h_massAssump->Fill(packedC.M());
 		//std::cout<<"Mass assumption "<<packedC.M()<<std::endl;
 		    
@@ -770,12 +771,15 @@ int main(int argc, char* argv[])
 			
 		  if(packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonRecCharge){
 		  
-	            std::cout<<"it's a match!"<<std::endl;
-		    matchMuon.emplace_back(*m);
-		  
-		  }
+	            if(event.numMuonPF2PAT && event.genMuonPF2PATMotherId==9000006){
 			
-		}    
+	              std::cout<<"it's a match!"<<std::endl;
+		      matchMuon.emplace_back(*m);
+			    
+		    }
+		  }	
+		}  
+		    
 	    }   
 	}
 	   
