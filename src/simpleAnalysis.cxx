@@ -760,26 +760,25 @@ int main(int argc, char* argv[])
 	        nr2.SetPtEtaPhiE(event.muonPF2PATPt[*n],event.muonPF2PATEta[*n],event.muonPF2PATPhi[*n],event.muonPF2PATE[*n]);
 		
 		h_matchDeltaR->Fill(nr1.DeltaR(nr2));
-		    
-		if(nr1.DeltaR(nr2)<0.2){
-		  
-		  std::cout<<"deltaR smaller than 0.2"<<std::endl;
 		 
-		  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[*m]};
-		  const Int_t packedCandsCharge {event.packedCandsCharge[*m]};
-		  const Int_t muonRecCharge     {event.muonPF2PATCharge[*n]};
-			
-		  if(packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonRecCharge){
+		if(event.numMuonPF2PAT && event.genMuonPF2PATMotherId[*n]==9000006){
+		 
+	          if(nr1.DeltaR(nr2)<0.2){
 		  
-	            if(event.numMuonPF2PAT && event.genMuonPF2PATMotherId==9000006){
+		    std::cout<<"deltaR smaller than 0.2"<<std::endl;
+		 
+		    const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[*m]};
+		    const Int_t packedCandsCharge {event.packedCandsCharge[*m]};
+		    const Int_t muonRecCharge     {event.muonPF2PATCharge[*n]};
 			
+		    if(packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonRecCharge){
+		  
 	              std::cout<<"it's a match!"<<std::endl;
 		      matchMuon.emplace_back(*m);
 			    
-		    }
-		  }	
-		}  
-		    
+		    }	
+		  }  
+		}    
 	    }   
 	}
 	   
