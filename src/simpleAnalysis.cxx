@@ -590,7 +590,8 @@ int main(int argc, char* argv[])
 	       const Float_t muonRecE    { event.muonPF2PATE[k] };
 	       //const Int_t muonRecCharge {event.muonPF2PATCharge[k]};
 		   
-	       h_muonRecPt->Fill(muonRecPt);
+	       h_muonRecPt->Fill(event.muonPF2PATPt[0]);
+	       h_muonRecPt->Fill(event.muonPF2PATPt[1]);
 	       h_muonRecEta->Fill(muonRecEta);
 	       h_muonRecPhi->Fill(muonRecPhi);
 	       h_muonRecE->Fill(muonRecE);
@@ -622,8 +623,9 @@ int main(int argc, char* argv[])
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 			 
 	           nrofmuonRec.emplace_back(k); //Take its index
-		   h_muonCutSingle->Fill(muonRecPt);
-	           //h_muonCutSingle->Fill(event.muonPF2PATPt[1]);
+		   //h_muonCutSingle->Fill(muonRecPt);
+	           h_muonCutSingle->Fill(event.muonPF2PATPt[0]);
+	           h_muonCutSingle->Fill(event.muonPF2PATPt[1]);
 			 
 		 }
 		       
@@ -634,9 +636,9 @@ int main(int argc, char* argv[])
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 			 
 	           nrofmuonRec.emplace_back(k); //Take its index
-		   h_muonCutDouble->Fill(muonRecPt);
-	           //h_muonCutDouble->Fill(event.muonPF2PATPt[1]);
-			 
+		   //h_muonCutDouble->Fill(muonRecPt);
+	           h_muonCutDouble->Fill(event.muonPF2PATPt[0]);
+		   h_muonCutDouble->Fill(event.muonPF2PATPt[1]); 
 		 }
 		       
 	       }
