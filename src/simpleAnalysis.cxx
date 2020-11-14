@@ -623,7 +623,7 @@ int main(int argc, char* argv[])
 			 
 	           nrofmuonRec.emplace_back(k); //Take its index
 		   h_muonCutSingle->Fill(event.muonPF2PATPt[0]);
-	           h_muonCutSingle->Fill(event.muonPF2PATPt[1]);
+	           //h_muonCutSingle->Fill(event.muonPF2PATPt[1]);
 			 
 		 }
 		       
@@ -635,7 +635,7 @@ int main(int argc, char* argv[])
 			 
 	           nrofmuonRec.emplace_back(k); //Take its index
 		   h_muonCutDouble->Fill(event.muonPF2PATPt[0]);
-	           h_muonCutDouble->Fill(event.muonPF2PATPt[1]);
+	           //h_muonCutDouble->Fill(event.muonPF2PATPt[1]);
 			 
 		 }
 		       
