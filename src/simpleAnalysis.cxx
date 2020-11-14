@@ -622,7 +622,7 @@ int main(int argc, char* argv[])
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 			 
 	           nrofmuonRec.emplace_back(k); //Take its index
-		   h_muonCutSingle->Fill(event.muonPF2PATPt[0]);
+		   h_muonCutSingle->Fill(muonRecPt);
 	           //h_muonCutSingle->Fill(event.muonPF2PATPt[1]);
 			 
 		 }
@@ -634,7 +634,7 @@ int main(int argc, char* argv[])
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 			 
 	           nrofmuonRec.emplace_back(k); //Take its index
-		   h_muonCutDouble->Fill(event.muonPF2PATPt[0]);
+		   h_muonCutDouble->Fill(muonRecPt);
 	           //h_muonCutDouble->Fill(event.muonPF2PATPt[1]);
 			 
 		 }
