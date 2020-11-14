@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
   TH1F* h_genParEta     {new TH1F("h_genParEta", "genPar #eta",  200, -7., 7.)}; 
   TH1F* h_genParPhi     {new TH1F("h_genParPhi", "genPar #phi",  100, -3.5, 3.5)};
   TH1F* h_genParE       {new TH1F("h_genParE",   "genPar energy",     1000, 0., 1000.)};
-  TH1I* h_VertexPosR    {new TH2I("h_VertexPosR", "Vertex position R",100,0,250)};
+  TH1F* h_VertexPosR    {new TH2I("h_VertexPosR", "Vertex position R",100,0,250)};
 	
   //Higgs boson
   TH1F* h_genParHiggsPt      {new TH1F("h_genParHiggsPt",  "genPar h_0 p_{T}", 1000, 0., 1000.)};
