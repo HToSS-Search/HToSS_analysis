@@ -150,9 +150,6 @@ int main(int argc, char* argv[])
   TH1F* h_muonDivDouble        {new TH1F("h_muonDivDouble",  "Double #mu^{#pm} reconstruction p_{T} divide", 300, 0., 1000.)}; 
 	
   //Packed candidates 
-  TH1F* h_packedCPt    {new TH1F("h_packedCPt",  "Packed Candidate p_{T}", 1000, 0., 1000.)};
-  TH1F* h_packedCEta   {new TH1F("h_packedCEta", "Packed Candidate #eta",  200, -7., 7.)}; 
-  TH1F* h_packedCPhi   {new TH1F("h_packedCPhi", "Packed Candidate #phi",  100, -3.5, 3.5)};
   TH1F* h_packedCDxy   {new TH1F("h_packedCDxy", "Packed Candidate Dxy", 500,  -200., 200.)};
   TH1F* h_packedCDz    {new TH1F("h_packedCDz",  "Packed Candidate Dz", 1500, -500., 500.)};
   TH1F* h_packedCVx    {new TH1F("h_packedCVx",  "Packed Candidate track vx", 500,  -150., 150.)};
@@ -740,11 +737,7 @@ int main(int argc, char* argv[])
 	          if(packedCandsCharge!=0 && packedCandsPseudoTrkCharge!=0){ //No neutral particles as they don't leave tracks, only charged
 	           
 		    nrofPacked.emplace_back(k);
-
-		    h_packedCPt->Fill(event.packedCandsPseudoTrkPt[k]);
-	 	    h_packedCEta->Fill(event.packedCandsPseudoTrkEta[k]);
-	            h_packedCPhi->Fill(event.packedCandsPseudoTrkPhi[k]);
-			
+			  
 	            h_packedCVx->Fill(event.packedCandsPseudoTrkVx[k]);
                     h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
                     h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
@@ -979,10 +972,6 @@ int main(int argc, char* argv[])
   h_muonDivDouble->Write();
 	
   //Packed Candidates
-  h_packedCPt->GetXaxis()->SetTitle("GeV");
-  h_packedCPt->Write();
-  h_packedCEta->Write();
-  h_packedCPhi->Write();
   h_packedCDxy->Write();
   h_packedCDz->Write();
   h_packedCVx->Write();
