@@ -580,6 +580,8 @@ int main(int argc, char* argv[])
 	      
 	/// BEGIN Muon Reconstruction
 	std::vector<Int_t> nrofmuonRec;
+	std::vector<Int_t> ptSingle; std::vector<Int_t> ptDouble;
+	std::vector<Int_t> passedMuonsSingle; std::vector<Int_t> passedMuonsDouble;
 
 	if(event.metFilters()){
 	  
@@ -620,15 +622,27 @@ int main(int argc, char* argv[])
 	   	   h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
 		       
 		 } 
+		       
+		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
+			 nrofmuonRec.emplace_back(k); //Take its index
+		   }
+		 }
+		       
 	       } 
 	
 	       if(event.muTrig()){
-		       
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
+		
+	 	   if(event.muonPF2PATPt[k]>30){//p_T cut
+	             ptSingle.emplace_back(k);
+		   }	
 			 
-	           h_muonCutSingle->Fill(event.muonPF2PATPt[0]); //Select two highest momenta
-	           h_muonCutSingle->Fill(event.muonPF2PATPt[1]);
-			 
+	           if(ptSingle.size()!=0){//At least one must obey
+		     h_muonCutSingle->Fill(event.muonPF2PATPt[0]); //Select two highest momenta for the histogram
+	             h_muonCutSingle->Fill(event.muonPF2PATPt[1]);
+		     passedMuonsSingle.emplace_back(k);
+		   }
+		   
 		 }
 		       
 	       }
@@ -636,32 +650,27 @@ int main(int argc, char* argv[])
 	       if(event.mumuTrig()){
 		       
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
-			 
-	           h_muonCutDouble->Fill(event.muonPF2PATPt[0]);
-		   h_muonCutDouble->Fill(event.muonPF2PATPt[1]); 
-			 
+		   if(event.muonPF2PATPt[0]>20 && event.muonPF2PATPt[1]>12){ //p_T cut
+		     h_muonCutDouble->Fill(event.muonPF2PATPt[0]);
+		     h_muonCutDouble->Fill(event.muonPF2PATPt[1]);
+		     passedMuonsDouble.emplace_back(k);
+		   }	 	 
 		 }
 		       
 	       }
 		
-	       if(event.muTrig() || event.mumuTrig()){ //For storing of indices
-		       
-		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
-		    nrofmuonRec.emplace_back(k); //Take its index
-		 }
-	       }
 		   
 	   }//end of for-loop k
 
-	
-	   /*for(Int_t m{0};m<passedMuons.size();m++){
+	   /*std::vector<Int_t>::iterator n;
+	   for(n=passedMuonsSingle.begin(); n!=passedMuonsSingle.end();n++){
 	  
-	      if(event.genMuonPF2PATMotherId[passedMuons[m]]==scalarParticleId){
+	      if(event.numMuonPF2PAT && event.genMuonPF2PATMotherId[*n]==9000006){
 		      
 		      
 	      }
 	      
-	      if(event.genMuonPF2PATPromptFinalState[passedMuons[m]]==1){
+	      if(event.genMuonPF2PATPromptFinalState[*n]==1){
 		      
 	      }
 	      	   
@@ -669,45 +678,6 @@ int main(int argc, char* argv[])
 	   }*/
 		
 		
-	/*std::cout << "muon single trigger size "<< muonSingleTrigger.size()<<std::endl; 
-	   //Single muon trigger is passed
-	   if(muonSingleTrigger.size()==2){
-		  std::cout << "passed size 2 single muon "<< std::endl; 
-	     for(Int_t j{0}; j<muonSingleTrigger.size(); j++){
-                std::cout<<"pt 1 "<<event.muonPF2PATPt[muonSingleTrigger[0]]<<"pt 2 "<<event.muonPF2PATPt[muonSingleTrigger[1]]<<std::endl;
-		if(event.muonPF2PATPt[muonSingleTrigger[j]]>30){  //Cut above 27GeV
-	        h_muonCut->Fill(event.muonPF2PATPt[muonSingleTrigger[j]]); 	
-	        } 
-		     
-	     } 
-		   
-	   } 
-	std::cout << "muon double trigger size "<< muonDoubleTrigger.size()<<std::endl; 
-	   //Double muon trigger is passed
-	   if(muonDoubleTrigger.size()==2){
-		    std::cout << "passed size 2 double muon "<< std::endl; 
-	     const int Nr1 {muonDoubleTrigger[0]}; 
-	     const int Nr2 {muonDoubleTrigger[1]};
-	std::cout<<"pt 1 "<<event.muonPF2PATPt[Nr1]<<"pt 2 "<<event.muonPF2PATPt[Nr2]<<std::endl;
-             if(event.muonPF2PATPt[Nr1]>event.muonPF2PATPt[Nr2]){
-		     
-		     if(event.muonPF2PATPt[Nr1]>20 && event.muonPF2PATPt[Nr2]>11){
-			     
-			    h_muonCut->Fill(event.muonPF2PATPt[Nr1]);  
-			    h_muonCut->Fill(event.muonPF2PATPt[Nr2]); 
-			     
-		     }
-	     } else if(event.muonPF2PATPt[Nr1]<event.muonPF2PATPt[Nr2]){   
-	             
-		     if(event.muonPF2PATPt[Nr2]>20 && event.muonPF2PATPt[Nr1]>11){
-			     
-			    h_muonCut->Fill(event.muonPF2PATPt[Nr1]);  
-			    h_muonCut->Fill(event.muonPF2PATPt[Nr2]); 
-			     
-		     }	     
-	     }
-             
-	   }*/
 		
 	}//END of MET filter 
 	
@@ -763,7 +733,7 @@ int main(int argc, char* argv[])
 	  
           }
 	}     
-	//END Packed Candidates
+
 	
 	
 	      
