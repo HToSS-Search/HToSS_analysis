@@ -595,6 +595,7 @@ int main(int argc, char* argv[])
 		   
 	       h_muonRecPt->Fill(event.muonPF2PATPt[0]);
 	       h_muonRecPt->Fill(event.muonPF2PATPt[1]);
+		   
 	       h_muonRecEta->Fill(muonRecEta);
 	       h_muonRecPhi->Fill(muonRecPhi);
 	       h_muonRecE->Fill(muonRecE);
@@ -625,9 +626,7 @@ int main(int argc, char* argv[])
 		       
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 			 
-	           nrofmuonRec.emplace_back(k); //Take its index
-		   //h_muonCutSingle->Fill(muonRecPt);
-	           h_muonCutSingle->Fill(event.muonPF2PATPt[0]);
+	           h_muonCutSingle->Fill(event.muonPF2PATPt[0]); //Select two highest momenta
 	           h_muonCutSingle->Fill(event.muonPF2PATPt[1]);
 			 
 		 }
@@ -638,14 +637,20 @@ int main(int argc, char* argv[])
 		       
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 			 
-	           nrofmuonRec.emplace_back(k); //Take its index
-		   //h_muonCutDouble->Fill(muonRecPt);
 	           h_muonCutDouble->Fill(event.muonPF2PATPt[0]);
 		   h_muonCutDouble->Fill(event.muonPF2PATPt[1]); 
+			 
 		 }
 		       
 	       }
-			    
+		
+	       if(event.muTrig() || event.mumuTrig()){ //For storing of indices
+		       
+		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
+		    nrofmuonRec.emplace_back(k); //Take its index
+		 }
+	       }
+		   
 	   }//end of for-loop k
 
 	
@@ -794,11 +799,11 @@ int main(int argc, char* argv[])
 		    const Int_t packedCandsCharge {event.packedCandsCharge[*m]};
 		    const Int_t muonRecCharge     {event.muonPF2PATCharge[*n]};
 			
-		    if(packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonRecCharge){
+		    if(packedCandsCharge!=0 && packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonRecCharge){
 		  
-	              if(packedC.M()>0.13 && packedC.M()<0.14){//Only charged pions
+	              if(packedC.M()>0.138 && packedC.M()<0.141){//Only charged pions
 			      
-			std::cout<<"Mass assumption voor match "<<packedC.M()<<std::endl;    
+			//std::cout<<"Mass assumption voor match "<<packedC.M()<<std::endl;    
 	                std::cout<<"it's a match!"<<std::endl;
 		        matchMuon.emplace_back(*m);
 			      
