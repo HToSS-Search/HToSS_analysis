@@ -625,7 +625,6 @@ int main(int argc, char* argv[])
 		       
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 			 nrofmuonRec.emplace_back(k); //Take its index
-		   }
 		 }
 		       
 	       } 
