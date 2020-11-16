@@ -168,6 +168,8 @@ int main(int argc, char* argv[])
   TH1F* h_matchPt      {new TH1F("h_matchPt",  "Matched p_{T}", 1000, 0., 1000.)};
   TH1F* h_matchEta     {new TH1F("h_matchEta", "Matched #eta",  200, -7., 7.)}; 
   TH1F* h_matchPhi     {new TH1F("h_matchPhi", "Matched #phi",  100, -3.5, 3.5)};	
+ 	
+  TH1F* h_testPt      {new TH1F("h_test Pt",  "test p_{T}", 1000, 0., 1000.)};
 	
   //Iso tracks
   TH1F* h_isoTracksPt  {new TH1F("h_isoTracksPt",  "Iso tracks p_{T}", 1000, 0., 1000.)}; 	
@@ -364,12 +366,14 @@ int main(int argc, char* argv[])
 		      
 	           if(event.muTrig()){
 			 
-	             h_genParScalarMuonCutPtS->Fill(genParPt);
+	             h_genParScalarMuonCutPtS->Fill(event.genParPt[0]);
+		     h_genParScalarMuonCutPtS->Fill(event.genParPt[1]);
 			 
 		   }
 		   if(event.mumuTrig()){
 			 
-	             h_genParScalarMuonCutPtD->Fill(genParPt);
+	             h_genParScalarMuonCutPtD->Fill(event.genParPt[0]);
+		     h_genParScalarMuonCutPtD->Fill(event.genParPt[1]);
 			 
 		   }
 		      
@@ -764,7 +768,9 @@ int main(int argc, char* argv[])
 		    
 		TLorentzVector nr1;
 	        TLorentzVector nr2;
-			
+		
+		h_testPt->Fill(event.packedCandsPseudoTrkPt[*m]);    
+		    
 	        nr1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[*m],event.packedCandsPseudoTrkEta[*m],event.packedCandsPseudoTrkPhi[*m],packedC.M());
 	        nr2.SetPtEtaPhiE(event.muonPF2PATPt[*n],event.muonPF2PATEta[*n],event.muonPF2PATPhi[*n],event.muonPF2PATE[*n]);
 		
@@ -789,9 +795,9 @@ int main(int argc, char* argv[])
 		        matchMuon.emplace_back(*m);
 			
 			for(p=matchMuon.begin(); p!=matchMuon.end();p++){      
-			h_matchPt->Fill(event.packedCandsPseudoTrkPt[*p]);
-		        h_matchEta->Fill(event.packedCandsPseudoTrkEta[*p]);
-			h_matchPhi->Fill(event.packedCandsPseudoTrkPhi[*p]);
+			h_matchPt->Fill(event.packedCandsPt[*p]);
+		        h_matchEta->Fill(event.packedCandsEta[*p]);
+			h_matchPhi->Fill(event.packedCandsPhi[*p]);
 			}	
 		      }    
 		    }	
@@ -995,6 +1001,8 @@ int main(int argc, char* argv[])
   h_matchPt->Write();
   h_matchEta->Write();
   h_matchPhi->Write();
+  h_testPt->GetXaxis()->SetTitle("GeV");
+  h_testPt->Write();
 	
   //Iso tracks
   h_isoTracksPt->GetXaxis()->SetTitle("GeV");
