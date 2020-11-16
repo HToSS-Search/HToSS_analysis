@@ -166,8 +166,8 @@ int main(int argc, char* argv[])
   TH1F* h_massAssump   {new TH1F("h_massAssump",  "Mass assumption", 5000, 0., 1.)};
   TH1F* h_matchDeltaR  {new TH1F("h_matchDeltaR", "#DeltaR reconstructed muon and track candidate",2500, -10., 10.)};
   TH1F* h_matchPt      {new TH1F("h_matchPt",  "Matched p_{T}", 1000, 0., 1000.)};
-  TH1F* h_matchEta     {new TH1F("h_matchEta", "Matched #eta",  200, -7., 7.)}; 
-  TH1F* h_matchPhi     {new TH1F("h_matchPhi", "Matched #phi",  100, -3.5, 3.5)};	
+  //TH1F* h_matchEta     {new TH1F("h_matchEta", "Matched #eta",  200, -7., 7.)}; 
+  //TH1F* h_matchPhi     {new TH1F("h_matchPhi", "Matched #phi",  100, -3.5, 3.5)};	
  	
   TH1F* h_testRME      {new TH1F("h_testRME",  "test reco muon energy after selection", 1000, 0., 1000.)};
 	
@@ -797,7 +797,7 @@ int main(int argc, char* argv[])
 			
 			for(p=matchMuon.begin(); p!=matchMuon.end();p++){   
 			
-			TVector3 matchPt {event.packedCandsPseudoTrkPx[*p],event.packedCandsPseudoTrkPy[*p],event.packedCandsPseudoTrkPz[*p]}
+			const TVector3 matchPt {event.packedCandsPseudoTrkPx[*p],event.packedCandsPseudoTrkPy[*p],event.packedCandsPseudoTrkPz[*p]};
 			h_matchPt->Fill(matchPt.Pt());
 		        //h_matchEta->Fill(event.packedCandsPseudoTrkEta[*p]);
 			//h_matchPhi->Fill(event.packedCandsPseudoTrkPhi[*p]);
@@ -1002,8 +1002,8 @@ int main(int argc, char* argv[])
   h_matchDeltaR->Write();
   h_matchPt->GetXaxis()->SetTitle("GeV");
   h_matchPt->Write();
-  h_matchEta->Write();
-  h_matchPhi->Write();
+  //h_matchEta->Write();
+  //h_matchPhi->Write();
   h_testRME->GetXaxis()->SetTitle("GeV");
   h_testRME->Write();
 	
