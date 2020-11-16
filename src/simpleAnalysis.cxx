@@ -676,7 +676,7 @@ int main(int argc, char* argv[])
 		
 		   
 	   }//end of for-loop k
-
+	   
 	   /*std::vector<Int_t>::iterator n;
 	   for(n=passedMuonsSingle.begin(); n!=passedMuonsSingle.end();n++){
 	  
@@ -704,6 +704,7 @@ int main(int argc, char* argv[])
 	h_muonDivDouble->Divide(h_muonRecPt);
 	h_muonDivDouble->SetTitle("After/before cut");
 
+	std::cout<<"number of reco muons passed "<<passedMuons.size()<<std::endl;
 	//END Muon Reconstruction
 	      
 	      
@@ -748,7 +749,7 @@ int main(int argc, char* argv[])
 	  
           }
 	}     
-
+        std::cout<<"number of packed candidates passed "<<nrofPacked.size()<<std::endl;
 	
 	
 	      
@@ -794,10 +795,12 @@ int main(int argc, char* argv[])
 	                std::cout<<"it's a match!"<<std::endl;
 		        matchMuon.emplace_back(*m);
 			
-			for(p=matchMuon.begin(); p!=matchMuon.end();p++){      
-			h_matchPt->Fill(event.packedCandsPseudoTrkPt[*p]);
-		        h_matchEta->Fill(event.packedCandsPseudoTrkEta[*p]);
-			h_matchPhi->Fill(event.packedCandsPseudoTrkPhi[*p]);
+			for(p=matchMuon.begin(); p!=matchMuon.end();p++){   
+			
+			TVector3 matchPt {event.packedCandsPseudoTrkPx[*p],event.packedCandsPseudoTrkPy[*p],event.packedCandsPseudoTrkPz[*p]}
+			h_matchPt->Fill(matchPt.Pt());
+		        //h_matchEta->Fill(event.packedCandsPseudoTrkEta[*p]);
+			//h_matchPhi->Fill(event.packedCandsPseudoTrkPhi[*p]);
 			}	
 		      }    
 		    }	
@@ -807,7 +810,7 @@ int main(int argc, char* argv[])
 		    
 	    }   
 	}
-	   
+	std::cout<<"number of matched muons passed "<<matchMuon.size()<<std::endl;   
 	      
 	      
 	      
