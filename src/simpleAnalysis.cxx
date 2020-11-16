@@ -165,7 +165,9 @@ int main(int argc, char* argv[])
   //Matching
   TH1F* h_massAssump   {new TH1F("h_massAssump",  "Mass assumption", 5000, 0., 1.)};
   TH1F* h_matchDeltaR  {new TH1F("h_matchDeltaR", "#DeltaR reconstructed muon and track candidate",2500, -10., 10.)};
-	
+  TH1F* h_matchPt      {new TH1F("h_matchPt",  "Matched p_{T}", 1000, 0., 1000.)};
+  TH1F* h_matchEta     {new TH1F("h_matchEta", "Matched #eta",  200, -7., 7.)}; 
+  TH1F* h_matchPhi     {new TH1F("h_matchPhi", "Matched #phi",  100, -3.5, 3.5)};	
 	
   //Iso tracks
   TH1F* h_isoTracksPt  {new TH1F("h_isoTracksPt",  "Iso tracks p_{T}", 1000, 0., 1000.)}; 	
@@ -989,7 +991,10 @@ int main(int argc, char* argv[])
   h_massAssump->GetXaxis()->SetTitle("GeV");
   h_massAssump->Write();
   h_matchDeltaR->Write();
-	
+  h_matchPt->GetXaxis()->SetTitle("GeV");
+  h_matchPt->Write();
+  h_matchEta->Write();
+  h_matchPhi->Write();
 	
   //Iso tracks
   h_isoTracksPt->GetXaxis()->SetTitle("GeV");
