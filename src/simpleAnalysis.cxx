@@ -86,8 +86,10 @@ int main(int argc, char* argv[])
 	
   //Muon from scalar decay
   TH1F* h_genParScalarMuonPt         {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
-  TH1F* h_genParScalarMuonCutPt      {new TH1F("h_genParScalarMuonCutPt",  "#mu^{#pm} from scalar decay p_{T} cut", 1000, 0., 1000.)};
-  TH1F* h_genParScalarMuonDivPt      {new TH1F("h_genParScalarMuonDivPt",  "#mu^{#pm} from scalar decay p_{T} divide", 300, 0., 1000.)};
+  TH1F* h_genParScalarMuonCutPtS     {new TH1F("h_genParScalarMuonCutPtS",  "#mu^{#pm} from scalar decay p_{T} cut", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonDivPtS     {new TH1F("h_genParScalarMuonDivPtS",  "#mu^{#pm} from scalar decay p_{T} divide", 300, 0., 1000.)};
+  TH1F* h_genParScalarMuonCutPtD     {new TH1F("h_genParScalarMuonCutPtD",  "#mu^{#pm} from scalar decay p_{T} cut", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonDivPtD     {new TH1F("h_genParScalarMuonDivPtD",  "#mu^{#pm} from scalar decay p_{T} divide", 300, 0., 1000.)};
 	
   TH1F* h_genParScalarMuonEta     {new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
   TH1F* h_genParScalarMuonPhi     {new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
@@ -358,9 +360,14 @@ int main(int argc, char* argv[])
 		      
 		   h_genParScalarMuonPt->Fill(genParPt);
 		      
-	           if(event.muTrig() || event.mumuTrig()){
+	           if(event.muTrig()){
 			 
-	             h_genParScalarMuonCutPt->Fill(genParPt);
+	             h_genParScalarMuonCutPtS->Fill(genParPt);
+			 
+		   }
+		   if(event.mumuTrig()){
+			 
+	             h_genParScalarMuonCutPtD->Fill(genParPt);
 			 
 		   }
 		      
@@ -419,9 +426,13 @@ int main(int argc, char* argv[])
 		    
 	}  
 	      
-	h_genParScalarMuonDivPt=(TH1F*)h_genParScalarMuonCutPt->Clone();
-	h_genParScalarMuonDivPt->Divide(h_genParScalarMuonPt);
-	h_genParScalarMuonDivPt->SetTitle("After/before cut");
+	h_genParScalarMuonDivPtS=(TH1F*)h_genParScalarMuonCutPtS->Clone();
+	h_genParScalarMuonDivPtS->Divide(h_genParScalarMuonPt);
+	h_genParScalarMuonDivPtS->SetTitle("After/before cut");
+	      
+	h_genParScalarMuonDivPtD=(TH1F*)h_genParScalarMuonCutPtD->Clone();
+	h_genParScalarMuonDivPtD->Divide(h_genParScalarMuonPt);
+	h_genParScalarMuonDivPtD->SetTitle("After/before cut");
 	      
 	      
 	if (nrofScalar.size()==2){ //Two-particle (scalar) correlations
@@ -740,7 +751,7 @@ int main(int argc, char* argv[])
 	//MATCHING RECO MUON TO PACKED CAND
 	      
 	std::vector<Int_t> matchMuon;//Store the matched muons
-	std::vector<Int_t>::iterator m; std::vector<Int_t>::iterator n; 
+	std::vector<Int_t>::iterator m; std::vector<Int_t>::iterator n; std::vector<Int_t>::iterator p; 
 	      
 	for (m=nrofPacked.begin(); m!=nrofPacked.end();m++) { //Looping over charged packed cand with tracking details, MET, single or double trigger pass
 	    for (n=passedMuons.begin(); n!=passedMuons.end();n++){ //Reco muon with loose ID cut and |eta| < 2.4, MET, single or double trigger pass
@@ -775,7 +786,11 @@ int main(int argc, char* argv[])
 	                std::cout<<"it's a match!"<<std::endl;
 		        matchMuon.emplace_back(*m);
 			
-			//h_matchPt->Fill()
+			for(p=matchMuon.begin(); p!=matchMuon.end();p++){      
+			h_matchPt->Fill(event.packedCandsPseudoTrkPt[*p]);
+		        h_matchEta->Fill(event.packedCandsPseudoTrkEta[*p]);
+			h_matchPhi->Fill(event.packedCandsPseudoTrkPhi[*p]);
+			}	
 		      }    
 		    }	
 		  }  
@@ -872,10 +887,14 @@ int main(int argc, char* argv[])
   
   h_genParScalarMuonPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonPt->Write();
-  h_genParScalarMuonCutPt->GetXaxis()->SetTitle("GeV");
-  h_genParScalarMuonCutPt->Write();
-  h_genParScalarMuonDivPt->GetXaxis()->SetTitle("GeV");
-  h_genParScalarMuonDivPt->Write();
+  h_genParScalarMuonCutPtS->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonCutPtS->Write();
+  h_genParScalarMuonDivPtS->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonDivPtS->Write();
+  h_genParScalarMuonCutPtD->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonCutPtD->Write();
+  h_genParScalarMuonDivPtD->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonDivPtD->Write();
 		
   h_genParScalarMuonEta->Write();
   h_genParScalarMuonPhi->Write();
