@@ -785,7 +785,7 @@ int main(int argc, char* argv[])
 			  
 		    std::cout<<"deltaR smaller than 0.2"<<std::endl;
 			  
-	            if(nr1.DeltaR(nr2)==std::min(minDR)){ //To avoid that multiple tracks potentially matched with the muon
+	            //if(nr1.DeltaR(nr2)==std::min_element(minDR.begin(),minDR.end())){ //To avoid that multiple tracks potentially matched with the muon
 		    
 		      const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[*m]};
 		      const Int_t packedCandsCharge {event.packedCandsCharge[*m]};
@@ -809,7 +809,7 @@ int main(int argc, char* argv[])
 			  }	
 		        }    
 		      }
-		    }
+		    //}
 		  }  
 		}   
 		    
