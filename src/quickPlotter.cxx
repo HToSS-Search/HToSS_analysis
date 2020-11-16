@@ -77,26 +77,28 @@ int main(int argc, char* argv[])
     TH1F* h_numMuonsPromptFinalState   {new TH1F("h_numMuonsPromptFinalState", "number of reco muons with PromptFinalState flag", 21, -0.5, 20.5)};
     TH1F* h_numMuonsHardProcess        {new TH1F("h_numMuonsHardProcess",      "number of reco muons with HardProcess flag", 21, -0.5, 20.5)};
 
-    TProfile* p_hardMuonsIdProfile         {new TProfile("p_hardMuonsIdProfile", "ID decisions for muons from hard process", 8, 0.5, 8.5)};
-    TProfile* p_softMuonsIdProfile         {new TProfile("p_softMuonsIdProfile", "ID decisions for muons not from hard process", 8, 0.5, 8.5)};
+    TProfile* p_hardMuonsIdProfile         {new TProfile("p_hardMuonsIdProfile", "ID decisions for muons from hard process", 9, 0.5, 9.5)};
+    TProfile* p_softMuonsIdProfile         {new TProfile("p_softMuonsIdProfile", "ID decisions for muons not from hard process", 9, 0.5, 9.5)};
 
-    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(1, "Pass Loose Cut ID");
-    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(2, "Pass Medium Cut ID");
-    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(3, "Pass Tight Cut ID");
-    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(4, "Pass Very Loose Iso Cut");
-    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(5, "Pass Loose Iso Cut");
-    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(6, "Pass Medium Iso Cut");
-    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(7, "Pass Tight Iso Cut");
-    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(8, "Pass Very Tight Iso Cut");
+    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(1, "Pass PF ID");
+    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(2, "Pass Loose Cut ID");
+    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(3, "Pass Medium Cut ID");
+    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(4, "Pass Tight Cut ID");
+    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(5, "Pass Very Loose Iso Cut");
+    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(6, "Pass Loose Iso Cut");
+    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(7, "Pass Medium Iso Cut");
+    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(8, "Pass Tight Iso Cut");
+    p_hardMuonsIdProfile->GetXaxis()->SetBinLabel(9, "Pass Very Tight Iso Cut");
 
-    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(1, "Pass Loose Cut ID");
-    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(2, "Pass Medium Cut ID");
-    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(3, "Pass Tight Cut ID");
-    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(4, "Pass Very Loose Iso Cut");
-    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(5, "Pass Loose Iso Cut");
-    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(6, "Pass Medium Iso Cut");
-    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(7, "Pass Tight Iso Cut");
-    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(8, "Pass Very Tight Iso Cut");
+    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(1, "Pass PF ID");
+    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(2, "Pass Loose Cut ID");
+    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(3, "Pass Medium Cut ID");
+    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(4, "Pass Tight Cut ID");
+    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(5, "Pass Very Loose Iso Cut");
+    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(6, "Pass Loose Iso Cut");
+    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(7, "Pass Medium Iso Cut");
+    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(8, "Pass Tight Iso Cut");
+    p_softMuonsIdProfile->GetXaxis()->SetBinLabel(9, "Pass Very Tight Iso Cut");
 
     TH1F* h_promptMuonPt               {new TH1F("h_promptMuonPt",       "prompt muon p_{T}; p_{T} (GeV);", 400, 0., 200.)};
     TH1F* h_promptMuonEta              {new TH1F("h_promptMuonEta",      "prompt muon #eta; #eta;", 120, 0., 3.2)};
@@ -283,14 +285,15 @@ int main(int argc, char* argv[])
       	       	if (event.genMuonPF2PATHardProcess[*it]) {
                     numMuonsHardProcess++;
 
-                    p_hardMuonsIdProfile->Fill(1.0, event.muonPF2PATLooseCutId[*it]);
-                    p_hardMuonsIdProfile->Fill(2.0, event.muonPF2PATMediumCutId[*it]);
-                    p_hardMuonsIdProfile->Fill(3.0, event.muonPF2PATTightCutId[*it]);
-                    p_hardMuonsIdProfile->Fill(4.0, event.muonPF2PATPfIsoVeryLoose[*it]);
-                    p_hardMuonsIdProfile->Fill(5.0, event.muonPF2PATPfIsoLoose[*it]);
-                    p_hardMuonsIdProfile->Fill(6.0, event.muonPF2PATPfIsoMedium[*it]);
-                    p_hardMuonsIdProfile->Fill(7.0, event.muonPF2PATPfIsoTight[*it]);
-                    p_hardMuonsIdProfile->Fill(8.0, event.muonPF2PATPfIsoVeryTight[*it]);
+                    p_hardMuonsIdProfile->Fill(1.0, event.muonPF2PATIsPFMuon[*it]);
+                    p_hardMuonsIdProfile->Fill(2.0, event.muonPF2PATLooseCutId[*it]);
+                    p_hardMuonsIdProfile->Fill(3.0, event.muonPF2PATMediumCutId[*it]);
+                    p_hardMuonsIdProfile->Fill(4.0, event.muonPF2PATTightCutId[*it]);
+                    p_hardMuonsIdProfile->Fill(5.0, event.muonPF2PATPfIsoVeryLoose[*it]);
+                    p_hardMuonsIdProfile->Fill(6.0, event.muonPF2PATPfIsoLoose[*it]);
+                    p_hardMuonsIdProfile->Fill(7.0, event.muonPF2PATPfIsoMedium[*it]);
+                    p_hardMuonsIdProfile->Fill(8.0, event.muonPF2PATPfIsoTight[*it]);
+                    p_hardMuonsIdProfile->Fill(9.0, event.muonPF2PATPfIsoVeryTight[*it]);
 
                     h_promptMuonPt->Fill(event.muonPF2PATPt[*it]);
                     h_promptMuonEta->Fill(std::abs(event.muonPF2PATEta[*it]));
@@ -302,14 +305,15 @@ int main(int argc, char* argv[])
                     h_promptMuonMotherId->Fill(motherId);
                 }
                 else {
-                    p_softMuonsIdProfile->Fill(1.0, event.muonPF2PATLooseCutId[*it]);
-                    p_softMuonsIdProfile->Fill(2.0, event.muonPF2PATMediumCutId[*it]);
-                    p_softMuonsIdProfile->Fill(3.0, event.muonPF2PATTightCutId[*it]);
-                    p_softMuonsIdProfile->Fill(4.0, event.muonPF2PATPfIsoVeryLoose[*it]);
-                    p_softMuonsIdProfile->Fill(5.0, event.muonPF2PATPfIsoLoose[*it]);
-                    p_softMuonsIdProfile->Fill(6.0, event.muonPF2PATPfIsoMedium[*it]);
-                    p_softMuonsIdProfile->Fill(7.0, event.muonPF2PATPfIsoTight[*it]);
-                    p_softMuonsIdProfile->Fill(8.0, event.muonPF2PATPfIsoVeryTight[*it]);
+                    p_softMuonsIdProfile->Fill(1.0, event.muonPF2PATIsPFMuon[*it]);
+                    p_softMuonsIdProfile->Fill(2.0, event.muonPF2PATLooseCutId[*it]);
+                    p_softMuonsIdProfile->Fill(3.0, event.muonPF2PATMediumCutId[*it]);
+                    p_softMuonsIdProfile->Fill(4.0, event.muonPF2PATTightCutId[*it]);
+                    p_softMuonsIdProfile->Fill(5.0, event.muonPF2PATPfIsoVeryLoose[*it]);
+                    p_softMuonsIdProfile->Fill(6.0, event.muonPF2PATPfIsoLoose[*it]);
+                    p_softMuonsIdProfile->Fill(7.0, event.muonPF2PATPfIsoMedium[*it]);
+                    p_softMuonsIdProfile->Fill(8.0, event.muonPF2PATPfIsoTight[*it]);
+                    p_softMuonsIdProfile->Fill(9.0, event.muonPF2PATPfIsoVeryTight[*it]);
 
                     h_nonpromptMuonPt->Fill(event.muonPF2PATPt[*it]);
                     h_nonpromptMuonEta->Fill(std::abs(event.muonPF2PATEta[*it]));
