@@ -769,7 +769,7 @@ int main(int argc, char* argv[])
 		TLorentzVector nr1;
 	        TLorentzVector nr2;
 		
-		h_muonRME->Fill(event.muonPF2PATE[*n]);   
+		h_testRME->Fill(event.muonPF2PATE[*n]);   
 		   
 	        nr1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[*m],event.packedCandsPseudoTrkEta[*m],event.packedCandsPseudoTrkPhi[*m],packedC.M());
 	        nr2.SetPtEtaPhiE(event.muonPF2PATPt[*n],event.muonPF2PATEta[*n],event.muonPF2PATPhi[*n],event.muonPF2PATE[*n]);
