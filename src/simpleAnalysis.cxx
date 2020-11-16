@@ -37,7 +37,6 @@
 std::string pdgIdCode (const Int_t pdgId, const bool unicode = false); // declaring function called below main(); pdgIdCode translate stored numerical pdgId code into a string: unicode for output to string, or latex style for ROOT plotting
 bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
 
-
 namespace fs = boost::filesystem;
 
 int main(int argc, char* argv[])
@@ -704,7 +703,6 @@ int main(int argc, char* argv[])
 	h_muonDivDouble->Divide(h_muonRecPt);
 	h_muonDivDouble->SetTitle("After/before cut");
 
-	std::cout<<"number of reco muons passed "<<passedMuons.size()<<std::endl;
 	//END Muon Reconstruction
 	      
 	      
@@ -749,7 +747,7 @@ int main(int argc, char* argv[])
 	  
           }
 	}     
-        std::cout<<"number of packed candidates passed "<<nrofPacked.size()<<std::endl;
+       
 	
 	
 	      
@@ -759,6 +757,7 @@ int main(int argc, char* argv[])
 	      
 	std::vector<Int_t> matchMuon;//Store the matched muons
 	std::vector<Int_t>::iterator m; std::vector<Int_t>::iterator n; std::vector<Int_t>::iterator p; 
+	std::vector<Float_t> minDR;//Storage of deltaR
 	      
 	for (m=nrofPacked.begin(); m!=nrofPacked.end();m++) { //Looping over charged packed cand with tracking details, MET, single or double trigger pass
 	    for (n=passedMuons.begin(); n!=passedMuons.end();n++){ //Reco muon with loose ID cut and |eta| < 2.4, MET, single or double trigger pass
@@ -780,37 +779,44 @@ int main(int argc, char* argv[])
 		if(event.numMuonPF2PAT && event.genMuonPF2PATMotherId[*n]==9000006){
 		 
 	          if(nr1.DeltaR(nr2)<0.2){
-		  
+			  
+		    minDR.emplace_back(nr1.DeltaR(nr2));
+		    //Float_t sortedDR=std::sort(minDR);
+			  
 		    std::cout<<"deltaR smaller than 0.2"<<std::endl;
-		 
-		    const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[*m]};
-		    const Int_t packedCandsCharge {event.packedCandsCharge[*m]};
-		    const Int_t muonRecCharge     {event.muonPF2PATCharge[*n]};
+			  
+	            if(nr1.DeltaR(nr2)==std::min(minDR)){ //To avoid that multiple tracks potentially matched with the muon
+		    
+		      const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[*m]};
+		      const Int_t packedCandsCharge {event.packedCandsCharge[*m]};
+		      const Int_t muonRecCharge     {event.muonPF2PATCharge[*n]};
 			
-		    if(packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonRecCharge){
+		      if(packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonRecCharge){
 		  
-	              if(packedC.M()>0.1385 && packedC.M()<0.1405){//Only charged pions
+	                if(packedC.M()>0.1385 && packedC.M()<0.1405){//Only charged pions
 			      
-			//std::cout<<"Mass assumption voor match "<<packedC.M()<<std::endl;    
-	                std::cout<<"it's a match!"<<std::endl;
-		        matchMuon.emplace_back(*m);
+			  //std::cout<<"Mass assumption voor match "<<packedC.M()<<std::endl;    
+	                  std::cout<<"it's a match!"<<std::endl;
+		          matchMuon.emplace_back(*m);
 			
-			for(p=matchMuon.begin(); p!=matchMuon.end();p++){   
+			  for(p=matchMuon.begin(); p!=matchMuon.end();p++){   
 			
-			const TVector3 matchPt {event.packedCandsPseudoTrkPx[*p],event.packedCandsPseudoTrkPy[*p],event.packedCandsPseudoTrkPz[*p]};
-			h_matchPt->Fill(matchPt.Pt());
-		        //h_matchEta->Fill(event.packedCandsPseudoTrkEta[*p]);
-			//h_matchPhi->Fill(event.packedCandsPseudoTrkPhi[*p]);
-			}	
-		      }    
-		    }	
+			     const TVector3 matchPt {event.packedCandsPseudoTrkPx[*p],event.packedCandsPseudoTrkPy[*p],event.packedCandsPseudoTrkPz[*p]};
+			     h_matchPt->Fill(matchPt.Pt());
+		             //h_matchEta->Fill(event.packedCandsPseudoTrkEta[*p]);
+			     //h_matchPhi->Fill(event.packedCandsPseudoTrkPhi[*p]);
+				
+			  }	
+		        }    
+		      }
+		    }
 		  }  
 		}   
 		    
 		    
 	    }   
 	}
-	std::cout<<"number of matched muons passed "<<matchMuon.size()<<std::endl;   
+	 
 	      
 	      
 	      
