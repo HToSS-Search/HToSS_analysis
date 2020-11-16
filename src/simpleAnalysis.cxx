@@ -747,7 +747,7 @@ int main(int argc, char* argv[])
 		
 		const TLorentzVector packedC {event.packedCandsPseudoTrkPx[*m],event.packedCandsPseudoTrkPy[*m],event.packedCandsPseudoTrkPz[*m],event.packedCandsE[*m]};
 		h_massAssump->Fill(packedC.M());
-		std::cout<<"Mass assumption "<<packedC.M()<<std::endl;
+		//std::cout<<"Mass assumption "<<packedC.M()<<std::endl;
 		    
 		TLorentzVector nr1;
 	        TLorentzVector nr2;
