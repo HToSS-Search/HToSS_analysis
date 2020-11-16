@@ -579,9 +579,8 @@ int main(int argc, char* argv[])
 	      
 	      
 	/// BEGIN Muon Reconstruction
-	std::vector<Int_t> nrofmuonRec;
 	std::vector<Int_t> ptSingle; std::vector<Int_t> ptDouble;
-	std::vector<Int_t> passedMuonsSingle; std::vector<Int_t> passedMuonsDouble;
+	std::vector<Int_t> passedMuons; 
 
 	if(event.metFilters()){
 	  
@@ -593,9 +592,8 @@ int main(int argc, char* argv[])
 	       const Float_t muonRecEta  { event.muonPF2PATEta[k] };
 	       const Float_t muonRecPhi  { event.muonPF2PATPhi[k] };
 	       const Float_t muonRecE    { event.muonPF2PATE[k] };
-	       //const Int_t muonRecCharge {event.muonPF2PATCharge[k]};
 		   
-	       h_muonRecPt->Fill(event.muonPF2PATPt[0]);
+	       h_muonRecPt->Fill(event.muonPF2PATPt[0]);//Two highest momenta
 	       h_muonRecPt->Fill(event.muonPF2PATPt[1]);
 		   
 	       h_muonRecEta->Fill(muonRecEta);
@@ -620,16 +618,19 @@ int main(int argc, char* argv[])
 	 	   TLorentzVector lVecMu2  {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]};
 
 	   	   h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
-		       
-		 } 
-		       
-		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
-			 nrofmuonRec.emplace_back(k); //Take its index
-		 }
-		       
+		   
+		   if(event.muonPF2PATPt[0]>30 && event.muonPF2PATPt[1]>12){//p_T cuts applied 
+		     
+	             if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut and |eta| < 2.4
+		       passedMuons.emplace_back(k);//Take its index
+		     }
+		   }
+		   
+		 }     
 	       } 
-	
-	       if(event.muTrig()){
+	    
+	       //To show seperate turn-on curve for single or double muon trigger
+	       if(event.muTrig() ){
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 		
 	 	   if(event.muonPF2PATPt[k]>30){//p_T cut
@@ -639,7 +640,6 @@ int main(int argc, char* argv[])
 	           if(ptSingle.size()!=0){//At least one must obey
 		     h_muonCutSingle->Fill(event.muonPF2PATPt[0]); //Select two highest momenta for the histogram
 	             h_muonCutSingle->Fill(event.muonPF2PATPt[1]);
-		     passedMuonsSingle.emplace_back(k);
 		   }
 		   
 		 }
@@ -648,11 +648,10 @@ int main(int argc, char* argv[])
 		
 	       if(event.mumuTrig()){
 		       
-		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
-		   if(event.muonPF2PATPt[0]>20 && event.muonPF2PATPt[1]>12){ //p_T cut
+		 if(event.muonPF2PATPt[0]>20 && event.muonPF2PATPt[1]>12){//p_T cut
+		   if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut and |eta| < 2.4 
 		     h_muonCutDouble->Fill(event.muonPF2PATPt[0]);
 		     h_muonCutDouble->Fill(event.muonPF2PATPt[1]);
-		     passedMuonsDouble.emplace_back(k);
 		   }	 	 
 		 }
 		       
@@ -710,7 +709,7 @@ int main(int argc, char* argv[])
 	        h_packedCDxy->Fill(event.packedCandsDxy[k]);
 	        h_packedCDz->Fill(event.packedCandsDz[k]);  
 	      
-		if(event.packedCandsHasTrackDetails[k]){
+		if(event.packedCandsHasTrackDetails[k]==1){
 		
 		  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]};
 		  const Int_t packedCandsCharge {event.packedCandsCharge[k]};
@@ -744,11 +743,11 @@ int main(int argc, char* argv[])
 	std::vector<Int_t>::iterator m; std::vector<Int_t>::iterator n; 
 	      
 	for (m=nrofPacked.begin(); m!=nrofPacked.end();m++) { //Looping over charged packed cand with tracking details, MET, single or double trigger pass
-	    for (n=nrofmuonRec.begin(); n!=nrofmuonRec.end();n++){ //Reco muon with loose ID cut and |eta| < 2.4, MET, single or double trigger pass
+	    for (n=passedMuons.begin(); n!=passedMuons.end();n++){ //Reco muon with loose ID cut and |eta| < 2.4, MET, single or double trigger pass
 		
 		const TLorentzVector packedC {event.packedCandsPseudoTrkPx[*m],event.packedCandsPseudoTrkPy[*m],event.packedCandsPseudoTrkPz[*m],event.packedCandsE[*m]};
 		h_massAssump->Fill(packedC.M());
-		//std::cout<<"Mass assumption "<<packedC.M()<<std::endl;
+		std::cout<<"Mass assumption "<<packedC.M()<<std::endl;
 		    
 		TLorentzVector nr1;
 	        TLorentzVector nr2;
@@ -768,14 +767,15 @@ int main(int argc, char* argv[])
 		    const Int_t packedCandsCharge {event.packedCandsCharge[*m]};
 		    const Int_t muonRecCharge     {event.muonPF2PATCharge[*n]};
 			
-		    if(packedCandsCharge!=0 && packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonRecCharge){
+		    if(packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonRecCharge){
 		  
-	              if(packedC.M()>0.138 && packedC.M()<0.141){//Only charged pions
+	              if(packedC.M()>0.1385 && packedC.M()<0.1405){//Only charged pions
 			      
 			//std::cout<<"Mass assumption voor match "<<packedC.M()<<std::endl;    
 	                std::cout<<"it's a match!"<<std::endl;
 		        matchMuon.emplace_back(*m);
-			      
+			
+			//h_matchPt->Fill()
 		      }    
 		    }	
 		  }  
