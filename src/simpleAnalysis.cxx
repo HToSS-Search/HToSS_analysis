@@ -778,12 +778,12 @@ int main(int argc, char* argv[])
 		 
 		if(event.numMuonPF2PAT && event.genMuonPF2PATMotherId[*n]==9000006){
 		 
-	          if(nr1.DeltaR(nr2)<0.2){
+	          if(nr1.DeltaR(nr2)<0.1){
 			  
 		    minDR.emplace_back(nr1.DeltaR(nr2));
 		    //Float_t sortedDR=std::sort(minDR);
 			  
-		    std::cout<<"deltaR smaller than 0.2"<<std::endl;
+		    std::cout<<"deltaR smaller than 0.1"<<std::endl;
 			  
 	            //if(nr1.DeltaR(nr2)==std::min_element(minDR.begin(),minDR.end())){ //To avoid that multiple tracks potentially matched with the muon
 		    
