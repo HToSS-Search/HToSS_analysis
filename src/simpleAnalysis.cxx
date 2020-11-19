@@ -171,7 +171,7 @@ int main(int argc, char* argv[])
   TH1F* h_testRME      {new TH1F("h_testRME",  "test reco muon energy after selection", 1000, 0., 1000.)};
 	
   //Iso tracks
-  TH1F* h_isoTracksPt  {new TH1F("h_isoTracksPt",  "Iso tracks p_{T}", 1000, 0., 1000.)}; 	
+//  TH1F* h_isoTracksPt  {new TH1F("h_isoTracksPt",  "Iso tracks p_{T}", 1000, 0., 1000.)}; 	
 	
 	
 	
@@ -820,8 +820,9 @@ int main(int argc, char* argv[])
 	      
 	      
 	      
-	//Isolated tracks  
-	      
+	//Isolated tracks
+        // ADM - commented out as these branches are no longer avaliable as all track info required can be accessed through packed cands 
+/*	      
 	if(event.metFilters()){
 		
 	  for (Int_t k{0}; k<event.numIsolatedTracks;k++){
@@ -841,7 +842,7 @@ int main(int argc, char* argv[])
 	  }
 	}
 	      
-	      
+*/	      
 	      
 	      
 	      
@@ -1014,8 +1015,8 @@ int main(int argc, char* argv[])
   h_testRME->Write();
 	
   //Iso tracks
-  h_isoTracksPt->GetXaxis()->SetTitle("GeV");
-  h_isoTracksPt->Write();
+//  h_isoTracksPt->GetXaxis()->SetTitle("GeV");
+//  h_isoTracksPt->Write();
 	
 	
 	
