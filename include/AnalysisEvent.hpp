@@ -419,24 +419,24 @@ class AnalysisEvent
     Int_t genPhoOOT_PF2PATIsConvertedPhoton[NOOTPHOTONSMAX];
     Int_t genPhoOOT_PF2PATIsJet[NOOTPHOTONSMAX];
 */
-    static constexpr size_t NPACKEDCANDSMAX{700};
+    static constexpr size_t NPACKEDCANDSMAX{1000};
     Int_t numPackedCands;
     Float_t packedCandsPt[NPACKEDCANDSMAX];
     Float_t packedCandsPx[NPACKEDCANDSMAX];
     Float_t packedCandsPy[NPACKEDCANDSMAX];
     Float_t packedCandsPz[NPACKEDCANDSMAX];
     Float_t packedCandsE[NPACKEDCANDSMAX];
-    Float_t packedCandsEta[NPACKEDCANDSMAX];
+//    Float_t packedCandsEta[NPACKEDCANDSMAX];
 //    Float_t packedCandsTheta[NPACKEDCANDSMAX];
     Float_t packedCandsPhi[NPACKEDCANDSMAX];
     Int_t packedCandsCharge[NPACKEDCANDSMAX];
     Int_t packedCandsPdgId[NPACKEDCANDSMAX];
-//    Float_t packedCandsTime[NPACKEDCANDSMAX];
+    Float_t packedCandsTime[NPACKEDCANDSMAX];
 //    Int_t packedCandsFromPV[NPACKEDCANDSMAX];
 //    Int_t packedCandsPVquality[NPACKEDCANDSMAX];
-//    Float_t packedCandsVx[NPACKEDCANDSMAX];
-//    Float_t packedCandsVy[NPACKEDCANDSMAX];
-//    Float_t packedCandsVz[NPACKEDCANDSMAX];
+    Float_t packedCandsVx[NPACKEDCANDSMAX];
+    Float_t packedCandsVy[NPACKEDCANDSMAX];
+    Float_t packedCandsVz[NPACKEDCANDSMAX];
 //    Float_t packedCandsVEta[NPACKEDCANDSMAX];
 //    Float_t packedCandsVPhi[NPACKEDCANDSMAX];
 //    Float_t packedCandsBeamSpotCorrectedD0[NPACKEDCANDSMAX];
@@ -445,9 +445,9 @@ class AnalysisEvent
 //    Float_t packedCandsDzAssocPV[NPACKEDCANDSMAX];
 //    Float_t packedCandsVtxChi2Norm[NPACKEDCANDSMAX];
     Int_t packedCandsHasTrackDetails[NPACKEDCANDSMAX];
-//    Float_t packedCandsDzError[NPACKEDCANDSMAX];
-//    Float_t packedCandsDxyError[NPACKEDCANDSMAX];
-//    Float_t packedCandsTimeError[NPACKEDCANDSMAX];
+    Float_t packedCandsDzError[NPACKEDCANDSMAX];
+    Float_t packedCandsDxyError[NPACKEDCANDSMAX];
+    Float_t packedCandsTimeError[NPACKEDCANDSMAX];
     Float_t packedCandsPseudoTrkPt[NPACKEDCANDSMAX];
     Float_t packedCandsPseudoTrkPx[NPACKEDCANDSMAX];
     Float_t packedCandsPseudoTrkPy[NPACKEDCANDSMAX];
@@ -458,9 +458,9 @@ class AnalysisEvent
     Float_t packedCandsPseudoTrkVx[NPACKEDCANDSMAX];
     Float_t packedCandsPseudoTrkVy[NPACKEDCANDSMAX];
     Float_t packedCandsPseudoTrkVz[NPACKEDCANDSMAX];
-//    Float_t packedCandsPseudoTrkChi2Norm[NPACKEDCANDSMAX];
-//    Int_t packedCandsPseudoTrkNumberOfHits[NPACKEDCANDSMAX];
-//    Int_t packedCandsPseudoTrkNumberOfPixelHits[NPACKEDCANDSMAX];
+    Float_t packedCandsPseudoTrkChi2Norm[NPACKEDCANDSMAX];
+    Int_t packedCandsPseudoTrkNumberOfHits[NPACKEDCANDSMAX];
+    Int_t packedCandsPseudoTrkNumberOfPixelHits[NPACKEDCANDSMAX];
 //    Int_t packedCandsPseudoTrkPixelLayersWithMeasurement[NPACKEDCANDSMAX];
 //    Int_t packedCandsPseudoTrkStripLayersWithMeasurement[NPACKEDCANDSMAX];
 //    Int_t packedCandsPseudoTrkTrackerLayersWithMeasurement[NPACKEDCANDSMAX];
@@ -1492,12 +1492,12 @@ class AnalysisEvent
 //    TBranch* b_packedCandsPhi; //!
     TBranch* b_packedCandsCharge; //!
     TBranch* b_packedCandsPdgId; //!
-//    TBranch* b_packedCandsTime; //!
+    TBranch* b_packedCandsTime; //!
 //    TBranch* b_packedCandsFromPV; //!
 //    TBranch* b_packedCandsPVquality; //!
-//    TBranch* b_packedCandsVx; //!
-//    TBranch* b_packedCandsVy; //!
-//    TBranch* b_packedCandsVz; //!
+    TBranch* b_packedCandsVx; //!
+    TBranch* b_packedCandsVy; //!
+    TBranch* b_packedCandsVz; //!
 //    TBranch* b_packedCandsVEta; //!
 //    TBranch* b_packedCandsVPhi; //!
 //    TBranch* b_packedCandsBeamSpotCorrectedD0; //!
@@ -1506,22 +1506,22 @@ class AnalysisEvent
 //    TBranch* b_packedCandsDzAssocPV; //!
 //    TBranch* b_packedCandsVtxChi2Norm; //!
     TBranch* b_packedCandsHasTrackDetails; //!
-//    TBranch* b_packedCandsDzError; //!
-//    TBranch* b_packedCandsDxyError; //!
-//    TBranch* b_packedCandsTimeError; //!
-//    TBranch* b_packedCandsPseudoTrkPt; //!
+    TBranch* b_packedCandsDzError; //!
+    TBranch* b_packedCandsDxyError; //!
+    TBranch* b_packedCandsTimeError; //!
+    TBranch* b_packedCandsPseudoTrkPt; //!
     TBranch* b_packedCandsPseudoTrkPx; //!
     TBranch* b_packedCandsPseudoTrkPy; //!
     TBranch* b_packedCandsPseudoTrkPz; //!
-//    TBranch* b_packedCandsPseudoTrkEta; //!
-//    TBranch* b_packedCandsPseudoTrkPhi; //!
+    TBranch* b_packedCandsPseudoTrkEta; //!
+    TBranch* b_packedCandsPseudoTrkPhi; //!
     TBranch* b_packedCandsPseudoTrkCharge; //!
     TBranch* b_packedCandsPseudoTrkVx; //!
     TBranch* b_packedCandsPseudoTrkVy; //!
     TBranch* b_packedCandsPseudoTrkVz; //!
-//    TBranch* b_packedCandsPseudoTrkChi2Norm; //!
-//    TBranch* b_packedCandsPseudoTrkNumberOfHits; //!
-//    TBranch* b_packedCandsPseudoTrkNumberOfPixelHits; //!
+    TBranch* b_packedCandsPseudoTrkChi2Norm; //!
+    TBranch* b_packedCandsPseudoTrkNumberOfHits; //!
+    TBranch* b_packedCandsPseudoTrkNumberOfPixelHits; //!
 //    TBranch* b_packedCandsPseudoTrkPixelLayersWithMeasurement; //!
 //    TBranch* b_packedCandsPseudoTrkStripLayersWithMeasurement; //!
 //    TBranch* b_packedCandsPseudoTrkTrackerLayersWithMeasurement; //!
@@ -2657,12 +2657,12 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
 //   fChain->SetBranchAddress("packedCandsPhi", packedCandsPhi, &b_packedCandsPhi);
    fChain->SetBranchAddress("packedCandsCharge", packedCandsCharge, &b_packedCandsCharge);
    fChain->SetBranchAddress("packedCandsPdgId", packedCandsPdgId, &b_packedCandsPdgId);
-//   fChain->SetBranchAddress("packedCandsTime", packedCandsTime, &b_packedCandsTime);
+   fChain->SetBranchAddress("packedCandsTime", packedCandsTime, &b_packedCandsTime);
 //   fChain->SetBranchAddress("packedCandsFromPV", packedCandsFromPV, &b_packedCandsFromPV);
 //   fChain->SetBranchAddress("packedCandsPVquality", packedCandsPVquality, &b_packedCandsPVquality);
-//   fChain->SetBranchAddress("packedCandsVx", packedCandsVx, &b_packedCandsVx);
-//   fChain->SetBranchAddress("packedCandsVy", packedCandsVy, &b_packedCandsVy);
-//   fChain->SetBranchAddress("packedCandsVz", packedCandsVz, &b_packedCandsVz);
+   fChain->SetBranchAddress("packedCandsVx", packedCandsVx, &b_packedCandsVx);
+   fChain->SetBranchAddress("packedCandsVy", packedCandsVy, &b_packedCandsVy);
+   fChain->SetBranchAddress("packedCandsVz", packedCandsVz, &b_packedCandsVz);
 //   fChain->SetBranchAddress("packedCandsVEta", packedCandsVEta, &b_packedCandsVEta);
 //   fChain->SetBranchAddress("packedCandsVPhi", packedCandsVPhi, &b_packedCandsVPhi);
 //   fChain->SetBranchAddress("packedCandsBeamSpotCorrectedD0", packedCandsBeamSpotCorrectedD0, &b_packedCandsBeamSpotCorrectedD0);
@@ -2671,22 +2671,22 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
 //   fChain->SetBranchAddress("packedCandsDzAssocPV", packedCandsDzAssocPV, &b_packedCandsDzAssocPV);
 //   fChain->SetBranchAddress("packedCandsVtxChi2Norm", packedCandsVtxChi2Norm, &b_packedCandsVtxChi2Norm);
    fChain->SetBranchAddress("packedCandsHasTrackDetails", packedCandsHasTrackDetails, &b_packedCandsHasTrackDetails);
-//   fChain->SetBranchAddress("packedCandsDzError", packedCandsDzError, &b_packedCandsDzError);
-//   fChain->SetBranchAddress("packedCandsDxyError", packedCandsDxyError, &b_packedCandsDxyError);
-//   fChain->SetBranchAddress("packedCandsTimeError", packedCandsTimeError, &b_packedCandsTimeError);
-//   fChain->SetBranchAddress("packedCandsPseudoTrkPt", packedCandsPseudoTrkPt, &b_packedCandsPseudoTrkPt);
+   fChain->SetBranchAddress("packedCandsDzError", packedCandsDzError, &b_packedCandsDzError);
+   fChain->SetBranchAddress("packedCandsDxyError", packedCandsDxyError, &b_packedCandsDxyError);
+   fChain->SetBranchAddress("packedCandsTimeError", packedCandsTimeError, &b_packedCandsTimeError);
+   fChain->SetBranchAddress("packedCandsPseudoTrkPt", packedCandsPseudoTrkPt, &b_packedCandsPseudoTrkPt);
    fChain->SetBranchAddress("packedCandsPseudoTrkPx", packedCandsPseudoTrkPx, &b_packedCandsPseudoTrkPx);
    fChain->SetBranchAddress("packedCandsPseudoTrkPy", packedCandsPseudoTrkPy, &b_packedCandsPseudoTrkPy);
    fChain->SetBranchAddress("packedCandsPseudoTrkPz", packedCandsPseudoTrkPz, &b_packedCandsPseudoTrkPz);
-//   fChain->SetBranchAddress("packedCandsPseudoTrkEta", packedCandsPseudoTrkEta, &b_packedCandsPseudoTrkEta);
-//   fChain->SetBranchAddress("packedCandsPseudoTrkPhi", packedCandsPseudoTrkPhi, &b_packedCandsPseudoTrkPhi);
+   fChain->SetBranchAddress("packedCandsPseudoTrkEta", packedCandsPseudoTrkEta, &b_packedCandsPseudoTrkEta);
+   fChain->SetBranchAddress("packedCandsPseudoTrkPhi", packedCandsPseudoTrkPhi, &b_packedCandsPseudoTrkPhi);
    fChain->SetBranchAddress("packedCandsPseudoTrkCharge", packedCandsPseudoTrkCharge, &b_packedCandsPseudoTrkCharge);
    fChain->SetBranchAddress("packedCandsPseudoTrkVx", packedCandsPseudoTrkVx, &b_packedCandsPseudoTrkVx);
    fChain->SetBranchAddress("packedCandsPseudoTrkVy", packedCandsPseudoTrkVy, &b_packedCandsPseudoTrkVy);
    fChain->SetBranchAddress("packedCandsPseudoTrkVz", packedCandsPseudoTrkVz, &b_packedCandsPseudoTrkVz);
-//   fChain->SetBranchAddress("packedCandsPseudoTrkChi2Norm", packedCandsPseudoTrkChi2Norm, &b_packedCandsPseudoTrkChi2Norm);
-//   fChain->SetBranchAddress("packedCandsPseudoTrkNumberOfHits", packedCandsPseudoTrkNumberOfHits, &b_packedCandsPseudoTrkNumberOfHits);
-//   fChain->SetBranchAddress("packedCandsPseudoTrkNumberOfPixelHits", packedCandsPseudoTrkNumberOfPixelHits, &b_packedCandsPseudoTrkNumberOfHits);
+   fChain->SetBranchAddress("packedCandsPseudoTrkChi2Norm", packedCandsPseudoTrkChi2Norm, &b_packedCandsPseudoTrkChi2Norm);
+   fChain->SetBranchAddress("packedCandsPseudoTrkNumberOfHits", packedCandsPseudoTrkNumberOfHits, &b_packedCandsPseudoTrkNumberOfHits);
+   fChain->SetBranchAddress("packedCandsPseudoTrkNumberOfPixelHits", packedCandsPseudoTrkNumberOfPixelHits, &b_packedCandsPseudoTrkNumberOfHits);
 //   fChain->SetBranchAddress("packedCandsPseudoTrkPixelLayersWithMeasurement", packedCandsPseudoTrkPixelLayersWithMeasurement, &b_packedCandsPseudoTrkPixelLayersWithMeasurement);
 //   fChain->SetBranchAddress("packedCandsPseudoTrkStripLayersWithMeasurement", packedCandsPseudoTrkStripLayersWithMeasurement, &b_packedCandsPseudoTrkStripLayersWithMeasurement);
 //   fChain->SetBranchAddress("packedCandsPseudoTrkTrackerLayersWithMeasurement", packedCandsPseudoTrkTrackerLayersWithMeasurement, &b_packedCandsPseudoTrkTrackerLayersWithMeasurement);
