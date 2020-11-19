@@ -293,14 +293,15 @@ class AnalysisEvent
     Float_t genMetPF2PATPx;
     Float_t genMetPF2PATPy;
     Float_t genMetPF2PATPz;
-
+/*
     static constexpr size_t NTAUSMAX{20};
     Int_t numTauPF2PAT;
     Float_t tauPF2PATE[NTAUSMAX];
     Float_t tauPF2PATPt[NTAUSMAX];
     Float_t tauPF2PATPhi[NTAUSMAX];
     Float_t tauPF2PATEta[NTAUSMAX];
-
+*/
+/*
     static constexpr size_t NPHOTONSMAX{30};
     Int_t numPhoPF2PAT;
     Float_t phoPF2PATE[NPHOTONSMAX];
@@ -359,6 +360,7 @@ class AnalysisEvent
     Int_t genPhoPF2PATIsPhoton[NPHOTONSMAX];
     Int_t genPhoPF2PATIsConvertedPhoton[NPHOTONSMAX];
     Int_t genPhoPF2PATIsJet[NPHOTONSMAX];
+*/
 /*
     static constexpr size_t NOOTPHOTONSMAX{30};
     Int_t numPhoOOT_PF2PAT;
@@ -465,7 +467,7 @@ class AnalysisEvent
 //    Int_t packedCandsPseudoTrkStripLayersWithMeasurement[NPACKEDCANDSMAX];
 //    Int_t packedCandsPseudoTrkTrackerLayersWithMeasurement[NPACKEDCANDSMAX];
     Int_t packedCandsHighPurityTrack[NPACKEDCANDSMAX];
-
+/*
     static constexpr size_t NISOTRACKSMAX{40};
     Int_t numIsolatedTracks;
     Float_t isoTracksPt[NISOTRACKSMAX];
@@ -493,6 +495,7 @@ class AnalysisEvent
     Int_t isoTracksLoose[NISOTRACKSMAX];
     Float_t isoTracksDeltaEta[NISOTRACKSMAX];
     Float_t isoTracksDeltaPhi[NISOTRACKSMAX];
+*/
 
     Int_t isElePlusJets;
     Float_t genPDFScale;
@@ -1360,11 +1363,14 @@ class AnalysisEvent
     TBranch* b_genMetPF2PATPx; //!
     TBranch* b_genMetPF2PATPy; //!
     TBranch* b_genMetPF2PATPz; //!
+/*
     TBranch* b_numTauPF2PAT; //!
     TBranch* b_tauPF2PATE; //!
     TBranch* b_tauPF2PATPt; //!
     TBranch* b_tauPF2PATPhi; //!
     TBranch* b_tauPF2PATEta; //!
+*/
+/*
     TBranch* b_numPhoPF2PAT; //!
     TBranch* b_phoPF2PATE; //!
     TBranch* b_phoPF2PATSigmaE; //!
@@ -1422,6 +1428,7 @@ class AnalysisEvent
     TBranch* b_genPhoPF2PATIsPhoton; //!
     TBranch* b_genPhoPF2PATIsConvertedPhoton; //!
     TBranch* b_genPhoPF2PATIsJet; //!
+*/
 /*
     TBranch* b_numPhoOOT_PF2PAT; //!
     TBranch* b_phoOOT_PF2PATE; //!
@@ -1526,7 +1533,7 @@ class AnalysisEvent
 //    TBranch* b_packedCandsPseudoTrkStripLayersWithMeasurement; //!
 //    TBranch* b_packedCandsPseudoTrkTrackerLayersWithMeasurement; //!
     TBranch* b_packedCandsHighPurityTrack; //!
-
+/*
     TBranch* b_numIsolatedTracks; //!
     TBranch* b_isoTracksPt; //!
     TBranch* b_isoTracksPx; //!
@@ -1553,7 +1560,7 @@ class AnalysisEvent
     TBranch* b_isoTracksLoose; //!
     TBranch* b_isoTracksDeltaEta; //!
     TBranch* b_isoTracksDeltaPhi; //!
-
+*/
     TBranch* b_isElePlusJets; //!
     TBranch* b_genPDFScale; //!
     TBranch* b_genPDFx1; //!
@@ -2519,12 +2526,14 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
        fChain->SetBranchAddress("genMetPF2PATPy", &genMetPF2PATPy, &b_genMetPF2PATPy);
        fChain->SetBranchAddress("genMetPF2PATPz", &genMetPF2PATPz, &b_genMetPF2PATPz);
    }
+/*
    fChain->SetBranchAddress("numTauPF2PAT", &numTauPF2PAT, &b_numTauPF2PAT);
    fChain->SetBranchAddress("tauPF2PATE", tauPF2PATE, &b_tauPF2PATE);
    fChain->SetBranchAddress("tauPF2PATPt", tauPF2PATPt, &b_tauPF2PATPt);
    fChain->SetBranchAddress("tauPF2PATPhi", tauPF2PATPhi, &b_tauPF2PATPhi);
    fChain->SetBranchAddress("tauPF2PATEta", tauPF2PATEta, &b_tauPF2PATEta);
-
+*/
+/*
    fChain->SetBranchAddress("numPhoPF2PAT", &numPhoPF2PAT, &b_numPhoPF2PAT);
    fChain->SetBranchAddress("phoPF2PATE", phoPF2PATE, &b_phoPF2PATE);
    fChain->SetBranchAddress("phoPF2PATSigmaE", phoPF2PATSigmaE, &b_phoPF2PATSigmaE);
@@ -2584,6 +2593,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
       fChain->SetBranchAddress("genPhoPF2PATIsConvertedPhoton", genPhoPF2PATIsConvertedPhoton, &b_genPhoPF2PATIsConvertedPhoton);
       fChain->SetBranchAddress("genPhoPF2PATIsJet", genPhoPF2PATIsJet, &b_genPhoPF2PATIsJet);
    }
+*/
 /*
    fChain->SetBranchAddress("numPhoOOT_PF2PAT", &numPhoOOT_PF2PAT, &b_numPhoOOT_PF2PAT);
    fChain->SetBranchAddress("phoOOT_PF2PATE", phoOOT_PF2PATE, &b_phoOOT_PF2PATE);
@@ -2691,7 +2701,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
 //   fChain->SetBranchAddress("packedCandsPseudoTrkStripLayersWithMeasurement", packedCandsPseudoTrkStripLayersWithMeasurement, &b_packedCandsPseudoTrkStripLayersWithMeasurement);
 //   fChain->SetBranchAddress("packedCandsPseudoTrkTrackerLayersWithMeasurement", packedCandsPseudoTrkTrackerLayersWithMeasurement, &b_packedCandsPseudoTrkTrackerLayersWithMeasurement);
    fChain->SetBranchAddress("packedCandsHighPurityTrack", packedCandsHighPurityTrack, &b_packedCandsHighPurityTrack);
-
+/*
    fChain->SetBranchAddress("numIsolatedTracks", &numIsolatedTracks, &b_numIsolatedTracks);
    fChain->SetBranchAddress("isoTracksPt", isoTracksPt, &b_isoTracksPt);
    fChain->SetBranchAddress("isoTracksPx", isoTracksPx, &b_isoTracksPx);
@@ -2718,7 +2728,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
    fChain->SetBranchAddress("isoTracksLoose", isoTracksLoose, &b_isoTracksLoose);
    fChain->SetBranchAddress("isoTracksDeltaEta", isoTracksDeltaEta, &b_isoTracksDeltaEta);
    fChain->SetBranchAddress("isoTracksDeltaPhi", isoTracksDeltaPhi, &b_isoTracksDeltaPhi);
-
+*/
    if (isMC)
    {
        fChain->SetBranchAddress("isElePlusJets", &isElePlusJets, &b_isElePlusJets);
