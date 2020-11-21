@@ -148,14 +148,14 @@ int main(int argc, char* argv[])
   TH1F* h_muonRecDeltaR        {new TH1F("h_muonRecDeltaR", "Muon reconstruction #DeltaR",2500, -10., 10.)}; 
   TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
   TH1F* h_muonRecInvMass       {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",1000, 0, 500)};
-  TH1F* h_muonCutSingleL        {new TH1F("h_muonCutSingleL",  "Single #mu^{#pm} trigger, leading p_{T}", 1000, 0., 1000.)}; 	
-  TH1F* h_muonCutDoubleL        {new TH1F("h_muonCutDoubleL",  "Double #mu^{#pm} trigger, leading p_{T}", 1000, 0., 1000.)}; 	
-  TH1F* h_muonDivSingleL        {new TH1F("h_muonDivSingleL",  "Turn-on Single #mu^{#pm} trigger, leading p_{T}", 300, 0., 1000.)}; 
-  TH1F* h_muonDivDoubleL        {new TH1F("h_muonDivDoubleL",  "Turn-on Double #mu^{#pm} trigger, leading p_{T}", 300, 0., 1000.)};
+  TH1F* h_muonCutSingleL       {new TH1F("h_muonCutSingleL",  "Single #mu^{#pm} trigger, leading p_{T}", 1000, 0., 1000.)}; 	
+  TH1F* h_muonCutDoubleL       {new TH1F("h_muonCutDoubleL",  "Double #mu^{#pm} trigger, leading p_{T}", 1000, 0., 1000.)}; 	
+  TH1F* h_muonDivSingleL       {new TH1F("h_muonDivSingleL",  "Turn-on Single #mu^{#pm} trigger, leading p_{T}", 300, 0., 1000.)}; 
+  TH1F* h_muonDivDoubleL       {new TH1F("h_muonDivDoubleL",  "Turn-on Double #mu^{#pm} trigger, leading p_{T}", 300, 0., 1000.)};
   //TH1F* h_muonCutSingleS        {new TH1F("h_muonCutSingleS",  "Single #mu^{#pm} reconstruction subleading p_{T}", 1000, 0., 1000.)}; 	
-  TH1F* h_muonCutDoubleS        {new TH1F("h_muonCutDoubleS",  "Double #mu^{#pm} trigger, subleading p_{T}", 1000, 0., 1000.)}; 	
+  TH1F* h_muonCutDoubleS       {new TH1F("h_muonCutDoubleS",  "Double #mu^{#pm} trigger, subleading p_{T}", 1000, 0., 1000.)}; 	
   //TH1F* h_muonDivSingleS        {new TH1F("h_muonDivSingleS",  "Single #mu^{#pm} reconstruction subleading p_{T} divide", 300, 0., 1000.)}; 
-  TH1F* h_muonDivDoubleS        {new TH1F("h_muonDivDoubleS",  "Turn-on Double #mu^{#pm} trigger, subleading p_{T}", 300, 0., 1000.)};
+  TH1F* h_muonDivDoubleS       {new TH1F("h_muonDivDoubleS",  "Turn-on Double #mu^{#pm} trigger, subleading p_{T}", 300, 0., 1000.)};
 	
   //Packed candidates 
   TH1F* h_packedCDxy   {new TH1F("h_packedCDxy", "Packed Candidate Dxy", 500,  -200., 200.)};
@@ -165,7 +165,7 @@ int main(int argc, char* argv[])
   TH1F* h_packedCVz    {new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.)};
   TH2I* h_displacedXY  {new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150)};
   TH2I* h_displacedRZ  {new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250)};	
-  
+  TH1F* h_packedDeltaR {new TH1F("h_packedDeltaR", "Packed Candidate #DeltaR",2500, -10., 10.)}; 
 	
   //Matching
   TH1F* h_massAssump   {new TH1F("h_massAssump",  "Mass assumption", 5000, 0., 1.)};
@@ -755,12 +755,24 @@ int main(int argc, char* argv[])
 	            h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
 	         
 	            //Invariant mass - charged hadrons
-		    const TLorentzVector packedC {event.packedCandsPseudoTrkPx[k],event.packedCandsPseudoTrkPy[k],event.packedCandsPseudoTrkPz[k],event.packedCandsE[k]};
+		    const TLorentzVector packedC {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]};
 		    h_massAssump->Fill(packedC.M()); 
 		    std::cout<<"Mass assumption "<<packedC.M()<<std::endl;  
-		      
-			  
-			  
+		    
+	            //Find the pions
+		    if(event.packedCandsPdgId[k]!=std::abs(13)){//Selection of pions (charged hadrons)
+		      if(event.packedCandsPseudoTrkCharge[0]==-(event.packedCandsPseudoTrkCharge[1])){//Opposite charge
+			
+			TLorentzVector packed1;
+	   	        TLorentzVector packed2;
+		  
+	   	        packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[0],event.packedCandsPseudoTrkEta[0],event.packedCandsPseudoTrkPhi[0],event.packedCandsE[0]);
+	   	        packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[1],event.packedCandsPseudoTrkEta[1],event.packedCandsPseudoTrkPhi[1],event.packedCandsE[1]);
+			
+	   	        h_packedDeltaR->Fill(packed1.DeltaR(packed2));      
+			    
+		      }    
+		    }  
 			  
 	          }
 	        }
@@ -1003,7 +1015,7 @@ int main(int argc, char* argv[])
   h_displacedRZ->GetXaxis()->SetTitle("Vertex position z"); 
   h_displacedRZ->GetYaxis()->SetTitle("R");
   h_displacedRZ->Write();
-  
+  h_packedDeltaR->Write();
 	
   //Matching
   h_massAssump->GetXaxis()->SetTitle("GeV");
