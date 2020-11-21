@@ -85,10 +85,15 @@ int main(int argc, char* argv[])
 	
   //Muon from scalar decay
   TH1F* h_genParScalarMuonPt         {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
-  TH1F* h_genParScalarMuonCutPtS     {new TH1F("h_genParScalarMuonCutPtS",  "#mu^{#pm} from scalar decay p_{T} cut", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonCutPtS     {new TH1F("h_genParScalarMuonCutPtS",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)};
   TH1F* h_genParScalarMuonDivPtS     {new TH1F("h_genParScalarMuonDivPtS",  "#mu^{#pm} from scalar decay p_{T} divide", 300, 0., 1000.)};
-  TH1F* h_genParScalarMuonCutPtD     {new TH1F("h_genParScalarMuonCutPtD",  "#mu^{#pm} from scalar decay p_{T} cut", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonCutPtD     {new TH1F("h_genParScalarMuonCutPtD",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)};
   TH1F* h_genParScalarMuonDivPtD     {new TH1F("h_genParScalarMuonDivPtD",  "#mu^{#pm} from scalar decay p_{T} divide", 300, 0., 1000.)};
+  TH1F* h_genParScalarMuonCutPtS     {new TH1F("h_genParScalarMuonCutPtS",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonDivPtS     {new TH1F("h_genParScalarMuonDivPtS",  "#mu^{#pm} from scalar decay p_{T} divide", 300, 0., 1000.)};
+  TH1F* h_genParScalarMuonCutPtD     {new TH1F("h_genParScalarMuonCutPtD",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonDivPtD     {new TH1F("h_genParScalarMuonDivPtD",  "#mu^{#pm} from scalar decay p_{T} divide", 300, 0., 1000.)};
+			
 	
   TH1F* h_genParScalarMuonEta     {new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
   TH1F* h_genParScalarMuonPhi     {new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
@@ -146,10 +151,14 @@ int main(int argc, char* argv[])
   TH1F* h_muonRecDeltaR        {new TH1F("h_muonRecDeltaR", "Muon reconstruction #DeltaR",2500, -10., 10.)}; 
   TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
   TH1F* h_muonRecInvMass       {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",1000, 0, 500)};
-  TH1F* h_muonCutSingle        {new TH1F("h_muonCutSingle",  "Single #mu^{#pm} reconstruction p_{T} selection", 1000, 0., 1000.)}; 	
-  TH1F* h_muonCutDouble        {new TH1F("h_muonCutDouble",  "Double #mu^{#pm} reconstruction p_{T} selection", 1000, 0., 1000.)}; 	
-  TH1F* h_muonDivSingle        {new TH1F("h_muonDivSingle",  "Single #mu^{#pm} reconstruction p_{T} divide", 300, 0., 1000.)}; 
-  TH1F* h_muonDivDouble        {new TH1F("h_muonDivDouble",  "Double #mu^{#pm} reconstruction p_{T} divide", 300, 0., 1000.)}; 
+  TH1F* h_muonCutSingleL        {new TH1F("h_muonCutSingleL",  "Single #mu^{#pm} reconstruction leading p_{T}", 1000, 0., 1000.)}; 	
+  TH1F* h_muonCutDoubleL        {new TH1F("h_muonCutDoubleL",  "Double #mu^{#pm} reconstruction leading p_{T}", 1000, 0., 1000.)}; 	
+  TH1F* h_muonDivSingleL        {new TH1F("h_muonDivSingleL",  "Single #mu^{#pm} reconstruction leading p_{T} divide", 300, 0., 1000.)}; 
+  TH1F* h_muonDivDoubleL        {new TH1F("h_muonDivDoubleL",  "Double #mu^{#pm} reconstruction leading p_{T} divide", 300, 0., 1000.)};
+  //TH1F* h_muonCutSingleS        {new TH1F("h_muonCutSingleS",  "Single #mu^{#pm} reconstruction subleading p_{T}", 1000, 0., 1000.)}; 	
+  TH1F* h_muonCutDoubleS        {new TH1F("h_muonCutDoubleS",  "Double #mu^{#pm} reconstruction subleading p_{T}", 1000, 0., 1000.)}; 	
+  //TH1F* h_muonDivSingleS        {new TH1F("h_muonDivSingleS",  "Single #mu^{#pm} reconstruction subleading p_{T} divide", 300, 0., 1000.)}; 
+  TH1F* h_muonDivDoubleS        {new TH1F("h_muonDivDoubleS",  "Double #mu^{#pm} reconstruction subleading p_{T} divide", 300, 0., 1000.)};
 	
   //Packed candidates 
   TH1F* h_packedCDxy   {new TH1F("h_packedCDxy", "Packed Candidate Dxy", 500,  -200., 200.)};
@@ -649,14 +658,14 @@ int main(int argc, char* argv[])
 	       if(event.muTrig() ){
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 		
-	 	   if(event.muonPF2PATPt[k]>30){//p_T cut
+	 	   /*if(event.muonPF2PATPt[k]>30){//p_T cut
 	             ptSingle.emplace_back(k);
-		   }	
+		   }*/	
 			 
-	           if(ptSingle.size()!=0){//At least one must obey
-		     h_muonCutSingle->Fill(event.muonPF2PATPt[0]); //Select two highest momenta for the histogram
-	             h_muonCutSingle->Fill(event.muonPF2PATPt[1]);
-		   }
+	           //if(ptSingle.size()!=0){//At least one must obey
+		   h_muonCutSingleL->Fill(event.muonPF2PATPt[0]); //Select two highest momenta for the histogram
+	           //h_muonCutSingleS->Fill(event.muonPF2PATPt[1]);
+		   //}
 		   
 		 }
 		       
@@ -664,12 +673,12 @@ int main(int argc, char* argv[])
 		
 	       if(event.mumuTrig()){
 		       
-		 if(event.muonPF2PATPt[0]>20 && event.muonPF2PATPt[1]>12){//p_T cut
+		 //if(event.muonPF2PATPt[0]>20 && event.muonPF2PATPt[1]>12){//p_T cut
 		   if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut and |eta| < 2.4 
-		     h_muonCutDouble->Fill(event.muonPF2PATPt[0]);
-		     h_muonCutDouble->Fill(event.muonPF2PATPt[1]);
+		     h_muonCutDoubleL->Fill(event.muonPF2PATPt[0]);
+		     h_muonCutDoubleS->Fill(event.muonPF2PATPt[1]);
 		   }	 	 
-		 }
+		 //}
 		       
 	       }
 		
@@ -695,13 +704,21 @@ int main(int argc, char* argv[])
 		
 	}//END of MET filter 
 	
-	h_muonDivSingle=(TH1F*)h_muonCutSingle->Clone();
-	h_muonDivSingle->Divide(h_muonRecPt);
-	h_muonDivSingle->SetTitle("After/before cut");
+	h_muonDivSingleL=(TH1F*)h_muonCutSingleL->Clone();
+	h_muonDivSingleL->Divide(h_muonRecPt);
+	h_muonDivSingleL->SetTitle("Turn-on Single trigger, leading");
 	      
-	h_muonDivDouble=(TH1F*)h_muonCutDouble->Clone();
-	h_muonDivDouble->Divide(h_muonRecPt);
-	h_muonDivDouble->SetTitle("After/before cut");
+	h_muonDivDoubleL=(TH1F*)h_muonCutDoubleL->Clone();
+	h_muonDivDoubleL->Divide(h_muonRecPt);
+	h_muonDivDoubleL->SetTitle("Turn-on Double trigger, leading");
+	      
+	h_muonDivSingleS=(TH1F*)h_muonCutSingleS->Clone();
+	h_muonDivSingleS->Divide(h_muonRecPt);
+	h_muonDivSingleS->SetTitle("Turn-on Single trigger, subleading");
+	      
+	h_muonDivDoubleS=(TH1F*)h_muonCutDoubleS->Clone();
+	h_muonDivDoubleS->Divide(h_muonRecPt);
+	h_muonDivDoubleS->SetTitle("Turn-on Double trigger, subleading");
 
 	//END Muon Reconstruction
 	      
@@ -771,7 +788,7 @@ int main(int argc, char* argv[])
 		
 		h_testRME->Fill(event.muonPF2PATE[*n]);   
 		   
-	        nr1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[*m],event.packedCandsPseudoTrkEta[*m],event.packedCandsPseudoTrkPhi[*m],packedC.M());
+	        nr1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[*m],event.packedCandsPseudoTrkEta[*m],event.packedCandsPseudoTrkPhi[*m],event.packedCandsE[*m]);
 	        nr2.SetPtEtaPhiE(event.muonPF2PATPt[*n],event.muonPF2PATEta[*n],event.muonPF2PATPhi[*n],event.muonPF2PATE[*n]);
 		
 		h_matchDeltaR->Fill(nr1.DeltaR(nr2));
@@ -905,15 +922,11 @@ int main(int argc, char* argv[])
   
   h_genParScalarMuonPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonPt->Write();
-  h_genParScalarMuonCutPtS->GetXaxis()->SetTitle("GeV");
-  h_genParScalarMuonCutPtS->Write();
-  h_genParScalarMuonDivPtS->GetXaxis()->SetTitle("GeV");
-  h_genParScalarMuonDivPtS->Write();
-  h_genParScalarMuonCutPtD->GetXaxis()->SetTitle("GeV");
-  h_genParScalarMuonCutPtD->Write();
-  h_genParScalarMuonDivPtD->GetXaxis()->SetTitle("GeV");
-  h_genParScalarMuonDivPtD->Write();
-		
+  h_genParScalarMuonCutPt->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonCutPt->Write();
+  h_genParScalarMuonDivPt->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonDivPt->Write();
+
   h_genParScalarMuonEta->Write();
   h_genParScalarMuonPhi->Write();
   h_genParScalarMuonE->Write();
@@ -980,14 +993,22 @@ int main(int argc, char* argv[])
   h_muonRecDeltaPhi->Write();
   h_muonRecInvMass->GetXaxis()->SetTitle("GeV");
   h_muonRecInvMass->Write();
-  h_muonCutSingle->GetXaxis()->SetTitle("GeV");
-  h_muonCutSingle->Write();
-  h_muonDivSingle->GetXaxis()->SetTitle("GeV");
-  h_muonDivSingle->Write();
-  h_muonCutDouble->GetXaxis()->SetTitle("GeV");
-  h_muonCutDouble->Write();
-  h_muonDivDouble->GetXaxis()->SetTitle("GeV");
-  h_muonDivDouble->Write();
+  h_muonCutSingleL->GetXaxis()->SetTitle("GeV");
+  h_muonCutSingleL->Write();
+  h_muonDivSingleL->GetXaxis()->SetTitle("GeV");
+  h_muonDivSingleL->Write();
+  h_muonCutDoubleL->GetXaxis()->SetTitle("GeV");
+  h_muonCutDoubleL->Write();
+  h_muonDivDoubleL->GetXaxis()->SetTitle("GeV");
+  h_muonDivDoubleL->Write();
+  //h_muonCutSingleS->GetXaxis()->SetTitle("GeV");
+  //h_muonCutSingleS->Write();
+  //h_muonDivSingleS->GetXaxis()->SetTitle("GeV");
+  //h_muonDivSingleS->Write();
+  h_muonCutDoubleS->GetXaxis()->SetTitle("GeV");
+  h_muonCutDoubleS->Write();
+  h_muonDivDoubleS->GetXaxis()->SetTitle("GeV");
+  h_muonDivDoubleS->Write();
 	
   //Packed Candidates
   h_packedCDxy->Write();
