@@ -152,9 +152,7 @@ int main(int argc, char* argv[])
   TH1F* h_muonCutDoubleL       {new TH1F("h_muonCutDoubleL",  "Double #mu^{#pm} trigger, leading p_{T}", 1000, 0., 1000.)}; 	
   TH1F* h_muonDivSingleL       {new TH1F("h_muonDivSingleL",  "Turn-on Single #mu^{#pm} trigger, leading p_{T}", 300, 0., 1000.)}; 
   TH1F* h_muonDivDoubleL       {new TH1F("h_muonDivDoubleL",  "Turn-on Double #mu^{#pm} trigger, leading p_{T}", 300, 0., 1000.)};
-  //TH1F* h_muonCutSingleS        {new TH1F("h_muonCutSingleS",  "Single #mu^{#pm} reconstruction subleading p_{T}", 1000, 0., 1000.)}; 	
   TH1F* h_muonCutDoubleS       {new TH1F("h_muonCutDoubleS",  "Double #mu^{#pm} trigger, subleading p_{T}", 1000, 0., 1000.)}; 	
-  //TH1F* h_muonDivSingleS        {new TH1F("h_muonDivSingleS",  "Single #mu^{#pm} reconstruction subleading p_{T} divide", 300, 0., 1000.)}; 
   TH1F* h_muonDivDoubleS       {new TH1F("h_muonDivDoubleS",  "Turn-on Double #mu^{#pm} trigger, subleading p_{T}", 300, 0., 1000.)};
 	
   //Packed candidates 
@@ -166,19 +164,10 @@ int main(int argc, char* argv[])
   TH2I* h_displacedXY  {new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150)};
   TH2I* h_displacedRZ  {new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250)};	
   TH1F* h_packedDeltaR {new TH1F("h_packedDeltaR", "Packed Candidate #DeltaR",2500, -10., 10.)}; 
-	
-  //Matching
-  TH1F* h_massAssump   {new TH1F("h_massAssump",  "Mass assumption", 5000, 0., 1.)};
-  TH1F* h_matchDeltaR  {new TH1F("h_matchDeltaR", "#DeltaR reconstructed muon and track candidate",2500, -10., 10.)};
-  TH1F* h_matchPt      {new TH1F("h_matchPt",  "Matched p_{T}", 1000, 0., 1000.)};
-  //TH1F* h_matchEta     {new TH1F("h_matchEta", "Matched #eta",  200, -7., 7.)}; 
-  //TH1F* h_matchPhi     {new TH1F("h_matchPhi", "Matched #phi",  100, -3.5, 3.5)};	
- 	
-  TH1F* h_testRME      {new TH1F("h_testRME",  "test reco muon energy after selection", 1000, 0., 1000.)};
-	
-  //Iso tracks
-//  TH1F* h_isoTracksPt  {new TH1F("h_isoTracksPt",  "Iso tracks p_{T}", 1000, 0., 1000.)}; 	
-	
+  TH1F* h_IsoSum       {new TH1F("h_IsoSum",  "0.3 p_{T} Cone construction ", 1000, 0., 1000.)}; 
+  TH1F* h_hadronInvMass {new TH1F("h_hadronInvMass", "Two hadrons - Invariant mass",1000, 0., 7.)};
+  TH1F* h_muonsInvMass  {new TH1F("h_muonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
+
 	
 	
 	
@@ -725,11 +714,6 @@ int main(int argc, char* argv[])
 		    h_displacedXY->Fill(event.packedCandsPseudoTrkVx[k],event.packedCandsPseudoTrkVy[k]);
 	            h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
 	         
-	            //Invariant mass - charged hadrons
-		    const TLorentzVector packedC {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]};
-		    h_massAssump->Fill(packedC.M()); 
-		    std::cout<<"Mass assumption "<<packedC.M()<<std::endl;  
-		    
 	            //Find the pions
 		    if(event.packedCandsPdgId[k]!=std::abs(13)){//Selection of pions (charged hadrons)
 		      if(event.packedCandsPseudoTrkCharge[0]==-(event.packedCandsPseudoTrkCharge[1])){//Opposite charge
@@ -740,9 +724,15 @@ int main(int argc, char* argv[])
 	   	        packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[0],event.packedCandsPseudoTrkEta[0],event.packedCandsPseudoTrkPhi[0],event.packedCandsE[0]);
 	   	        packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[1],event.packedCandsPseudoTrkEta[1],event.packedCandsPseudoTrkPhi[1],event.packedCandsE[1]);
 			
-	   	        h_packedDeltaR->Fill(packed1.DeltaR(packed2)); 
-			    
-			//Cone .3
+	   	        h_packedDeltaR->Fill(packed1.DeltaR(packed2));
+			
+			//Invariant mass for two hadrons
+	    	        TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[0], event.packedCandsPseudoTrkPy[0], event.packedCandsPseudoTrkPz[0], event.packedCandsE[0]};
+	 	        TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[1], event.packedCandsPseudoTrkPy[1], event.packedCandsPseudoTrkPz[1], event.packedCandsE[1]};
+
+	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
+			      
+			//0.3 p_T cone construction
 			Float_t IsoSum=0;
 			
 			TLorentzVector cone1;//The pion
@@ -761,7 +751,17 @@ int main(int argc, char* argv[])
 			}
 			      
 		      }    
-		    }  	  
+		    } 
+			  
+		    if(event.packedCandsPdgId[k]=std::abs(13)){
+		      if(event.packedCandsPseudoTrkCharge[0]==-(event.packedCandsPseudoTrkCharge[1])){
+			//Invariant mass for two hadrons
+	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[0], event.packedCandsPseudoTrkPy[0], event.packedCandsPseudoTrkPz[0], event.packedCandsE[0]};
+	 	        TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[1], event.packedCandsPseudoTrkPy[1], event.packedCandsPseudoTrkPz[1], event.packedCandsE[1]};
+
+	   	        h_muonsInvMass->Fill((lmuon1+lmuon2).M());
+		      }
+		    }
 	          }
 	        }
 	      }
@@ -783,6 +783,8 @@ int main(int argc, char* argv[])
 
 	
   
+	
+	
 
   std::cout << std::endl;
   std::cout << "Total no. of events:\t\t\t" << totalEvents << std::endl;
@@ -942,21 +944,18 @@ int main(int argc, char* argv[])
   h_displacedRZ->GetYaxis()->SetTitle("R");
   h_displacedRZ->Write();
   h_packedDeltaR->Write();
+  h_IsoSum->Write();
+  h_IsoSum->GetXaxis()->SetTitle("GeV");
+  h_muonsInvMass->Write();
+  h_muonsInvMass->GetXaxis()->SetTitle("GeV");
+  h_hadronInvMass->Write();
+  h_hadronInvMass->GetXaxis()->SetTitle("GeV");
 	
-  //Matching
-  h_massAssump->GetXaxis()->SetTitle("GeV");
-  h_massAssump->Write();
-  h_matchDeltaR->Write();
-  h_matchPt->GetXaxis()->SetTitle("GeV");
-  h_matchPt->Write();
-  //h_matchEta->Write();
-  //h_matchPhi->Write();
-  h_testRME->GetXaxis()->SetTitle("GeV");
-  h_testRME->Write();
 	
-  //Iso tracks
-//  h_isoTracksPt->GetXaxis()->SetTitle("GeV");
-//  h_isoTracksPt->Write();
+	
+	
+	
+	
 	
 	
 	
