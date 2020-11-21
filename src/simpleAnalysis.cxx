@@ -644,7 +644,7 @@ int main(int argc, char* argv[])
 
 	   	   h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
 		   
-		   if(event.muonPF2PATPt[0]>30 && event.muonPF2PATPt[1]>12){//p_T cuts applied 
+		   if(event.muonPF2PATPt[0]>30 && event.muonPF2PATPt[1]>12){//combined (single+double, mix) p_T cut applied 
 		     
 	             if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut and |eta| < 2.4
 		       passedMuons.emplace_back(k);//Take its index
@@ -742,7 +742,7 @@ int main(int argc, char* argv[])
 		
 		  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]};
 		  const Int_t packedCandsCharge {event.packedCandsCharge[k]};
-	          if(packedCandsCharge!=0 && packedCandsPseudoTrkCharge!=0){ //No neutral particles as they don't leave tracks, only charged
+	          if(packedCandsCharge!=0 && packedCandsCharge==packedCandsPseudoTrkCharge){ //No neutral particles as they don't leave tracks, only charged
 	           
 		    nrofPacked.emplace_back(k);
 			  
@@ -754,6 +754,14 @@ int main(int argc, char* argv[])
 		    h_displacedXY->Fill(event.packedCandsPseudoTrkVx[k],event.packedCandsPseudoTrkVy[k]);
 	            h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
 	         
+	            //Invariant mass - charged hadrons
+		    const TLorentzVector packedC {event.packedCandsPseudoTrkPx[k],event.packedCandsPseudoTrkPy[k],event.packedCandsPseudoTrkPz[k],event.packedCandsE[k]};
+		    h_massAssump->Fill(packedC.M()); 
+		    std::cout<<"Mass assumption "<<packedC.M()<<std::endl;  
+		      
+			  
+			  
+			  
 	          }
 	        }
 	      }
@@ -766,7 +774,7 @@ int main(int argc, char* argv[])
 	      
 	
 	      
-	//MATCHING RECO MUON TO PACKED CAND
+	//MATCHING ALGORITHM RECO MUON TO PACKED CAND
 	      
 	std::vector<Int_t> matchMuon;//Store the matched muons
 	std::vector<Int_t>::iterator m; std::vector<Int_t>::iterator n; std::vector<Int_t>::iterator p; 
@@ -774,10 +782,6 @@ int main(int argc, char* argv[])
 	      
 	for (m=nrofPacked.begin(); m!=nrofPacked.end();m++) { //Looping over charged packed cand with tracking details, MET, single or double trigger pass
 	    for (n=passedMuons.begin(); n!=passedMuons.end();n++){ //Reco muon with loose ID cut and |eta| < 2.4, MET, single or double trigger pass
-		
-		const TLorentzVector packedC {event.packedCandsPseudoTrkPx[*m],event.packedCandsPseudoTrkPy[*m],event.packedCandsPseudoTrkPz[*m],event.packedCandsE[*m]};
-		h_massAssump->Fill(packedC.M());
-		//std::cout<<"Mass assumption "<<packedC.M()<<std::endl;
 		    
 		TLorentzVector nr1;
 	        TLorentzVector nr2;
@@ -796,7 +800,7 @@ int main(int argc, char* argv[])
 		    minDR.emplace_back(nr1.DeltaR(nr2));
 		    //Float_t sortedDR=std::sort(minDR);
 			  
-		    std::cout<<"deltaR smaller than 0.1"<<std::endl;
+		    //std::cout<<"deltaR smaller than 0.1"<<std::endl;
 			  
 	            //if(nr1.DeltaR(nr2)==std::min_element(minDR.begin(),minDR.end())){ //To avoid that multiple tracks potentially matched with the muon
 		    
@@ -806,10 +810,10 @@ int main(int argc, char* argv[])
 			
 		      if(packedCandsCharge==packedCandsPseudoTrkCharge && packedCandsPseudoTrkCharge==muonRecCharge){
 		  
-	                if(packedC.M()>0.1385 && packedC.M()<0.1405){//Only charged pions
+	               // if(packedC.M()>0.1385 && packedC.M()<0.1405){//Only charged pions
 			      
 			  //std::cout<<"Mass assumption voor match "<<packedC.M()<<std::endl;    
-	                  std::cout<<"it's a match!"<<std::endl;
+	                  //std::cout<<"it's a match!"<<std::endl;
 		          matchMuon.emplace_back(*m);
 			
 			  for(p=matchMuon.begin(); p!=matchMuon.end();p++){   
@@ -820,7 +824,7 @@ int main(int argc, char* argv[])
 			     //h_matchPhi->Fill(event.packedCandsPseudoTrkPhi[*p]);
 				
 			  }	
-		        }    
+		        //}    
 		      }
 		    //}
 		  }  
@@ -833,37 +837,14 @@ int main(int argc, char* argv[])
 	      
 	      
 	      
-	//Isolated tracks
-        // ADM - commented out as these branches are no longer avaliable as all track info required can be accessed through packed cands 
-/*	      
-	if(event.metFilters()){
-		
-	  for (Int_t k{0}; k<event.numIsolatedTracks;k++){
-	  
-              const TLorentzVector isoTracks {event.isoTracksPx[k],event.isoTracksPy[k],event.isoTracksPz[k],event.isoTracksE[k]};
-		
-	      const Float_t isoTracksPt  { event.isoTracksPt[k] };
-	      h_isoTracksPt->Fill(isoTracksPt);
-		
-	      const Float_t isoTracksEta { event.isoTracksEta[k] };
-	      const Float_t isoTracksPhi { event.isoTracksPhi[k] };
-	      const Float_t isoTracksE   { event.isoTracksE[k] };
-		
-	      const Int_t  isoTracksId     {event.isoTracksPdgId[k]};
-	      const Int_t  isoTracksCharge {event.isoTracksCharge[k]};
-	
-	  }
-	}
-	      
-*/	      
-	      
-	      
-	      
+ 	      
       } //Loop over all events
 	    
   } //Loop over all datatsets
     	
+  //SELECTION
 	
+  
 
   std::cout << std::endl;
   std::cout << "Total no. of events:\t\t\t" << totalEvents << std::endl;
