@@ -644,18 +644,27 @@ int main(int argc, char* argv[])
 	       //To show seperate turn-on curve for single or double muon trigger
 	       if(event.muTrig() ){
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
-		   std::cout<<"single k "<<k<<std::endl;	 
-		   h_muonCutSingleL->Fill(event.muonPF2PATPt[k]); 
-
+		  
+	           if(k!=0){
+		     h_muonCutSingleL->Fill(event.muonPF2PATPt[1]);
+		   }
+		   else if(k==0){
+			  h_muonCutSingleL->Fill(event.muonPF2PATPt[0]);
+		   }
 		 }       
 	       }
 		
 	       if(event.mumuTrig()){
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut and |eta| < 2.4 
-		   std::cout<<"double k "<<k<<std::endl;
-	           h_muonCutDoubleL->Fill(event.muonPF2PATPt[k]);
-		   h_muonCutDoubleS->Fill(event.muonPF2PATPt[k+1]);
-			 
+		  
+		   if(k!=0){
+		     h_muonCutDoubleL->Fill(event.muonPF2PATPt[1]);
+		     h_muonCutDoubleS->Fill(event.muonPF2PATPt[2]);
+		   }
+		   else if(k==0){
+			  h_muonCutDoubleL->Fill(event.muonPF2PATPt[0]);
+		          h_muonCutDoubleS->Fill(event.muonPF2PATPt[1]);
+		   }
 		 }	 	        
 	       }  
 		   
@@ -780,9 +789,8 @@ int main(int argc, char* argv[])
 		    if(cone1.DeltaR(cone2)<0.3){
 		      IsoSum1+=event.packedCandsPseudoTrkPt[k];
 		      h_coneDeltaR->Fill(cone1.DeltaR(cone2));
-		    }
-				
-		    h_IsoSum1->Fill(IsoSum1);
+		      h_IsoSum1->Fill(IsoSum1);
+		    }		  
 		  }
 	      }
 	      
@@ -800,9 +808,8 @@ int main(int argc, char* argv[])
 		    if(cone1.DeltaR(cone2)<0.3){
 		      IsoSum2+=event.packedCandsPseudoTrkPt[k];
 		      h_coneDeltaR->Fill(cone1.DeltaR(cone2));
+		      h_IsoSum2->Fill(IsoSum2);
 		    }
-				
-		    h_IsoSum2->Fill(IsoSum2);
 		  }
 	      }
 	  }
