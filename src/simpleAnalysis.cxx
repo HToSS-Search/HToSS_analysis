@@ -740,8 +740,8 @@ int main(int argc, char* argv[])
 	   	          cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
 			
 			  if(cone1.DeltaR(cone2)<0.3){
-			    IsoSum=IsoSum+(event.packedCandsPseudoTrkPt[k]);
-			    std::cout<<"IsoSum O.3 cone "<<IsoSum<<"for k "<<k<<std::endl;
+			    IsoSum+=event.packedCandsPseudoTrkPt[k];
+			    std::cout<<"IsoSum O.3 cone "<<IsoSum<<"for k "<<k<<"momentum "<<event.packedCandsPseudoTrkPt[k]<<std::endl;
 			  }
 				
 			  h_IsoSum->Fill(IsoSum);
