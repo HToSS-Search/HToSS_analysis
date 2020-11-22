@@ -765,12 +765,12 @@ int main(int argc, char* argv[])
           for (Int_t k{0};k<event.numPackedCands;k++) {	
 		  
 	      for (l=thepion.begin(); l!=thepion.end();l++){
-		  if(l!=k && l!=k+1){
+		  if((*l)!=k && (*l)!=k+1){
 				
 		    TLorentzVector cone1;//The pion
 	   	    TLorentzVector cone2;//Packed candidate
 				    
-	   	    cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[l],event.packedCandsPseudoTrkEta[l],event.packedCandsPseudoTrkPhi[l],event.packedCandsE[l]);
+	   	    cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[*l],event.packedCandsPseudoTrkEta[*l],event.packedCandsPseudoTrkPhi[*l],event.packedCandsE[*l]);
 	   	    cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
 			
 		    if(cone1.DeltaR(cone2)<0.3){
