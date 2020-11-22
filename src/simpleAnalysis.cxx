@@ -758,7 +758,8 @@ int main(int argc, char* argv[])
 	}    
 	      
 	      
-	  //0.3 p_T cone construction
+	//0.3 p_T cone construction
+	std::vector<Int_t>::iterator l;
 	if(event.metFilters()){
 		
           for (Int_t k{0};k<event.numPackedCands;k++) {	
