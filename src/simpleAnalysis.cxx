@@ -681,7 +681,7 @@ int main(int argc, char* argv[])
 	      
 	//BEGIN Packed candidates 
 	      
-	std::vector<Int_t> nrofPacked;
+	std::vector<Int_t> thepion;
 	Float_t IsoSum=0;      
 	if(event.metFilters()){
 		
@@ -712,7 +712,7 @@ int main(int argc, char* argv[])
 		    h_displacedXY->Fill(event.packedCandsPseudoTrkVx[k],event.packedCandsPseudoTrkVy[k]);
 	            h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
 	         
-	            //Find the pions
+	            //Find the hadrons (pions)
 		    if(packedId!=std::abs(13) && event.packedCandsPdgId[k+1]!=std::abs(13)){//Selection of pions (charged hadrons)
 		      if(event.packedCandsPseudoTrkCharge[k]==-(event.packedCandsPseudoTrkCharge[k+1])){//Opposite charge
 			
@@ -729,32 +729,13 @@ int main(int argc, char* argv[])
 	 	        TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[k+1], event.packedCandsPseudoTrkPy[k+1], event.packedCandsPseudoTrkPz[k+1], event.packedCandsE[k+1]};
 
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
-			      
-			//0.3 p_T cone construction
-			
-			for (Int_t l{0};l<event.numPackedCands;l++){
-		            if(l!=k && l!=k+1){
-				
-			      TLorentzVector cone1;//The pion
-	   	              TLorentzVector cone2;//Packed candidate
-				    
-	   	              cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[l],event.packedCandsPseudoTrkEta[l],event.packedCandsPseudoTrkPhi[l],event.packedCandsE[l]);
-	   	              cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
-			
-			      if(cone1.DeltaR(cone2)<0.3){
-			        IsoSum+=event.packedCandsPseudoTrkPt[k];
-			      }
-				
-			      h_IsoSum->Fill(IsoSum);
-				
-			    }
-			}    
+			thepion.emplace_back(k);  
 		      }    
 		    } 
 			  
 		    if(packedId==std::abs(13) && event.packedCandsPdgId[k+1]==std::abs(13)){
 		      if(event.packedCandsPseudoTrkCharge[k]==-(event.packedCandsPseudoTrkCharge[k+1])){
-			//Invariant mass for two hadrons
+			//Invariant mass for two muons
 	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
 	 	        TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[k+1], event.packedCandsPseudoTrkPy[k+1], event.packedCandsPseudoTrkPz[k+1], event.packedCandsE[k+1]};
 
@@ -772,9 +753,34 @@ int main(int argc, char* argv[])
 	          }
 	        }
 	      }
-	  
-          }
-	}     
+		  
+	  }    	
+	}    
+	      
+	      
+	  //0.3 p_T cone construction
+	if(event.metFilters()){
+		
+          for (Int_t k{0};k<event.numPackedCands;k++) {	
+		  
+	      for (l=thepion.begin(); l!=thepion.end();l++){
+		  if(l!=k && l!=k+1){
+				
+		    TLorentzVector cone1;//The pion
+	   	    TLorentzVector cone2;//Packed candidate
+				    
+	   	    cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[l],event.packedCandsPseudoTrkEta[l],event.packedCandsPseudoTrkPhi[l],event.packedCandsE[l]);
+	   	    cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+			
+		    if(cone1.DeltaR(cone2)<0.3){
+		      IsoSum+=event.packedCandsPseudoTrkPt[k];
+		    }
+				
+		    h_IsoSum->Fill(IsoSum);
+		  }
+	      }
+	  }
+	}
    
 	//END Packed Candidates    
 	      
