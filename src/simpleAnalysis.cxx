@@ -361,14 +361,14 @@ int main(int argc, char* argv[])
 	           if(event.muTrig()){
 			std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
 	             h_genParScalarMuonCutPtSL->Fill(event.genParPt[0]);
-			   std::cout<<"hoogste scalar single "<<std::endl;
+			   std::cout<<"hoogste scalar single "<<event.genParPt[0]<<std::endl;
 			std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
 		   }
 		   if(event.mumuTrig()){
 			std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
-			   std::cout<<"hoogste scalar double "<<std::endl;
+			   std::cout<<"hoogste scalar double "<<event.genParPt[0]<<std::endl;
 	             h_genParScalarMuonCutPtDL->Fill(event.genParPt[0]);
-			   std::cout<<"tweede hoogste scalar double "<<std::endl;
+			   std::cout<<"tweede hoogste scalar double "<<event.genParPt[1]<<std::endl;
 		     h_genParScalarMuonCutPtDS->Fill(event.genParPt[1]);
 			std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
 		   }
