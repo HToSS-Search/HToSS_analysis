@@ -652,7 +652,7 @@ int main(int argc, char* argv[])
 		
 	       if(event.mumuTrig()){
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut and |eta| < 2.4 
-		   std::cout<<"double k "<<k<<std::endl 
+		   std::cout<<"double k "<<k<<std::endl;
 	           h_muonCutDoubleL->Fill(event.muonPF2PATPt[k]);
 		   h_muonCutDoubleS->Fill(event.muonPF2PATPt[k+1]);
 			 
