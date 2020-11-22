@@ -306,7 +306,7 @@ int main(int argc, char* argv[])
 	  const Int_t genParVy {event.genParVy[k]};
 	  const Int_t genParVz {event.genParVz[k]};
 		    
-	  const Float_t genParPt  { event.genParPt[k] };
+	  //const Float_t genParPt  { event.genParPt[k] };
 	  const Float_t genParEta { event.genParEta[k] };
 	  const Float_t genParPhi { event.genParPhi[k] };
 	  const Float_t genParE   { event.genParE[k] };
@@ -314,7 +314,7 @@ int main(int argc, char* argv[])
 	  const bool ownParent {pdgId == motherId ? true : false}; 
 	  //meaning: const bool ownParent {if(pdgId == motherId){return true;}else{return false;}};
 
-	  h_genParPt->Fill(genParPt);
+	  h_genParPt->Fill(event.genParPt[k]);
 	  h_genParEta->Fill(genParEta);
 	  h_genParPhi->Fill(genParPhi);
 	  h_genParE->Fill(genParE);
@@ -322,7 +322,7 @@ int main(int argc, char* argv[])
 	  //Higgs boson
 	  if (pdgId==25 && !ownParent){ //First entry Higgs - to obtain mass correctly
 	    nrofHiggs.emplace_back(k);
-	    h_genParHiggsPt->Fill(genParPt);
+	    h_genParHiggsPt->Fill(event.genParPt[k]);
 	    h_genParHiggsEta->Fill(genParEta);
 	    h_genParHiggsPhi->Fill(genParPhi);
 	    h_genParHiggsE->Fill(genParE);
@@ -331,7 +331,7 @@ int main(int argc, char* argv[])
 	  //Scalar decay
 	  if (pdgId==9000006){
 	    nrofScalar.emplace_back(k); //Store the scalar index k in nrofScalar		
-	    h_genParScalarPt->Fill(genParPt);
+	    h_genParScalarPt->Fill(event.genParPt[k]);
 	    h_genParScalarEta->Fill(genParEta);
 	    h_genParScalarPhi->Fill(genParPhi);
 	    h_genParScalarE->Fill(genParE);
@@ -356,7 +356,7 @@ int main(int argc, char* argv[])
 		 std::cout << __LINE__ << " : " << __FILE__ << std::endl;    
 		if (event.metFilters()){ 
 		    std::cout << __LINE__ << " : " << __FILE__ << std::endl;  
-		   h_genParScalarMuonPt->Fill(genParPt);
+		   h_genParScalarMuonPt->Fill(event.genParPt[k]);
 		   std::cout << __LINE__ << " : " << __FILE__ << std::endl;   
 	           if(event.muTrig()){
 			std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
@@ -380,7 +380,7 @@ int main(int argc, char* argv[])
 	    //Charged kaon from scalar decay
 	    if (pdgId==321){
 	      nrofKaon.emplace_back(k);
-	      h_genParScalarCKaonPt->Fill(genParPt);
+	      h_genParScalarCKaonPt->Fill(event.genParPt[k]);
 	      h_genParScalarCKaonEta->Fill(genParEta);
 	      h_genParScalarCKaonPhi->Fill(genParPhi);
 	      h_genParScalarCKaonE->Fill(genParE);
@@ -391,7 +391,7 @@ int main(int argc, char* argv[])
 	    //K short from scalar decay
 	    if (pdgId==310){
 	      nrofKShort.emplace_back(k); //Together with kaon in angular differences
-	      h_genParScalarKShortPt->Fill(genParPt);
+	      h_genParScalarKShortPt->Fill(event.genParPt[k]);
 	      h_genParScalarKShortEta->Fill(genParEta);
 	      h_genParScalarKShortPhi->Fill(genParPhi);
 	      h_genParScalarKShortE->Fill(genParE);
@@ -402,7 +402,7 @@ int main(int argc, char* argv[])
 	    //Charged pion from scalar decay
 	    if (pdgId==211){
 	      nrofPion.emplace_back(k);
-	      h_genParScalarCPionPt->Fill(genParPt);
+	      h_genParScalarCPionPt->Fill(event.genParPt[k]);
 	      h_genParScalarCPionEta->Fill(genParEta);
 	      h_genParScalarCPionPhi->Fill(genParPhi);
 	      h_genParScalarCPionE->Fill(genParE);
@@ -413,7 +413,7 @@ int main(int argc, char* argv[])
 	    //Neutral pion from scalar decay
 	    if (pdgId==111){
 	      nrofPion.emplace_back(k);
-	      h_genParScalarNPionPt->Fill(genParPt);
+	      h_genParScalarNPionPt->Fill(event.genParPt[k]);
 	      h_genParScalarNPionEta->Fill(genParEta);
 	      h_genParScalarNPionPhi->Fill(genParPhi);
 	      h_genParScalarNPionE->Fill(genParE);
