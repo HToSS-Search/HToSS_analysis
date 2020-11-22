@@ -85,12 +85,12 @@ int main(int argc, char* argv[])
 	
   //Muon from scalar decay
   TH1F* h_genParScalarMuonPt          {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)}; 
-  TH1F* h_genParScalarMuonCutPtSL     {new TH1F("h_genParScalarMuonCutPtSL",  "Single #mu^{#pm} trigger, leading p_{T}", 1000, 0., 1000.)};
-  TH1F* h_genParScalarMuonDivPtSL     {new TH1F("h_genParScalarMuonDivPtSL",  "Turn-on Single #mu^{#pm} trigger, leading p_{T}", 300, 0., 1000.)};
-  TH1F* h_genParScalarMuonCutPtDL     {new TH1F("h_genParScalarMuonCutPtDL",  "Double #mu^{#pm} trigger, leading p_{T}", 1000, 0., 1000.)};
-  TH1F* h_genParScalarMuonDivPtDL     {new TH1F("h_genParScalarMuonDivPtDL",  "Turn-on Double #mu^{#pm} trigger, leading p_{T}", 300, 0., 1000.)};
-  TH1F* h_genParScalarMuonCutPtDS     {new TH1F("h_genParScalarMuonCutPtDS",  "Double #mu^{#pm} trigger, subleading p_{T}", 1000, 0., 1000.)};
-  TH1F* h_genParScalarMuonDivPtDS     {new TH1F("h_genParScalarMuonDivPtDS",  "Turn-on Double #mu^{#pm} trigger, subleading p_{T}", 300, 0., 1000.)};
+  TH1F* h_genParScalarMuonCutPtSL     {new TH1F("h_genParScalarMuonCutPtSL",  "Single #mu^{#pm} trigger leading p_{T}", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonDivPtSL     {new TH1F("h_genParScalarMuonDivPtSL",  "Turn-on Single #mu^{#pm} trigger leading p_{T}", 300, 0., 1000.)};
+  TH1F* h_genParScalarMuonCutPtDL     {new TH1F("h_genParScalarMuonCutPtDL",  "Double #mu^{#pm} trigger leading p_{T}", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonDivPtDL     {new TH1F("h_genParScalarMuonDivPtDL",  "Turn-on Double #mu^{#pm} trigger leading p_{T}", 300, 0., 1000.)};
+  TH1F* h_genParScalarMuonCutPtDS     {new TH1F("h_genParScalarMuonCutPtDS",  "Double #mu^{#pm} trigger subleading p_{T}", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonDivPtDS     {new TH1F("h_genParScalarMuonDivPtDS",  "Turn-on Double #mu^{#pm} trigger subleading p_{T}", 300, 0., 1000.)};
 	
   TH1F* h_genParScalarMuonEta     {new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.)}; 
   TH1F* h_genParScalarMuonPhi     {new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
@@ -148,12 +148,12 @@ int main(int argc, char* argv[])
   TH1F* h_muonRecDeltaR        {new TH1F("h_muonRecDeltaR", "Muon reconstruction #DeltaR",2500, -10., 10.)}; 
   TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
   TH1F* h_muonRecInvMass       {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",1000, 0, 500)};
-  TH1F* h_muonCutSingleL       {new TH1F("h_muonCutSingleL",  "Single #mu^{#pm} trigger, leading p_{T}", 1000, 0., 1000.)}; 	
-  TH1F* h_muonCutDoubleL       {new TH1F("h_muonCutDoubleL",  "Double #mu^{#pm} trigger, leading p_{T}", 1000, 0., 1000.)}; 	
-  TH1F* h_muonDivSingleL       {new TH1F("h_muonDivSingleL",  "Turn-on Single #mu^{#pm} trigger, leading p_{T}", 300, 0., 1000.)}; 
-  TH1F* h_muonDivDoubleL       {new TH1F("h_muonDivDoubleL",  "Turn-on Double #mu^{#pm} trigger, leading p_{T}", 300, 0., 1000.)};
-  TH1F* h_muonCutDoubleS       {new TH1F("h_muonCutDoubleS",  "Double #mu^{#pm} trigger, subleading p_{T}", 1000, 0., 1000.)}; 	
-  TH1F* h_muonDivDoubleS       {new TH1F("h_muonDivDoubleS",  "Turn-on Double #mu^{#pm} trigger, subleading p_{T}", 300, 0., 1000.)};
+  TH1F* h_muonCutSingleL       {new TH1F("h_muonCutSingleL",  "Single #mu^{#pm} trigger leading p_{T}", 1000, 0., 1000.)}; 	
+  TH1F* h_muonCutDoubleL       {new TH1F("h_muonCutDoubleL",  "Double #mu^{#pm} trigger leading p_{T}", 1000, 0., 1000.)}; 	
+  TH1F* h_muonDivSingleL       {new TH1F("h_muonDivSingleL",  "Turn-on Single #mu^{#pm} trigger leading p_{T}", 300, 0., 1000.)}; 
+  TH1F* h_muonDivDoubleL       {new TH1F("h_muonDivDoubleL",  "Turn-on Double #mu^{#pm} trigger leading p_{T}", 300, 0., 1000.)};
+  TH1F* h_muonCutDoubleS       {new TH1F("h_muonCutDoubleS",  "Double #mu^{#pm} trigger subleading p_{T}", 1000, 0., 1000.)}; 	
+  TH1F* h_muonDivDoubleS       {new TH1F("h_muonDivDoubleS",  "Turn-on Double #mu^{#pm} trigger subleading p_{T}", 300, 0., 1000.)};
 	
   //Packed candidates 
   TH1F* h_packedCDxy   {new TH1F("h_packedCDxy", "Packed Candidate Dxy", 500,  -200., 200.)};
@@ -353,21 +353,21 @@ int main(int argc, char* argv[])
 	        h_VertexPosXY->Fill(genParVx,genParVy);
 	        h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
 		h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
-		     
+		 std::cout << __LINE__ << " : " << __FILE__ << std::endl;    
 		if (event.metFilters()){ 
-		      
+		    std::cout << __LINE__ << " : " << __FILE__ << std::endl;  
 		   h_genParScalarMuonPt->Fill(genParPt);
-		      
+		   std::cout << __LINE__ << " : " << __FILE__ << std::endl;   
 	           if(event.muTrig()){
-			 
+			std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
 	             h_genParScalarMuonCutPtSL->Fill(event.genParPt[0]);
-			 
+			std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
 		   }
 		   if(event.mumuTrig()){
-			 
+			std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
 	             h_genParScalarMuonCutPtDL->Fill(event.genParPt[0]);
 		     h_genParScalarMuonCutPtDS->Fill(event.genParPt[1]);
-			 
+			std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
 		   }
 		      
 	        }
@@ -424,19 +424,19 @@ int main(int argc, char* argv[])
 	  pdgIdMap[pdgId]++;
 		    
 	}  
-	      
+	 std::cout << __LINE__ << " : " << __FILE__ << std::endl;     
 	h_genParScalarMuonDivPtSL=(TH1F*)h_genParScalarMuonCutPtSL->Clone();
 	h_genParScalarMuonDivPtSL->Divide(h_genParScalarMuonPt);
-	h_genParScalarMuonDivPtSL->SetTitle("Turn-on Single trigger, leading");
-	      
+	h_genParScalarMuonDivPtSL->SetTitle("Turn-on Single trigger leading");
+	 std::cout << __LINE__ << " : " << __FILE__ << std::endl;     
 	h_genParScalarMuonDivPtDL=(TH1F*)h_genParScalarMuonCutPtDL->Clone();
 	h_genParScalarMuonDivPtDL->Divide(h_genParScalarMuonPt);
-	h_genParScalarMuonDivPtDL->SetTitle("Turn-on Double trigger, leading");
-	      
+	h_genParScalarMuonDivPtDL->SetTitle("Turn-on Double trigger leading");
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;      
 	h_genParScalarMuonDivPtDS=(TH1F*)h_genParScalarMuonCutPtDS->Clone();
 	h_genParScalarMuonDivPtDS->Divide(h_genParScalarMuonPt);
-	h_genParScalarMuonDivPtDS->SetTitle("Turn-on Double trigger, subleading");
-	      
+	h_genParScalarMuonDivPtDS->SetTitle("Turn-on Double trigger subleading");
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;      
 	      
 	if (nrofScalar.size()==2){ //Two-particle (scalar) correlations
 	  const int Nr1 {nrofScalar[0]}; //Give the scalar index value k
