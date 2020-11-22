@@ -156,15 +156,15 @@ int main(int argc, char* argv[])
   TH1F* h_muonDivDoubleS       {new TH1F("h_muonDivDoubleS",  "Turn-on Double #mu^{#pm} trigger subleading p_{T}", 300, 0., 1000.)};
 	
   //Packed candidates 
-  TH1F* h_packedCDxy   {new TH1F("h_packedCDxy", "Packed Candidate Dxy", 500,  -200., 200.)};
-  TH1F* h_packedCDz    {new TH1F("h_packedCDz",  "Packed Candidate Dz", 1500, -500., 500.)};
-  TH1F* h_packedCVx    {new TH1F("h_packedCVx",  "Packed Candidate track vx", 500,  -150., 150.)};
-  TH1F* h_packedCVy    {new TH1F("h_packedCVy",  "Packed Candidate track vy", 500,  -150., 150.)};
-  TH1F* h_packedCVz    {new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.)};
-  TH2I* h_displacedXY  {new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150)};
-  TH2I* h_displacedRZ  {new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250)};	
-  TH1F* h_packedDeltaR {new TH1F("h_packedDeltaR", "Packed Candidate #DeltaR",2500, -10., 10.)}; 
-  TH1F* h_IsoSum       {new TH1F("h_IsoSum",  "0.3 p_{T} Cone construction ", 1000, 0., 1000.)}; 
+  TH1F* h_packedCDxy    {new TH1F("h_packedCDxy", "Packed Candidate Dxy", 500,  -200., 200.)};
+  TH1F* h_packedCDz     {new TH1F("h_packedCDz",  "Packed Candidate Dz", 1500, -500., 500.)};
+  TH1F* h_packedCVx     {new TH1F("h_packedCVx",  "Packed Candidate track vx", 500,  -150., 150.)};
+  TH1F* h_packedCVy     {new TH1F("h_packedCVy",  "Packed Candidate track vy", 500,  -150., 150.)};
+  TH1F* h_packedCVz     {new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.)};
+  TH2I* h_displacedXY   {new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150)};
+  TH2I* h_displacedRZ   {new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250)};	
+  TH1F* h_packedDeltaR  {new TH1F("h_packedDeltaR", "Packed Candidate #DeltaR",2500, -10., 10.)}; 
+  TH1F* h_IsoSum        {new TH1F("h_IsoSum",  "0.3 p_{T} Cone construction ", 1000, 0., 1000.)}; 
   TH1F* h_hadronInvMass {new TH1F("h_hadronInvMass", "Two hadrons - Invariant mass",1000, 0., 7.)};
   TH1F* h_muonsInvMass  {new TH1F("h_muonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
 
@@ -287,7 +287,7 @@ int main(int argc, char* argv[])
 	      
 	      
 	      
-	//////// GENERATOR PARTICLE STUFF
+	//GENERATOR PARTICLE STUFF
 	std::vector<int> nrofHiggs;
 	std::vector<int> nrofScalar; //Number of scalars
 	std::vector<int> nrofMuon;
@@ -353,28 +353,23 @@ int main(int argc, char* argv[])
 	        h_VertexPosXY->Fill(genParVx,genParVy);
 	        h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
 		h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
-		 std::cout << __LINE__ << " : " << __FILE__ << std::endl;    
+		  
 		if (event.metFilters()){ 
-		    std::cout << __LINE__ << " : " << __FILE__ << std::endl;  
+		   
 		   h_genParScalarMuonPt->Fill(event.genParPt[k]);
-		   std::cout << __LINE__ << " : " << __FILE__ << std::endl;   
+		  
 	           if(event.muTrig()){
-			std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
+			
 	             h_genParScalarMuonCutPtSL->Fill(event.genParPt[k]);
 			  
-			std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
 		   }
 		   if(event.mumuTrig()){
-			std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
 			  
-	             h_genParScalarMuonCutPtDL->Fill(event.genParPt[k]);
-			  
+	             h_genParScalarMuonCutPtDL->Fill(event.genParPt[k]);  
 		     h_genParScalarMuonCutPtDS->Fill(event.genParPt[k+1]);
-			std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
-		   }
-		      
-	        }
-		     
+			
+		   }    
+	        }     
 	     }
 		 
 	    //Charged kaon from scalar decay
@@ -427,19 +422,19 @@ int main(int argc, char* argv[])
 	  pdgIdMap[pdgId]++;
 		    
 	}  
-	 std::cout << __LINE__ << " : " << __FILE__ << std::endl;     
+
 	h_genParScalarMuonDivPtSL=(TH1F*)h_genParScalarMuonCutPtSL->Clone();
 	h_genParScalarMuonDivPtSL->Divide(h_genParScalarMuonPt);
 	h_genParScalarMuonDivPtSL->SetTitle("Turn-on Single trigger leading");
-	 std::cout << __LINE__ << " : " << __FILE__ << std::endl;     
+	
 	h_genParScalarMuonDivPtDL=(TH1F*)h_genParScalarMuonCutPtDL->Clone();
 	h_genParScalarMuonDivPtDL->Divide(h_genParScalarMuonPt);
 	h_genParScalarMuonDivPtDL->SetTitle("Turn-on Double trigger leading");
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;      
+	
 	h_genParScalarMuonDivPtDS=(TH1F*)h_genParScalarMuonCutPtDS->Clone();
 	h_genParScalarMuonDivPtDS->Divide(h_genParScalarMuonPt);
 	h_genParScalarMuonDivPtDS->SetTitle("Turn-on Double trigger subleading");
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;      
+	      
 	      
 	if (nrofScalar.size()==2){ //Two-particle (scalar) correlations
 	  const int Nr1 {nrofScalar[0]}; //Give the scalar index value k
@@ -591,8 +586,7 @@ int main(int argc, char* argv[])
 	
 	      
 	      
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;      
-	      
+	
 	      
 	      
 	/// BEGIN Muon Reconstruction
@@ -748,7 +742,9 @@ int main(int argc, char* argv[])
 			
 			  if(cone1.DeltaR(cone2)<0.3){
 			    IsoSum=IsoSum+event.packedCandsPseudoTrkPt[k];
+			    std::cout<<"IsoSum O.3 cone "<<IsoSum<<"for k "<<k<<std::endl;
 			  }
+				
 			  h_IsoSum->Fill(IsoSum);
 				
 			}
