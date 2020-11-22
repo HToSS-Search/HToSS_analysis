@@ -590,7 +590,7 @@ int main(int argc, char* argv[])
 	      
 	std::cout << __LINE__ << " : " << __FILE__ << std::endl;      
 	      
-	  /*    
+	      
 	      
 	/// BEGIN Muon Reconstruction
 	std::vector<Int_t> ptSingle; std::vector<Int_t> ptDouble;
@@ -677,9 +677,9 @@ int main(int argc, char* argv[])
 
 	//END Muon Reconstruction
 	      
-	 */     
 	      
-	/*      
+	      
+	      
 	      
 	//BEGIN Packed candidates 
 	      
@@ -772,7 +772,7 @@ int main(int argc, char* argv[])
 	//END Packed Candidates    
 	      
 	      
-	*/      
+	     
 	   std::cout << __LINE__ << " : " << __FILE__ << std::endl;   
  	      
       } //Loop over all events
