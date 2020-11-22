@@ -166,7 +166,8 @@ int main(int argc, char* argv[])
   TH1F* h_hadronDeltaR  {new TH1F("h_hadronDeltaR", "Two hadrons #DeltaR",2500, -10., 10.)}; 
   TH1F* h_muonsDeltaR   {new TH1F("h_muonsDeltaR", "Two muons #DeltaR",2500, -10., 10.)};
   TH1F* h_coneDeltaR    {new TH1F("h_coneDeltaR", "Cone mapping  #DeltaR",2500, -10., 10.)}; 
-  TH1F* h_IsoSum        {new TH1F("h_IsoSum",  "0.3 p_{T} Cone construction ", 1000, 0., 1000.)}; 
+  TH1F* h_IsoSum1       {new TH1F("h_IsoSum1",  "0.3 p_{T} Cone construction pion 1", 1000, 0., 1000.)};
+  TH1F* h_IsoSum2       {new TH1F("h_IsoSum1",  "0.3 p_{T} Cone construction pion 2", 1000, 0., 1000.)}; 
   TH1F* h_hadronInvMass {new TH1F("h_hadronInvMass", "Two hadrons - Invariant mass",1000, 0., 7.)};
   TH1F* h_muonsInvMass  {new TH1F("h_muonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
 
@@ -643,17 +644,17 @@ int main(int argc, char* argv[])
 	       //To show seperate turn-on curve for single or double muon trigger
 	       if(event.muTrig() ){
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
-			 
-		   h_muonCutSingleL->Fill(event.muonPF2PATPt[0]); 
+		   std::cout<<"single k "<<k<<std::endl;	 
+		   h_muonCutSingleL->Fill(event.muonPF2PATPt[k]); 
 
 		 }       
 	       }
 		
 	       if(event.mumuTrig()){
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut and |eta| < 2.4 
-		     
-	           h_muonCutDoubleL->Fill(event.muonPF2PATPt[0]);
-		   h_muonCutDoubleS->Fill(event.muonPF2PATPt[1]);
+		   std::cout<<"double k "<<k<<std::endl 
+	           h_muonCutDoubleL->Fill(event.muonPF2PATPt[k]);
+		   h_muonCutDoubleS->Fill(event.muonPF2PATPt[k+1]);
 			 
 		 }	 	        
 	       }  
@@ -682,8 +683,8 @@ int main(int argc, char* argv[])
 	      
 	//BEGIN Packed candidates 
 	      
-	std::vector<Int_t> thepion;
-	Float_t IsoSum=0;      
+	std::vector<Int_t> thepion; std::vector<Int_t> otherpion;
+	Float_t IsoSum1=0;  Float_t IsoSum2=0;        
 	if(event.metFilters()){
 		
           for (Int_t k{0};k<event.numPackedCands;k++) {
@@ -730,7 +731,7 @@ int main(int argc, char* argv[])
 	 	        TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[k+1], event.packedCandsPseudoTrkPy[k+1], event.packedCandsPseudoTrkPz[k+1], event.packedCandsE[k+1]};
 
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
-			thepion.emplace_back(k);  
+			thepion.emplace_back(k); otherpion.emplace_back(k+1);  
 		      }    
 		    } 
 			  
@@ -777,11 +778,31 @@ int main(int argc, char* argv[])
 	           // h_coneDeltaR->Fill(cone1.DeltaR(cone2));
 			  
 		    if(cone1.DeltaR(cone2)<0.3){
-		      IsoSum+=event.packedCandsPseudoTrkPt[k];
+		      IsoSum1+=event.packedCandsPseudoTrkPt[k];
 		      h_coneDeltaR->Fill(cone1.DeltaR(cone2));
 		    }
 				
-		    h_IsoSum->Fill(IsoSum);
+		    h_IsoSum1->Fill(IsoSum1);
+		  }
+	      }
+	      
+	      for (l=otherpion.begin(); l!=otherpion.end();l++){
+		  if((*l-1)!=k && (*l)!=k){
+				
+		    TLorentzVector cone1;//The pion
+	   	    TLorentzVector cone2;//Packed candidate
+				    
+	   	    cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[*l],event.packedCandsPseudoTrkEta[*l],event.packedCandsPseudoTrkPhi[*l],event.packedCandsE[*l]);
+	   	    cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+		    
+	           // h_coneDeltaR->Fill(cone1.DeltaR(cone2));
+			  
+		    if(cone1.DeltaR(cone2)<0.3){
+		      IsoSum2+=event.packedCandsPseudoTrkPt[k];
+		      h_coneDeltaR->Fill(cone1.DeltaR(cone2));
+		    }
+				
+		    h_IsoSum2->Fill(IsoSum2);
 		  }
 	      }
 	  }
@@ -972,8 +993,10 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_displacedRZ->Write();
   h_hadronDeltaR->Write();
   h_muonsDeltaR->Write();
-  h_IsoSum->Write();
-  h_IsoSum->GetXaxis()->SetTitle("GeV");
+  h_IsoSum1->Write();
+  h_IsoSum1->GetXaxis()->SetTitle("GeV");
+  h_IsoSum2->Write();
+  h_IsoSum2->GetXaxis()->SetTitle("GeV");
   h_muonsInvMass->Write();
   h_muonsInvMass->GetXaxis()->SetTitle("GeV");
   h_hadronInvMass->Write();
