@@ -773,7 +773,7 @@ int main(int argc, char* argv[])
 	      
 	      
 	*/      
-	      
+	   std::cout << __LINE__ << " : " << __FILE__ << std::endl;   
  	      
       } //Loop over all events
 	    
@@ -781,7 +781,7 @@ int main(int argc, char* argv[])
     	
 
 
-	
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   
 	
 	
@@ -803,12 +803,12 @@ int main(int argc, char* argv[])
     h_pdgId->GetXaxis()->SetBinLabel(binCounter, label);
     binCounter++;
   }
-
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   // Create output ROOT file
   TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
   // change current ROOT directory to that of outFile
   outFile->cd();
-
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   // Write histograms to file
   h_genParPt->GetXaxis()->SetTitle("GeV");
   h_genParPt->Write();
@@ -817,7 +817,7 @@ int main(int argc, char* argv[])
   h_genParE->Write();
   h_pdgId->Write();
   h_VertexPosR->Write();
- 
+ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_genParHiggsPt->GetXaxis()->SetTitle("GeV");
   h_genParHiggsPt->Write();
   h_genParHiggsEta->Write();
@@ -825,7 +825,7 @@ int main(int argc, char* argv[])
   h_genParHiggsE->Write();
   h_HiggsInvMass->GetXaxis()->SetTitle("GeV");
   h_HiggsInvMass->Write();
-	
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;	
   h_genParScalarPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarPt->Write();
   h_genParScalarEta->Write();
