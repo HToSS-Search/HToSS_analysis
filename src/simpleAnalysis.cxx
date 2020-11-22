@@ -346,7 +346,7 @@ int main(int argc, char* argv[])
 	     if (pdgId==13 && !ownParent){  
 		     
 	        nrofMuon.emplace_back(k);
-	        std::cout<<"wat gaat mis?"<<event.genParPt[k]<<std::endl;
+	        std::cout<<"wat gaat mis? k "<<k<<"waarde "<<event.genParPt[k]<<std::endl;
 	        h_genParScalarMuonEta->Fill(genParEta);
 	        h_genParScalarMuonPhi->Fill(genParPhi);
 	        h_genParScalarMuonE->Fill(genParE);
