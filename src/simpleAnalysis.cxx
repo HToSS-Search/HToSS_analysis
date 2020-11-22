@@ -588,7 +588,7 @@ int main(int argc, char* argv[])
 	
 	      
 	      
-	      
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;      
 	      
 	  /*    
 	      
@@ -836,21 +836,29 @@ int main(int argc, char* argv[])
   h_ScalarInvMass->GetXaxis()->SetTitle("GeV");
   h_ScalarInvMass->Write();
   h_Scalar3DAngle->Write();
-  
+	
+  std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_genParScalarMuonPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonPt->Write();
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_genParScalarMuonCutPtSL->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonCutPtSL->Write();
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_genParScalarMuonDivPtSL->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonDivPtSL->Write();
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_genParScalarMuonCutPtDL->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonCutPtDL->Write();
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_genParScalarMuonDivPtDL->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonDivPtDL->Write();
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_genParScalarMuonCutPtDS->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonCutPtDS->Write();
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_genParScalarMuonDivPtDS->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonDivPtDS->Write();
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	
   h_genParScalarMuonEta->Write();
   h_genParScalarMuonPhi->Write();
