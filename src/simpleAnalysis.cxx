@@ -164,6 +164,7 @@ int main(int argc, char* argv[])
   TH2I* h_displacedXY   {new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150)};
   TH2I* h_displacedRZ   {new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250)};	
   TH1F* h_hadronDeltaR  {new TH1F("h_hadronDeltaR", "Two hadrons #DeltaR",2500, -10., 10.)}; 
+  TH1F* h_muonsDeltaR   {new TH1F("h_muonsDeltaR", "Two muons #DeltaR",2500, -10., 10.)}; 
   TH1F* h_IsoSum        {new TH1F("h_IsoSum",  "0.3 p_{T} Cone construction ", 1000, 0., 1000.)}; 
   TH1F* h_hadronInvMass {new TH1F("h_hadronInvMass", "Two hadrons - Invariant mass",1000, 0., 7.)};
   TH1F* h_muonsInvMass  {new TH1F("h_muonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
@@ -734,19 +735,20 @@ int main(int argc, char* argv[])
 			TLorentzVector cone1;//The pion
 	   	        TLorentzVector cone2;//Packed candidate
 			
-		        if(k!=0 && k!=1){
+			for (Int_t l{0};l<event.numPackedCands;l++){
+		            if(l!=k && l!=k+1){
 				
-	   	          cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
-	   	          cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k+1],event.packedCandsPseudoTrkEta[k+1],event.packedCandsPseudoTrkPhi[k+1],event.packedCandsE[k+1]);
+	   	              cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[l],event.packedCandsPseudoTrkEta[l],event.packedCandsPseudoTrkPhi[l],event.packedCandsE[l]);
+	   	              cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[l+1],event.packedCandsPseudoTrkEta[l+1],event.packedCandsPseudoTrkPhi[l+1],event.packedCandsE[l+1]);
 			
-			  if(cone1.DeltaR(cone2)<0.3){
-			    IsoSum+=event.packedCandsPseudoTrkPt[k];
-			  }
+			      if(cone1.DeltaR(cone2)<0.3){
+			        IsoSum+=event.packedCandsPseudoTrkPt[k];
+			      }
 				
-			  h_IsoSum->Fill(IsoSum);
+			      h_IsoSum->Fill(IsoSum);
 				
-			}
-			      
+			    }
+			}     
 		      }    
 		    } 
 			  
@@ -757,6 +759,14 @@ int main(int argc, char* argv[])
 	 	        TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[k+1], event.packedCandsPseudoTrkPy[k+1], event.packedCandsPseudoTrkPz[k+1], event.packedCandsE[k+1]};
 
 	   	        h_muonsInvMass->Fill((lmuon1+lmuon2).M());
+			     
+			TLorentzVector m1;
+	   	        TLorentzVector m2;
+		  
+	   	        m1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+	   	        m2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k+1],event.packedCandsPseudoTrkEta[k+1],event.packedCandsPseudoTrkPhi[k+1],event.packedCandsE[k+1]);
+			
+	   	        h_muonsDeltaR->Fill(m1.DeltaR(m2));
 		      }
 		    }
 	          }
@@ -950,6 +960,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_displacedRZ->GetYaxis()->SetTitle("R");
   h_displacedRZ->Write();
   h_hadronDeltaR->Write();
+  h_muonsDeltaR->Write();
   h_IsoSum->Write();
   h_IsoSum->GetXaxis()->SetTitle("GeV");
   h_muonsInvMass->Write();
