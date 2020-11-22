@@ -760,13 +760,13 @@ int main(int argc, char* argv[])
 
 	   	        h_muonsInvMass->Fill((lmuon1+lmuon2).M());
 			     
-			TLorentzVector m1;
+			/*TLorentzVector m1;
 	   	        TLorentzVector m2;
 		  
 	   	        m1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
 	   	        m2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k+1],event.packedCandsPseudoTrkEta[k+1],event.packedCandsPseudoTrkPhi[k+1],event.packedCandsE[k+1]);
 			
-	   	        h_muonsDeltaR->Fill(m1.DeltaR(m2));
+	   	        h_muonsDeltaR->Fill(m1.DeltaR(m2));*/
 		      }
 		    }
 	          }
