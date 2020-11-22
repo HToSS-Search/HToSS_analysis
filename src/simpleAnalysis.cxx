@@ -724,8 +724,12 @@ int main(int argc, char* argv[])
 	            h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
 	         
 	            //Find the hadrons (pions)
-		    if(packedId!=std::abs(13) && event.packedCandsPdgId[k+1]!=std::abs(13)){//Selection of pions (charged hadrons)
-		      if(event.packedCandsPseudoTrkCharge[k]==-(event.packedCandsPseudoTrkCharge[k+1])){//Opposite charge
+		    if(packedId!=std::abs(13)){//Selection of pions (charged hadrons)
+		      thepion.emplace_back(k); 
+			    std::cout<<"the k"<<k<<std::cout;
+		    } 
+			std::cout<<"first element "<<thepion.front()<<" second element "<<thepion.front()+1<<std::cout;
+		    if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[thepion.front()+1])){//Opposite charge
 			
 			TLorentzVector packed1;
 	   	        TLorentzVector packed2;
@@ -740,11 +744,9 @@ int main(int argc, char* argv[])
 	 	        TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[k+1], event.packedCandsPseudoTrkPy[k+1], event.packedCandsPseudoTrkPz[k+1], event.packedCandsE[k+1]};
 
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
-			thepion.emplace_back(k); otherpion.emplace_back(k+1);  
-		      }    
-		    } 
 			  
-		    if(packedId==std::abs(13) && event.packedCandsPdgId[k+1]==std::abs(13)){
+		     } 
+		    /*if(packedId==std::abs(13)){
 		      if(event.packedCandsPseudoTrkCharge[k]==-(event.packedCandsPseudoTrkCharge[k+1])){
 			//Invariant mass for two muons
 	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
@@ -760,7 +762,7 @@ int main(int argc, char* argv[])
 			
 	   	        h_muonsDeltaR->Fill(m1.DeltaR(m2));
 		      }
-		    }
+		    }*/
 	          }
 	        }
 	      }
@@ -770,7 +772,7 @@ int main(int argc, char* argv[])
 	      
 	      
 	//0.3 p_T cone construction
-	std::vector<Int_t>::iterator l;
+	/*std::vector<Int_t>::iterator l;
 	if(event.metFilters()){
 		
           for (Int_t k{0};k<event.numPackedCands;k++) {	
@@ -811,7 +813,7 @@ int main(int argc, char* argv[])
 		      h_IsoSum2->Fill(IsoSum2);
 		    }
 		  }
-	      }
+	      }*/
 	  }
 	}
    
