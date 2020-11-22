@@ -713,19 +713,19 @@ int main(int argc, char* argv[])
 	         
 	            //Find the pions
 		    if(packedId!=std::abs(13)){//Selection of pions (charged hadrons)
-		      if(event.packedCandsPseudoTrkCharge[0]==-(event.packedCandsPseudoTrkCharge[1])){//Opposite charge
+		      if(event.packedCandsPseudoTrkCharge[k]==-(event.packedCandsPseudoTrkCharge[k+1])){//Opposite charge
 			
 			TLorentzVector packed1;
 	   	        TLorentzVector packed2;
 		  
-	   	        packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[0],event.packedCandsPseudoTrkEta[0],event.packedCandsPseudoTrkPhi[0],event.packedCandsE[0]);
-	   	        packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[1],event.packedCandsPseudoTrkEta[1],event.packedCandsPseudoTrkPhi[1],event.packedCandsE[1]);
+	   	        packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+	   	        packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k+1],event.packedCandsPseudoTrkEta[k+1],event.packedCandsPseudoTrkPhi[k+1],event.packedCandsE[k+1]);
 			
-	   	        h_packedDeltaR->Fill(packed1.DeltaR(packed2));
+	   	        h_hadronDeltaR->Fill(packed1.DeltaR(packed2));
 			
 			//Invariant mass for two hadrons
-	    	        TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[0], event.packedCandsPseudoTrkPy[0], event.packedCandsPseudoTrkPz[0], event.packedCandsE[0]};
-	 	        TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[1], event.packedCandsPseudoTrkPy[1], event.packedCandsPseudoTrkPz[1], event.packedCandsE[1]};
+	    	        TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
+	 	        TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[k+1], event.packedCandsPseudoTrkPy[k+1], event.packedCandsPseudoTrkPz[k+1], event.packedCandsE[k+1]};
 
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
 			      
@@ -736,12 +736,11 @@ int main(int argc, char* argv[])
 			
 		        if(k!=0 && k!=1){
 				
-	   	          cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[0],event.packedCandsPseudoTrkEta[0],event.packedCandsPseudoTrkPhi[0],event.packedCandsE[0]);
-	   	          cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+	   	          cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+	   	          cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k+1],event.packedCandsPseudoTrkEta[k+1],event.packedCandsPseudoTrkPhi[k+1],event.packedCandsE[k+1]);
 			
 			  if(cone1.DeltaR(cone2)<0.3){
 			    IsoSum+=event.packedCandsPseudoTrkPt[k];
-			    std::cout<<"IsoSum O.3 cone "<<IsoSum<<"for k "<<k<<"momentum "<<event.packedCandsPseudoTrkPt[k]<<std::endl;
 			  }
 				
 			  h_IsoSum->Fill(IsoSum);
@@ -751,11 +750,11 @@ int main(int argc, char* argv[])
 		      }    
 		    } 
 			  
-		    if(event.packedCandsPdgId[k]=std::abs(13)){
-		      if(event.packedCandsPseudoTrkCharge[0]==-(event.packedCandsPseudoTrkCharge[1])){
+		    if(packedId==std::abs(13)){
+		      if(event.packedCandsPseudoTrkCharge[k]==-(event.packedCandsPseudoTrkCharge[k+1])){
 			//Invariant mass for two hadrons
-	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[0], event.packedCandsPseudoTrkPy[0], event.packedCandsPseudoTrkPz[0], event.packedCandsE[0]};
-	 	        TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[1], event.packedCandsPseudoTrkPy[1], event.packedCandsPseudoTrkPz[1], event.packedCandsE[1]};
+	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
+	 	        TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[k+1], event.packedCandsPseudoTrkPy[k+1], event.packedCandsPseudoTrkPz[k+1], event.packedCandsE[k+1]};
 
 	   	        h_muonsInvMass->Fill((lmuon1+lmuon2).M());
 		      }
@@ -950,7 +949,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_displacedRZ->GetXaxis()->SetTitle("Vertex position z"); 
   h_displacedRZ->GetYaxis()->SetTitle("R");
   h_displacedRZ->Write();
-  h_packedDeltaR->Write();
+  h_hadronDeltaR->Write();
   h_IsoSum->Write();
   h_IsoSum->GetXaxis()->SetTitle("GeV");
   h_muonsInvMass->Write();
