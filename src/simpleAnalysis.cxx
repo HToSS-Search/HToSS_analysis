@@ -715,7 +715,7 @@ int main(int argc, char* argv[])
 	            h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
 	         
 	            //Find the pions
-		    if(event.packedCandsPdgId[k]!=std::abs(13)){//Selection of pions (charged hadrons)
+		    if(packedId!=std::abs(13)){//Selection of pions (charged hadrons)
 		      if(event.packedCandsPseudoTrkCharge[0]==-(event.packedCandsPseudoTrkCharge[1])){//Opposite charge
 			
 			TLorentzVector packed1;
@@ -733,7 +733,7 @@ int main(int argc, char* argv[])
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());*/
 			      
 			//0.3 p_T cone construction
-			Float_t IsoSum=0;
+			/*Float_t IsoSum=0;
 			
 			TLorentzVector cone1;//The pion
 	   	        TLorentzVector cone2;//Packed candidate
@@ -748,7 +748,7 @@ int main(int argc, char* argv[])
 			  }
 			  h_IsoSum->Fill(IsoSum);
 				
-			}
+			}*/
 			      
 		      }    
 		    } 
@@ -760,8 +760,8 @@ int main(int argc, char* argv[])
 	 	        TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[1], event.packedCandsPseudoTrkPy[1], event.packedCandsPseudoTrkPz[1], event.packedCandsE[1]};
 
 	   	        h_muonsInvMass->Fill((lmuon1+lmuon2).M());
-		      }*/
-		    }
+		      }
+		    }*/
 	          }
 	        }
 	      }
