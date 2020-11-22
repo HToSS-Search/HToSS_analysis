@@ -681,7 +681,7 @@ int main(int argc, char* argv[])
 	//BEGIN Packed candidates 
 	      
 	std::vector<Int_t> nrofPacked;
-	      
+	Float_t IsoSum=0;      
 	if(event.metFilters()){
 		
           for (Int_t k{0};k<event.numPackedCands;k++) {
@@ -730,7 +730,6 @@ int main(int argc, char* argv[])
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
 			      
 			//0.3 p_T cone construction
-			Float_t IsoSum=0;
 			
 			TLorentzVector cone1;//The pion
 	   	        TLorentzVector cone2;//Packed candidate
@@ -741,7 +740,7 @@ int main(int argc, char* argv[])
 	   	          cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
 			
 			  if(cone1.DeltaR(cone2)<0.3){
-			    IsoSum=IsoSum+event.packedCandsPseudoTrkPt[k];
+			    IsoSum=IsoSum+(event.packedCandsPseudoTrkPt[k]);
 			    std::cout<<"IsoSum O.3 cone "<<IsoSum<<"for k "<<k<<std::endl;
 			  }
 				
