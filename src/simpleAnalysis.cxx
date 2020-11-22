@@ -713,7 +713,7 @@ int main(int argc, char* argv[])
 	            h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
 	         
 	            //Find the pions
-		    if(packedId!=std::abs(13)){//Selection of pions (charged hadrons)
+		    if(packedId!=std::abs(13) && event.packedCandsPdgId[k+1]!=std::abs(13)){//Selection of pions (charged hadrons)
 		      if(event.packedCandsPseudoTrkCharge[k]==-(event.packedCandsPseudoTrkCharge[k+1])){//Opposite charge
 			
 			TLorentzVector packed1;
@@ -732,14 +732,14 @@ int main(int argc, char* argv[])
 			      
 			//0.3 p_T cone construction
 			
-			TLorentzVector cone1;//The pion
-	   	        TLorentzVector cone2;//Packed candidate
-			
-			/*for (Int_t l{0};l<event.numPackedCands;l++){
+			for (Int_t l{0};l<event.numPackedCands;l++){
 		            if(l!=k && l!=k+1){
 				
+			      TLorentzVector cone1;//The pion
+	   	              TLorentzVector cone2;//Packed candidate
+				    
 	   	              cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[l],event.packedCandsPseudoTrkEta[l],event.packedCandsPseudoTrkPhi[l],event.packedCandsE[l]);
-	   	              cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[l+1],event.packedCandsPseudoTrkEta[l+1],event.packedCandsPseudoTrkPhi[l+1],event.packedCandsE[l+1]);
+	   	              cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
 			
 			      if(cone1.DeltaR(cone2)<0.3){
 			        IsoSum+=event.packedCandsPseudoTrkPt[k];
@@ -748,11 +748,11 @@ int main(int argc, char* argv[])
 			      h_IsoSum->Fill(IsoSum);
 				
 			    }
-			}*/    
+			}    
 		      }    
 		    } 
 			  
-		    if(packedId==std::abs(13)){
+		    if(packedId==std::abs(13) && event.packedCandsPdgId[k+1]==std::abs(13)){
 		      if(event.packedCandsPseudoTrkCharge[k]==-(event.packedCandsPseudoTrkCharge[k+1])){
 			//Invariant mass for two hadrons
 	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
