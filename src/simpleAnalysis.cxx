@@ -743,7 +743,7 @@ int main(int argc, char* argv[])
 		    } 
 		    if(thepion.size()>1){//Safety measure
 		      Int_t ptr=thepion.front();
-			   
+			std::cout<<ptr<<"first"<<ptr++<<"second"<<std::endl;   
 		      //if(event.packedCandsPseudoTrkCharge[thepion.front()]!=event.packedCandsPseudoTrkCharge[ptr++]){//Opposite charge
 			 std::cout<<"inside pion loop"<<std::endl;
 			TLorentzVector packed1;
