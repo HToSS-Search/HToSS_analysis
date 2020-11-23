@@ -693,7 +693,7 @@ int main(int argc, char* argv[])
 	//BEGIN Packed candidates 
 	      
 	std::vector<Int_t> thepion; std::vector<Int_t> themuon; 
-	//Float_t IsoSum1=0;  Float_t IsoSum2=0;        
+	Float_t IsoSum1=0;  Float_t IsoSum2=0;        
 	if(event.metFilters()){
 		
           for (Int_t k{0};k<event.numPackedCands;k++) {
@@ -742,7 +742,36 @@ int main(int argc, char* argv[])
 
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
 		      }  
+		    
+		
+		      if(k!=thepion.front() && k!=thepion.front()+1){
+				
+		        TLorentzVector cone1;//The pion
+	   	        TLorentzVector cone2;//Packed candidate
+				    
+	   	        cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[thepion.front()],event.packedCandsPseudoTrkEta[thepion.front()],event.packedCandsPseudoTrkPhi[thepion.front()],event.packedCandsE[thepion.front()]);
+	   	        cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+			  
+		        if(cone1.DeltaR(cone2)<0.3){
+		          IsoSum1+=event.packedCandsPseudoTrkPt[k];
+		          h_coneDeltaR->Fill(cone1.DeltaR(cone2));
+		          h_IsoSum1->Fill(IsoSum1);
+		        }
+			
+			TLorentzVector cone3;//The other pion
+	   	        TLorentzVector cone4;//Packed candidate
+				    
+	   	        cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[thepion.front()+1],event.packedCandsPseudoTrkEta[thepion.front()+1],event.packedCandsPseudoTrkPhi[thepion.front()+1],event.packedCandsE[thepion.front()+1]);
+	   	        cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+			  
+			if(cone3.DeltaR(cone4)<0.3){
+		          IsoSum2+=event.packedCandsPseudoTrkPt[k];
+		          h_coneDeltaR->Fill(cone3.DeltaR(cone4));
+		          h_IsoSum2->Fill(IsoSum2);
+			}      
+		      }
 		    }
+			  
 			  
 		    if(packedId==std::abs(13)){//Selection of muons
 		      themuon.emplace_back(k);
@@ -770,59 +799,12 @@ int main(int argc, char* argv[])
 		  
 	  }    	
 	}    
-	      
-	      
-	//0.3 p_T cone construction
-	/*std::vector<Int_t>::iterator l;
-	if(event.metFilters()){
-		
-          for (Int_t k{0};k<event.numPackedCands;k++) {	
-		  
-	      for (l=thepion.begin(); l!=thepion.end();l++){
-		  if((*l)!=k && (*l)!=k+1){
-				
-		    TLorentzVector cone1;//The pion
-	   	    TLorentzVector cone2;//Packed candidate
-				    
-	   	    cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[*l],event.packedCandsPseudoTrkEta[*l],event.packedCandsPseudoTrkPhi[*l],event.packedCandsE[*l]);
-	   	    cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
-		    
-	           // h_coneDeltaR->Fill(cone1.DeltaR(cone2));
-			  
-		    if(cone1.DeltaR(cone2)<0.3){
-		      IsoSum1+=event.packedCandsPseudoTrkPt[k];
-		      h_coneDeltaR->Fill(cone1.DeltaR(cone2));
-		      h_IsoSum1->Fill(IsoSum1);
-		    }		  
-		  }
-	      }
-	      
-	      for (l=otherpion.begin(); l!=otherpion.end();l++){
-		  if((*l-1)!=k && (*l)!=k){
-				
-		    TLorentzVector cone1;//The pion
-	   	    TLorentzVector cone2;//Packed candidate
-				    
-	   	    cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[*l],event.packedCandsPseudoTrkEta[*l],event.packedCandsPseudoTrkPhi[*l],event.packedCandsE[*l]);
-	   	    cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
-		    
-	           // h_coneDeltaR->Fill(cone1.DeltaR(cone2));
-			  
-		    if(cone1.DeltaR(cone2)<0.3){
-		      IsoSum2+=event.packedCandsPseudoTrkPt[k];
-		      h_coneDeltaR->Fill(cone1.DeltaR(cone2));
-		      h_IsoSum2->Fill(IsoSum2);
-		    }
-		  }
-	      }
-	  }
-	}*/
    
 	//END Packed Candidates    
 	      
 	      
 	     
-	   std::cout << __LINE__ << " : " << __FILE__ << std::endl;   
+	   std::cout << __LINE__ << " : " << __FILE__ << std::endl;   //!!! PROBLEM OCCURS HERE
  	      
       } //Loop over all events
 	    std::cout << __LINE__ << " : " << __FILE__ << std::endl;
