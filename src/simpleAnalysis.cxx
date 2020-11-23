@@ -374,7 +374,7 @@ int main(int argc, char* argv[])
 		      if(k!=0){
 			mumu.emplace_back(k);
 			Int_t ptr=mumu.front();
-		        h_genParScalarMuonCutPtDL->Fill(event.genParPt[mumu.front();]);  
+		        h_genParScalarMuonCutPtDL->Fill(event.genParPt[mumu.front()]);  
 		        h_genParScalarMuonCutPtDS->Fill(event.genParPt[ptr++]);
 		      }
 		     else if(k==0){
