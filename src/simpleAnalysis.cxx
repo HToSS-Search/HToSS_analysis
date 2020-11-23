@@ -746,22 +746,23 @@ int main(int argc, char* argv[])
 		    if(packedId==std::abs(13)){//Selection of muons
 		      themuon.emplace_back(k);
 		    }
-		  
-		    if(event.packedCandsPseudoTrkCharge[themuon.front()]==-(event.packedCandsPseudoTrkCharge[themuon.front()+1])){
-		      //Invariant mass for two muons
-	    	      TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[themuon.front()], event.packedCandsPseudoTrkPy[themuon.front()], event.packedCandsPseudoTrkPz[themuon.front()], event.packedCandsE[themuon.front()]};
-	 	      TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[themuon.front()+1], event.packedCandsPseudoTrkPy[themuon.front()+1], event.packedCandsPseudoTrkPz[themuon.front()+1], event.packedCandsE[themuon.front()+1]};
+		    if(themuon.size()!=0){
+		      if(event.packedCandsPseudoTrkCharge[themuon.front()]==-(event.packedCandsPseudoTrkCharge[themuon.front()+1])){
+		        //Invariant mass for two muons
+	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[themuon.front()], event.packedCandsPseudoTrkPy[themuon.front()], event.packedCandsPseudoTrkPz[themuon.front()], event.packedCandsE[themuon.front()]};
+	 	        TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[themuon.front()+1], event.packedCandsPseudoTrkPy[themuon.front()+1], event.packedCandsPseudoTrkPz[themuon.front()+1], event.packedCandsE[themuon.front()+1]};
 
-	   	      h_muonsInvMass->Fill((lmuon1+lmuon2).M());
+	   	        h_muonsInvMass->Fill((lmuon1+lmuon2).M());
 			     
-                      TLorentzVector m1;
-	   	      TLorentzVector m2;
+                        TLorentzVector m1;
+	   	        TLorentzVector m2;
 		  
-	   	      m1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[themuon.front()],event.packedCandsPseudoTrkEta[themuon.front()],event.packedCandsPseudoTrkPhi[themuon.front()],event.packedCandsE[themuon.front()]);
-	   	      m2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[themuon.front()+1],event.packedCandsPseudoTrkEta[themuon.front()+1],event.packedCandsPseudoTrkPhi[themuon.front()+1],event.packedCandsE[themuon.front()+1]);
+	   	        m1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[themuon.front()],event.packedCandsPseudoTrkEta[themuon.front()],event.packedCandsPseudoTrkPhi[themuon.front()],event.packedCandsE[themuon.front()]);
+	   	        m2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[themuon.front()+1],event.packedCandsPseudoTrkEta[themuon.front()+1],event.packedCandsPseudoTrkPhi[themuon.front()+1],event.packedCandsE[themuon.front()+1]);
 			
-	              h_muonsDeltaR->Fill(m1.DeltaR(m2));
-		    } 
+	                h_muonsDeltaR->Fill(m1.DeltaR(m2));
+		      } 
+		    }
 	          }
 	        }
 	      }
