@@ -742,6 +742,7 @@ int main(int argc, char* argv[])
 		    } 
 		    if(thepion.size()!=0){//Safety measure
 		      Int_t ptr=thepion.front();
+			    std::cout<<"charge "<<event.packedCandsPseudoTrkCharge[thepion.front()]<<"other charge"<<event.packedCandsPseudoTrkCharge[ptr++]<<std::endl;
 		      if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[ptr++])){//Opposite charge
 			std::cout<<"inside thepion loop"<<std::endl;   
 			TLorentzVector packed1;
@@ -795,7 +796,7 @@ int main(int argc, char* argv[])
 		    }
 		    if(themuon.size()!=0){
 		      Int_t two=themuon.front();
-			    std::cout<<"charge "<<event.packedCandsPseudoTrkCharge[themuon.front()]<<"other charge"<<event.packedCandsPseudoTrkCharge[two++]<<std::endl;
+			    std::cout<<"charge "<<event.packedCandsPseudoTrkCharge[themuon.front()]<<"other charge"<<(-event.packedCandsPseudoTrkCharge[two++])<<std::endl;
 		      if(event.packedCandsPseudoTrkCharge[themuon.front()]==-(event.packedCandsPseudoTrkCharge[two++])){
 			std::cout<<"inside themuon loop"<<std::endl; 
 		        //Invariant mass for two muons
