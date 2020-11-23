@@ -880,7 +880,7 @@ int main(int argc, char* argv[])
   h_genParE->Write();
   h_pdgId->Write();
   h_VertexPosR->Write();
- std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
   h_genParHiggsPt->GetXaxis()->SetTitle("GeV");
   h_genParHiggsPt->Write();
   h_genParHiggsEta->Write();
@@ -888,7 +888,7 @@ int main(int argc, char* argv[])
   h_genParHiggsE->Write();
   h_HiggsInvMass->GetXaxis()->SetTitle("GeV");
   h_HiggsInvMass->Write();
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;	
+
   h_genParScalarPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarPt->Write();
   h_genParScalarEta->Write();
