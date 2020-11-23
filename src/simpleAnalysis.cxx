@@ -745,7 +745,7 @@ int main(int argc, char* argv[])
 		      }  
 		    
 		
-		      if(k!=thepion.front() && k!=thepion.front()+1){
+		      if(k!=thepion.front() && k!=ptr++){
 				
 		        TLorentzVector cone1;//The pion
 	   	        TLorentzVector cone2;//Packed candidate
@@ -762,7 +762,7 @@ int main(int argc, char* argv[])
 			TLorentzVector cone3;//The other pion
 	   	        TLorentzVector cone4;//Packed candidate
 				    
-	   	        cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[thepion.front()+1],event.packedCandsPseudoTrkEta[thepion.front()+1],event.packedCandsPseudoTrkPhi[thepion.front()+1],event.packedCandsE[thepion.front()+1]);
+	   	        cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[ptr++],event.packedCandsPseudoTrkEta[ptr++],event.packedCandsPseudoTrkPhi[ptr++],event.packedCandsE[ptr++]);
 	   	        cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
 			  
 			if(cone3.DeltaR(cone4)<0.3){
@@ -778,10 +778,11 @@ int main(int argc, char* argv[])
 		      themuon.emplace_back(k);
 		    }
 		    if(themuon.size()!=0){
-		      if(event.packedCandsPseudoTrkCharge[themuon.front()]==-(event.packedCandsPseudoTrkCharge[themuon.front()+1])){
+		      Int_t two=themuon.front();
+		      if(event.packedCandsPseudoTrkCharge[themuon.front()]==-(event.packedCandsPseudoTrkCharge[two++])){
 		        //Invariant mass for two muons
 	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[themuon.front()], event.packedCandsPseudoTrkPy[themuon.front()], event.packedCandsPseudoTrkPz[themuon.front()], event.packedCandsE[themuon.front()]};
-	 	        TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[themuon.front()+1], event.packedCandsPseudoTrkPy[themuon.front()+1], event.packedCandsPseudoTrkPz[themuon.front()+1], event.packedCandsE[themuon.front()+1]};
+	 	        TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[two++], event.packedCandsPseudoTrkPy[two++], event.packedCandsPseudoTrkPz[two++], event.packedCandsE[two++]};
 
 	   	        h_muonsInvMass->Fill((lmuon1+lmuon2).M());
 			     
@@ -789,7 +790,7 @@ int main(int argc, char* argv[])
 	   	        TLorentzVector m2;
 		  
 	   	        m1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[themuon.front()],event.packedCandsPseudoTrkEta[themuon.front()],event.packedCandsPseudoTrkPhi[themuon.front()],event.packedCandsE[themuon.front()]);
-	   	        m2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[themuon.front()+1],event.packedCandsPseudoTrkEta[themuon.front()+1],event.packedCandsPseudoTrkPhi[themuon.front()+1],event.packedCandsE[themuon.front()+1]);
+	   	        m2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[two++],event.packedCandsPseudoTrkEta[two++],event.packedCandsPseudoTrkPhi[two++],event.packedCandsE[two++]);
 			
 	                h_muonsDeltaR->Fill(m1.DeltaR(m2));
 		      } 
