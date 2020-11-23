@@ -728,7 +728,7 @@ int main(int argc, char* argv[])
 		      thepion.emplace_back(k); 
 			    std::cout<<"the k"<<k<<std::endl;
 		    } 
-			std::cout<<"first element "<<thepion.front()<<" second element "<<thepion.front()+1<<std::cout;
+			std::cout<<"first element "<<thepion.front()<<" second element "<<(thepion.front()+1)<<std::endl;
 		    if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[thepion.front()+1])){//Opposite charge
 			
 			TLorentzVector packed1;
