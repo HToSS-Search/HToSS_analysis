@@ -741,7 +741,7 @@ int main(int argc, char* argv[])
 		      thepion.emplace_back(k);
 		      std::cout<<"pion selected charge"<<event.packedCandsPseudoTrkCharge[k]<<std::endl;
 		    } 
-		    if(thepion.size()!=0){//Safety measure
+		    if(thepion.size()>1){//Safety measure
 		      Int_t ptr=thepion.front();
 			   
 		      if(event.packedCandsPseudoTrkCharge[thepion.front()]!=event.packedCandsPseudoTrkCharge[ptr++]){//Opposite charge
@@ -796,7 +796,7 @@ int main(int argc, char* argv[])
 		      themuon.emplace_back(k);
 		      
 		    }
-		    if(themuon.size()!=0){
+		    if(themuon.size()>1){
 		      Int_t two=themuon.front();
 		   std::cout<<"muon selected charge"<<event.packedCandsPseudoTrkCharge[themuon.front()]<<"other charge "<<event.packedCandsPseudoTrkCharge[two++]<<std::endl;
 		      if(event.packedCandsPseudoTrkCharge[themuon.front()]!=event.packedCandsPseudoTrkCharge[two++]){
