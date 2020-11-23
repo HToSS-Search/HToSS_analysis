@@ -726,7 +726,7 @@ int main(int argc, char* argv[])
 	            //Find the hadrons (pions)
 		    if(packedId!=std::abs(13)){//Selection of pions (charged hadrons)
 		      thepion.emplace_back(k); 
-			    std::cout<<"the k"<<k<<std::cout;
+			    std::cout<<"the k"<<k<<std::endl;
 		    } 
 			std::cout<<"first element "<<thepion.front()<<" second element "<<thepion.front()+1<<std::cout;
 		    if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[thepion.front()+1])){//Opposite charge
