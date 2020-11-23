@@ -692,7 +692,7 @@ int main(int argc, char* argv[])
 	      
 	//BEGIN Packed candidates 
 	      
-	std::vector<Int_t> thepion; std::vector<Int_t> otherpion;
+	std::vector<Int_t> thepion; std::vector<Int_t> otherpion; std::vector<Int_t> themuon; std::vector<Int_t> othermuon;
 	Float_t IsoSum1=0;  Float_t IsoSum2=0;        
 	if(event.metFilters()){
 		
@@ -728,9 +728,7 @@ int main(int argc, char* argv[])
 		      thepion.emplace_back(k); 
 		    } 
 		    
-		    std::cout<<"first element "<<thepion.front()<<" second element "<<(thepion.front()+1)<<std::endl;
 		    if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[thepion.front()+1])){//Opposite charge
-			std::cout<<"inside the opposite charge"<<std::endl;
 			    
 			TLorentzVector packed1;
 	   	        TLorentzVector packed2;
@@ -747,23 +745,25 @@ int main(int argc, char* argv[])
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
 			  
 		     } 
-		    /*if(packedId==std::abs(13)){
-		      if(event.packedCandsPseudoTrkCharge[k]==-(event.packedCandsPseudoTrkCharge[k+1])){
-			//Invariant mass for two muons
-	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
-	 	        TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[k+1], event.packedCandsPseudoTrkPy[k+1], event.packedCandsPseudoTrkPz[k+1], event.packedCandsE[k+1]};
-
-	   	        h_muonsInvMass->Fill((lmuon1+lmuon2).M());
-			     
-			TLorentzVector m1;
-	   	        TLorentzVector m2;
+		    if(packedId==std::abs(13)){//Selection of muons
+		      themuon.emplace_back(k);
+		    }
 		  
-	   	        m1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
-	   	        m2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k+1],event.packedCandsPseudoTrkEta[k+1],event.packedCandsPseudoTrkPhi[k+1],event.packedCandsE[k+1]);
+		    if(event.packedCandsPseudoTrkCharge[themuon.front()]==-(event.packedCandsPseudoTrkCharge[themuon.front()+1])){
+		      //Invariant mass for two muons
+	    	      TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[themuon.front()], event.packedCandsPseudoTrkPy[themuon.front()], event.packedCandsPseudoTrkPz[themuon.front()], event.packedCandsE[themuon.front()]};
+	 	      TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[themuon.front()+1], event.packedCandsPseudoTrkPy[themuon.front()+1], event.packedCandsPseudoTrkPz[themuon.front()+1], event.packedCandsE[themuon.front()+1]};
+
+	   	      h_muonsInvMass->Fill((lmuon1+lmuon2).M());
+			     
+                      TLorentzVector m1;
+	   	      TLorentzVector m2;
+		  
+	   	      m1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[themuon.front()],event.packedCandsPseudoTrkEta[themuon.front()],event.packedCandsPseudoTrkPhi[themuon.front()],event.packedCandsE[themuon.front()]);
+	   	      m2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[themuon.front()+1],event.packedCandsPseudoTrkEta[themuon.front()+1],event.packedCandsPseudoTrkPhi[themuon.front()+1],event.packedCandsE[themuon.front()+1]);
 			
-	   	        h_muonsDeltaR->Fill(m1.DeltaR(m2));
-		      }
-		    }*/
+	              h_muonsDeltaR->Fill(m1.DeltaR(m2));
+		    } 
 	          }
 	        }
 	      }
