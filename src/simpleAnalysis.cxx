@@ -170,7 +170,7 @@ int main(int argc, char* argv[])
   TH1F* h_IsoSum2       {new TH1F("h_IsoSum2",  "0.3 p_{T} Cone construction pion 2", 1000, 0., 1000.)}; 
   TH1F* h_hadronInvMass {new TH1F("h_hadronInvMass", "Two hadrons - Invariant mass",1000, 0., 7.)};
   TH1F* h_muonsInvMass  {new TH1F("h_muonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
-  TH2F* h_invmass       {new TH2I("h_invmass", "Invariant mass: pions vs muons", 1000, 0.,7.,1000,0.,7.)};
+  TH2F* h_invmass       {new TH2F("h_invmass", "Invariant mass: pions vs muons", 1000, 0.,7.,1000,0.,7.)};
 	
 	
 	
