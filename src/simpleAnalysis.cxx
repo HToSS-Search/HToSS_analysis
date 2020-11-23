@@ -739,7 +739,7 @@ int main(int argc, char* argv[])
 	            //Find the hadrons (pions)
 		    if(std::abs(packedId)!=13){//Selection of pions (charged hadrons)
 		      thepion.emplace_back(k);
-		      std::cout<<"pion selected charge"<<event.packedCandsPseudoTrkCharge[k]<<std::endl;
+		      std::cout<<"pion selected charge"<<k<<"charge "<<event.packedCandsPseudoTrkCharge[k]<<std::endl;
 		    } 
 		    if(thepion.size()>1){//Safety measure
 		      Int_t ptr=thepion.front();
@@ -798,7 +798,7 @@ int main(int argc, char* argv[])
 		    }
 		    if(themuon.size()>1){
 		      Int_t two=themuon.front();
-		   std::cout<<"muon selected charge"<<event.packedCandsPseudoTrkCharge[themuon.front()]<<"other charge "<<event.packedCandsPseudoTrkCharge[two++]<<std::endl;
+		   
 		      if(event.packedCandsPseudoTrkCharge[themuon.front()]!=event.packedCandsPseudoTrkCharge[two++]){
 			std::cout<<"inside the muon loop"<<std::endl;  
 		        //Invariant mass for two muons
