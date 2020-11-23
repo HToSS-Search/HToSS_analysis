@@ -726,22 +726,23 @@ int main(int argc, char* argv[])
 	            //Find the hadrons (pions)
 		    if(packedId!=std::abs(13)){//Selection of pions (charged hadrons)
 		      thepion.emplace_back(k); 
-			    std::cout<<"the k"<<k<<std::endl;
 		    } 
-			std::cout<<"first element "<<thepion.front()<<" second element "<<(thepion.front()+1)<<std::endl;
+		    
+		    std::cout<<"first element "<<thepion.front()<<" second element "<<(thepion.front()+1)<<std::endl;
 		    if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[thepion.front()+1])){//Opposite charge
-			
+			std::cout<<"inside the opposite charge"<<std::endl;
+			    
 			TLorentzVector packed1;
 	   	        TLorentzVector packed2;
 		  
-	   	        packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
-	   	        packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k+1],event.packedCandsPseudoTrkEta[k+1],event.packedCandsPseudoTrkPhi[k+1],event.packedCandsE[k+1]);
+	   	        packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[thepion.front()],event.packedCandsPseudoTrkEta[thepion.front()],event.packedCandsPseudoTrkPhi[thepion.front()],event.packedCandsE[thepion.front()]);
+	   	        packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[thepion.front()+1],event.packedCandsPseudoTrkEta[thepion.front()+1],event.packedCandsPseudoTrkPhi[thepion.front()+1],event.packedCandsE[thepion.front()+1]);
 			
 	   	        h_hadronDeltaR->Fill(packed1.DeltaR(packed2));
 			
 			//Invariant mass for two hadrons
-	    	        TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
-	 	        TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[k+1], event.packedCandsPseudoTrkPy[k+1], event.packedCandsPseudoTrkPz[k+1], event.packedCandsE[k+1]};
+	    	        TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[thepion.front()], event.packedCandsPseudoTrkPy[thepion.front()], event.packedCandsPseudoTrkPz[thepion.front()], event.packedCandsE[thepion.front()]};
+	 	        TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[thepion.front()+1], event.packedCandsPseudoTrkPy[thepion.front()+1], event.packedCandsPseudoTrkPz[thepion.front()+1], event.packedCandsE[thepion.front()+1]};
 
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
 			  
