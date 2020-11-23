@@ -744,7 +744,7 @@ int main(int argc, char* argv[])
 		    if(thepion.size()>1){//Safety measure
 		      Int_t ptr=thepion.front();
 			   
-		      if(event.packedCandsPseudoTrkCharge[thepion.front()]!=event.packedCandsPseudoTrkCharge[ptr++]){//Opposite charge
+		      //if(event.packedCandsPseudoTrkCharge[thepion.front()]!=event.packedCandsPseudoTrkCharge[ptr++]){//Opposite charge
 			 std::cout<<"inside pion loop"<<std::endl;
 			TLorentzVector packed1;
 	   	        TLorentzVector packed2;
@@ -760,7 +760,7 @@ int main(int argc, char* argv[])
 
 			//hadroninv=(lhadron1+lhadron2).M();
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
-		      }  
+		      //}  
 		    
 		
 		      if(k!=thepion.front() && k!=ptr++){
@@ -799,7 +799,7 @@ int main(int argc, char* argv[])
 		    if(themuon.size()>1){
 		      Int_t two=themuon.front();
 		   
-		      if(event.packedCandsPseudoTrkCharge[themuon.front()]!=event.packedCandsPseudoTrkCharge[two++]){
+		      //if(event.packedCandsPseudoTrkCharge[themuon.front()]!=event.packedCandsPseudoTrkCharge[two++]){
 			std::cout<<"inside the muon loop"<<std::endl;  
 		        //Invariant mass for two muons
 	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[themuon.front()], event.packedCandsPseudoTrkPy[themuon.front()], event.packedCandsPseudoTrkPz[themuon.front()], event.packedCandsE[themuon.front()]};
@@ -815,7 +815,7 @@ int main(int argc, char* argv[])
 	   	        m2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[two++],event.packedCandsPseudoTrkEta[two++],event.packedCandsPseudoTrkPhi[two++],event.packedCandsE[two++]);
 			
 	                h_muonsDeltaR->Fill(m1.DeltaR(m2));
-		      } 
+		      //} 
 		    }
 			  
 		   // h_invmass->Fill(hadroninv,muoninv);
