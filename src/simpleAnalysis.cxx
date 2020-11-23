@@ -713,8 +713,6 @@ int main(int argc, char* argv[])
 			
 	          if(packedCandsCharge!=0 && packedCandsCharge==packedCandsPseudoTrkCharge){ //No neutral particles as they don't leave tracks, only charged
 	           
-		    //nrofPacked.emplace_back(k);
-			  
 	            h_packedCVx->Fill(event.packedCandsPseudoTrkVx[k]);
                     h_packedCVy->Fill(event.packedCandsPseudoTrkVy[k]);
                     h_packedCVz->Fill(event.packedCandsPseudoTrkVz[k]);
@@ -728,7 +726,7 @@ int main(int argc, char* argv[])
 		      thepion.emplace_back(k); 
 		    } 
 		    
-		    if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[thepion.front()+1])){//Opposite charge
+		    /*if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[thepion.front()+1])){//Opposite charge
 			    
 			TLorentzVector packed1;
 	   	        TLorentzVector packed2;
@@ -744,8 +742,8 @@ int main(int argc, char* argv[])
 
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
 			  
-		     } 
-		    /*if(packedId==std::abs(13)){//Selection of muons
+		     } */
+		    if(packedId==std::abs(13)){//Selection of muons
 		      themuon.emplace_back(k);
 		    }
 		  
@@ -763,7 +761,7 @@ int main(int argc, char* argv[])
 	   	      m2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[themuon.front()+1],event.packedCandsPseudoTrkEta[themuon.front()+1],event.packedCandsPseudoTrkPhi[themuon.front()+1],event.packedCandsE[themuon.front()+1]);
 			
 	              h_muonsDeltaR->Fill(m1.DeltaR(m2));
-		    }*/ 
+		    } 
 	          }
 	        }
 	      }
