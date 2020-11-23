@@ -814,7 +814,7 @@ int main(int argc, char* argv[])
 		      } 
 		    }
 			  
-		    h_invmass->Fill(hadroninv,muoninv);
+		   // h_invmass->Fill(hadroninv,muoninv);
 	          }
 	        }
 	      }
