@@ -726,13 +726,14 @@ int main(int argc, char* argv[])
 		      thepion.emplace_back(k); 
 		    } 
 		    if(thepion.size()!=0){//Safety measure
-		      if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[std::advance(thepion.front(),1)])){//Opposite charge
+		      ptr=thepion.begin();
+		      if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[ptr++])){//Opposite charge
 			    
 			TLorentzVector packed1;
 	   	        TLorentzVector packed2;
 		  
-	   	        packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[thepion.front()],event.packedCandsPseudoTrkEta[thepion.front()],event.packedCandsPseudoTrkPhi[thepion.front()],event.packedCandsE[thepion.front()]);
-	   	        packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[thepion.front()+1],event.packedCandsPseudoTrkEta[thepion.front()+1],event.packedCandsPseudoTrkPhi[thepion.front()+1],event.packedCandsE[thepion.front()+1]);
+	   	        packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[thepion.begin()],event.packedCandsPseudoTrkEta[thepion.begin()],event.packedCandsPseudoTrkPhi[thepion.begin()],event.packedCandsE[thepion.begin()]);
+	   	        packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[ptr++],event.packedCandsPseudoTrkEta[ptr++],event.packedCandsPseudoTrkPhi[ptr++],event.packedCandsE[ptr++]);
 			
 	   	        h_hadronDeltaR->Fill(packed1.DeltaR(packed2));
 			
