@@ -737,7 +737,7 @@ int main(int argc, char* argv[])
 	            h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
 	         
 	            //Find the hadrons (pions)
-		    if(packedId!=std::abs(13)){//Selection of pions (charged hadrons)
+		    if(std::abs(packedId)!=13){//Selection of pions (charged hadrons)
 		      thepion.emplace_back(k);
 		      std::cout<<"pion selected charge"<<event.packedCandsPseudoTrkCharge[k]<<std::endl;
 		    } 
@@ -792,7 +792,7 @@ int main(int argc, char* argv[])
 		    }
 			  
 			  
-		    if(packedId==std::abs(13)){//Selection of muons
+		    if(std::abs(packedId)==13){//Selection of muons
 		      themuon.emplace_back(k);
 		      std::cout<<"muon selected charge"<<event.packedCandsPseudoTrkCharge[k]<<std::endl;
 		    }
