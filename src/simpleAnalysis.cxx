@@ -756,7 +756,7 @@ int main(int argc, char* argv[])
 	    	        TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[thepion.front()], event.packedCandsPseudoTrkPy[thepion.front()], event.packedCandsPseudoTrkPz[thepion.front()], event.packedCandsE[thepion.front()]};
 	 	        TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[ptr++], event.packedCandsPseudoTrkPy[ptr++], event.packedCandsPseudoTrkPz[ptr++], event.packedCandsE[ptr++]};
 
-			hadroninv=(lhadron1+lhadron2).M();
+			//hadroninv=(lhadron1+lhadron2).M();
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
 		      }  
 		    
@@ -801,7 +801,7 @@ int main(int argc, char* argv[])
 	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[themuon.front()], event.packedCandsPseudoTrkPy[themuon.front()], event.packedCandsPseudoTrkPz[themuon.front()], event.packedCandsE[themuon.front()]};
 	 	        TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[two++], event.packedCandsPseudoTrkPy[two++], event.packedCandsPseudoTrkPz[two++], event.packedCandsE[two++]};
                         
-			muoninv=(lmuon1+lmuon2).M();
+			//muoninv=(lmuon1+lmuon2).M();
 	   	        h_muonsInvMass->Fill((lmuon1+lmuon2).M());
 			     
                         TLorentzVector m1;
