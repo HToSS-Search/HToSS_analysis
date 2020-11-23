@@ -725,8 +725,8 @@ int main(int argc, char* argv[])
 		    if(packedId!=std::abs(13)){//Selection of pions (charged hadrons)
 		      thepion.emplace_back(k); 
 		    } 
-		    
-		    /*if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[thepion.front()+1])){//Opposite charge
+		    if(thepion.size()!=0){//Safety measure
+		      if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[thepion.front()+1])){//Opposite charge
 			    
 			TLorentzVector packed1;
 	   	        TLorentzVector packed2;
@@ -741,8 +741,9 @@ int main(int argc, char* argv[])
 	 	        TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[thepion.front()+1], event.packedCandsPseudoTrkPy[thepion.front()+1], event.packedCandsPseudoTrkPz[thepion.front()+1], event.packedCandsE[thepion.front()+1]};
 
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
+		      }  
+		    }
 			  
-		     } */
 		    if(packedId==std::abs(13)){//Selection of muons
 		      themuon.emplace_back(k);
 		    }
