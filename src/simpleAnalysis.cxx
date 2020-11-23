@@ -732,7 +732,7 @@ int main(int argc, char* argv[])
 			TLorentzVector packed1;
 	   	        TLorentzVector packed2;
 		  
-	   	        packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[thepion.front()],event.packedCandsPseudoTrkEta[thepion.front()],event.packedCandsPseudoTrkPhi[thepion.front()],event.packedCandsE[front.begin()]);
+	   	        packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[thepion.front()],event.packedCandsPseudoTrkEta[thepion.front()],event.packedCandsPseudoTrkPhi[thepion.front()],event.packedCandsE[thepion.front()]);
 	   	        packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[ptr++],event.packedCandsPseudoTrkEta[ptr++],event.packedCandsPseudoTrkPhi[ptr++],event.packedCandsE[ptr++]);
 			
 	   	        h_hadronDeltaR->Fill(packed1.DeltaR(packed2));
