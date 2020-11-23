@@ -738,13 +738,14 @@ int main(int argc, char* argv[])
 	         
 	            //Find the hadrons (pions)
 		    if(packedId!=std::abs(13)){//Selection of pions (charged hadrons)
-		      thepion.emplace_back(k); 
+		      thepion.emplace_back(k);
+		      std::cout<<"pion selected charge"<<event.packedCandsPseudoTrkCharge[k]<<std::endl;
 		    } 
 		    if(thepion.size()!=0){//Safety measure
 		      Int_t ptr=thepion.front();
-			    std::cout<<"charge "<<event.packedCandsPseudoTrkCharge[thepion.front()]<<"other charge"<<event.packedCandsPseudoTrkCharge[ptr++]<<std::endl;
+			   
 		      if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[ptr++])){//Opposite charge
-			std::cout<<"inside thepion loop"<<std::endl;   
+			 
 			TLorentzVector packed1;
 	   	        TLorentzVector packed2;
 		  
@@ -793,12 +794,13 @@ int main(int argc, char* argv[])
 			  
 		    if(packedId==std::abs(13)){//Selection of muons
 		      themuon.emplace_back(k);
+		      std::cout<<"muon selected charge"<<event.packedCandsPseudoTrkCharge[k]<<std::endl;
 		    }
 		    if(themuon.size()!=0){
 		      Int_t two=themuon.front();
-			    std::cout<<"charge "<<event.packedCandsPseudoTrkCharge[themuon.front()]<<"other charge"<<(-event.packedCandsPseudoTrkCharge[two++])<<std::endl;
+			   
 		      if(event.packedCandsPseudoTrkCharge[themuon.front()]==-(event.packedCandsPseudoTrkCharge[two++])){
-			std::cout<<"inside themuon loop"<<std::endl; 
+			
 		        //Invariant mass for two muons
 	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[themuon.front()], event.packedCandsPseudoTrkPy[themuon.front()], event.packedCandsPseudoTrkPz[themuon.front()], event.packedCandsE[themuon.front()]};
 	 	        TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[two++], event.packedCandsPseudoTrkPy[two++], event.packedCandsPseudoTrkPz[two++], event.packedCandsE[two++]};
