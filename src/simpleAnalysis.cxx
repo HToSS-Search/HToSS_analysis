@@ -342,7 +342,7 @@ int main(int argc, char* argv[])
 		    
 	  //Particles from scalar decay
 	  const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)}; 
-		    
+	  std::vector<Int_t> mu; std::vector<Int_t> mumu;	    
 	  if (isScalarGrandparent==true){
 	      
 	      //Muon from scalar decay
@@ -362,15 +362,25 @@ int main(int argc, char* argv[])
 		   h_genParScalarMuonPt->Fill(event.genParPt[k]);
 		  
 	           if(event.muTrig()){
-			
-	             h_genParScalarMuonCutPtSL->Fill(event.genParPt[k]);
-			  
+		     if(k!=0){
+		       mu.emplace_back(k);
+		       h_genParScalarMuonCutPtSL->Fill(event.genParPt[mu.front()]);
+		     }
+		    else if(k==0){
+			   h_genParScalarMuonCutPtSL->Fill(event.genParPt[0]);
+		    }
 		   }
 		   if(event.mumuTrig()){
-			  
-	             h_genParScalarMuonCutPtDL->Fill(event.genParPt[k]);  
-		     h_genParScalarMuonCutPtDS->Fill(event.genParPt[k+1]);
-			
+		      if(k!=0){
+			mumu.emplace_back(k);
+			Int_t ptr=mumu.front();
+		        h_genParScalarMuonCutPtDL->Fill(event.genParPt[mumu.front();]);  
+		        h_genParScalarMuonCutPtDS->Fill(event.genParPt[ptr++]);
+		      }
+		     else if(k==0){
+			    h_genParScalarMuonCutPtDL->Fill(event.genParPt[0]);  
+		            h_genParScalarMuonCutPtDS->Fill(event.genParPt[1]); 
+		     }
 		   }    
 	        }     
 	     }
@@ -593,9 +603,9 @@ int main(int argc, char* argv[])
 	      
 	      
 	/// BEGIN Muon Reconstruction
-	std::vector<Int_t> ptSingle; std::vector<Int_t> ptDouble;
+	std::vector<Int_t> ptSingle; std::vector<Int_t> ptDouble; std::vector<Int_t> sin; std::vector<Int_t> doub;
 	std::vector<Int_t> passedMuons; 
-
+  
 	if(event.metFilters()){
 	  
 	   for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
@@ -640,13 +650,14 @@ int main(int argc, char* argv[])
 		 }     
 	       } 
 	    
-		   
+		
 	       //To show seperate turn-on curve for single or double muon trigger
 	       if(event.muTrig() ){
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
 		  
 	           if(k!=0){
-		     h_muonCutSingleL->Fill(event.muonPF2PATPt[1]);
+		     sin.emplace_back(k);
+		     h_muonCutSingleL->Fill(event.muonPF2PATPt[sin.front()]);
 		   }
 		   else if(k==0){
 			  h_muonCutSingleL->Fill(event.muonPF2PATPt[0]);
@@ -658,8 +669,10 @@ int main(int argc, char* argv[])
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut and |eta| < 2.4 
 		  
 		   if(k!=0){
-		     h_muonCutDoubleL->Fill(event.muonPF2PATPt[1]);
-		     h_muonCutDoubleS->Fill(event.muonPF2PATPt[2]);
+		     doub.emplace_back(k);
+		     Int_t pp=doub.front();
+		     h_muonCutDoubleL->Fill(event.muonPF2PATPt[doub.front()]);
+		     h_muonCutDoubleS->Fill(event.muonPF2PATPt[pp++]);
 		   }
 		   else if(k==0){
 			  h_muonCutDoubleL->Fill(event.muonPF2PATPt[0]);
