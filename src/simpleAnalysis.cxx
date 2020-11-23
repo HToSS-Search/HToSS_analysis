@@ -170,7 +170,7 @@ int main(int argc, char* argv[])
   TH1F* h_IsoSum2       {new TH1F("h_IsoSum2",  "0.3 p_{T} Cone construction pion 2", 1000, 0., 1000.)}; 
   TH1F* h_hadronInvMass {new TH1F("h_hadronInvMass", "Two hadrons - Invariant mass",1000, 0., 7.)};
   TH1F* h_muonsInvMass  {new TH1F("h_muonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
-
+  TH2F* h_invmass       {new TH2I("h_invmass", "Invariant mass: pions vs muons", 1000, 0.,7.,1000,0.,7.)};
 	
 	
 	
@@ -710,7 +710,9 @@ int main(int argc, char* argv[])
 	if(event.metFilters()){
 		
           for (Int_t k{0};k<event.numPackedCands;k++) {
-	 
+		  
+	      Float_t hadroninv; Float_t muoninv;
+		  
 	      if(event.muTrig() || event.mumuTrig()){	  
 	        
 		const Int_t packedId {event.packedCandsPdgId[k]}; 
@@ -754,6 +756,7 @@ int main(int argc, char* argv[])
 	    	        TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[thepion.front()], event.packedCandsPseudoTrkPy[thepion.front()], event.packedCandsPseudoTrkPz[thepion.front()], event.packedCandsE[thepion.front()]};
 	 	        TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[ptr++], event.packedCandsPseudoTrkPy[ptr++], event.packedCandsPseudoTrkPz[ptr++], event.packedCandsE[ptr++]};
 
+			hadroninv=(lhadron1+lhadron2).M();
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
 		      }  
 		    
@@ -796,7 +799,8 @@ int main(int argc, char* argv[])
 		        //Invariant mass for two muons
 	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[themuon.front()], event.packedCandsPseudoTrkPy[themuon.front()], event.packedCandsPseudoTrkPz[themuon.front()], event.packedCandsE[themuon.front()]};
 	 	        TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[two++], event.packedCandsPseudoTrkPy[two++], event.packedCandsPseudoTrkPz[two++], event.packedCandsE[two++]};
-
+                        
+			muoninv=(lmuon1+lmuon2).M();
 	   	        h_muonsInvMass->Fill((lmuon1+lmuon2).M());
 			     
                         TLorentzVector m1;
@@ -808,6 +812,8 @@ int main(int argc, char* argv[])
 	                h_muonsDeltaR->Fill(m1.DeltaR(m2));
 		      } 
 		    }
+			  
+		    h_invmass->Fill(hadroninv,muoninv);
 	          }
 	        }
 	      }
@@ -817,18 +823,20 @@ int main(int argc, char* argv[])
    
 	//END Packed Candidates    
 	      
+	  
 	      
-	     
-	   std::cout << __LINE__ << " : " << __FILE__ << std::endl;   //!!! PROBLEM OCCURS HERE
+	      
+	      
+	      
+	      
+	      
  	      
-      } //Loop over all events
-	    std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+      } //Loop over all events	
 
   } //Loop over all datatsets
     	
 
 
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   
 	
 	
@@ -850,12 +858,17 @@ int main(int argc, char* argv[])
     h_pdgId->GetXaxis()->SetBinLabel(binCounter, label);
     binCounter++;
   }
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+	
+	
   // Create output ROOT file
   TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
   // change current ROOT directory to that of outFile
   outFile->cd();
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+	
+	
+	
   // Write histograms to file
   h_genParPt->GetXaxis()->SetTitle("GeV");
   h_genParPt->Write();
@@ -884,28 +897,21 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_ScalarInvMass->Write();
   h_Scalar3DAngle->Write();
 	
-  std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+ 
   h_genParScalarMuonPt->GetXaxis()->SetTitle("GeV");
-  h_genParScalarMuonPt->Write();
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+  h_genParScalarMuonPt->Write();	
   h_genParScalarMuonCutPtSL->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonCutPtSL->Write();
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_genParScalarMuonDivPtSL->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonDivPtSL->Write();
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_genParScalarMuonCutPtDL->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonCutPtDL->Write();
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_genParScalarMuonDivPtDL->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonDivPtDL->Write();
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_genParScalarMuonCutPtDS->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonCutPtDS->Write();
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_genParScalarMuonDivPtDS->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonDivPtDS->Write();
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	
   h_genParScalarMuonEta->Write();
   h_genParScalarMuonPhi->Write();
@@ -1009,8 +1015,9 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_hadronInvMass->Write();
   h_hadronInvMass->GetXaxis()->SetTitle("GeV");
   h_coneDeltaR->Write();	
-	
-	
+  h_invmass->Write();	
+  h_invmass->GetXaxis()->SetTitle("GeV");
+  h_invmass->GetYaxis()->SetTitle("GeV");
 	
 	
 	
