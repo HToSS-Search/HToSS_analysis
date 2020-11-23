@@ -762,7 +762,7 @@ int main(int argc, char* argv[])
 		      }  
 		    
 		
-		      if(k!=thepion.front() && k!=ptr++){
+		      if(k!=thepion.front() && k!=thepion.front()+1){
 				
 		        TLorentzVector cone1;//The pion
 	   	        TLorentzVector cone2;//Packed candidate
@@ -797,7 +797,7 @@ int main(int argc, char* argv[])
 		    }
 		    if(themuon.size()>1){
 		   
-		      if(event.packedCandsPseudoTrkCharge[themuon.front()]!=event.packedCandsPseudoTrkCharge[two++]){
+		      if(event.packedCandsPseudoTrkCharge[themuon.front()]==-(event.packedCandsPseudoTrkCharge[themuon.front()+1])){
 			
 		        //Invariant mass for two muons
 	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[themuon.front()], event.packedCandsPseudoTrkPy[themuon.front()], event.packedCandsPseudoTrkPz[themuon.front()], event.packedCandsE[themuon.front()]};
