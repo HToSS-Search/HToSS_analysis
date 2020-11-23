@@ -692,8 +692,8 @@ int main(int argc, char* argv[])
 	      
 	//BEGIN Packed candidates 
 	      
-	std::vector<Int_t> thepion; std::vector<Int_t> otherpion; std::vector<Int_t> themuon; std::vector<Int_t> othermuon;
-	Float_t IsoSum1=0;  Float_t IsoSum2=0;        
+	std::vector<Int_t> thepion; std::vector<Int_t> themuon; 
+	//Float_t IsoSum1=0;  Float_t IsoSum2=0;        
 	if(event.metFilters()){
 		
           for (Int_t k{0};k<event.numPackedCands;k++) {
@@ -745,7 +745,7 @@ int main(int argc, char* argv[])
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
 			  
 		     } 
-		    if(packedId==std::abs(13)){//Selection of muons
+		    /*if(packedId==std::abs(13)){//Selection of muons
 		      themuon.emplace_back(k);
 		    }
 		  
@@ -763,7 +763,7 @@ int main(int argc, char* argv[])
 	   	      m2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[themuon.front()+1],event.packedCandsPseudoTrkEta[themuon.front()+1],event.packedCandsPseudoTrkPhi[themuon.front()+1],event.packedCandsE[themuon.front()+1]);
 			
 	              h_muonsDeltaR->Fill(m1.DeltaR(m2));
-		    } 
+		    }*/ 
 	          }
 	        }
 	      }
