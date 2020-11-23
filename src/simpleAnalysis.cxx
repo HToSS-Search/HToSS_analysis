@@ -726,7 +726,7 @@ int main(int argc, char* argv[])
 		      thepion.emplace_back(k); 
 		    } 
 		    if(thepion.size()!=0){//Safety measure
-		      if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[thepion(2)])){//Opposite charge
+		      if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[std::advance(thepion.front(),1)])){//Opposite charge
 			    
 			TLorentzVector packed1;
 	   	        TLorentzVector packed2;
