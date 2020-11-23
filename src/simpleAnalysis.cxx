@@ -726,20 +726,20 @@ int main(int argc, char* argv[])
 		      thepion.emplace_back(k); 
 		    } 
 		    if(thepion.size()!=0){//Safety measure
-		      Int_t ptr=thepion.begin();
+		      Int_t ptr=thepion.front();
 		      if(event.packedCandsPseudoTrkCharge[thepion.front()]==-(event.packedCandsPseudoTrkCharge[ptr++])){//Opposite charge
 			    
 			TLorentzVector packed1;
 	   	        TLorentzVector packed2;
 		  
-	   	        packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[thepion.begin()],event.packedCandsPseudoTrkEta[thepion.begin()],event.packedCandsPseudoTrkPhi[thepion.begin()],event.packedCandsE[thepion.begin()]);
+	   	        packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[thepion.front()],event.packedCandsPseudoTrkEta[thepion.front()],event.packedCandsPseudoTrkPhi[thepion.front()],event.packedCandsE[front.begin()]);
 	   	        packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[ptr++],event.packedCandsPseudoTrkEta[ptr++],event.packedCandsPseudoTrkPhi[ptr++],event.packedCandsE[ptr++]);
 			
 	   	        h_hadronDeltaR->Fill(packed1.DeltaR(packed2));
 			
 			//Invariant mass for two hadrons
 	    	        TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[thepion.front()], event.packedCandsPseudoTrkPy[thepion.front()], event.packedCandsPseudoTrkPz[thepion.front()], event.packedCandsE[thepion.front()]};
-	 	        TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[thepion.front()+1], event.packedCandsPseudoTrkPy[thepion.front()+1], event.packedCandsPseudoTrkPz[thepion.front()+1], event.packedCandsE[thepion.front()+1]};
+	 	        TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[ptr++], event.packedCandsPseudoTrkPy[ptr++], event.packedCandsPseudoTrkPz[ptr++], event.packedCandsE[ptr++]};
 
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
 		      }  
