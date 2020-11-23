@@ -167,7 +167,7 @@ int main(int argc, char* argv[])
   TH1F* h_muonsDeltaR   {new TH1F("h_muonsDeltaR", "Two muons #DeltaR",2500, -10., 10.)};
   TH1F* h_coneDeltaR    {new TH1F("h_coneDeltaR", "Cone mapping  #DeltaR",2500, -10., 10.)}; 
   TH1F* h_IsoSum1       {new TH1F("h_IsoSum1",  "0.3 p_{T} Cone construction pion 1", 1000, 0., 1000.)};
-  TH1F* h_IsoSum2       {new TH1F("h_IsoSum1",  "0.3 p_{T} Cone construction pion 2", 1000, 0., 1000.)}; 
+  TH1F* h_IsoSum2       {new TH1F("h_IsoSum2",  "0.3 p_{T} Cone construction pion 2", 1000, 0., 1000.)}; 
   TH1F* h_hadronInvMass {new TH1F("h_hadronInvMass", "Two hadrons - Invariant mass",1000, 0., 7.)};
   TH1F* h_muonsInvMass  {new TH1F("h_muonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
 
@@ -1150,7 +1150,7 @@ bool scalarGrandparent (const AnalysisEvent& event, const Int_t& k, const Int_t&
 
   if (motherId == 0 || motherIndex == -1) return false; // if no parent, then mother Id is null and there's no index, quit search
   else if (motherId == std::abs(grandparentId)) return true; // if mother is granparent being searched for, return true
-  else if (motherIndex > event.NGENPARMAX) return false; // index exceeds stored genParticle range, return false for safety
+  else if (motherIndex >= event.NGENPARMAX) return false; // index exceeds stored genParticle range, return false for safety
   else {
     //   std::cout << "Going up the ladder ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
     //   debugCounter++;
