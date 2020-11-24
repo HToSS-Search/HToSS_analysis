@@ -603,9 +603,11 @@ int main(int argc, char* argv[])
 	      
 	      
 	/// BEGIN Muon Reconstruction
-	std::vector<Int_t> ptSingle; std::vector<Int_t> ptDouble; std::vector<Int_t> sin; std::vector<Int_t> doub;
 	std::vector<Int_t> passedMuons; 
-  
+ 
+	uint singleFlag{0}; doubleFlag{0};
+	std::vector<int> singleIndex{}, doubleIndex{};  
+	      
 	if(event.metFilters()){
 	  
 	   for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
@@ -654,34 +656,25 @@ int main(int argc, char* argv[])
 	       //To show seperate turn-on curve for single or double muon trigger
 	       if(event.muTrig() ){
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut and |eta| < 2.4
-		  
-	           if(k!=0){
-		     sin.emplace_back(k);
-		     h_muonCutSingleL->Fill(event.muonPF2PATPt[sin.front()]);
-		   }
-		   else if(k==0){
-			  h_muonCutSingleL->Fill(event.muonPF2PATPt[0]);
-		   }
-		 }       
+		    singleFlag++; singleIndex.emplace_back(k);
+		 }
+	       }
+	       if(singleFlag==2){
+		 const int s1 {singleIndex[0]};
+		 h_muonCutSingleL->Fill(event.muonPF2PATPt[s1]);
 	       }
 		
 	       if(event.mumuTrig()){
 		 if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut and |eta| < 2.4 
-		  
-		   if(k!=0){
-		     doub.emplace_back(k);
-		     
-		     h_muonCutDoubleL->Fill(event.muonPF2PATPt[doub.front()]);
-		     h_muonCutDoubleS->Fill(event.muonPF2PATPt[doub.front()+1]);
-		   }
-		   else if(k==0){
-			  h_muonCutDoubleL->Fill(event.muonPF2PATPt[0]);
-		          h_muonCutDoubleS->Fill(event.muonPF2PATPt[1]);
-		   }
-		 }	 	        
-	       }  
-		   
-		   
+		   doubleFlag++; doubleIndex.emplace_back(k);
+		 }
+	       }
+	       if(doubleFlag==2){
+		 const int d1 {doubleIndex[0]}; d2 {doubleIndex[1]};
+		 h_muonCutDoubleL->Fill(event.muonPF2PATPt[d1]);
+		 h_muonCutDoubleS->Fill(event.muonPF2PATPt[d2]);
+	       }
+		       
 	   }	
 	}//MET filter 
 	
