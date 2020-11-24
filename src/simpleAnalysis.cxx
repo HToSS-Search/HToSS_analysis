@@ -606,7 +606,7 @@ int main(int argc, char* argv[])
 	std::vector<Int_t> passedMuons; 
  
 	uint singleFlag{0}; uint doubleFlag{0};
-	std::vector<Int_t> singleIndex{}, std::vector<Int_t> doubleIndex{};  
+	std::vector<Int_t> singleIndex{}; std::vector<Int_t> doubleIndex{};  
 	      
 	if(event.metFilters()){
 	  
