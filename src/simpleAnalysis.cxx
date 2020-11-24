@@ -784,7 +784,7 @@ int main(int argc, char* argv[])
 		    }
 			  
 			  
-		    if(std::abs(packedId)==13 && (event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
+		    if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
 		      muonFlag++; muonIndex.emplace_back(k);  
 		    }
 		    if(muonFlag==2){
