@@ -167,7 +167,9 @@ int main(int argc, char* argv[])
   TH1F* h_muonsDeltaR   {new TH1F("h_muonsDeltaR", "Two muons #DeltaR",2500, -10., 10.)};
   TH1F* h_coneDeltaR    {new TH1F("h_coneDeltaR", "Cone mapping  #DeltaR",2500, -10., 10.)}; 
   TH1F* h_IsoSum1       {new TH1F("h_IsoSum1",  "0.3 p_{T} Cone construction pion 1", 1000, 0., 1000.)};
-  TH1F* h_IsoSum2       {new TH1F("h_IsoSum2",  "0.3 p_{T} Cone construction pion 2", 1000, 0., 1000.)}; 
+  TH1F* h_IsoSum2       {new TH1F("h_IsoSum2",  "0.3 p_{T} Cone construction pion 2", 1000, 0., 1000.)};
+  TH1F* h_IsoSum3	{new TH1F("h_IsoSum3",  "0.3 p_{T} Cone construction muon 1", 1000, 0., 1000.)};
+  TH1F* h_IsoSum4	{new TH1F("h_IsoSum4",  "0.3 p_{T} Cone construction muon 2", 1000, 0., 1000.)}; 
   TH1F* h_hadronInvMass {new TH1F("h_hadronInvMass", "Two hadrons - Invariant mass",1000, 0., 7.)};
   TH1F* h_muonsInvMass  {new TH1F("h_muonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
   TH2F* h_invmass       {new TH2F("h_invmass", "Invariant mass: pions vs muons", 1000, 0.,7.,1000,0.,7.)};
@@ -765,7 +767,6 @@ int main(int argc, char* argv[])
 			  
 		        if(cone1.DeltaR(cone2)<0.3){
 		          IsoSum1+=event.packedCandsPseudoTrkPt[k];
-		          h_coneDeltaR->Fill(cone1.DeltaR(cone2));
 		          h_IsoSum1->Fill(IsoSum1);
 		        }
 			
@@ -777,7 +778,6 @@ int main(int argc, char* argv[])
 			  
 			if(cone3.DeltaR(cone4)<0.3){
 		          IsoSum2+=event.packedCandsPseudoTrkPt[k];
-		          h_coneDeltaR->Fill(cone3.DeltaR(cone4));
 		          h_IsoSum2->Fill(IsoSum2);
 			}      
 		      }
@@ -805,7 +805,32 @@ int main(int argc, char* argv[])
 	   	        mm2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[m2],event.packedCandsPseudoTrkEta[m2],event.packedCandsPseudoTrkPhi[m2],event.packedCandsE[m2]);
 			
 	                h_muonsDeltaR->Fill(mm1.DeltaR(mm2));
-		      } 
+		      }
+		      if(k!=m1 && k!=m2){
+
+                        TLorentzVector cone1;//The muon
+                        TLorentzVector cone2;//Packed candidate
+
+                        cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[m1],event.packedCandsPseudoTrkEta[m1],event.packedCandsPseudoTrkPhi[m1],event.packedCandsE[m1]);
+                        cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+
+                        if(cone1.DeltaR(cone2)<0.3){
+                          IsoSum3+=event.packedCandsPseudoTrkPt[k];
+                          h_IsoSum3->Fill(IsoSum3);
+                        }
+
+                        TLorentzVector cone3;//The other muon
+                        TLorentzVector cone4;//Packed candidate
+
+                        cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[m2],event.packedCandsPseudoTrkEta[m2],event.packedCandsPseudoTrkPhi[m2],event.packedCandsE[m2]);
+                        cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+
+                        if(cone3.DeltaR(cone4)<0.3){
+                          IsoSum4+=event.packedCandsPseudoTrkPt[k];
+                          h_IsoSum4->Fill(IsoSum4);
+                        }
+                      }
+	  
 		    }
 			  
 		  h_invmass->Fill(hadroninv,muoninv);
@@ -1005,6 +1030,10 @@ int main(int argc, char* argv[])
   h_IsoSum1->GetXaxis()->SetTitle("GeV");
   h_IsoSum2->Write();
   h_IsoSum2->GetXaxis()->SetTitle("GeV");
+  h_IsoSum3->Write();
+  h_IsoSum3->GetXaxis()->SetTitle("GeV");
+  h_IsoSum4->Write();
+  h_IsoSum4->GetXaxis()->SetTitle("GeV");
   h_muonsInvMass->Write();
   h_muonsInvMass->GetXaxis()->SetTitle("GeV");
   h_hadronInvMass->Write();
