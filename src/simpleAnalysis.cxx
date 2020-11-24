@@ -605,8 +605,8 @@ int main(int argc, char* argv[])
 	/// BEGIN Muon Reconstruction
 	std::vector<Int_t> passedMuons; 
  
-	uint singleFlag{0}; doubleFlag{0};
-	std::vector<int> singleIndex{}, doubleIndex{};  
+	uint singleFlag{0}; uint doubleFlag{0};
+	std::vector<Int_t> singleIndex{}, std::vector<Int_t> doubleIndex{};  
 	      
 	if(event.metFilters()){
 	  
@@ -670,7 +670,7 @@ int main(int argc, char* argv[])
 		 }
 	       }
 	       if(doubleFlag==2){
-		 const int d1 {doubleIndex[0]}; d2 {doubleIndex[1]};
+		 const int d1 {doubleIndex[0]}; const int d2 {doubleIndex[1]};
 		 h_muonCutDoubleL->Fill(event.muonPF2PATPt[d1]);
 		 h_muonCutDoubleS->Fill(event.muonPF2PATPt[d2]);
 	       }
