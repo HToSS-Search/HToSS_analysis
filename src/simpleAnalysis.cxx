@@ -314,7 +314,7 @@ int main(int argc, char* argv[])
 	  const Float_t genParEta { event.genParEta[k] };
 	  const Float_t genParPhi { event.genParPhi[k] };
 	  const Float_t genParE   { event.genParE[k] };
-	  std::cout<<"Gen "<<event.genParPt[k]<<std::endl;	 
+	  std::cout<<"Gen "<<k<<"pt "<<event.genParPt[k]<<std::endl;	 
 	  const bool ownParent {pdgId == motherId ? true : false}; 
 	  //meaning: const bool ownParent {if(pdgId == motherId){return true;}else{return false;}};
 
@@ -612,7 +612,7 @@ int main(int argc, char* argv[])
 	if(event.metFilters()){
 	  
 	   for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
-	       std::cout<<"Reco "<<event.muonPF2PATPt[k]<<std::endl;       
+	       std::cout<<"Reco "<<k<<"pt "<<event.muonPF2PATPt[k]<<std::endl;       
 	       const Float_t muonRecPt   { event.muonPF2PATPt[k] };
 	       const Float_t muonRecEta  { event.muonPF2PATEta[k] };
 	       const Float_t muonRecPhi  { event.muonPF2PATPhi[k] };
@@ -718,7 +718,7 @@ int main(int argc, char* argv[])
 	        h_packedCDz->Fill(event.packedCandsDz[k]);  
 	      
 		if(event.packedCandsHasTrackDetails[k]==1){
-		  std::cout<<"Packed "<<event.packedCandsPseudoTrkPt[k]<<std::endl;
+		  std::cout<<"Packed "<<k<<"pt "<<event.packedCandsPseudoTrkPt[k]<<std::endl;
 		  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]};
 		  const Int_t packedCandsCharge {event.packedCandsCharge[k]};
 			
