@@ -767,7 +767,7 @@ int main(int argc, char* argv[])
 			  
 		        if(cone1.DeltaR(cone2)<0.3){
 		          IsoSum1+=event.packedCandsPseudoTrkPt[k];
-		          h_IsoSum1->Fill(IsoSum1/event.packedCandsPseudoTrkPt[k];);
+		          h_IsoSum1->Fill(IsoSum1/event.packedCandsPseudoTrkPt[k]);
 		        }
 			
 			TLorentzVector cone3;//The other pion
@@ -778,7 +778,7 @@ int main(int argc, char* argv[])
 			  
 			if(cone3.DeltaR(cone4)<0.3){
 		          IsoSum2+=event.packedCandsPseudoTrkPt[k];
-		          h_IsoSum2->Fill(IsoSum2/event.packedCandsPseudoTrkPt[k];);
+		          h_IsoSum2->Fill(IsoSum2/event.packedCandsPseudoTrkPt[k]);
 			}      
 		      }
 		    }
@@ -816,7 +816,7 @@ int main(int argc, char* argv[])
 
                         if(cone1.DeltaR(cone2)<0.3){
                           IsoSum3+=event.packedCandsPseudoTrkPt[k];
-                          h_IsoSum3->Fill(IsoSum3/event.packedCandsPseudoTrkPt[k];);
+                          h_IsoSum3->Fill(IsoSum3/event.packedCandsPseudoTrkPt[k]);
                         }
 
                         TLorentzVector cone3;//The other muon
@@ -827,7 +827,7 @@ int main(int argc, char* argv[])
 
                         if(cone3.DeltaR(cone4)<0.3){
                           IsoSum4+=event.packedCandsPseudoTrkPt[k];
-                          h_IsoSum4->Fill(IsoSum4/event.packedCandsPseudoTrkPt[k];);
+                          h_IsoSum4->Fill(IsoSum4/event.packedCandsPseudoTrkPt[k]);
                         }
                       }
 	  
