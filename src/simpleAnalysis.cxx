@@ -164,8 +164,7 @@ int main(int argc, char* argv[])
   TH2I* h_displacedXY   {new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150)};
   TH2I* h_displacedRZ   {new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250)};	
   TH1F* h_hadronDeltaR  {new TH1F("h_hadronDeltaR", "Two hadrons #DeltaR",2500, -10., 10.)}; 
-  TH1F* h_muonsDeltaR   {new TH1F("h_muonsDeltaR", "Two muons #DeltaR",2500, -10., 10.)};
-  TH1F* h_coneDeltaR    {new TH1F("h_coneDeltaR", "Cone mapping  #DeltaR",2500, -10., 10.)}; 
+  TH1F* h_muonsDeltaR   {new TH1F("h_muonsDeltaR", "Two muons #DeltaR",2500, -10., 10.)}; 
   TH1F* h_IsoSum1       {new TH1F("h_IsoSum1",  "0.3 p_{T} Cone construction pion 1", 1000, 0., 1000.)};
   TH1F* h_IsoSum2       {new TH1F("h_IsoSum2",  "0.3 p_{T} Cone construction pion 2", 1000, 0., 1000.)};
   TH1F* h_IsoSum3	{new TH1F("h_IsoSum3",  "0.3 p_{T} Cone construction muon 1", 1000, 0., 1000.)};
@@ -315,7 +314,7 @@ int main(int argc, char* argv[])
 	  const Float_t genParEta { event.genParEta[k] };
 	  const Float_t genParPhi { event.genParPhi[k] };
 	  const Float_t genParE   { event.genParE[k] };
-		 
+	  std::cout<<"Gen "<<event.genParPt[k]<<std::endl;	 
 	  const bool ownParent {pdgId == motherId ? true : false}; 
 	  //meaning: const bool ownParent {if(pdgId == motherId){return true;}else{return false;}};
 
@@ -613,7 +612,7 @@ int main(int argc, char* argv[])
 	if(event.metFilters()){
 	  
 	   for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
-		       
+	       std::cout<<"Reco "<<event.muonPF2PATPt[k]<<std::endl;       
 	       const Float_t muonRecPt   { event.muonPF2PATPt[k] };
 	       const Float_t muonRecEta  { event.muonPF2PATEta[k] };
 	       const Float_t muonRecPhi  { event.muonPF2PATPhi[k] };
@@ -719,7 +718,7 @@ int main(int argc, char* argv[])
 	        h_packedCDz->Fill(event.packedCandsDz[k]);  
 	      
 		if(event.packedCandsHasTrackDetails[k]==1){
-		
+		  std::cout<<"Packed "<<event.packedCandsPseudoTrkPt[k]<<std::endl;
 		  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]};
 		  const Int_t packedCandsCharge {event.packedCandsCharge[k]};
 			
@@ -1038,11 +1037,10 @@ int main(int argc, char* argv[])
   h_muonsInvMass->Write();
   h_muonsInvMass->GetXaxis()->SetTitle("GeV");
   h_hadronInvMass->Write();
-  h_hadronInvMass->GetXaxis()->SetTitle("GeV");
-  h_coneDeltaR->Write();	
+  h_hadronInvMass->GetXaxis()->SetTitle("GeV");	
   h_invmass->Write();	
-  h_invmass->GetXaxis()->SetTitle("GeV");
-  h_invmass->GetYaxis()->SetTitle("GeV");
+  h_invmass->GetXaxis()->SetTitle("Hadron invariant mass");
+  h_invmass->GetYaxis()->SetTitle("Muon invariant mass");
 	
 	
 	
