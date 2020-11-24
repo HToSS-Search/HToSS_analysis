@@ -702,7 +702,8 @@ int main(int argc, char* argv[])
 	uint pionFlag{0}; uint muonFlag{0};
 	std::vector<Int_t> pionIndex{}; std::vector<Int_t> muonIndex{};  
 	      
-	Float_t IsoSum1=0;  Float_t IsoSum2=0; 
+	Float_t IsoSum1=0;  Float_t IsoSum2=0;
+	Float_t IsoSum3=0;  Float_t IsoSum4=0; 
 	Float_t hadroninv; Float_t muoninv;
 	      
 	if(event.metFilters()){
