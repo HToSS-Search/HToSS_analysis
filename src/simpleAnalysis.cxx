@@ -706,12 +706,12 @@ int main(int argc, char* argv[])
 	//BEGIN Packed candidates 
 	      
 	std::vector<Int_t> thepion; std::vector<Int_t> themuon; 
-	Float_t IsoSum1=0;  Float_t IsoSum2=0;        
+	Float_t IsoSum1=0;  Float_t IsoSum2=0; 
+	Float_t hadroninv; Float_t muoninv;
+	      
 	if(event.metFilters()){
 		
           for (Int_t k{0};k<event.numPackedCands;k++) {
-		  
-	      //Float_t hadroninv; Float_t muoninv;
 		  
 	      if(event.muTrig() || event.mumuTrig()){	  
 	        
@@ -757,7 +757,7 @@ int main(int argc, char* argv[])
 	    	        TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[thepion.front()], event.packedCandsPseudoTrkPy[thepion.front()], event.packedCandsPseudoTrkPz[thepion.front()], event.packedCandsE[thepion.front()]};
 	 	        TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[thepion.front()+1], event.packedCandsPseudoTrkPy[thepion.front()+1], event.packedCandsPseudoTrkPz[thepion.front()+1], event.packedCandsE[thepion.front()+1]};
 
-			//hadroninv=(lhadron1+lhadron2).M();
+			hadroninv=(lhadron1+lhadron2).M();
 	   	        h_hadronInvMass->Fill((lhadron1+lhadron2).M());
 		      }  
 		    
@@ -803,7 +803,7 @@ int main(int argc, char* argv[])
 	    	        TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[themuon.front()], event.packedCandsPseudoTrkPy[themuon.front()], event.packedCandsPseudoTrkPz[themuon.front()], event.packedCandsE[themuon.front()]};
 	 	        TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[themuon.front()+1], event.packedCandsPseudoTrkPy[themuon.front()+1], event.packedCandsPseudoTrkPz[themuon.front()+1], event.packedCandsE[themuon.front()+1]};
                         
-			//muoninv=(lmuon1+lmuon2).M();
+			muoninv=(lmuon1+lmuon2).M();
 	   	        h_muonsInvMass->Fill((lmuon1+lmuon2).M());
 			     
                         TLorentzVector m1;
@@ -816,7 +816,7 @@ int main(int argc, char* argv[])
 		      } 
 		    }
 			  
-		   // h_invmass->Fill(hadroninv,muoninv);
+		  h_invmass->Fill(hadroninv,muoninv);
 	          }
 	        }
 	      }
