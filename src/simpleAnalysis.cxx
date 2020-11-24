@@ -314,7 +314,7 @@ int main(int argc, char* argv[])
 	  const Float_t genParEta { event.genParEta[k] };
 	  const Float_t genParPhi { event.genParPhi[k] };
 	  const Float_t genParE   { event.genParE[k] };
-	  std::cout<<"Gen "<<k<<"pt "<<event.genParPt[k]<<std::endl;	 
+	 
 	  const bool ownParent {pdgId == motherId ? true : false}; 
 	  //meaning: const bool ownParent {if(pdgId == motherId){return true;}else{return false;}};
 
@@ -612,7 +612,7 @@ int main(int argc, char* argv[])
 	if(event.metFilters()){
 	  
 	   for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
-	       std::cout<<"Reco "<<k<<"pt "<<event.muonPF2PATPt[k]<<std::endl;       
+	             
 	       const Float_t muonRecPt   { event.muonPF2PATPt[k] };
 	       const Float_t muonRecEta  { event.muonPF2PATEta[k] };
 	       const Float_t muonRecPhi  { event.muonPF2PATPhi[k] };
@@ -718,7 +718,7 @@ int main(int argc, char* argv[])
 	        h_packedCDz->Fill(event.packedCandsDz[k]);  
 	      
 		if(event.packedCandsHasTrackDetails[k]==1){
-		  std::cout<<"Packed "<<k<<"pt "<<event.packedCandsPseudoTrkPt[k]<<std::endl;
+		  
 		  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]};
 		  const Int_t packedCandsCharge {event.packedCandsCharge[k]};
 			
@@ -767,7 +767,7 @@ int main(int argc, char* argv[])
 			  
 		        if(cone1.DeltaR(cone2)<0.3){
 		          IsoSum1+=event.packedCandsPseudoTrkPt[k];
-		          h_IsoSum1->Fill(IsoSum1);
+		          h_IsoSum1->Fill(IsoSum1/event.packedCandsPseudoTrkPt[k];);
 		        }
 			
 			TLorentzVector cone3;//The other pion
@@ -778,7 +778,7 @@ int main(int argc, char* argv[])
 			  
 			if(cone3.DeltaR(cone4)<0.3){
 		          IsoSum2+=event.packedCandsPseudoTrkPt[k];
-		          h_IsoSum2->Fill(IsoSum2);
+		          h_IsoSum2->Fill(IsoSum2/event.packedCandsPseudoTrkPt[k];);
 			}      
 		      }
 		    }
@@ -816,7 +816,7 @@ int main(int argc, char* argv[])
 
                         if(cone1.DeltaR(cone2)<0.3){
                           IsoSum3+=event.packedCandsPseudoTrkPt[k];
-                          h_IsoSum3->Fill(IsoSum3);
+                          h_IsoSum3->Fill(IsoSum3/event.packedCandsPseudoTrkPt[k];);
                         }
 
                         TLorentzVector cone3;//The other muon
@@ -827,7 +827,7 @@ int main(int argc, char* argv[])
 
                         if(cone3.DeltaR(cone4)<0.3){
                           IsoSum4+=event.packedCandsPseudoTrkPt[k];
-                          h_IsoSum4->Fill(IsoSum4);
+                          h_IsoSum4->Fill(IsoSum4/event.packedCandsPseudoTrkPt[k];);
                         }
                       }
 	  
