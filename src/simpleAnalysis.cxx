@@ -385,9 +385,10 @@ int main(int argc, char* argv[])
 	        h_VertexPosXY->Fill(genParVx,genParVy);
 	        h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
 		h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
-		std::cout<<"momentum"<< event.genParPt[k]<<std::endl;  
-		if (event.metFilters()){ 
-		   std::cout<<"momentum MET filter"<< event.genParPt[k]<<std::endl;
+		//std::cout<<"momentum"<< event.genParPt[k]<<std::endl; 
+		     
+		//if (event.metFilters()){ 
+		  // std::cout<<"momentum MET filter"<< event.genParPt[k]<<std::endl;
 		   h_genParScalarMuonPt->Fill(event.genParPt[k]);  
 	           if(event.genParPt[k]>genpt1){
 	             genpt2=genpt1; 
@@ -413,7 +414,7 @@ int main(int argc, char* argv[])
 		       h_genParScalarMuonCutPtDS->Fill(genpt2);
 		     } 
 		   }
-		}     
+		//}     
 	     }
 	    //Charged kaon from scalar decay
 	    if (pdgId==321){
