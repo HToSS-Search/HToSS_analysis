@@ -312,8 +312,8 @@ int main(int argc, char* argv[])
 	    else if(event.genParPt[k]>genpt2){
 		   genpt2=event.genParPt[k];
 	    }
-	    max1.emplace_back(genpt1);
-	    max2.emplace_back(genpt2);
+	    max1.push_back(genpt1);
+	    max2.push_back(genpt2);
 	}
 	    
        for (Int_t k{0}; k < event.nGenPar; k++) {
@@ -377,11 +377,11 @@ int main(int argc, char* argv[])
 		   h_genParScalarMuonPt->Fill(event.genParPt[k]);
 		  
 	           if(event.muTrig()){
-		     h_genParScalarMuonCutPtSL->Fill(max1[end]); //leading momenta for the event 
+		     h_genParScalarMuonCutPtSL->Fill(max1.back()); //leading momenta for the event 
 		   }
 		   if(event.mumuTrig()){
-		     h_genParScalarMuonCutPtDL->Fill(max1[end]);  
-		     h_genParScalarMuonCutPtDS->Fill(max2[end]);
+		     h_genParScalarMuonCutPtDL->Fill(max1.back());  
+		     h_genParScalarMuonCutPtDS->Fill(max2.back());
 		   }    
 		}     
 	     }
