@@ -34,7 +34,30 @@ Dataset::Dataset(std::string name, float lumi, bool isMC, float crossSection, st
             location += '/';
     }
 
-    initGeneratorWeightHistogram();
+    // Read in generator level plots to determine event weights and total number of events
+    if (isMC_) {
+        const std::regex mask{R"(\.root$)"};
+        bool firstFile{true};
+        for (const auto& location : locations_) {
+            for (const auto& file : boost::make_iterator_range(fs::directory_iterator{location}, {})) {
+                const std::string path{file.path().string()};
+                if (!fs::is_regular_file(file.status()) || !std::regex_search(path, mask))
+                    continue;
+
+                TFile* tempFile{new TFile{path.c_str(), "READ"}};
+                if (firstFile) {
+                    generatorWeightPlot_ = dynamic_cast<TH1I*>((TH1I*)tempFile->Get("makeTopologyNtupleMiniAOD/weightHisto")->Clone());
+                    firstFile = false;
+                }
+                else {
+                    generatorWeightPlot_->Add((TH1I*)tempFile->Get("makeTopologyNtupleMiniAOD/weightHisto"));
+                    tempFile->Close();
+                    delete tempFile;
+                }
+            }
+        }
+    }
+
     totalEvents_ = generatorWeightPlot_->GetBinContent(1)+generatorWeightPlot_->GetBinContent(2);
 }
 
@@ -59,38 +82,6 @@ int Dataset::fillChain(TChain* chain) {
 float Dataset::getDatasetWeight(double lumi) {
     if (!isMC_)
         return 1.;
-    return (lumi * crossSection_) / totalEvents_;
+    return (lumi * crossSection_) / (totalEvents_ + 1.0e-06);
 }
 
-// Function to weight each event in a dataset
-float Dataset::getEventWeight() {
-    return 1.;
-}
-
-// Function that constructs a histogram of all the generator level weights from across the entire dataset
-void Dataset::initGeneratorWeightHistogram() {
-
-    TH1I* generatorWeightPlot{nullptr};
-    const std::regex mask{R"(\.root$)"};
-    bool firstFile{true};
-    for (const auto& location : locations_) {
-        for (const auto& file : boost::make_iterator_range(fs::directory_iterator{location}, {})) {
-            const std::string path{file.path().string()};
-            if (!fs::is_regular_file(file.status()) || !std::regex_search(path, mask))
-                continue;
-
-            TFile* tempFile{new TFile{path.c_str(), "READ"}};
-            if (firstFile) {
-                generatorWeightPlot = dynamic_cast<TH1I*>((TH1I*)tempFile->Get("makeTopologyNtupleMiniAOD/weightHisto")->Clone());
-                firstFile = false;
-            }
-            else {
-                generatorWeightPlot->Add((TH1I*)tempFile->Get("makeTopologyNtupleMiniAOD/weightHisto"));
-                tempFile->Close();
-                delete tempFile;
-            }
-        }
-    }
-
-    generatorWeightPlot_ = generatorWeightPlot;
-}

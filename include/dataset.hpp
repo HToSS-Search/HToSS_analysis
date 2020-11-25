@@ -62,7 +62,6 @@ class Dataset {
     }
     int fillChain(TChain* chain);
     float getDatasetWeight(double);
-    float getEventWeight();
     std::string getTriggerFlag() {
         return triggerFlag_;
     }
@@ -74,8 +73,6 @@ class Dataset {
         return generatorWeightPlot_;
     }
 
-    private:
-    void initGeneratorWeightHistogram();
 };
 
 #endif
