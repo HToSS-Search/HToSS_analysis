@@ -389,7 +389,7 @@ int main(int argc, char* argv[])
 		   
 		   h_genParScalarMuonPt->Fill(event.genParPt[k]);  
 	           if(event.genParPt[k]>genpt1){
-	             //genpt2=genpt1; 
+	             genpt2=genpt1; 
 	             genpt1=event.genParPt[k];
 		     muonIndex1=k;
          	   }
@@ -397,7 +397,7 @@ int main(int argc, char* argv[])
 	                  genpt2=event.genParPt[k];
 			  muonIndex2=k;
 		   }
-		   if(genpt1!=-1 && genpt2!=-1){
+		   if(genpt1!=0 && genpt2!=0){
 	             std::cout<<"k "<<k<<"moment max  "<<genpt1<<"second max "<<genpt2<<std::endl;
 	              // max1.emplace_back(genpt1);
 	               //max2.emplace_back(genpt2);
