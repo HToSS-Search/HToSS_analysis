@@ -209,7 +209,7 @@ class AnalysisEvent
     Int_t genMuonPF2PATPromptFinalState[NMUONSMAX];
     Int_t genMuonPF2PATHardProcess[NMUONSMAX];
 
-    static constexpr size_t NMUONTKPAIRMAX{190};	
+    static constexpr size_t NMUONTKPAIRMAX{100};	
     Int_t   numMuonTrackPairsPF2PAT;	
     Int_t   muonTkPairPF2PATIndex1[NMUONTKPAIRMAX];	
     Int_t   muonTkPairPF2PATIndex2[NMUONTKPAIRMAX];	
@@ -352,14 +352,15 @@ class AnalysisEvent
     Float_t genMetPF2PATPx;
     Float_t genMetPF2PATPy;
     Float_t genMetPF2PATPz;
-
+/*
     static constexpr size_t NTAUSMAX{20};
     Int_t numTauPF2PAT;
     Float_t tauPF2PATE[NTAUSMAX];
     Float_t tauPF2PATPt[NTAUSMAX];
     Float_t tauPF2PATPhi[NTAUSMAX];
     Float_t tauPF2PATEta[NTAUSMAX];
-
+*/
+/*
     static constexpr size_t NPHOTONSMAX{30};
     Int_t numPhoPF2PAT;
     Float_t phoPF2PATE[NPHOTONSMAX];
@@ -418,6 +419,7 @@ class AnalysisEvent
     Int_t genPhoPF2PATIsPhoton[NPHOTONSMAX];
     Int_t genPhoPF2PATIsConvertedPhoton[NPHOTONSMAX];
     Int_t genPhoPF2PATIsJet[NPHOTONSMAX];
+*/
 /*
     static constexpr size_t NOOTPHOTONSMAX{30};
     Int_t numPhoOOT_PF2PAT;
@@ -507,7 +509,7 @@ class AnalysisEvent
     Float_t isoTracksDeltaEta[NISOTRACKSMAX];
     Float_t isoTracksDeltaPhi[NISOTRACKSMAX];
 */
-    static constexpr size_t NPACKEDCANDSMAX{1000};
+    static constexpr size_t NPACKEDCANDSMAX{000};
     Int_t numPackedCands;
 //    Float_t packedCandsPt[NPACKEDCANDSMAX];
     Float_t packedCandsPx[NPACKEDCANDSMAX];
@@ -553,6 +555,58 @@ class AnalysisEvent
 //    Int_t packedCandsPseudoTrkStripLayersWithMeasurement[NPACKEDCANDSMAX];
 //    Int_t packedCandsPseudoTrkTrackerLayersWithMeasurement[NPACKEDCANDSMAX];
     Int_t packedCandsHighPurityTrack[NPACKEDCANDSMAX];
+
+    static constexpr size_t NCHSTKPAIRMAX{350};
+    Int_t   numChsTrackPairs;
+    Int_t   chsTkPairIndex1[NCHSTKPAIRMAX];
+    Int_t   chsTkPairIndex2[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxPx[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxPy[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxPz[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxP2[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVx[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVy[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVz[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxCov00[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxCov01[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxCov02[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxCov10[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxCov11[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxCov12[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxCov20[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxCov21[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxCov22[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxChi2[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxNdof[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxTime[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxTimeError[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxAngleXY[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxDistMagXY[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxDistMagXYSigma[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxAngleXYZ[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxDistMagXYZ[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxDistMagXYZSigma[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk1Pt[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk1Px[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk1Py[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk1Pz[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk1P2[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk1Eta[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk1Phi[NCHSTKPAIRMAX];
+    Int_t   chsTkPairTk1Charge[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk1Chi2[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk1Ndof[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk2Pt[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk2Px[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk2Py[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk2Pz[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk2P2[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk2Eta[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk2Phi[NCHSTKPAIRMAX];
+    Int_t   chsTkPairTk2Charge[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk2Chi2[NCHSTKPAIRMAX];
+    Float_t chsTkPairTk2Ndof[NCHSTKPAIRMAX];
+    Float_t chsTkPairTkVtxDcaPreFit[NCHSTKPAIRMAX];
 
     Int_t isElePlusJets;
     Float_t genPDFScale;
@@ -1494,11 +1548,14 @@ class AnalysisEvent
     TBranch* b_genMetPF2PATPx; //!
     TBranch* b_genMetPF2PATPy; //!
     TBranch* b_genMetPF2PATPz; //!
+/*
     TBranch* b_numTauPF2PAT; //!
     TBranch* b_tauPF2PATE; //!
     TBranch* b_tauPF2PATPt; //!
     TBranch* b_tauPF2PATPhi; //!
     TBranch* b_tauPF2PATEta; //!
+*/
+/*
     TBranch* b_numPhoPF2PAT; //!
     TBranch* b_phoPF2PATE; //!
     TBranch* b_phoPF2PATSigmaE; //!
@@ -1556,6 +1613,7 @@ class AnalysisEvent
     TBranch* b_genPhoPF2PATIsPhoton; //!
     TBranch* b_genPhoPF2PATIsConvertedPhoton; //!
     TBranch* b_genPhoPF2PATIsJet; //!
+*/
 /*
     TBranch* b_numPhoOOT_PF2PAT; //!
     TBranch* b_phoOOT_PF2PATE; //!
@@ -1687,6 +1745,56 @@ class AnalysisEvent
 //    TBranch* b_packedCandsPseudoTrkPixelLayersWithMeasurement; //!
 //    TBranch* b_packedCandsPseudoTrkStripLayersWithMeasurement; //!
 //    TBranch* b_packedCandsPseudoTrkTrackerLayersWithMeasurement; //!
+    TBranch* b_numChsTrackPairs;
+    TBranch* b_chsTkPairIndex1; //!
+    TBranch* b_chsTkPairIndex2; //!
+    TBranch* b_chsTkPairTkVtxPx; //!
+    TBranch* b_chsTkPairTkVtxPy; //!
+    TBranch* b_chsTkPairTkVtxPz; //!
+    TBranch* b_chsTkPairTkVtxP2; //!
+    TBranch* b_chsTkPairTkVx; //!
+    TBranch* b_chsTkPairTkVy; //!
+    TBranch* b_chsTkPairTkVz; //!
+    TBranch* b_chsTkPairTkVtxCov00; //!
+    TBranch* b_chsTkPairTkVtxCov01; //!
+    TBranch* b_chsTkPairTkVtxCov02; //!
+    TBranch* b_chsTkPairTkVtxCov10; //!
+    TBranch* b_chsTkPairTkVtxCov11; //!
+    TBranch* b_chsTkPairTkVtxCov12; //!
+    TBranch* b_chsTkPairTkVtxCov20; //!
+    TBranch* b_chsTkPairTkVtxCov21; //!
+    TBranch* b_chsTkPairTkVtxCov22; //!
+    TBranch* b_chsTkPairTkVtxChi2; //!
+    TBranch* b_chsTkPairTkVtxNdof; //!
+    TBranch* b_chsTkPairTkVtxTime; //!
+    TBranch* b_chsTkPairTkVtxTimeError; //!
+    TBranch* b_chsTkPairTkVtxAngleXY; //!
+    TBranch* b_chsTkPairTkVtxDistMagXY; //!
+    TBranch* b_chsTkPairTkVtxDistMagXYSigma; //!
+    TBranch* b_chsTkPairTkVtxAngleXYZ; //!
+    TBranch* b_chsTkPairTkVtxDistMagXYZ; //!
+    TBranch* b_chsTkPairTkVtxDistMagXYZSigma; //!
+    TBranch* b_chsTkPairTk1Pt; //!
+    TBranch* b_chsTkPairTk1Px; //!
+    TBranch* b_chsTkPairTk1Py; //!
+    TBranch* b_chsTkPairTk1Pz; //!
+    TBranch* b_chsTkPairTk1P2; //!
+    TBranch* b_chsTkPairTk1Eta; //!
+    TBranch* b_chsTkPairTk1Phi; //!
+    TBranch* b_chsTkPairTk1Charge; //!
+    TBranch* b_chsTkPairTk1Chi2; //!
+    TBranch* b_chsTkPairTk1Ndof; //!
+    TBranch* b_chsTkPairTk2Pt; //!
+    TBranch* b_chsTkPairTk2Px; //!
+    TBranch* b_chsTkPairTk2Py; //!
+    TBranch* b_chsTkPairTk2Pz; //!
+    TBranch* b_chsTkPairTk2P2; //!
+    TBranch* b_chsTkPairTk2Eta; //!
+    TBranch* b_chsTkPairTk2Phi; //!
+    TBranch* b_chsTkPairTk2Charge; //!
+    TBranch* b_chsTkPairTk2Chi2; //!
+    TBranch* b_chsTkPairTk2Ndof; //!
+    TBranch* b_chsTkPairTkVtxDcaPreFit; //!
     TBranch* b_packedCandsHighPurityTrack; //!
     TBranch* b_isElePlusJets; //!
     TBranch* b_genPDFScale; //!
@@ -2729,12 +2837,14 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
        fChain->SetBranchAddress("genMetPF2PATPy", &genMetPF2PATPy, &b_genMetPF2PATPy);
        fChain->SetBranchAddress("genMetPF2PATPz", &genMetPF2PATPz, &b_genMetPF2PATPz);
    }
+/*
    fChain->SetBranchAddress("numTauPF2PAT", &numTauPF2PAT, &b_numTauPF2PAT);
    fChain->SetBranchAddress("tauPF2PATE", tauPF2PATE, &b_tauPF2PATE);
    fChain->SetBranchAddress("tauPF2PATPt", tauPF2PATPt, &b_tauPF2PATPt);
    fChain->SetBranchAddress("tauPF2PATPhi", tauPF2PATPhi, &b_tauPF2PATPhi);
    fChain->SetBranchAddress("tauPF2PATEta", tauPF2PATEta, &b_tauPF2PATEta);
-
+*/
+/*
    fChain->SetBranchAddress("numPhoPF2PAT", &numPhoPF2PAT, &b_numPhoPF2PAT);
    fChain->SetBranchAddress("phoPF2PATE", phoPF2PATE, &b_phoPF2PATE);
    fChain->SetBranchAddress("phoPF2PATSigmaE", phoPF2PATSigmaE, &b_phoPF2PATSigmaE);
@@ -2794,6 +2904,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
       fChain->SetBranchAddress("genPhoPF2PATIsConvertedPhoton", genPhoPF2PATIsConvertedPhoton, &b_genPhoPF2PATIsConvertedPhoton);
       fChain->SetBranchAddress("genPhoPF2PATIsJet", genPhoPF2PATIsJet, &b_genPhoPF2PATIsJet);
    }
+*/
 /*
    fChain->SetBranchAddress("numPhoOOT_PF2PAT", &numPhoOOT_PF2PAT, &b_numPhoOOT_PF2PAT);
    fChain->SetBranchAddress("phoOOT_PF2PATE", phoOOT_PF2PATE, &b_phoOOT_PF2PATE);
@@ -2928,6 +3039,56 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
 //   fChain->SetBranchAddress("packedCandsPseudoTrkStripLayersWithMeasurement", packedCandsPseudoTrkStripLayersWithMeasurement, &b_packedCandsPseudoTrkStripLayersWithMeasurement);
 //   fChain->SetBranchAddress("packedCandsPseudoTrkTrackerLayersWithMeasurement", packedCandsPseudoTrkTrackerLayersWithMeasurement, &b_packedCandsPseudoTrkTrackerLayersWithMeasurement);
    fChain->SetBranchAddress("packedCandsHighPurityTrack", packedCandsHighPurityTrack, &b_packedCandsHighPurityTrack);
+   fChain->SetBranchAddress("numChsTrackPairs", &numChsTrackPairs, &b_numChsTrackPairs);	
+   fChain->SetBranchAddress("chsTkPairIndex1", chsTkPairIndex1, &b_chsTkPairIndex1); 	
+   fChain->SetBranchAddress("chsTkPairIndex2", chsTkPairIndex2, &b_chsTkPairIndex2);	
+   fChain->SetBranchAddress("chsTkPairTkVtxPx", chsTkPairTkVtxPx, &b_chsTkPairTkVtxPx);	
+   fChain->SetBranchAddress("chsTkPairTkVtxPy", chsTkPairTkVtxPy, &b_chsTkPairTkVtxPy);	
+   fChain->SetBranchAddress("chsTkPairTkVtxPz", chsTkPairTkVtxPz, &b_chsTkPairTkVtxPz);	
+   fChain->SetBranchAddress("chsTkPairTkVtxP2", chsTkPairTkVtxP2, &b_chsTkPairTkVtxP2);	
+   fChain->SetBranchAddress("chsTkPairTkVx", chsTkPairTkVx, &b_chsTkPairTkVx);	
+   fChain->SetBranchAddress("chsTkPairTkVy", chsTkPairTkVy, &b_chsTkPairTkVy);	
+   fChain->SetBranchAddress("chsTkPairTkVz", chsTkPairTkVz, &b_chsTkPairTkVz);	
+   fChain->SetBranchAddress("chsTkPairTkVtxCov00", chsTkPairTkVtxCov00, &b_chsTkPairTkVtxCov00);	
+   fChain->SetBranchAddress("chsTkPairTkVtxCov01", chsTkPairTkVtxCov01, &b_chsTkPairTkVtxCov01);	
+   fChain->SetBranchAddress("chsTkPairTkVtxCov02", chsTkPairTkVtxCov02, &b_chsTkPairTkVtxCov02);	
+   fChain->SetBranchAddress("chsTkPairTkVtxCov10", chsTkPairTkVtxCov10, &b_chsTkPairTkVtxCov10);	
+   fChain->SetBranchAddress("chsTkPairTkVtxCov11", chsTkPairTkVtxCov11, &b_chsTkPairTkVtxCov11);	
+   fChain->SetBranchAddress("chsTkPairTkVtxCov12", chsTkPairTkVtxCov12, &b_chsTkPairTkVtxCov12);	
+   fChain->SetBranchAddress("chsTkPairTkVtxCov20", chsTkPairTkVtxCov20, &b_chsTkPairTkVtxCov20);	
+   fChain->SetBranchAddress("chsTkPairTkVtxCov21", chsTkPairTkVtxCov21, &b_chsTkPairTkVtxCov21);	
+   fChain->SetBranchAddress("chsTkPairTkVtxCov22", chsTkPairTkVtxCov22, &b_chsTkPairTkVtxCov22);	
+   fChain->SetBranchAddress("chsTkPairTkVtxChi2", chsTkPairTkVtxChi2, &b_chsTkPairTkVtxChi2);	
+   fChain->SetBranchAddress("chsTkPairTkVtxNdof", chsTkPairTkVtxNdof, &b_chsTkPairTkVtxNdof);	
+   fChain->SetBranchAddress("chsTkPairTkVtxTime", chsTkPairTkVtxTime, &b_chsTkPairTkVtxTime);	
+   fChain->SetBranchAddress("chsTkPairTkVtxTimeError", chsTkPairTkVtxTimeError, &b_chsTkPairTkVtxTimeError);	
+   fChain->SetBranchAddress("chsTkPairTkVtxAngleXY", chsTkPairTkVtxAngleXY, &b_chsTkPairTkVtxAngleXY);	
+   fChain->SetBranchAddress("chsTkPairTkVtxDistMagXY", chsTkPairTkVtxDistMagXY, &b_chsTkPairTkVtxDistMagXY);	
+   fChain->SetBranchAddress("chsTkPairTkVtxDistMagXYSigma", chsTkPairTkVtxDistMagXYSigma, &b_chsTkPairTkVtxDistMagXYSigma);	
+   fChain->SetBranchAddress("chsTkPairTkVtxAngleXYZ", chsTkPairTkVtxAngleXYZ, &b_chsTkPairTkVtxAngleXYZ);	
+   fChain->SetBranchAddress("chsTkPairTkVtxDistMagXYZ", chsTkPairTkVtxDistMagXYZ, &b_chsTkPairTkVtxDistMagXYZ);	
+   fChain->SetBranchAddress("chsTkPairTkVtxDistMagXYZSigma", chsTkPairTkVtxDistMagXYZSigma, &b_chsTkPairTkVtxDistMagXYZSigma);	
+   fChain->SetBranchAddress("chsTkPairTk1Pt", chsTkPairTk1Pt, &b_chsTkPairTk1Pt);	
+   fChain->SetBranchAddress("chsTkPairTk1Px", chsTkPairTk1Px, &b_chsTkPairTk1Px);	
+   fChain->SetBranchAddress("chsTkPairTk1Py", chsTkPairTk1Py, &b_chsTkPairTk1Py);	
+   fChain->SetBranchAddress("chsTkPairTk1Pz", chsTkPairTk1Pz, &b_chsTkPairTk1Pz);	
+   fChain->SetBranchAddress("chsTkPairTk1P2", chsTkPairTk1P2, &b_chsTkPairTk1P2);	
+   fChain->SetBranchAddress("chsTkPairTk1Eta", chsTkPairTk1Eta, &b_chsTkPairTk1Eta);	
+   fChain->SetBranchAddress("chsTkPairTk1Phi", chsTkPairTk1Phi, &b_chsTkPairTk1Phi);	
+   fChain->SetBranchAddress("chsTkPairTk1Charge", chsTkPairTk1Charge, &b_chsTkPairTk1Charge);	
+   fChain->SetBranchAddress("chsTkPairTk1Chi2", chsTkPairTk1Chi2, &b_chsTkPairTk1Chi2);	
+   fChain->SetBranchAddress("chsTkPairTk1Ndof", chsTkPairTk1Ndof, &b_chsTkPairTk1Ndof);	
+   fChain->SetBranchAddress("chsTkPairTk2Pt", chsTkPairTk2Pt, &b_chsTkPairTk2Pt);	
+   fChain->SetBranchAddress("chsTkPairTk2Px", chsTkPairTk2Px, &b_chsTkPairTk2Px);	
+   fChain->SetBranchAddress("chsTkPairTk2Py", chsTkPairTk2Py, &b_chsTkPairTk2Py);	
+   fChain->SetBranchAddress("chsTkPairTk2Pz", chsTkPairTk2Pz, &b_chsTkPairTk2Pz);	
+   fChain->SetBranchAddress("chsTkPairTk2P2", chsTkPairTk2P2, &b_chsTkPairTk2P2);	
+   fChain->SetBranchAddress("chsTkPairTk2Eta", chsTkPairTk2Eta, &b_chsTkPairTk2Eta);	
+   fChain->SetBranchAddress("chsTkPairTk2Phi", chsTkPairTk2Phi, &b_chsTkPairTk2Phi);	
+   fChain->SetBranchAddress("chsTkPairTk2Charge", chsTkPairTk2Charge, &b_chsTkPairTk2Charge);	
+   fChain->SetBranchAddress("chsTkPairTk2Chi2", chsTkPairTk2Chi2, &b_chsTkPairTk2Chi2);	
+   fChain->SetBranchAddress("chsTkPairTk2Ndof", chsTkPairTk2Ndof, &b_chsTkPairTk2Ndof);	
+   fChain->SetBranchAddress("chsTkPairTkVtxDcaPreFit", chsTkPairTkVtxDcaPreFit, &b_chsTkPairTkVtxDcaPreFit);	
    if (isMC)
    {
        fChain->SetBranchAddress("isElePlusJets", &isElePlusJets, &b_isElePlusJets);
