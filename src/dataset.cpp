@@ -13,20 +13,7 @@
 
 namespace fs = boost::filesystem;
 
-Dataset::Dataset(std::string name,
-                 float lumi,
-                 bool isMC,
-                 float crossSection,
-                 std::vector<std::string> locations,
-                 std::string histoName,
-                 std::string treeName,
-                 long long totalEvents,
-                 std::string colourHex,
-                 std::string plotLabel,
-                 std::string plotType,
-                 std::string triggerFlag)
-    : colour_{TColor::GetColor(colourHex.c_str())}
-{
+Dataset::Dataset(std::string name, float lumi, bool isMC, float crossSection, std::vector<std::string> locations, std::string histoName, std::string treeName, std::string colourHex, std::string plotLabel, std::string plotType, std::string triggerFlag) : colour_{TColor::GetColor(colourHex.c_str())} {
     name_ = name;
     lumi_ = lumi;
     isMC_ = isMC;
@@ -35,38 +22,55 @@ Dataset::Dataset(std::string name,
     fillName_ = histoName;
     treeName_ = treeName;
     locations_ = locations;
-    totalEvents_ = totalEvents;
     plotType_ = plotType;
     plotLabel_ = plotLabel;
     triggerFlag_ = triggerFlag;
-    std::cout << "For dataset " << name_ << " trigger flag is " << triggerFlag_
-              << std::endl;
+    generatorWeightPlot_ = nullptr;
 
-    for (auto& location : locations_)
-    {
+    std::cout << "For dataset " << name_ << " trigger flag is " << triggerFlag_  << std::endl;
+
+    for (auto& location : locations_) {
         if (location.back() != '/')
-        {
             location += '/';
+    }
+
+    // Read in generator level plots to determine event weights and total number of events
+    if (isMC_) {
+        const std::regex mask{R"(\.root$)"};
+        bool firstFile{true};
+        for (const auto& location : locations_) {
+            for (const auto& file : boost::make_iterator_range(fs::directory_iterator{location}, {})) {
+                const std::string path{file.path().string()};
+                if (!fs::is_regular_file(file.status()) || !std::regex_search(path, mask))
+                    continue;
+
+                TFile* tempFile{new TFile{path.c_str(), "READ"}};
+                if (firstFile) {
+                    generatorWeightPlot_ = dynamic_cast<TH1I*>((TH1I*)tempFile->Get("makeTopologyNtupleMiniAOD/weightHisto")->Clone());
+                    firstFile = false;
+                }
+                else {
+                    generatorWeightPlot_->Add((TH1I*)tempFile->Get("makeTopologyNtupleMiniAOD/weightHisto"));
+                    tempFile->Close();
+                    delete tempFile;
+                }
+            }
         }
     }
+
+    totalEvents_ = generatorWeightPlot_->GetBinContent(1)+generatorWeightPlot_->GetBinContent(2);
 }
 
 // Method that fills a TChain with the files that will be used for the analysis.
 // Returns 1 if succesful, otherwise returns 0. This can probably be largely
 // ignored.
-int Dataset::fillChain(TChain* chain, int nFiles)
-{
-    for (const auto& location : locations_)
-    {
+int Dataset::fillChain(TChain* chain) {
+    for (const auto& location : locations_) {
         const fs::path dir{location};
         if (fs::is_directory(dir))
-        {
             chain->Add(TString{location + "*.root"});
-        }
-        else
-        {
-            std::cout << "ERROR: " << location << "is not a valid directory"
-                      << std::endl;
+        else {
+            std::cout << "ERROR: " << location << "is not a valid directory" << std::endl;
             return 0;
         }
     }
@@ -75,56 +79,9 @@ int Dataset::fillChain(TChain* chain, int nFiles)
 
 // Function that returns the weight of a dataset. This is 1 is the dataset is
 // data, but varies by lumi, number of events and cross section otherwise.
-float Dataset::getDatasetWeight(double lumi)
-{
+float Dataset::getDatasetWeight(double lumi) {
     if (!isMC_)
-    {
         return 1.;
-    }
-    return (lumi * crossSection_) / totalEvents_;
+    return (lumi * crossSection_) / (totalEvents_ + 1.0e-06);
 }
 
-// Function to weight each event in a dataset
-float Dataset::getEventWeight()
-{
-    return 1.;
-}
-
-// Function that constructs a histogram of all the generator level weights from
-// across the entire dataset
-TH1I* Dataset::getGeneratorWeightHistogram(int nFiles)
-{
-    TH1I* generatorWeightPlot{nullptr};
-    const std::regex mask{R"(\.root$)"};
-    bool firstFile{true};
-    for (const auto& location : locations_)
-    {
-        for (const auto& file :
-             boost::make_iterator_range(fs::directory_iterator{location}, {}))
-        {
-            const std::string path{file.path().string()};
-            if (!fs::is_regular_file(file.status())
-                || !std::regex_search(path, mask))
-            {
-                continue;
-            }
-
-            TFile* tempFile{new TFile{path.c_str(), "READ"}};
-            if (firstFile)
-            {
-                generatorWeightPlot = dynamic_cast<TH1I*>(
-                    (TH1I*)tempFile->Get("sumNumPosMinusNegWeights")->Clone());
-                firstFile = false;
-            }
-            else
-            {
-                generatorWeightPlot->Add(
-                    (TH1I*)tempFile->Get("sumNumPosMinusNegWeights"));
-                tempFile->Close();
-                delete tempFile;
-            }
-        }
-    }
-
-    return generatorWeightPlot;
-}

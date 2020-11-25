@@ -9,8 +9,7 @@ class TH1I;
 
 // class to hold information about the dataset. This will be extracted during
 // config parsing.
-class Dataset
-{
+class Dataset {
     std::string name_;
     float lumi_;
     bool isMC_;
@@ -23,6 +22,7 @@ class Dataset
     std::string plotLabel_;
     std::string plotType_;
     std::string triggerFlag_;
+    TH1I* generatorWeightPlot_;
 
     public:
     Dataset(std::string name,
@@ -32,55 +32,47 @@ class Dataset
             std::vector<std::string> locations,
             std::string histoName,
             std::string treeName,
-            long long,
             std::string,
             std::string,
             std::string,
             std::string);
-    std::string name()
-    {
+    std::string name() {
         return name_;
     }
-    float lumi()
-    {
+    float lumi() {
         return lumi_;
     }
-    bool isMC()
-    {
+    bool isMC() {
         return isMC_;
     }
-    std::string getFillHisto()
-    {
+    std::string getFillHisto() {
         return fillName_;
     }
-    std::string treeName()
-    {
+    std::string treeName() {
         return treeName_;
     }
-    int getColour()
-    {
+    int getColour() {
         return colour_;
     }
-    std::string getPlotLabel()
-    {
+    std::string getPlotLabel() {
         return plotLabel_;
     }
-    std::string getPlotType()
-    {
+    std::string getPlotType() {
         return plotType_;
     }
-    int fillChain(TChain*, int);
+    int fillChain(TChain* chain);
     float getDatasetWeight(double);
-    float getEventWeight();
-    std::string getTriggerFlag()
-    {
+    std::string getTriggerFlag() {
         return triggerFlag_;
     }
-    long long getTotalEvents()
-    {
+    long long getTotalEvents() {
         return totalEvents_;
     } // Function to return total number of events
-    TH1I* getGeneratorWeightHistogram(int nFiles);
+
+    TH1I* getGeneratorWeightHistogram() {
+        return generatorWeightPlot_;
+    }
+
 };
 
 #endif

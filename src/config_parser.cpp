@@ -107,8 +107,7 @@ void Parser::parse_files(const std::vector<std::string> files,
 {
     std::cerr << "Adding datasets:" << std::endl;
 
-    for (const auto& file : files)
-    {
+    for (const auto& file : files) {
         const YAML::Node root{YAML::LoadFile(file)};
         const bool isMC{root["mc"].as<bool>()};
         datasets.emplace_back(root["name"].as<std::string>(),
@@ -117,17 +116,14 @@ void Parser::parse_files(const std::vector<std::string> files,
                               isMC ? root["cross_section"].as<double>() : 0,
                               root["locations"].as<std::vector<std::string>>(),
                               root["histogram"].as<std::string>(),
-                              "tree",
-                              isMC ? root["total_events"].as<long long>() : 0,
+                              "makeTopologyNtupleMiniAOD/tree",
                               root["colour"].as<std::string>(),
                               root["label"].as<std::string>(),
                               root["plot_type"].as<std::string>(),
-                              isMC ? ""
-                                   : root["trigger_flag"].as<std::string>());
+                              isMC ? "" : root["trigger_flag"].as<std::string>());
 
         // If we are doing NPLs, add the NPL version of this dataset
-        if (NPL)
-        {
+        if (NPL) {
             datasets.emplace_back(
                 root["name"].as<std::string>(),
                 0,
@@ -135,8 +131,7 @@ void Parser::parse_files(const std::vector<std::string> files,
                 isMC ? root["cross_section"].as<double>() : 0,
                 root["locations"].as<std::vector<std::string>>(),
                 "NPL",
-                "tree",
-                isMC ? root["total_events"].as<long long>() : 0,
+                "makeTopologyNtupleMiniAOD/tree",
                 "#003300",
                 "NPL",
                 "f",

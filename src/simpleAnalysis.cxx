@@ -56,7 +56,6 @@ int main(int argc, char* argv[])
   std::map<int, int> pdgIdMap; // declare map of int, int - first int corresponds to pdgId, second will note how many times a particle with that pdgId has been found
   std::string outFileString{"plots/distributions/output.root"}; // 
   const bool is2016_ {false}; // analysis framework is setup to run over multiple years - as we are considering 2017 conditions currently, this is set to false for safety.
-  int numFiles; // Max umber of input dataset files to read in. Defaut is all
   Long64_t nEvents; // Max number of events to consider per dataset. Default is set in config file, but can be overriden with command line arguements
   Long64_t totalEvents {0}; // Counter for total number of events
 
@@ -187,9 +186,6 @@ int main(int argc, char* argv[])
 						      "config,c",
 						      po::value<std::string>(&config)->required(),
 						      "The configuration file to be used.")(
-											    "nFiles,f",
-											    po::value<int>(&numFiles)->default_value(-1),
-											    "Number of files to run over. All if set to -1.")(
 																	      "lumi,l",
 																	      po::value<double>(&usePreLumi)->default_value(41528.0),
 																	      "Lumi to scale MC plots to.")(
@@ -253,8 +249,8 @@ int main(int argc, char* argv[])
       datasetChain->SetAutoSave(0);
 
       if (!datasetFilled) {
-	if (!dataset->fillChain(datasetChain, numFiles)) {
-	  std::cerr << "There was a problem constructing the chain for " << dataset->name() << " made of " << numFiles << " files. Continuing with next dataset.\n";
+	if (!dataset->fillChain(datasetChain)) {
+	  std::cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
 	  continue;
 	}
 	datasetFilled=true;
