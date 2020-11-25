@@ -34,15 +34,11 @@ AnalysisAlgo::AnalysisAlgo()
     , is2016_{false}
     , doNPLs_{false}
     , doZplusCR_{false}
-{
-}
+{}
 
-AnalysisAlgo::~AnalysisAlgo()
-{
-}
+AnalysisAlgo::~AnalysisAlgo() {}
 
-void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[])
-{
+void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
     std::stringstream events;
     std::stringstream jetRegion;
 
@@ -153,27 +149,22 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[])
         "Apply an mW cut. Dilepton only.");
     po::variables_map vm;
 
-    try
-    {
+    try {
         po::store(po::parse_command_line(argc, argv, desc), vm);
 
-        if (vm.count("help"))
-        {
+        if (vm.count("help")) {
             std::cout << desc;
             std::exit(0);
         }
 
         po::notify(vm);
 
-        if (vm.count("channels") && !vm.count("config"))
-        {
+        if (vm.count("channels") && !vm.count("config")) {
             throw std::logic_error(
                 "--channels requires --config to be specified");
         }
-        if (vm.count("jetRegion"))
-        {
-            if (jetRegVars.size() != 4)
-            {
+        if (vm.count("jetRegion")) {
+            if (jetRegVars.size() != 4) {
                 throw std::logic_error(
                     "--jetRegion takes exactly four arguments.");
             }
@@ -183,50 +174,29 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[])
                       << jetRegVars[1] << "-" << jetRegVars[3] << " b-jets"
                       << std::endl;
         }
-        if (usebTagWeight && !usePostLepTree)
-        {
+        if (usebTagWeight && !usePostLepTree) {
             throw std::logic_error(
                 "Currently bTag weights can only be retrieved "
                 "from post lepton selection trees. Please set -u.");
         }
     }
-    catch (const std::logic_error& e)
-    {
+    catch (const std::logic_error& e) {
         std::cerr << "ERROR: " << e.what() << std::endl;
         std::cerr << "Use -h or --help for help." << std::endl;
         std::exit(1);
     }
 
-    if (vm.count("plotConf"))
-    {
+    if (vm.count("plotConf")) {
         plots = true;
     }
 
     // Some vectors that will be filled in the parsing.
     totalLumi = 0;
 
-    try
-    {
-        Parser::parse_config(config,
-                             datasets,
-                             totalLumi,
-                             plotTitles,
-                             plotNames,
-                             xMin,
-                             xMax,
-                             nBins,
-                             fillExp,
-                             xAxisLabels,
-                             cutStage,
-                             cutConfName,
-                             plotConfName,
-                             outFolder,
-                             postfix,
-                             channel,
-                             doNPLs_);
+    try {
+        Parser::parse_config(config, datasets, totalLumi, plotTitles, plotNames, xMin, xMax, nBins, fillExp, xAxisLabels, cutStage, cutConfName, plotConfName, outFolder, postfix, channel, doNPLs_);
     }
-    catch (const std::exception)
-    {
+    catch (const std::exception)  {
         std::cerr << "ERROR Problem with a confugration file, see previous "
                      "errors for more details. If this is the only error, the "
                      "problem is with the main configuration file."
@@ -234,41 +204,23 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[])
         throw;
     }
 
-    if (channelsToRun)
-    {
+    if (channelsToRun)  {
         std::cout << "Running over the channels: " << std::endl;
-        for (unsigned channelInd = 1; channelInd != 32;
-             channelInd = channelInd << 1)
-        {
+        for (unsigned channelInd = 1; channelInd != 32; channelInd = channelInd << 1) {
             if (!(channelInd & channelsToRun) && channelsToRun)
                 continue;
-            if (channelInd & 5)
-            { // ee channel
+            if (channelInd & 5)// ee channel
                 std::cout << "ee ";
-            }
-            if (channelInd & 10)
-            { // mumu channel
+            if (channelInd & 10) // mumu channel
                 std::cout << "mumu ";
-            }
-            if (channelInd & 3)
-            { // nominal samples
+            if (channelInd & 3) // nominal samples
                 std::cout << "nominal" << std::endl;
-            }
-            if (channelInd & 12)
-            { // same sign samples
+            if (channelInd & 12) // same sign samples
                 std::cout << "same lepton charge" << std::endl;
-            }
-            if (channelInd & 16)
-            { // nominal samples and emu
-                std::cout << "emu - used only for ttbar control region "
-                          << std::endl;
-            }
-            if (channelInd & 32)
-            { // nominal samples and emu
-                std::cout
-                    << "emu - used only for ttbar same sign control region "
-                    << std::endl;
-            }
+            if (channelInd & 16) // nominal samples and emu
+                std::cout << "emu - used only for ttbar control region " << std::endl;
+            if (channelInd & 32) // nominal samples and emu
+                std::cout << "emu - used only for ttbar same sign control region "  << std::endl;
         }
     }
 }
@@ -416,9 +368,7 @@ void AnalysisAlgo::runMainAnalysis()
 
     bool datasetFilled{false};
 
-    const std::string postLepSelSkimDir{
-        std::string{"/scratch2/data/TopPhysics/postLepSelSkims"}
-        + (is2016_ ? "2016" : "2017") + "/"};
+    const std::string postLepSelSkimDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + (is2016_ ? "2016" : "2017") + "/"};
 
     // Begin to loop over all datasets
     for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset)
@@ -432,28 +382,21 @@ void AnalysisAlgo::runMainAnalysis()
         srand(hasher(dataset->name()));
 
         channelIndMax = 64;
-        for (unsigned channelInd{1}; channelInd != channelIndMax;
-             channelInd = channelInd << 1)
-        {
-            if (!(channelInd & channelsToRun) && channelsToRun)
-            {
+        for (unsigned channelInd{1}; channelInd != channelIndMax; channelInd = channelInd << 1) {
+            if (!(channelInd & channelsToRun) && channelsToRun) {
                 continue;
             }
 
             std::string chanName = channelSetup(channelInd);
 
-            if (dataset->isMC() && skipMC)
-            {
+            if (dataset->isMC() && skipMC) {
                 continue;
             }
-            if (!dataset->isMC() && skipData)
-            {
+            if (!dataset->isMC() && skipData) {
                 continue;
             }
 
-            if (plots)
-            { // Initialise a load of stuff that's required by the plotting
-              // macro.
+            if (plots) { // Initialise a load of stuff that's required by the plotting macro.
 
                 // Gather all variables for plotting to make it easier to follow
                 std::string histoName{dataset->getFillHisto()},
@@ -676,40 +619,24 @@ void AnalysisAlgo::runMainAnalysis()
 
             // Here we will initialise the generator level weight histograms
             TH1I* generatorWeightPlot{nullptr};
-            if (dataset->isMC())
-            {
-                if (usePostLepTree)
-                {
+            if (dataset->isMC()) {
+                if (usePostLepTree) {
                     std::string inputPostfix{};
                     inputPostfix += postfix;
                     if (invertLepCut)
-                    {
                         inputPostfix += "invLep";
-                    }
+
                     if (doNPLs_ && dataset->getPlotLabel() == "NPL")
-                    {
-                        inputPostfix +=
-                            "invLep"; // If plotting non-prompt leptons for this
-                                      // dataset, be sure to read in the same
-                                      // sign lepton post lepton $
-                    }
+                        inputPostfix += "invLep"; // If plotting non-prompt leptons for this dataset, be sure to read in the same sign lepton post lepton
+ 
                     TFile* datasetFileForHists;
-                    datasetFileForHists =
-                        new TFile((postLepSelSkimDir + dataset->name()
-                                   + inputPostfix + "SmallSkim.root")
-                                      .c_str(),
-                                  "READ");
-                    generatorWeightPlot = dynamic_cast<TH1I*>(
-                        datasetFileForHists->Get("sumNumPosMinusNegWeights")
-                            ->Clone());
+                    datasetFileForHists = new TFile((postLepSelSkimDir + dataset->name()  + inputPostfix + "SmallSkim.root").c_str(), "READ");
+                    generatorWeightPlot = dynamic_cast<TH1I*>(datasetFileForHists->Get("sumNumPosMinusNegWeights")->Clone());
                     generatorWeightPlot->SetDirectory(nullptr);
                     datasetFileForHists->Close();
                 }
-                else
-                {
-                    generatorWeightPlot = dynamic_cast<TH1I*>(
-                        dataset->getGeneratorWeightHistogram(numFiles)
-                            ->Clone());
+                else {
+                    generatorWeightPlot = dynamic_cast<TH1I*>(dataset->getGeneratorWeightHistogram(numFiles)->Clone());
                     generatorWeightPlot->SetDirectory(nullptr);
                 }
             }
@@ -721,8 +648,7 @@ void AnalysisAlgo::runMainAnalysis()
             std::cout << datasetChain->GetEntries()
                       << " number of items in tree. Dataset weight: "
                       << datasetWeight << std::endl;
-            if (datasetChain->GetEntries() == 0)
-            {
+            if (datasetChain->GetEntries() == 0) {
                 std::cout << "No entries in tree, skipping..." << std::endl;
                 continue;
             }
@@ -735,18 +661,12 @@ void AnalysisAlgo::runMainAnalysis()
 
             // If we're making the post lepton selection trees, set them up
             // here.
-            if (makePostLepTree)
-            {
+            if (makePostLepTree) {
                 std::string invPostFix;
                 if (invertLepCut)
-                {
                     invPostFix = "invLep";
-                }
 
-                outFile1 = new TFile{(postLepSelSkimDir + dataset->name()
-                                      + postfix + invPostFix + "SmallSkim.root")
-                                         .c_str(),
-                                     "RECREATE"};
+                outFile1 = new TFile{(postLepSelSkimDir + dataset->name() + postfix + invPostFix + "SmallSkim.root").c_str(), "RECREATE"};
                 cloneTree = datasetChain->CloneTree(0);
                 cloneTree->SetDirectory(outFile1);
                 cutObj->setCloneTree(cloneTree);
@@ -772,8 +692,7 @@ void AnalysisAlgo::runMainAnalysis()
             event.isMC_ = (dataset->isMC());
             // Now add in the branches:
 
-            if (makeMVATree)
-            {
+            if (makeMVATree) {
                 boost::filesystem::create_directories(mvaDir);
                 std::string invPostFix{};
                 if (invertLepCut)
@@ -853,21 +772,13 @@ void AnalysisAlgo::runMainAnalysis()
             if (dataset->isMC())
             {
                 // Load in plots
-                sumPositiveWeights_ = dataset->getTotalEvents();
-                sumNegativeWeights_ = generatorWeightPlot->GetBinContent(4);
-                sumNegativeWeightsScaleUp_ = generatorWeightPlot->GetBinContent(
-                    7); // Systematic Scale up
-                sumNegativeWeightsScaleDown_ =
-                    generatorWeightPlot->GetBinContent(
-                        1); // Systematic Scale down
-                if (sumNegativeWeights_ > sumPositiveWeights_)
-                {
-                    std::cout << "Something SERIOUSLY went wrong here - the "
-                                 "number of postitive weights minus negative "
-                                 "ones is greater than their sum?!"
-                              << std::endl;
-                    std::cout << "number of postitive weights: "
-                              << sumPositiveWeights_ << std::endl;
+                sumPositiveWeights_          = dataset->getTotalEvents();
+                sumNegativeWeights_          = generatorWeightPlot->GetBinContent(1)  - generatorWeightPlot->GetBinContent(2);
+                sumNegativeWeightsScaleUp_   = generatorWeightPlot->GetBinContent(13) - generatorWeightPlot->GetBinContent(14); // Systematic Scale up
+                sumNegativeWeightsScaleDown_ = generatorWeightPlot->GetBinContent(7)  - generatorWeightPlot->GetBinContent(8); // Systematic Scale down
+                if (sumNegativeWeights_ > sumPositiveWeights_) {
+                    std::cout << "Something SERIOUSLY went wrong here - the number of postitive weights minus negative ones is greater than their sum?!" << std::endl;
+                    std::cout << "number of postitive weights: " << sumPositiveWeights_ << std::endl;
                     std::cout
                         << "number of negative weights: " << sumNegativeWeights_
                         << std::endl;
@@ -876,12 +787,9 @@ void AnalysisAlgo::runMainAnalysis()
             }
 
             TMVA::Timer* lEventTimer{
-                new TMVA::Timer{boost::numeric_cast<int>(numberOfEvents),
-                                "Running over dataset ...",
-                                false}};
+                new TMVA::Timer{boost::numeric_cast<int>(numberOfEvents), "Running over dataset ...", false}};
             lEventTimer->DrawProgressBar(0, "");
-            for (int i{0}; i < numberOfEvents; i++)
-            {
+            for (int i{0}; i < numberOfEvents; i++) {
                 std::stringstream lSStrFoundEvents;
                 lSStrFoundEvents << foundEvents;
                 lEventTimer->DrawProgressBar(
@@ -912,28 +820,12 @@ void AnalysisAlgo::runMainAnalysis()
                     if (dataset->isMC() && sumNegativeWeights_ >= 0)
                     {
                         if (systMask == 4096)
-                        {
-                            generatorWeight =
-                                (sumPositiveWeights_)
-                                / (sumNegativeWeightsScaleDown_)
-                                * (event.weight_muF0p5muR0p5
-                                   / std::abs(event.origWeightForNorm));
-                        }
+                            generatorWeight = (sumPositiveWeights_) / (sumNegativeWeightsScaleDown_) * (event.weight_muF0p5muR0p5 / std::abs(event.origWeightForNorm));
                         else if (systMask == 8192)
-                        {
-                            generatorWeight =
-                                (sumPositiveWeights_)
-                                / (sumNegativeWeightsScaleUp_)
-                                * (event.weight_muF2muR2
-                                   / std::abs(event.origWeightForNorm));
-                        }
+                            generatorWeight = (sumPositiveWeights_) / (sumNegativeWeightsScaleUp_) * (event.weight_muF2muR2 / std::abs(event.origWeightForNorm));
                         else
-                        {
-                            generatorWeight =
-                                (sumPositiveWeights_) / (sumNegativeWeights_)
-                                * (event.origWeightForNorm
-                                   / std::abs(event.origWeightForNorm));
-                        }
+                            generatorWeight = (sumPositiveWeights_) / (sumNegativeWeights_) * (event.origWeightForNorm / std::abs(event.origWeightForNorm));
+
                         //	    	      std::cout << std::setprecision(5) <<
                         // std::fixed; 	                std::cout <<
                         // sumPositiveWeights_ << "/" << sumNegativeWeights_ <<
@@ -974,7 +866,7 @@ void AnalysisAlgo::runMainAnalysis()
                     {
                         eventWeight *=
                             -1.0; // Should NOT be done when plotting
-                                  // non-prompts - separate code for that
+ // non-prompts - separate code for that
                     }
 
                     // Apply in cutClass, as the RATIO weight of OS/SS
