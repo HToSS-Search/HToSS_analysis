@@ -302,7 +302,7 @@ int main(int argc, char* argv[])
        for (Int_t k{0}; k < event.nGenPar; k++) {
 	 
 	  std::vector<Float_t> max1{}; std::vector<Float_t> max2{};
-
+	  Int muonIndex1 {-1}, muonIndex2 {-1};
 
           //Print out event record
 
@@ -391,9 +391,11 @@ int main(int argc, char* argv[])
 	           if(event.genParPt[k]>genpt1){
 	             genpt2=genpt1; 
 	             genpt1=event.genParPt[k];
+		     muonIndex1=k;
          	   }
 	           else if(event.genParPt[k]>genpt2){
 	                  genpt2=event.genParPt[k];
+			  muonIndex2=k;
                    }
 	           std::cout<<"k "<<k<<"moment max  "<<genpt1<<"second max "<<genpt2<<std::endl;
 	              // max1.emplace_back(genpt1);
