@@ -298,7 +298,8 @@ int main(int argc, char* argv[])
 	std::vector<int> nrofPion;
 	
 	Float_t genpt1=0; Float_t genpt2=0;
-	std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;	      
+	std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
+	     
        for (Int_t k{0}; k < event.nGenPar; k++) {
 	 
 	  std::vector<Float_t> max1{-1}; std::vector<Float_t> max2{-1};
@@ -384,9 +385,9 @@ int main(int argc, char* argv[])
 	        h_VertexPosXY->Fill(genParVx,genParVy);
 	        h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
 		h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
-		  
+		std::cout<<"momentum"<< event.genParPt[k]<<std::endl;  
 		if (event.metFilters()){ 
-		   std::cout<<"momentum "<< event.genParPt[k]<<std::endl;
+		   std::cout<<"momentum MET filter"<< event.genParPt[k]<<std::endl;
 		   h_genParScalarMuonPt->Fill(event.genParPt[k]);  
 	           if(event.genParPt[k]>genpt1){
 	             genpt2=genpt1; 
