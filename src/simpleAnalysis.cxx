@@ -303,6 +303,33 @@ int main(int argc, char* argv[])
 	 
 	  std::vector<Float_t> max1{}; std::vector<Float_t> max2{};
 
+
+          //Print out event record
+
+	  std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
+	  //Invariant mass
+	  TLorentzVector mass;
+	  mass.SetPtEtaPhiE(event.genParPt[k],event.genParEta[k],event.genParPhi[k],event.genParE[k]);	 
+
+          std::cout << k << "\t | "
+          << event.genParId[k] << "\t "
+          << event.genParStatus[k] << "\t | "
+          << event.genParMotherIndex[k] << "\t "
+          << event.genParDaughter1Index[k] << "\t "
+          << event.genParDaughter2Index[k] << "\t | "
+          << event.genParPt[k] << "\t "
+          << event.genParEta[k] << "\t "
+          << event.genParPhi[k] << "\t "
+          << mass.M() << std::endl;
+
+
+
+
+
+
+
+
+
 	  // get variables for this event that have been stored in ROOT nTuple tree
 	  const Int_t pdgId        { std::abs(event.genParId[k]) };
 	  const Int_t motherId     { std::abs(event.genParMotherId[k]) };
