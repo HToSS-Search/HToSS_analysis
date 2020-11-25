@@ -13,20 +13,7 @@
 
 namespace fs = boost::filesystem;
 
-Dataset::Dataset(std::string name,
-                 float lumi,
-                 bool isMC,
-                 float crossSection,
-                 std::vector<std::string> locations,
-                 std::string histoName,
-                 std::string treeName,
-                 long long totalEvents,
-                 std::string colourHex,
-                 std::string plotLabel,
-                 std::string plotType,
-                 std::string triggerFlag)
-    : colour_{TColor::GetColor(colourHex.c_str())}
-{
+Dataset::Dataset(std::string name, float lumi, bool isMC, float crossSection, std::vector<std::string> locations, std::string histoName, std::string treeName, std::string colourHex, std::string plotLabel, std::string plotType, std::string triggerFlag) : colour_{TColor::GetColor(colourHex.c_str())} {
     name_ = name;
     lumi_ = lumi;
     isMC_ = isMC;
@@ -35,16 +22,20 @@ Dataset::Dataset(std::string name,
     fillName_ = histoName;
     treeName_ = treeName;
     locations_ = locations;
-    totalEvents_ = totalEvents;
     plotType_ = plotType;
     plotLabel_ = plotLabel;
     triggerFlag_ = triggerFlag;
+    generatorWeightPlot_ = nullptr;
+
     std::cout << "For dataset " << name_ << " trigger flag is " << triggerFlag_  << std::endl;
 
     for (auto& location : locations_) {
         if (location.back() != '/')
             location += '/';
     }
+
+    initGeneratorWeightHistogram();
+    totalEvents_ = generatorWeightPlot_->GetBinContent(1)+generatorWeightPlot_->GetBinContent(2);
 }
 
 // Method that fills a TChain with the files that will be used for the analysis.
@@ -76,9 +67,9 @@ float Dataset::getEventWeight() {
     return 1.;
 }
 
-// Function that constructs a histogram of all the generator level weights from
-// across the entire dataset
-TH1I* Dataset::getGeneratorWeightHistogram() {
+// Function that constructs a histogram of all the generator level weights from across the entire dataset
+void Dataset::initGeneratorWeightHistogram() {
+
     TH1I* generatorWeightPlot{nullptr};
     const std::regex mask{R"(\.root$)"};
     bool firstFile{true};
@@ -101,5 +92,5 @@ TH1I* Dataset::getGeneratorWeightHistogram() {
         }
     }
 
-    return generatorWeightPlot;
+    generatorWeightPlot_ = generatorWeightPlot;
 }
