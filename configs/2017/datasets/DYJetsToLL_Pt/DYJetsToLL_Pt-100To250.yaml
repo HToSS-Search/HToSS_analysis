@@ -1,7 +1,6 @@
 name: "DYJetsToLL_Pt-100To250"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/DYJetsToLL_Pt/DYJetsToLL_Pt-100To250/part0/"
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/DYJetsToLL_Pt/DYJetsToLL_Pt-100To250/part1/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/DYJetsToLL_Pt/DYJetsToLL_Pt-100To250/"
 cross_section: 84.014804
 mc: true
 histogram: "Zjets"
