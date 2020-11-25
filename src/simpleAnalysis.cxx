@@ -371,7 +371,7 @@ int main(int argc, char* argv[])
 	              // max1.emplace_back(genpt1);
 	               //max2.emplace_back(genpt2);
 	               //std::cout<<"k "<<l<<"max1 "<<max1.back()<<"max2 "<<max2.back()<<std::endl;	      
-		   }	
+			
 	           if(event.muTrig()){
 		     h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event 
 		   }
