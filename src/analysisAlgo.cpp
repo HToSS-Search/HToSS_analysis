@@ -102,9 +102,6 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         po::bool_switch(&doZplusCR_),
         "Use Z+jets CR for dilepton channel. Region mwCut and metCut set by "
         "--mwCut and --metCut.")(
-        "nFiles,f",
-        po::value<int>(&numFiles)->default_value(-1),
-        "Number of files to run over. All if set to -1.")(
         "events,e",
         po::value<std::vector<int>>(&eventNumbers)->multitoken(),
         "Specify a space-separated list of events to run over.")(
@@ -489,12 +486,10 @@ void AnalysisAlgo::runMainAnalysis()
             {
                 if (!datasetFilled)
                 {
-                    if (!dataset->fillChain(datasetChain, numFiles))
-                    {
+                    if (!dataset->fillChain(datasetChain)) {
                         std::cerr
                             << "There was a problem constructing the chain for "
-                            << dataset->name() << " made of " << numFiles
-                            << " files. Continuing with next dataset.\n";
+                            << dataset->name() << ". Continuing with next dataset.\n";
                         continue;
                     }
                     datasetFilled = true;
@@ -636,7 +631,7 @@ void AnalysisAlgo::runMainAnalysis()
                     datasetFileForHists->Close();
                 }
                 else {
-                    generatorWeightPlot = dynamic_cast<TH1I*>(dataset->getGeneratorWeightHistogram(numFiles)->Clone());
+                    generatorWeightPlot = dynamic_cast<TH1I*>(dataset->getGeneratorWeightHistogram()->Clone());
                     generatorWeightPlot->SetDirectory(nullptr);
                 }
             }
@@ -772,7 +767,7 @@ void AnalysisAlgo::runMainAnalysis()
             if (dataset->isMC())
             {
                 // Load in plots
-                sumPositiveWeights_          = dataset->getTotalEvents();
+                sumPositiveWeights_          = generatorWeightPlot->GetBinContent(1)  + generatorWeightPlot->GetBinContent(2);
                 sumNegativeWeights_          = generatorWeightPlot->GetBinContent(1)  - generatorWeightPlot->GetBinContent(2);
                 sumNegativeWeightsScaleUp_   = generatorWeightPlot->GetBinContent(13) - generatorWeightPlot->GetBinContent(14); // Systematic Scale up
                 sumNegativeWeightsScaleDown_ = generatorWeightPlot->GetBinContent(7)  - generatorWeightPlot->GetBinContent(8); // Systematic Scale down

@@ -49,7 +49,6 @@ class AnalysisAlgo
     bool skipMC;
     std::string cutConfName;
     std::string plotConfName;
-    int numFiles;
     bool makePostLepTree;
     bool makeMVATree;
     bool usePostLepTree;

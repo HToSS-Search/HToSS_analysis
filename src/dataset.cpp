@@ -50,7 +50,7 @@ Dataset::Dataset(std::string name,
 // Method that fills a TChain with the files that will be used for the analysis.
 // Returns 1 if succesful, otherwise returns 0. This can probably be largely
 // ignored.
-int Dataset::fillChain(TChain* chain, int nFiles) {
+int Dataset::fillChain(TChain* chain) {
     for (const auto& location : locations_) {
         const fs::path dir{location};
         if (fs::is_directory(dir))
@@ -78,7 +78,7 @@ float Dataset::getEventWeight() {
 
 // Function that constructs a histogram of all the generator level weights from
 // across the entire dataset
-TH1I* Dataset::getGeneratorWeightHistogram(int nFiles) {
+TH1I* Dataset::getGeneratorWeightHistogram() {
     TH1I* generatorWeightPlot{nullptr};
     const std::regex mask{R"(\.root$)"};
     bool firstFile{true};

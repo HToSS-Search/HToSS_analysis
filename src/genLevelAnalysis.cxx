@@ -89,7 +89,6 @@ int main(int argc, char* argv[])
    
     std::string outFileString{"plots/distributions/output.root"};
     bool is2016_;
-    int numFiles;
     Long64_t nEvents;
     Long64_t totalEvents {0};
     const std::regex mask{".*\\.root"};
@@ -240,9 +239,6 @@ int main(int argc, char* argv[])
         "config,c",
         po::value<std::string>(&config)->required(),
         "The configuration file to be used.")(
-        "nFiles,f",
-        po::value<int>(&numFiles)->default_value(-1),
-        "Number of files to run over. All if set to -1.")(
         "lumi,l",
         po::value<double>(&usePreLumi)->default_value(41528.0),
         "Lumi to scale MC plots to.")(
@@ -307,8 +303,8 @@ int main(int argc, char* argv[])
         datasetChain->SetAutoSave(0);
 
         if (!datasetFilled) {
-            if (!dataset->fillChain(datasetChain, numFiles)) {
-                std::cerr << "There was a problem constructing the chain for " << dataset->name() << " made of " << numFiles << " files. Continuing with next dataset.\n";
+            if (!dataset->fillChain(datasetChain)) {
+                std::cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
                 continue;
             }
             datasetFilled=true;

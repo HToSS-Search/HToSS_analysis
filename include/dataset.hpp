@@ -69,7 +69,7 @@ class Dataset
     {
         return plotType_;
     }
-    int fillChain(TChain*, int);
+    int fillChain(TChain* chain);
     float getDatasetWeight(double);
     float getEventWeight();
     std::string getTriggerFlag()
@@ -80,7 +80,7 @@ class Dataset
     {
         return totalEvents_;
     } // Function to return total number of events
-    TH1I* getGeneratorWeightHistogram(int nFiles);
+    TH1I* getGeneratorWeightHistogram();
 };
 
 #endif
