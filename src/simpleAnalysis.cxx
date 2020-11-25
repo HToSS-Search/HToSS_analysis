@@ -303,8 +303,7 @@ int main(int argc, char* argv[])
 	
 	Float_t genpt1=0; Float_t genpt2=0;
 	
-	for (Int_t k{0}; k < event.nGenPar; k++) {
-	    
+	for (Int_t k{0}; k < event.nGenPar; k++) { 
 	    if(event.genParPt[k]>genpt1){
 	      genpt2=genpt1; 
 	      genpt1=event.genParPt[k];
@@ -312,7 +311,9 @@ int main(int argc, char* argv[])
 	    else if(event.genParPt[k]>genpt2){
 		   genpt2=event.genParPt[k];
 	    }
-		
+	}
+	    
+       for (Int_t k{0}; k < event.nGenPar; k++) {
 		
 	  // get variables for this event that have been stored in ROOT nTuple tree
 	  const Int_t pdgId        { std::abs(event.genParId[k]) };
