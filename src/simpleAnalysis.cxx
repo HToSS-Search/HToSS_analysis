@@ -389,7 +389,7 @@ int main(int argc, char* argv[])
 		   
 		   h_genParScalarMuonPt->Fill(event.genParPt[k]);  
 	           if(event.genParPt[k]>genpt1){
-	             genpt2=genpt1; 
+	             //genpt2=genpt1; 
 	             genpt1=event.genParPt[k];
 		     muonIndex1=k;
          	   }
