@@ -301,35 +301,32 @@ int main(int argc, char* argv[])
 	std::vector<int> nrofKShort;
 	std::vector<int> nrofPion;
 	
-	Float_t pt1=0; Float_t pt2=0;
+	Float_t genpt1=0; Float_t genpt2=0;
+	
 	for (Int_t k{0}; k < event.nGenPar; k++) {
 	    
-	    if(event.genParPt[k]>pt1){
-	      pt2=pt1; 
-	      pt1=event.genParPt[k];
+	    if(event.genParPt[k]>genpt1){
+	      genpt2=genpt1; 
+	      genpt1=event.genParPt[k];
 	    }
-	    else if(event.genParPt[k]>pt2){
-		   pt2=event.genParPt[k];
+	    else if(event.genParPt[k]>genpt2){
+		   genpt2=event.genParPt[k];
 	    }
 		
-	  std::cout<<"max "<<pt1<<" second max "<<pt2<<std::endl;
-	  std::cout<<"k"<<k<<"momentum "<<event.genParPt[k]<<std::endl;
 		
 	  // get variables for this event that have been stored in ROOT nTuple tree
 	  const Int_t pdgId        { std::abs(event.genParId[k]) };
 	  const Int_t motherId     { std::abs(event.genParMotherId[k]) };
 	  const Int_t motherIndex  { std::abs(event.genParMotherIndex[k]) };
-	  const Int_t genParVx {event.genParVx[k]};
-	  const Int_t genParVy {event.genParVy[k]};
-	  const Int_t genParVz {event.genParVz[k]};
+	  const Int_t genParVx     {event.genParVx[k]};
+	  const Int_t genParVy     {event.genParVy[k]};
+	  const Int_t genParVz     {event.genParVz[k]};
 		    
-	  //const Float_t genParPt  { event.genParPt[k] };
-	  const Float_t genParEta { event.genParEta[k] };
-	  const Float_t genParPhi { event.genParPhi[k] };
-	  const Float_t genParE   { event.genParE[k] };
+	  const Float_t genParEta  { event.genParEta[k] };
+	  const Float_t genParPhi  { event.genParPhi[k] };
+	  const Float_t genParE    { event.genParE[k] };
 	 
 	  const bool ownParent {pdgId == motherId ? true : false}; 
-	  //meaning: const bool ownParent {if(pdgId == motherId){return true;}else{return false;}};
 
 	  h_genParPt->Fill(event.genParPt[k]);
 	  h_genParEta->Fill(genParEta);
@@ -376,29 +373,14 @@ int main(int argc, char* argv[])
 		   h_genParScalarMuonPt->Fill(event.genParPt[k]);
 		  
 	           if(event.muTrig()){
-		     if(k!=0){
-		       mu.emplace_back(k);
-		       h_genParScalarMuonCutPtSL->Fill(event.genParPt[mu.front()]);
-		     }
-		    else if(k==0){
-			   h_genParScalarMuonCutPtSL->Fill(event.genParPt[0]);
-		    }
+		     h_genParScalarMuonCutPtSL->Fill(event.genParPt[genpt1]); //leading momenta for the event 
 		   }
 		   if(event.mumuTrig()){
-		      if(k!=0){
-			mumu.emplace_back(k);
-			
-		        h_genParScalarMuonCutPtDL->Fill(event.genParPt[mumu.front()]);  
-		        h_genParScalarMuonCutPtDS->Fill(event.genParPt[mumu.front()+1]);
-		      }
-		     else if(k==0){
-			    h_genParScalarMuonCutPtDL->Fill(event.genParPt[0]);  
-		            h_genParScalarMuonCutPtDS->Fill(event.genParPt[1]); 
-		     }
+		     h_genParScalarMuonCutPtDL->Fill(event.genParPt[genpt1]);  
+		     h_genParScalarMuonCutPtDS->Fill(event.genParPt[genpt2]);
 		   }    
-	        }     
+		}     
 	     }
-		 
 	    //Charged kaon from scalar decay
 	    if (pdgId==321){
 	      nrofKaon.emplace_back(k);
@@ -673,7 +655,7 @@ int main(int argc, char* argv[])
 		    singleFlag++; singleIndex.emplace_back(k);
 		 }
 	       }
-	       if(singleFlag==2){
+	       if(singleFlag>0){
 		 const int s1 {singleIndex[0]};
 		 h_muonCutSingleL->Fill(event.muonPF2PATPt[s1]);
 	       }
@@ -683,7 +665,7 @@ int main(int argc, char* argv[])
 		   doubleFlag++; doubleIndex.emplace_back(k);
 		 }
 	       }
-	       if(doubleFlag==2){
+	       if(doubleFlag>1){
 		 const int d1 {doubleIndex[0]}; const int d2 {doubleIndex[1]};
 		 h_muonCutDoubleL->Fill(event.muonPF2PATPt[d1]);
 		 h_muonCutDoubleS->Fill(event.muonPF2PATPt[d2]);
