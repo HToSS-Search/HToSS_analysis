@@ -37,6 +37,8 @@
 std::string pdgIdCode (const Int_t pdgId, const bool unicode = false); // declaring function called below main(); pdgIdCode translate stored numerical pdgId code into a string: unicode for output to string, or latex style for ROOT plotting
 bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
 
+
+
 namespace fs = boost::filesystem;
 
 int main(int argc, char* argv[])
@@ -299,9 +301,20 @@ int main(int argc, char* argv[])
 	std::vector<int> nrofKShort;
 	std::vector<int> nrofPion;
 	
-	
+	Float_t pt1=0; Float_t pt2=0;
 	for (Int_t k{0}; k < event.nGenPar; k++) {
-
+	    
+	    if(event.genParPt[k]>pt1){
+	      pt2=pt1; 
+	      pt1=event.genParPt[k];
+	    }
+	    else if(event.genParPt[k]>pt2){
+		   pt2=event.genParPt[k];
+	    }
+		
+	  std::cout<<"max "<<pt1<<" second max "<<pt2<<std::endl;
+	  std::cout<<"k"<<k<<"momentum "<<event.genParPt[k]<<std::endl;
+		
 	  // get variables for this event that have been stored in ROOT nTuple tree
 	  const Int_t pdgId        { std::abs(event.genParId[k]) };
 	  const Int_t motherId     { std::abs(event.genParMotherId[k]) };
