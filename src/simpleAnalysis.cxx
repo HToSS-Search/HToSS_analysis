@@ -371,10 +371,10 @@ int main(int argc, char* argv[])
 	           else if(event.genParPt[k]>genpt2){
 		          genpt2=event.genParPt[k];
 		   }
-		   std::cout<<"k "<<k<<"moment max  "<<genpt1<<"second max "<<genpt2<<cout::endl;
+		   std::cout<<"k "<<k<<"moment max  "<<genpt1<<"second max "<<genpt2<<std::endl;
 		   max1.emplace_back(genpt1);
 	           max2.emplace_back(genpt2);
-		   std::cout<<"k "<<k<<"max1 "<<max1.back()<<"max2 "<<max2.back()<<cout::endl;	
+		   std::cout<<"k "<<k<<"max1 "<<max1.back()<<"max2 "<<max2.back()<<std::endl;	
 	           if(event.muTrig()){
 		     h_genParScalarMuonCutPtSL->Fill(max1.back()); //leading momenta for the event 
 		   }
