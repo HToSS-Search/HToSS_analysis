@@ -298,10 +298,10 @@ int main(int argc, char* argv[])
 	std::vector<int> nrofPion;
 	
 	Float_t genpt1=0; Float_t genpt2=0;
-	    
+	      
        for (Int_t k{0}; k < event.nGenPar; k++) {
 	 
-	  std::vector<Int_t> max1{}; std::vector<Int_t> max2{};  
+	  
 	  // get variables for this event that have been stored in ROOT nTuple tree
 	  const Int_t pdgId        { std::abs(event.genParId[k]) };
 	  const Int_t motherId     { std::abs(event.genParMotherId[k]) };
@@ -359,24 +359,26 @@ int main(int argc, char* argv[])
 		if (event.metFilters()){ 
 		   
 		   h_genParScalarMuonPt->Fill(event.genParPt[k]);
-			
-		   if(event.genParPt[k]>genpt1){
-	             genpt2=genpt1; 
-	             genpt1=event.genParPt[k];
-	           }
-	           else if(event.genParPt[k]>genpt2){
-		          genpt2=event.genParPt[k];
-		   }
-		   std::cout<<"k "<<k<<"moment max  "<<genpt1<<"second max "<<genpt2<<std::endl;
-		   max1.emplace_back(genpt1);
-	           max2.emplace_back(genpt2);
-		   std::cout<<"k "<<k<<"max1 "<<max1.back()<<"max2 "<<max2.back()<<std::endl;	
+		   for (Int_t l{0}; l < event.nGenPar; ++l) {
+	               std::vector<Float_t> max1{}; std::vector<Float_t> max2{};  
+	               if(event.genParPt[l]>genpt1){
+	                  genpt2=genpt1; 
+	                  genpt1=event.genParPt[l];
+		       }
+	               else if(event.genParPt[l]>genpt2){
+		              genpt2=event.genParPt[l];
+		       }
+	               std::cout<<"k "<<l<<"moment max  "<<genpt1<<"second max "<<genpt2<<std::endl;
+	              // max1.emplace_back(genpt1);
+	               //max2.emplace_back(genpt2);
+	               //std::cout<<"k "<<l<<"max1 "<<max1.back()<<"max2 "<<max2.back()<<std::endl;	      
+		   }	
 	           if(event.muTrig()){
-		     h_genParScalarMuonCutPtSL->Fill(max1.back()); //leading momenta for the event 
+		     h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event 
 		   }
 		   if(event.mumuTrig()){
-		     h_genParScalarMuonCutPtDL->Fill(max1.back());  
-		     h_genParScalarMuonCutPtDS->Fill(max2.back());
+		     h_genParScalarMuonCutPtDL->Fill(genpt1);  
+		     h_genParScalarMuonCutPtDS->Fill(genpt2);
 		   }    
 		}     
 	     }
