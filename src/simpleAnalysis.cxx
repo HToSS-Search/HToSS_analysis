@@ -373,11 +373,11 @@ int main(int argc, char* argv[])
 		   h_genParScalarMuonPt->Fill(event.genParPt[k]);
 		  
 	           if(event.muTrig()){
-		     h_genParScalarMuonCutPtSL->Fill(event.genParPt[genpt1]); //leading momenta for the event 
+		     h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event 
 		   }
 		   if(event.mumuTrig()){
-		     h_genParScalarMuonCutPtDL->Fill(event.genParPt[genpt1]);  
-		     h_genParScalarMuonCutPtDS->Fill(event.genParPt[genpt2]);
+		     h_genParScalarMuonCutPtDL->Fill(genpt1);  
+		     h_genParScalarMuonCutPtDS->Fill(genpt2);
 		   }    
 		}     
 	     }
