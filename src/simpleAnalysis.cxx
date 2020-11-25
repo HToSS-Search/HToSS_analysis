@@ -302,7 +302,7 @@ int main(int argc, char* argv[])
        for (Int_t k{0}; k < event.nGenPar; k++) {
 	 
 	  std::vector<Float_t> max1{}; std::vector<Float_t> max2{};
-	  Int muonIndex1 {-1}, muonIndex2 {-1};
+	  Int_t muonIndex1 {-1}; Int_t muonIndex2 {-1};
 
           //Print out event record
 
