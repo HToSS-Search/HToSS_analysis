@@ -1,7 +1,6 @@
 name: "WZ_l3nu"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/VV/WZ_l3nu/"
-total_events:  4994395
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VV/WZ_l3nu/"
 cross_section: 3.054
 mc: true
 histogram: "VV"

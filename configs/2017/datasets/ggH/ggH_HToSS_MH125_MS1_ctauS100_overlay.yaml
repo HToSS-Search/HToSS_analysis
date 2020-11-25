@@ -1,8 +1,7 @@
 name: "ggH_HToSS_MS1_ctauS100"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/ggH/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS1_ctauS100/"
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/ggH/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS1_ctauS100_ext1/"
-total_events: 1697767
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ggH/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS1_ctauS100/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ggH/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS1_ctauS100_ext1/"
 cross_section: 21.46
 mc: true
 histogram: "ggH_HToSS_MS1_ctauS100"

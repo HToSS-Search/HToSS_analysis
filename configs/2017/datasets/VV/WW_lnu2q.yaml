@@ -1,7 +1,6 @@
 name: "WW_lnu2q"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/VV/WW_lnu2q/"
-total_events: 8785360
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VV/WW_lnu2q/"
 cross_section: 45.99
 mc: true
 histogram: "VV"

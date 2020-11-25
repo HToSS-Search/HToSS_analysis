@@ -1,8 +1,7 @@
 name: "ZZ_2l2q"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/VV/ZZ_2l2q/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VV/ZZ_2l2q/"
 mc: true
-total_events: 27186109
 cross_section: 3.222
 histogram: "VV"
 colour: "#a65628"

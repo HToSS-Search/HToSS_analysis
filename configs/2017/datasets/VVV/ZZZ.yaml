@@ -1,7 +1,6 @@
 name: "ZZZ"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/VVV/ZZZ/"
-total_events: 250000
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VVV/ZZZ/"
 cross_section: 0.01398
 mc: true
 histogram: "VVV"

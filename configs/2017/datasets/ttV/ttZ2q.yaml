@@ -1,8 +1,7 @@
 name: "ttZ2q"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/ttV/ttZ_qq/"
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/ttV/ttZ_qq_ext/"
-total_events: 9690000
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ttV/ttZ_qq/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ttV/ttZ_qq_ext/"
 cross_section: 0.5104
 mc: true
 histogram: "ttV"

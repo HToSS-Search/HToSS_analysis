@@ -1,7 +1,8 @@
 name: "ttbar_semileptonic"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/ttbar/ttbar_semileptonic/"
-total_events: 110014744
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ttbar/ttbar_semileptonic/part0/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ttbar/ttbar_semileptonic/part1/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ttbar/ttbar_semileptonic/part2/"
 cross_section: 365.34
 mc: true
 histogram: "ttbar"

@@ -1,7 +1,6 @@
 name: "WG_lnug"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/VV/WG_lnug/"
-total_events: 6283083
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VV/WG_lnug/"
 cross_section: 405.271
 mc: true
 histogram: "VV"

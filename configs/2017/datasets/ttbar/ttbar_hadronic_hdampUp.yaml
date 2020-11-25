@@ -1,7 +1,6 @@
 name: "ttbar_hadronic_hdampUp"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v2/ttbar/ttbar_hadronic_hdampUP/"
-total_events: 27260880
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ttbar/ttbar_hadronic_hdampUP/"
 cross_section: 377.96
 mc: true
 histogram: "ttbar"

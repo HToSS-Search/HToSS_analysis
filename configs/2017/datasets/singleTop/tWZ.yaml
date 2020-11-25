@@ -1,7 +1,6 @@
 name: "tWZ"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/singleTop/tWz_tWll/"
-total_events: 986000
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/singleTop/tWz_tWll/"
 cross_section: 0.01103
 mc: true
 histogram: "SingleTop"

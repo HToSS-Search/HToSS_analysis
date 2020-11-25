@@ -1,8 +1,7 @@
 name: "wPlusJets_v3"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/Wjets/Wjets_v3/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/Wjets/Wjets_v3/"
 mc: true
-total_events: 30008250
 cross_section: 52940.0 
 histogram: "wJets"
 colour: "#ffff33"

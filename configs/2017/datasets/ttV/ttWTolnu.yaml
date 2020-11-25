@@ -1,7 +1,6 @@
 name: "ttWTolnu"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/ttV/ttW_lnu/"
-total_events: 4919674
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ttV/ttW_lnu/"
 cross_section: 0.2198
 mc: true
 histogram: "ttV"

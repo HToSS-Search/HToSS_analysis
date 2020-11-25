@@ -1,7 +1,6 @@
 name: "tHq"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/singleTop/tHq/"
-total_events: 3381548
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/singleTop/tHq/"
 cross_section: 0.3184
 mc: true
 histogram: "SingleTop"

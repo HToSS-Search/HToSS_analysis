@@ -1,7 +1,6 @@
 name: "ZZ_4l"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/VV/ZZ_4l/"
-total_events:  6964071
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VV/ZZ_4l/"
 cross_section: 1.325
 mc: true
 histogram: "VV"

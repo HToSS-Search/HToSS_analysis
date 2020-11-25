@@ -1,7 +1,6 @@
 name: "WZ_2l2q"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/VV/WZ_2l2q/"
-total_events:  27582164
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VV/WZ_2l2q/"
 cross_section: 6.331
 mc: true
 histogram: "VV"

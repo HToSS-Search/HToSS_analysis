@@ -1,7 +1,6 @@
 name: "tbarW"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/singleTop/tbarW/"
-total_events: 7745276
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/singleTop/tbarW/"
 cross_section: 34.97
 mc: true
 histogram: "SingleTop"

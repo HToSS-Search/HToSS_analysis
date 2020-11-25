@@ -1,7 +1,6 @@
 name: "WWZ"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/VVV/WWZ/"
-total_events: 250000
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VVV/WWZ/"
 cross_section: 0.1651
 mc: true
 histogram: "VVV"

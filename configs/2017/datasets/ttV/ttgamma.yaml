@@ -1,7 +1,6 @@
 name: "ttgamma"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v3/ttV/ttgamma/"
-total_events: 4642344
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ttV/ttgamma/"
 cross_section: 0.5804
 mc: true
 histogram: "ttV"
