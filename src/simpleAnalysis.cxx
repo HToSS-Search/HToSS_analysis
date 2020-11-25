@@ -301,7 +301,7 @@ int main(int argc, char* argv[])
 	std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;	      
        for (Int_t k{0}; k < event.nGenPar; k++) {
 	 
-	  std::vector<Float_t> max1{}; std::vector<Float_t> max2{};
+	  std::vector<Float_t> max1{-1}; std::vector<Float_t> max2{-1};
 	  Int_t muonIndex1 {-1}; Int_t muonIndex2 {-1};
 
           //Print out event record
@@ -396,19 +396,21 @@ int main(int argc, char* argv[])
 	           else if(event.genParPt[k]>genpt2){
 	                  genpt2=event.genParPt[k];
 			  muonIndex2=k;
-                   }
-	           std::cout<<"k "<<k<<"moment max  "<<genpt1<<"second max "<<genpt2<<std::endl;
+		   }
+		   if(genpt1!=-1 && genpt2!=-1){
+	             std::cout<<"k "<<k<<"moment max  "<<genpt1<<"second max "<<genpt2<<std::endl;
 	              // max1.emplace_back(genpt1);
 	               //max2.emplace_back(genpt2);
 	               //std::cout<<"k "<<l<<"max1 "<<max1.back()<<"max2 "<<max2.back()<<std::endl;	      
 			
-	           if(event.muTrig()){
-		     h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event 
+	             if(event.muTrig()){
+		       h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event 
+		     }
+		     if(event.mumuTrig()){
+		       h_genParScalarMuonCutPtDL->Fill(genpt1);  
+		       h_genParScalarMuonCutPtDS->Fill(genpt2);
+		     } 
 		   }
-		   if(event.mumuTrig()){
-		     h_genParScalarMuonCutPtDL->Fill(genpt1);  
-		     h_genParScalarMuonCutPtDS->Fill(genpt2);
-		   }    
 		}     
 	     }
 	    //Charged kaon from scalar decay
