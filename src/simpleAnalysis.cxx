@@ -307,7 +307,7 @@ int main(int argc, char* argv[])
           //Print out event record
 
 	  //Invariant mass
-	  TLorentzVector m;
+	 /* TLorentzVector m;
 	  m.SetPtEtaPhiE(event.genParPt[k],event.genParEta[k],event.genParPhi[k],event.genParE[k]);	 
           TLorentzVector mass {m.Px(),m.Py(),m.Pz(),event.genParE[k]};	
 
@@ -321,7 +321,7 @@ int main(int argc, char* argv[])
           << event.genParPt[k] << "\t "
           << event.genParEta[k] << "\t "
           << event.genParPhi[k] << "\t "
-          << mass.M() << std::endl;
+          << mass.M() << std::endl;*/
 
 
 
@@ -386,7 +386,7 @@ int main(int argc, char* argv[])
 		h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
 		  
 		if (event.metFilters()){ 
-		   
+		   std::cout<<"momentum "<< event.genParPt[k]<<std::endl;
 		   h_genParScalarMuonPt->Fill(event.genParPt[k]);  
 	           if(event.genParPt[k]>genpt1){
 	             genpt2=genpt1; 
@@ -398,6 +398,7 @@ int main(int argc, char* argv[])
 			  muonIndex2=k;
 		   }
 		   if(genpt1!=0 && genpt2!=0){
+			
 	             std::cout<<"k "<<k<<"moment max  "<<genpt1<<"second max "<<genpt2<<std::endl;
 	              // max1.emplace_back(genpt1);
 	               //max2.emplace_back(genpt2);
