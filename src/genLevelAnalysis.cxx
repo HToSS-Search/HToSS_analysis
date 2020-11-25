@@ -378,7 +378,7 @@ int main(int argc, char* argv[])
 //            std::cout << "Number of general pions with jets: " << pionAndJetCounter << std::endl;
 
             //////// ISO TRACK STUFF
-
+/*
             uint pionTrackCounter = 0;
 //            std::cout << "ISO TRACKS COLLECTION" << std::endl;
 
@@ -395,7 +395,7 @@ int main(int argc, char* argv[])
 
             }
 //            std::cout << "Number of isolated pion tracks: " << pionTrackCounter << std::endl;
-
+*/
 
             //////// JET STUFF
 
