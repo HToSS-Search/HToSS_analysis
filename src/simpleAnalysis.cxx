@@ -302,7 +302,8 @@ int main(int argc, char* argv[])
 	std::vector<int> nrofPion;
 	
 	Float_t genpt1=0; Float_t genpt2=0;
-	
+	std::vector<Int_t> max1{}; std::vector<Int_t> max2{};  
+	      
 	for (Int_t k{0}; k < event.nGenPar; k++) { 
 	    if(event.genParPt[k]>genpt1){
 	      genpt2=genpt1; 
@@ -311,6 +312,8 @@ int main(int argc, char* argv[])
 	    else if(event.genParPt[k]>genpt2){
 		   genpt2=event.genParPt[k];
 	    }
+	    max1.emplace_back(genpt1);
+	    max2.emplace_back(genpt2);
 	}
 	    
        for (Int_t k{0}; k < event.nGenPar; k++) {
@@ -374,11 +377,11 @@ int main(int argc, char* argv[])
 		   h_genParScalarMuonPt->Fill(event.genParPt[k]);
 		  
 	           if(event.muTrig()){
-		     h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event 
+		     h_genParScalarMuonCutPtSL->Fill(max1[end]); //leading momenta for the event 
 		   }
 		   if(event.mumuTrig()){
-		     h_genParScalarMuonCutPtDL->Fill(genpt1);  
-		     h_genParScalarMuonCutPtDS->Fill(genpt2);
+		     h_genParScalarMuonCutPtDL->Fill(max1[end]);  
+		     h_genParScalarMuonCutPtDS->Fill(max2[end]);
 		   }    
 		}     
 	     }
