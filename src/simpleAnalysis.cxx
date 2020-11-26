@@ -300,12 +300,11 @@ int main(int argc, char* argv[])
 	std::vector<int> nrofPion;
 	
 	Float_t genpt1=0; Float_t genpt2=0;
+        Int_t muonIndex1 {-1}; Int_t muonIndex2 {-1};
+
 	//std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
 	     
        for (Int_t k{0}; k < event.nGenPar; k++) {
-	 
-	  std::vector<Float_t> max1{-1}; std::vector<Float_t> max2{-1};
-	  Int_t muonIndex1 {-1}; Int_t muonIndex2 {-1};
 
           //Print out event record
 
@@ -399,8 +398,8 @@ int main(int argc, char* argv[])
 	               genpt2=event.genParPt[k];
 		       muonIndex2=k;
 		}
-		if(genpt1!=0 && genpt2!=0){
-				      
+		//if(genpt1!=0 && genpt2!=0){
+		std::cout<<"k "<<k<<"max1 "<<genpt1<<"max2 "<<genpt2<<std::endl;		      
 	           if(event.muTrig()){
 		     h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event 
 		   }
@@ -408,7 +407,7 @@ int main(int argc, char* argv[])
 		     h_genParScalarMuonCutPtDL->Fill(genpt1);  
 		     h_genParScalarMuonCutPtDS->Fill(genpt2);
 		   } 
-		}
+		//}
 		     
 	     }
 	    //Charged kaon from scalar decay
