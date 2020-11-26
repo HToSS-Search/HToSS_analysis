@@ -173,6 +173,8 @@ int main(int argc, char* argv[])
   TH1F* h_hadronInvMass {new TH1F("h_hadronInvMass", "Two hadrons - Invariant mass",1000, 0., 7.)};
   TH1F* h_muonsInvMass  {new TH1F("h_muonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
   TH2F* h_invmass       {new TH2F("h_invmass", "Invariant mass: pions vs muons", 1000, 0.,7.,1000,0.,7.)};
+  
+  TH1F* h_testInvMass  {new TH1F("h_testInvMass", "Invariant mass Packed Candidates",1000, 0., 7.)};
 	
 	
 	
@@ -298,7 +300,7 @@ int main(int argc, char* argv[])
 	std::vector<int> nrofPion;
 	
 	Float_t genpt1=0; Float_t genpt2=0;
-	std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
+	//std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
 	     
        for (Int_t k{0}; k < event.nGenPar; k++) {
 	 
@@ -398,9 +400,7 @@ int main(int argc, char* argv[])
 		       muonIndex2=k;
 		}
 		if(genpt1!=0 && genpt2!=0){
-			
-	           std::cout<<"k "<<k<<"moment max  "<<genpt1<<"second max "<<genpt2<<std::endl;	      
-			
+				      
 	           if(event.muTrig()){
 		     h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event 
 		   }
@@ -744,6 +744,11 @@ int main(int argc, char* argv[])
 	      
 		if(event.packedCandsHasTrackDetails[k]==1){
 		  
+		  //Test invariant masses
+	    	  TLorentzVector test  {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
+	 	  h_testInvMass->Fill(test.M());
+		  std::cout<<"invariant mass packed candid "<<test.M()<<std::endl;
+			
 		  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]};
 		  const Int_t packedCandsCharge {event.packedCandsCharge[k]};
 			
@@ -1065,7 +1070,8 @@ int main(int argc, char* argv[])
   h_invmass->Write();	
   h_invmass->GetXaxis()->SetTitle("Hadron invariant mass");
   h_invmass->GetYaxis()->SetTitle("Muon invariant mass");
-	
+  
+  h_testInvMass->Write();
 	
 	
 	
