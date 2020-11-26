@@ -10,11 +10,11 @@
 #include <string>
 #include <vector>
 
-namespace Parser
-{
+namespace Parser {
     void parse_config(const std::string conf,
                       std::vector<Dataset>& datasets,
-                      double& lumi);
+                      double& lumi,
+                      const bool usePostLepTree = false);
     void parse_config(const std::string conf,
                       std::vector<Dataset>& datasets,
                       double& lumi,
@@ -31,10 +31,12 @@ namespace Parser
                       std::string&,
                       std::string&,
                       std::string&,
+                      const bool = false,
                       const bool = false);
     void parse_files(const std::vector<std::string> files,
                      std::vector<Dataset>& datasets,
                      double& lumi,
+                     const bool usePostLepTree = false,
                      const bool NPL = false);
     void parse_plots(const std::string plotConf,
                      std::vector<std::string>&,
