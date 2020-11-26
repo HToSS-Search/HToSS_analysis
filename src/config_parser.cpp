@@ -8,18 +8,13 @@
 #include <vector>
 #include <yaml-cpp/yaml.h>
 
-void Parser::parse_config(const std::string conf,
-                          std::vector<Dataset>& datasets,
-                          double& lumi)
-{
+void Parser::parse_config(const std::string conf, std::vector<Dataset>& datasets, double& lumi, const bool usePostLepTree) {
     const YAML::Node root{YAML::LoadFile(conf)};
     auto datasetConfs{root["datasets"].as<std::vector<std::string>>()};
-    try
-    {
-        parse_files(datasetConfs, datasets, lumi);
+    try {
+        parse_files(datasetConfs, datasets, lumi, usePostLepTree);
     }
-    catch (const std::exception)
-    {
+    catch (const std::exception) {
         std::cerr << "ERROR while parsing dataset file" << std::endl;
         throw;
     }
@@ -41,18 +36,17 @@ void Parser::parse_config(const std::string conf,
                           std::string& outFolder,
                           std::string& postfix,
                           std::string& channel,
+                          const bool usePostLepTree, 
                           const bool NPL)
 {
     const YAML::Node root{YAML::LoadFile(conf)};
 
     auto datasetConfs{root["datasets"].as<std::vector<std::string>>()};
 
-    try
-    {
-        parse_files(datasetConfs, datasets, lumi, NPL);
+    try {
+        parse_files(datasetConfs, datasets, lumi, usePostLepTree, NPL);
     }
-    catch (const std::exception)
-    {
+    catch (const std::exception) {
         std::cerr << "ERROR while parsing dataset file" << std::endl;
         throw;
     }
@@ -103,9 +97,13 @@ void Parser::parse_config(const std::string conf,
 void Parser::parse_files(const std::vector<std::string> files,
                          std::vector<Dataset>& datasets,
                          double& totalLumi,
+                         const bool usePostLepTree,
                          const bool NPL)
 {
     std::cerr << "Adding datasets:" << std::endl;
+
+    std::string treeName {"makeTopologyNtupleMiniAOD/tree"};
+    if (usePostLepTree) treeName = "tree";
 
     for (const auto& file : files) {
         const YAML::Node root{YAML::LoadFile(file)};
@@ -116,7 +114,7 @@ void Parser::parse_files(const std::vector<std::string> files,
                               isMC ? root["cross_section"].as<double>() : 0,
                               root["locations"].as<std::vector<std::string>>(),
                               root["histogram"].as<std::string>(),
-                              "makeTopologyNtupleMiniAOD/tree",
+                              treeName,
                               root["colour"].as<std::string>(),
                               root["label"].as<std::string>(),
                               root["plot_type"].as<std::string>(),
@@ -131,7 +129,7 @@ void Parser::parse_files(const std::vector<std::string> files,
                 isMC ? root["cross_section"].as<double>() : 0,
                 root["locations"].as<std::vector<std::string>>(),
                 "NPL",
-                "makeTopologyNtupleMiniAOD/tree",
+                treeName,
                 "#003300",
                 "NPL",
                 "f",
@@ -139,9 +137,7 @@ void Parser::parse_files(const std::vector<std::string> files,
         }
 
         if (root["luminosity"])
-        {
             totalLumi += root["luminosity"].as<double>();
-        }
 
         std::cerr << datasets.back().name() << "\t(" << (isMC ? "MC" : "Data")
                   << ')' << std::endl;

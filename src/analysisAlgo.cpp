@@ -191,7 +191,7 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
     totalLumi = 0;
 
     try {
-        Parser::parse_config(config, datasets, totalLumi, plotTitles, plotNames, xMin, xMax, nBins, fillExp, xAxisLabels, cutStage, cutConfName, plotConfName, outFolder, postfix, channel, doNPLs_);
+        Parser::parse_config(config, datasets, totalLumi, plotTitles, plotNames, xMin, xMax, nBins, fillExp, xAxisLabels, cutStage, cutConfName, plotConfName, outFolder, postfix, channel, usePostLepTree,  doNPLs_);
     }
     catch (const std::exception)  {
         std::cerr << "ERROR Problem with a confugration file, see previous "
@@ -476,16 +476,12 @@ void AnalysisAlgo::runMainAnalysis()
             // If making plots and using saved histos, skip running over the
             // datasets ...
             if (plots && useHistos)
-            {
                 continue;
-            }
 
             // If making either plots, make cut flow object.
             std::cerr << "Processing dataset " << dataset->name() << std::endl;
-            if (!usePostLepTree)
-            {
-                if (!datasetFilled)
-                {
+            if (!usePostLepTree) {
+                if (!datasetFilled) {
                     if (!dataset->fillChain(datasetChain)) {
                         std::cerr
                             << "There was a problem constructing the chain for "
@@ -495,16 +491,12 @@ void AnalysisAlgo::runMainAnalysis()
                     datasetFilled = true;
                 }
             }
-            else
-            {
+            else {
                 std::string inputPostfix{};
                 inputPostfix += postfix;
                 if (invertLepCut)
-                {
                     inputPostfix += "invLep";
-                }
-                if (doNPLs_ && dataset->getPlotLabel() == "NPL")
-                {
+                if (doNPLs_ && dataset->getPlotLabel() == "NPL") {
                     inputPostfix +=
                         "invLep"; // If plotting non-prompt leptons for this
                                   // dataset, be sure to read in the same sign
@@ -517,8 +509,7 @@ void AnalysisAlgo::runMainAnalysis()
                     cutObj->setNplFlag(true);
                     cutObj->setInvLepCut(true);
                 }
-                else if (doNPLs_ && dataset->getPlotLabel() != "NPL")
-                {
+                else if (doNPLs_ && dataset->getPlotLabel() != "NPL") {
                     cutObj->setNplFlag(false);
                     cutObj->setInvLepCut(false);
                 }
@@ -569,33 +560,27 @@ void AnalysisAlgo::runMainAnalysis()
                 }
                 cutObj->setBTagPlots(bTagEffPlots, true);
             } // end btag eff plots.
-            if (usePostLepTree && usebTagWeight && dataset->isMC())
-            {
+            if (usePostLepTree && usebTagWeight && dataset->isMC()) {
                 // Get efficiency plots from the file. Will have to be from
                 // post-lep sel trees I guess.
                 std::string inputPostfix{};
                 inputPostfix += postfix;
-                if (doNPLs_ && dataset->getPlotLabel() == "NPL")
-                {
+                if (doNPLs_ && dataset->getPlotLabel() == "NPL") {
                     inputPostfix +=
                         "invLep"; // If plotting non-prompt leptons for this
                                   // dataset, be sure to read in the same sign
                                   // lepton post lepton $
                 }
                 if (invertLepCut)
-                {
                     inputPostfix += "invLep";
-                }
                 TFile* datasetFileForHists;
                 datasetFileForHists =
                     new TFile((postLepSelSkimDir + dataset->name()
                                + inputPostfix + "SmallSkim.root")
                                   .c_str(),
                               "READ");
-                for (unsigned denNum{0}; denNum < denomNum.size(); denNum++)
-                {
-                    for (unsigned eff{0}; eff < typesOfEff.size(); eff++)
-                    {
+                for (unsigned denNum{0}; denNum < denomNum.size(); denNum++) {
+                    for (unsigned eff{0}; eff < typesOfEff.size(); eff++) {
                         bTagEffPlots.emplace_back(dynamic_cast<TH2D*>(
                             datasetFileForHists
                                 ->Get(("bTagEff_" + denomNum[denNum] + "_"
@@ -604,8 +589,7 @@ void AnalysisAlgo::runMainAnalysis()
                                 ->Clone()));
                     }
                 }
-                for (unsigned plotIt{0}; plotIt < bTagEffPlots.size(); plotIt++)
-                {
+                for (unsigned plotIt{0}; plotIt < bTagEffPlots.size(); plotIt++) {
                     bTagEffPlots[plotIt]->SetDirectory(nullptr);
                 }
                 cutObj->setBTagPlots(bTagEffPlots, false);
@@ -626,7 +610,7 @@ void AnalysisAlgo::runMainAnalysis()
  
                     TFile* datasetFileForHists;
                     datasetFileForHists = new TFile((postLepSelSkimDir + dataset->name()  + inputPostfix + "SmallSkim.root").c_str(), "READ");
-                    generatorWeightPlot = dynamic_cast<TH1I*>(datasetFileForHists->Get("sumNumPosMinusNegWeights")->Clone());
+                    generatorWeightPlot = dynamic_cast<TH1I*>(datasetFileForHists->Get("weightHisto")->Clone());
                     generatorWeightPlot->SetDirectory(nullptr);
                     datasetFileForHists->Close();
                 }
