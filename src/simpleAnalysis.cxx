@@ -298,10 +298,40 @@ int main(int argc, char* argv[])
 	std::vector<int> nrofPion;
 	
 	Float_t genpt1=0; Float_t genpt2=0;
-	      
+	std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
+	     
        for (Int_t k{0}; k < event.nGenPar; k++) {
 	 
-	  
+	  std::vector<Float_t> max1{-1}; std::vector<Float_t> max2{-1};
+	  Int_t muonIndex1 {-1}; Int_t muonIndex2 {-1};
+
+          //Print out event record
+
+	  //Invariant mass
+	  TLorentzVector m;
+	  m.SetPtEtaPhiE(event.genParPt[k],event.genParEta[k],event.genParPhi[k],event.genParE[k]);	 
+          TLorentzVector mass {m.Px(),m.Py(),m.Pz(),event.genParE[k]};	
+
+
+          std::cout << k << "\t | "
+          << event.genParId[k] << "\t "
+          << event.genParStatus[k] << "\t | "
+          << event.genParMotherIndex[k] << "\t "
+          << event.genParDaughter1Index[k] << "\t "
+          << event.genParDaughter2Index[k] << "\t | "
+          << event.genParPt[k] << "\t "
+          << event.genParEta[k] << "\t "
+          << event.genParPhi[k] << "\t "
+          << mass.M() << std::endl;
+
+
+
+
+
+
+
+
+
 	  // get variables for this event that have been stored in ROOT nTuple tree
 	  const Int_t pdgId        { std::abs(event.genParId[k]) };
 	  const Int_t motherId     { std::abs(event.genParMotherId[k]) };
@@ -355,32 +385,31 @@ int main(int argc, char* argv[])
 	        h_VertexPosXY->Fill(genParVx,genParVy);
 	        h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
 		h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
-		  
-		if (event.metFilters()){ 
-		   
-		   h_genParScalarMuonPt->Fill(event.genParPt[k]);
-		   for (Int_t l{0}; l < event.nGenPar; ++l) {
-	               std::vector<Float_t> max1{}; std::vector<Float_t> max2{};  
-	               if(event.genParPt[l]>genpt1){
-	                  genpt2=genpt1; 
-	                  genpt1=event.genParPt[l];
-		       }
-	               else if(event.genParPt[l]>genpt2){
-		              genpt2=event.genParPt[l];
-		       }
-	               std::cout<<"k "<<l<<"moment max  "<<genpt1<<"second max "<<genpt2<<std::endl;
-	              // max1.emplace_back(genpt1);
-	               //max2.emplace_back(genpt2);
-	               //std::cout<<"k "<<l<<"max1 "<<max1.back()<<"max2 "<<max2.back()<<std::endl;	      
-		   }	
+		
+		
+	        h_genParScalarMuonPt->Fill(event.genParPt[k]);  
+	        if(event.genParPt[k]>genpt1){
+	          genpt2=genpt1; 
+	          genpt1=event.genParPt[k];
+		  muonIndex1=k;
+         	}
+	        else if(event.genParPt[k]>genpt2){
+	               genpt2=event.genParPt[k];
+		       muonIndex2=k;
+		}
+		if(genpt1!=0 && genpt2!=0){
+			
+	           std::cout<<"k "<<k<<"moment max  "<<genpt1<<"second max "<<genpt2<<std::endl;	      
+			
 	           if(event.muTrig()){
 		     h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event 
 		   }
 		   if(event.mumuTrig()){
 		     h_genParScalarMuonCutPtDL->Fill(genpt1);  
 		     h_genParScalarMuonCutPtDS->Fill(genpt2);
-		   }    
-		}     
+		   } 
+		}
+		     
 	     }
 	    //Charged kaon from scalar decay
 	    if (pdgId==321){
@@ -728,7 +757,7 @@ int main(int argc, char* argv[])
 		    h_displacedXY->Fill(event.packedCandsPseudoTrkVx[k],event.packedCandsPseudoTrkVy[k]);
 	            h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
 	         
-		
+		  
 	            //Find the hadrons (pions)
 		    if(std::abs(packedId)!=13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons)
 		      pionFlag++; pionIndex.emplace_back(k);
@@ -738,6 +767,7 @@ int main(int argc, char* argv[])
 		    }
 		  }
 		  if(pionFlag>1){//Safety measure
+			  
 		    const int p1 {pionIndex[0]}; const int p2 {pionIndex[1]};
 		    if(event.packedCandsPseudoTrkCharge[p1]==-(event.packedCandsPseudoTrkCharge[p2])){//Opposite charge
 			
