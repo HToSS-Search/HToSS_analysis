@@ -315,7 +315,7 @@ int main(int argc, char* argv[])
           TLorentzVector mass {m.Px(),m.Py(),m.Pz(),event.genParE[k]};	
 
 
-          std::cout << k << "\t | "
+/*          std::cout << k << "\t | "
           << event.genParId[k] << "\t "
           << event.genParStatus[k] << "\t | "
           << event.genParMotherIndex[k] << "\t "
@@ -326,7 +326,7 @@ int main(int argc, char* argv[])
           << event.genParPhi[k] << "\t "
           << mass.M() << std::endl;
 
-
+*/
 
 
 
@@ -747,7 +747,7 @@ int main(int argc, char* argv[])
 		  //Test invariant masses
 	    	  TLorentzVector test  {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
 	 	  h_testInvMass->Fill(test.M());
-		  std::cout<<"invariant mass packed candid "<<test.M()<<std::endl;
+//		  std::cout<<"invariant mass packed candid "<<test.M()<<std::endl;
 			
 		  const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]};
 		  const Int_t packedCandsCharge {event.packedCandsCharge[k]};
