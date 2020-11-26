@@ -509,7 +509,7 @@ class AnalysisEvent
     Float_t isoTracksDeltaEta[NISOTRACKSMAX];
     Float_t isoTracksDeltaPhi[NISOTRACKSMAX];
 */
-    static constexpr size_t NPACKEDCANDSMAX{000};
+    static constexpr size_t NPACKEDCANDSMAX{3000};
     Int_t numPackedCands;
 //    Float_t packedCandsPt[NPACKEDCANDSMAX];
     Float_t packedCandsPx[NPACKEDCANDSMAX];
