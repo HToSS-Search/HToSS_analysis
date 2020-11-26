@@ -709,8 +709,7 @@ void AnalysisAlgo::runMainAnalysis()
                     mvaTree[systIn]->SetName(
                         (mvaTree[systIn]->GetName() + systNames[systIn])
                             .c_str());
-                    mvaTree[systIn]->Branch(
-                        "eventWeight", &eventWeight, "eventWeight/D");
+                    mvaTree[systIn]->Branch("eventWeight", &eventWeight, "eventWeight/D");
                     mvaTree[systIn]->Branch(
                         "zLep1Index", &zLep1Index, "zLep1Index/I");
                     mvaTree[systIn]->Branch(
@@ -748,10 +747,8 @@ void AnalysisAlgo::runMainAnalysis()
             int foundEvents{0};
             double foundEventsNorm{0.0};
 
-            // If event is amc@nlo, need to sum number of positive and negative
-            // weights first.
-            if (dataset->isMC())
-            {
+            // If event is amc@nlo, need to sum number of positive and negative weights first.
+            if (dataset->isMC()) {
                 // Load in plots
                 sumPositiveWeights_          = generatorWeightPlot->GetBinContent(1)  + generatorWeightPlot->GetBinContent(2);
                 sumNegativeWeights_          = generatorWeightPlot->GetBinContent(1)  - generatorWeightPlot->GetBinContent(2);
@@ -765,6 +762,27 @@ void AnalysisAlgo::runMainAnalysis()
                         << std::endl;
                     std::exit(999);
                 }
+            }
+
+            // Some samples lack LHE info - the LHE flag needs to be set so that the samples are correctly treated
+            bool hasLHE {true};
+            if ( dataset->name() == "ZG_lnug"
+              || dataset->name() == "tHq"
+              || dataset->name() == "tWZ" 
+              || dataset->name() == "QCD_Pt-20toInf_MuEnrichedPt15"
+              || dataset->name() == "QCD_Pt-1000toInf_MuEnrichedPt5"
+              || dataset->name() == "QCD_Pt-120to170_MuEnrichedPt5"
+              || dataset->name() == "QCD_Pt-15to20_MuEnrichedPt5"
+              || dataset->name() == "QCD_Pt-170to300_MuEnrichedPt5"
+              || dataset->name() == "QCD_Pt-20to30_MuEnrichedPt5"
+              || dataset->name() == "QCD_Pt-300to470_MuEnrichedPt5"
+              || dataset->name() == "QCD_Pt-30to50_MuEnrichedPt5"
+              || dataset->name() == "QCD_Pt-470to600_MuEnrichedPt5"
+              || dataset->name() == "QCD_Pt-50to80_MuEnrichedPt5"
+              || dataset->name() == "QCD_Pt-600to800_MuEnrichedPt5"
+              || dataset->name() == "QCD_Pt-800to1000_MuEnrichedPt5"
+              || dataset->name() == "QCD_Pt-80to120_MuEnrichedPt5") {
+               hasLHE = false;
             }
 
             TMVA::Timer* lEventTimer{
@@ -794,12 +812,12 @@ void AnalysisAlgo::runMainAnalysis()
                         }
                         continue;
                     }
+
                     eventWeight = 1;
 
                     // apply generator weights here.
                     double generatorWeight{1.0};
-                    if (dataset->isMC() && sumNegativeWeights_ >= 0)
-                    {
+                    if (dataset->isMC() && hasLHE) {
                         if (systMask == 4096)
                             generatorWeight = (sumPositiveWeights_) / (sumNegativeWeightsScaleDown_) * (event.weight_muF0p5muR0p5 / std::abs(event.origWeightForNorm));
                         else if (systMask == 8192)
@@ -817,7 +835,9 @@ void AnalysisAlgo::runMainAnalysis()
                         // std::cout << "NB. This should only not be 1.0 for
                         // aMC@NLO." << std::endl;
                     }
+
                     eventWeight *= generatorWeight;
+
                     // apply pileup weights here.
                     if (dataset->isMC())
                     { // no weights applied for synchronisation
@@ -845,9 +865,7 @@ void AnalysisAlgo::runMainAnalysis()
                     // so that further downstream
                     if (dataset->isMC() && invertLepCut && !plots)
                     {
-                        eventWeight *=
-                            -1.0; // Should NOT be done when plotting
- // non-prompts - separate code for that
+                        eventWeight *= -1.0; // Should NOT be done when plotting non-prompts - separate code for that
                     }
 
                     // Apply in cutClass, as the RATIO weight of OS/SS
@@ -905,17 +923,14 @@ void AnalysisAlgo::runMainAnalysis()
                     // Do Run 1 style PDF reweighting things for tW samples as
                     // they use Powerheg V1 Everything else uses LHE event
                     // weights
-                    if (systMask == 1024 || systMask == 2048)
-                    {
-                        if (is2016_
-                            && (dataset->name() == "tWInclusive"
+                    if (systMask == 1024 || systMask == 2048) {
+                        if (is2016_ && (dataset->name() == "tWInclusive"
                                 || dataset->name() == "tbarWInclusive"
                                 || dataset->name() == "tWInclusive_scaleup"
                                 || dataset->name() == "tWInclusive_scaledown"
                                 || dataset->name() == "tbarWInclusive_scaleup"
                                 || dataset->name()
-                                       == "tbarWInclusive_scaledown"))
-                        {
+                                       == "tbarWInclusive_scaledown")) {
                             // std::cout << std::setprecision(15) << eventWeight
                             // << " ";
                             LHAPDF::usePDFMember(1, 0);
@@ -1172,11 +1187,8 @@ void AnalysisAlgo::runMainAnalysis()
                 }
                 mvaOutFile->Close();
             }
-            std::cerr << "\nFound " << foundEvents << " in " << dataset->name()
-                      << std::endl;
-            std::cerr << "Found " << foundEventsNorm
-                      << " after normalisation in " << dataset->name()
-                      << std::endl;
+            std::cerr << "\nFound " << foundEvents << " in " << dataset->name() << std::endl;
+            std::cerr << "Found " << foundEventsNorm << " after normalisation in " << dataset->name() << std::endl;
             std::cerr << "\n\n";
             // Delete generator level plot. Avoid memory leaks, kids.
             delete generatorWeightPlot;
