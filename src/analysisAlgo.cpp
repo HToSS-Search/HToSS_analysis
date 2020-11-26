@@ -365,7 +365,9 @@ void AnalysisAlgo::runMainAnalysis()
 
     bool datasetFilled{false};
 
-    const std::string postLepSelSkimDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + (is2016_ ? "2016" : "2017") + "/"};
+    const std::string postLepSelSkimOutputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + (is2016_ ? "2016" : "2017") + "/"};
+    const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + (is2016_ ? "2016" : "2017") + "/"};
+
 
     // Begin to loop over all datasets
     for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset)
@@ -513,10 +515,10 @@ void AnalysisAlgo::runMainAnalysis()
                     cutObj->setNplFlag(false);
                     cutObj->setInvLepCut(false);
                 }
-                std::cout << postLepSelSkimDir + dataset->name() + inputPostfix
+                std::cout << postLepSelSkimInputDir + dataset->name() + inputPostfix
                                  + "SmallSkim.root"
                           << std::endl;
-                datasetChain->Add((postLepSelSkimDir + dataset->name()
+                datasetChain->Add((postLepSelSkimInputDir + dataset->name()
                                    + inputPostfix + "SmallSkim.root")
                                       .c_str());
             }
@@ -575,7 +577,7 @@ void AnalysisAlgo::runMainAnalysis()
                     inputPostfix += "invLep";
                 TFile* datasetFileForHists;
                 datasetFileForHists =
-                    new TFile((postLepSelSkimDir + dataset->name()
+                    new TFile((postLepSelSkimInputDir + dataset->name()
                                + inputPostfix + "SmallSkim.root")
                                   .c_str(),
                               "READ");
@@ -609,7 +611,7 @@ void AnalysisAlgo::runMainAnalysis()
                         inputPostfix += "invLep"; // If plotting non-prompt leptons for this dataset, be sure to read in the same sign lepton post lepton
  
                     TFile* datasetFileForHists;
-                    datasetFileForHists = new TFile((postLepSelSkimDir + dataset->name()  + inputPostfix + "SmallSkim.root").c_str(), "READ");
+                    datasetFileForHists = new TFile((postLepSelSkimInputDir + dataset->name()  + inputPostfix + "SmallSkim.root").c_str(), "READ");
                     generatorWeightPlot = dynamic_cast<TH1I*>(datasetFileForHists->Get("weightHisto")->Clone());
                     generatorWeightPlot->SetDirectory(nullptr);
                     datasetFileForHists->Close();
@@ -645,7 +647,7 @@ void AnalysisAlgo::runMainAnalysis()
                 if (invertLepCut)
                     invPostFix = "invLep";
 
-                outFile1 = new TFile{(postLepSelSkimDir + dataset->name() + postfix + invPostFix + "SmallSkim.root").c_str(), "RECREATE"};
+                outFile1 = new TFile{(postLepSelSkimOutputDir + dataset->name() + postfix + invPostFix + "SmallSkim.root").c_str(), "RECREATE"};
                 cloneTree = datasetChain->CloneTree(0);
                 cloneTree->SetDirectory(outFile1);
                 cutObj->setCloneTree(cloneTree);
