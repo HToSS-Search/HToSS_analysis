@@ -1071,7 +1071,7 @@ int main(int argc, char* argv[])
   h_invmass->GetXaxis()->SetTitle("Hadron invariant mass");
   h_invmass->GetYaxis()->SetTitle("Muon invariant mass");
   
-  testInvMass->Write();
+  h_testInvMass->Write();
 	
 	
 	
