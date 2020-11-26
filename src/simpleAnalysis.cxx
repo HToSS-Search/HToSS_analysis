@@ -398,6 +398,7 @@ int main(int argc, char* argv[])
 	               genpt2=event.genParPt[k];
 		       muonIndex2=k;
 		}
+		    std::cout<<"index1 "<<muonIndex1<<"index2 "<<muonIndex2<<std::endl;
 		if(genpt1!=0 && genpt2!=0){
 		  if(event.muTrig()){
 		     h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event 
@@ -767,7 +768,7 @@ int main(int argc, char* argv[])
 	         
 		  
 	            //Find the hadrons (pions)
-		    if(std::abs(packedId)!=13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons)
+		    /*if(std::abs(packedId)!=13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons)
 		      if(event.packedCandsPseudoTrkPt[k]>packedhpt1){
 	                packedhpt2=packedhpt1; 
 	                packedhpt1=event.packedCandsPseudoTrkPt[k];
@@ -779,12 +780,12 @@ int main(int argc, char* argv[])
 		      }
 		      pionFlag++; //pionIndex.emplace_back(k);
 		std::cout<<"index 1 "<<packedhIndex1<<"index 2 "<<packedhIndex2<<std::endl;
-		    } 
+		    } */
 		    if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
 		      muonFlag++; //muonIndex.emplace_back(k);  
 		    }
 		  }
-		  if(pionFlag>1 && packedhpt1!=0 && packedhpt2!=0){//Safety measure
+		 /* if(pionFlag>1 && packedhpt1!=0 && packedhpt2!=0){//Safety measure
 			  
 		    //const int p1 {pionIndex[0]}; const int p2 {pionIndex[1]};
 		    if(event.packedCandsPseudoTrkCharge[packedhIndex1]==-(event.packedCandsPseudoTrkCharge[packedhIndex2])){//Opposite charge
@@ -829,7 +830,7 @@ int main(int argc, char* argv[])
 		        h_IsoSum2->Fill(IsoSum2/event.packedCandsPseudoTrkPt[k]);
 		      }      
 		    }
-		  }
+		  }*/
 			  
 			  
 		  if(muonFlag>1){
@@ -876,7 +877,7 @@ int main(int argc, char* argv[])
 		      }
 		    }
 		  }
-		  h_invmass->Fill(hadroninv,muoninv);
+		 // h_invmass->Fill(hadroninv,muoninv);
 		}
 	      }
 		
