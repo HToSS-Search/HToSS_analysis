@@ -300,19 +300,19 @@ int main(int argc, char* argv[])
 	std::vector<Int_t> nrofPion;
 	
 	Float_t genpt1=0; Float_t genpt2=0;
-
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	//std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
 	     
        for (Int_t k{0}; k < event.nGenPar; k++) {
 
           //Print out event record
-
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	  //Invariant mass
 	  TLorentzVector m;
 	  m.SetPtEtaPhiE(event.genParPt[k],event.genParEta[k],event.genParPhi[k],event.genParE[k]);	 
           TLorentzVector mass {m.Px(),m.Py(),m.Pz(),event.genParE[k]};	
 
-
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 /*          std::cout << k << "\t | "
           << event.genParId[k] << "\t "
           << event.genParStatus[k] << "\t | "
@@ -368,17 +368,17 @@ int main(int argc, char* argv[])
 	    h_genParScalarPhi->Fill(genParPhi);
 	    h_genParScalarE->Fill(genParE);
 	  }  
-		    
+		std::cout << __LINE__ << " : " << __FILE__ << std::endl;    
 	  //Particles from scalar decay
 	  const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)}; 
 
 	  if (isScalarGrandparent==true){
-	      
+	      std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	      //Muon from scalar decay
 	     if (pdgId==13 && !ownParent){  
 		     
 	        nrofMuon.emplace_back(k);
-	        
+	        std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	        h_genParScalarMuonEta->Fill(genParEta);
 	        h_genParScalarMuonPhi->Fill(genParPhi);
 	        h_genParScalarMuonE->Fill(genParE);
@@ -391,18 +391,22 @@ int main(int argc, char* argv[])
 	        if(event.genParPt[k]>genpt1){
 	          genpt2=genpt1; 
 	          genpt1=event.genParPt[k];
+			std::cout << __LINE__ << " : " << __FILE__ << std::endl;
          	}
 	        else if(event.genParPt[k]>genpt2){
 	               genpt2=event.genParPt[k];
+			std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 		}
 		
 		if(genpt1!=0 && genpt2!=0){
 		  if(event.muTrig()){
 		     h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event 
+			  std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 		   }
 		   if(event.mumuTrig()){
 		     h_genParScalarMuonCutPtDL->Fill(genpt1);  
 		     h_genParScalarMuonCutPtDS->Fill(genpt2);
+			   std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 		   } 
 		}
 		     
@@ -452,12 +456,12 @@ int main(int argc, char* argv[])
 	      h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
 	    }
 	  }
-
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	  // Increment counter for pdgId found
 	  pdgIdMap[pdgId]++;
 		    
 	}  
-
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	h_genParScalarMuonDivPtSL=(TH1F*)h_genParScalarMuonCutPtSL->Clone();
 	h_genParScalarMuonDivPtSL->Divide(h_genParScalarMuonPt);
 	h_genParScalarMuonDivPtSL->SetTitle("Turn-on Single trigger leading");
@@ -556,7 +560,7 @@ int main(int argc, char* argv[])
 	  h_Kaon3DAngle->Fill(angle1.Angle(angle2));
 	    
 	}
-		
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;	
 	if (nrofKShort.size()==2){ 
 	  const Int_t Nr1 {nrofKShort[0]}; 
 	  const Int_t Nr2 {nrofKShort[1]};
@@ -619,7 +623,7 @@ int main(int argc, char* argv[])
 	/// END GENERATOR PARTICLE STUFF
 
 	
-	      
+	   std::cout << __LINE__ << " : " << __FILE__ << std::endl;   
 	      
 	
 	      
@@ -713,7 +717,7 @@ int main(int argc, char* argv[])
 	h_muonDivDoubleS->SetTitle("Turn-on Double trigger, subleading");
 
 	//END Muon Reconstruction
-	      
+	 std::cout << __LINE__ << " : " << __FILE__ << std::endl;     
 	      
 	      
 	 /*     
