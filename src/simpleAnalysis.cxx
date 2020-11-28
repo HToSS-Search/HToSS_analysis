@@ -300,7 +300,6 @@ int main(int argc, char* argv[])
 	std::vector<Int_t> nrofPion;
 	
 	Float_t genpt1=0; Float_t genpt2=0;
-        std::vector<Int_t> muonIndex1; std::vector<Int_t> muonIndex2;
 
 	//std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
 	     
@@ -392,13 +391,11 @@ int main(int argc, char* argv[])
 	        if(event.genParPt[k]>genpt1){
 	          genpt2=genpt1; 
 	          genpt1=event.genParPt[k];
-		  muonIndex1.emplace_back(k);
          	}
 	        else if(event.genParPt[k]>genpt2){
 	               genpt2=event.genParPt[k];
-		       muonIndex2.emplace_back(k);
 		}
-		    std::cout<<"index1 "<<muonIndex1.back()<<"index2 "<<muonIndex2.back()<<std::endl;
+		
 		if(genpt1!=0 && genpt2!=0){
 		  if(event.muTrig()){
 		     h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event 
@@ -720,7 +717,7 @@ int main(int argc, char* argv[])
 	      
 	      
 	      
-	      
+	     
 	//BEGIN Packed candidates 
 	Float_t packedmpt1=0; Float_t packedmpt2=0;
         Int_t packedmIndex1 {-1}; Int_t packedmIndex2 {-1};
