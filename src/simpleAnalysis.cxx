@@ -778,17 +778,19 @@ int main(int argc, char* argv[])
                   if(event.packedCandsPseudoTrkPt[k]>mupt1){
                     mupt2=mupt1;
                     mupt1=event.packedCandsPseudoTrkPt[k];
+                    std::cout<<"leading "<<k<<std::endl;
                   }
                   else if(event.packedCandsPseudoTrkPt[k]>mupt2){
                          mupt2=event.packedCandsPseudoTrkPt[k];
+                         std::cout<<"subleading "<<k<<std::endl;
                   }
                 }
               }
               //Safety measure
-              if(pionIndex1.size()>0 && pionIndex2.size()>0){
+              /*if(pionIndex1.size()>0 && pionIndex2.size()>0){
                 //const Int_t p1 {pionIndex1.end()}; const Int_t p2 {pionIndex2.end()};
                 std::cout<<"index1 "<<pionIndex1.end()<<"index2 "<<pionIndex2.end()<<std::endl;
-               /* if(event.packedCandsPseudoTrkCharge[p1]==-(event.packedCandsPseudoTrkCharge[p2])){//Opposite charge
+                if(event.packedCandsPseudoTrkCharge[p1]==-(event.packedCandsPseudoTrkCharge[p2])){//Opposite charge
             
                   TLorentzVector packed1;
                   TLorentzVector packed2;
@@ -831,7 +833,7 @@ int main(int argc, char* argv[])
                   }
                 }
               
-              }*/
+              }*/ 
               
             /*
                 const int m1 {muonIndex[0]}; const int m2 {muonIndex[1]};
