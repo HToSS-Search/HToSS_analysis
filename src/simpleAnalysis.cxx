@@ -168,13 +168,13 @@ int main(int argc, char* argv[])
   TH1F* h_muonsDeltaR   {new TH1F("h_muonsDeltaR", "Two muons #DeltaR",2500, -10., 10.)};
   TH1F* h_IsoSum1       {new TH1F("h_IsoSum1",  "0.3 p_{T} Cone construction pion 1", 1000, 0., 1000.)};
   TH1F* h_IsoSum2       {new TH1F("h_IsoSum2",  "0.3 p_{T} Cone construction pion 2", 1000, 0., 1000.)};
-  TH1F* h_IsoSum3    {new TH1F("h_IsoSum3",  "0.3 p_{T} Cone construction muon 1", 1000, 0., 1000.)};
-  TH1F* h_IsoSum4    {new TH1F("h_IsoSum4",  "0.3 p_{T} Cone construction muon 2", 1000, 0., 1000.)};
+  TH1F* h_IsoSum3       {new TH1F("h_IsoSum3",  "0.3 p_{T} Cone construction muon 1", 1000, 0., 1000.)};
+  TH1F* h_IsoSum4       {new TH1F("h_IsoSum4",  "0.3 p_{T} Cone construction muon 2", 1000, 0., 1000.)};
   TH1F* h_hadronInvMass {new TH1F("h_hadronInvMass", "Two hadrons - Invariant mass",1000, 0., 7.)};
   TH1F* h_muonsInvMass  {new TH1F("h_muonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
   TH2F* h_invmass       {new TH2F("h_invmass", "Invariant mass: pions vs muons", 1000, 0.,7.,1000,0.,7.)};
-  
-  TH1F* h_testInvMass  {new TH1F("h_testInvMass", "Invariant mass Packed Candidates",1000, 0., 7.)};
+   
+  TH1F* h_testInvMass   {new TH1F("h_testInvMass", "Invariant mass Packed Candidates",1000, 0., 7.)};
     
     
     
@@ -300,20 +300,16 @@ int main(int argc, char* argv[])
     std::vector<int> nrofPion;
     
     Float_t genpt1=0; Float_t genpt2=0;
-    //std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
+    std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
          
        for (Int_t k{0}; k < event.nGenPar; k++) {
      
-      std::vector<Float_t> max1{-1}; std::vector<Float_t> max2{-1};
-      Int_t muonIndex1 {-1}; Int_t muonIndex2 {-1};
-
           //Print out event record
 
-      //Invariant mass
-      TLorentzVector m;
-      m.SetPtEtaPhiE(event.genParPt[k],event.genParEta[k],event.genParPhi[k],event.genParE[k]);
+          //Invariant mass
+          TLorentzVector m;
+          m.SetPtEtaPhiE(event.genParPt[k],event.genParEta[k],event.genParPhi[k],event.genParE[k]);
           TLorentzVector mass {m.Px(),m.Py(),m.Pz(),event.genParE[k]};
-
 
           std::cout << k << "\t | "
           << event.genParId[k] << "\t "
@@ -325,9 +321,6 @@ int main(int argc, char* argv[])
           << event.genParEta[k] << "\t "
           << event.genParPhi[k] << "\t "
           << mass.M() << std::endl;
-
-
-
 
 
 
@@ -374,6 +367,7 @@ int main(int argc, char* argv[])
       //Particles from scalar decay
       const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)};
       std::vector<Int_t> mu; std::vector<Int_t> mumu;
+         
       if (isScalarGrandparent==true){
           
           //Muon from scalar decay
@@ -386,29 +380,25 @@ int main(int argc, char* argv[])
             h_genParScalarMuonE->Fill(genParE);
             h_VertexPosXY->Fill(genParVx,genParVy);
             h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
-        h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
-        
+            h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
         
             h_genParScalarMuonPt->Fill(event.genParPt[k]);
             if(event.genParPt[k]>genpt1){
               genpt2=genpt1;
               genpt1=event.genParPt[k];
-          muonIndex1=k;
              }
             else if(event.genParPt[k]>genpt2){
                    genpt2=event.genParPt[k];
-               muonIndex2=k;
-        }
-        if(genpt1!=0 && genpt2!=0){
-                      
+            }
+            if(genpt1!=0 && genpt2!=0){         
                if(event.muTrig()){
-             h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event
-           }
-           if(event.mumuTrig()){
-             h_genParScalarMuonCutPtDL->Fill(genpt1);
-             h_genParScalarMuonCutPtDS->Fill(genpt2);
-           }
-        }
+                 h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event
+               }
+               if(event.mumuTrig()){
+                  h_genParScalarMuonCutPtDL->Fill(genpt1);
+                  h_genParScalarMuonCutPtDS->Fill(genpt2);
+               }
+            }
              
          }
         //Charged kaon from scalar decay
