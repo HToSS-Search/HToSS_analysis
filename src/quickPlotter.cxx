@@ -53,6 +53,7 @@ int main(int argc, char* argv[])
     std::vector<Dataset> datasets;
     double totalLumi;
     double usePreLumi;
+    bool usePostLepTree {false};
    
     std::string outFileString{"plots/distributions/output.root"};
     bool is2016_;
@@ -70,7 +71,7 @@ int main(int argc, char* argv[])
     p_kaonAncestry->GetXaxis()->SetBinLabel(4, "D0");
     p_kaonAncestry->GetXaxis()->SetBinLabel(5, "D^{#pm}_{S}");
 
-    // Reco Histos
+    // Reco Muon Histos
     TH1F* h_numMuons                   {new TH1F("h_numMuons",                 "number of reco muons in the event", 21, -0.5, 20.5)};
     TH1F* h_numMuonsFromScalar         {new TH1F("h_numMuonsFromScalar",       "number of reco muons with motherId = scalarId", 21, -0.5, 20.5)};
     TH1F* h_numMuonsPromptFinalState   {new TH1F("h_numMuonsPromptFinalState", "number of reco muons with PromptFinalState flag", 21, -0.5, 20.5)};
@@ -136,6 +137,108 @@ int main(int argc, char* argv[])
     p_subleadingMuonsProfile->GetXaxis()->SetBinLabel(2, "PromptFinalState");
     p_subleadingMuonsProfile->GetXaxis()->SetBinLabel(3, "HardProcess");
 
+    // Reco Muon Vertex/Track Histos
+    TProfile* p_muonTrackPairsAncestry   {new TProfile ("p_muonTrackPairsAncestry", "Number of genuine/combinatorial/fake muon pairs per event", 4, 0.5, 4.5)};
+    p_muonTrackPairsAncestry->GetXaxis()->SetBinLabel(1, "Both muon tracks genuine");
+    p_muonTrackPairsAncestry->GetXaxis()->SetBinLabel(1, "Leading muon track geunine");
+    p_muonTrackPairsAncestry->GetXaxis()->SetBinLabel(1, "Subleading muon track genuine");
+    p_muonTrackPairsAncestry->GetXaxis()->SetBinLabel(1, "Both genuine tracks fake");
+
+    TProfile* p_selectedMuonTrkMatching  {new TProfile ("p_selectedMuonTrkMatching", "Selected leading/subleading muon ancestry", 4, 0.5, 4.5)};
+    p_selectedMuonTrkMatching->GetXaxis()->SetBinLabel(1, "Both muon tracks genuine");
+    p_selectedMuonTrkMatching->GetXaxis()->SetBinLabel(2, "Leading muon track geunine");
+    p_selectedMuonTrkMatching->GetXaxis()->SetBinLabel(3, "Subleading muon track genuine");
+    p_selectedMuonTrkMatching->GetXaxis()->SetBinLabel(4, "Both genuine tracks fake");
+
+    TH1F* h_MuVtxPx               {new TH1F("h_MuVtxPx",          "Muon Vertex p_{x}; p_{x} (GeV);", 800, -200., 200.)};
+    TH1F* h_MuVtxPy               {new TH1F("h_MuVtxPy",          "Muon Vertex p_{y}; p_{y} (GeV);", 800, -200., 200.)};
+    TH1F* h_MuVtxPz               {new TH1F("h_MuVtxPz",          "Muon Vertex p_{z}; p_{z} (GeV);", 800, -200., 200.)};
+    TH1F* h_MuVtxP2               {new TH1F("h_MuVtxP2",          "Muon Vertex p^{2}; p^{2} (GeV)^{2};", 800, 0., 400.)};
+    TH1F* h_MuTrkVx               {new TH1F("h_MuTrkVx",          "Muon Vertex v_{x}; v_{x} (cm)", 400, -100., 100.)}; 
+    TH1F* h_MuTrkVy               {new TH1F("h_MuTrkVy",          "Muon Vertex v_{y}; v_{y} (cm)", 400, -100., 100.)}; 
+    TH1F* h_MuTrkVz               {new TH1F("h_MuTrkVz",          "Muon Vertex v_{z}; v_{z} (cm)", 400, -100., 100.)}; 
+    TH1F* h_MuTrkVabs             {new TH1F("h_MuTrkVabs",        "Muon Vertex v; v (cm)",  400, 0., 200.)}; 
+    TH1F* h_MuVtxChi2Ndof         {new TH1F("h_MuVtxChi2Ndof",    "Muon Vertex #chi^{2}/N_{dof}; #chi^{2}/N_{dof}", 1000, 0., 1000.)};
+    TH1F* h_MuVtxAngleXY          {new TH1F("h_MuVtxAngleXY",     "Muon Vertex 2D angle; 2D angle", 300, -6., 6)};
+    TH1F* h_MuVtxAngleXYZ         {new TH1F("h_MuVtxAngleXYZ",    "Muon Vertex 3D angle; 3D angle",	300, -6., 6)};
+    TH1F* h_MuVtxSigXY            {new TH1F("h_MuVtxSigXY",       "Muon Vertex XY Signifiance; XY Signifiance", 300, 0., 150.)};
+    TH1F* h_MuVtxSigXYZ           {new TH1F("h_MuVtxSigXYZ",      "Muon Vertex XYZ Signifiance; XYZ Signifiance", 300, 0., 150.)};
+    TH1F* h_MuTrkDca              {new TH1F("h_MuTrkDca",         "Muon vertex tracks' distance of closest approach; dca (cm)", 100, 0., 50.)};
+
+    TH1F* h_genMuVtxPx            {new TH1F("h_genMuVtxPx",       "Genuine Muon Vertex p_{x}; p_{x} (GeV);", 800, -200., 200.)};
+    TH1F* h_genMuVtxPy            {new TH1F("h_genMuVtxPy",       "Genuine Muon Vertex p_{y}; p_{y} (GeV);", 800, -200., 200.)};
+    TH1F* h_genMuVtxPz            {new TH1F("h_genMuVtxPz",       "Genuine Muon Vertex p_{z}; p_{z} (GeV);", 800, -200., 200.)};
+    TH1F* h_genMuVtxP2            {new TH1F("h_genMuVtxP2",       "Genuine Muon Vertex p^{2}; p^{2} (GeV)^{2};", 800, 0., 400.)};
+    TH1F* h_genMuTrkVx            {new TH1F("h_genMuTrkVx",       "Genuine Muon Vertex v_{x}; v_{x} (cm)", 400, -100., 100.)}; 
+    TH1F* h_genMuTrkVy            {new TH1F("h_genMuTrkVy",       "Genuine Muon Vertex v_{y}; v_{y} (cm)", 400, -100., 100.)}; 
+    TH1F* h_genMuTrkVz            {new TH1F("h_genMuTrkVz",       "Genuine Muon Vertex v_{z}; v_{z} (cm)", 400, -100., 100.)}; 
+    TH1F* h_genMuTrkVabs          {new TH1F("h_genMuTrkVabs",     "Genuine Muon Vertex v; v (cm)",  400, 0., 200.)}; 
+    TH1F* h_genMuVtxChi2Ndof      {new TH1F("h_genMuVtxChi2Ndof", "Genuine Muon Vertex #chi^{2}/N_{dof}; #chi^{2}/N_{dof}", 1000, 0., 1000.)}; 
+    TH1F* h_genMuVtxAngleXY       {new TH1F("h_genMuVtxAngleXY",  "Genuine Muon Vertex 2D angle; 2D angle", 300, -6., 6)};
+    TH1F* h_genMuVtxAngleXYZ      {new TH1F("h_genMuVtxAngleXYZ", "Genuine Muon Vertex 3D angle; 3D angle",	300, -6., 6)};
+    TH1F* h_genMuVtxSigXY         {new TH1F("h_genMuVtxSigXY",    "Genuine Muon Vertex XY Signifiance; XY Signifiance", 300, 0., 150.)};
+    TH1F* h_genMuVtxSigXYZ        {new TH1F("h_genMuVtxSigXYZ",   "Genuine Muon Vertex XYZ Signifiance; XYZ Signifiance", 300, 0., 150.)};
+    TH1F* h_genMuTrkDca           {new TH1F("h_genMuTrkDca",      "Genuine Muon vertex tracks' distance of closest approach; dca (cm)", 100, 0., 50.)};
+
+    TH1F* h_combMuVtxPx           {new TH1F("h_combMuVtxPx",      "Comb Muon Vertex p_{x}; p_{x} (GeV);", 800, -200., 200.)};
+    TH1F* h_combMuVtxPy           {new TH1F("h_combMuVtxPy",      "Comb Muon Vertex p_{y}; p_{y} (GeV);", 800, -200., 200.)};
+    TH1F* h_combMuVtxPz           {new TH1F("h_combMuVtxPz",      "Comb Muon Vertex p_{z}; p_{z} (GeV);", 800, -200., 200.)};
+    TH1F* h_combMuVtxP2           {new TH1F("h_combMuVtxP2",      "Comb Muon Vertex p^{2}; p^{2} (GeV)^{2};", 800, 0., 400.)};
+    TH1F* h_combMuTrkVx           {new TH1F("h_combMuTrkVx",      "Comb Muon Vertex v_{x}; v_{x} (cm)", 400, -100., 100.)}; 
+    TH1F* h_combMuTrkVy           {new TH1F("h_combMuTrkVy",      "Comb Muon Vertex v_{y}; v_{y} (cm)", 400, -100., 100.)}; 
+    TH1F* h_combMuTrkVz           {new TH1F("h_combMuTrkVz",      "Comb Muon Vertex v_{z}; v_{z} (cm)", 400, -100., 100.)}; 
+    TH1F* h_combMuTrkVabs         {new TH1F("h_combMuTrkVabs",    "Comb Muon Vertex v; v (cm)",  400, 0., 200.)}; 
+    TH1F* h_combMuVtxChi2Ndof     {new TH1F("h_combMuVtxChi2Ndof","Comb Muon Vertex #chi^{2}/N_{dof}; #chi^{2}/N_{dof}", 1000, 0., 1000.)}; 
+    TH1F* h_combMuVtxAngleXY      {new TH1F("h_combMuVtxAngleXY", "Comb Muon Vertex 2D angle; 2D angle", 300, -6., 6)};
+    TH1F* h_combMuVtxAngleXYZ     {new TH1F("h_combMuVtxAngleXYZ","Comb Muon Vertex 3D angle; 3D angle",	300, -6., 6)};
+    TH1F* h_combMuVtxSigXY        {new TH1F("h_combMuVtxSigXY",   "Comb Muon Vertex XY Signifiance; XY Signifiance", 300, 0., 150.)};
+    TH1F* h_combMuVtxSigXYZ       {new TH1F("h_combMuVtxSigXYZ",  "Comb Muon Vertex XYZ Signifiance; XYZ Signifiance", 300, 0., 150.)};
+    TH1F* h_combMuTrkDca          {new TH1F("h_combMuTrkDca",     "Comb Muon vertex tracks' distance of closest approach; dca (cm)", 100, 0., 50.)};
+
+    TH1F* h_fakeMuVtxPx           {new TH1F("h_fakeMuVtxPx",      "Fake Muon Vertex p_{x}; p_{x} (GeV);", 800, -200., 200.)};
+    TH1F* h_fakeMuVtxPy           {new TH1F("h_fakeMuVtxPy",      "Fake Muon Vertex p_{y}; p_{y} (GeV);", 800, -200., 200.)};
+    TH1F* h_fakeMuVtxPz           {new TH1F("h_fakeMuVtxPz",      "Fake Muon Vertex p_{z}; p_{z} (GeV);", 800, -200., 200.)};
+    TH1F* h_fakeMuVtxP2           {new TH1F("h_fakeMuVtxP2",      "Fake Muon Vertex p^{2}; p^{2} (GeV)^{2};", 800, 0., 400.)};
+    TH1F* h_fakeMuTrkVx           {new TH1F("h_fakeMuTrkVx",      "Fake Muon Vertex v_{x}; v_{x} (cm)", 400, -100., 100.)}; 
+    TH1F* h_fakeMuTrkVy           {new TH1F("h_fakeMuTrkVy",      "Fake Muon Vertex v_{y}; v_{y} (cm)", 400, -100., 100.)}; 
+    TH1F* h_fakeMuTrkVz           {new TH1F("h_fakeMuTrkVz",      "Fake Muon Vertex v_{z}; v_{z} (cm)", 400, -100., 100.)}; 
+    TH1F* h_fakeMuTrkVabs         {new TH1F("h_fakeMuTrkVabs",    "Fake Muon Vertex v; v (cm)",  400, 0., 200.)}; 
+    TH1F* h_fakeMuVtxChi2Ndof     {new TH1F("h_fakeMuVtxChi2Ndof","Fake Muon Vertex #chi^{2}/N_{dof}; #chi^{2}/N_{dof}", 1000, 0., 1000.)}; 
+    TH1F* h_fakeMuVtxAngleXY      {new TH1F("h_fakeMuVtxAngleXY", "Fake Muon Vertex 2D angle; 2D angle", 300, -6., 6)};
+    TH1F* h_fakeMuVtxAngleXYZ     {new TH1F("h_fakeMuVtxAngleXYZ","Fake Muon Vertex 3D angle; 3D angle",	300, -6., 6)};
+    TH1F* h_fakeMuVtxSigXY        {new TH1F("h_fakeMuVtxSigXY",   "Fake Muon Vertex XY Signifiance; XY Signifiance", 300, 0., 150.)};
+    TH1F* h_fakeMuVtxSigXYZ       {new TH1F("h_fakeMuVtxSigXYZ",  "Fake Muon Vertex XYZ Signifiance; XYZ Signifiance", 300, 0., 150.)};
+    TH1F* h_fakeMuTrkDca          {new TH1F("h_fakeMuTrkDca",     "Fake Muon vertex tracks' distance of closest approach; dca (cm)", 100, 0., 50.)};
+
+    // Reco Muon Vertex/Refitted Track Histos
+    TH1F* h_originalGenMuTrkPt1         {new TH1F("h_originalGenMuTrkPt1",        "Pre-refit track p_{T} (genuine)", 400, 0., 200.)};
+    TH1F* h_originalGenMuTrkEta1        {new TH1F("h_originalGenMuTrkEta1",       "Pre-refit track #eta (genuine)", 800, -4., 4.)};
+    TH1F* h_originalGenMuTrkChi2Ndof1   {new TH1F("h_originalGenMuTrkChi2Ndof1",  "Pre-refit track #chi^{2}/N_{dof} (genuine)", 1000, 0., 1000.)}; 
+    TH1F* h_refittedGenMuTrkPt1         {new TH1F("h_refittedGenMuTrkPt1",        "Refitted track p_{T} (genuine)", 400, 0., 200.)};
+    TH1F* h_refittedGenMuTrkEta1        {new TH1F("h_refittedGenMuTrkEta1",       "Refitted track #eta (genuine)", 400, 0., 200.)};
+    TH1F* h_refittedGenMuTrkChi2Ndof1   {new TH1F("h_refittedGenMuTrkChi2Ndof1",  "Refitted track #chi^{2}/N_{dof} (genuine)", 1000, 0., 1000.)};
+
+    TH1F* h_originalFakeMuTrkPt1        {new TH1F("h_originalFakeMuTrkPt1",        "Pre-refit track p_{T} (fake)", 400, 0., 200.)};
+    TH1F* h_originalFakeMuTrkEta1       {new TH1F("h_originalFakeMuTrkEta1",       "Pre-refit track #eta (fake)", 800, -4., 4.)};
+    TH1F* h_originalFakeMuTrkChi2Ndof1  {new TH1F("h_originalFakeMuTrkChi2Ndof1",  "Pre-refit track #chi^{2}/N_{dof} (fake)", 1000, 0., 1000.)}; 
+    TH1F* h_refittedFakeMuTrkPt1        {new TH1F("h_refittedFakeMuTrkPt1",        "Re-refitted track p_{T} (fake)", 400, 0., 200.)};
+    TH1F* h_refittedFakeMuTrkEta1       {new TH1F("h_refittedFakeMuTrkEta1",       "Re-refitted track #eta (fake)", 400, 0., 200.)};
+    TH1F* h_refittedFakeMuTrkChi2Ndof1  {new TH1F("h_refittedFakeMuTrkChi2Ndof1",  "Refitted track #chi^{2}/N_{dof} (fake)", 1000, 0., 1000.)};
+
+    TH1F* h_originalGenMuTrkPt2         {new TH1F("h_originalGenMuTrkPt2",        "Pre-refit track p_{T} (genuine)", 400, 0., 200.)};
+    TH1F* h_originalGenMuTrkEta2        {new TH1F("h_originalGenMuTrkEta2",       "Pre-refit track #eta (genuine)", 800, -4., 4.)};
+    TH1F* h_originalGenMuTrkChi2Ndof2   {new TH1F("h_originalGenMuTrkChi2Ndof2",  "Pre-refit track #chi^{2}/N_{dof} (genuine)", 1000, 0., 1000.)}; 
+    TH1F* h_refittedGenMuTrkPt2         {new TH1F("h_refittedGenMuTrkPt2",        "Refitted track p_{T} (genuine)", 400, 0., 200.)};
+    TH1F* h_refittedGenMuTrkEta2        {new TH1F("h_refittedGenMuTrkEta2",       "Refitted track #eta (genuine)", 400, 0., 200.)};
+    TH1F* h_refittedGenMuTrkChi2Ndof2   {new TH1F("h_refittedGenMuTrkChi2Ndof2",  "Refitted track #chi^{2}/N_{dof} (genuine)", 1000, 0., 1000.)};
+
+    TH1F* h_originalFakeMuTrkPt2        {new TH1F("h_originalFakeMuTrkPt2",        "Pre-refit track p_{T} (fake)", 400, 0., 200.)};
+    TH1F* h_originalFakeMuTrkEta2       {new TH1F("h_originalFakeMuTrkEta2",       "Pre-refit track #eta (fake)", 800, -4., 4.)};
+    TH1F* h_originalFakeMuTrkChi2Ndof2  {new TH1F("h_originalFakeMuTrkChi2Ndof2",  "Pre-refit track #chi^{2}/N_{dof} (fake)", 1000, 0., 1000.)}; 
+    TH1F* h_refittedFakeMuTrkPt2        {new TH1F("h_refittedFakeMuTrkPt2",        "Re-refitted track p_{T} (fake)", 400, 0., 200.)};
+    TH1F* h_refittedFakeMuTrkEta2       {new TH1F("h_refittedFakeMuTrkEta2",       "Re-refitted track #eta (fake)", 400, 0., 200.)};
+    TH1F* h_refittedFakeMuTrkChi2Ndof2  {new TH1F("h_refittedFakeMuTrkChi2Ndof2",  "Refitted track #chi^{2}/N_{dof} (fake)", 1000, 0., 1000.)};
+
     namespace po = boost::program_options;
     po::options_description desc("Options");
     desc.add_options()("help,h", "Print this message.")(
@@ -151,6 +254,9 @@ int main(int argc, char* argv[])
         ",n",
         po::value<Long64_t>(&nEvents)->default_value(0),
         "The number of events to be run over. All if set to 0.")(
+        ",u",
+        po::bool_switch(&usePostLepTree),
+        "Use post lepton selection trees.")(
         "2016", po::bool_switch(&is2016_), "Use 2016 conditions (SFs, et al.).");
     po::variables_map vm;
 
@@ -179,7 +285,8 @@ int main(int argc, char* argv[])
     {
         Parser::parse_config(config,
                              datasets,
-                             totalLumi);
+                             totalLumi,
+                             usePostLepTree);
     }
     catch (const std::exception)
     {
@@ -197,6 +304,7 @@ int main(int argc, char* argv[])
     std::cout << "Using lumi: " << totalLumi << std::endl;
 
     bool datasetFilled{false};
+    const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + (is2016_ ? "2016" : "2017") + "/"};
 
     // Begin to loop over all datasets
     for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset)
@@ -205,12 +313,19 @@ int main(int argc, char* argv[])
         TChain* datasetChain{new TChain{dataset->treeName().c_str()}};
         datasetChain->SetAutoSave(0);
 
-        if (!datasetFilled) {
-            if (!dataset->fillChain(datasetChain)) {
-                std::cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
-                continue;
+        std::cerr << "Processing dataset " << dataset->name() << std::endl;
+        if (!usePostLepTree) {
+            if (!datasetFilled) {
+                if (!dataset->fillChain(datasetChain)) {
+                    std::cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
+                    continue;
+                }
+                datasetFilled=true;
             }
-            datasetFilled=true;
+        }
+        else {
+            std::cout << postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root" << std::endl;
+            datasetChain->Add((postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root").c_str());
         }
 
         // extract the dataset weight. MC = (lumi*crossSection)/(totalEvents), data = 1.0
@@ -359,6 +474,156 @@ int main(int argc, char* argv[])
             p_subleadingMuonsProfile->Fill( 1.0, genMuonFromScalar2 );
       	    p_subleadingMuonsProfile->Fill( 2.0, event.genMuonPF2PATPromptFinalState[index2] );
       	    p_subleadingMuonsProfile->Fill( 3.0, event.genMuonPF2PATHardProcess[index2] );
+
+            unsigned int numGenuineMuonTracks{0}, numComb1MuonTracks{0}, numComb2MuonTracks{0}, numFakeMuonTracks{0};
+
+            // loop over muon tracks post lepton selection
+            for ( Int_t k{0}; k < event.numMuonTrackPairsPF2PAT; k++ ) {
+
+                // Number of pairs of muon tracks per event where both muons came from scalar
+                // Number of pairs of muon tracks per event where only one muon came from scalar
+                // Number of pairs of muon tracks per event where only no muons came from scalar
+
+                const int index1{event.muonTkPairPF2PATIndex1[k]}, index2{event.muonTkPairPF2PATIndex2[k]};
+                const int muonMotherId1{event.genMuonPF2PATMotherId[index1]}, muonMotherId2{event.genMuonPF2PATMotherId[index2]};
+
+                const bool genMuon1 {muonMotherId1 == 9000006}, genMuon2 {muonMotherId2 == 9000006};
+
+                if ( genMuon1 && genMuon2 )      numGenuineMuonTracks++;
+                else if ( genMuon1 && !genMuon2 ) numComb1MuonTracks++;
+                else if ( !genMuon1 && genMuon2 ) numComb2MuonTracks++;
+                else if ( !genMuon1 && !genMuon2 ) numFakeMuonTracks++;
+
+                // Are leading and subleading muons selected from scalar?
+                if ( index1 == event.zPairIndex.first && index2 == event.zPairIndex.second ) {
+                    p_selectedMuonTrkMatching->Fill( 1.0, bool (genMuon1 && genMuon2) );
+                    p_selectedMuonTrkMatching->Fill( 2.0, bool (genMuon1 && !genMuon2) );
+                    p_selectedMuonTrkMatching->Fill( 3.0, bool (!genMuon1 && genMuon2) );
+                    p_selectedMuonTrkMatching->Fill( 4.0, bool (!genMuon1 && !genMuon2) );
+                }
+
+
+                const float vtxPx {event.muonTkPairPF2PATTkVtxPx[k]}, vtxPy {event.muonTkPairPF2PATTkVtxPy[k]}, vtxPz {event.muonTkPairPF2PATTkVtxPz[k]}, vtxP2 {event.muonTkPairPF2PATTkVtxP2[k]};
+                const float vx {event.muonTkPairPF2PATTkVx[k]}, vy {event.muonTkPairPF2PATTkVy[k]}, vz {event.muonTkPairPF2PATTkVz[k]};
+                const float Vabs {std::sqrt( vx*vx + vy*vy + vz*vz )};
+       	       	const float vtxChi2Ndof {event.muonTkPairPF2PATTkVtxChi2[k]/(event.muonTkPairPF2PATTkVtxNdof[k]+1.0e-06)};
+                const float angleXY {event.muonTkPairPF2PATTkVtxAngleXY[k]}, angleXYZ {event.muonTkPairPF2PATTkVtxAngleXYZ[k]};
+                const float sigXY {event.muonTkPairPF2PATTkVtxDistMagXY[k]/(event.muonTkPairPF2PATTkVtxDistMagXYSigma[k]+1.0e-06)}, sigXYZ {event.muonTkPairPF2PATTkVtxDistMagXYZ[k]/(event.muonTkPairPF2PATTkVtxDistMagXYZ[k]+1.0e-06)};
+                const float dca {event.muonTkPairPF2PATTkVtxDcaPreFit[k]};
+
+                // Plot all muon vertex quantities
+                h_MuVtxPx->Fill(vtxPx);
+                h_MuVtxPy->Fill(vtxPy);
+                h_MuVtxPz->Fill(vtxPz);
+                h_MuVtxP2->Fill(vtxP2);
+                h_MuTrkVx->Fill(vx);
+                h_MuTrkVy->Fill(vy);
+                h_MuTrkVz->Fill(vz);
+                h_MuTrkVabs->Fill(Vabs);
+                h_MuVtxChi2Ndof->Fill(vtxChi2Ndof);
+                h_MuVtxAngleXY->Fill(angleXY);
+                h_MuVtxAngleXYZ->Fill(angleXYZ);
+                h_MuVtxSigXY->Fill(sigXY);
+                h_MuVtxSigXYZ->Fill(sigXYZ);
+                h_MuTrkDca->Fill(dca);
+
+                // Plot genuine muon vetrex quantities
+                if ( genMuon1 && genMuon2 ) {
+                    h_genMuVtxPx->Fill(vtxPx);
+                    h_genMuVtxPy->Fill(vtxPy);
+                    h_genMuVtxPz->Fill(vtxPz);
+                    h_genMuVtxP2->Fill(vtxP2);
+                    h_genMuTrkVx->Fill(vx);
+                    h_genMuTrkVy->Fill(vy);
+                    h_genMuTrkVz->Fill(vz);
+                    h_genMuTrkVabs->Fill(Vabs);
+                    h_genMuVtxChi2Ndof->Fill(vtxChi2Ndof);
+                    h_genMuVtxAngleXY->Fill(angleXY);
+                    h_genMuVtxAngleXYZ->Fill(angleXYZ);
+                    h_genMuVtxSigXY->Fill(sigXY);
+                    h_genMuVtxSigXYZ->Fill(sigXYZ);
+                    h_genMuTrkDca->Fill(dca);
+                }
+                else if ( (genMuon1 && !genMuon2) || (!genMuon1 && genMuon2) ) {
+                    h_combMuVtxPx->Fill(vtxPx);
+                    h_combMuVtxPy->Fill(vtxPy);
+                    h_combMuVtxPz->Fill(vtxPz);
+                    h_combMuVtxP2->Fill(vtxP2);
+                    h_combMuTrkVx->Fill(vx);
+                    h_combMuTrkVy->Fill(vy);
+                    h_combMuTrkVz->Fill(vz);
+                    h_combMuTrkVabs->Fill(Vabs);
+                    h_combMuVtxChi2Ndof->Fill(vtxChi2Ndof);
+                    h_combMuVtxAngleXY->Fill(angleXY);
+                    h_combMuVtxAngleXYZ->Fill(angleXYZ);
+                    h_combMuVtxSigXY->Fill(sigXY);
+                    h_combMuVtxSigXYZ->Fill(sigXYZ);
+                    h_combMuTrkDca->Fill(dca);
+                }
+                else if ( !genMuon2 && !genMuon2 ) {
+                    h_fakeMuVtxPx->Fill(vtxPx);
+                    h_fakeMuVtxPy->Fill(vtxPy);
+                    h_fakeMuVtxPz->Fill(vtxPz);
+                    h_fakeMuVtxP2->Fill(vtxP2);
+                    h_fakeMuTrkVx->Fill(vx);
+                    h_fakeMuTrkVy->Fill(vy);
+                    h_fakeMuTrkVz->Fill(vz);
+                    h_fakeMuTrkVabs->Fill(Vabs);
+                    h_fakeMuVtxChi2Ndof->Fill(vtxChi2Ndof);
+                    h_fakeMuVtxAngleXY->Fill(angleXY);
+                    h_fakeMuVtxAngleXYZ->Fill(angleXYZ);
+                    h_fakeMuVtxSigXY->Fill(sigXY);
+                    h_fakeMuVtxSigXYZ->Fill(sigXYZ);
+                    h_fakeMuTrkDca->Fill(dca);
+                }
+
+
+                const float oldTrkPt1 {event.muonPF2PATInnerTkPt[index1]}, oldTrkPt2 {event.muonPF2PATInnerTkPt[index2]};
+                const float oldTrkEta1 {event.muonPF2PATInnerTkEta[index1]}, oldTrkEta2 {event.muonPF2PATInnerTkEta[index2]};
+                const float oldTrkChi2Ndof1 {event.muonPF2PATInnerTkNormChi2[index1]}, oldTrkChi2Ndof2 {event.muonPF2PATInnerTkNormChi2[index2]};
+                const float newTrkPt1 {event.muonTkPairPF2PATTk1Pt[k]}, newTrkPt2 {event.muonTkPairPF2PATTk2Pt[k]};
+                const float newTrkEta1 {event.muonTkPairPF2PATTk1Eta[k]}, newTrkEta2 {event.muonTkPairPF2PATTk2Eta[k]};
+                const float newTrkChi2Ndof1 {event.muonTkPairPF2PATTk1Chi2[k]/(event.muonTkPairPF2PATTk1Ndof[k]+1.0e-06)}, newTrkChi2Ndof2 {event.muonTkPairPF2PATTk2Chi2[k]/(event.muonTkPairPF2PATTk2Ndof[k]+1.0e-06)};
+
+                // Plot replotted muon track pT, eta, chi2/ndof and dca prefit for genuine and fake muons
+                if ( genMuon1 ) {
+                    h_originalGenMuTrkPt1->Fill(oldTrkPt1);
+                    h_originalGenMuTrkEta1->Fill(oldTrkEta1);
+                    h_originalGenMuTrkChi2Ndof1->Fill(oldTrkChi2Ndof1);
+                    h_refittedGenMuTrkPt1->Fill(newTrkPt1);
+                    h_refittedGenMuTrkEta1->Fill(newTrkEta1);
+                    h_refittedGenMuTrkChi2Ndof1->Fill(newTrkChi2Ndof1);
+                }
+                else {
+                    h_originalFakeMuTrkPt1->Fill(oldTrkPt1);
+                    h_originalFakeMuTrkEta1->Fill(oldTrkEta1);
+                    h_originalFakeMuTrkChi2Ndof1->Fill(oldTrkChi2Ndof1);
+                    h_refittedFakeMuTrkPt1->Fill(newTrkPt1);
+                    h_refittedFakeMuTrkEta1->Fill(newTrkEta1);
+                    h_refittedFakeMuTrkChi2Ndof1->Fill(newTrkChi2Ndof1);
+                }
+                if ( genMuon2 ) {
+                    h_originalGenMuTrkPt2->Fill(oldTrkPt2);
+                    h_originalGenMuTrkEta2->Fill(oldTrkEta2);
+                    h_originalGenMuTrkChi2Ndof2->Fill(oldTrkChi2Ndof2);
+                    h_refittedGenMuTrkPt2->Fill(newTrkPt2);
+                    h_refittedGenMuTrkEta2->Fill(newTrkEta2);
+                    h_refittedGenMuTrkChi2Ndof2->Fill(newTrkChi2Ndof2);
+                }
+                else {
+                    h_originalFakeMuTrkPt2->Fill(oldTrkPt2);
+                    h_originalFakeMuTrkEta2->Fill(oldTrkEta2);
+                    h_originalFakeMuTrkPt2->Fill(oldTrkChi2Ndof2);
+                    h_refittedFakeMuTrkChi2Ndof2->Fill(newTrkPt2);
+                    h_refittedFakeMuTrkEta2->Fill(newTrkEta2);
+                    h_refittedFakeMuTrkChi2Ndof2->Fill(newTrkChi2Ndof2);
+                }
+            }
+
+            p_muonTrackPairsAncestry->Fill( 1.0, numGenuineMuonTracks );
+            p_muonTrackPairsAncestry->Fill( 2.0, numComb1MuonTracks );
+            p_muonTrackPairsAncestry->Fill( 3.0, numComb2MuonTracks );
+            p_muonTrackPairsAncestry->Fill( 4.0, numFakeMuonTracks );
 
         } // end event loop
     } // end dataset loop
