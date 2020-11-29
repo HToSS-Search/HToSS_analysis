@@ -766,12 +766,12 @@ int main(int argc, char* argv[])
                     pionpt2=pionpt1;
                     pionpt1=event.packedCandsPseudoTrkPt[k];
                     pionIndex1.emplace_back(k);
-                    std::cout<<"index pion 1"<<pionIndex1[k]<<std::endl;
+                    std::cout<<"index pion 1"<<k<<std::endl;
                   }
                   else if(event.packedCandsPseudoTrkPt[k]>pionpt2){
                          pionpt2=event.packedCandsPseudoTrkPt[k];
                          pionIndex2.emplace_back(k);
-                         std::cout<<"index pion 2"<<pionIndex2[k]<<std::endl;
+                         std::cout<<"index pion 2"<<k<<std::endl;
                   }
                 }
                 
