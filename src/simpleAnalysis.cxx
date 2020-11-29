@@ -715,9 +715,11 @@ int main(int argc, char* argv[])
           
           
     //BEGIN Packed candidates
-    uint pionFlag{0}; uint muonFlag{0};
     std::vector<Int_t> pionIndex{}; std::vector<Int_t> muonIndex{};
-          
+     
+    Float_t pionpt1=0; Float_t pionpt2=0;
+    Float_t mupt1=0; Float_t mupt2=0;
+        
     Float_t IsoSum1=0;  Float_t IsoSum2=0;
     Float_t IsoSum3=0;  Float_t IsoSum4=0;
    
@@ -758,13 +760,28 @@ int main(int argc, char* argv[])
           
                 //Find the hadrons (pions)
                 if(std::abs(packedId)!=13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons)
-                  pionFlag++; pionIndex.emplace_back(k);
+                  pionIndex.emplace_back(k);
+                  if(event.packedCandsPseudoTrkPt[k]>pionpt1){
+                    pionpt2=pionpt1;
+                    pionpt1=event.packedCandsPseudoTrkPt[k];
+                  }
+                  else if(event.packedCandsPseudoTrkPt[k]>pionpt2){
+                         pionpt2=event.packedCandsPseudoTrkPt[k];
+                  }
                 }
+                
                 if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
-                  muonFlag++; muonIndex.emplace_back(k);
+                  muonIndex.emplace_back(k);
+                  if(event.packedCandsPseudoTrkPt[k]>mupt1){
+                    mupt2=mupt1;
+                    mupt1=event.packedCandsPseudoTrkPt[k];
+                  }
+                  else if(event.packedCandsPseudoTrkPt[k]>mupt2){
+                         mupt2=event.packedCandsPseudoTrkPt[k];
+                  }
                 }
               }
-              if(pionFlag>1){//Safety measure
+              //Safety measure
               
                 const int p1 {pionIndex[0]}; const int p2 {pionIndex[1]};
                 if(event.packedCandsPseudoTrkCharge[p1]==-(event.packedCandsPseudoTrkCharge[p2])){//Opposite charge
@@ -809,10 +826,10 @@ int main(int argc, char* argv[])
                     h_IsoSum2->Fill(IsoSum2/event.packedCandsPseudoTrkPt[k]);
                   }
                 }
-              }
               
               
-              if(muonFlag>1){
+              
+            
                 const int m1 {muonIndex[0]}; const int m2 {muonIndex[1]};
                 if(event.packedCandsPseudoTrkCharge[m1]==-(event.packedCandsPseudoTrkCharge[m2])){
             
@@ -855,7 +872,7 @@ int main(int argc, char* argv[])
                     h_IsoSum4->Fill(IsoSum4/event.packedCandsPseudoTrkPt[k]);
                   }
                 }
-              }
+              
               h_invmass->Fill(hadroninv,muoninv);
             }
           }
