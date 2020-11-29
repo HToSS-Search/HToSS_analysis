@@ -383,12 +383,14 @@ int main(int argc, char* argv[])
             h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
         
             h_genParScalarMuonPt->Fill(event.genParPt[k]);
-            if(event.genParPt[k]>genpt1){
-              genpt2=genpt1;
-              genpt1=event.genParPt[k];
-             }
-            else if(event.genParPt[k]>genpt2){
-                   genpt2=event.genParPt[k];
+            if(event.muTrig() || event.mumuTrig()){
+              if(event.genParPt[k]>genpt1){
+                genpt2=genpt1;
+                genpt1=event.genParPt[k];
+              }
+              else if(event.genParPt[k]>genpt2){
+                     genpt2=event.genParPt[k];
+              }
             }
             if(genpt1!=0 && genpt2!=0){         
                if(event.muTrig()){
