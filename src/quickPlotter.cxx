@@ -42,10 +42,8 @@ bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& 
 namespace fs = boost::filesystem;
 
 // Lepton cut variables
-const float looseMuonEta_ {5.0}, looseMuonPt_ {0.}, looseMuonPtLeading_ {0.}, looseMuonRelIso_ {100.};
+const float looseMuonEta_ {2.8}, looseMuonPt_ {6.}, looseMuonPtLeading_ {15.}, looseMuonRelIso_ {100.};
 const float invZMassCut_ {10.0};
-const float scalarMass_ {2.0};
-const bool exactlyTwo_ = false;
 
 int main(int argc, char* argv[])
 {
@@ -56,6 +54,8 @@ int main(int argc, char* argv[])
     double totalLumi;
     double usePreLumi;
     bool usePostLepTree {false};
+    float scalarMass_;
+    bool exactlyTwo_ {false};
    
     std::string outFileString{"plots/distributions/output.root"};
     bool is2016_;
@@ -259,7 +259,11 @@ int main(int argc, char* argv[])
         ",u",
         po::bool_switch(&usePostLepTree),
         "Use post lepton selection trees.")(
-        "2016", po::bool_switch(&is2016_), "Use 2016 conditions (SFs, et al.).");
+        "2016", po::bool_switch(&is2016_), "Use 2016 conditions (SFs, et al.).")(
+        "scalarMass,s",
+        po::value<float>(&scalarMass_)->default_value(2.0),
+        "scalar mass being searched for.")(
+        ",e", po::bool_switch(&exactlyTwo_), "only use events with exactly two loose muons");
     po::variables_map vm;
 
     try
