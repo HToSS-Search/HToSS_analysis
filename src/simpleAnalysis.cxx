@@ -785,7 +785,7 @@ int main(int argc, char* argv[])
                 }
               }
               //Safety measure
-              if(pionIndex.size()>1){
+              if(pionIndex1.size()>0 && pionIndex2.size()>0){
                 const int p1 {pionIndex[0]}; const int p2 {pionIndex[1]};
                 if(event.packedCandsPseudoTrkCharge[p1]==-(event.packedCandsPseudoTrkCharge[p2])){//Opposite charge
             
