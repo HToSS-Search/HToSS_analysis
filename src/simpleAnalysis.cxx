@@ -742,7 +742,7 @@ int main(int argc, char* argv[])
               //Test invariant masses
               TLorentzVector test  {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
               h_testInvMass->Fill(test.M());
-              std::cout<<"invariant mass packed candid "<<test.M()<<std::endl;
+              //std::cout<<"invariant mass packed candid "<<test.M()<<std::endl;
             
               const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]};
               const Int_t packedCandsCharge {event.packedCandsCharge[k]};
@@ -782,7 +782,7 @@ int main(int argc, char* argv[])
                 }
               }
               //Safety measure
-              
+              if(pionIndex.size()>1){
                 const int p1 {pionIndex[0]}; const int p2 {pionIndex[1]};
                 if(event.packedCandsPseudoTrkCharge[p1]==-(event.packedCandsPseudoTrkCharge[p2])){//Opposite charge
             
@@ -827,9 +827,9 @@ int main(int argc, char* argv[])
                   }
                 }
               
+              }
               
-              
-            
+            /*
                 const int m1 {muonIndex[0]}; const int m2 {muonIndex[1]};
                 if(event.packedCandsPseudoTrkCharge[m1]==-(event.packedCandsPseudoTrkCharge[m2])){
             
@@ -872,8 +872,8 @@ int main(int argc, char* argv[])
                     h_IsoSum4->Fill(IsoSum4/event.packedCandsPseudoTrkPt[k]);
                   }
                 }
-              
-              h_invmass->Fill(hadroninv,muoninv);
+              */
+             // h_invmass->Fill(hadroninv,muoninv);
             }
           }
         
