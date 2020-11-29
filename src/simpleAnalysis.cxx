@@ -765,11 +765,11 @@ int main(int argc, char* argv[])
                   if(event.packedCandsPseudoTrkPt[k]>pionpt1){
                     pionpt2=pionpt1;
                     pionpt1=event.packedCandsPseudoTrkPt[k];
-                    pionIndex1.push_front(k);
+                    pionIndex1.emplace_back(k);
                   }
                   else if(event.packedCandsPseudoTrkPt[k]>pionpt2){
                          pionpt2=event.packedCandsPseudoTrkPt[k];
-                         pionIndex2.push_front(k);
+                         pionIndex2.emplace_back(k);
                   }
                 }
                 std::cout<<"index pion 1"<<pionIndex1[k]<<"index pion 2"<<pionIndex2[k]<<std::endl;
@@ -786,7 +786,8 @@ int main(int argc, char* argv[])
               }
               //Safety measure
               if(pionIndex1.size()>0 && pionIndex2.size()>0){
-                const int p1 {pionIndex1[0]}; const int p2 {pionIndex2[0]};
+                const int p1 {pionIndex1.end()}; const int p2 {pionIndex2.end()};
+                std::cout<<"index1 "<<p1<<"index2 "<<p2<<std::endl;
                 if(event.packedCandsPseudoTrkCharge[p1]==-(event.packedCandsPseudoTrkCharge[p2])){//Opposite charge
             
                   TLorentzVector packed1;
