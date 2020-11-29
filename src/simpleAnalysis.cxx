@@ -786,9 +786,9 @@ int main(int argc, char* argv[])
               }
               //Safety measure
               if(pionIndex1.size()>0 && pionIndex2.size()>0){
-                const int p1 {pionIndex1.end()}; const int p2 {pionIndex2.end()};
-                std::cout<<"index1 "<<p1<<"index2 "<<p2<<std::endl;
-                if(event.packedCandsPseudoTrkCharge[p1]==-(event.packedCandsPseudoTrkCharge[p2])){//Opposite charge
+                //const Int_t p1 {pionIndex1.end()}; const Int_t p2 {pionIndex2.end()};
+                std::cout<<"index1 "<<pionIndex1.end()<<"index2 "<<pionIndex2.end()<<std::endl;
+               /* if(event.packedCandsPseudoTrkCharge[p1]==-(event.packedCandsPseudoTrkCharge[p2])){//Opposite charge
             
                   TLorentzVector packed1;
                   TLorentzVector packed2;
@@ -831,7 +831,7 @@ int main(int argc, char* argv[])
                   }
                 }
               
-              }
+              }*/
               
             /*
                 const int m1 {muonIndex[0]}; const int m2 {muonIndex[1]};
