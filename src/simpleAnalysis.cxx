@@ -644,53 +644,53 @@ int main(int argc, char* argv[])
            
            if(event.muTrig() || event.mumuTrig()){
                
-           if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){ //Electric charge control
+             if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){ //Electric charge control
         
-                   TLorentzVector muonRec1;
-              TLorentzVector muonRec2;
+               TLorentzVector muonRec1;
+               TLorentzVector muonRec2;
           
-              muonRec1.SetPtEtaPhiE(event.muonPF2PATPt[0],event.muonPF2PATEta[0],event.muonPF2PATPhi[0],event.muonPF2PATE[0]);
-              muonRec2.SetPtEtaPhiE(event.muonPF2PATPt[1],event.muonPF2PATEta[1],event.muonPF2PATPhi[1],event.muonPF2PATE[1]);
+               muonRec1.SetPtEtaPhiE(event.muonPF2PATPt[0],event.muonPF2PATEta[0],event.muonPF2PATPhi[0],event.muonPF2PATE[0]);
+               muonRec2.SetPtEtaPhiE(event.muonPF2PATPt[1],event.muonPF2PATEta[1],event.muonPF2PATPhi[1],event.muonPF2PATE[1]);
             
-              h_muonRecDeltaR->Fill(muonRec1.DeltaR(muonRec2));
-            h_muonRecDeltaPhi->Fill(muonRec1.DeltaPhi(muonRec2));
+               h_muonRecDeltaR->Fill(muonRec1.DeltaR(muonRec2));
+               h_muonRecDeltaPhi->Fill(muonRec1.DeltaPhi(muonRec2));
             
-             //Invariant mass for two highest p_T
+               //Invariant mass for two highest p_T
                TLorentzVector lVecMu1  {event.muonPF2PATPX[0], event.muonPF2PATPY[0], event.muonPF2PATPZ[0], event.muonPF2PATE[0]};
-            TLorentzVector lVecMu2  {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]};
+               TLorentzVector lVecMu2  {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]};
 
-              h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
+               h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
            
-           if(event.muonPF2PATPt[0]>30 && event.muonPF2PATPt[1]>12){//combined (single+double, mix) p_T cut applied
+               if(event.muonPF2PATPt[0]>30 && event.muonPF2PATPt[1]>12){//combined (single+double, mix) p_T cut applied
              
                  if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut and |eta| < 2.4
-               passedMuons.emplace_back(k);//Take its index
+                   passedMuons.emplace_back(k);//Take its index
+                 }
+               }
              }
-           }
-         }
            }
         
         
            //To show seperate turn-on curve for single or double muon trigger
            if(event.muTrig() ){
-         if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4 && event.muonPF2PATPt[k]>5){ //Loose ID cut, |eta| < 2.4 and min 5GeV cut
-            singleFlag++; singleIndex.emplace_back(k);
-         }
+             if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4 && event.muonPF2PATPt[k]>5){ //Loose ID cut, |eta| < 2.4 and min 5GeV cut
+               singleFlag++; singleIndex.emplace_back(k);
+             }
            }
+         
            if(singleFlag>0){
-         const int s1 {singleIndex[0]};
-         h_muonCutSingleL->Fill(event.muonPF2PATPt[s1]);
+             const int s1 {singleIndex[0]};
+             h_muonCutSingleL->Fill(event.muonPF2PATPt[s1]);
            }
-        
            if(event.mumuTrig()){
-         if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4 && event.muonPF2PATPt[k]>5){//Loose ID cut, |eta| < 2.4 and min 5GeV cut
-           doubleFlag++; doubleIndex.emplace_back(k);
-         }
+             if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4 && event.muonPF2PATPt[k]>5){//Loose ID cut, |eta| < 2.4 and min 5GeV cut
+               doubleFlag++; doubleIndex.emplace_back(k);
+             } 
            }
            if(doubleFlag>1){
-         const int d1 {doubleIndex[0]}; const int d2 {doubleIndex[1]};
-         h_muonCutDoubleL->Fill(event.muonPF2PATPt[d1]);
-         h_muonCutDoubleS->Fill(event.muonPF2PATPt[d2]);
+             const int d1 {doubleIndex[0]}; const int d2 {doubleIndex[1]};
+             h_muonCutDoubleL->Fill(event.muonPF2PATPt[d1]);
+             h_muonCutDoubleS->Fill(event.muonPF2PATPt[d2]);
            }
                
        }
