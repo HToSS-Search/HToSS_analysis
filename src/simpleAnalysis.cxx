@@ -786,9 +786,9 @@ int main(int argc, char* argv[])
       }
     }
     
-    if(event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0){
-    std::cout<<"outside lading 1 "<<event.packedCandsPseudoTrkCharge[muIndex1]<<"outside lading 2 "<<event.packedCandsPseudoTrkCharge[muIndex2]<<std::endl;
-    }
+    //if(event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0){
+    //std::cout<<"outside lading 1 "<<event.packedCandsPseudoTrkCharge[muIndex1]<<"outside lading 2 "<<event.packedCandsPseudoTrkCharge[muIndex2]<<std::endl;
+    //}
             
     Float_t IsoSum1=0;  Float_t IsoSum2=0;
     Float_t IsoSum3=0;  Float_t IsoSum4=0;
@@ -797,7 +797,7 @@ int main(int argc, char* argv[])
           
     if(event.metFilters()){
       for (Int_t k{0};k<event.numPackedCands;k++) {
-          if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex1])){
+          if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2])){
             std::cout<<"inside pion loop "<<std::endl;
             TLorentzVector packed1;
             TLorentzVector packed2;
@@ -839,7 +839,7 @@ int main(int argc, char* argv[])
               }
             }
           }
-          if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex1])){
+          if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
             std::cout<<"inside muon loop "<<std::endl;
            
             TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[muIndex1], event.packedCandsPseudoTrkPy[muIndex1], event.packedCandsPseudoTrkPz[muIndex1], event.packedCandsE[muIndex1]};
