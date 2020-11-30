@@ -720,12 +720,7 @@ int main(int argc, char* argv[])
      
     Float_t pionpt1{-1}; Float_t pionpt2{-1};
     Float_t mupt1=0; Float_t mupt2=0;
-        
-    Float_t IsoSum1=0;  Float_t IsoSum2=0;
-    Float_t IsoSum3=0;  Float_t IsoSum4=0;
-   
-    Float_t hadroninv; Float_t muoninv;
-          
+       
     if(event.metFilters()){
         
       for (Int_t k{0};k<event.numPackedCands;k++) {
@@ -791,6 +786,11 @@ int main(int argc, char* argv[])
       }
     }
     
+    Float_t IsoSum1=0;  Float_t IsoSum2=0;
+    Float_t IsoSum3=0;  Float_t IsoSum4=0;
+   
+    Float_t hadroninv; Float_t muoninv;
+          
     if(event.metFilters()){
       for (Int_t k{0};k<event.numPackedCands;k++) {
           if(event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex1])){
@@ -825,7 +825,7 @@ int main(int argc, char* argv[])
               TLorentzVector cone3;//The other pion
               TLorentzVector cone4;//Packed candidate
                     
-              cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[p2],event.packedCandsPseudoTrkEta[p2],event.packedCandsPseudoTrkPhi[p2],event.packedCandsE[p2]);
+              cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],event.packedCandsE[pionIndex2]);
               cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
               
               if(cone3.DeltaR(cone4)<0.3){
