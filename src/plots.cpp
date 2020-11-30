@@ -1569,7 +1569,87 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
              return {(event.zPairLeptons.second)
                          .DeltaPhi(event.wPairQuarks.first
                                    + event.wPairQuarks.second + tempBjet)};
-         }}};
+         }},
+        {"mumuVtxPx", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonTkPairPF2PATTkVtxPx[event.mumuTrkIndex]};
+         }},
+        {"mumuVtxPy", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonTkPairPF2PATTkVtxPy[event.mumuTrkIndex]};
+         }},
+        {"mumuVtxPz", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonTkPairPF2PATTkVtxPz[event.mumuTrkIndex]};
+         }},
+        {"mumuVtxP", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {std::sqrt( event.muonTkPairPF2PATTkVtxP2[event.mumuTrkIndex] )};
+         }},
+	{"mumuVx", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonTkPairPF2PATTkVx[event.mumuTrkIndex]};
+         }},
+	{"mumuVy", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonTkPairPF2PATTkVy[event.mumuTrkIndex]};
+         }},
+	{"mumuVz", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonTkPairPF2PATTkVz[event.mumuTrkIndex]};
+         }},
+	{"mumuVabs", [](const AnalysisEvent& event) -> std::vector<float> {
+             float vx {event.muonTkPairPF2PATTkVx[event.mumuTrkIndex]}, vy {event.muonTkPairPF2PATTkVy[event.mumuTrkIndex]}, vz {event.muonTkPairPF2PATTkVz[event.mumuTrkIndex]};
+             return { std::sqrt(vx*vx + vy*vy + vz*vz) };
+         }},
+	{"mumuVtxChi2Ndof", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {(event.muonTkPairPF2PATTkVtxChi2[event.mumuTrkIndex])/(event.muonTkPairPF2PATTkVtxNdof[event.mumuTrkIndex]+1.0e-06)};
+         }},
+	{"mumuVtxAngleXY", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {(event.muonTkPairPF2PATTkVtxAngleXY[event.mumuTrkIndex])};
+         }},
+        {"mumuVtxAngleXYZ", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {(event.muonTkPairPF2PATTkVtxAngleXYZ[event.mumuTrkIndex])};         
+         }},
+        {"mumuVtxSigXY", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {(event.muonTkPairPF2PATTkVtxDistMagXY[event.mumuTrkIndex])/(event.muonTkPairPF2PATTkVtxDistMagXYSigma[event.mumuTrkIndex]+1.0e-06)};
+         }},
+	{"mumuVtxSigXYZ", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {(event.muonTkPairPF2PATTkVtxDistMagXYZ[event.mumuTrkIndex])/(event.muonTkPairPF2PATTkVtxDistMagXYZSigma[event.mumuTrkIndex]+1.0e-06)};
+         }},
+	{"mumuVtxDca", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {(event.muonTkPairPF2PATTkVtxDcaPreFit[event.mumuTrkIndex])};
+         }},
+        {"mumuTrkInnerPtOld1", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonPF2PATInnerTkPt[event.zPairIndex.first]};
+         }},
+        {"mumuTrkInnerEtaOld1", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonPF2PATInnerTkEta[event.zPairIndex.first]};
+         }},
+        {"mumuTrkInnerChi2NdofOld1", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonPF2PATInnerTkNormChi2[event.zPairIndex.first]};
+         }},
+        {"mumuTrkInnerPtOld2", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonPF2PATInnerTkPt[event.zPairIndex.second]};
+         }},
+        {"mumuTrkInnerEtaOld2", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonPF2PATInnerTkEta[event.zPairIndex.second]};
+         }},
+        {"mumuTrkInnerChi2NdofOld2", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonPF2PATInnerTkNormChi2[event.zPairIndex.second]};
+         }},
+	{"mumuTrkInnerPtNew1", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonTkPairPF2PATTk1Pt[event.mumuTrkIndex]};
+         }},
+	{"mumuTrkInnerEtaNew1", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonTkPairPF2PATTk2Eta[event.mumuTrkIndex]};
+         }},
+	{"mumuTrkInnerChi2NdofNew1", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {(event.muonTkPairPF2PATTk1Chi2[event.mumuTrkIndex])/(event.muonTkPairPF2PATTk1Ndof[event.mumuTrkIndex]+1.0e-06)};
+         }},
+	{"mumuTrkInnerPtNew2", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonTkPairPF2PATTk2Pt[event.mumuTrkIndex]};
+         }},
+	{"mumuTrkInnerEtaNew2", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.muonTkPairPF2PATTk2Eta[event.mumuTrkIndex]};
+         }},
+	{"mumuTrkInnerChi2NdofNew2", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {(event.muonTkPairPF2PATTk2Chi2[event.mumuTrkIndex])/(event.muonTkPairPF2PATTk2Ndof[event.mumuTrkIndex]+1.0e-06)};
+         }}
+    };
 }
 
 void Plots::fillAllPlots(const AnalysisEvent& event, const double eventWeight)

@@ -508,7 +508,7 @@ int main(int argc, char* argv[])
                 }
 
 
-                const float vtxPx {event.muonTkPairPF2PATTkVtxPx[k]}, vtxPy {event.muonTkPairPF2PATTkVtxPy[k]}, vtxPz {event.muonTkPairPF2PATTkVtxPz[k]}, vtxP2 {event.muonTkPairPF2PATTkVtxP2[k]};
+                const float vtxPx {event.muonTkPairPF2PATTkVtxPx[k]}, vtxPy {event.muonTkPairPF2PATTkVtxPy[k]}, vtxPz {event.muonTkPairPF2PATTkVtxPz[k]}, vtxP2 {std::sqrt(event.muonTkPairPF2PATTkVtxP2[k])};
                 const float vx {event.muonTkPairPF2PATTkVx[k]}, vy {event.muonTkPairPF2PATTkVy[k]}, vz {event.muonTkPairPF2PATTkVz[k]};
                 const float Vabs {std::sqrt( vx*vx + vy*vy + vz*vz )};
        	       	const float vtxChi2Ndof {event.muonTkPairPF2PATTkVtxChi2[k]/(event.muonTkPairPF2PATTkVtxNdof[k]+1.0e-06)};
