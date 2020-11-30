@@ -786,6 +786,9 @@ int main(int argc, char* argv[])
       }
     }
     
+    std::cout<<"outside mom 1 "<<event.packedCandsPseudoTrkPt[pionIndex1]<<"outside mom 2 "<<event.packedCandsPseudoTrkPt[pionIndex2]<<std::endl;  
+    std::cout<<"outside index 1 "<<pionIndex1<<"outside index 2 "<<pionIndex2<<std::endl;       
+        
     Float_t IsoSum1=0;  Float_t IsoSum2=0;
     Float_t IsoSum3=0;  Float_t IsoSum4=0;
    
@@ -882,7 +885,7 @@ int main(int argc, char* argv[])
     //END Packed Candidates
           
       
-  std::cout<<"outside mom 1 "<<event.packedCandsPseudoTrkPt[pionIndex1]<<"outside mom 2 "<<event.packedCandsPseudoTrkPt[pionIndex2]<<std::endl;       
+
           
           
           
