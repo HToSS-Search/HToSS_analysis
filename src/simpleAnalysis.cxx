@@ -715,7 +715,7 @@ int main(int argc, char* argv[])
           
           
     //BEGIN Packed candidates
-    std::vector<Int_t> pionIndex1{}; std::vector<Int_t> pionIndex2{};
+    std::vector<Int_t> pionIndex1{-1}; std::vector<Int_t> pionIndex2{-1};
     std::vector<Int_t> muonIndex{};
      
     Float_t pionpt1=0; Float_t pionpt2=0;
@@ -765,17 +765,17 @@ int main(int argc, char* argv[])
                   if(event.packedCandsPseudoTrkPt[k]>pionpt1){
                     pionpt2=pionpt1;
                     pionpt1=event.packedCandsPseudoTrkPt[k];
-                    pionIndex1.emplace_back(k);
+                    pionIndex1=k;
                     std::cout<<"index pion 1 "<<k<<std::endl;
                   }
                   else if(event.packedCandsPseudoTrkPt[k]>pionpt2){
                          pionpt2=event.packedCandsPseudoTrkPt[k];
-                         pionIndex2.emplace_back(k);
+                         pionIndex2=k;
                          std::cout<<"index pion 2 "<<k<<std::endl;
                   }
                 }
                 //std::cout<<"laatste element k "<<k<<"index voor pion "<<pionIndex1.back()<<std::endl;
-                if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
+                /*if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
                   muonIndex.emplace_back(k);
                   if(event.packedCandsPseudoTrkPt[k]>mupt1){
                     mupt2=mupt1;
@@ -786,7 +786,7 @@ int main(int argc, char* argv[])
                          mupt2=event.packedCandsPseudoTrkPt[k];
                          std::cout<<"subleading "<<k<<std::endl;
                   }
-                }
+                }*/
               }
               //Safety measure
               /*if(pionIndex1.size()>0 && pionIndex2.size()>0){
