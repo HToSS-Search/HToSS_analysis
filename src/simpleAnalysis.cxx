@@ -766,14 +766,15 @@ int main(int argc, char* argv[])
                     pionpt2=pionpt1;
                     pionpt1=event.packedCandsPseudoTrkPt[k];
                     pionIndex1=k;
-                    std::cout<<"index pion 1 "<<k<<std::endl;
+                    //std::cout<<"index pion 1 "<<k<<std::endl;
                   }
                   else if(event.packedCandsPseudoTrkPt[k]>pionpt2){
                          pionpt2=event.packedCandsPseudoTrkPt[k];
                          pionIndex2=k;
-                         std::cout<<"index pion 2 "<<k<<std::endl;
+                         //std::cout<<"index pion 2 "<<k<<std::endl;
                   }
                   std::cout<<"k "<<k<<"pion mom 1 "<<pionpt1<<"pion mom 2 "<<pionpt2<<std::endl;
+                  std::cout<<"pionIndex1 "<<pionIndex1<<"pionIndex2 "<<pionIndex2<<std::endl;
                 }
                 //std::cout<<"laatste element k "<<k<<"index voor pion "<<pionIndex1.back()<<std::endl;
                 /*if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
