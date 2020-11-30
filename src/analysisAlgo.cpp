@@ -138,9 +138,12 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         "metCut",
         po::value<float>(&metCut)->default_value(0),
         "Apply an MET cut. Dilepton Z+jets CR.")(
-        "mzCut",
-        po::value<float>(&mzCut)->default_value(20.),
-        "Apply an mZ cut. Dilepton only.")(
+        "msCut",
+        po::value<float>(&msCut)->default_value(10.),
+        "Apply an mScalar cut.")(
+        "skMass",
+        po::value<float>(&skMass)->default_value(2.),
+        "Set target scalar mass.")(
         "mwCut",
         po::value<float>(&mwCut)->default_value(20.),
         "Apply an mW cut. Dilepton only.");
@@ -335,7 +338,8 @@ void AnalysisAlgo::setupCuts()
     }
     cutObj->setMetCut(metCut);
     cutObj->setMWCut(mwCut);
-    cutObj->setMZCut(mzCut);
+    cutObj->setScalarCut(msCut);
+    cutObj->setScalarMass(skMass);
     if (doZplusCR_)
     {
         cutObj->setZplusControlRegionFlag(true);
@@ -664,7 +668,6 @@ void AnalysisAlgo::runMainAnalysis()
             int zLep2Index{-1};
             int wQuark1Index{-1};
             int wQuark2Index{-1};
-            int muonLeads{};
             int jetInd[15]; // The index of the selected jets;
             int bJetInd[10]; // Index of selected b-jets;
             float jetSmearValue[15]{};
@@ -714,8 +717,6 @@ void AnalysisAlgo::runMainAnalysis()
                         "zLep1Index", &zLep1Index, "zLep1Index/I");
                     mvaTree[systIn]->Branch(
                         "zLep2Index", &zLep2Index, "zLep2Index/I");
-                    mvaTree[systIn]->Branch(
-                        "muonLeads", &muonLeads, "muonLeads/I");
                     mvaTree[systIn]->Branch(
                         "wQuark1Index", &wQuark1Index, "wQuark1Index/I");
                     mvaTree[systIn]->Branch(
@@ -1064,7 +1065,6 @@ void AnalysisAlgo::runMainAnalysis()
                         zLep2Index = event.zPairIndex.second;
                         wQuark1Index = event.wPairIndex.first;
                         wQuark2Index = event.wPairIndex.second;
-                        muonLeads = event.muonLeads;
                         for (unsigned i{0}; i < 15; i++)
                         {
                             if (i < event.jetIndex.size())

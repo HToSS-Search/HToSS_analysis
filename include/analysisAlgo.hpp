@@ -59,7 +59,8 @@ class AnalysisAlgo
     std::string mvaDir;
     bool customJetRegion;
     float metCut;
-    float mzCut;
+    float msCut;
+    float skMass;
     float mwCut;
     bool is2016_;
     bool doNPLs_;

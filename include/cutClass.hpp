@@ -21,7 +21,7 @@ class Cuts
                         std::map<std::string, std::shared_ptr<Plots>>& plotMap,
                         TH1D& cutFlow,
                         const int& syst,
-                        const bool& skipZCut = false);
+                        const bool& skipScalarMassCut = false);
     std::pair<std::vector<int>, std::vector<double>>
         makeJetCuts(const AnalysisEvent& event,
                     const int syst,
@@ -40,7 +40,6 @@ class Cuts
     [[gnu::pure]] std::vector<int>
         getLooseMuons(const AnalysisEvent& event) const;
     bool getDileptonCand(AnalysisEvent& event,
-                          const std::vector<int>& electrons,
                           const std::vector<int>& muons) const;
     double getWbosonQuarksCand(AnalysisEvent& event,
                                const std::vector<int>& jets,
@@ -57,6 +56,9 @@ class Cuts
     double getLeptonWeight(const AnalysisEvent& event, const int& syst) const;
     double eleSF(const double& pt, const double& eta, const int& syst) const;
     double muonSF(const double& pt, const double& eta, const int& syst) const;
+
+    // grab the muon track pair index for selected muons
+    int getMuonTrackPairIndex(const AnalysisEvent& event) const;
 
     // set to true to fill in histograms/spit out other info
     bool doPlots_;
@@ -94,7 +96,8 @@ class Cuts
     double looseMuonRelIso_;
 
     // z and w inv cuts
-    double invZMassCut_;
+    double scalarMassCut_;
+    double skMass_;
     double invWMassCut_;
 
     // Tight jet cuts
@@ -266,9 +269,13 @@ class Cuts
     {
         invWMassCut_ = cut;
     }
-    void setMZCut(double cut)
+    void setScalarCut(double cut)
     {
-        invZMassCut_ = cut;
+        scalarMassCut_ = cut;
+    }
+    void setScalarMass(double mass)
+    {
+        skMass_ = mass;
     }
     void setJetRegion(const unsigned nJets,
                       const unsigned nBets,

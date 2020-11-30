@@ -2410,7 +2410,7 @@ class AnalysisEvent
     std::pair<TLorentzVector, TLorentzVector> zPairLeptons;
     std::pair<float, float> zPairRelIso;
     std::pair<int, int> zPairIndex;
-    bool muonLeads{};
+    int mumuTrkIndex;
 
     std::pair<TLorentzVector, TLorentzVector> wPairQuarks;
     std::pair<int, int> wPairIndex;
