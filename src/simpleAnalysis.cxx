@@ -786,8 +786,8 @@ int main(int argc, char* argv[])
       }
     }
     
-    std::cout<<"outside mom 1 "<<event.packedCandsPseudoTrkPt[muIndex1]<<"outside mom 2 "<<event.packedCandsPseudoTrkPt[muIndex2]<<std::endl;  
-    std::cout<<"outside index 1 "<<muIndex1<<"outside index 2 "<<muIndex2<<std::endl;       
+    std::cout<<"outside mom 1 "<<event.packedCandsPseudoTrkCharge[muIndex1]<<"outside mom 2 "<<event.packedCandsPseudoTrkCharge[muIndex2]<<std::endl;  
+    //std::cout<<"outside index 1 "<<muIndex1<<"outside index 2 "<<muIndex2<<std::endl;       
         
     Float_t IsoSum1=0;  Float_t IsoSum2=0;
     Float_t IsoSum3=0;  Float_t IsoSum4=0;
