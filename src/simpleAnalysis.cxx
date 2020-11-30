@@ -718,7 +718,7 @@ int main(int argc, char* argv[])
     Int_t pionIndex1{-1}; Int_t pionIndex2{-1};
     std::vector<Int_t> muonIndex{};
      
-    Float_t pionpt1=0; Float_t pionpt2=0;
+    Float_t pionpt1{-1}; Float_t pionpt2{-1};
     Float_t mupt1=0; Float_t mupt2=0;
         
     Float_t IsoSum1=0;  Float_t IsoSum2=0;
