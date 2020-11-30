@@ -173,10 +173,7 @@ int main(int argc, char* argv[])
   TH1F* h_hadronInvMass {new TH1F("h_hadronInvMass", "Two hadrons - Invariant mass",1000, 0., 7.)};
   TH1F* h_muonsInvMass  {new TH1F("h_muonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
   TH2F* h_invmass       {new TH2F("h_invmass", "Invariant mass: pions vs muons", 1000, 0.,7.,1000,0.,7.)};
-   
-  TH1F* h_testInvMass   {new TH1F("h_testInvMass", "Invariant mass Packed Candidates",1000, 0., 7.)};
-    
-    
+  
     
      
     
@@ -311,7 +308,7 @@ int main(int argc, char* argv[])
           m.SetPtEtaPhiE(event.genParPt[k],event.genParEta[k],event.genParPhi[k],event.genParE[k]);
           TLorentzVector mass {m.Px(),m.Py(),m.Pz(),event.genParE[k]};
 
-          /*std::cout << k << "\t | "
+          std::cout << k << "\t | "
           << event.genParId[k] << "\t "
           << event.genParStatus[k] << "\t | "
           << event.genParMotherIndex[k] << "\t "
@@ -320,7 +317,7 @@ int main(int argc, char* argv[])
           << event.genParPt[k] << "\t "
           << event.genParEta[k] << "\t "
           << event.genParPhi[k] << "\t "
-          << mass.M() << std::endl;*/
+          << mass.M() << std::endl;
 
 
 
@@ -754,7 +751,7 @@ int main(int argc, char* argv[])
              
           
                 //Find the hadrons (pions)
-                if(std::abs(packedId)!=13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons) 
+                if(std::abs(packedId)!=13){//Selection of pions (charged hadrons) 
                   if(event.packedCandsPseudoTrkPt[k]>pionpt1){
                     pionpt2=pionpt1;
                     pionpt1=event.packedCandsPseudoTrkPt[k];
@@ -767,7 +764,7 @@ int main(int argc, char* argv[])
                   }
                 }
      
-                if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
+                if(std::abs(packedId)==13){//Selection of muons
                  if(event.packedCandsPseudoTrkPt[k]>mupt1){
                     mupt2=mupt1;
                     mupt1=event.packedCandsPseudoTrkPt[k];
@@ -786,10 +783,7 @@ int main(int argc, char* argv[])
       }
     }
     
-    //if(event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0){
-    //std::cout<<"outside lading 1 "<<event.packedCandsPseudoTrkCharge[muIndex1]<<"outside lading 2 "<<event.packedCandsPseudoTrkCharge[muIndex2]<<std::endl;
-    //}
-            
+    
     Float_t IsoSum1=0;  Float_t IsoSum2=0;
     Float_t IsoSum3=0;  Float_t IsoSum4=0;
    
@@ -824,7 +818,7 @@ int main(int argc, char* argv[])
               
               if(cone1.DeltaR(cone2)<0.3){
                 IsoSum1+=event.packedCandsPseudoTrkPt[k];
-                h_IsoSum1->Fill(IsoSum1/event.packedCandsPseudoTrkPt[k]);
+                h_IsoSum1->Fill(IsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]);
               } 
             
               TLorentzVector cone3;//The other pion
@@ -835,7 +829,7 @@ int main(int argc, char* argv[])
               
               if(cone3.DeltaR(cone4)<0.3){
                 IsoSum2+=event.packedCandsPseudoTrkPt[k];
-                h_IsoSum2->Fill(IsoSum2/event.packedCandsPseudoTrkPt[k]);
+                h_IsoSum2->Fill(IsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]);
               }
             }
           }
@@ -865,7 +859,7 @@ int main(int argc, char* argv[])
 
               if(cone1.DeltaR(cone2)<0.3){
                 IsoSum3+=event.packedCandsPseudoTrkPt[k];
-                h_IsoSum3->Fill(IsoSum3/event.packedCandsPseudoTrkPt[k]);
+                h_IsoSum3->Fill(IsoSum3/event.packedCandsPseudoTrkPt[muIndex1]);
               }
 
               TLorentzVector cone3;//The other muon
@@ -876,7 +870,7 @@ int main(int argc, char* argv[])
 
               if(cone3.DeltaR(cone4)<0.3){
                 IsoSum4+=event.packedCandsPseudoTrkPt[k];
-                h_IsoSum4->Fill(IsoSum4/event.packedCandsPseudoTrkPt[k]);
+                h_IsoSum4->Fill(IsoSum4/event.packedCandsPseudoTrkPt[muIndex2]);
               }
             }
           }
