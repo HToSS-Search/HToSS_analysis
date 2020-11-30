@@ -786,9 +786,9 @@ int main(int argc, char* argv[])
       }
     }
     
-    //if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0){
-    std::cout<<"outside mom 1 "<<event.packedCandsPseudoTrkPt[muIndex1]<<"outside mom 2 "<<event.packedCandsPseudoTrkPt[muIndex2]<<std::endl;
-   // }
+    if(event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0){
+    std::cout<<"outside lading 1 "<<event.packedCandsPseudoTrkCharge[muIndex1]<<"outside lading 2 "<<event.packedCandsPseudoTrkCharge[muIndex2]<<std::endl;
+    }
             
     Float_t IsoSum1=0;  Float_t IsoSum2=0;
     Float_t IsoSum3=0;  Float_t IsoSum4=0;
