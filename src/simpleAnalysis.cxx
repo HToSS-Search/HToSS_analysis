@@ -166,10 +166,10 @@ int main(int argc, char* argv[])
   TH2I* h_displacedRZ   {new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250)};
   TH1F* h_hadronDeltaR  {new TH1F("h_hadronDeltaR", "Two hadrons #DeltaR",2500, -10., 10.)};
   TH1F* h_muonsDeltaR   {new TH1F("h_muonsDeltaR", "Two muons #DeltaR",2500, -10., 10.)};
-  TH1F* h_IsoSum1       {new TH1F("h_IsoSum1",  "0.3 p_{T} Cone construction pion 1", 1000, 0., 1000.)};
-  TH1F* h_IsoSum2       {new TH1F("h_IsoSum2",  "0.3 p_{T} Cone construction pion 2", 1000, 0., 1000.)};
-  TH1F* h_IsoSum3       {new TH1F("h_IsoSum3",  "0.3 p_{T} Cone construction muon 1", 1000, 0., 1000.)};
-  TH1F* h_IsoSum4       {new TH1F("h_IsoSum4",  "0.3 p_{T} Cone construction muon 2", 1000, 0., 1000.)};
+  TH1F* h_IsoSum1       {new TH1F("h_IsoSum1",  "0.3 p_{T} Cone construction pion 1", 1000, 0., 50.)};
+  TH1F* h_IsoSum2       {new TH1F("h_IsoSum2",  "0.3 p_{T} Cone construction pion 2", 1000, 0., 50.)};
+  TH1F* h_IsoSum3       {new TH1F("h_IsoSum3",  "0.3 p_{T} Cone construction muon 1", 1000, 0., 50.)};
+  TH1F* h_IsoSum4       {new TH1F("h_IsoSum4",  "0.3 p_{T} Cone construction muon 2", 1000, 0., 50.)};
   TH1F* h_hadronInvMass {new TH1F("h_hadronInvMass", "Two hadrons - Invariant mass",1000, 0., 7.)};
   TH1F* h_muonsInvMass  {new TH1F("h_muonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
   TH2F* h_invmass       {new TH2F("h_invmass", "Invariant mass: pions vs muons", 1000, 0.,7.,1000,0.,7.)};
