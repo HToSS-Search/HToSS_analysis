@@ -772,7 +772,7 @@ int main(int argc, char* argv[])
                          pionpt2=event.packedCandsPseudoTrkPt[k];
                          pionIndex2=k;
                   }
-                  std::cout<<"k "<<k<<"pion mom 1 "<<pionpt1<<"pion mom 2 "<<pionpt2<<std::endl;
+                  //std::cout<<"k "<<k<<"pion mom 1 "<<pionpt1<<"pion mom 2 "<<pionpt2<<std::endl;
                   std::cout<<"pionIndex1 "<<pionIndex1<<"pionIndex2 "<<pionIndex2<<std::endl;
                   std::cout<<"Controle mom 1 "<<event.packedCandsPseudoTrkPt[pionIndex1]<<"Controle mom 2 "<<event.packedCandsPseudoTrkPt[pionIndex2]<<std::endl;
                 }
@@ -885,14 +885,14 @@ int main(int argc, char* argv[])
              // h_invmass->Fill(hadroninv,muoninv);
             }
           }
-        
+      
           
       }
     }
     //END Packed Candidates
           
       
-          
+  std::cout<<"outside mom 1 "<<<<event.packedCandsPseudoTrkPt[pionIndex1]<<"outside mom 2 "<<event.packedCandsPseudoTrkPt[pionIndex2]<<std::endl;       
           
           
           
