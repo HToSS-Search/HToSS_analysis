@@ -1,14 +1,14 @@
 cuts:
     tightMuons:
-        pt: 0
-        ptLeading: 0
-        eta: 5.0
+        pt: 6.0
+        ptLeading: 15.0
+        eta: 2.8
         relIso: 100.0
         number: 2
     looseMuons:
-        pt: 0
-        ptLeading: 0
-        eta: 5.0
+        pt: 6.0
+        ptLeading: 15.0
+        eta: 2.8
         relIso: 100.0
         number: 2
     tightElectrons:
