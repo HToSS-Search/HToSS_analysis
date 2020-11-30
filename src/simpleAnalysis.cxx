@@ -716,7 +716,7 @@ int main(int argc, char* argv[])
           
     //BEGIN Packed candidates
     Int_t pionIndex1{-1}; Int_t pionIndex2{-1};
-    std::vector<Int_t> muonIndex{};
+    Int_t muIndex1{-1}; Int_t muIndex2{-1};
      
     Float_t pionpt1{-1}; Float_t pionpt2{-1};
     Float_t mupt1=0; Float_t mupt2=0;
@@ -733,7 +733,6 @@ int main(int argc, char* argv[])
           if(event.muTrig() || event.mumuTrig()){
             
             const Int_t packedId {event.packedCandsPdgId[k]};
-            //Id of 211 or -211: Charged pions
         
             h_packedCDxy->Fill(event.packedCandsDxy[k]);
             h_packedCDz->Fill(event.packedCandsDz[k]);
@@ -760,8 +759,7 @@ int main(int argc, char* argv[])
              
           
                 //Find the hadrons (pions)
-                if(std::abs(packedId)!=13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons)
-                  
+                if(std::abs(packedId)!=13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons) 
                   if(event.packedCandsPseudoTrkPt[k]>pionpt1){
                     pionpt2=pionpt1;
                     pionpt1=event.packedCandsPseudoTrkPt[k];
@@ -772,122 +770,114 @@ int main(int argc, char* argv[])
                          pionpt2=event.packedCandsPseudoTrkPt[k];
                          pionIndex2=k;
                   }
-                  //std::cout<<"k "<<k<<"pion mom 1 "<<pionpt1<<"pion mom 2 "<<pionpt2<<std::endl;
-                  std::cout<<"pionIndex1 "<<pionIndex1<<"pionIndex2 "<<pionIndex2<<std::endl;
-                  std::cout<<"Controle mom 1 "<<event.packedCandsPseudoTrkPt[pionIndex1]<<"Controle mom 2 "<<event.packedCandsPseudoTrkPt[pionIndex2]<<std::endl;
                 }
-                //std::cout<<"laatste element k "<<k<<"index voor pion "<<pionIndex1.back()<<std::endl;
-                /*if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
-                  muonIndex.emplace_back(k);
-                  if(event.packedCandsPseudoTrkPt[k]>mupt1){
+     
+                if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
+                 if(event.packedCandsPseudoTrkPt[k]>mupt1){
                     mupt2=mupt1;
                     mupt1=event.packedCandsPseudoTrkPt[k];
-                    std::cout<<"leading "<<k<<std::endl;
+                    muIndex2=muIndex1;
+                    muIndex1=k;
                   }
                   else if(event.packedCandsPseudoTrkPt[k]>mupt2){
                          mupt2=event.packedCandsPseudoTrkPt[k];
-                         std::cout<<"subleading "<<k<<std::endl;
+                         muIndex2=k;
                   }
-                }*/
+                }
               }
-              //Safety measure
-              if(pionIndex1!=-1 && pionIndex2!=-1 && pionpt1!=-1 && pionpt2!=-1){
-                
-                if(event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex1])){//Opposite charge
-            
-                  TLorentzVector packed1;
-                  TLorentzVector packed2;
-          
-                  packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],event.packedCandsE[pionIndex1]);
-                  packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],event.packedCandsE[pionIndex2]);
-            
-                  h_hadronDeltaR->Fill(packed1.DeltaR(packed2));
-            
-                  //Invariant mass for two hadrons
-                  TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[pionIndex1], event.packedCandsPseudoTrkPy[pionIndex1], event.packedCandsPseudoTrkPz[pionIndex1], event.packedCandsE[pionIndex1]};
-                  TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[pionIndex2], event.packedCandsPseudoTrkPy[pionIndex2], event.packedCandsPseudoTrkPz[pionIndex2], event.packedCandsE[pionIndex2]};
-
-                  hadroninv=(lhadron1+lhadron2).M();
-                  h_hadronInvMass->Fill((lhadron1+lhadron2).M());
-                }
-            
-                /*if(k!=p1 && k!=p2){
-                
-                  TLorentzVector cone1;//The pion
-                  TLorentzVector cone2;//Packed candidate
-                    
-                  cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[p1],event.packedCandsPseudoTrkEta[p1],event.packedCandsPseudoTrkPhi[p1],event.packedCandsE[p1]);
-                  cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
-              
-                  if(cone1.DeltaR(cone2)<0.3){
-                    IsoSum1+=event.packedCandsPseudoTrkPt[k];
-                    h_IsoSum1->Fill(IsoSum1/event.packedCandsPseudoTrkPt[k]);
-                  }
-            
-                  TLorentzVector cone3;//The other pion
-                  TLorentzVector cone4;//Packed candidate
-                    
-                  cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[p2],event.packedCandsPseudoTrkEta[p2],event.packedCandsPseudoTrkPhi[p2],event.packedCandsE[p2]);
-                  cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
-              
-                  if(cone3.DeltaR(cone4)<0.3){
-                    IsoSum2+=event.packedCandsPseudoTrkPt[k];
-                    h_IsoSum2->Fill(IsoSum2/event.packedCandsPseudoTrkPt[k]);
-                  }
-                }*/
-              
-              } 
-              
-            /*
-                const int m1 {muonIndex[0]}; const int m2 {muonIndex[1]};
-                if(event.packedCandsPseudoTrkCharge[m1]==-(event.packedCandsPseudoTrkCharge[m2])){
-            
-                  //Invariant mass for two muons
-                  TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[m1], event.packedCandsPseudoTrkPy[m1], event.packedCandsPseudoTrkPz[m1], event.packedCandsE[m1]};
-                  TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[m2], event.packedCandsPseudoTrkPy[m2], event.packedCandsPseudoTrkPz[m2], event.packedCandsE[m2]};
-                        
-                  muoninv=(lmuon1+lmuon2).M();
-                  h_muonsInvMass->Fill((lmuon1+lmuon2).M());
-                 
-                  TLorentzVector mm1;
-                  TLorentzVector mm2;
-          
-                  mm1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[m1],event.packedCandsPseudoTrkEta[m1],event.packedCandsPseudoTrkPhi[m1],event.packedCandsE[m1]);
-                  mm2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[m2],event.packedCandsPseudoTrkEta[m2],event.packedCandsPseudoTrkPhi[m2],event.packedCandsE[m2]);
-            
-                  h_muonsDeltaR->Fill(mm1.DeltaR(mm2));
-                }
-                if(k!=m1 && k!=m2){
-                  
-                  TLorentzVector cone1;//The muon
-                  TLorentzVector cone2;//Packed candidate
-
-                  cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[m1],event.packedCandsPseudoTrkEta[m1],event.packedCandsPseudoTrkPhi[m1],event.packedCandsE[m1]);
-                  cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
-
-                  if(cone1.DeltaR(cone2)<0.3){
-                    IsoSum3+=event.packedCandsPseudoTrkPt[k];
-                    h_IsoSum3->Fill(IsoSum3/event.packedCandsPseudoTrkPt[k]);
-                  }
-
-                  TLorentzVector cone3;//The other muon
-                  TLorentzVector cone4;//Packed candidate
-
-                  cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[m2],event.packedCandsPseudoTrkEta[m2],event.packedCandsPseudoTrkPhi[m2],event.packedCandsE[m2]);
-                  cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
-
-                  if(cone3.DeltaR(cone4)<0.3){
-                    IsoSum4+=event.packedCandsPseudoTrkPt[k];
-                    h_IsoSum4->Fill(IsoSum4/event.packedCandsPseudoTrkPt[k]);
-                  }
-                }
-              */
-             // h_invmass->Fill(hadroninv,muoninv);
             }
           }
-      
-          
+        
       }
+    }
+    
+    if(event.metFilters()){
+      for (Int_t k{0};k<event.numPackedCands;k++) {
+          if(event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex1])){
+            TLorentzVector packed1;
+            TLorentzVector packed2;
+          
+            packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],event.packedCandsE[pionIndex1]);
+            packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],event.packedCandsE[pionIndex2]);
+            
+            h_hadronDeltaR->Fill(packed1.DeltaR(packed2));
+            
+            //Invariant mass for two hadrons
+            TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[pionIndex1], event.packedCandsPseudoTrkPy[pionIndex1], event.packedCandsPseudoTrkPz[pionIndex1], event.packedCandsE[pionIndex1]};
+            TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[pionIndex2], event.packedCandsPseudoTrkPy[pionIndex2], event.packedCandsPseudoTrkPz[pionIndex2], event.packedCandsE[pionIndex2]};
+
+            hadroninv=(lhadron1+lhadron2).M();
+            h_hadronInvMass->Fill((lhadron1+lhadron2).M());
+            
+            if(k!=pionIndex1 && k!=pionIndex2){
+                
+              TLorentzVector cone1;//The pion
+              TLorentzVector cone2;//Packed candidate
+                    
+              cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],event.packedCandsE[pionIndex1]);
+              cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+              
+              if(cone1.DeltaR(cone2)<0.3){
+                IsoSum1+=event.packedCandsPseudoTrkPt[k];
+                h_IsoSum1->Fill(IsoSum1/event.packedCandsPseudoTrkPt[k]);
+              } 
+            
+              TLorentzVector cone3;//The other pion
+              TLorentzVector cone4;//Packed candidate
+                    
+              cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[p2],event.packedCandsPseudoTrkEta[p2],event.packedCandsPseudoTrkPhi[p2],event.packedCandsE[p2]);
+              cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+              
+              if(cone3.DeltaR(cone4)<0.3){
+                IsoSum2+=event.packedCandsPseudoTrkPt[k];
+                h_IsoSum2->Fill(IsoSum2/event.packedCandsPseudoTrkPt[k]);
+              }
+            }
+          }
+          if(event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex1])){
+           
+            //Invariant mass for two muons
+            TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[muIndex1], event.packedCandsPseudoTrkPy[muIndex1], event.packedCandsPseudoTrkPz[muIndex1], event.packedCandsE[muIndex1]};
+            TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[muIndex2], event.packedCandsPseudoTrkPy[muIndex2], event.packedCandsPseudoTrkPz[muIndex2], event.packedCandsE[muIndex2]};
+                        
+            muoninv=(lmuon1+lmuon2).M();
+            h_muonsInvMass->Fill((lmuon1+lmuon2).M());
+                 
+            TLorentzVector mm1;
+            TLorentzVector mm2;
+          
+            mm1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
+            mm2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
+            
+            h_muonsDeltaR->Fill(mm1.DeltaR(mm2));
+            
+            if(k!=muIndex1 && k!=muIndex2){
+                  
+              TLorentzVector cone1;//The muon
+              TLorentzVector cone2;//Packed candidate
+
+              cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
+              cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+
+              if(cone1.DeltaR(cone2)<0.3){
+                IsoSum3+=event.packedCandsPseudoTrkPt[k];
+                h_IsoSum3->Fill(IsoSum3/event.packedCandsPseudoTrkPt[k]);
+              }
+
+              TLorentzVector cone3;//The other muon
+              TLorentzVector cone4;//Packed candidate
+
+              cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
+              cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+
+              if(cone3.DeltaR(cone4)<0.3){
+                IsoSum4+=event.packedCandsPseudoTrkPt[k];
+                h_IsoSum4->Fill(IsoSum4/event.packedCandsPseudoTrkPt[k]);
+              }
+            }
+          }
+          h_invmass->Fill(hadroninv,muoninv);
+      } 
     }
     //END Packed Candidates
           
