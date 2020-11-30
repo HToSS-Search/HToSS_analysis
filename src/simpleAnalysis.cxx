@@ -798,7 +798,7 @@ int main(int argc, char* argv[])
     if(event.metFilters()){
       for (Int_t k{0};k<event.numPackedCands;k++) {
           if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2])){
-            std::cout<<"inside pion loop "<<std::endl;
+
             TLorentzVector packed1;
             TLorentzVector packed2;
           
@@ -840,7 +840,6 @@ int main(int argc, char* argv[])
             }
           }
           if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
-            std::cout<<"inside muon loop "<<std::endl;
            
             TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[muIndex1], event.packedCandsPseudoTrkPy[muIndex1], event.packedCandsPseudoTrkPz[muIndex1], event.packedCandsE[muIndex1]};
             TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[muIndex2], event.packedCandsPseudoTrkPy[muIndex2], event.packedCandsPseudoTrkPz[muIndex2], event.packedCandsE[muIndex2]};
