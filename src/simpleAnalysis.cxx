@@ -773,6 +773,7 @@ int main(int argc, char* argv[])
                          pionIndex2=k;
                          std::cout<<"index pion 2 "<<k<<std::endl;
                   }
+                  std::cout<<"pion mom 1 "<<pionpt1<<"pion mom 2 "<<pionpt2<<std::endl;
                 }
                 //std::cout<<"laatste element k "<<k<<"index voor pion "<<pionIndex1.back()<<std::endl;
                 /*if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
