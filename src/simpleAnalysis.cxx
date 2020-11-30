@@ -892,7 +892,7 @@ int main(int argc, char* argv[])
     //END Packed Candidates
           
       
-  std::cout<<"outside mom 1 "<<<<event.packedCandsPseudoTrkPt[pionIndex1]<<"outside mom 2 "<<event.packedCandsPseudoTrkPt[pionIndex2]<<std::endl;       
+  std::cout<<"outside mom 1 "<<event.packedCandsPseudoTrkPt[pionIndex1]<<"outside mom 2 "<<event.packedCandsPseudoTrkPt[pionIndex2]<<std::endl;       
           
           
           
