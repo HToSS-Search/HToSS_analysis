@@ -297,7 +297,7 @@ int main(int argc, char* argv[])
     std::vector<int> nrofPion;
     
     Float_t genpt1=0; Float_t genpt2=0;
-    //std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
+    std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
          
        for (Int_t k{0}; k < event.nGenPar; k++) {
      
