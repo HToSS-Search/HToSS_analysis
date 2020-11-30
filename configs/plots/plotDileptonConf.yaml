@@ -623,3 +623,212 @@ plots:
     fillExp: "allJetBDisc"
     xAxisLabel: "bDisc"
     cutStage: 1
+  - title: "Muon Track Vertex p_{x}"
+    name: "mumuVtxPx"
+    xMin: -300.
+    xMax: 300.
+    nBins: 1000
+    fillExp: "mumuVtxPx"
+    xAxisLabel: "Vertex p_{x} (GeV/c)"
+    cutStage: 1
+  - title: "Muon Track Vertex p_{y}"
+    name: "mumuVtxPy"
+    xMin: -300.
+    xMax: 300.
+    nBins: 1000
+    fillExp: "mumuVtxPy"
+    xAxisLabel: "Vertex p_{y} (GeV/c)"
+    cutStage: 1
+  - title: "Muon Track Vertex p_{z}"
+    name: "mumuVtxPz"
+    xMin: -300.
+    xMax: 300.
+    nBins: 1000
+    fillExp: "mumuVtxPz"
+    xAxisLabel: "Vertex p_{z} (GeV/c)"
+    cutStage: 1
+  - title: "Muon Track Vertex p"
+    name: "mumuVtxP"
+    xMin: 0.
+    xMax: 400.
+    nBins: 800
+    fillExp: "mumuVtxP"
+    xAxisLabel: "Vertex momentum (GeV/c)"
+    cutStage: 1
+  - title: "Muon Track Vertex x Displacement"
+    name: "mumuVx"
+    xMin: -100.
+    xMax: 100.
+    nBins: 400
+    fillExp: "mumuVx"
+    xAxisLabel: "v_{x} (cm)"
+    cutStage: 1
+  - title: "Muon Track Vertex y Displacement"
+    name: "mumuVy"
+    xMin: -100.
+    xMax: 100.
+    nBins: 400
+    fillExp: "mumuVy"
+    xAxisLabel: "v_{y} (cm)"
+    cutStage: 1
+  - title: "Muon Track Vertex z Displacement"
+    name: "mumuVz"
+    xMin: -100.
+    xMax: 100.
+    nBins: 400
+    fillExp: "mumuVz"
+    xAxisLabel: "v_{z} (cm)"
+    cutStage: 1
+  - title: "Muon Track Vertex Displacement"
+    name: "mumuVabs"
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "mumuVabs"
+    xAxisLabel: "v (cm)"
+    cutStage: 1
+  - title: "Muon Track Vertex #chi^{2}/N_{dof}"
+    name: "mumuVtxChi2Ndof"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "mumuVtxChi2Ndof"
+    xAxisLabel: "#chi^{2}/N_{dof}"
+    cutStage: 1
+  - title: "Muon Vertex 2D Angle"
+    name: "mumuVtxAngleXY"
+    xMin: -1.5
+    xMax: 1.5
+    nBins: 120
+    fillExp: "mumuVtxAngleXY"
+    xAxisLabel: "vertex xy angle"
+    cutStage: 1
+  - title: "Muon Vertex 3D Angle"
+    name: "mumuVtxAngleXYZ"
+    xMin: -1.5
+    xMax: 1.5
+    nBins: 120
+    fillExp: "mumuVtxAngleXY"
+    xAxisLabel: "vertex xyz angle"
+    cutStage: 1
+  - title: "Muon Vertex XY Signifiance"
+    name: "mumuVtxSigXY"
+    xMin: 0.
+    xMax: 300.
+    nBins: 600
+    fillExp: "mumuVtxSigXY"
+    xAxisLabel: "vertex xy significance"
+    cutStage: 1
+  - title: "Muon Vertex XYZ Signifiance"
+    name: "mumuVtxSigXYZ"
+    xMin: 0.  
+    xMax: 300.
+    nBins: 600
+    fillExp: "mumuVtxSigXYZ"
+    xAxisLabel: "vertex xyz significance"
+    cutStage: 1
+  - title: "Closest distance of approach between muons pre-vertex fit"
+    name: "mumuVtxDca"
+    xMin: 0.
+    xMax: 50.
+    nBins: 100
+    fillExp: "mumuVtxDca"
+    xAxisLabel: "Distance of closest approach (cm)"
+    cutStage: 1
+  - title: "Pre-refit leading muon track p_{T}"
+    name: "mumuTrkInnerPtOld1
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "mumuTrkInnerPtOld1"
+    xAxisLabel: "muon track p_{T} (GeV/c)"
+    cutStage: 1
+  - title: "Pre-refit leading muon track #eta"
+    name: "mumuTrkInnerEtaOld1
+    xMin: -3.
+    xMax: 3.
+    nBins: 600
+    fillExp: "mumuTrkInnerEtaOld1"
+    xAxisLabel: "muon track #eta"
+    cutStage: 1
+  - title: "Pre-refit leading muon track #chi^{2}/N_{dof}"
+    name: "mumuTrkInnerChi2NdofOld1"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "mumuTrkInnerChiNdofOld1"
+    xAxisLabel: "muon track #chi^{2}/N_{dof}"
+    cutStage: 1
+  - title: "Pre-refit subleading muon track p_{T}"
+    name: "mumuTrkInnerPtOld2
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "mumuTrkInnerPtOld2"
+    xAxisLabel: "muon track p_{T} (GeV/c)"
+    cutStage: 1
+  - title: "Pre-refit subleading muon track #eta"
+    name: "mumuTrkInnerEtaOld2
+    xMin: -3.
+    xMax: 3.
+    nBins: 600
+    fillExp: "mumuTrkInnerEtaOld2"
+    xAxisLabel: "muon track #eta"
+    cutStage: 1
+  - title: "Pre-refit subleading muon track #chi^{2}/N_{dof}"
+    name: "mumuTrkInnerChi2NdofOld2"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "mumuTrkInnerChiNdofOld2"
+    xAxisLabel: "muon track #chi^{2}/N_{dof}"
+    cutStage: 1
+  - title: "Refitted leading muon track p_{T}"
+    name: "mumuTrkInnerPtNew1
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "mumuTrkInnerPtNew1"
+    xAxisLabel: "muon track p_{T} (GeV/c)"
+    cutStage: 1
+  - title: "Refitted leading muon track #eta"
+    name: "mumuTrkInnerEtaNew1
+    xMin: -3.
+    xMax: 3.
+    nBins: 600
+    fillExp: "mumuTrkInnerEtaNew1"
+    xAxisLabel: "muon track #eta"
+    cutStage: 1
+  - title: "Refitted leading muon track #chi^{2}/N_{dof}"
+    name: "mumuTrkInnerChi2NdofNew1"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "mumuTrkInnerChiNdofNew1"
+    xAxisLabel: "muon track #chi^{2}/N_{dof}"
+    cutStage: 1
+  - title: "Refitted subleading muon track p_{T}"
+    name: "mumuTrkInnerPtNew2
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "mumuTrkInnerPtNew2"
+    xAxisLabel: "muon track p_{T} (GeV/c)"
+    cutStage: 1
+  - title: "Refitted subleading muon track #eta"
+    name: "mumuTrkInnerEtaNew2
+    xMin: -3.
+    xMax: 3.
+    nBins: 600
+    fillExp: "mumuTrkInnerEtaNew2"
+    xAxisLabel: "muon track #eta"
+    cutStage: 1
+  - title: "Refitted subleading muon track #chi^{2}/N_{dof}"
+    name: "mumuTrkInnerChi2NdofNew2"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "mumuTrkInnerChiNdofNew2"
+    xAxisLabel: "muon track #chi^{2}/N_{dof}"
+    cutStage: 1
+
