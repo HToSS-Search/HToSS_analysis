@@ -392,16 +392,6 @@ int main(int argc, char* argv[])
                      genpt2=event.genParPt[k];
               }
             }
-            if(genpt1!=0 && genpt2!=0){         
-               if(event.muTrig()){
-                 h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event
-               }
-               if(event.mumuTrig()){
-                  h_genParScalarMuonCutPtDL->Fill(genpt1);
-                  h_genParScalarMuonCutPtDS->Fill(genpt2);
-               }
-            }
-             
          }
         //Charged kaon from scalar decay
         if (pdgId==321){
@@ -453,7 +443,17 @@ int main(int argc, char* argv[])
       pdgIdMap[pdgId]++;
             
     }
-
+        
+    if(genpt1!=0 && genpt2!=0){         
+       if(event.muTrig()){
+         h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event
+       }
+       if(event.mumuTrig()){
+         h_genParScalarMuonCutPtDL->Fill(genpt1);
+         h_genParScalarMuonCutPtDS->Fill(genpt2);
+       }
+    }
+             
     h_genParScalarMuonDivPtSL=(TH1F*)h_genParScalarMuonCutPtSL->Clone();
     h_genParScalarMuonDivPtSL->Divide(h_genParScalarMuonPt);
     h_genParScalarMuonDivPtSL->SetTitle("Turn-on Single trigger leading");
