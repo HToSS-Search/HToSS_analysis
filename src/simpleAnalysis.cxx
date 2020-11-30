@@ -730,11 +730,6 @@ int main(int argc, char* argv[])
             h_packedCDz->Fill(event.packedCandsDz[k]);
           
             if(event.packedCandsHasTrackDetails[k]==1){
-          
-              //Test invariant masses
-              TLorentzVector test  {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
-              h_testInvMass->Fill(test.M());
-              //std::cout<<"invariant mass packed candid "<<test.M()<<std::endl;
             
               const Int_t packedCandsPseudoTrkCharge {event.packedCandsPseudoTrkCharge[k]};
               const Int_t packedCandsCharge {event.packedCandsCharge[k]};
@@ -1078,7 +1073,7 @@ int main(int argc, char* argv[])
   h_invmass->GetXaxis()->SetTitle("Hadron invariant mass");
   h_invmass->GetYaxis()->SetTitle("Muon invariant mass");
   
-  h_testInvMass->Write();
+
     
     
     
