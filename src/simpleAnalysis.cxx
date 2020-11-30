@@ -308,7 +308,7 @@ int main(int argc, char* argv[])
           m.SetPtEtaPhiE(event.genParPt[k],event.genParEta[k],event.genParPhi[k],event.genParE[k]);
           TLorentzVector mass {m.Px(),m.Py(),m.Pz(),event.genParE[k]};
 
-          /*std::cout << k << "\t | "
+          std::cout << k << "\t | "
           << event.genParId[k] << "\t "
           << event.genParStatus[k] << "\t | "
           << event.genParMotherIndex[k] << "\t "
@@ -317,7 +317,7 @@ int main(int argc, char* argv[])
           << event.genParPt[k] << "\t "
           << event.genParEta[k] << "\t "
           << event.genParPhi[k] << "\t "
-          << mass.M() << std::endl;*/
+          << mass.M() << std::endl;
 
 
 
