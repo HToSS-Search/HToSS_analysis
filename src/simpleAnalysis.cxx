@@ -746,7 +746,7 @@ int main(int argc, char* argv[])
              
           
                 //Find the hadrons (pions)
-                if(std::abs(packedId)!=13){//Selection of pions (charged hadrons) 
+                if(std::abs(packedId)==211){//Selection of pions (charged hadrons) 
                   if(event.packedCandsPseudoTrkPt[k]>pionpt1){
                     pionpt2=pionpt1;
                     pionpt1=event.packedCandsPseudoTrkPt[k];
