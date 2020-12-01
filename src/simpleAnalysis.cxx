@@ -171,6 +171,7 @@ int main(int argc, char* argv[])
   TH1F* h_IsoSum3       {new TH1F("h_IsoSum3",  "0.3 p_{T} Cone construction muon 1", 1000, 0., 50.)};
   TH1F* h_IsoSum4       {new TH1F("h_IsoSum4",  "0.3 p_{T} Cone construction muon 2", 1000, 0., 50.)};
   TH1F* h_hadronInvMass {new TH1F("h_hadronInvMass", "Two hadrons - Invariant mass",1000, 0., 7.)};
+  TH1F* h_hadronInvMass2 {new TH1F("h_hadronInvMass2", "Two hadrons - Invariant mass, smaller binning",100, 0., 7.)};
   TH1F* h_muonsInvMass  {new TH1F("h_muonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
   TH2F* h_invmass       {new TH2F("h_invmass", "Invariant mass: pions vs muons", 1000, 0.,7.,1000,0.,7.)};
   
@@ -802,6 +803,7 @@ int main(int argc, char* argv[])
 
             hadroninv=(lhadron1+lhadron2).M();
             h_hadronInvMass->Fill((lhadron1+lhadron2).M());
+            h_hadronInvMass2->Fill((lhadron1+lhadron2).M());
             
             if(k!=pionIndex1 && k!=pionIndex2){
                 
@@ -1069,6 +1071,8 @@ int main(int argc, char* argv[])
   h_muonsInvMass->GetXaxis()->SetTitle("GeV");
   h_hadronInvMass->Write();
   h_hadronInvMass->GetXaxis()->SetTitle("GeV");
+  h_hadronInvMass2->GetXaxis()->SetTitle("GeV");
+  h_hadronInvMass2->Write();
   h_invmass->Write();
   h_invmass->GetXaxis()->SetTitle("Hadron invariant mass");
   h_invmass->GetYaxis()->SetTitle("Muon invariant mass");
