@@ -688,7 +688,7 @@ int main(int argc, char* argv[])
         
            //To show seperate turn-on curve for single or double muon trigger
            if(event.muTrig() ){
-             if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4 && event.muonPF2PATPt[k]>5){ //Loose ID cut, |eta| < 2.4 and min 5GeV cut
+             if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut, |eta| < 2.4 
                singleFlag++; singleIndex.emplace_back(k);
              }
            }
@@ -698,7 +698,7 @@ int main(int argc, char* argv[])
              h_muonCutSingleL->Fill(event.muonPF2PATPt[s1]);
            }
            if(event.mumuTrig()){
-             if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4 && event.muonPF2PATPt[k]>5){//Loose ID cut, |eta| < 2.4 and min 5GeV cut
+             if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut, |eta| < 2.4 
                doubleFlag++; doubleIndex.emplace_back(k);
              } 
            }
