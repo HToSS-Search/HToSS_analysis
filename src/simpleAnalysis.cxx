@@ -969,8 +969,10 @@ int main(int argc, char* argv[])
   h_Scalar3DAngle->Write();
     
  
-  h_genParScalarMuonPt->GetXaxis()->SetTitle("GeV");
-  h_genParScalarMuonPt->Write();
+  h_genParScalarMuonPtL->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonPtL->Write();
+  h_genParScalarMuonPtS->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonPtS->Write();
   h_genParScalarMuonCutPtSL->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonCutPtSL->Write();
   h_genParScalarMuonDivPtSL->GetXaxis()->SetTitle("GeV");
@@ -1043,6 +1045,10 @@ int main(int argc, char* argv[])
   //Reconstruction
   h_muonRecPt->GetXaxis()->SetTitle("GeV");
   h_muonRecPt->Write();
+  h_muonRecPtL->GetXaxis()->SetTitle("GeV");
+  h_muonRecPtL->Write();
+  h_muonRecPtS->GetXaxis()->SetTitle("GeV");
+  h_muonRecPtS->Write();
   h_muonRecEta->Write();
   h_muonRecPhi->Write();
   h_muonRecE->Write();
