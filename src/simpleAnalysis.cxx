@@ -85,7 +85,8 @@ int main(int argc, char* argv[])
   TH1F* h_Scalar3DAngle       {new TH1F("h_Scalar3DAngle", "Scalar 3D Angle",1000,-10., 10.)};
     
   //Muon from scalar decay
-  TH1F* h_genParScalarMuonPt          {new TH1F("h_genParScalarMuonPt",  "#mu^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonPtL         {new TH1F("h_genParScalarMuonPtL",  "#mu^{#pm} from scalar decay p_{T}, leading", 1000, 0., 1000.)};
+  TH1F* h_genParScalarMuonPtS         {new TH1F("h_genParScalarMuonPtS",  "#mu^{#pm} from scalar decay p_{T}, subleading", 1000, 0., 1000.)};
   TH1F* h_genParScalarMuonCutPtSL     {new TH1F("h_genParScalarMuonCutPtSL",  "Single #mu^{#pm} trigger leading p_{T}", 1000, 0., 1000.)};
   TH1F* h_genParScalarMuonDivPtSL     {new TH1F("h_genParScalarMuonDivPtSL",  "Turn-on Single #mu^{#pm} trigger leading p_{T}", 300, 0., 1000.)};
   TH1F* h_genParScalarMuonCutPtDL     {new TH1F("h_genParScalarMuonCutPtDL",  "Double #mu^{#pm} trigger leading p_{T}", 1000, 0., 1000.)};
@@ -143,6 +144,8 @@ int main(int argc, char* argv[])
   //RECONSTRUCTION histograms
   //Muon reco
   TH1F* h_muonRecPt            {new TH1F("h_muonRecPt",  "#mu^{#pm} reconstruction p_{T}", 1000, 0., 1000.)};
+  TH1F* h_muonRecPtL           {new TH1F("h_muonRecPtL",  "#mu^{#pm} reconstruction p_{T}, leading", 1000, 0., 1000.)};
+  TH1F* h_muonRecPtS           {new TH1F("h_muonRecPtS",  "#mu^{#pm} reconstruction p_{T}, subleading", 1000, 0., 1000.)};
   TH1F* h_muonRecEta           {new TH1F("h_muonRecEta", "#mu^{#pm} reconstruction #eta",  200, -7., 7.)};
   TH1F* h_muonRecPhi           {new TH1F("h_muonRecPhi", "#mu^{#pm} reconstruction #phi",  100, -3.5, 3.5)};
   TH1F* h_muonRecE             {new TH1F("h_muonRecE",   "#mu^{#pm} reconstruction energy",     1000, 0., 1000.)};
@@ -171,7 +174,7 @@ int main(int argc, char* argv[])
   TH1F* h_IsoSum3       {new TH1F("h_IsoSum3",  "0.3 p_{T} Cone construction muon 1", 1000, 0., 50.)};
   TH1F* h_IsoSum4       {new TH1F("h_IsoSum4",  "0.3 p_{T} Cone construction muon 2", 1000, 0., 50.)};
   TH1F* h_hadronInvMass {new TH1F("h_hadronInvMass", "Two hadrons - Invariant mass",1000, 0., 7.)};
-  TH1F* h_hadronInvMass2 {new TH1F("h_hadronInvMass2", "Two hadrons - Invariant mass, smaller binning",100, 0., 7.)};
+  TH1F* h_hadronInvMass2 {new TH1F("h_hadronInvMass2", "Two hadrons - Invariant mass, smaller binning",500, 0., 7.)};
   TH1F* h_muonsInvMass  {new TH1F("h_muonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
   TH2F* h_invmass       {new TH2F("h_invmass", "Invariant mass: pions vs muons", 1000, 0.,7.,1000,0.,7.)};
   
@@ -298,6 +301,7 @@ int main(int argc, char* argv[])
     std::vector<int> nrofPion;
     
     Float_t genpt1=0; Float_t genpt2=0;
+    Float_t gen1=0; Float_t gen2=0;
     //std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
          
        for (Int_t k{0}; k < event.nGenPar; k++) {
@@ -305,11 +309,11 @@ int main(int argc, char* argv[])
           //Print out event record
 
           //Invariant mass
-          TLorentzVector m;
+          /*TLorentzVector m;
           m.SetPtEtaPhiE(event.genParPt[k],event.genParEta[k],event.genParPhi[k],event.genParE[k]);
           TLorentzVector mass {m.Px(),m.Py(),m.Pz(),event.genParE[k]};
 
-          /*std::cout << k << "\t | "
+          std::cout << k << "\t | "
           << event.genParId[k] << "\t "
           << event.genParStatus[k] << "\t | "
           << event.genParMotherIndex[k] << "\t "
@@ -379,8 +383,15 @@ int main(int argc, char* argv[])
             h_VertexPosXY->Fill(genParVx,genParVy);
             h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
             h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
-        
-            h_genParScalarMuonPt->Fill(event.genParPt[k]);
+       
+            if(event.genParPt[k]>gen1){
+                gen2=gen1;
+                gen1=event.genParPt[k];
+              }
+            else if(event.genParPt[k]>gen2){
+                     gen2=event.genParPt[k];
+            }
+           
             if(event.muTrig() || event.mumuTrig()){
               if(event.genParPt[k]>genpt1){
                 genpt2=genpt1;
@@ -451,17 +462,22 @@ int main(int argc, char* argv[])
          h_genParScalarMuonCutPtDS->Fill(genpt2);
        }
     }
-             
+    if(gen1!=0 && gen2!=0){
+       h_genParScalarMuonPtL->Fill(gen1); 
+       h_genParScalarMuonPtS->Fill(gen2);
+    }  
+ 
+    
     h_genParScalarMuonDivPtSL=(TH1F*)h_genParScalarMuonCutPtSL->Clone();
-    h_genParScalarMuonDivPtSL->Divide(h_genParScalarMuonPt);
+    h_genParScalarMuonDivPtSL->Divide(h_genParScalarMuonPtL);
     h_genParScalarMuonDivPtSL->SetTitle("Turn-on Single trigger leading");
     
     h_genParScalarMuonDivPtDL=(TH1F*)h_genParScalarMuonCutPtDL->Clone();
-    h_genParScalarMuonDivPtDL->Divide(h_genParScalarMuonPt);
+    h_genParScalarMuonDivPtDL->Divide(h_genParScalarMuonPtL);
     h_genParScalarMuonDivPtDL->SetTitle("Turn-on Double trigger leading");
     
     h_genParScalarMuonDivPtDS=(TH1F*)h_genParScalarMuonCutPtDS->Clone();
-    h_genParScalarMuonDivPtDS->Divide(h_genParScalarMuonPt);
+    h_genParScalarMuonDivPtDS->Divide(h_genParScalarMuonPtS);
     h_genParScalarMuonDivPtDS->SetTitle("Turn-on Double trigger subleading");
           
           
@@ -633,8 +649,9 @@ int main(int argc, char* argv[])
            const Float_t muonRecPhi  { event.muonPF2PATPhi[k] };
            const Float_t muonRecE    { event.muonPF2PATE[k] };
            
-           h_muonRecPt->Fill(event.muonPF2PATPt[0]);//Two highest momenta
-           h_muonRecPt->Fill(event.muonPF2PATPt[1]);
+           h_muonRecPt->Fill(muonRecPt);
+           h_muonRecPtL->Fill(event.muonPF2PATPt[0]);//Two highest momenta
+           h_muonRecPtS->Fill(event.muonPF2PATPt[1]);
            
            h_muonRecEta->Fill(muonRecEta);
            h_muonRecPhi->Fill(muonRecPhi);
@@ -695,15 +712,15 @@ int main(int argc, char* argv[])
     }//MET filter
     
     h_muonDivSingleL=(TH1F*)h_muonCutSingleL->Clone();
-    h_muonDivSingleL->Divide(h_muonRecPt);
+    h_muonDivSingleL->Divide(h_muonRecPtL);
     h_muonDivSingleL->SetTitle("Turn-on Single trigger, leading");
           
     h_muonDivDoubleL=(TH1F*)h_muonCutDoubleL->Clone();
-    h_muonDivDoubleL->Divide(h_muonRecPt);
+    h_muonDivDoubleL->Divide(h_muonRecPtL);
     h_muonDivDoubleL->SetTitle("Turn-on Double trigger, leading");
           
     h_muonDivDoubleS=(TH1F*)h_muonCutDoubleS->Clone();
-    h_muonDivDoubleS->Divide(h_muonRecPt);
+    h_muonDivDoubleS->Divide(h_muonRecPtS);
     h_muonDivDoubleS->SetTitle("Turn-on Double trigger, subleading");
 
     //END Muon Reconstruction
@@ -786,6 +803,7 @@ int main(int argc, char* argv[])
     Float_t hadroninv; Float_t muoninv;
           
     if(event.metFilters()){
+      if(event.muTrig()||event.mumuTrig()){
       for (Int_t k{0};k<event.numPackedCands;k++) {
           if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2])){
 
@@ -872,7 +890,7 @@ int main(int argc, char* argv[])
             }
           }
           h_invmass->Fill(hadroninv,muoninv);
-      } 
+      }} 
     }
     //END Packed Candidates
           
