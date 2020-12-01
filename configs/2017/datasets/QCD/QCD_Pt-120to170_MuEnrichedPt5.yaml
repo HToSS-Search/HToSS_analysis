@@ -1,0 +1,10 @@
+name: "QCD_Pt-120to170_MuEnrichedPt5"
+locations:
+    - "localInput/QCD_Pt-120to170_MuEnrichedPt5/"
+cross_section: 21230.0
+mc: true
+histogram: "QCD"
+colour: "#993399"
+label: "QCD"
+plot_type: "f"
+
