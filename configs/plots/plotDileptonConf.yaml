@@ -736,7 +736,7 @@ plots:
     xAxisLabel: "Distance of closest approach (cm)"
     cutStage: 1
   - title: "Pre-refit leading muon track p_{T}"
-    name: "mumuTrkInnerPtOld1
+    name: "mumuTrkInnerPtOld1"
     xMin: 0.
     xMax: 200.
     nBins: 400
@@ -744,7 +744,7 @@ plots:
     xAxisLabel: "muon track p_{T} (GeV/c)"
     cutStage: 1
   - title: "Pre-refit leading muon track #eta"
-    name: "mumuTrkInnerEtaOld1
+    name: "mumuTrkInnerEtaOld1"
     xMin: -3.
     xMax: 3.
     nBins: 600
@@ -760,7 +760,7 @@ plots:
     xAxisLabel: "muon track #chi^{2}/N_{dof}"
     cutStage: 1
   - title: "Pre-refit subleading muon track p_{T}"
-    name: "mumuTrkInnerPtOld2
+    name: "mumuTrkInnerPtOld2"
     xMin: 0.
     xMax: 200.
     nBins: 400
@@ -768,7 +768,7 @@ plots:
     xAxisLabel: "muon track p_{T} (GeV/c)"
     cutStage: 1
   - title: "Pre-refit subleading muon track #eta"
-    name: "mumuTrkInnerEtaOld2
+    name: "mumuTrkInnerEtaOld2"
     xMin: -3.
     xMax: 3.
     nBins: 600
@@ -784,7 +784,7 @@ plots:
     xAxisLabel: "muon track #chi^{2}/N_{dof}"
     cutStage: 1
   - title: "Refitted leading muon track p_{T}"
-    name: "mumuTrkInnerPtNew1
+    name: "mumuTrkInnerPtNew1"
     xMin: 0.
     xMax: 200.
     nBins: 400
@@ -792,7 +792,7 @@ plots:
     xAxisLabel: "muon track p_{T} (GeV/c)"
     cutStage: 1
   - title: "Refitted leading muon track #eta"
-    name: "mumuTrkInnerEtaNew1
+    name: "mumuTrkInnerEtaNew1"
     xMin: -3.
     xMax: 3.
     nBins: 600
@@ -808,7 +808,7 @@ plots:
     xAxisLabel: "muon track #chi^{2}/N_{dof}"
     cutStage: 1
   - title: "Refitted subleading muon track p_{T}"
-    name: "mumuTrkInnerPtNew2
+    name: "mumuTrkInnerPtNew2"
     xMin: 0.
     xMax: 200.
     nBins: 400
@@ -816,7 +816,7 @@ plots:
     xAxisLabel: "muon track p_{T} (GeV/c)"
     cutStage: 1
   - title: "Refitted subleading muon track #eta"
-    name: "mumuTrkInnerEtaNew2
+    name: "mumuTrkInnerEtaNew2"
     xMin: -3.
     xMax: 3.
     nBins: 600
@@ -831,4 +831,3 @@ plots:
     fillExp: "mumuTrkInnerChiNdofNew2"
     xAxisLabel: "muon track #chi^{2}/N_{dof}"
     cutStage: 1
-
