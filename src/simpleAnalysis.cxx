@@ -1085,24 +1085,23 @@ int main(int argc, char* argv[])
   h_displacedRZ->Write();
   h_hadronDeltaR->Write();
   h_muonsDeltaR->Write();
-  h_IsoSum1->Write();
   h_IsoSum1->GetXaxis()->SetTitle("GeV");
-  h_IsoSum2->Write();
+  h_IsoSum1->Write();
   h_IsoSum2->GetXaxis()->SetTitle("GeV");
-  h_IsoSum3->Write();
+  h_IsoSum2->Write();
   h_IsoSum3->GetXaxis()->SetTitle("GeV");
-  h_IsoSum4->Write();
+  h_IsoSum3->Write();
   h_IsoSum4->GetXaxis()->SetTitle("GeV");
-  h_muonsInvMass->Write();
+  h_IsoSum4->Write();
   h_muonsInvMass->GetXaxis()->SetTitle("GeV");
-  h_hadronInvMass->Write();
+  h_muonsInvMass->Write();
   h_hadronInvMass->GetXaxis()->SetTitle("GeV");
+  h_hadronInvMass->Write();
   h_hadronInvMass2->GetXaxis()->SetTitle("GeV");
   h_hadronInvMass2->Write();
-  h_invmass->Write();
   h_invmass->GetXaxis()->SetTitle("Hadron invariant mass");
   h_invmass->GetYaxis()->SetTitle("Muon invariant mass");
-  
+  h_invmass->Write();
 
     
     
