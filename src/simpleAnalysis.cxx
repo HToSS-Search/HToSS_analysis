@@ -180,8 +180,8 @@ int main(int argc, char* argv[])
   
   TH1F* h_antiscalarInvMass        {new TH1F("h_antiscalarInvMass", "Antiscalar Invariant mass", 1000, 0.,15.)};
   TH1F* h_scalarInvMass            {new TH1F("h_scalarInvMass", "Scalar Invariant mass", 1000, 0.,15.)};
-  TH1F* h_higgsInvMass             {new TH1F("h_higgsInvMass",  "h_0 Invariant mass", 1000, 0., 300.)};   
-  TH1F* h_higgsDeltaR              {new TH1F("h_higssDeltaR", "Scalar-Antiscalar #DeltaR",2500, -20., 20.)};  
+  TH1F* h_higgsInvMass             {new TH1F("h_higgsInvMass",  "h_0 Invariant mass", 1000, 0., 200.)};   
+  TH1F* h_higgsDeltaR              {new TH1F("h_higgsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.)};  
 	
 	
 	
@@ -799,6 +799,7 @@ int main(int argc, char* argv[])
             }
           }
         
+	      
       }
     }
     
@@ -923,8 +924,7 @@ int main(int argc, char* argv[])
 		
 	  TLorentzVector antiscalar{Ppx,Ppy,Ppz,PE};
 	  h_antiscalarInvMass->Fill(antiscalar.M());
-	     
-	      
+	        
 	  h_higgsInvMass->Fill((antiscalar+scalar).M());
 	      
           sPt=event.packedCandsPseudoTrkPt[muIndex1]+event.packedCandsPseudoTrkPt[muIndex2];
