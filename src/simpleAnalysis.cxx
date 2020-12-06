@@ -845,7 +845,7 @@ int main(int argc, char* argv[])
              Ppz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
              PE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
 		
-	     antiscalar {Ppx,Ppy,Ppz,PE};
+	     antiscalar{Ppx,Ppy,Ppz,PE};
 	     h_antiscalarInvMass->Fill(antiscalar.M());
 	     
            }
@@ -905,7 +905,7 @@ int main(int argc, char* argv[])
               Mpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
               ME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
 		
-	      scalar {Mpx,Mpy,Mpz,ME};
+	      scalar{Mpx,Mpy,Mpz,ME};
 	      h_scalarInvMass->Fill(scalar.M());
 	    }
             if(k!=muIndex1 && k!=muIndex2 && event.packedCandsPseudoTrkPt[k]>5){
@@ -941,7 +941,7 @@ int main(int argc, char* argv[])
             }
           }
           h_invmass->Fill(hadroninv,muoninv);
-	  h_higgsInvMass->Fill((antiscalar+scalar).M())
+	  h_higgsInvMass->Fill((antiscalar+scalar).M();
 		  
           h_higgsDeltaR->Fill(antis.DeltaR(s));
       }} 
