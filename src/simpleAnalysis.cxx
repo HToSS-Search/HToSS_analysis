@@ -908,42 +908,44 @@ int main(int argc, char* argv[])
           }
           h_invmass->Fill(hadroninv,muoninv);
 	      
+	  if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2]) && muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
 	      
-	  Mpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
-          Mpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
-          Mpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
-	  ME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];	
+	    Mpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
+            Mpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
+            Mpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
+	    ME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];	
 	      
-	  TLorentzVector scalar{Mpx,Mpy,Mpz,ME};
-	  h_scalarInvMass->Fill(scalar.M());
+	    TLorentzVector scalar{Mpx,Mpy,Mpz,ME};
+	    h_scalarInvMass->Fill(scalar.M());
 	   
-          Ppx=event.packedCandsPseudoTrkPx[pionIndex1]+event.packedCandsPseudoTrkPx[pionIndex2];
-          Ppy=event.packedCandsPseudoTrkPy[pionIndex1]+event.packedCandsPseudoTrkPy[pionIndex2];
-          Ppz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
-          PE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
+            Ppx=event.packedCandsPseudoTrkPx[pionIndex1]+event.packedCandsPseudoTrkPx[pionIndex2];
+            Ppy=event.packedCandsPseudoTrkPy[pionIndex1]+event.packedCandsPseudoTrkPy[pionIndex2];
+            Ppz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
+            PE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
 		
-	  TLorentzVector antiscalar{Ppx,Ppy,Ppz,PE};
-	  h_antiscalarInvMass->Fill(antiscalar.M());
+	    TLorentzVector antiscalar{Ppx,Ppy,Ppz,PE};
+	    h_antiscalarInvMass->Fill(antiscalar.M());
 	        
-	  h_higgsInvMass->Fill((antiscalar+scalar).M());
+	    h_higgsInvMass->Fill((antiscalar+scalar).M());
 	      
-          sPt=event.packedCandsPseudoTrkPt[muIndex1]+event.packedCandsPseudoTrkPt[muIndex2];
-	  sEta=event.packedCandsPseudoTrkEta[muIndex1]+event.packedCandsPseudoTrkEta[muIndex2];
-	  sPhi=event.packedCandsPseudoTrkPhi[muIndex1]+event.packedCandsPseudoTrkPhi[muIndex2];
-	  sE=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
+            sPt=event.packedCandsPseudoTrkPt[muIndex1]+event.packedCandsPseudoTrkPt[muIndex2];
+	    sEta=event.packedCandsPseudoTrkEta[muIndex1]+event.packedCandsPseudoTrkEta[muIndex2];
+	    sPhi=event.packedCandsPseudoTrkPhi[muIndex1]+event.packedCandsPseudoTrkPhi[muIndex2];
+	    sE=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
 	      
-	  TLorentzVector s; 
-	  s.SetPtEtaPhiE(sPt,sEta,sPhi,sE);
+	    TLorentzVector s; 
+	    s.SetPtEtaPhiE(sPt,sEta,sPhi,sE);
 	      
-	  antisPt=event.packedCandsPseudoTrkPt[pionIndex1]+event.packedCandsPseudoTrkPt[pionIndex2];
-	  antisEta=event.packedCandsPseudoTrkEta[pionIndex1]+event.packedCandsPseudoTrkEta[pionIndex2];
-	  antisPhi=event.packedCandsPseudoTrkPhi[pionIndex1]+event.packedCandsPseudoTrkPhi[pionIndex2];
-	  antisE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
+	    antisPt=event.packedCandsPseudoTrkPt[pionIndex1]+event.packedCandsPseudoTrkPt[pionIndex2];
+	    antisEta=event.packedCandsPseudoTrkEta[pionIndex1]+event.packedCandsPseudoTrkEta[pionIndex2];
+	    antisPhi=event.packedCandsPseudoTrkPhi[pionIndex1]+event.packedCandsPseudoTrkPhi[pionIndex2];
+	    antisE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
 	
-	  TLorentzVector antis;
-	  antis.SetPtEtaPhiE(antisPt,antisEta,antisPhi,antisE);
+	    TLorentzVector antis;
+	    antis.SetPtEtaPhiE(antisPt,antisEta,antisPhi,antisE);
 	             
-          h_higgsDeltaR->Fill(antis.DeltaR(s));
+            h_higgsDeltaR->Fill(antis.DeltaR(s));
+	  }
       }} 
     }
     //END Packed Candidates
