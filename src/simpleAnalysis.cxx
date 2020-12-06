@@ -860,14 +860,6 @@ int main(int argc, char* argv[])
                 IsoSum2+=event.packedCandsPseudoTrkPt[k];
                 h_IsoSum2->Fill(IsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]);
               }
-	      antisPt=event.packedCandsPseudoTrkPt[pionIndex1]+event.packedCandsPseudoTrkPt[pionIndex2];
-	      antisEta=event.packedCandsPseudoTrkEta[pionIndex1]+event.packedCandsPseudoTrkEta[pionIndex2];
-	      antisPhi=event.packedCandsPseudoTrkPhi[pionIndex1]+event.packedCandsPseudoTrkPhi[pionIndex2];
-	      antisE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
-	
-	      TLorentzVector antis;
-	      antis.SetPtEtaPhiE(antisPt,antisEta,antisPhi,antisE);
-	      
 	   }
           }
           if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
@@ -910,15 +902,7 @@ int main(int argc, char* argv[])
               if(cone3.DeltaR(cone4)<0.3){
                 IsoSum4+=event.packedCandsPseudoTrkPt[k];
                 h_IsoSum4->Fill(IsoSum4/event.packedCandsPseudoTrkPt[muIndex2]);
-              }
-		   
-	      sPt=event.packedCandsPseudoTrkPt[muIndex1]+event.packedCandsPseudoTrkPt[muIndex2];
-	      sEta=event.packedCandsPseudoTrkEta[muIndex1]+event.packedCandsPseudoTrkEta[muIndex2];
-	      sPhi=event.packedCandsPseudoTrkPhi[muIndex1]+event.packedCandsPseudoTrkPhi[muIndex2];
-	      sE=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
-	      
-	      TLorentzVector s; 
-	      s.SetPtEtaPhiE(antisPt,antisEta,antisPhi,antisE);
+              }   
             }
           }
           h_invmass->Fill(hadroninv,muoninv);
@@ -941,7 +925,23 @@ int main(int argc, char* argv[])
 	     
 	      
 	  h_higgsInvMass->Fill((antiscalar+scalar).M());
-		  
+	      
+          sPt=event.packedCandsPseudoTrkPt[muIndex1]+event.packedCandsPseudoTrkPt[muIndex2];
+	  sEta=event.packedCandsPseudoTrkEta[muIndex1]+event.packedCandsPseudoTrkEta[muIndex2];
+	  sPhi=event.packedCandsPseudoTrkPhi[muIndex1]+event.packedCandsPseudoTrkPhi[muIndex2];
+	  sE=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
+	      
+	  TLorentzVector s; 
+	  s.SetPtEtaPhiE(antisPt,antisEta,antisPhi,antisE);
+	      
+	  antisPt=event.packedCandsPseudoTrkPt[pionIndex1]+event.packedCandsPseudoTrkPt[pionIndex2];
+	  antisEta=event.packedCandsPseudoTrkEta[pionIndex1]+event.packedCandsPseudoTrkEta[pionIndex2];
+	  antisPhi=event.packedCandsPseudoTrkPhi[pionIndex1]+event.packedCandsPseudoTrkPhi[pionIndex2];
+	  antisE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
+	
+	  TLorentzVector antis;
+	  antis.SetPtEtaPhiE(antisPt,antisEta,antisPhi,antisE);
+	             
           h_higgsDeltaR->Fill(antis.DeltaR(s));
       }} 
     }
