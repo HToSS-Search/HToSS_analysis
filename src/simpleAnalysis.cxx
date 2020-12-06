@@ -813,7 +813,9 @@ int main(int argc, char* argv[])
 	      
     Float_t Ppx=0; Float_t Ppy=0; Float_t Ppz=0; Float_t PE=0;
     Float_t Mpx=0; Float_t Mpy=0; Float_t Mpz=0; Float_t ME=0;
-	      
+	
+    TLorentzVector s; TLorentzVector antis;
+    TLorentzVector antiscalar; TLorentzVector scalar
 	      
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){
@@ -843,7 +845,7 @@ int main(int argc, char* argv[])
              Ppz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
              PE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
 		
-	     TLorentzVector antiscalar {Ppx,Ppy,Ppz,PE};
+	     antiscalar {Ppx,Ppy,Ppz,PE};
 	     h_antiscalarInvMass->Fill(antiscalar.M());
 	     
            }
@@ -903,7 +905,7 @@ int main(int argc, char* argv[])
               Mpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
               ME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
 		
-	      TLorentzVector scalar {Mpx,Mpy,Mpz,ME};
+	      scalar {Mpx,Mpy,Mpz,ME};
 	      h_scalarInvMass->Fill(scalar.M());
 	    }
             if(k!=muIndex1 && k!=muIndex2 && event.packedCandsPseudoTrkPt[k]>5){
@@ -935,7 +937,6 @@ int main(int argc, char* argv[])
 	      sPhi=event.packedCandsPseudoTrkPhi[muIndex1]+event.packedCandsPseudoTrkPhi[muIndex2];
 	      sE=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
 		   
-	      TLorentzVector s;
 	      s.SetPtEtaPhiE(antisPt,antisEta,antisPhi,antisE);
             }
           }
