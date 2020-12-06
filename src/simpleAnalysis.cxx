@@ -808,7 +808,7 @@ int main(int argc, char* argv[])
    
     Float_t hadroninv; Float_t muoninv;
 	      
-    Float_t antisPt=0; Float_t antisEta=0; Float_t antisEta=0; Float_t antisE=0;
+    Float_t antisPt=0; Float_t antisEta=0; Float_t antisPhi=0; Float_t antisE=0;
     Float_t sPt=0; Float_t sEta=0; Float_t sPhi=0; Float_t sE=0;
 	      
     Float_t Ppx=0; Float_t Ppy=0; Float_t Ppz=0; Float_t PE=0;
