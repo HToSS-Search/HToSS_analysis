@@ -911,7 +911,8 @@ int main(int argc, char* argv[])
 	  Mpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
           Mpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
           Mpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
-		
+	  ME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];	
+	      
 	  TLorentzVector scalar{Mpx,Mpy,Mpz,ME};
 	  h_scalarInvMass->Fill(scalar.M());
 	   
