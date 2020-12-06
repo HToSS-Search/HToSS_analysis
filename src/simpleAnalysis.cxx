@@ -916,7 +916,8 @@ int main(int argc, char* argv[])
 	      sEta=event.packedCandsPseudoTrkEta[muIndex1]+event.packedCandsPseudoTrkEta[muIndex2];
 	      sPhi=event.packedCandsPseudoTrkPhi[muIndex1]+event.packedCandsPseudoTrkPhi[muIndex2];
 	      sE=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
-		   
+	      
+	      TLorentzVector s; 
 	      s.SetPtEtaPhiE(antisPt,antisEta,antisPhi,antisE);
             }
           }
