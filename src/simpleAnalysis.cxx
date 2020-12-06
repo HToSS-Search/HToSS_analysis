@@ -813,9 +813,6 @@ int main(int argc, char* argv[])
 	      
     Float_t Ppx=0; Float_t Ppy=0; Float_t Ppz=0; Float_t PE=0;
     Float_t Mpx=0; Float_t Mpy=0; Float_t Mpz=0; Float_t ME=0;
-	
-    TLorentzVector s; TLorentzVector antis;
-    TLorentzVector antiscalar; TLorentzVector scalar;
 	      
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){
@@ -839,17 +836,8 @@ int main(int argc, char* argv[])
              h_hadronInvMass->Fill((lhadron1+lhadron2).M());
              h_hadronInvMass2->Fill((lhadron1+lhadron2).M());
 	
-             //Antiscalar reconstruction, invariant mass
-             Ppx=event.packedCandsPseudoTrkPx[pionIndex1]+event.packedCandsPseudoTrkPx[pionIndex2];
-             Ppy=event.packedCandsPseudoTrkPy[pionIndex1]+event.packedCandsPseudoTrkPy[pionIndex2];
-             Ppz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
-             PE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
-		
-	     antiscalar{Ppx,Ppy,Ppz,PE};
-	     h_antiscalarInvMass->Fill(antiscalar.M());
-	     
            }
-            if(k!=pionIndex1 && k!=pionIndex2 && event.packedCandsPseudoTrkPt[k]>5){
+           if(k!=pionIndex1 && k!=pionIndex2 && event.packedCandsPseudoTrkPt[k]>5){
                 
               TLorentzVector cone1;//The pion
               TLorentzVector cone2;//Packed candidate
@@ -880,7 +868,7 @@ int main(int argc, char* argv[])
 	      TLorentzVector antis;
 	      antis.SetPtEtaPhiE(antisPt,antisEta,antisPhi,antisE);
 	      
-            }
+	   }
           }
           if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
                  
@@ -898,15 +886,7 @@ int main(int argc, char* argv[])
                         
               muoninv=(lmuon1+lmuon2).M();
               h_muonsInvMass->Fill((lmuon1+lmuon2).M());
-		    
-	      //Scalar reconstruction, invariant mass
-	      Mpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
-              Mpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
-              Mpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
-              ME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
-		
-	      scalar{Mpx,Mpy,Mpz,ME};
-	      h_scalarInvMass->Fill(scalar.M());
+		   
 	    }
             if(k!=muIndex1 && k!=muIndex2 && event.packedCandsPseudoTrkPt[k]>5){
                   
@@ -941,7 +921,25 @@ int main(int argc, char* argv[])
             }
           }
           h_invmass->Fill(hadroninv,muoninv);
-	  h_higgsInvMass->Fill((antiscalar+scalar).M();
+	      
+	      
+	  Mpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
+          Mpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
+          Mpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
+		
+	  TLorentzVector scalar{Mpx,Mpy,Mpz,ME};
+	  h_scalarInvMass->Fill(scalar.M());
+	   
+          Ppx=event.packedCandsPseudoTrkPx[pionIndex1]+event.packedCandsPseudoTrkPx[pionIndex2];
+          Ppy=event.packedCandsPseudoTrkPy[pionIndex1]+event.packedCandsPseudoTrkPy[pionIndex2];
+          Ppz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
+          PE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
+		
+	  TLorentzVector antiscalar{Ppx,Ppy,Ppz,PE};
+	  h_antiscalarInvMass->Fill(antiscalar.M());
+	     
+	      
+	  h_higgsInvMass->Fill((antiscalar+scalar).M());
 		  
           h_higgsDeltaR->Fill(antis.DeltaR(s));
       }} 
