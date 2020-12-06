@@ -815,7 +815,7 @@ int main(int argc, char* argv[])
     Float_t Mpx=0; Float_t Mpy=0; Float_t Mpz=0; Float_t ME=0;
 	
     TLorentzVector s; TLorentzVector antis;
-    TLorentzVector antiscalar; TLorentzVector scalar
+    TLorentzVector antiscalar; TLorentzVector scalar;
 	      
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){
