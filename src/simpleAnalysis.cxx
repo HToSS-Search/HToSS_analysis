@@ -768,9 +768,9 @@ int main(int argc, char* argv[])
                 h_displacedXY->Fill(event.packedCandsPseudoTrkVx[k],event.packedCandsPseudoTrkVy[k]);
                 h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
              
-          	TLorentzVector assump {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
+          	/*TLorentzVector assump {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
                 
-		std::cout<<"Pion mass assumption "<<assump.M()<<std::endl;      
+		std::cout<<"Pion mass assumption "<<assump.M()<<std::endl;*/      
 		      
 		//Find the hadrons (pions)
                 if(std::abs(packedId)==211 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons) 
