@@ -1179,6 +1179,7 @@ int main(int argc, char* argv[])
   h_genParScalarEta->Write();
   h_genParScalarPhi->Write();
   h_genParScalarE->Write();
+  h_ScalarDeltaR->GetXaxis()->SetTitle("Radians");
   h_ScalarDeltaR->Write();
   h_ScalarDeltaPhi->Write();
   h_ScalarInvMass->GetXaxis()->SetTitle("GeV");
@@ -1206,6 +1207,7 @@ int main(int argc, char* argv[])
   h_genParScalarMuonEta->Write();
   h_genParScalarMuonPhi->Write();
   h_genParScalarMuonE->Write();
+  h_MuonDeltaR->GetXaxis()->SetTitle("Radians");
   h_MuonDeltaR->Write();
   h_MuonDeltaPhi->Write();
   h_MuonInvMass->GetXaxis()->SetTitle("GeV");
@@ -1217,6 +1219,7 @@ int main(int argc, char* argv[])
   h_genParScalarCKaonEta->Write();
   h_genParScalarCKaonPhi->Write();
   h_genParScalarCKaonE->Write();
+  h_KaonDeltaR->GetXaxis()->SetTitle("Radians");
   h_KaonDeltaR->Write();
   h_KaonDeltaPhi->Write();
   h_KaonInvMass->GetXaxis()->SetTitle("GeV");
@@ -1228,6 +1231,7 @@ int main(int argc, char* argv[])
   h_genParScalarKShortEta->Write();
   h_genParScalarKShortPhi->Write();
   h_genParScalarKShortE->Write();
+  h_KShortDeltaR->GetXaxis()->SetTitle("Radians");
   h_KShortDeltaR->Write();
   h_KShortDeltaPhi->Write();
   h_KShortInvMass->GetXaxis()->SetTitle("GeV");
@@ -1244,6 +1248,7 @@ int main(int argc, char* argv[])
   h_genParScalarNPionEta->Write();
   h_genParScalarNPionPhi->Write();
   h_genParScalarNPionE->Write();
+  h_PionDeltaR->GetXaxis()->SetTitle("Radians");
   h_PionDeltaR->Write();
   h_PionDeltaPhi->Write();
   h_PionInvMass->GetXaxis()->SetTitle("GeV");
@@ -1269,6 +1274,7 @@ int main(int argc, char* argv[])
   h_muonRecEta->Write();
   h_muonRecPhi->Write();
   h_muonRecE->Write();
+  h_muonRecDeltaR->GetXaxis()->SetTitle("Radians");
   h_muonRecDeltaR->Write();
   h_muonRecDeltaPhi->Write();
   h_muonRecInvMass->GetXaxis()->SetTitle("GeV");
@@ -1298,7 +1304,9 @@ int main(int argc, char* argv[])
   h_displacedRZ->GetXaxis()->SetTitle("Vertex position z");
   h_displacedRZ->GetYaxis()->SetTitle("R");
   h_displacedRZ->Write();
+  h_hadronDeltaR->GetXaxis()->SetTitle("Radians");
   h_hadronDeltaR->Write();
+  h_muonsDeltaR->GetXaxis()->SetTitle("Radians");
   h_muonsDeltaR->Write();
   h_IsoSum1->GetXaxis()->SetTitle("GeV");
   h_IsoSum1->Write();
@@ -1324,7 +1332,8 @@ int main(int argc, char* argv[])
   h_scalarInvMass->GetXaxis()->SetTitle("GeV");
   h_scalarInvMass->Write();
   h_higgsInvMass->GetXaxis()->SetTitle("GeV");
-  h_higgsInvMass->Write();  
+  h_higgsInvMass->Write();
+  h_higgsDeltaR->GetXaxis()->SetTitle("Radians");
   h_higgsDeltaR->Write();  
     
   // Safely close file
