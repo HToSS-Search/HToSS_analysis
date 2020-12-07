@@ -768,7 +768,7 @@ int main(int argc, char* argv[])
                 h_displacedXY->Fill(event.packedCandsPseudoTrkVx[k],event.packedCandsPseudoTrkVy[k]);
                 h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]));
              
-		Float_t kaonmass=std::sqrt(event.packedCandsE[k]*event.packedCandsE[k]-0.106^2+0.494^2);
+		Float_t kaonmass=std::sqrt(event.packedCandsE[k]*event.packedCandsE[k]-std::pow(0.106,2)+std::pow(0.494,2));
           	TLorentzVector assump {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k],kaonmass};
                 //packedCandsE^2=pt^2+pionmass^2
 		std::cout<<"Kaon mass assumption"<<assump.M()<<std::endl;      
