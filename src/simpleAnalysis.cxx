@@ -771,7 +771,7 @@ int main(int argc, char* argv[])
 		Float_t kaonmass=std::sqrt(event.packedCandsE[k]*event.packedCandsE[k]-std::pow(0.106,2)+std::pow(0.494,2));
           	TLorentzVector assump {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k],kaonmass};
                 //packedCandsE^2=pt^2+pionmass^2
-		std::cout<<"Kaon mass assumption"<<assump.M()<<std::endl;      
+		//std::cout<<"Kaon mass assumption"<<assump.M()<<std::endl;      
 		      
 		//Find the hadrons (pions)
                 if(std::abs(packedId)==211 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons) 
@@ -830,15 +830,15 @@ int main(int argc, char* argv[])
             TLorentzVector packed1;
             TLorentzVector packed2;
           
-            packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],event.packedCandsE[pionIndex1]);
-            packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],event.packedCandsE[pionIndex2]);
+            packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2)));
+            packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2)));
             
             h_hadronDeltaR->Fill(packed1.DeltaR(packed2));
             
 	   if(packed1.DeltaR(packed2)<0.2){
              //Invariant mass for two hadrons
-             TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[pionIndex1], event.packedCandsPseudoTrkPy[pionIndex1], event.packedCandsPseudoTrkPz[pionIndex1], event.packedCandsE[pionIndex1]};
-             TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[pionIndex2], event.packedCandsPseudoTrkPy[pionIndex2], event.packedCandsPseudoTrkPz[pionIndex2], event.packedCandsE[pionIndex2]};
+             TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[pionIndex1], event.packedCandsPseudoTrkPy[pionIndex1], event.packedCandsPseudoTrkPz[pionIndex1], std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2))};
+             TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[pionIndex2], event.packedCandsPseudoTrkPy[pionIndex2], event.packedCandsPseudoTrkPz[pionIndex2], std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2))};
 
              hadroninv=(lhadron1+lhadron2).M();
              h_hadronInvMass->Fill((lhadron1+lhadron2).M());
@@ -850,8 +850,8 @@ int main(int argc, char* argv[])
               TLorentzVector cone1;//The pion
               TLorentzVector cone2;//Packed candidate
                     
-              cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],event.packedCandsE[pionIndex1]);
-              cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+              cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2)));
+              cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],std::sqrt(event.packedCandsE[k]*event.packedCandsE[k]-std::pow(0.106,2)+std::pow(0.494,2)));
               
               if(cone1.DeltaR(cone2)<0.3){
                 IsoSum1+=event.packedCandsPseudoTrkPt[k];
@@ -861,8 +861,8 @@ int main(int argc, char* argv[])
               TLorentzVector cone3;//The other pion
               TLorentzVector cone4;//Packed candidate
                     
-              cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],event.packedCandsE[pionIndex2]);
-              cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+              cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2)));
+              cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],std::sqrt(event.packedCandsE[k]*event.packedCandsE[k]-std::pow(0.106,2)+std::pow(0.494,2)));
               
               if(cone3.DeltaR(cone4)<0.3){
                 IsoSum2+=event.packedCandsPseudoTrkPt[k];
@@ -875,14 +875,14 @@ int main(int argc, char* argv[])
             TLorentzVector mm1;
             TLorentzVector mm2;
           
-            mm1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
-            mm2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
+            mm1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],std::sqrt(event.packedCandsE[muIndex1]*event.packedCandsE[muIndex1]-std::pow(0.106,2)+std::pow(0.494,2)));
+            mm2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],std::sqrt(event.packedCandsE[muIndex2]*event.packedCandsE[muIndex2]-std::pow(0.106,2)+std::pow(0.494,2)));
             
             h_muonsDeltaR->Fill(mm1.DeltaR(mm2));
             
             if(mm1.DeltaR(mm2)<0.2){
-	      TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[muIndex1], event.packedCandsPseudoTrkPy[muIndex1], event.packedCandsPseudoTrkPz[muIndex1], event.packedCandsE[muIndex1]};
-              TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[muIndex2], event.packedCandsPseudoTrkPy[muIndex2], event.packedCandsPseudoTrkPz[muIndex2], event.packedCandsE[muIndex2]};
+	      TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[muIndex1], event.packedCandsPseudoTrkPy[muIndex1], event.packedCandsPseudoTrkPz[muIndex1], std::sqrt(event.packedCandsE[muIndex1]*event.packedCandsE[muIndex1]-std::pow(0.106,2)+std::pow(0.494,2))};
+              TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[muIndex2], event.packedCandsPseudoTrkPy[muIndex2], event.packedCandsPseudoTrkPz[muIndex2], std::sqrt(event.packedCandsE[muIndex2]*event.packedCandsE[muIndex2]-std::pow(0.106,2)+std::pow(0.494,2))};
                         
               muoninv=(lmuon1+lmuon2).M();
               h_muonsInvMass->Fill((lmuon1+lmuon2).M());
@@ -893,8 +893,8 @@ int main(int argc, char* argv[])
               TLorentzVector cone1;//The muon
               TLorentzVector cone2;//Packed candidate
 
-              cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
-              cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+              cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],std::sqrt(event.packedCandsE[muIndex1]*event.packedCandsE[muIndex1]-std::pow(0.106,2)+std::pow(0.494,2)));
+              cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],std::sqrt(event.packedCandsE[k]*event.packedCandsE[k]-std::pow(0.106,2)+std::pow(0.494,2)));
 
               if(cone1.DeltaR(cone2)<0.3){
                 IsoSum3+=event.packedCandsPseudoTrkPt[k];
@@ -904,8 +904,8 @@ int main(int argc, char* argv[])
               TLorentzVector cone3;//The other muon
               TLorentzVector cone4;//Packed candidate
 
-              cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
-              cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+              cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],std::sqrt(event.packedCandsE[muIndex2]*event.packedCandsE[muIndex2]-std::pow(0.106,2)+std::pow(0.494,2)));
+              cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],std::sqrt(event.packedCandsE[k]*event.packedCandsE[k]-std::pow(0.106,2)+std::pow(0.494,2)));
 
               if(cone3.DeltaR(cone4)<0.3){
                 IsoSum4+=event.packedCandsPseudoTrkPt[k];
@@ -922,7 +922,7 @@ int main(int argc, char* argv[])
 	      sPt=event.packedCandsPseudoTrkPt[muIndex1]+event.packedCandsPseudoTrkPt[muIndex2];
 	      sEta=event.packedCandsPseudoTrkEta[muIndex1]+event.packedCandsPseudoTrkEta[muIndex2];
 	      sPhi=event.packedCandsPseudoTrkPhi[muIndex1]+event.packedCandsPseudoTrkPhi[muIndex2];
-	      sE=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
+	      sE=std::sqrt(event.packedCandsE[muIndex1]*event.packedCandsE[muIndex1]-std::pow(0.106,2)+std::pow(0.494,2))+std::sqrt(event.packedCandsE[muIndex2]*event.packedCandsE[muIndex2]-std::pow(0.106,2)+std::pow(0.494,2));
 	      
 	      TLorentzVector s; 
 	      s.SetPtEtaPhiE(sPt,sEta,sPhi,sE);
@@ -930,7 +930,7 @@ int main(int argc, char* argv[])
 	      antisPt=event.packedCandsPseudoTrkPt[pionIndex1]+event.packedCandsPseudoTrkPt[pionIndex2];
 	      antisEta=event.packedCandsPseudoTrkEta[pionIndex1]+event.packedCandsPseudoTrkEta[pionIndex2];
 	      antisPhi=event.packedCandsPseudoTrkPhi[pionIndex1]+event.packedCandsPseudoTrkPhi[pionIndex2];
-	      antisE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
+	      antisE=std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2))+std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2));
 	
 	      TLorentzVector antis;
 	      antis.SetPtEtaPhiE(antisPt,antisEta,antisPhi,antisE);
@@ -941,7 +941,7 @@ int main(int argc, char* argv[])
 	      Mpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
               Mpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
               Mpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
-	      ME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];	
+	      ME=std::sqrt(event.packedCandsE[muIndex1]*event.packedCandsE[muIndex1]-std::pow(0.106,2)+std::pow(0.494,2))+std::sqrt(event.packedCandsE[muIndex2]*event.packedCandsE[muIndex2]-std::pow(0.106,2)+std::pow(0.494,2));	
 	      
 	      TLorentzVector scalar{Mpx,Mpy,Mpz,ME};
 	      h_scalarInvMass->Fill(scalar.M());
@@ -949,7 +949,7 @@ int main(int argc, char* argv[])
               Ppx=event.packedCandsPseudoTrkPx[pionIndex1]+event.packedCandsPseudoTrkPx[pionIndex2];
               Ppy=event.packedCandsPseudoTrkPy[pionIndex1]+event.packedCandsPseudoTrkPy[pionIndex2];
               Ppz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
-              PE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
+              PE=std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2))+std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2));
 		
 	      TLorentzVector antiscalar{Ppx,Ppy,Ppz,PE};
 	      h_antiscalarInvMass->Fill(antiscalar.M());
