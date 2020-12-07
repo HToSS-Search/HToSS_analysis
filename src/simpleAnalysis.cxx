@@ -770,7 +770,7 @@ int main(int argc, char* argv[])
              
           	TLorentzVector assump {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
                 //packedCandsE^2=pt^2+pionmass^2
-		std::cout<<"Pion mass"<<std::sqrt(event.packedCandsE[k]*event.packedCandsE[k]-assump.Pt()^2)<<std::endl;      
+		std::cout<<"Pion mass"<<std::sqrt(event.packedCandsE[k]*event.packedCandsE[k]-assump.Pt()*assump.Pt())<<std::endl;      
 		      
 		//Find the hadrons (pions)
                 if(std::abs(packedId)==211 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons) 
