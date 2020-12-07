@@ -756,7 +756,7 @@ plots:
     xMin: 0.
     xMax: 100.
     nBins: 500
-    fillExp: "mumuTrkInnerChiNdofOld1"
+    fillExp: "mumuTrkInnerChi2NdofOld1"
     xAxisLabel: "muon track #chi^{2}/N_{dof}"
     cutStage: 1
   - title: "Pre-refit subleading muon track p_{T}"
@@ -780,7 +780,7 @@ plots:
     xMin: 0.
     xMax: 100.
     nBins: 500
-    fillExp: "mumuTrkInnerChiNdofOld2"
+    fillExp: "mumuTrkInnerChi2NdofOld2"
     xAxisLabel: "muon track #chi^{2}/N_{dof}"
     cutStage: 1
   - title: "Refitted leading muon track p_{T}"
@@ -804,7 +804,7 @@ plots:
     xMin: 0.
     xMax: 100.
     nBins: 500
-    fillExp: "mumuTrkInnerChiNdofNew1"
+    fillExp: "mumuTrkInnerChi2NdofNew1"
     xAxisLabel: "muon track #chi^{2}/N_{dof}"
     cutStage: 1
   - title: "Refitted subleading muon track p_{T}"
@@ -828,6 +828,6 @@ plots:
     xMin: 0.
     xMax: 100.
     nBins: 500
-    fillExp: "mumuTrkInnerChiNdofNew2"
+    fillExp: "mumuTrkInnerChi2NdofNew2"
     xAxisLabel: "muon track #chi^{2}/N_{dof}"
     cutStage: 1
