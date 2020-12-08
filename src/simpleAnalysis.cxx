@@ -843,7 +843,7 @@ int main(int argc, char* argv[])
     TLorentzVector mm1; TLorentzVector mm2;
     TLorentzVector packed1; TLorentzVector packed2; 
 	      
-    Khiggs=0;
+    Float_t Khiggs=0;
 	
     //Kaon mass assumption
     if(event.metFilters()){
@@ -980,7 +980,7 @@ int main(int argc, char* argv[])
     TLorentzVector mm3; TLorentzVector mm4;
     TLorentzVector packed3; TLorentzVector packed4;       
 	
-    Phiggs=0;
+    Float_t Phiggs=0;
 	      
     //Pion mass assumption
     if(event.metFilters()){
