@@ -207,6 +207,8 @@ int main(int argc, char* argv[])
   TH1F* h_PhiggsDeltaR              {new TH1F("h_PhiggsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.)}; 	
 	
 	
+  TH2F* h_massassump       {new TH2F("h_massassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.)};
+  TH2F* h_higggsassump     {new TH2F("h_higgsassump", "Invariant mass: h_0 (pions-muons) vs h_0 (kaons-muons)", 1000, 0.,200.,1000,0.,200.)};
 	
   namespace po = boost::program_options;
 
@@ -839,7 +841,9 @@ int main(int argc, char* argv[])
     Float_t KMpx=0; Float_t KMpy=0; Float_t KMpz=0; Float_t KME=0;
 	      
     TLorentzVector mm1; TLorentzVector mm2;
-    TLorentzVector packed1; TLorentzVector packed2;       
+    TLorentzVector packed1; TLorentzVector packed2; 
+	      
+    Khiggs=0;
 	
     //Kaon mass assumption
     if(event.metFilters()){
@@ -896,7 +900,8 @@ int main(int argc, char* argv[])
 	      TLorentzVector antiscalar{Kpx,Kpy,Kpz,KE};
 	      h_KantiscalarInvMass->Fill(antiscalar.M());
 	        
-	      h_KhiggsInvMass->Fill((antiscalar+scalar).M());
+	      Khiggs=(antiscalar+scalar).M();
+	      h_KhiggsInvMass->Fill(Khiggs);
 	      h_KhiggsDeltaR->Fill(antiscalar.DeltaR(scalar)); 
 	    } 	 
 		 
@@ -975,6 +980,8 @@ int main(int argc, char* argv[])
     TLorentzVector mm3; TLorentzVector mm4;
     TLorentzVector packed3; TLorentzVector packed4;       
 	
+    Phiggs=0;
+	      
     //Pion mass assumption
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){ 
@@ -1030,7 +1037,8 @@ int main(int argc, char* argv[])
 	      TLorentzVector antiscalar{Ppx,Ppy,Ppz,PE};
 	      h_PantiscalarInvMass->Fill(antiscalar.M());
 	        
-	      h_PhiggsInvMass->Fill((antiscalar+scalar).M());
+	      Phiggs=(antiscalar+scalar).M();
+	      h_PhiggsInvMass->Fill(Phiggs);
 	      h_PhiggsDeltaR->Fill(antiscalar.DeltaR(scalar)); 
 	    } 	 
 		 
@@ -1095,8 +1103,8 @@ int main(int argc, char* argv[])
     }//END met filter   
 
           
-     
-   
+    h_massassump->Fill(Phadroninv,Khadroninv); 
+    h_higgsassump->Fill(Phiggs,Khiggs);
           
           
           
@@ -1319,8 +1327,8 @@ int main(int argc, char* argv[])
   h_KhadronInvMass->Write();
   h_KhadronInvMass2->GetXaxis()->SetTitle("GeV");
   h_KhadronInvMass2->Write();
-  h_Kinvmass->GetXaxis()->SetTitle("Hadron (kaon) invariant mass");
-  h_Kinvmass->GetYaxis()->SetTitle("Muon invariant mass");
+  h_Kinvmass->GetXaxis()->SetTitle("Hadron (kaon) invariant mass (GeV)");
+  h_Kinvmass->GetYaxis()->SetTitle("Muon invariant mass (GeV)");
   h_Kinvmass->Write();
 
 
@@ -1354,8 +1362,8 @@ int main(int argc, char* argv[])
   h_PhadronInvMass->Write();
   h_PhadronInvMass2->GetXaxis()->SetTitle("GeV");
   h_PhadronInvMass2->Write();
-  h_Pinvmass->GetXaxis()->SetTitle("Hadron (pion) invariant mass");
-  h_Pinvmass->GetYaxis()->SetTitle("Muon invariant mass");
+  h_Pinvmass->GetXaxis()->SetTitle("Hadron (pion) invariant mass (GeV)");
+  h_Pinvmass->GetYaxis()->SetTitle("Muon invariant mass (GeV)");
   h_Pinvmass->Write();
 
 
@@ -1369,8 +1377,16 @@ int main(int argc, char* argv[])
   h_PhiggsDeltaR->Write();  
 	
 	
+  h_massassump->GetXaxis()->SetTitle("Hadron (pion) invariant mass (GeV)");
+  h_massassump->GetYaxis()->SetTitle("Hadron (kaon) invariant mass (GeV)");	
+  h_massassump->Write();  
+  h_higgsassump->GetXaxis()->SetTitle("Higgs (pion-muon) invariant mass (GeV)");
+  h_higgsassump->GetYaxis()->SetTitle("Higgs (kaon-muon) invariant mass (GeV)");	
+  h_higgsassump->Write();
 	
-    
+	
+	
+	
   // Safely close file
   outFile->Close();
 
