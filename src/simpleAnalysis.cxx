@@ -208,7 +208,7 @@ int main(int argc, char* argv[])
 	
 	
   TH2F* h_massassump       {new TH2F("h_massassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.)};
-  TH2F* h_higggsassump     {new TH2F("h_higgsassump", "Invariant mass: h_0 (pions-muons) vs h_0 (kaons-muons)", 1000, 0.,200.,1000,0.,200.)};
+  TH2F* h_higgsassump     {new TH2F("h_higgsassump", "Invariant mass: h_0 (pions-muons) vs h_0 (kaons-muons)", 1000, 0.,200.,1000,0.,200.)};
 	
   namespace po = boost::program_options;
 
