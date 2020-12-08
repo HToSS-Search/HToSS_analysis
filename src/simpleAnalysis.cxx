@@ -679,14 +679,16 @@ int main(int argc, char* argv[])
            const Float_t muonRecE    { event.muonPF2PATE[k] };
            
            h_muonRecPt->Fill(muonRecPt);
+	   
+	   if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){
+	     if(event.muonPF2PATLooseCutId[0]==1 && std::abs(event.muonPF2PATEta[0])<2.4){ 
+               h_muonRecPtL->Fill(event.muonPF2PATPt[0]);//Two highest momenta
+	     }
+	     if(event.muonPF2PATLooseCutId[1]==1 && std::abs(event.muonPF2PATEta[1])<2.4){    
+               h_muonRecPtS->Fill(event.muonPF2PATPt[1]);
+	     }
+	   }
 	       
-	   if(event.muonPF2PATLooseCutId[0]==1 && std::abs(event.muonPF2PATEta[0])<2.4){ 
-           h_muonRecPtL->Fill(event.muonPF2PATPt[0]);//Two highest momenta
-	   }
-	   if(event.muonPF2PATLooseCutId[1]==1 && std::abs(event.muonPF2PATEta[1])<2.4){    
-           h_muonRecPtS->Fill(event.muonPF2PATPt[1]);
-	   }
-           
            h_muonRecEta->Fill(muonRecEta);
            h_muonRecPhi->Fill(muonRecPhi);
            h_muonRecE->Fill(muonRecE);
