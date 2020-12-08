@@ -890,7 +890,7 @@ int main(int argc, char* argv[])
                  if(std::abs(packedId)==211){
 		   cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],std::sqrt(event.packedCandsE[k]*event.packedCandsE[k]-std::pow(0.106,2)+std::pow(0.494,2)));
 		 }
-		 else(std::abs(packedId)!=211){
+		 else{
 		     cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
 		 }
 		       
@@ -905,7 +905,7 @@ int main(int argc, char* argv[])
                  if(std::abs(packedId)==211){
 		   cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],std::sqrt(event.packedCandsE[k]*event.packedCandsE[k]-std::pow(0.106,2)+std::pow(0.494,2)));
 		 }
-		 else(std::abs(packedId)!=211){
+		 else{
 		     cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
 		 }
 		       
@@ -923,7 +923,7 @@ int main(int argc, char* argv[])
                  if(std::abs(packedId)==211){
 		   cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],std::sqrt(event.packedCandsE[k]*event.packedCandsE[k]-std::pow(0.106,2)+std::pow(0.494,2)));
 		 }
-		 else(std::abs(packedId)!=211){
+		 else{
 		     cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
 		 }
 		             
@@ -938,7 +938,7 @@ int main(int argc, char* argv[])
                  if(std::abs(packedId)==211){
 		   cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],std::sqrt(event.packedCandsE[k]*event.packedCandsE[k]-std::pow(0.106,2)+std::pow(0.494,2)));
 		 }
-		 else(std::abs(packedId)!=211){
+		 else{
 		     cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
 		 }
 
