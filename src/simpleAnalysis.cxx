@@ -970,7 +970,7 @@ int main(int argc, char* argv[])
     Float_t Phadroninv; Float_t Pmuoninv;
 
     Float_t Ppx=0; Float_t Ppy=0; Float_t Ppz=0; Float_t PE=0;
-    Float_t KMpx=0; Float_t KMpy=0; Float_t KMpz=0; Float_t KME=0;
+    Float_t PMpx=0; Float_t PMpy=0; Float_t PMpz=0; Float_t PME=0;
 	      
     TLorentzVector mm3; TLorentzVector mm4;
     TLorentzVector packed3; TLorentzVector packed4;       
