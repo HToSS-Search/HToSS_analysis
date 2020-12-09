@@ -1158,13 +1158,13 @@ int main(int argc, char* argv[])
     //Muon momentum comparison       
     
     for(Int_t k{0}; k<event.numMuonPF2PAT;k++){
-       h_muonRecPtTrk->Fill(muonPF2PATInnerTkPt[k]);
+       h_muonRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k]);
     }
     for(Int_t k{0}; k<event.numPackedCands;k++){      
-       TLorentzVector muonpackedPt {packedCandsPx[k],packedCandsPy[k],packedCandsPz[k],packedCandsE[k]}; 
+       TLorentzVector muonpackedPt {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]}; 
        h_muonpackedPt->Fill(muonpackedPt.Pt());  
        h_muonpackedInvMass->Fill(muonpackedPt.M()); 
-       h_muonpackedPtTrk->Fill(packedCandsPseudoTrkPt[k]);	    
+       h_muonpackedPtTrk->Fill(event.packedCandsPseudoTrkPt[k]);	    
     }	      
 	      
 	      
