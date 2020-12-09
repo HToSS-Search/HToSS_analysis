@@ -680,6 +680,9 @@ int main(int argc, char* argv[])
     uint singleFlag{0}; uint doubleFlag{0};
     std::vector<Int_t> singleIndex{}; std::vector<Int_t> doubleIndex{};
           
+    uint leadingFlag{0}; uint subFlag{0};
+    std::vector<Int_t> leadingIndex{}; std::vector<Int_t> subIndex{};
+	      
     if(event.metFilters()){
       
        for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
@@ -692,13 +695,22 @@ int main(int argc, char* argv[])
            h_muonRecPt->Fill(muonRecPt);
 	   
 	   
-	   if(event.muonPF2PATLooseCutId[0]==1 && std::abs(event.muonPF2PATEta[0])<2.4){ 
-             h_muonRecPtL->Fill(event.muonPF2PATPt[0]);//Two highest momenta
+	   if(event.muonPF2PATLooseCutId[k]==1 && std::abs(event.muonPF2PATEta[k])<2.4){ 
+             leadingFlag++; leadingIndex.emplace_back(k);
 	   }
-	   if(event.muonPF2PATLooseCutId[1]==1 && std::abs(event.muonPF2PATEta[1])<2.4){    
-             h_muonRecPtS->Fill(event.muonPF2PATPt[1]);
-	   }
+	   if(leadingFlag>0){
+             const int s1 {leadingIndex[0]};
+             h_muonRecPtL->Fill(event.muonPF2PATPt[s1]);
+           }
 	   
+	   if(event.muonPF2PATLooseCutId[k]==1 && std::abs(event.muonPF2PATEta[k])<2.4){    
+             subFlag++; subIndex.emplace_back(k);
+	   }
+	   if(subFlag>1){
+             const int d1 {subIndex[1]}; 
+             h_muonRecPtS->Fill(event.muonPF2PATPt[d1]);
+           }
+	    
 	       
            h_muonRecEta->Fill(muonRecEta);
            h_muonRecPhi->Fill(muonRecPhi);
