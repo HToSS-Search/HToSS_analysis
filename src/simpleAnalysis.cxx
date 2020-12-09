@@ -845,13 +845,15 @@ int main(int argc, char* argv[])
     TLorentzVector mm1; TLorentzVector mm2;
     TLorentzVector packed1; TLorentzVector packed2; 
 	      
+    TLorentzVector Kscalar; TLorentzVector Kantiscalar;
+	      
     Float_t Khiggs=0;
 	
     //Kaon mass assumption
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){ 
 	 
-	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2]) && muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
+	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2])){
            
 	   packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2)));
            packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2)));
@@ -866,8 +868,51 @@ int main(int argc, char* argv[])
              Khadroninv=(lhadron1+lhadron2).M();
              h_KhadronInvMass->Fill((lhadron1+lhadron2).M());
              h_KhadronInvMass2->Fill((lhadron1+lhadron2).M());
+		
+	     //Vector addition
+	     Kpx=event.packedCandsPseudoTrkPx[pionIndex1]+event.packedCandsPseudoTrkPx[pionIndex2];
+             Kpy=event.packedCandsPseudoTrkPy[pionIndex1]+event.packedCandsPseudoTrkPy[pionIndex2];
+             Kpz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
+             KE=std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2))+std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2));
+		
+	     Kantiscalar {Kpx,Kpy,Kpz,KE};
+	     h_KantiscalarInvMass->Fill(Kantiscalar.M());
 	   }
 		 
+	   for(Int_t k{0};k<event.numPackedCands;k++) {
+              const Int_t packedId {event.packedCandsPdgId[k]};
+              if(k!=pionIndex1 && k!=pionIndex2){
+                
+                TLorentzVector cone1;//The pion
+                TLorentzVector cone2;//Packed candidate
+                    
+                cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2)));
+                cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+		 
+		       
+                if(cone1.DeltaR(cone2)<0.3){
+                  KIsoSum1+=event.packedCandsPseudoTrkPt[k];
+		}
+            
+                TLorentzVector cone3;//The other pion
+                TLorentzVector cone4;//Packed candidate
+                    
+                cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2)));
+                cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+
+		       
+                if(cone3.DeltaR(cone4)<0.3){
+                  KIsoSum2+=event.packedCandsPseudoTrkPt[k];
+		}
+	      }
+		   
+	   }//end of for-loop
+	   h_KIsoSum1->Fill(KIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]);    
+	   h_KIsoSum2->Fill(KIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]);
+	 }
+	      
+	 if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
+	   
 	   mm1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
            mm2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
             
@@ -880,92 +925,66 @@ int main(int argc, char* argv[])
                         
              Kmuoninv=(lmuon1+lmuon2).M();
              h_KmuonsInvMass->Fill((lmuon1+lmuon2).M());
+		   
+	     KMpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
+             KMpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
+             KMpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
+	     KME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
+	      
+	     Kscalar {KMpx,KMpy,KMpz,KME};
+	     h_KscalarInvMass->Fill(Kscalar.M());   
+		   
 	   }
 		 
-	   //Vector addition
-	   
-	    if(mm1.DeltaR(mm2)<0.2 && packed1.DeltaR(packed2)<0.2){
-		    
-	      KMpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
-              KMpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
-              KMpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
-	      KME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
-	      
-	      TLorentzVector scalar{KMpx,KMpy,KMpz,KME};
-	      h_KscalarInvMass->Fill(scalar.M());
-	   
-              Kpx=event.packedCandsPseudoTrkPx[pionIndex1]+event.packedCandsPseudoTrkPx[pionIndex2];
-              Kpy=event.packedCandsPseudoTrkPy[pionIndex1]+event.packedCandsPseudoTrkPy[pionIndex2];
-              Kpz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
-              KE=std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2))+std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2));
-		
-	      TLorentzVector antiscalar{Kpx,Kpy,Kpz,KE};
-	      h_KantiscalarInvMass->Fill(antiscalar.M());
-	        
-	      Khiggs=(antiscalar+scalar).M();
-	      h_KhiggsInvMass->Fill(Khiggs);
-	      h_KhiggsDeltaR->Fill(antiscalar.DeltaR(scalar)); 
-	    } 	 
-		 
-	    for(Int_t k{0};k<event.numPackedCands;k++) {
-               const Int_t packedId {event.packedCandsPdgId[k]};
-               if(k!=pionIndex1 && k!=pionIndex2){
-                
-                 TLorentzVector cone1;//The pion
-                 TLorentzVector cone2;//Packed candidate
-                    
-                 cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2)));
-                 cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
-		 
-		       
-                 if(cone1.DeltaR(cone2)<0.3){
-                   KIsoSum1+=event.packedCandsPseudoTrkPt[k];
-		 } 
-            
-                 TLorentzVector cone3;//The other pion
-                 TLorentzVector cone4;//Packed candidate
-                    
-                 cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2)));
-                 cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
-
-		       
-                 if(cone3.DeltaR(cone4)<0.3){
-                   KIsoSum2+=event.packedCandsPseudoTrkPt[k];
-		 }
-	       }
-          
-               if(k!=muIndex1 && k!=muIndex2){
+	   for(Int_t k{0};k<event.numPackedCands;k++) {
+              const Int_t packedId {event.packedCandsPdgId[k]};
+              if(k!=muIndex1 && k!=muIndex2){
                   
-                 TLorentzVector cone1;//The muon
-                 TLorentzVector cone2;//Packed candidate
+                TLorentzVector cone1;//The muon
+                TLorentzVector cone2;//Packed candidate
 
-                 cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
-                 cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+                cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
+                cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
           
-                 if(cone1.DeltaR(cone2)<0.3){
-                   KIsoSum3+=event.packedCandsPseudoTrkPt[k];
-		 }
+                if(cone1.DeltaR(cone2)<0.3){
+                  KIsoSum3+=event.packedCandsPseudoTrkPt[k];
+		}
               
-		 TLorentzVector cone3;//The other muon
-                 TLorentzVector cone4;//Packed candidate
+		TLorentzVector cone3;//The other muon
+                TLorentzVector cone4;//Packed candidate
 
-                 cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
-                 cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+                cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
+                cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
 
-                 if(cone3.DeltaR(cone4)<0.3){
-                   KIsoSum4+=event.packedCandsPseudoTrkPt[k];
-		 }
-	       }
-		    
-	    }
-	    h_KIsoSum1->Fill(KIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]);    
-	    h_KIsoSum2->Fill(KIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]);
-	    h_KIsoSum3->Fill(KIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]);
-            h_KIsoSum4->Fill(KIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]);
+                if(cone3.DeltaR(cone4)<0.3){
+                  KIsoSum4+=event.packedCandsPseudoTrkPt[k];
+		}
+	      }
+		
+	   }
+	   h_KIsoSum3->Fill(KIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]);
+           h_KIsoSum4->Fill(KIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]);
 	 }
-         h_Kinvmass->Fill(Khadroninv,Kmuoninv);
+	      
+	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2]) && muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
+    
+	   if(mm1.DeltaR(mm2)<0.2 && packed1.DeltaR(packed2)<0.2){  
+	      Khiggs=(Kantiscalar+Kscalar).M();
+	      h_KhiggsInvMass->Fill(Khiggs);
+	      h_KhiggsDeltaR->Fill(antiscalar.DeltaR(scalar));
+	      h_Kinvmass->Fill(Khadroninv,Kmuoninv);
+	   }
+	    	 
+	 }
+	       
+	      
       }
-    }//END met filter
+    }//end of met filter   
+	      
+	      
+	      
+	     	 
+	
       
 	      
 	      
@@ -980,15 +999,17 @@ int main(int argc, char* argv[])
     Float_t PMpx=0; Float_t PMpy=0; Float_t PMpz=0; Float_t PME=0;
 	      
     TLorentzVector mm3; TLorentzVector mm4;
-    TLorentzVector packed3; TLorentzVector packed4;       
-	
+    TLorentzVector packed3; TLorentzVector packed4;  
+	      
+    TLorentzVector Pscalar; TLorentzVector Pantiscalar;
+	      
     Float_t Phiggs=0;
 	      
     //Pion mass assumption
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){ 
 	 
-	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2]) && muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
+	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2])){
            
 	   packed3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],event.packedCandsE[pionIndex1]);
            packed4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],event.packedCandsE[pionIndex2]);
@@ -997,113 +1018,129 @@ int main(int argc, char* argv[])
             
 	   if(packed3.DeltaR(packed4)<0.2){
              //Invariant mass for two hadrons
-             TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[pionIndex1], event.packedCandsPseudoTrkPy[pionIndex1], event.packedCandsPseudoTrkPz[pionIndex1], event.packedCandsE[pionIndex1]};
-             TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[pionIndex2], event.packedCandsPseudoTrkPy[pionIndex2], event.packedCandsPseudoTrkPz[pionIndex2], event.packedCandsE[pionIndex2]};
+             TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[pionIndex1], event.packedCandsPseudoTrkPy[pionIndex1], event.packedCandsPseudoTrkPz[pionIndex1],event.packedCandsE[pionIndex1])};
+             TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[pionIndex2], event.packedCandsPseudoTrkPy[pionIndex2], event.packedCandsPseudoTrkPz[pionIndex2],event.packedCandsE[pionIndex2])};
 
              Phadroninv=(lhadron1+lhadron2).M();
              h_PhadronInvMass->Fill((lhadron1+lhadron2).M());
              h_PhadronInvMass2->Fill((lhadron1+lhadron2).M());
+		
+	     //Vector addition
+	     Ppx=event.packedCandsPseudoTrkPx[pionIndex1]+event.packedCandsPseudoTrkPx[pionIndex2];
+             Ppy=event.packedCandsPseudoTrkPy[pionIndex1]+event.packedCandsPseudoTrkPy[pionIndex2];
+             Ppz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
+             PE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2]);
+		
+	     Pantiscalar {Ppx,Ppy,Ppz,PE};
+	     h_PantiscalarInvMass->Fill(Pantiscalar.M());
 	   }
 		 
-	   mm3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
-           mm4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
+	   for(Int_t k{0};k<event.numPackedCands;k++) {
+              const Int_t packedId {event.packedCandsPdgId[k]};
+              if(k!=pionIndex1 && k!=pionIndex2){
+                
+                TLorentzVector cone1;//The pion
+                TLorentzVector cone2;//Packed candidate
+                    
+                cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],event.packedCandsE[pionIndex1]);
+                cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+		 
+		       
+                if(cone1.DeltaR(cone2)<0.3){
+                  KIsoSum1+=event.packedCandsPseudoTrkPt[k];
+		}
             
-           h_PmuonsDeltaR->Fill(mm3.DeltaR(mm4));
+                TLorentzVector cone3;//The other pion
+                TLorentzVector cone4;//Packed candidate
+                    
+                cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2)));
+                cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+
+		       
+                if(cone3.DeltaR(cone4)<0.3){
+                  KIsoSum2+=event.packedCandsPseudoTrkPt[k];
+		}
+	      }
+		   
+	   }//end of for-loop
+	   h_KIsoSum1->Fill(KIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]);    
+	   h_KIsoSum2->Fill(KIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]);
+	 }
+	      
+	 if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
+	   
+	   mm1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
+           mm2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
             
-           if(mm3.DeltaR(mm4)<0.2){
+           h_KmuonsDeltaR->Fill(mm1.DeltaR(mm2));
+            
+           if(mm1.DeltaR(mm2)<0.2){
 		   
 	     TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[muIndex1], event.packedCandsPseudoTrkPy[muIndex1], event.packedCandsPseudoTrkPz[muIndex1], event.packedCandsE[muIndex1]};
              TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[muIndex2], event.packedCandsPseudoTrkPy[muIndex2], event.packedCandsPseudoTrkPz[muIndex2], event.packedCandsE[muIndex2]};
                         
-             Pmuoninv=(lmuon1+lmuon2).M();
-             h_PmuonsInvMass->Fill((lmuon1+lmuon2).M());
+             Kmuoninv=(lmuon1+lmuon2).M();
+             h_KmuonsInvMass->Fill((lmuon1+lmuon2).M());
+		   
+	     KMpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
+             KMpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
+             KMpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
+	     KME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
+	      
+	     Kscalar {KMpx,KMpy,KMpz,KME};
+	     h_KscalarInvMass->Fill(Kscalar.M());   
+		   
 	   }
 		 
-	   //Vector addition
-	   
-	    if(mm3.DeltaR(mm4)<0.2 && packed3.DeltaR(packed4)<0.2){
-		    
-	      PMpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
-              PMpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
-              PMpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
-	      PME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
-	      
-	      TLorentzVector scalar{PMpx,PMpy,PMpz,PME};
-	      h_PscalarInvMass->Fill(scalar.M());
-	   
-              Ppx=event.packedCandsPseudoTrkPx[pionIndex1]+event.packedCandsPseudoTrkPx[pionIndex2];
-              Ppy=event.packedCandsPseudoTrkPy[pionIndex1]+event.packedCandsPseudoTrkPy[pionIndex2];
-              Ppz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
-              PE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
-		
-	      TLorentzVector antiscalar{Ppx,Ppy,Ppz,PE};
-	      h_PantiscalarInvMass->Fill(antiscalar.M());
-	        
-	      Phiggs=(antiscalar+scalar).M();
-	      h_PhiggsInvMass->Fill(Phiggs);
-	      h_PhiggsDeltaR->Fill(antiscalar.DeltaR(scalar)); 
-	    } 	 
-		 
-	    for(Int_t k{0};k<event.numPackedCands;k++) {
-               const Int_t packedId {event.packedCandsPdgId[k]};
-               if(k!=pionIndex1 && k!=pionIndex2){
-                
-                 TLorentzVector cone1;//The pion
-                 TLorentzVector cone2;//Packed candidate
-                    
-                 cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],event.packedCandsE[pionIndex1]);
-                 cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
-		 
-		       
-                 if(cone1.DeltaR(cone2)<0.3){
-                   PIsoSum1+=event.packedCandsPseudoTrkPt[k];
-		 } 
-            
-                 TLorentzVector cone3;//The other pion
-                 TLorentzVector cone4;//Packed candidate
-                    
-                 cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],event.packedCandsE[pionIndex2]);
-                 cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
-
-		       
-                 if(cone3.DeltaR(cone4)<0.3){
-                   PIsoSum2+=event.packedCandsPseudoTrkPt[k];
-		 }
-	       }
-          
-               if(k!=muIndex1 && k!=muIndex2){
+	   for(Int_t k{0};k<event.numPackedCands;k++) {
+              const Int_t packedId {event.packedCandsPdgId[k]};
+              if(k!=muIndex1 && k!=muIndex2){
                   
-                 TLorentzVector cone1;//The muon
-                 TLorentzVector cone2;//Packed candidate
+                TLorentzVector cone1;//The muon
+                TLorentzVector cone2;//Packed candidate
 
-                 cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
-                 cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+                cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
+                cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
           
-                 if(cone1.DeltaR(cone2)<0.3){
-                   PIsoSum3+=event.packedCandsPseudoTrkPt[k];
-		 }
+                if(cone1.DeltaR(cone2)<0.3){
+                  KIsoSum3+=event.packedCandsPseudoTrkPt[k];
+		}
               
-		 TLorentzVector cone3;//The other muon
-                 TLorentzVector cone4;//Packed candidate
+		TLorentzVector cone3;//The other muon
+                TLorentzVector cone4;//Packed candidate
 
-                 cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
-                 cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+                cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
+                cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
 
-                 if(cone3.DeltaR(cone4)<0.3){
-                   PIsoSum4+=event.packedCandsPseudoTrkPt[k];
-		 }
-	       }
-		    
-	    }
-	    h_PIsoSum1->Fill(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]);    
-	    h_PIsoSum2->Fill(PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]);
-	    h_PIsoSum3->Fill(PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]);
-            h_PIsoSum4->Fill(PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]);
+                if(cone3.DeltaR(cone4)<0.3){
+                  KIsoSum4+=event.packedCandsPseudoTrkPt[k];
+		}
+	      }
+		
+	   }
+	   h_KIsoSum3->Fill(KIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]);
+           h_KIsoSum4->Fill(KIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]);
 	 }
-         h_Pinvmass->Fill(Phadroninv,Pmuoninv);
+	      
+	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2]) && muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
+    
+	   if(mm1.DeltaR(mm2)<0.2 && packed1.DeltaR(packed2)<0.2){  
+	      Khiggs=(Kantiscalar+Kscalar).M();
+	      h_KhiggsInvMass->Fill(Khiggs);
+	      h_KhiggsDeltaR->Fill(antiscalar.DeltaR(scalar));
+	      h_Kinvmass->Fill(Khadroninv,Kmuoninv);
+	   }
+	    	 
+	 }
+	       
+	      
       }
-    }//END met filter   
-
+    }//end of met filter   
+	      
+	      
+	      
+	      
+	      
           
     h_massassump->Fill(Phadroninv,Khadroninv); 
     h_higgsassump->Fill(Phiggs,Khiggs);
