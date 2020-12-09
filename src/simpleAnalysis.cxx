@@ -1189,9 +1189,10 @@ int main(int argc, char* argv[])
              h_muonpackedPtTrk->Fill(event.packedCandsPseudoTrkPt[k]);
 	   }
 	}
-	  
+	  std::cout<<"max teller "<<event.numMuonTrackPairsPF2PAT<<std::endl;
 	for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
 		
+	   if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
 		std::cout<<"index bekijken "<<event.muonTkPairPF2PATIndex1[k]<<std::endl;
 		std::cout<<"muon index "<<muIndex1<<std::endl;
 		
@@ -1203,6 +1204,7 @@ int main(int argc, char* argv[])
 	     /*h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
              h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
              */ 
+	   }
 	   }
 	}
 	      
