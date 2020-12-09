@@ -1191,6 +1191,10 @@ int main(int argc, char* argv[])
 	}
 	  
 	for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
+		
+		std::cout<<"index bekijken "<<event.muonTkPairPF2PATIndex1[k]<<std::endl;
+		std::cout<<"muon index "<<muIndex1<<std::endl;
+		
 	   if(event.muonTkPairPF2PATIndex1[k]==muIndex1 && event.muonTkPairPF2PATIndex2[k]==muIndex2){	
 		   
 	     h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]);  
