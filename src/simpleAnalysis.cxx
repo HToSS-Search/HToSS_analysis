@@ -52,12 +52,14 @@ int main(int argc, char* argv[])
 
   double totalLumi;
   double usePreLumi;
+  bool usePostLepTree {false};
 
   std::map<int, int> pdgIdMap; // declare map of int, int - first int corresponds to pdgId, second will note how many times a particle with that pdgId has been found
   std::string outFileString{"plots/distributions/output.root"}; //
   const bool is2016_ {false}; // analysis framework is setup to run over multiple years - as we are considering 2017 conditions currently, this is set to false for safety.
   Long64_t nEvents; // Max number of events to consider per dataset. Default is set in config file, but can be overriden with command line arguements
   Long64_t totalEvents {0}; // Counter for total number of events
+  const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + (is2016_ ? "2016" : "2017") + "/"};
 
   // Declare TH1F GenPar plots
     
@@ -230,18 +232,21 @@ int main(int argc, char* argv[])
   // command line configuration parsing magic!
   po::options_description desc("Options");
   desc.add_options()("help,h", "Print this message.")(
-                              "config,c",
-                              po::value<std::string>(&config)->required(),
-                              "The configuration file to be used.")(
-                                                                          "lumi,l",
-                                                                          po::value<double>(&usePreLumi)->default_value(41528.0),
-                                                                          "Lumi to scale MC plots to.")(
-                                                                                        "outfile,o",
-                                                                                        po::value<std::string>(&outFileString)->default_value(outFileString),
-                                                                                        "Output file for plots.")(
-                                                                                                      ",n",
-                                                                                                      po::value<Long64_t>(&nEvents)->default_value(0),
-                                                                                                      "The number of events to be run over. All if set to 0.");
+        "config,c",
+        po::value<std::string>(&config)->required(),
+        "The configuration file to be used.")(
+        "lumi,l",
+        po::value<double>(&usePreLumi)->default_value(41528.0),
+        "Lumi to scale MC plots to.")(
+        "outfile,o",
+        po::value<std::string>(&outFileString)->default_value(outFileString),
+        "Output file for plots.")(
+        ",u",
+        po::bool_switch(&usePostLepTree),
+        "Use post lepton selection trees.")(
+        ",n",
+        po::value<Long64_t>(&nEvents)->default_value(0),
+        "The number of events to be run over. All if set to 0.");
   po::variables_map vm;
 
   try
@@ -269,7 +274,8 @@ int main(int argc, char* argv[])
     {
       Parser::parse_config(config,
                datasets,
-               totalLumi);
+               totalLumi,
+               usePostLepTree);
     }
   catch (const std::exception)
     {
@@ -289,26 +295,34 @@ int main(int argc, char* argv[])
   bool datasetFilled{false};
 
   // Begin to loop over all datasets
-  for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset)
-    {
+  for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset) {
       datasetFilled = false;
+
       TChain* datasetChain{new TChain{dataset->treeName().c_str()}};
       datasetChain->SetAutoSave(0);
 
-      if (!datasetFilled) {
-    if (!dataset->fillChain(datasetChain)) {
-      std::cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
-      continue;
-    }
-    datasetFilled=true;
+      std::cerr << "Processing dataset " << dataset->name() << std::endl;
+      if (!usePostLepTree) {
+              if (!datasetFilled) {
+              if (!dataset->fillChain(datasetChain)) {
+                  std::cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
+                  continue;
+              }
+              datasetFilled=true;
+          }
+      }
+      else {
+          std::string inputPostfix{"mumu"};
+          std::cout << postLepSelSkimInputDir + dataset->name() + inputPostfix + "SmallSkim.root"  << std::endl;
+          datasetChain->Add((postLepSelSkimInputDir + dataset->name() + inputPostfix + "SmallSkim.root").c_str());
       }
 
       // extract the dataset weight. MC = (lumi*crossSection)/(totalEvents), data = 1.0
       float datasetWeight{dataset->getDatasetWeight(totalLumi)};
       std::cout << datasetChain->GetEntries() << " number of items in tree. Dataset weight: " << datasetWeight << std::endl;
       if (datasetChain->GetEntries() == 0) {
-    std::cout << "No entries in tree, skipping..." << std::endl;
-    continue;
+          std::cout << "No entries in tree, skipping..." << std::endl;
+          continue;
       }
 
       AnalysisEvent event{dataset->isMC(), datasetChain, is2016_};
