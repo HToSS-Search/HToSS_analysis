@@ -875,7 +875,7 @@ int main(int argc, char* argv[])
              Kpz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
              KE=std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2))+std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2));
 		
-	     Kantiscalar {Kpx,Kpy,Kpz,KE};
+	     Kantiscalar{Kpx,Kpy,Kpz,KE};
 	     h_KantiscalarInvMass->Fill(Kantiscalar.M());
 	   }
 		 
@@ -931,7 +931,7 @@ int main(int argc, char* argv[])
              KMpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
 	     KME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
 	      
-	     Kscalar {KMpx,KMpy,KMpz,KME};
+	     Kscalar{KMpx,KMpy,KMpz,KME};
 	     h_KscalarInvMass->Fill(Kscalar.M());   
 		   
 	   }
@@ -971,7 +971,7 @@ int main(int argc, char* argv[])
 	   if(mm1.DeltaR(mm2)<0.2 && packed1.DeltaR(packed2)<0.2){  
 	      Khiggs=(Kantiscalar+Kscalar).M();
 	      h_KhiggsInvMass->Fill(Khiggs);
-	      h_KhiggsDeltaR->Fill(antiscalar.DeltaR(scalar));
+	      h_KhiggsDeltaR->Fill(Kantiscalar.DeltaR(Kscalar));
 	      h_Kinvmass->Fill(Khadroninv,Kmuoninv);
 	   }
 	    	 
@@ -1018,8 +1018,8 @@ int main(int argc, char* argv[])
             
 	   if(packed3.DeltaR(packed4)<0.2){
              //Invariant mass for two hadrons
-             TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[pionIndex1], event.packedCandsPseudoTrkPy[pionIndex1], event.packedCandsPseudoTrkPz[pionIndex1],event.packedCandsE[pionIndex1])};
-             TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[pionIndex2], event.packedCandsPseudoTrkPy[pionIndex2], event.packedCandsPseudoTrkPz[pionIndex2],event.packedCandsE[pionIndex2])};
+             TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[pionIndex1], event.packedCandsPseudoTrkPy[pionIndex1], event.packedCandsPseudoTrkPz[pionIndex1],event.packedCandsE[pionIndex1]};
+             TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[pionIndex2], event.packedCandsPseudoTrkPy[pionIndex2], event.packedCandsPseudoTrkPz[pionIndex2],event.packedCandsE[pionIndex2]};
 
              Phadroninv=(lhadron1+lhadron2).M();
              h_PhadronInvMass->Fill((lhadron1+lhadron2).M());
@@ -1031,7 +1031,7 @@ int main(int argc, char* argv[])
              Ppz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
              PE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2]);
 		
-	     Pantiscalar {Ppx,Ppy,Ppz,PE};
+	     Pantiscalar{Ppx,Ppy,Ppz,PE};
 	     h_PantiscalarInvMass->Fill(Pantiscalar.M());
 	   }
 		 
@@ -1087,7 +1087,7 @@ int main(int argc, char* argv[])
              PMpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
 	     PME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
 	      
-	     Pscalar {PMpx,PMpy,PMpz,PME};
+	     Pscalar{PMpx,PMpy,PMpz,PME};
 	     h_PscalarInvMass->Fill(Pscalar.M());   
 		   
 	   }
