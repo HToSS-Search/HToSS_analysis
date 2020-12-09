@@ -691,14 +691,14 @@ int main(int argc, char* argv[])
            
            h_muonRecPt->Fill(muonRecPt);
 	   
-	   if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){
-	     if(event.muonPF2PATLooseCutId[0]==1 && std::abs(event.muonPF2PATEta[0])<2.4){ 
-               h_muonRecPtL->Fill(event.muonPF2PATPt[0]);//Two highest momenta
-	     }
-	     if(event.muonPF2PATLooseCutId[1]==1 && std::abs(event.muonPF2PATEta[1])<2.4){    
-               h_muonRecPtS->Fill(event.muonPF2PATPt[1]);
-	     }
+	   
+	   if(event.muonPF2PATLooseCutId[0]==1 && std::abs(event.muonPF2PATEta[0])<2.4){ 
+             h_muonRecPtL->Fill(event.muonPF2PATPt[0]);//Two highest momenta
 	   }
+	   if(event.muonPF2PATLooseCutId[1]==1 && std::abs(event.muonPF2PATEta[1])<2.4){    
+             h_muonRecPtS->Fill(event.muonPF2PATPt[1]);
+	   }
+	   
 	       
            h_muonRecEta->Fill(muonRecEta);
            h_muonRecPhi->Fill(muonRecPhi);
@@ -1160,11 +1160,14 @@ int main(int argc, char* argv[])
     for(Int_t k{0}; k<event.numMuonPF2PAT;k++){
        h_muonRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k]);
     }
-    for(Int_t k{0}; k<event.numPackedCands;k++){      
-       TLorentzVector muonpackedPt {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]}; 
-       h_muonpackedPt->Fill(muonpackedPt.Pt());  
-       h_muonpackedInvMass->Fill(muonpackedPt.M()); 
-       h_muonpackedPtTrk->Fill(event.packedCandsPseudoTrkPt[k]);	    
+    for(Int_t k{0}; k<event.numPackedCands;k++){
+       const Int_t packedId {event.packedCandsPdgId[k]};    
+       if(std::abs(packedId)==13){
+         TLorentzVector muonpackedPt {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]}; 
+         h_muonpackedPt->Fill(muonpackedPt.Pt());  
+         h_muonpackedInvMass->Fill(muonpackedPt.M()); 
+         h_muonpackedPtTrk->Fill(event.packedCandsPseudoTrkPt[k]);
+       }
     }	      
 	      
 	      
