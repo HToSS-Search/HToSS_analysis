@@ -1176,10 +1176,7 @@ int main(int argc, char* argv[])
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){ 
 	      
-        for(Int_t k{0}; k<event.numMuonPF2PAT;k++){
-           h_muonRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k]);
-	}
-	      
+             
         for(Int_t k{0}; k<event.numPackedCands;k++){
            const Int_t packedId {event.packedCandsPdgId[k]};    
            if(std::abs(packedId)==13){
@@ -1189,17 +1186,23 @@ int main(int argc, char* argv[])
              h_muonpackedPtTrk->Fill(event.packedCandsPseudoTrkPt[k]);
 	   }
 	}
-	  
-	for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
-	   if(event.muonTkPairPF2PATIndex1[k]==0 && event.muonTkPairPF2PATIndex2[k]==1){	
+	
+	for(Int_t k{0}; k<event.numMuonPF2PAT;k++){
+           h_muonRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k]);
+	   if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){
+	 
+	     for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
+	        if(event.muonTkPairPF2PATIndex1[k]==0 && event.muonTkPairPF2PATIndex2[k]==1){	
 		   
-	     h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]);  
-	     h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k]);   
+	          h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]);  
+	          h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k]);   
 		
-	     /*h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
-             h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
-             */ 
-	   }   	
+	          /*h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
+                  h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
+                  */
+		}   	
+	     }
+	   }
 	}
 	      
       }//end of single/double muon trigger
