@@ -875,7 +875,7 @@ int main(int argc, char* argv[])
              Kpz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
              KE=std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2))+std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2));
 		
-	     Kantiscalar{Kpx,Kpy,Kpz,KE};
+	     Kantiscalar.SetPxPyPzE(Kpx,Kpy,Kpz,KE);
 	     h_KantiscalarInvMass->Fill(Kantiscalar.M());
 	   }
 		 
@@ -931,7 +931,7 @@ int main(int argc, char* argv[])
              KMpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
 	     KME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
 	      
-	     Kscalar{KMpx,KMpy,KMpz,KME};
+	     Kscalar.SetPxPyPzE(KMpx,KMpy,KMpz,KME);
 	     h_KscalarInvMass->Fill(Kscalar.M());   
 		   
 	   }
@@ -1029,9 +1029,9 @@ int main(int argc, char* argv[])
 	     Ppx=event.packedCandsPseudoTrkPx[pionIndex1]+event.packedCandsPseudoTrkPx[pionIndex2];
              Ppy=event.packedCandsPseudoTrkPy[pionIndex1]+event.packedCandsPseudoTrkPy[pionIndex2];
              Ppz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
-             PE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2]);
+             PE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
 		
-	     Pantiscalar{Ppx,Ppy,Ppz,PE};
+	     Pantiscalar.SetPxPyPzE(Ppx,Ppy,Ppz,PE);
 	     h_PantiscalarInvMass->Fill(Pantiscalar.M());
 	   }
 		 
@@ -1087,7 +1087,7 @@ int main(int argc, char* argv[])
              PMpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
 	     PME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
 	      
-	     Pscalar{PMpx,PMpy,PMpz,PME};
+	     Pscalar.SetPxPyPzE(PMpx,PMpy,PMpz,PME);
 	     h_PscalarInvMass->Fill(Pscalar.M());   
 		   
 	   }
