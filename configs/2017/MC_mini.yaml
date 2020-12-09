@@ -1,0 +1,3 @@
+datasets:
+  - "configs/2017/QCD/QCD_Pt-120to170_MuEnrichedPt5.yaml"
+  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS10.yaml"
