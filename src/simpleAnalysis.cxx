@@ -159,6 +159,8 @@ int main(int argc, char* argv[])
   TH1F* h_muonCutDoubleS       {new TH1F("h_muonCutDoubleS",  "Double #mu^{#pm} trigger subleading p_{T}", 1000, 0., 1000.)};
   TH1F* h_muonDivDoubleS       {new TH1F("h_muonDivDoubleS",  "Turn-on Double #mu^{#pm} trigger subleading p_{T}", 300, 0., 1000.)};
     
+	
+	
   //Packed candidates
   TH1F* h_packedCDxy    {new TH1F("h_packedCDxy", "Packed Candidate Dxy", 500,  -200., 200.)};
   TH1F* h_packedCDz     {new TH1F("h_packedCDz",  "Packed Candidate Dz", 1500, -500., 500.)};
@@ -208,7 +210,16 @@ int main(int argc, char* argv[])
 	
 	
   TH2F* h_massassump       {new TH2F("h_massassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.)};
-  TH2F* h_higgsassump     {new TH2F("h_higgsassump", "Invariant mass: h_0 (pions-muons) vs h_0 (kaons-muons)", 1000, 0.,200.,1000,0.,200.)};
+  TH2F* h_higgsassump      {new TH2F("h_higgsassump", "Invariant mass: h_0 (pions-muons) vs h_0 (kaons-muons)", 1000, 0.,200.,1000,0.,200.)};
+	
+	
+  //Comparison muon momenta
+  TH1F* h_muonRecPtTrk                {new TH1F("h_muonRecPtTrk",  "#mu^{#pm} reconstruction p_{T} track", 1000, 0., 1000.)};
+  TH1F* h_muonpackedPt                {new TH1F("h_muonpackedPt",  "#mu^{#pm} Packed candidate p_{T}", 1000, 0., 1000.)};
+  TH1F* h_muonpackedInvMass           {new TH1F("h_muonpackedInvMass", "#mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.)};
+  TH1F* h_muonpackedPtTrk             {new TH1F("h_muonpackedPtTrk",  "#mu^{#pm} Packed candidate p_{T} track", 1000, 0., 1000.)};
+ 	
+	
 	
   namespace po = boost::program_options;
 
@@ -1138,16 +1149,28 @@ int main(int argc, char* argv[])
     }//end of met filter   
 	      
 	      
-	      
-	      
-	      
+    //Pion and kaon comparison	      
           
     h_massassump->Fill(Phadroninv,Khadroninv); 
     h_higgsassump->Fill(Phiggs,Khiggs);
           
           
-          
-          
+    //Muon momentum comparison       
+    
+    for(Int_t k{0}; k<event.numMuonPF2PAT;k++){
+       h_muonRecPtTrk->Fill(muonPF2PATInnerTkPt[k]);
+    }
+    for(Int_t k{0}; k<event.numPackedCands;k++){      
+       TLorentzVector muonpackedPt {packedCandsPx[k],packedCandsPy[k],packedCandsPz[k],packedCandsE[k]}; 
+       h_muonpackedPt->Fill(muonpackedPt.Pt());  
+       h_muonpackedInvMass->Fill(muonpackedPt.M()); 
+       h_muonpackedPtTrk->Fill(packedCandsPseudoTrkPt[k]);	    
+    }	      
+	      
+	      
+	      
+	      
+	      
           
            
       } //Loop over all events
@@ -1423,6 +1446,15 @@ int main(int argc, char* argv[])
   h_higgsassump->GetYaxis()->SetTitle("Higgs (kaon-muon) invariant mass (GeV)");	
   h_higgsassump->Write();
 	
+	
+  h_muonRecPtTrk->GetXaxis()->SetTitle("GeV");
+  h_muonRecPtTrk->Write();
+  h_muonpackedPt->GetXaxis()->SetTitle("GeV");
+  h_muonpackedPt->Write();
+  h_muonpackedInvMass->GetXaxis()->SetTitle("GeV");
+  h_muonpackedInvMass->Write();
+  h_muonpackedPtTrk->GetXaxis()->SetTitle("GeV");
+  h_muonpackedPtTrk->Write();
 	
 	
 	
