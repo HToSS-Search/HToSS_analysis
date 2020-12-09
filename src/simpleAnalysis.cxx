@@ -1173,8 +1173,8 @@ int main(int argc, char* argv[])
 	      
           
     //Muon momentum comparison       
-   // if(event.metFilters()){
-   //   if(event.muTrig()||event.mumuTrig()){ 
+    if(event.metFilters()){
+      if(event.muTrig()||event.mumuTrig()){ 
 	      
         for(Int_t k{0}; k<event.numMuonPF2PAT;k++){
            h_muonRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k]);
@@ -1189,14 +1189,9 @@ int main(int argc, char* argv[])
              h_muonpackedPtTrk->Fill(event.packedCandsPseudoTrkPt[k]);
 	   }
 	}
-	  std::cout<<"max teller "<<event.numMuonTrackPairsPF2PAT<<std::endl;
+	  
 	for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
-		
-	   if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
-		std::cout<<"index bekijken "<<event.muonTkPairPF2PATIndex1[k]<<std::endl;
-		std::cout<<"muon index "<<muIndex1<<std::endl;
-		
-	   if(event.muonTkPairPF2PATIndex1[k]==muIndex1 && event.muonTkPairPF2PATIndex2[k]==muIndex2){	
+	   if(event.muonTkPairPF2PATIndex1[k]==0 && event.muonTkPairPF2PATIndex2[k]==1){	
 		   
 	     h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]);  
 	     h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k]);   
@@ -1204,12 +1199,11 @@ int main(int argc, char* argv[])
 	     /*h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
              h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
              */ 
-	   }
-	   }
+	   }   	
 	}
 	      
-    //  }//end of single/double muon trigger
-    //}//end of met filter
+      }//end of single/double muon trigger
+    }//end of met filter
 	      
 	      
 	      
