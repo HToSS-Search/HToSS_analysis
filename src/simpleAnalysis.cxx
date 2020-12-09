@@ -1173,8 +1173,8 @@ int main(int argc, char* argv[])
 	      
           
     //Muon momentum comparison       
-    if(event.metFilters()){
-      if(event.muTrig()||event.mumuTrig()){ 
+   // if(event.metFilters()){
+   //   if(event.muTrig()||event.mumuTrig()){ 
 	      
         for(Int_t k{0}; k<event.numMuonPF2PAT;k++){
            h_muonRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k]);
@@ -1206,8 +1206,8 @@ int main(int argc, char* argv[])
 	   }
 	}
 	      
-      }//end of single/double muon trigger
-    }//end of met filter
+    //  }//end of single/double muon trigger
+    //}//end of met filter
 	      
 	      
 	      
