@@ -143,21 +143,21 @@ int main(int argc, char* argv[])
     
   //RECONSTRUCTION histograms
   //Muon reco
-  TH1F* h_muonRecPt            {new TH1F("h_muonRecPt",  "#mu^{#pm} reconstruction p_{T}", 1000, 0., 1000.)};
-  TH1F* h_muonRecPtL           {new TH1F("h_muonRecPtL",  "#mu^{#pm} reconstruction p_{T}, leading", 1000, 0., 1000.)};
-  TH1F* h_muonRecPtS           {new TH1F("h_muonRecPtS",  "#mu^{#pm} reconstruction p_{T}, subleading", 1000, 0., 1000.)};
+  TH1F* h_muonRecPt            {new TH1F("h_muonRecPt",  "#mu^{#pm} reconstruction p_{T}", 1000, 0., 200.)};
+  TH1F* h_muonRecPtL           {new TH1F("h_muonRecPtL",  "#mu^{#pm} reconstruction p_{T}, leading", 1000, 0., 200.)};
+  TH1F* h_muonRecPtS           {new TH1F("h_muonRecPtS",  "#mu^{#pm} reconstruction p_{T}, subleading", 1000, 0., 200.)};
   TH1F* h_muonRecEta           {new TH1F("h_muonRecEta", "#mu^{#pm} reconstruction #eta",  200, -7., 7.)};
   TH1F* h_muonRecPhi           {new TH1F("h_muonRecPhi", "#mu^{#pm} reconstruction #phi",  100, -3.5, 3.5)};
   TH1F* h_muonRecE             {new TH1F("h_muonRecE",   "#mu^{#pm} reconstruction energy",     1000, 0., 1000.)};
   TH1F* h_muonRecDeltaR        {new TH1F("h_muonRecDeltaR", "Muon reconstruction #DeltaR",2500, -10., 10.)};
   TH1F* h_muonRecDeltaPhi      {new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5)};
   TH1F* h_muonRecInvMass       {new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",500, 0, 5)};
-  TH1F* h_muonCutSingleL       {new TH1F("h_muonCutSingleL",  "Single #mu^{#pm} trigger leading p_{T}", 1000, 0., 1000.)};
-  TH1F* h_muonCutDoubleL       {new TH1F("h_muonCutDoubleL",  "Double #mu^{#pm} trigger leading p_{T}", 1000, 0., 1000.)};
-  TH1F* h_muonDivSingleL       {new TH1F("h_muonDivSingleL",  "Turn-on Single #mu^{#pm} trigger leading p_{T}", 300, 0., 1000.)};
-  TH1F* h_muonDivDoubleL       {new TH1F("h_muonDivDoubleL",  "Turn-on Double #mu^{#pm} trigger leading p_{T}", 300, 0., 1000.)};
-  TH1F* h_muonCutDoubleS       {new TH1F("h_muonCutDoubleS",  "Double #mu^{#pm} trigger subleading p_{T}", 1000, 0., 1000.)};
-  TH1F* h_muonDivDoubleS       {new TH1F("h_muonDivDoubleS",  "Turn-on Double #mu^{#pm} trigger subleading p_{T}", 300, 0., 1000.)};
+  TH1F* h_muonCutSingleL       {new TH1F("h_muonCutSingleL",  "Single #mu^{#pm} trigger leading p_{T}", 1000, 0., 200.)};
+  TH1F* h_muonCutDoubleL       {new TH1F("h_muonCutDoubleL",  "Double #mu^{#pm} trigger leading p_{T}", 1000, 0., 200.)};
+  TH1F* h_muonDivSingleL       {new TH1F("h_muonDivSingleL",  "Turn-on Single #mu^{#pm} trigger leading p_{T}", 300, 0., 200.)};
+  TH1F* h_muonDivDoubleL       {new TH1F("h_muonDivDoubleL",  "Turn-on Double #mu^{#pm} trigger leading p_{T}", 300, 0., 200.)};
+  TH1F* h_muonCutDoubleS       {new TH1F("h_muonCutDoubleS",  "Double #mu^{#pm} trigger subleading p_{T}", 1000, 0., 200.)};
+  TH1F* h_muonDivDoubleS       {new TH1F("h_muonDivDoubleS",  "Turn-on Double #mu^{#pm} trigger subleading p_{T}", 300, 0., 200.)};
     
 	
 	
@@ -217,10 +217,14 @@ int main(int argc, char* argv[])
   TH1F* h_muonRecPtTrk                {new TH1F("h_muonRecPtTrk",  "#mu^{#pm} reconstruction p_{T} track", 1000, 0., 1000.)};
   TH1F* h_muonpackedPt                {new TH1F("h_muonpackedPt",  "#mu^{#pm} Packed candidate p_{T}", 1000, 0., 1000.)};
   TH1F* h_muonpackedInvMass           {new TH1F("h_muonpackedInvMass", "#mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.)};
-  TH1F* h_muonpackedPtTrk             {new TH1F("h_muonpackedPtTrk",  "#mu^{#pm} Packed candidate p_{T} track", 1000, 0., 1000.)};
- 	
+  TH1F* h_muonpackedPtTrk             {new TH1F("h_muonpackedPtTrk",  "#mu^{#pm} Packed candidate p_{T} track", 1000, 0., 1000.)};	
+  TH1F*	h_muon1PairsPt		      {new TH1F("h_muon1PairsPt",  "#mu^{#pm} 1 Refitted tracks p_{T} m", 1000, 0., 1000.)};
+  TH1F*	h_muon2PairsPt 		      {new TH1F("h_muon2PairsPt",  "#mu^{#pm} 2 Refitted tracks p_{T}", 1000, 0., 1000.)};     
+  /*TH2F* h_muonPairsXY                 {new TH2F("h_muonPairsXY", "Refitted tracks vertex XY", 100, -150,150,100,-150,150)};
+  TH2F* h_muonPairsRZ                 {new TH2F("h_muonPairsRZ", "Refitted tracks vertex RZ", 100, 0,20,100,0,250)};		
+  */	  
 	
-	
+	  
   namespace po = boost::program_options;
 
   // command line configuration parsing magic!
@@ -1165,22 +1169,41 @@ int main(int argc, char* argv[])
           
     h_massassump->Fill(Phadroninv,Khadroninv); 
     h_higgsassump->Fill(Phiggs,Khiggs);
-          
+       
+	      
           
     //Muon momentum comparison       
-    
-    for(Int_t k{0}; k<event.numMuonPF2PAT;k++){
-       h_muonRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k]);
-    }
-    for(Int_t k{0}; k<event.numPackedCands;k++){
-       const Int_t packedId {event.packedCandsPdgId[k]};    
-       if(std::abs(packedId)==13){
-         TLorentzVector muonpackedPt {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]}; 
-         h_muonpackedPt->Fill(muonpackedPt.Pt());  
-         h_muonpackedInvMass->Fill(muonpackedPt.M()); 
-         h_muonpackedPtTrk->Fill(event.packedCandsPseudoTrkPt[k]);
-       }
-    }	      
+    if(event.metFilters()){
+      if(event.muTrig()||event.mumuTrig()){ 
+	      
+        for(Int_t k{0}; k<event.numMuonPF2PAT;k++){
+           h_muonRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k]);
+	}
+	      
+        for(Int_t k{0}; k<event.numPackedCands;k++){
+           const Int_t packedId {event.packedCandsPdgId[k]};    
+           if(std::abs(packedId)==13){
+             TLorentzVector muonpackedPt {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]}; 
+             h_muonpackedPt->Fill(muonpackedPt.Pt());  
+             h_muonpackedInvMass->Fill(muonpackedPt.M()); 
+             h_muonpackedPtTrk->Fill(event.packedCandsPseudoTrkPt[k]);
+	   }
+	}
+	  
+	for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
+	   if(event.muonTkPairPF2PATIndex1[k]==muIndex1 && event.muonTkPairPF2PATIndex2[k]==muIndex2){	
+		   
+	     h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]);  
+	     h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k]);   
+		
+	     /*h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
+             h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
+             */ 
+	   }
+	}
+	      
+      }//end of single/double muon trigger
+    }//end of met filter
 	      
 	      
 	      
@@ -1470,6 +1493,16 @@ int main(int argc, char* argv[])
   h_muonpackedInvMass->Write();
   h_muonpackedPtTrk->GetXaxis()->SetTitle("GeV");
   h_muonpackedPtTrk->Write();
+  h_muon1PairsPt->GetXaxis()->SetTitle("GeV");	
+  h_muon1PairsPt->Write();
+  h_muon2PairsPt->GetXaxis()->SetTitle("GeV");	
+  h_muon2PairsPt->Write();
+  /*h_muonPairsXY->SetTitle("Vertex position x")
+  h_muonPairsXY->SetTitle("Vertex position y")
+  h_muonPairsXY->Write();
+  h_muonPairsRZ->SetTitle("Vertex position z")
+  h_muonPairsRZ->SetTitle("Vertex position R")
+  h_muonPairsRZ->Write();*/
 	
 	
 	
