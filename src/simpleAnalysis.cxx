@@ -718,17 +718,16 @@ int main(int argc, char* argv[])
 	   }
 	   if(leadingFlag>0){
              const int s1 {leadingIndex[0]};
-             h_muonRecPtL->Fill(event.muonPF2PATPt[s1]);
            }
-	   
+	   h_muonRecPtL->Fill(event.muonPF2PATPt[s1]);
+	       
 	   if(event.muonPF2PATLooseCutId[k]==1 && std::abs(event.muonPF2PATEta[k])<2.4){    
              subFlag++; subIndex.emplace_back(k);
 	   }
 	   if(subFlag>1){
              const int d1 {subIndex[1]}; 
-             h_muonRecPtS->Fill(event.muonPF2PATPt[d1]);
            }
-	    
+	   h_muonRecPtS->Fill(event.muonPF2PATPt[d1]); 
 	       
            h_muonRecEta->Fill(muonRecEta);
            h_muonRecPhi->Fill(muonRecPhi);
@@ -772,8 +771,8 @@ int main(int argc, char* argv[])
          
            if(singleFlag>0){
              const int s1 {singleIndex[0]};
-             h_muonCutSingleL->Fill(event.muonPF2PATPt[s1]);
            }
+	   h_muonCutSingleL->Fill(event.muonPF2PATPt[s1]);
            if(event.mumuTrig()){
              if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut, |eta| < 2.4 
                doubleFlag++; doubleIndex.emplace_back(k);
@@ -781,9 +780,9 @@ int main(int argc, char* argv[])
            }
            if(doubleFlag>1){
              const int d1 {doubleIndex[0]}; const int d2 {doubleIndex[1]};
-             h_muonCutDoubleL->Fill(event.muonPF2PATPt[d1]);
-             h_muonCutDoubleS->Fill(event.muonPF2PATPt[d2]);
            }
+	   h_muonCutDoubleL->Fill(event.muonPF2PATPt[d1]);
+           h_muonCutDoubleS->Fill(event.muonPF2PATPt[d2]);
                
        }
     }//MET filter
