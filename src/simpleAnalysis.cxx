@@ -699,9 +699,7 @@ int main(int argc, char* argv[])
     std::vector<Int_t> singleIndex{}; std::vector<Int_t> doubleIndex{};
           
     uint leadingFlag{0}; std::vector<Int_t> leadingIndex{}; 
-
-    const Int_t s1{0}; const Int_t d1{0}; const Int_t ss1=0; const Int_t dd1{0}; const Int_t dd2{0};
-	      
+      
     if(event.metFilters()){
       
        for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
@@ -717,13 +715,6 @@ int main(int argc, char* argv[])
 	   if(event.muonPF2PATLooseCutId[k]==1 && std::abs(event.muonPF2PATEta[k])<2.4){ 
              leadingFlag++; leadingIndex.emplace_back(k);
 	   }
-	   if(leadingFlag>0){
-             s1{leadingIndex[0]};
-           }
-	       
-	   if(leadingFlag>1){
-             d1{leadingIndex[1]}; 
-           }
 	      
            h_muonRecEta->Fill(muonRecEta);
            h_muonRecPhi->Fill(muonRecPhi);
@@ -764,9 +755,7 @@ int main(int argc, char* argv[])
                singleFlag++; singleIndex.emplace_back(k);
              }
            }
-           if(singleFlag>0){
-             ss1{singleIndex[0]};
-           }
+           
 	   
 	       
            if(event.mumuTrig()){
@@ -774,18 +763,25 @@ int main(int argc, char* argv[])
                doubleFlag++; doubleIndex.emplace_back(k);
              } 
            }
-           if(doubleFlag>1){
-             dd1{doubleIndex[0]}; dd2{doubleIndex[1]};
-           }
+           
 	   
                
        }
-       h_muonCutSingleL->Fill(event.muonPF2PATPt[ss1]);
-       h_muonCutDoubleL->Fill(event.muonPF2PATPt[dd1]);
-       h_muonCutDoubleS->Fill(event.muonPF2PATPt[dd2]);
-       h_muonRecPtL->Fill(event.muonPF2PATPt[s1]);
-       h_muonRecPtS->Fill(event.muonPF2PATPt[d1]); 
-	    
+       if(leadingFlag>0){
+	 h_muonRecPtL->Fill(event.muonPF2PATPt[leadingIndex[0]]);      
+       }
+	       
+       if(leadingFlag>1){ 
+	 h_muonRecPtS->Fill(event.muonPF2PATPt[leadingIndex[1]]); 
+       }
+       if(singleFlag>0){
+         h_muonCutSingleL->Fill(event.muonPF2PATPt[singleIndex[0]]); 
+       }
+       if(doubleFlag>1){
+         h_muonCutDoubleL->Fill(event.muonPF2PATPt[doubleIndex[0]]);
+         h_muonCutDoubleS->Fill(event.muonPF2PATPt[doubleIndex[1]]);
+       }
+           
     }//MET filter
     
     h_muonDivSingleL=(TH1F*)h_muonCutSingleL->Clone();
