@@ -203,6 +203,7 @@ int main(int argc, char* argv[])
   TH1F* h_PhadronInvMass {new TH1F("h_PhadronInvMass", "Two hadrons (pions) - Invariant mass",1000, 0., 7.)};
   TH1F* h_PhadronInvMass2 {new TH1F("h_PhadronInvMass2", "Two hadrons (pions) - Invariant mass, smaller binning",500, 0., 7.)};
   TH1F* h_PmuonsInvMass  {new TH1F("h_PmuonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
+  TF1 * Gaussian1 	 {new TF1("Gaussian1","gaus")};
   TH2F* h_Pinvmass       {new TH2F("h_Pinvmass", "Invariant mass: charged hadrons (pions) vs muons", 1000, 0.,7.,1000,0.,7.)};
   
   TH1F* h_PantiscalarInvMass        {new TH1F("h_PantiscalarInvMass", "(Pion) Antiscalar Invariant mass", 1000, 0.,15.)};
@@ -738,7 +739,8 @@ int main(int argc, char* argv[])
                TLorentzVector lVecMu2  {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]};
 
                h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
-           
+               h_muonRecInvMass->Fit(Gaussian1);
+		     
                if(event.muonPF2PATPt[0]>30 && event.muonPF2PATPt[1]>12){//combined (single+double, mix) p_T cut applied
              
                  if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut and |eta| < 2.4
@@ -1118,6 +1120,7 @@ int main(int argc, char* argv[])
                         
              Pmuoninv=(lmuon1+lmuon2).M();
              h_PmuonsInvMass->Fill((lmuon1+lmuon2).M());
+	     h_PmuonsInvMass->Fit(Gaussian1);
 		   
 	     PMpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
              PMpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
@@ -1125,7 +1128,8 @@ int main(int argc, char* argv[])
 	     PME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
 	      
 	     Pscalar.SetPxPyPzE(PMpx,PMpy,PMpz,PME);
-	     h_PscalarInvMass->Fill(Pscalar.M());   
+	     h_PscalarInvMass->Fill(Pscalar.M());
+	     h_PscalaeInvMass->Fit(Gaussian1);
 		   
 	   }
 		 
