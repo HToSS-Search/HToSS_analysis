@@ -209,13 +209,9 @@ int main(int argc, char* argv[])
   TH1F* h_PscalarInvMass            {new TH1F("h_PscalarInvMass", "Scalar Invariant mass", 1000, 0.,15.)};
   TH1F* h_PhiggsInvMass             {new TH1F("h_PhiggsInvMass",  "h_0 Invariant mass", 1000, 0., 200.)};   
   TH1F* h_PhiggsDeltaR              {new TH1F("h_PhiggsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.)}; 	
-
-  //Good pairing
-  TH1F* h_PphiggsInvMass             {new TH1F("h_PphiggsInvMass",  "h_0 Invariant mass", 1000, 0., 200.)};   
-  TH1F* h_PphiggsDeltaR              {new TH1F("h_PphiggsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.)}; 	
-
 	
   TH2F* h_massassump       {new TH2F("h_massassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.)};
+  TH2F* h_pmassassump       {new TH2F("h_pmassassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.)};
   TH2F* h_higgsassump      {new TH2F("h_higgsassump", "Invariant mass: h_0 (pions-muons) vs h_0 (kaons-muons)", 1000, 0.,200.,1000,0.,200.)};
 	
 	
@@ -1169,12 +1165,7 @@ int main(int argc, char* argv[])
 	      Phiggs=(Pantiscalar+Pscalar).M();
 	      h_PhiggsInvMass->Fill(Phiggs);
 	      h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(Pscalar));
-	      h_Pinvmass->Fill(Phadroninv,Pmuoninv);
-		
-	      if(std::abs(Phiggs-125)<3){ //Good pairing  
-	      h_PphiggsDeltaR->Fill(Pantiscalar.DeltaR(Pscalar));
-	      h_Ppinvmass->Fill(Phadroninv,Pmuoninv);
-	      }
+	      h_Pinvmass->Fill(Phadroninv,Pmuoninv); 
 	   }
 	    	 
 	 }
@@ -1185,12 +1176,16 @@ int main(int argc, char* argv[])
 	      
 	      
     //Pion and kaon comparison	      
+    if(std::abs(Phiggs-125)<3){      
+    h_pmassassump->Fill(Phadroninv,Khadroninv); 
+    } 
+    h_massassump->Fill(Phadroninv,Khadroninv);
+    h_higgsassump->Fill(Phiggs,Khiggs);      
           
-    h_massassump->Fill(Phadroninv,Khadroninv); 
-    h_higgsassump->Fill(Phiggs,Khiggs);
-       
 	      
-          
+	      
+	      
+	      
     //Muon momentum comparison       
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){ 
@@ -1490,15 +1485,12 @@ int main(int argc, char* argv[])
   h_PhiggsDeltaR->GetXaxis()->SetTitle("Radians");
   h_PhiggsDeltaR->Write();  
 
-  //Pairing
-  h_PphiggsInvMass->GetXaxis()->SetTitle("GeV");
-  h_PphiggsInvMass->Write();
-  h_PphiggsDeltaR->GetXaxis()->SetTitle("Radians");
-  h_PphiggsDeltaR->Write(); 
-	
   h_massassump->GetXaxis()->SetTitle("Hadron (pion) invariant mass (GeV)");
   h_massassump->GetYaxis()->SetTitle("Hadron (kaon) invariant mass (GeV)");	
   h_massassump->Write();  
+  h_pmassassump->GetXaxis()->SetTitle("Hadron (pion) invariant mass (GeV)");
+  h_pmassassump->GetYaxis()->SetTitle("Hadron (kaon) invariant mass (GeV)");	
+  h_pmassassump->Write();
   h_higgsassump->GetXaxis()->SetTitle("Higgs (pion-muon) invariant mass (GeV)");
   h_higgsassump->GetYaxis()->SetTitle("Higgs (kaon-muon) invariant mass (GeV)");	
   h_higgsassump->Write();
