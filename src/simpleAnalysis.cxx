@@ -209,7 +209,11 @@ int main(int argc, char* argv[])
   TH1F* h_PscalarInvMass            {new TH1F("h_PscalarInvMass", "Scalar Invariant mass", 1000, 0.,15.)};
   TH1F* h_PhiggsInvMass             {new TH1F("h_PhiggsInvMass",  "h_0 Invariant mass", 1000, 0., 200.)};   
   TH1F* h_PhiggsDeltaR              {new TH1F("h_PhiggsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.)}; 	
-	
+
+  //Good pairing
+  TH1F* h_PphiggsInvMass             {new TH1F("h_PphiggsInvMass",  "h_0 Invariant mass", 1000, 0., 200.)};   
+  TH1F* h_PphiggsDeltaR              {new TH1F("h_PphiggsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.)}; 	
+
 	
   TH2F* h_massassump       {new TH2F("h_massassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.)};
   TH2F* h_higgsassump      {new TH2F("h_higgsassump", "Invariant mass: h_0 (pions-muons) vs h_0 (kaons-muons)", 1000, 0.,200.,1000,0.,200.)};
@@ -1166,6 +1170,11 @@ int main(int argc, char* argv[])
 	      h_PhiggsInvMass->Fill(Phiggs);
 	      h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(Pscalar));
 	      h_Pinvmass->Fill(Phadroninv,Pmuoninv);
+		
+	      if(std::abs(Phiggs-125)<3){ //Good pairing  
+	      h_PphiggsDeltaR->Fill(Pantiscalar.DeltaR(Pscalar));
+	      h_Ppinvmass->Fill(Phadroninv,Pmuoninv);
+	      }
 	   }
 	    	 
 	 }
@@ -1426,13 +1435,9 @@ int main(int argc, char* argv[])
   h_KhadronDeltaR->Write();
   h_KmuonsDeltaR->GetXaxis()->SetTitle("Radians");
   h_KmuonsDeltaR->Write();
-  h_KIsoSum1->GetXaxis()->SetTitle("GeV");
   h_KIsoSum1->Write();
-  h_KIsoSum2->GetXaxis()->SetTitle("GeV");
   h_KIsoSum2->Write();
-  h_KIsoSum3->GetXaxis()->SetTitle("GeV");
   h_KIsoSum3->Write();
-  h_KIsoSum4->GetXaxis()->SetTitle("GeV");
   h_KIsoSum4->Write();
   h_KmuonsInvMass->GetXaxis()->SetTitle("GeV");
   h_KmuonsInvMass->Write();
@@ -1461,13 +1466,9 @@ int main(int argc, char* argv[])
   h_PhadronDeltaR->Write();
   h_PmuonsDeltaR->GetXaxis()->SetTitle("Radians");
   h_PmuonsDeltaR->Write();
-  h_PIsoSum1->GetXaxis()->SetTitle("GeV");
   h_PIsoSum1->Write();
-  h_PIsoSum2->GetXaxis()->SetTitle("GeV");
   h_PIsoSum2->Write();
-  h_PIsoSum3->GetXaxis()->SetTitle("GeV");
   h_PIsoSum3->Write();
-  h_PIsoSum4->GetXaxis()->SetTitle("GeV");
   h_PIsoSum4->Write();
   h_PmuonsInvMass->GetXaxis()->SetTitle("GeV");
   h_PmuonsInvMass->Write();
@@ -1488,7 +1489,12 @@ int main(int argc, char* argv[])
   h_PhiggsInvMass->Write();
   h_PhiggsDeltaR->GetXaxis()->SetTitle("Radians");
   h_PhiggsDeltaR->Write();  
-	
+
+  //Pairing
+  h_PphiggsInvMass->GetXaxis()->SetTitle("GeV");
+  h_PphiggsInvMass->Write();
+  h_PphiggsDeltaR->GetXaxis()->SetTitle("Radians");
+  h_PphiggsDeltaR->Write(); 
 	
   h_massassump->GetXaxis()->SetTitle("Hadron (pion) invariant mass (GeV)");
   h_massassump->GetYaxis()->SetTitle("Hadron (kaon) invariant mass (GeV)");	
