@@ -698,10 +698,9 @@ int main(int argc, char* argv[])
     uint singleFlag{0}; uint doubleFlag{0};
     std::vector<Int_t> singleIndex{}; std::vector<Int_t> doubleIndex{};
           
-    uint leadingFlag{0}; uint subFlag{0};
-    std::vector<Int_t> leadingIndex{}; std::vector<Int_t> subIndex{};
+    uint leadingFlag{0}; std::vector<Int_t> leadingIndex{}; 
 
-    const Int_t s1=0; const Int_t d1=0; const Int_t d2=0;
+    const Int_t s1=0; const Int_t d1=0; const Int_t ss1=0; const Int_t dd1=0; const Int_t dd2=0;
 	      
     if(event.metFilters()){
       
@@ -719,15 +718,12 @@ int main(int argc, char* argv[])
              leadingFlag++; leadingIndex.emplace_back(k);
 	   }
 	   if(leadingFlag>0){
-             const int s1 {leadingIndex[0]};
+             s1=leadingIndex[0];
            }
 	   h_muonRecPtL->Fill(event.muonPF2PATPt[s1]);
 	       
-	   if(event.muonPF2PATLooseCutId[k]==1 && std::abs(event.muonPF2PATEta[k])<2.4){    
-             subFlag++; subIndex.emplace_back(k);
-	   }
-	   if(subFlag>1){
-             const int d1 {subIndex[1]}; 
+	   if(leadingFlag>1){
+             d1=leadingIndex[1]; 
            }
 	   h_muonRecPtS->Fill(event.muonPF2PATPt[d1]); 
 	       
@@ -771,9 +767,9 @@ int main(int argc, char* argv[])
              }
            }
            if(singleFlag>0){
-             s1=singleIndex[0];
+             ss1=singleIndex[0];
            }
-	   h_muonCutSingleL->Fill(event.muonPF2PATPt[s1]);
+	   h_muonCutSingleL->Fill(event.muonPF2PATPt[ss1]);
 	       
            if(event.mumuTrig()){
              if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut, |eta| < 2.4 
@@ -781,10 +777,10 @@ int main(int argc, char* argv[])
              } 
            }
            if(doubleFlag>1){
-             d1=doubleIndex[0]; d2=doubleIndex[1];
+             dd1=doubleIndex[0]; dd2=doubleIndex[1];
            }
-	   h_muonCutDoubleL->Fill(event.muonPF2PATPt[d1]);
-           h_muonCutDoubleS->Fill(event.muonPF2PATPt[d2]);
+	   h_muonCutDoubleL->Fill(event.muonPF2PATPt[dd1]);
+           h_muonCutDoubleS->Fill(event.muonPF2PATPt[dd2]);
                
        }
     }//MET filter
