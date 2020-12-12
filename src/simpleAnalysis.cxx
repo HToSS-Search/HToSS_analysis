@@ -4,6 +4,7 @@
 #include "TH1F.h"
 #include "TH1I.h"
 #include "TH2F.h"
+#include "TF1.h"
 #include "TLegend.h"
 #include "TStyle.h"
 #include "TASImage.h"
