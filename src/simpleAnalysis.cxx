@@ -203,7 +203,7 @@ int main(int argc, char* argv[])
   TH1F* h_PhadronInvMass {new TH1F("h_PhadronInvMass", "Two hadrons (pions) - Invariant mass",1000, 0., 7.)};
   TH1F* h_PhadronInvMass2 {new TH1F("h_PhadronInvMass2", "Two hadrons (pions) - Invariant mass, smaller binning",500, 0., 7.)};
   TH1F* h_PmuonsInvMass  {new TH1F("h_PmuonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
-  TF1 * Gaussian1 	 {new TF1("Gaussian1","gaus",1,3)};
+  TF1* Gaussian1 	 {new TF1("Gaussian1","gaus",1.,3.)};
   TH2F* h_Pinvmass       {new TH2F("h_Pinvmass", "Invariant mass: charged hadrons (pions) vs muons", 1000, 0.,7.,1000,0.,7.)};
   
   TH1F* h_PantiscalarInvMass        {new TH1F("h_PantiscalarInvMass", "(Pion) Antiscalar Invariant mass", 1000, 0.,15.)};
