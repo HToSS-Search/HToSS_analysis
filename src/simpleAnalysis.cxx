@@ -1123,7 +1123,7 @@ int main(int argc, char* argv[])
                         
              Pmuoninv=(lmuon1+lmuon2).M();
              h_PmuonsInvMass->Fill((lmuon1+lmuon2).M());
-	     h_PmuonsInvMass->Fit(Gaussian1);
+	     h_PmuonsInvMass->Fit(Gaussian2);
 		   
 	     PMpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
              PMpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
@@ -1132,7 +1132,7 @@ int main(int argc, char* argv[])
 	      
 	     Pscalar.SetPxPyPzE(PMpx,PMpy,PMpz,PME);
 	     h_PscalarInvMass->Fill(Pscalar.M());
-	     h_PscalarInvMass->Fit(Gaussian1);
+	     h_PscalarInvMass->Fit(Gaussian3);
 		   
 	   }
 		 
