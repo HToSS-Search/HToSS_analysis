@@ -1244,8 +1244,9 @@ int main(int argc, char* argv[])
                   muonpt2=event.muonPF2PATInnerTkPt[k];
                   muonIndex2=k;
 	   }
-		
+	std::cout<<"Sorted? "<<std::endl;	
 	   if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){ 
+	    std::cout<<"maximum "<<event.muonPF2PATInnerTkPt[muonIndex1]<<"minimum "<<event.muonPF2PATInnerTkPt[muonIndex2]<<std::endl;
 	     h_muon1RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex1]);
 	     h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex2]);
 	   } 
