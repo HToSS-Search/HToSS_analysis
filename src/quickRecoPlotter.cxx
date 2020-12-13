@@ -94,9 +94,9 @@ int main(int argc, char* argv[]) {
     TH2F* h_diChsJEtPtOverDeltaR2D  { new TH2F("h_diChsJetPtOverDeltaR2D",    "; p_{T}; #Delta R", 200, 0., 100., 500, 0., 10.)};
     TH1F* h_diChsJetMass            { new TH1F("h_diChsJetMass",              ";Mass", 100, 0., 4.0)};
 
-    TH1F* h_scalarJetDeltaR         { new TH1F("h_scalarDeltaR",           ";#Delta R", 500, 0., 10.)};
-    TH2F* h_scalarJetMasses         { new TH2F("h_scalarMasses",           ";#mu#mu Mass; a#bar{a} Mass", 100, 0., 4.0, 100, 0., 4.0)};
-    TH1F* h_scalarJetMass           { new TH1F("h_scalarMass",             ";Higgs Mass", 200, 75., 175.)};
+    TH1F* h_scalarJetDeltaR         { new TH1F("h_scalarJetDeltaR",           ";#Delta R", 500, 0., 10.)};
+    TH2F* h_scalarJetMasses         { new TH2F("h_scalarJetMasses",           ";#mu#mu Mass; a#bar{a} Mass", 100, 0., 4.0, 100, 0., 4.0)};
+    TH1F* h_scalarJetMass           { new TH1F("h_scalarJetMass",             ";Higgs Mass", 200, 75., 175.)};
 
     // post trigger
 
@@ -128,9 +128,9 @@ int main(int argc, char* argv[]) {
     TH2F* ht_diChsJEtPtOverDeltaR2D  { new TH2F("ht_diChsJetPtOverDeltaR2D",    "; p_{T}; #Delta R", 200, 0., 100., 500, 0., 10.)};
     TH1F* ht_diChsJetMass            { new TH1F("ht_diChsJetMass",              ";Mass", 100, 0., 4.0)};
 
-    TH1F* ht_scalarJetDeltaR         { new TH1F("ht_scalarDeltaR",           ";#Delta R", 500, 0., 10.)};
-    TH2F* ht_scalarJetMasses         { new TH2F("ht_scalarMasses",           ";#mu#mu Mass; a#bar{a} Mass", 100, 0., 4.0, 100, 0., 4.0)};
-    TH1F* ht_scalarJetMass           { new TH1F("ht_scalarMass",             ";Higgs Mass", 200, 75., 175.)};
+    TH1F* ht_scalarJetDeltaR         { new TH1F("ht_scalarJetDeltaR",           ";#Delta R", 500, 0., 10.)};
+    TH2F* ht_scalarJetMasses         { new TH2F("ht_scalarJetMasses",           ";#mu#mu Mass; a#bar{a} Mass", 100, 0., 4.0, 100, 0., 4.0)};
+    TH1F* ht_scalarJetMass           { new TH1F("ht_scalarJetMass",             ";Higgs Mass", 200, 75., 175.)};
 
 
     namespace po = boost::program_options;
@@ -283,13 +283,16 @@ int main(int argc, char* argv[]) {
                 chsIndex.emplace_back(k);
             }
 
+            if ( chsIndex.size() < 2 ) continue;
+
             getDihadronCand( event, chsIndex, scalarMass_);
 
             const TLorentzVector chs1Vec{event.chsPairVec.first}, chs2Vec{event.chsPairVec.second};
 
             TLorentzVector jet1Vec, jet2Vec;
-            jet1Vec.SetPtEtaPhiE(event.jetPF2PATPt[event.chsPairIndex.first], event.jetPF2PATEta[event.chsPairIndex.first], event.jetPF2PATPhi[event.chsPairIndex.first], event.jetPF2PATE[event.chsPairIndex.first]);
-            jet2Vec.SetPtEtaPhiE(event.jetPF2PATPt[event.chsPairIndex.second], event.jetPF2PATEta[event.chsPairIndex.second], event.jetPF2PATPhi[event.chsPairIndex.second], event.jetPF2PATE[event.chsPairIndex.second]);
+            const int jetIndex1 {event.packedCandsJetIndex[event.chsPairIndex.first]}, jetIndex2 {event.packedCandsJetIndex[event.chsPairIndex.second]};
+            jet1Vec.SetPtEtaPhiE(event.jetPF2PATPt[jetIndex1], event.jetPF2PATEta[jetIndex1], event.jetPF2PATPhi[jetIndex1], event.jetPF2PATE[jetIndex1]);
+            jet2Vec.SetPtEtaPhiE(event.jetPF2PATPt[jetIndex2], event.jetPF2PATEta[jetIndex2], event.jetPF2PATPhi[jetIndex2], event.jetPF2PATE[jetIndex2]);
 
             h_leadingMuonPt->Fill(muon1Vec.Pt());
             h_subleadingMuonPt->Fill(muon2Vec.Pt());
