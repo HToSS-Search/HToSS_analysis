@@ -357,12 +357,11 @@ void AnalysisAlgo::setupPlots()
 //    stageNames.emplace_back(std::make_pair("wMass", "W Mass Cuts"));
 }
 
-void AnalysisAlgo::runMainAnalysis()
-{
+void AnalysisAlgo::runMainAnalysis() {
+
     TMVA::gConfig().SetDrawProgressBar(true);
 
-    if (totalLumi == 0.)
-    {
+    if (totalLumi == 0.) {
         totalLumi = usePreLumi;
     }
     std::cout << "Using lumi: " << totalLumi << std::endl;
@@ -374,8 +373,7 @@ void AnalysisAlgo::runMainAnalysis()
 
 
     // Begin to loop over all datasets
-    for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset)
-    {
+    for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset) {
         datasetFilled = false;
         TChain* datasetChain{new TChain{dataset->treeName().c_str()}};
         datasetChain->SetAutoSave(0);
@@ -472,9 +470,7 @@ void AnalysisAlgo::runMainAnalysis()
                         }
                     } // end cutFlow find loop
                     if (systInd > 0)
-                    {
                         systMask = systMask << 1;
-                    }
                 } // end systematic loop
 
             } // end plots if statement
@@ -580,11 +576,7 @@ void AnalysisAlgo::runMainAnalysis()
                 if (invertLepCut)
                     inputPostfix += "invLep";
                 TFile* datasetFileForHists;
-                datasetFileForHists =
-                    new TFile((postLepSelSkimInputDir + dataset->name()
-                               + inputPostfix + "SmallSkim.root")
-                                  .c_str(),
-                              "READ");
+                datasetFileForHists = new TFile((postLepSelSkimInputDir + dataset->name() + inputPostfix + "SmallSkim.root").c_str(), "READ");
                 for (unsigned denNum{0}; denNum < denomNum.size(); denNum++) {
                     for (unsigned eff{0}; eff < typesOfEff.size(); eff++) {
                         bTagEffPlots.emplace_back(dynamic_cast<TH2D*>(

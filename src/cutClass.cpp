@@ -446,7 +446,6 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
     if (postLepSelTree_) postLepSelTree_->Fill();
 
 //    event.muonMomentumSF = getRochesterSFs(event);
-
     if ( !getDileptonCand(event, event.muonIndexTight) ) return false;
 
 //    eventWeight *= getLeptonWeight(event, syst);
@@ -682,16 +681,16 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                 // lepton2 *= event.muonMomentumSF.at(1);
 
                 double invMass { (lepton1+lepton2).M() };
-
                 if ( std::abs(( invMass - skMass_ )) < std::abs(closestMass) ) {
 
                     event.zPairLeptons.first = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
-                    event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[0] : muons[1];
-                    event.zPairRelIso.first = event.muonPF2PATComRelIsodBeta[muons[0]];
+                    event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[i] : muons[j];
+                    event.zPairRelIso.first = event.muonPF2PATComRelIsodBeta[muons[i]];
                     event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
-                    event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[1]];
-                    event.zPairIndex.second = lepton1.Pt() > lepton2.Pt() ? muons[1] : muons[0];
+                    event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
+                    event.zPairIndex.second = lepton1.Pt() > lepton2.Pt() ? muons[j] : muons[i];
                     event.mumuTrkIndex = getMuonTrackPairIndex(event);
+                    closestMass = invMass;
                 }
             }
         }

@@ -2434,6 +2434,9 @@ class AnalysisEvent
     std::pair<int, int> zPairIndex;
     int mumuTrkIndex;
 
+    std::pair<TLorentzVector, TLorentzVector> chsPairVec;
+    std::pair<int, int> chsPairIndex;
+
     std::pair<TLorentzVector, TLorentzVector> wPairQuarks;
     std::pair<int, int> wPairIndex;
 
