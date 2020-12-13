@@ -746,7 +746,7 @@ int main(int argc, char* argv[])
                TLorentzVector lVecMu2  {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]};
 
                h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M() );
-               h_muonRecInvMass->Fit(Gaussian1);
+               //h_muonRecInvMass->Fit(Gaussian1);
 		     
                if(event.muonPF2PATPt[0]>30 && event.muonPF2PATPt[1]>12){//combined (single+double, mix) p_T cut applied
              
@@ -1131,7 +1131,7 @@ int main(int argc, char* argv[])
                         
              Pmuoninv=(lmuon1+lmuon2).M();
              h_PmuonsInvMass->Fill((lmuon1+lmuon2).M());
-	     h_PmuonsInvMass->Fit(Gaussian2);
+	     //h_PmuonsInvMass->Fit(Gaussian2);
 		   
 	     PMpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
              PMpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
@@ -1140,7 +1140,7 @@ int main(int argc, char* argv[])
 	      
 	     Pscalar.SetPxPyPzE(PMpx,PMpy,PMpz,PME);
 	     h_PscalarInvMass->Fill(Pscalar.M());
-	     h_PscalarInvMass->Fit(Gaussian3);
+	     //h_PscalarInvMass->Fit(Gaussian3);
 		   
 	   }
 		 
@@ -1230,13 +1230,14 @@ int main(int argc, char* argv[])
 	}
 	
 	for(Int_t k{0}; k<event.numMuonPF2PAT;k++){
+		std::cout<<"Sorted1? "<<event.muonPF2PATInnerTkPt[k]<<std::endl;
 	   if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){
 	     h_muon1RecPtTrk->Fill(event.muonPF2PATInnerTkPt[0]);
 	     h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[1]);
 	   }
 	}
 	for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
-		std::cout<<"Sorted? "<<event.muonTkPairPF2PATTk1Pt[k]<<std::endl;
+		std::cout<<"Sorted2? "<<event.muonTkPairPF2PATTk1Pt[k]<<std::endl;
 	   if(event.muonTkPairPF2PATIndex1[k]==0 && event.muonTkPairPF2PATIndex2[k]==1){	
 		   
 	     h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]);  
