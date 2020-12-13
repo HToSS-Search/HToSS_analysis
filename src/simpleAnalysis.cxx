@@ -711,7 +711,7 @@ int main(int argc, char* argv[])
     if(event.metFilters()){
       
        for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
-                 
+            std::cout<<"Sorted? "<<event.muonPF2PATPt[k]<<std::endl;   
            const Float_t muonRecPt   { event.muonPF2PATPt[k] };
            const Float_t muonRecEta  { event.muonPF2PATEta[k] };
            const Float_t muonRecPhi  { event.muonPF2PATPhi[k] };
@@ -1207,7 +1207,11 @@ int main(int argc, char* argv[])
 	      
 	      
 	      
-    //Muon momentum comparison       
+    //Muon momentum comparison  
+	      
+    Int_t muonIndex1{-1}; Int_t muonIndex2{-1};
+    Float_t muonpt1{-1}; Float_t muonpt2{-1};	      
+	      
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){ 
 	if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
@@ -1229,15 +1233,27 @@ int main(int argc, char* argv[])
 	  }
 	}
 	
-	for(Int_t k{0}; k<event.numMuonPF2PAT;k++){
-		std::cout<<"Sorted1? "<<event.muonPF2PATInnerTkPt[k]<<std::endl;
-	   if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){
-	     h_muon1RecPtTrk->Fill(event.muonPF2PATInnerTkPt[0]);
-	     h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[1]);
+	for(Int_t k{0}; k<event.numMuonPF2PAT;k++){ 
+           if(event.muonPF2PATInnerTkPt[k]>muonpt1){
+             muonpt2=muonpt1;
+             muonpt1=event.muonPF2PATInnerTkPt[k];
+             muonIndex2=muonIndex1;
+             muonIndex1=k;
 	   }
-	}
+           else if(event.muonPF2PATInnerTkPt[k]>muonpt2){
+                  muonpt2=event.muonPF2PATInnerTkPt[k];
+                  muonIndex2=k;
+	   }
+		
+	   if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){ 
+	     h_muon1RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex1]);
+	     h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex2]);
+	   } 
+	}  
+	   
+	/*      
 	for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
-		std::cout<<"Sorted2? "<<event.muonTkPairPF2PATTk1Pt[k]<<std::endl;
+		//std::cout<<"Sorted2? "<<event.muonTkPairPF2PATTk1Pt[k]<<std::endl;
 	   if(event.muonTkPairPF2PATIndex1[k]==0 && event.muonTkPairPF2PATIndex2[k]==1){	
 		   
 	     h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]);  
@@ -1247,7 +1263,7 @@ int main(int argc, char* argv[])
              h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
              */
 	   }   	
-	}  
+	} */ 
 	      
       }//end of single/double muon trigger
     }//end of met filter
