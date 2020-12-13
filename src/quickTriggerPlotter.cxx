@@ -72,26 +72,26 @@ int main(int argc, char* argv[])
     TH1F* h_delR_truth                     {new TH1F("h_delR_truth",               "", 100, 0., 1.0)};
     TH1F* h_delR                           {new TH1F("h_delR",                     "", 100, 0., 1.0)};
     // numerator - single mu
-    TH1F* h_leadingMuonPt_truth_muTrig     {new TH1F("h_leadingMuonPt_truth_muTrig",      "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_truth_muTrig  {new TH1F("h_subLeadingMuonPt_truth_muTrig",   "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_leadingMuonPt_muTrig           {new TH1F("h_leadingMuonPt_muTrig",            "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_muTrig        {new TH1F("h_subLeadingMuonPt_muTrig",         "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_delR_truth_muTrig              {new TH1F("h_delR_truth_muTrig",               "Trigger turn-on for signal; #Delta R; #mu trigger #epislon", 100, 0., 1.0)};
-    TH1F* h_delR_muTrig                    {new TH1F("h_delR_muTrig",                     "Trigger turn-on for signal; #Delta R; #mu trigger #epislon", 100, 0., 1.0)};
+    TH1F* h_leadingMuonPt_truth_muTrig     {new TH1F("h_leadingMuonPt_truth_muTrig",      "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_truth_muTrig  {new TH1F("h_subLeadingMuonPt_truth_muTrig",   "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_leadingMuonPt_muTrig           {new TH1F("h_leadingMuonPt_muTrig",            "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_muTrig        {new TH1F("h_subLeadingMuonPt_muTrig",         "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_delR_truth_muTrig              {new TH1F("h_delR_truth_muTrig",               "Trigger turn-on for signal; #Delta R; #mu trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_delR_muTrig                    {new TH1F("h_delR_muTrig",                     "Trigger turn-on for signal; #Delta R; #mu trigger #epsilon", 100, 0., 1.0)};
     // numerator - doubele mu
-    TH1F* h_leadingMuonPt_truth_mumuTrig       {new TH1F("h_leadingMuonPt_truth_mumuTrig",      "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_truth_mumuTrig    {new TH1F("h_subLeadingMuonPt_truth_mumuTrig",   "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_leadingMuonPt_mumuTrig             {new TH1F("h_leadingMuonPt_mumuTrig",            "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_mumuTrig          {new TH1F("h_subLeadingMuonPt_mumuTrig",         "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_delR_truth_mumuTrig                {new TH1F("h_delR_truth_mumuTrig",               "Trigger turn-on for signal; #Delta R; #mu#mu trigger #epislon", 100, 0., 1.0)};
-    TH1F* h_delR_mumuTrig                      {new TH1F("h_delR_mumuTrig",                    "Trigger turn-on for signal;  #Delta R; #mu#mu trigger #epislon", 100, 0., 1.0)};
+    TH1F* h_leadingMuonPt_truth_mumuTrig       {new TH1F("h_leadingMuonPt_truth_mumuTrig",      "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_truth_mumuTrig    {new TH1F("h_subLeadingMuonPt_truth_mumuTrig",   "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_leadingMuonPt_mumuTrig             {new TH1F("h_leadingMuonPt_mumuTrig",            "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_mumuTrig          {new TH1F("h_subLeadingMuonPt_mumuTrig",         "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_delR_truth_mumuTrig                {new TH1F("h_delR_truth_mumuTrig",               "Trigger turn-on for signal; #Delta R; #mu#mu trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_delR_mumuTrig                      {new TH1F("h_delR_mumuTrig",                    "Trigger turn-on for signal;  #Delta R; #mu#mu trigger #epsilon", 100, 0., 1.0)};
     // numerator - L2 mu
-    TH1F* h_leadingMuonPt_truth_L2muTrig       {new TH1F("h_leadingMuonPt_truth_L2muTrig",      "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_truth_L2muTrig    {new TH1F("h_subLeadingMuonPt_truth_L2muTrig",   "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_leadingMuonPt_L2muTrig             {new TH1F("h_leadingMuonPt_L2muTrig",            "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_L2muTrig          {new TH1F("h_subLeadingMuonPt_L2muTrig",         "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_delR_truth_L2muTrig                {new TH1F("h_delR_truth_L2muTrig",               "Trigger turn-on for signal; #Delta R; L2 #mu#	mu trigger #epislon", 100, 0., 1.0)};
-    TH1F* h_delR_L2muTrig                      {new TH1F("h_delR_L2muTrig",                    "Trigger turn-on for signal; #Delta R;  L2 #mu#mu trigger #epislon", 100, 0., 1.0)};
+    TH1F* h_leadingMuonPt_truth_L2muTrig       {new TH1F("h_leadingMuonPt_truth_L2muTrig",      "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_truth_L2muTrig    {new TH1F("h_subLeadingMuonPt_truth_L2muTrig",   "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_leadingMuonPt_L2muTrig             {new TH1F("h_leadingMuonPt_L2muTrig",            "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_L2muTrig          {new TH1F("h_subLeadingMuonPt_L2muTrig",         "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_delR_truth_L2muTrig                {new TH1F("h_delR_truth_L2muTrig",               "Trigger turn-on for signal; #Delta R; L2 #mu#	mu trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_delR_L2muTrig                      {new TH1F("h_delR_L2muTrig",                    "Trigger turn-on for signal; #Delta R;  L2 #mu#mu trigger #epsilon", 100, 0., 1.0)};
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
