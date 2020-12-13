@@ -949,8 +949,7 @@ int main(int argc, char* argv[])
 	      }
 		   
 	   }//end of for-loop
-	   h_KIsoSum1->Fill(KIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]);    
-	   h_KIsoSum2->Fill(KIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]);
+	   
 	 }
 	      
 	 if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
@@ -1002,10 +1001,16 @@ int main(int argc, char* argv[])
                   KIsoSum4+=event.packedCandsPseudoTrkPt[k];
 		}
 	      }
-		
+	      if(std::abs((Kantiscalar+Kscalar).M()-125)<3){
+	        if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2])){
+	          h_KIsoSum1->Fill(KIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]);    
+	          h_KIsoSum2->Fill(KIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]);
+		}
+	        h_KIsoSum3->Fill(KIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]);
+                h_KIsoSum4->Fill(KIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]);
+	      }
 	   }
-	   h_KIsoSum3->Fill(KIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]);
-           h_KIsoSum4->Fill(KIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]);
+	   
 	 }
 	      
 	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2]) && muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
