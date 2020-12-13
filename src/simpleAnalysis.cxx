@@ -221,9 +221,12 @@ int main(int argc, char* argv[])
 	
   //Comparison muon momenta
   TH1F* h_muonRecPtTrk                {new TH1F("h_muonRecPtTrk",  "#mu^{#pm} reconstruction p_{T} track", 1000, 0., 1000.)};
-  TH1F* h_muonpackedPt                {new TH1F("h_muonpackedPt",  "#mu^{#pm} Packed candidate p_{T}", 1000, 0., 1000.)};
-  TH1F* h_muonpackedInvMass           {new TH1F("h_muonpackedInvMass", "#mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.)};
-  TH1F* h_muonpackedPtTrk             {new TH1F("h_muonpackedPtTrk",  "#mu^{#pm} Packed candidate p_{T} track", 1000, 0., 1000.)};	
+  TH1F* h_muon1packedPt                {new TH1F("h_muon1packedPt",  "Leading #mu^{#pm} Packed candidate p_{T}", 1000, 0., 1000.)};
+  TH1F* h_muon1packedInvMass           {new TH1F("h_muon1packedInvMass", "Leading #mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.)};
+  TH1F* h_muon1packedPtTrk             {new TH1F("h_muon1packedPtTrk",  "Leading #mu^{#pm} Packed candidate p_{T} track", 1000, 0., 1000.)};
+  TH1F* h_muon2packedPt                {new TH1F("h_muon2packedPt",  "Subleading #mu^{#pm} Packed candidate p_{T}", 1000, 0., 1000.)};
+  TH1F* h_muon2packedInvMass           {new TH1F("h_muon2packedInvMass", "Subleading #mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.)};
+  TH1F* h_muon2packedPtTrk             {new TH1F("h_muon2packedPtTrk",  "Subleading #mu^{#pm} Packed candidate p_{T} track", 1000, 0., 1000.)};	
   TH1F*	h_muon1PairsPt		      {new TH1F("h_muon1PairsPt",  "#mu^{#pm} 1 Refitted tracks p_{T} m", 1000, 0., 1000.)};
   TH1F*	h_muon2PairsPt 		      {new TH1F("h_muon2PairsPt",  "#mu^{#pm} 2 Refitted tracks p_{T}", 1000, 0., 1000.)};     
   /*TH2F* h_muonPairsXY                 {new TH2F("h_muonPairsXY", "Refitted tracks vertex XY", 100, -150,150,100,-150,150)};
@@ -1206,16 +1209,23 @@ int main(int argc, char* argv[])
     //Muon momentum comparison       
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){ 
-	      
-             
-        for(Int_t k{0}; k<event.numPackedCands;k++){
-           const Int_t packedId {event.packedCandsPdgId[k]};    
-           if(std::abs(packedId)==13){
-             TLorentzVector muonpackedPt {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]}; 
-             h_muonpackedPt->Fill(muonpackedPt.Pt());  
-             h_muonpackedInvMass->Fill(muonpackedPt.M()); 
-             h_muonpackedPtTrk->Fill(event.packedCandsPseudoTrkPt[k]);
-	   }
+	if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
+     
+          for(Int_t k{0}; k<event.numPackedCands;k++){
+             const Int_t packedId {event.packedCandsPdgId[k]};    
+             if(std::abs(packedId)==13){
+               TLorentzVector muonpackedPt1 {event.packedCandsPx[muIndex1],event.packedCandsPy[muIndex1],event.packedCandsPz[muIndex1],event.packedCandsE[muIndex1]}; 
+	       TLorentzVector muonpackedPt2 {event.packedCandsPx[muIndex2],event.packedCandsPy[muIndex2],event.packedCandsPz[muIndex2],event.packedCandsE[muIndex2]}; 
+               h_muon1packedPt->Fill(muonpackedPt1.Pt()); 
+	       h_muon2packedPt->Fill(muonpackedPt2.Pt()); 
+               h_muon1packedInvMass->Fill(muonpackedPt1.M()); 
+	       h_muon2packedInvMass->Fill(muonpackedPt2.M()); 
+	       if(event.packedCandsHasTrackDetails[k]==1){
+                 h_muon1packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex1]);
+	         h_muon2packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex2]);
+	       }
+	     }
+	  }
 	}
 	
 	for(Int_t k{0}; k<event.numMuonPF2PAT;k++){
@@ -1515,12 +1525,18 @@ int main(int argc, char* argv[])
 	
   h_muonRecPtTrk->GetXaxis()->SetTitle("GeV");
   h_muonRecPtTrk->Write();
-  h_muonpackedPt->GetXaxis()->SetTitle("GeV");
-  h_muonpackedPt->Write();
-  h_muonpackedInvMass->GetXaxis()->SetTitle("GeV");
-  h_muonpackedInvMass->Write();
-  h_muonpackedPtTrk->GetXaxis()->SetTitle("GeV");
-  h_muonpackedPtTrk->Write();
+  h_muon1packedPt->GetXaxis()->SetTitle("GeV");
+  h_muon1packedPt->Write();
+  h_muon1packedInvMass->GetXaxis()->SetTitle("GeV");
+  h_muon1packedInvMass->Write();
+  h_muon1packedPtTrk->GetXaxis()->SetTitle("GeV");
+  h_muon1packedPtTrk->Write();
+  h_muon2packedPt->GetXaxis()->SetTitle("GeV");
+  h_muon2packedPt->Write();
+  h_muon2packedInvMass->GetXaxis()->SetTitle("GeV");
+  h_muon2packedInvMass->Write();
+  h_muon2packedPtTrk->GetXaxis()->SetTitle("GeV");
+  h_muon2packedPtTrk->Write();
   h_muon1PairsPt->GetXaxis()->SetTitle("GeV");	
   h_muon1PairsPt->Write();
   h_muon2PairsPt->GetXaxis()->SetTitle("GeV");	
