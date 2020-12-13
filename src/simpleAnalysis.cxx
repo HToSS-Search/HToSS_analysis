@@ -220,7 +220,8 @@ int main(int argc, char* argv[])
 	
 	
   //Comparison muon momenta
-  TH1F* h_muonRecPtTrk                {new TH1F("h_muonRecPtTrk",  "#mu^{#pm} reconstruction p_{T} track", 1000, 0., 1000.)};
+  TH1F* h_muon1RecPtTrk                {new TH1F("h_muon1RecPtTrk",  "Leading #mu^{#pm} reconstruction p_{T} track", 1000, 0., 1000.)};
+  TH1F* h_muon2RecPtTrk                {new TH1F("h_muon2RecPtTrk",  "Subleading #mu^{#pm} reconstruction p_{T} track", 1000, 0., 1000.)};
   TH1F* h_muon1packedPt                {new TH1F("h_muon1packedPt",  "Leading #mu^{#pm} Packed candidate p_{T}", 1000, 0., 1000.)};
   TH1F* h_muon1packedInvMass           {new TH1F("h_muon1packedInvMass", "Leading #mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.)};
   TH1F* h_muon1packedPtTrk             {new TH1F("h_muon1packedPtTrk",  "Leading #mu^{#pm} Packed candidate p_{T} track", 1000, 0., 1000.)};
@@ -1229,22 +1230,23 @@ int main(int argc, char* argv[])
 	}
 	
 	for(Int_t k{0}; k<event.numMuonPF2PAT;k++){
-           h_muonRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k]);
 	   if(event.muonPF2PATCharge[0]==-(event.muonPF2PATCharge[1])){
-	 
-	     for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
-	        if(event.muonTkPairPF2PATIndex1[k]==0 && event.muonTkPairPF2PATIndex2[k]==1){	
-		   
-	          h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]);  
-	          h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k]);   
-		
-	          /*h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
-                  h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
-                  */
-		}   	
-	     }
+	     h_muon1RecPtTrk->Fill(event.muonPF2PATInnerTkPt[0]);
+	     h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[1]);
 	   }
 	}
+	for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
+		std::cout<<"Sorted? "<<event.muonTkPairPF2PATTk1Pt[k]<<std::endl;
+	   if(event.muonTkPairPF2PATIndex1[k]==0 && event.muonTkPairPF2PATIndex2[k]==1){	
+		   
+	     h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]);  
+	     h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k]);   
+		
+	     /*h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
+             h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
+             */
+	   }   	
+	}  
 	      
       }//end of single/double muon trigger
     }//end of met filter
@@ -1523,8 +1525,10 @@ int main(int argc, char* argv[])
   h_higgsassump->Write();
 	
 	
-  h_muonRecPtTrk->GetXaxis()->SetTitle("GeV");
-  h_muonRecPtTrk->Write();
+  h_muon1RecPtTrk->GetXaxis()->SetTitle("GeV");
+  h_muon1RecPtTrk->Write();
+  h_muon2RecPtTrk->GetXaxis()->SetTitle("GeV");
+  h_muon2RecPtTrk->Write();
   h_muon1packedPt->GetXaxis()->SetTitle("GeV");
   h_muon1packedPt->Write();
   h_muon1packedInvMass->GetXaxis()->SetTitle("GeV");
