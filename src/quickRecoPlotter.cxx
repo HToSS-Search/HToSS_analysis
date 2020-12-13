@@ -42,7 +42,8 @@ float deltaR(float eta1, float phi1, float eta2, float phi2);
 namespace fs = boost::filesystem;
 
 // Lepton cut variables
-const float looseMuonEta_ {2.8}, looseMuonPt_ {6.}, looseMuonPtLeading_ {15.}, looseMuonRelIso_ {100.};
+//const float looseMuonEta_ {2.8}, looseMuonPt_ {6.}, looseMuonPtLeading_ {15.}, looseMuonRelIso_ {100.};
+const float looseMuonEta_ {2.8}, looseMuonPt_ {0.}, looseMuonPtLeading_ {0.}, looseMuonRelIso_ {100.};
 const float invZMassCut_ {10.0};
 
 int main(int argc, char* argv[]) {
@@ -66,7 +67,7 @@ int main(int argc, char* argv[]) {
     // Quick and dirty plots
     TH1F* h_leadingMuonPt        { new TH1F("h_leadingMuonPt",          "", 200, 0., 100.)};
     TH1F* h_subleadingMuonPt     { new TH1F("h_subleadingMuonPt",       "", 200, 0., 100.)};
-    TH1F* h_muonDeltaR           { new TH1F("h_muonDeltaR",             "", 500, 0., 10.)}; 
+    TH1F* h_muonDeltaR           { new TH1F("h_muonDeltaR",             "", 500, 0., 1.)}; 
     TH1F* h_dimuonPt             { new TH1F("h_dimuonPt",               "", 400, 0., 200.)};
     TH1F* h_muonPtOverDeltaR     { new TH1F("h_muonPtOverDeltaR",       "", 5000, 0., 10.)};
     TH2F* h_muonPtOverDeltaR2D   { new TH2F("h_muonPtOverDeltaR2D",     "", 200, 0., 100., 500, 0., 10.)};
@@ -87,7 +88,7 @@ int main(int argc, char* argv[]) {
 
     TH1F* ht_leadingMuonPt       { new TH1F("ht_leadingMuonPt",         "", 200, 0., 100.)};
     TH1F* ht_subleadingMuonPt    { new TH1F("ht_subleadingMuonPt",      "", 200, 0., 100.)};
-    TH1F* ht_muonDeltaR          { new TH1F("ht_muonDeltaR",            "", 500, 0., 10.)}; 
+    TH1F* ht_muonDeltaR          { new TH1F("ht_muonDeltaR",            "", 500, 0., 1.)}; 
     TH1F* ht_dimuonPt            { new TH1F("ht_dimuonPt",              "", 400, 0., 200.)};
     TH1F* ht_muonPtOverDeltaR    { new TH1F("ht_muonPtOverDeltaR",      "", 5000, 0., 10.)};
     TH2F* ht_muonPtOverDeltaR2D  { new TH2F("ht_muonPtOverDeltaR2D",    "", 200, 0., 100., 500, 0., 10.)};
@@ -116,7 +117,7 @@ int main(int argc, char* argv[]) {
         "outfile,o",
         po::value<std::string>(&outFileString)->default_value(outFileString),
         "Output file for plots.")(
-        "mcTruth, m",
+        "mcTruth,m",
         po::bool_switch(&mcTruth_),
         "Use MC truth to select particles")(
         ",n",
@@ -266,17 +267,6 @@ int main(int argc, char* argv[]) {
             h_muonPtOverDeltaR2D->Fill( (muon1Vec + muon2Vec).Pt(), muon1Vec.DeltaR(muon2Vec) );
             h_diMuonMass->Fill((muon1Vec + muon2Vec).M() );
 
-            if ( passTriggers ) {
-                ht_leadingMuonPt->Fill(muon1Vec.Pt());
-                ht_subleadingMuonPt->Fill(muon2Vec.Pt());
-                ht_muonDeltaR->Fill(muon1Vec.DeltaR(muon2Vec));
-                ht_dimuonPt->Fill( (muon1Vec + muon2Vec).Pt() );
-                ht_muonPtOverDeltaR->Fill( ((muon1Vec + muon2Vec).Pt())/(muon1Vec.DeltaR(muon2Vec) + 1.0e-06) );
-                ht_muonPtOverDeltaR2D->Fill( (muon1Vec + muon2Vec).Pt(), muon1Vec.DeltaR(muon2Vec) );
-                ht_diMuonMass->Fill((muon1Vec + muon2Vec).M() );
-            }
-
-            
             h_leadingChsPt->Fill(chs1Vec.Pt());
       	    h_subleadingChsPt->Fill(chs2Vec.Pt());
       	    h_chsDeltaR->Fill(chs1Vec.DeltaR(chs2Vec));
@@ -288,6 +278,27 @@ int main(int argc, char* argv[]) {
             h_scalarDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR( (chs1Vec+chs2Vec) ) );
             h_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M() );
 
+            if ( passTriggers ) {
+                ht_leadingMuonPt->Fill(muon1Vec.Pt());
+                ht_subleadingMuonPt->Fill(muon2Vec.Pt());
+                ht_muonDeltaR->Fill(muon1Vec.DeltaR(muon2Vec));
+                ht_dimuonPt->Fill( (muon1Vec + muon2Vec).Pt() );
+                ht_muonPtOverDeltaR->Fill( ((muon1Vec + muon2Vec).Pt())/(muon1Vec.DeltaR(muon2Vec) + 1.0e-06) );
+                ht_muonPtOverDeltaR2D->Fill( (muon1Vec + muon2Vec).Pt(), muon1Vec.DeltaR(muon2Vec) );
+                ht_diMuonMass->Fill((muon1Vec + muon2Vec).M() );
+
+                ht_leadingChsPt->Fill(chs1Vec.Pt());
+                ht_subleadingChsPt->Fill(chs2Vec.Pt());
+      	        ht_chsDeltaR->Fill(chs1Vec.DeltaR(chs2Vec));
+                ht_diChsPt->Fill( (chs1Vec+chs2Vec).Pt() );
+      	        ht_diChsPtOverDeltaR->Fill( ((chs1Vec+chs2Vec).Pt())/ (chs1Vec.DeltaR(chs2Vec) + 1.0e-06) );
+                ht_diChsPtOverDeltaR2D->Fill( (chs1Vec+chs2Vec).Pt(), chs1Vec.DeltaR(chs2Vec) );
+                ht_diChsMass->Fill( (chs1Vec+chs2Vec).M() );
+
+                ht_scalarDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR( (chs1Vec+chs2Vec) ) );
+                ht_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M() );
+            }
+            
         } // end event loop
     } // end dataset loop
 
