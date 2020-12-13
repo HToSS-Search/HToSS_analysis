@@ -1216,25 +1216,26 @@ int main(int argc, char* argv[])
 	      
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){ 
+	      
 	if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
      
           for(Int_t k{0}; k<event.numPackedCands;k++){
-             const Int_t packedId {event.packedCandsPdgId[k]};    
-             if(std::abs(packedId)==13){
-               TLorentzVector muonpackedPt1 {event.packedCandsPx[muIndex1],event.packedCandsPy[muIndex1],event.packedCandsPz[muIndex1],event.packedCandsE[muIndex1]}; 
-	       TLorentzVector muonpackedPt2 {event.packedCandsPx[muIndex2],event.packedCandsPy[muIndex2],event.packedCandsPz[muIndex2],event.packedCandsE[muIndex2]}; 
-               h_muon1packedPt->Fill(muonpackedPt1.Pt()); 
-	       h_muon2packedPt->Fill(muonpackedPt2.Pt()); 
-               h_muon1packedInvMass->Fill(muonpackedPt1.M()); 
-	       h_muon2packedInvMass->Fill(muonpackedPt2.M()); 
-	       if(event.packedCandsHasTrackDetails[k]==1){
-                 h_muon1packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex1]);
-	         h_muon2packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex2]);
-	       }
+	     if(event.packedCandsHasTrackDetails[k]==1){
+               h_muon1packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex1]);
+	       h_muon2packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex2]);
 	     }
-	  }
+	  } 
+	  TLorentzVector muonpackedPt1 {event.packedCandsPx[muIndex1],event.packedCandsPy[muIndex1],event.packedCandsPz[muIndex1],event.packedCandsE[muIndex1]}; 
+	  TLorentzVector muonpackedPt2 {event.packedCandsPx[muIndex2],event.packedCandsPy[muIndex2],event.packedCandsPz[muIndex2],event.packedCandsE[muIndex2]}; 
+          h_muon1packedPt->Fill(muonpackedPt1.Pt()); 
+	  h_muon2packedPt->Fill(muonpackedPt2.Pt()); 
+          h_muon1packedInvMass->Fill(muonpackedPt1.M()); 
+	  h_muon2packedInvMass->Fill(muonpackedPt2.M()); 
 	}
 	
+	      
+	      
+	      
 	for(Int_t k{0}; k<event.numMuonPF2PAT;k++){ 
            if(event.muonPF2PATInnerTkPt[k]>muonpt1){
              muonpt2=muonpt1;
@@ -1251,6 +1252,8 @@ int main(int argc, char* argv[])
 	  h_muon1RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex1]);
 	  h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex2]);
 	}    
+	   
+	      
 	      
 	for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
 	   if(event.muonPF2PATInnerTkPt[k]>muonapt1){
