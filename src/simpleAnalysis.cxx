@@ -1218,13 +1218,14 @@ int main(int argc, char* argv[])
       if(event.muTrig()||event.mumuTrig()){ 
 	      
 	if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
-     
-          for(Int_t k{0}; k<event.numPackedCands;k++){
-	     if(event.packedCandsHasTrackDetails[k]==1){
-               h_muon1packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex1]);
-	       h_muon2packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex2]);
-	     }
-	  } 
+    
+	  if(event.packedCandsHasTrackDetails[muIndex1]==1){
+            h_muon1packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex1]);
+	  }
+	  if(event.packedCandsHasTrackDetails[muIndex2]==1){
+            h_muon2packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex2]);
+	  }
+	   
 	  TLorentzVector muonpackedPt1 {event.packedCandsPx[muIndex1],event.packedCandsPy[muIndex1],event.packedCandsPz[muIndex1],event.packedCandsE[muIndex1]}; 
 	  TLorentzVector muonpackedPt2 {event.packedCandsPx[muIndex2],event.packedCandsPy[muIndex2],event.packedCandsPz[muIndex2],event.packedCandsE[muIndex2]}; 
           h_muon1packedPt->Fill(muonpackedPt1.Pt()); 
@@ -1266,15 +1267,19 @@ int main(int argc, char* argv[])
                   muonapt2=event.muonPF2PATInnerTkPt[k];
                   muonaIndex2=k;
 	   }
-	   if(event.muonTkPairPF2PATIndex1[k]==muonaIndex1 && event.muonTkPairPF2PATIndex2[k]==muonaIndex2){	
+	   if(event.muonTkPairPF2PATIndex1[k]==muonaIndex1){	
 	   
-	     h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]);  
-	     h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k]);   
+	     h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]); 
 		
 	     //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
              //h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
              
-	   }   	
+	   }
+	   if(event.muonTkPairPF2PATIndex2[k]==muonaIndex2){	
+	   
+	     h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k]); 
+		
+	   }  
 	}  
 	      
       }//end of single/double muon trigger
