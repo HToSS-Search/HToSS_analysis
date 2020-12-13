@@ -711,7 +711,7 @@ int main(int argc, char* argv[])
     if(event.metFilters()){
       
        for (Int_t k{0}; k < event.numMuonPF2PAT; k++) {
-            std::cout<<"Sorted? "<<event.muonPF2PATPt[k]<<std::endl;   
+             
            const Float_t muonRecPt   { event.muonPF2PATPt[k] };
            const Float_t muonRecEta  { event.muonPF2PATEta[k] };
            const Float_t muonRecPhi  { event.muonPF2PATPhi[k] };
@@ -1271,6 +1271,7 @@ int main(int argc, char* argv[])
 	   
 	     h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]); 
 	     h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k]); 
+		   
 	     //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
              //h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
              
