@@ -1207,10 +1207,12 @@ int main(int argc, char* argv[])
 	      
 	      
 	      
-    //Muon momentum comparison  
-	std::cout<<"Opnieuw "<<std::endl;      
+    //Muon momentum comparison    
     Int_t muonIndex1{-1}; Int_t muonIndex2{-1};
     Float_t muonpt1{-1}; Float_t muonpt2{-1};	      
+	
+    Int_t muonaIndex1{-1}; Int_t muonaIndex2{-1};
+    Float_t muonapt1{-1}; Float_t muonapt2{-1};
 	      
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){ 
@@ -1244,27 +1246,33 @@ int main(int argc, char* argv[])
                   muonpt2=event.muonPF2PATInnerTkPt[k];
                   muonIndex2=k;
 	   }
-	std::cout<<"Sorted? "<<std::endl;	
-	   if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){ 
-	    std::cout<<"maximum "<<event.muonPF2PATInnerTkPt[muonIndex1]<<"minimum "<<event.muonPF2PATInnerTkPt[muonIndex2]<<std::endl;
-	     h_muon1RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex1]);
-	     h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex2]);
-	   } 
 	}  
-	   
+	if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){ 
+	  h_muon1RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex1]);
+	  h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex2]);
+	}    
 	      
-	/*for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
-		//std::cout<<"Sorted2? "<<event.muonTkPairPF2PATTk1Pt[k]<<std::endl;
-	   if(event.muonTkPairPF2PATIndex1[k]==0 && event.muonTkPairPF2PATIndex2[k]==1){	
-		   
+	for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
+	   if(event.muonPF2PATInnerTkPt[k]>muonapt1){
+             muonapt2=muonapt1;
+             muonapt1=event.muonPF2PATInnerTkPt[k];
+             muonaIndex2=muonaIndex1;
+             muonaIndex1=k;
+	   }
+           else if(event.muonPF2PATInnerTkPt[k]>muonapt2){
+                  muonapt2=event.muonPF2PATInnerTkPt[k];
+                  muonaIndex2=k;
+	   }
+	   if(event.muonTkPairPF2PATIndex1[k]==muonaIndex1 && event.muonTkPairPF2PATIndex2[k]==muonaIndex2){	
+	   
 	     h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]);  
 	     h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k]);   
 		
-	     h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
-             h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
+	     //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
+             //h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
              
 	   }   	
-	}*/  
+	}  
 	      
       }//end of single/double muon trigger
     }//end of met filter
