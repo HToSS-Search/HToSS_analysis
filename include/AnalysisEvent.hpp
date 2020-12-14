@@ -2424,6 +2424,7 @@ class AnalysisEvent
     std::vector<int> photonIndexLoose;
     std::vector<int> jetIndex;
     std::vector<int> displacedJetIndex;
+    std::vector<int> chsIndex;
     double totalJetHt;
     double selectedJetIncHt;
     double selectedJetTracksHt;

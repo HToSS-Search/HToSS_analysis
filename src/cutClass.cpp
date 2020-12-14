@@ -448,6 +448,8 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
 //    event.muonMomentumSF = getRochesterSFs(event);
     if ( !getDileptonCand(event, event.muonIndexTight) ) return false;
 
+    if ( !getDihadronCand(event, event.chsIndex) ) return false;
+
 //    eventWeight *= getLeptonWeight(event, syst);
 
     if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, syst, eventWeight, false);
@@ -698,6 +700,30 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
     }
     else {
         return false; // Not dilepton candidate if this is the case ...
+    }
+    return false;
+}
+
+bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) const {
+    if (chs.size() > 1) {
+        double closestMass {9999.};
+        for ( unsigned int i{0}; i < chs.size(); i++ ) {
+            for ( unsigned int j{i+1}; j < chs.size(); j++ ) {
+                if (event.packedCandsCharge[i] * event.packedCandsCharge[j] >= 0) continue;
+                TLorentzVector chs1, chs2;
+                chs1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[i],event.packedCandsPseudoTrkEta[i],event.packedCandsPseudoTrkPhi[i],event.packedCandsE[i]);
+                chs2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[j],event.packedCandsPseudoTrkEta[j],event.packedCandsPseudoTrkPhi[j],event.packedCandsE[j]);
+                double invMass { (chs1+chs2).M() };
+                if ( std::abs(( invMass - skMass_ )) < std::abs(closestMass) ) {
+                    event.chsPairVec.first = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
+                    event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chs[i] : chs[j];
+                    event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
+                    event.chsPairIndex.second = chs1.Pt() > chs2.Pt() ? chs[i] : chs[j];
+                    closestMass = ( invMass - skMass_ );
+                }
+            }
+        }
+        if ( closestMass < 9999. ) return true;
     }
     return false;
 }
