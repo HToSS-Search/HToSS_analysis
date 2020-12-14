@@ -253,13 +253,11 @@ int main(int argc, char* argv[])
   TH1F*	h_muon2PairsPt 		      {new TH1F("h_muon2PairsPt",  "#mu^{#pm} 2 Refitted tracks p_{T}", 1000, 0., 1000.)};
   TH1F* h_muon1refitInvMass           {new TH1F("h_muon1refitInvMass", "Leading #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
   TH1F* h_muon2refitInvMass           {new TH1F("h_muon2refitInvMass", "Subleading #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
-  TH1F* h_muon12refitInvMass          {new TH1F("h_muon12refitInvMass", "Scalar #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
-  TH1F* h_Prefit1InvMass               {new TH1F("h_Prefit1InvMass", "Leading (pion) #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
-  TH1F* h_Prefit2InvMass               {new TH1F("h_Prefit2InvMass", "Subleading (pion) #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
-  TH1F* h_Prefit12InvMass               {new TH1F("h_Prefit12InvMass", "Scalar (pion) #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
-  TH1F* h_Krefit1InvMass               {new TH1F("h_Krefit1InvMass", "Leading (kaon) #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
-  TH1F* h_Krefit2InvMass               {new TH1F("h_Krefit2InvMass", "Subleading (kaon) #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
-  TH1F* h_Krefit12InvMass               {new TH1F("h_Krefit12InvMass", "Scalar (kaon) #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_muon12refitInvMass          {new TH1F("h_muon12refitInvMass", "Scalar Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_refit1InvMass               {new TH1F("h_refit1InvMass", "Leading #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_refit2InvMass               {new TH1F("h_refit2InvMass", "Subleading #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_refit12InvMass              {new TH1F("h_refit12InvMass", "Scalar Refit Invariant mass", 500, 0.,5.)};
+  
   /*TH2F* h_muonPairsXY                 {new TH2F("h_muonPairsXY", "Refitted tracks vertex XY", 100, -150,150,100,-150,150)};
   TH2F* h_muonPairsRZ                 {new TH2F("h_muonPairsRZ", "Refitted tracks vertex RZ", 100, 0,20,100,0,250)};		
   */	  
@@ -935,15 +933,15 @@ int main(int argc, char* argv[])
 	 
 	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsCharge[pionIndex1]==-(event.packedCandsCharge[pionIndex2])){
            
-	   packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2)));
-           packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2)));
+	   packed1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.1396,2)+std::pow(0.494,2)));
+           packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.1396,2)+std::pow(0.494,2)));
             
            h_KhadronDeltaR->Fill(packed1.DeltaR(packed2));
             
 	   if(packed1.DeltaR(packed2)<0.2){
              //Invariant mass for two hadrons
-             TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[pionIndex1], event.packedCandsPseudoTrkPy[pionIndex1], event.packedCandsPseudoTrkPz[pionIndex1], std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2))};
-             TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[pionIndex2], event.packedCandsPseudoTrkPy[pionIndex2], event.packedCandsPseudoTrkPz[pionIndex2], std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2))};
+             TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[pionIndex1], event.packedCandsPseudoTrkPy[pionIndex1], event.packedCandsPseudoTrkPz[pionIndex1], std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.1396,2)+std::pow(0.494,2))};
+             TLorentzVector lhadron2  {event.packedCandsPseudoTrkPx[pionIndex2], event.packedCandsPseudoTrkPy[pionIndex2], event.packedCandsPseudoTrkPz[pionIndex2], std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.1396,2)+std::pow(0.494,2))};
 
              Khadroninv=(lhadron1+lhadron2).M();
              h_KhadronInvMass->Fill((lhadron1+lhadron2).M());
@@ -953,7 +951,7 @@ int main(int argc, char* argv[])
 	     Kpx=event.packedCandsPseudoTrkPx[pionIndex1]+event.packedCandsPseudoTrkPx[pionIndex2];
              Kpy=event.packedCandsPseudoTrkPy[pionIndex1]+event.packedCandsPseudoTrkPy[pionIndex2];
              Kpz=event.packedCandsPseudoTrkPz[pionIndex1]+event.packedCandsPseudoTrkPz[pionIndex2];
-             KE=std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2))+std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2));
+             KE=std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.1396,2)+std::pow(0.494,2))+std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.1396,2)+std::pow(0.494,2));
 		
 	     Kantiscalar.SetPxPyPzE(Kpx,Kpy,Kpz,KE);
 	     h_KantiscalarInvMass->Fill(Kantiscalar.M());
@@ -966,7 +964,7 @@ int main(int argc, char* argv[])
                 TLorentzVector cone1;//The pion
                 TLorentzVector cone2;//Packed candidate
                     
-                cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.106,2)+std::pow(0.494,2)));
+                cone1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.1396,2)+std::pow(0.494,2)));
                 cone2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
 		 
 		       
@@ -977,7 +975,7 @@ int main(int argc, char* argv[])
                 TLorentzVector cone3;//The other pion
                 TLorentzVector cone4;//Packed candidate
                     
-                cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.106,2)+std::pow(0.494,2)));
+                cone3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.1396,2)+std::pow(0.494,2)));
                 cone4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
 
 		       
@@ -1318,27 +1316,24 @@ int main(int argc, char* argv[])
 	   
 	     h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]); 
 	     h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k]); 
-		
-	     TLorentzVector VecMu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], event.packedCandsE[k]};
-             TLorentzVector VecMu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], event.packedCandsE[k]};
-	 
-	     h_muon1refitInvMass->Fill(VecMu1.M());
-	     h_muon2refitInvMass->Fill(VecMu2.M());
-             h_muon12refitInvMass->Fill((VecMu1+VecMu2).M());        
-	
-	     TLorentzVector PMu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2))};
-             TLorentzVector PMu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2))};
-	 
-	     h_Prefit1InvMass->Fill(PMu1.M());
-	     h_Prefit2InvMass->Fill(PMu2.M());
-             h_Prefit12InvMass->Fill((PMu1+PMu2).M());
 		   
-	     TLorentzVector KMu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.494,2))};
-             TLorentzVector KMu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.494,2))};
+	     if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsCharge[muIndex1]==-(event.packedCandsCharge[muIndex2])){
+
+	       TLorentzVector VecMu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], event.packedCandsE[muIndex1]};
+               TLorentzVector VecMu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], event.packedCandsE[muIndex2]};
 	 
-	     h_Krefit1InvMass->Fill(KMu1.M());
-	     h_Krefit2InvMass->Fill(KMu2.M());
-             h_Krefit12InvMass->Fill((KMu1+KMu2).M());
+	       h_muon1refitInvMass->Fill(VecMu1.M());
+	       h_muon2refitInvMass->Fill(VecMu2.M());
+               h_muon12refitInvMass->Fill((VecMu1+VecMu2).M());        
+	     }
+		   
+	     TLorentzVector Mu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2))};
+             TLorentzVector Mu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], std::sqrt(event.muonTkPairPF2PATTk2P2[k]+std::pow(0.106,2))};
+	 
+	     h_refit1InvMass->Fill(Mu1.M());
+	     h_refit2InvMass->Fill(Mu2.M());
+             h_refit12InvMass->Fill((Mu1+Mu2).M());
+	
 		   
 	     //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
              //h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
@@ -1679,18 +1674,13 @@ int main(int argc, char* argv[])
   h_muon2refitInvMass->Write();
   h_muon12refitInvMass->GetXaxis()->SetTitle("GeV");
   h_muon12refitInvMass->Write();
-  h_Prefit1InvMass->GetXaxis()->SetTitle("GeV");
-  h_Prefit1InvMass->Write();
-  h_Prefit2InvMass->GetXaxis()->SetTitle("GeV");
-  h_Prefit2InvMass->Write();
-  h_Prefit12InvMass->GetXaxis()->SetTitle("GeV");
-  h_Prefit12InvMass->Write();
-  h_Krefit1InvMass->GetXaxis()->SetTitle("GeV");
-  h_Krefit1InvMass->Write();
-  h_Krefit2InvMass->GetXaxis()->SetTitle("GeV");
-  h_Krefit2InvMass->Write();
-  h_Krefit12InvMass->GetXaxis()->SetTitle("GeV");
-  h_Krefit12InvMass->Write();
+  h_refit1InvMass->GetXaxis()->SetTitle("GeV");
+  h_refit1InvMass->Write();
+  h_refit2InvMass->GetXaxis()->SetTitle("GeV");
+  h_refit2InvMass->Write();
+  h_refit12InvMass->GetXaxis()->SetTitle("GeV");
+  h_refit12InvMass->Write();
+ 
   /*h_muonPairsXY->SetTitle("Vertex position x")
   h_muonPairsXY->SetTitle("Vertex position y")
   h_muonPairsXY->Write();
