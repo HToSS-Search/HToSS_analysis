@@ -1049,7 +1049,6 @@ int main(int argc, char* argv[])
 	     }
 	     h_KIsoSum3->Fill(KIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]);
              h_KIsoSum4->Fill(KIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]);
-	     h_KIso4->Fill(KIsoSum4/event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkPt[muIndex2]);
 	   //}
 	 }
 	      
