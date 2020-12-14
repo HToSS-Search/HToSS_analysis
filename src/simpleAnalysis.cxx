@@ -250,7 +250,16 @@ int main(int argc, char* argv[])
 	
   //Refitted tracks
   TH1F*	h_muon1PairsPt		      {new TH1F("h_muon1PairsPt",  "#mu^{#pm} 1 Refitted tracks p_{T} m", 1000, 0., 1000.)};
-  TH1F*	h_muon2PairsPt 		      {new TH1F("h_muon2PairsPt",  "#mu^{#pm} 2 Refitted tracks p_{T}", 1000, 0., 1000.)};     
+  TH1F*	h_muon2PairsPt 		      {new TH1F("h_muon2PairsPt",  "#mu^{#pm} 2 Refitted tracks p_{T}", 1000, 0., 1000.)};
+  TH1F* h_muon1refitInvMass           {new TH1F("h_muon1refitInvMass", "Leading #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_muon2refitInvMass           {new TH1F("h_muon2refitInvMass", "Subleading #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_muon12refitInvMass          {new TH1F("h_muon12refitInvMass", "Scalar #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_Prefit1InvMass               {new TH1F("h_Prefit1InvMass", "Leading (pion) #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_Prefit2InvMass               {new TH1F("h_Prefit2InvMass", "Subleading (pion) #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_Prefit12InvMass               {new TH1F("h_Prefit12InvMass", "Scalar (pion) #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_Krefit1InvMass               {new TH1F("h_Krefit1InvMass", "Leading (kaon) #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_Krefit2InvMass               {new TH1F("h_Krefit2InvMass", "Subleading (kaon) #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_Krefit12InvMass               {new TH1F("h_Krefit12InvMass", "Scalar (kaon) #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
   /*TH2F* h_muonPairsXY                 {new TH2F("h_muonPairsXY", "Refitted tracks vertex XY", 100, -150,150,100,-150,150)};
   TH2F* h_muonPairsRZ                 {new TH2F("h_muonPairsRZ", "Refitted tracks vertex RZ", 100, 0,20,100,0,250)};		
   */	  
@@ -1309,6 +1318,27 @@ int main(int argc, char* argv[])
 	   
 	     h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]); 
 	     h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k]); 
+		
+	     TLorentzVector VecMu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], event.packedCandsE[k]};
+             TLorentzVector VecMu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], event.packedCandsE[k]};
+	 
+	     h_muon1refitInvMass->Fill(VecMu1.M());
+	     h_muon2refitInvMass->Fill(VecMu2.M());
+             h_muon12refitInvMass->Fill((VecMu1+VecMu2).M());        
+	
+	     TLorentzVector PMu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2))};
+             TLorentzVector PMu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2))};
+	 
+	     h_Prefit1InvMass->Fill(PMu1.M());
+	     h_Prefit2InvMass->Fill(PMu2.M());
+             h_Prefit12InvMass->Fill((PMu1+PMu2).M());
+		   
+	     TLorentzVector KMu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.494,2))};
+             TLorentzVector KMu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.494,2))};
+	 
+	     h_Krefit1InvMass->Fill(KMu1.M());
+	     h_Krefit2InvMass->Fill(KMu2.M());
+             h_Krefit12InvMass->Fill((KMu1+KMu2).M());
 		   
 	     //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
              //h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
@@ -1643,6 +1673,24 @@ int main(int argc, char* argv[])
   h_muon1PairsPt->Write();
   h_muon2PairsPt->GetXaxis()->SetTitle("GeV");	
   h_muon2PairsPt->Write();
+  h_muon1refitInvMass->GetXaxis()->SetTitle("GeV");
+  h_muon1refitInvMass->Write();
+  h_muon2refitInvMass->GetXaxis()->SetTitle("GeV");
+  h_muon2refitInvMass->Write();
+  h_muon12refitInvMass->GetXaxis()->SetTitle("GeV");
+  h_muon12refitInvMass->Write();
+  h_Prefit1InvMass->GetXaxis()->SetTitle("GeV");
+  h_Prefit1InvMass->Write();
+  h_Prefit2InvMass->GetXaxis()->SetTitle("GeV");
+  h_Prefit2InvMass->Write();
+  h_Prefit12InvMass->GetXaxis()->SetTitle("GeV");
+  h_Prefit12InvMass->Write();
+  h_Krefit1InvMass->GetXaxis()->SetTitle("GeV");
+  h_Krefit1InvMass->Write();
+  h_Krefit2InvMass->GetXaxis()->SetTitle("GeV");
+  h_Krefit2InvMass->Write();
+  h_Krefit12InvMass->GetXaxis()->SetTitle("GeV");
+  h_Krefit12InvMass->Write();
   /*h_muonPairsXY->SetTitle("Vertex position x")
   h_muonPairsXY->SetTitle("Vertex position y")
   h_muonPairsXY->Write();
