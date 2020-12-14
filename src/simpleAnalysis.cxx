@@ -185,6 +185,7 @@ int main(int argc, char* argv[])
   TH1F* h_KmuonsDeltaR   {new TH1F("h_KmuonsDeltaR", "Two muons #DeltaR",2500, -10., 10.)};
   TH1F* h_KIsoSum1       {new TH1F("h_KIsoSum1",  "0.3 p_{T} Cone construction kaon 1", 1000, 0., 50.)};
   TH1F* h_KIsoSum2       {new TH1F("h_KIsoSum2",  "0.3 p_{T} Cone construction kaon 2", 1000, 0., 50.)};
+  TH2F* h_KIso2          {new TH2F("h_KIso2", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.)};
   TH1F* h_KIsoSum3       {new TH1F("h_KIsoSum3",  "0.3 p_{T} Cone construction muon 1", 1000, 0., 50.)};
   TH1F* h_KIsoSum4       {new TH1F("h_KIsoSum4",  "0.3 p_{T} Cone construction muon 2", 1000, 0., 50.)};
   TH1F* h_KhadronInvMass {new TH1F("h_KhadronInvMass", "Two hadrons (kaons) - Invariant mass",1000, 0., 7.)};
@@ -204,8 +205,10 @@ int main(int argc, char* argv[])
   TH1F* h_PmuonsDeltaR   {new TH1F("h_PmuonsDeltaR", "Two muons #DeltaR",2500, -10., 10.)};
   TH1F* h_PIsoSum1       {new TH1F("h_PIsoSum1",  "0.3 p_{T} Cone construction pion 1", 1000, 0., 50.)};
   TH1F* h_PIsoSum2       {new TH1F("h_PIsoSum2",  "0.3 p_{T} Cone construction pion 2", 1000, 0., 50.)};
+  TH2F* h_PIso2          {new TH2F("h_PIso2", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.)};
   TH1F* h_PIsoSum3       {new TH1F("h_PIsoSum3",  "0.3 p_{T} Cone construction muon 1", 1000, 0., 50.)};
   TH1F* h_PIsoSum4       {new TH1F("h_PIsoSum4",  "0.3 p_{T} Cone construction muon 2", 1000, 0., 50.)};
+  TH2F* h_PIso4          {new TH2F("h_PIso4", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.)};
   TH1F* h_PhadronInvMass {new TH1F("h_PhadronInvMass", "Two hadrons (pions) - Invariant mass",1000, 0., 7.)};
   TH1F* h_PhadronInvMass2 {new TH1F("h_PhadronInvMass2", "Two hadrons (pions) - Invariant mass, smaller binning",500, 0., 7.)};
   TH1F* h_PmuonsInvMass  {new TH1F("h_PmuonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
@@ -878,7 +881,7 @@ int main(int argc, char* argv[])
               
 		      
 		//Find the hadrons (pions)
-                if(std::abs(packedId)==211 /*&& event.packedCandsPseudoTrkPt[k]>5*/){//Selection of pions (charged hadrons) 
+                if(std::abs(packedId)==211 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons) 
                   if(event.packedCandsPseudoTrkPt[k]>pionpt1){
                     pionpt2=pionpt1;
                     pionpt1=event.packedCandsPseudoTrkPt[k];
@@ -891,7 +894,7 @@ int main(int argc, char* argv[])
                   }
                 }
      
-                if(std::abs(packedId)==13 /*&& event.packedCandsPseudoTrkPt[k]>5*/){//Selection of muons
+                if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
                  if(event.packedCandsPseudoTrkPt[k]>mupt1){
                     mupt2=mupt1;
                     mupt1=event.packedCandsPseudoTrkPt[k];
@@ -1038,14 +1041,16 @@ int main(int argc, char* argv[])
 		}
 	      }
 	   }
-	   if(std::abs((Kantiscalar+Kscalar).M()-125)<3){
+	   //if(std::abs((Kantiscalar+Kscalar).M()-125)<3){
 	     if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2])){
 	       h_KIsoSum1->Fill(KIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]);    
 	       h_KIsoSum2->Fill(KIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]);
+	       h_KIso2->Fill(KIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkPt[pionIndex2]);
 	     }
 	     h_KIsoSum3->Fill(KIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]);
              h_KIsoSum4->Fill(KIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]);
-	   }
+	     h_KIso4->Fill(KIsoSum4/event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkPt[muIndex2]);
+	   //}
 	 }
 	      
 	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2]) && muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
@@ -1201,14 +1206,15 @@ int main(int argc, char* argv[])
 	      }
 		
 	   }
-	   if(std::abs((Pantiscalar+Pscalar).M()-125)<3){
+	   //if(std::abs((Pantiscalar+Pscalar).M()-125)<3){
 	     if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2])){
 	       h_PIsoSum1->Fill(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]);    
 	       h_PIsoSum2->Fill(PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]);
+	       h_PIso2->Fill(PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkPt[pionIndex2]);
 	     }
 	     h_PIsoSum3->Fill(PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]);
              h_PIsoSum4->Fill(PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]);
-	   }
+	  // }
 	 }
 	      
 	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2]) && muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
@@ -1555,6 +1561,9 @@ int main(int argc, char* argv[])
   h_KmuonsDeltaR->Write();
   h_KIsoSum1->Write();
   h_KIsoSum2->Write();
+  h_KIso2->GetXaxis()->SetTitle("Relative isolation sum");
+  h_KIso2->GetYaxis()->SetTitle("Particle momentum");
+  h_KIso2->Write();
   h_KIsoSum3->Write();
   h_KIsoSum4->Write();
   h_KmuonsInvMass->GetXaxis()->SetTitle("GeV");
@@ -1586,8 +1595,14 @@ int main(int argc, char* argv[])
   h_PmuonsDeltaR->Write();
   h_PIsoSum1->Write();
   h_PIsoSum2->Write();
+  h_PIso2->GetXaxis()->SetTitle("Relative isolation sum");
+  h_PIso2->GetYaxis()->SetTitle("Particle momentum");
+  h_PIso2->Write();
   h_PIsoSum3->Write();
   h_PIsoSum4->Write();
+  h_PIso4->GetXaxis()->SetTitle("Relative isolation sum");
+  h_PIso4->GetYaxis()->SetTitle("Particle momentum");
+  h_PIso4->Write();
   h_PmuonsInvMass->GetXaxis()->SetTitle("GeV");
   h_PmuonsInvMass->Write();
   h_PhadronInvMass->GetXaxis()->SetTitle("GeV");
