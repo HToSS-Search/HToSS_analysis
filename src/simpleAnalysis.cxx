@@ -1234,10 +1234,7 @@ int main(int argc, char* argv[])
     //Muon momentum comparison    
     Int_t muonIndex1{-1}; Int_t muonIndex2{-1};
     Float_t muonpt1{-1}; Float_t muonpt2{-1};	      
-	
-    Int_t muonaIndex1{-1}; Int_t muonaIndex2{-1};
-    Float_t muonapt1{-1}; Float_t muonapt2{-1};
-	      
+
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){ 
 	      
@@ -1290,34 +1287,25 @@ int main(int argc, char* argv[])
 	//Tracks associated
 	if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){
 	  h_muon1RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex1]);
-	  h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex2]);
-	   
-	  //No tracks associated      
-	  h_muon1RecPt->Fill(event.muonPF2PATPt[muonIndex1]);            
-	  h_muon2RecPt->Fill(event.muonPF2PATPt[muonIndex2]);      
-	  
-	  TLorentzVector VecMu1  {event.muonPF2PATPX[muonIndex1], event.muonPF2PATPY[muonIndex1], event.muonPF2PATPZ[muonIndex1], event.muonPF2PATE[muonIndex1]};
-          TLorentzVector VecMu2  {event.muonPF2PATPX[muonIndex2], event.muonPF2PATPY[muonIndex2], event.muonPF2PATPZ[muonIndex2], event.muonPF2PATE[muonIndex2]};
-	 
-	  h_muon1RecInvMass->Fill(VecMu1.M());
-	  h_muon2RecInvMass->Fill(VecMu2.M());
-          h_muon12RecInvMass->Fill((VecMu1+VecMu2).M());
+	  h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex2]);  
 	} 
+	//No tracks associated      
+	h_muon1RecPt->Fill(event.muonPF2PATPt[0]);            
+	h_muon2RecPt->Fill(event.muonPF2PATPt[1]);    
+	      
+	TLorentzVector VecMu1  {event.muonPF2PATPX[0], event.muonPF2PATPY[0], event.muonPF2PATPZ[0], event.muonPF2PATE[0]};
+        TLorentzVector VecMu2  {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]};
+	 
+	h_muon1RecInvMass->Fill(VecMu1.M());
+	h_muon2RecInvMass->Fill(VecMu2.M());
+        h_muon12RecInvMass->Fill((VecMu1+VecMu2).M());      
+	     
 	      
 	      
 	//Refitted tracks      
 	for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
-	   if(event.muonPF2PATInnerTkPt[k]>muonapt1){
-             muonapt2=muonapt1;
-             muonapt1=event.muonPF2PATInnerTkPt[k];
-             muonaIndex2=muonaIndex1;
-             muonaIndex1=k;
-	   }
-           else if(event.muonPF2PATInnerTkPt[k]>muonapt2){
-                  muonapt2=event.muonPF2PATInnerTkPt[k];
-                  muonaIndex2=k;
-	   }
-	   if(event.muonTkPairPF2PATIndex1[k]==muIndex1 && event.muonTkPairPF2PATIndex2[k]==muIndex2){	
+	   
+	   if(event.muonTkPairPF2PATIndex1[k]==muonIndex1 && event.muonTkPairPF2PATIndex2[k]==muonIndex2){	
 	   
 	     h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k]); 
 	     h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k]); 
