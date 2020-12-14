@@ -878,7 +878,7 @@ int main(int argc, char* argv[])
               
 		      
 		//Find the hadrons (pions)
-                if(std::abs(packedId)==211 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons) 
+                if(std::abs(packedId)==211 /*&& event.packedCandsPseudoTrkPt[k]>5*/){//Selection of pions (charged hadrons) 
                   if(event.packedCandsPseudoTrkPt[k]>pionpt1){
                     pionpt2=pionpt1;
                     pionpt1=event.packedCandsPseudoTrkPt[k];
@@ -891,7 +891,7 @@ int main(int argc, char* argv[])
                   }
                 }
      
-                if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
+                if(std::abs(packedId)==13 /*&& event.packedCandsPseudoTrkPt[k]>5*/){//Selection of muons
                  if(event.packedCandsPseudoTrkPt[k]>mupt1){
                     mupt2=mupt1;
                     mupt1=event.packedCandsPseudoTrkPt[k];
