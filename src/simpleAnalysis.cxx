@@ -1279,6 +1279,7 @@ int main(int argc, char* argv[])
                   muonIndex2=k;
 	   }
 	   h_muoniRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k]);
+	   h_muoniRecPt->Fill(event.muonPF2PATPt[k]);
 	}  
 	//Tracks associated
 	if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){
@@ -1286,7 +1287,6 @@ int main(int argc, char* argv[])
 	  h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex2]);
 	}   
 	//No tracks associated      
-	h_muoniRecPt->Fill(event.muonPF2PATPt[k]);
 	h_muon1RecPt->Fill(event.muonPF2PATPt[muonIndex1]);            
 	h_muon2RecPt->Fill(event.muonPF2PATPt[muonIndex2]);      
 	      
