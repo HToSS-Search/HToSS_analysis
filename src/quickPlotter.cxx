@@ -462,7 +462,7 @@ int main(int argc, char* argv[])
                 }
             }
 
-            if (! ( passDimuonTrigger || passSingleMuonTrigger ) ) continue;
+//            if (! ( passDimuonTrigger || passSingleMuonTrigger ) ) continue;
 
             std::vector<int> looseMuonIndex = getLooseMuons(event);
 
