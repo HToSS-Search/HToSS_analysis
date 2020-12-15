@@ -1379,6 +1379,11 @@ int main(int argc, char* argv[])
                   p2pt2=event.chsTkPairTk2Pt[k];
                   p2Index2=k;
 	   }	
+		std::cout<<"K1 1"<<p1Index1<<std::endl;
+		std::cout<<"K2 1"<<p2Index1<<std::endl;
+	        std::cout<<"K1 2"<<p1Index2<<std::endl;
+		std::cout<<"K2 2"<<p2Index2<<std::endl;
+		
 	   if(event.chsTkPairIndex1[k]==p1Index1 && event.chsTkPairIndex2[k]==p2Index1){	
 	   
 	     //h_pion1PairsPt->Fill(event.chsTkPairTk1Pt[k]); 
