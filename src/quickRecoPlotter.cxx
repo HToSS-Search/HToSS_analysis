@@ -309,7 +309,7 @@ int main(int argc, char* argv[]) {
                 if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
                 if (event.packedCandsCharge[k] == 0 ) continue;
                 if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
-                if (mcTruth_ && !event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[k]]) continue;
+//                if (mcTruth_ && !event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[k]]) continue;
                 chsIndex.emplace_back(k);
             }
 

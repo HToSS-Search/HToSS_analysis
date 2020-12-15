@@ -467,8 +467,8 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
 
     if ( chsIndex.size() < 2 ) return false;
 
-    getDihadronCand(event, event.chsIndex);
-//    if ( !getDihadronCand(event, event.chsIndex) ) return false;
+    getDihadronCand(event, chsIndex);
+//    if ( !getDihadronCand(event, chsIndex) ) return false;
 
 //    eventWeight *= getLeptonWeight(event, syst);
 
@@ -752,8 +752,8 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
 
         if ( idx1 < 0 || idx2 < 0 ) return false;
  
-        TLorentzVector chs1 {event.packedCandsPseudoTrkPx[idx1],event.packedCandsPseudoTrkPy[idx1],event.packedCandsPseudoTrkPz[idx1],event.packedCandsE[idx1]};
-        TLorentzVector chs2 {event.packedCandsPseudoTrkPx[idx2],event.packedCandsPseudoTrkPy[idx2],event.packedCandsPseudoTrkPz[idx2],event.packedCandsE[idx2]};
+        event.chsPairVec.first  = TLorentzVector {event.packedCandsPseudoTrkPx[idx1],event.packedCandsPseudoTrkPy[idx1],event.packedCandsPseudoTrkPz[idx1],event.packedCandsE[idx1]};
+        event.chsPairVec.second = TLorentzVector {event.packedCandsPseudoTrkPx[idx2],event.packedCandsPseudoTrkPy[idx2],event.packedCandsPseudoTrkPz[idx2],event.packedCandsE[idx2]};
 
         event.chsPairIndex.first = idx1;
         event.chsPairIndex.second = idx2;
@@ -767,32 +767,6 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
 
       }
 
-/*    if (chs.size() > 1) {
-        double closestMass {9999.};
-        for ( unsigned int i{0}; i < chs.size(); i++ ) {
-            for ( unsigned int j{i+1}; j < chs.size(); j++ ) {
-                if (event.packedCandsCharge[i] * event.packedCandsCharge[j] >= 0) continue;
-                TLorentzVector chs1{event.packedCandsPseudoTrkPx[i],event.packedCandsPseudoTrkPy[i],event.packedCandsPseudoTrkPz[i],event.packedCandsE[i]};
-                TLorentzVector chs2{event.packedCandsPseudoTrkPx[j],event.packedCandsPseudoTrkPy[j],event.packedCandsPseudoTrkPz[j],event.packedCandsE[j]};
-                double invMass { (chs1+chs2).M() };
-                if ( std::abs(( invMass - skMass_ )) < std::abs(closestMass) ) {
-                    event.chsPairVec.first = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
-                    event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chs[i] : chs[j];
-                    event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
-                    event.chsPairIndex.second = chs1.Pt() > chs2.Pt() ? chs[i] : chs[j];
-                    closestMass = ( invMass - skMass_ );
-                }
-            }
-        }
-
-        event.chsPairTrkIndex = getChsTrackPairIndex(event);
-
-        event.chsPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex],event.chsTkPairTk1Py[event.chsPairTrkIndex],event.chsTkPairTk1Pz[event.chsPairTrkIndex],event.packedCandsE[event.chsPairIndex.first]};
-        event.chsPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex],event.chsTkPairTk2Py[event.chsPairTrkIndex],event.chsTkPairTk2Pz[event.chsPairTrkIndex],event.packedCandsE[event.chsPairIndex.second]};
-
-        if ( closestMass < 9999. ) return true;
-    }
-*/
     return false;
 }
 
