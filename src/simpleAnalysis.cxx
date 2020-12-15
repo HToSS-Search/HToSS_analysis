@@ -1379,14 +1379,11 @@ int main(int argc, char* argv[])
                   p2pt2=event.chsTkPairTk2Pt[k];
                   p2Index2=k;
 	   }	
-		std::cout<<"K1 1 "<<p1Index1<<std::endl;
-		std::cout<<"K2 1 "<<p2Index1<<std::endl;
-	        std::cout<<"K1 2 "<<p1Index2<<std::endl;
-		std::cout<<"K2 2 "<<p2Index2<<std::endl;
+		
 		std::cout<<"Opnieuw "<<std::endl;
 		std::cout<<"Index1 "<<event.chsTkPairIndex1[k]<<std::endl;
 	        std::cout<<"Index2 "<<event.chsTkPairIndex2[k]<<std::endl;
-	   if(event.chsTkPairIndex1[k]==p1Index1 && event.chsTkPairIndex2[k]==p2Index1){	
+	  // if(event.chsTkPairIndex1[k]==p1Index1 && event.chsTkPairIndex2[k]==p2Index1){	
 	   
 	     //h_pion1PairsPt->Fill(event.chsTkPairTk1Pt[k]); 
 	     //h_pion2PairsPt->Fill(event.chsTkPairTk2Pt[k]); 
@@ -1401,8 +1398,8 @@ int main(int argc, char* argv[])
                h_muon12refitInvMass->Fill((VecMu1+VecMu2).M());        
 	     }*/
 		   
-	     TLorentzVector Mu1  {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
-             TLorentzVector Mu2  {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Px[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
+	     TLorentzVector Mu1  {event.chsTkPairTk1Px[event.chsTkPairIndex1[k]], event.chsTkPairTk1Py[event.chsTkPairIndex1[k]], event.chsTkPairTk1Pz[event.chsTkPairIndex1[k]], std::sqrt(event.chsTkPairTk1P2[event.chsTkPairIndex1[k]]+std::pow(0.1396,2))};
+             TLorentzVector Mu2  {event.chsTkPairTk2Px[event.chsTkPairIndex2[k]], event.chsTkPairTk2Py[event.chsTkPairIndex2[k]], event.chsTkPairTk2Px[event.chsTkPairIndex2[k]], std::sqrt(event.chsTkPairTk2P2[event.chsTkPairIndex2[k]]+std::pow(0.1396,2))};
 	 
 	     //h_refit1InvMass->Fill(Mu1.M());
 	     //h_refit2InvMass->Fill(Mu2.M());
@@ -1412,7 +1409,7 @@ int main(int argc, char* argv[])
 	     //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
              //h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
              
-	   }
+	  // }
 	     
 	}  
 	      
