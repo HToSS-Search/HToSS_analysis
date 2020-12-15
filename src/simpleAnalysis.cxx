@@ -251,7 +251,7 @@ int main(int argc, char* argv[])
   TH1F* h_muon2packedPtTrk             {new TH1F("h_muon2packedPtTrk",  "Subleading #mu^{#pm} Packed candidate p_{T} track", 1000, 0., 1000.)};	
   TH1F* h_muon12packedInvMass          {new TH1F("h_muon12packedInvMass", "Scalar #mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.)};
 	
-  //Refitted tracks
+  //Refitted tracks muons
   TH1F*	h_muon1PairsPt		      {new TH1F("h_muon1PairsPt",  "#mu^{#pm} 1 Refitted tracks p_{T} m", 1000, 0., 1000.)};
   TH1F*	h_muon2PairsPt 		      {new TH1F("h_muon2PairsPt",  "#mu^{#pm} 2 Refitted tracks p_{T}", 1000, 0., 1000.)};
   TH1F* h_muon1refitInvMass           {new TH1F("h_muon1refitInvMass", "Leading #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
@@ -259,8 +259,10 @@ int main(int argc, char* argv[])
   TH1F* h_muon12refitInvMass          {new TH1F("h_muon12refitInvMass", "Scalar Refit Invariant mass", 500, 0.,5.)};
   TH1F* h_refit1InvMass               {new TH1F("h_refit1InvMass", "Leading #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
   TH1F* h_refit2InvMass               {new TH1F("h_refit2InvMass", "Subleading #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
-  TH1F* h_refit12InvMass              {new TH1F("h_refit12InvMass", "Scalar Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_refit12InvMass              {new TH1F("h_refit12InvMass", "Dimuon Refit Invariant mass", 500, 0.,5.)};
   
+  //Refitted tracks pions
+  TH1F* h_pionre12InvMass              {new TH1F("h_pionre12InvMass", "Dipion Refit Invariant mass", 500, 0.,5.)};
   /*TH2F* h_muonPairsXY                 {new TH2F("h_muonPairsXY", "Refitted tracks vertex XY", 100, -150,150,100,-150,150)};
   TH2F* h_muonPairsRZ                 {new TH2F("h_muonPairsRZ", "Refitted tracks vertex RZ", 100, 0,20,100,0,250)};		
   */	  
@@ -1314,7 +1316,7 @@ int main(int argc, char* argv[])
 	     
 	      
 	      
-	//Refitted tracks      
+	//Refitted tracks muons   
 	for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
 	   
 	   if(event.muonTkPairPF2PATIndex1[k]==muonIndex1 && event.muonTkPairPF2PATIndex2[k]==muonIndex2){	
@@ -1338,6 +1340,39 @@ int main(int argc, char* argv[])
 	     h_refit1InvMass->Fill(Mu1.M());
 	     h_refit2InvMass->Fill(Mu2.M());
              h_refit12InvMass->Fill((Mu1+Mu2).M());
+	
+		   
+	     //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
+             //h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
+             
+	   }
+	     
+	}  
+	      
+	//Refitted tracks pions   
+	for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+	   
+	   if(event.chsTkPairIndex1[k]==pionIndex1 && event.chsTkPairIndex2[k]==pionIndex2){	
+	   
+	     //h_pion1PairsPt->Fill(event.chsTkPairTk1Pt[k]); 
+	     //h_pion2PairsPt->Fill(event.chsTkPairTk2Pt[k]); 
+		   
+	     /*if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsCharge[pionIndex1]==-(event.packedCandsCharge[pionIndex2])){
+
+	       TLorentzVector VecMu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], event.packedCandsE[pionIndex1]};
+               TLorentzVector VecMu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], event.packedCandsE[pionIndex2]};
+	 
+	       h_muon1refitInvMass->Fill(VecMu1.M());
+	       h_muon2refitInvMass->Fill(VecMu2.M());
+               h_muon12refitInvMass->Fill((VecMu1+VecMu2).M());        
+	     }*/
+		   
+	     TLorentzVector Mu1  {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
+             TLorentzVector Mu2  {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Px[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
+	 
+	     //h_refit1InvMass->Fill(Mu1.M());
+	     //h_refit2InvMass->Fill(Mu2.M());
+             h_pionre12InvMass->Fill((Mu1+Mu2).M());
 	
 		   
 	     //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
@@ -1677,7 +1712,7 @@ int main(int argc, char* argv[])
   h_muon12packedInvMass->GetXaxis()->SetTitle("GeV");
   h_muon12packedInvMass->Write();	
 	
-  //Refitted tracks	
+  //Refitted tracks muons
   h_muon1PairsPt->GetXaxis()->SetTitle("GeV");	
   h_muon1PairsPt->Write();
   h_muon2PairsPt->GetXaxis()->SetTitle("GeV");	
@@ -1695,6 +1730,10 @@ int main(int argc, char* argv[])
   h_refit12InvMass->GetXaxis()->SetTitle("GeV");
   h_refit12InvMass->Write();
  
+  //Refitted tracks pions	
+  h_pionre12InvMass->GetXaxis()->SetTitle("GeV");
+  h_pionre12InvMass->Write();
+	
   /*h_muonPairsXY->SetTitle("Vertex position x")
   h_muonPairsXY->SetTitle("Vertex position y")
   h_muonPairsXY->Write();
