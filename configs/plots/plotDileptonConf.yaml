@@ -479,6 +479,38 @@ plots:
     fillExp: "zPairPhi"
     xAxisLabel: "#phi dilepton"
     cutStage: 0
+  - title: "Dilepton Invariant Mass (Refitted)"
+    name: "zPairMassRefit"
+    xMin: 0.
+    xMax: 11.
+    nBins: 30
+    fillExp: "zPairMassRefit"
+    xAxisLabel: "m_{ll} (GeV/c^{2})"
+    cutStage: 0
+  - title: "Dilepton p_{T} (Refitted)"
+    name: "zPairPtRefit"
+    xMin: 0.
+    xMax: 400.
+    nBins: 40
+    fillExp: "zPairPtRefit"
+    xAxisLabel: "p_{T} dilepton (GeV/c)"
+    cutStage: 0
+  - title: "Dilepton #eta (Refitted)"
+    name: "zPairEtaRefit"
+    xMin: 0.
+    xMax: 5.
+    nBins: 60
+    fillExp: "zPairEtaRefit"
+    xAxisLabel: "#eta dilepton"
+    cutStage: 0
+  - title: "Z #phi (Refitted)"
+    name: "zPairPhiRefit"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 80
+    fillExp: "zPairPhiRefit"
+    xAxisLabel: "#phi dilepton"
+    cutStage: 0
   - title: "#Delta(R) between Leading Jets"
     name: "jjDelR"
     xMin: 0.
