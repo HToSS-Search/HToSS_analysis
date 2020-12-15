@@ -65,10 +65,17 @@ int main(int argc, char* argv[]) {
     Long64_t totalEvents {0};
     const std::regex mask{".*\\.root"};
 
+    TH1F* h_muonPtGenuine           { new TH1F("h_muonPtGenuine",          ";p_{T}", 200, 0., 100.)};
+    TH1F* h_muon1PtGenuine          { new TH1F("h_muon1PtGenuine",         ";p_{T}", 200, 0., 100.)};
+    TH1F* h_muon2PtGenuine          { new TH1F("h_muon2PtGenuine",         ";p_{T}", 200, 0., 100.)};
+    TH1F* h_muonDeltaRGenuine       { new TH1F("h_muonDeltaRGenuine",       "#DeltaR between muons from scalar decay; #DeltaR", 500, 0., 1.)};
+
+    TH1F* h_genMuonPtGenuine        { new TH1F("h_genMuonPtGenuine",          ";p_{T}", 200, 0., 100.)};
+    TH1F* h_genMuon1PtGenuine       { new TH1F("h_genMuon1PtGenuine",         ";p_{T}", 200, 0., 100.)};
+    TH1F* h_genMuon2PtGenuine       { new TH1F("h_genMuon2PtGenuine",         ";p_{T}", 200, 0., 100.)};
+    TH1F* h_genMuonDeltaRGenuine    { new TH1F("h_genMuonDeltaRGenuine",      "#DeltaR between muons from scalar decay; #DeltaR", 500, 0., 1.)};
+
     // Quick and dirty plots
-    TH1F* h_muonPtGenuine        { new TH1F("h_muonPtGenuine",          ";p_{T}", 200, 0., 100.)};
-    TH1F* h_muon1PtGenuine       { new TH1F("h_muon1PtGenuine",          ";p_{T}", 200, 0., 100.)};
-    TH1F* h_muon2PtGenuine       { new TH1F("h_muon2PtGenuine",          ";p_{T}", 200, 0., 100.)};
     TH1F* h_leadingMuonPt        { new TH1F("h_leadingMuonPt",          ";p_{T}", 200, 0., 100.)};
     TH1F* h_subleadingMuonPt     { new TH1F("h_subleadingMuonPt",       ";p_{T}", 200, 0., 100.)};
     TH1F* h_muonDeltaR           { new TH1F("h_muonDeltaR",             ";#Delta R", 500, 0., 1.)}; 
@@ -259,7 +266,10 @@ int main(int argc, char* argv[]) {
             float eventWeight = 1.;
 
             for (Int_t k = 0; k < event.numMuonPF2PAT; k++ ){
-                if ( event.genMuonPF2PATMotherId[k] == 9000006 )  h_muonPtGenuine->Fill(event.muonPF2PATPt[k]);
+                if ( event.genMuonPF2PATMotherId[k] == 9000006 )  {
+                    h_muonPtGenuine->Fill(event.muonPF2PATPt[k]);
+                    h_genMuonPtGenuine->Fill(event.genMuonPF2PATPT[k]);
+                }
             }
 
             // Get muons
@@ -269,8 +279,19 @@ int main(int argc, char* argv[]) {
 
             getDileptonCand( event, looseMuonIndex, scalarMass_, exactlyTwo_);
 
-            if ( event.genMuonPF2PATMotherId[event.zPairIndex.first] == 9000006 )  h_muon1PtGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.first]);
-            if ( event.genMuonPF2PATMotherId[event.zPairIndex.second] == 9000006 ) h_muon2PtGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.second]);
+            if ( event.genMuonPF2PATMotherId[event.zPairIndex.first] == 9000006 )  {
+                h_muon1PtGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.first]);
+                h_genMuon1PtGenuine->Fill(event.genMuonPF2PATPT[event.zPairIndex.first]);
+            }
+            if ( event.genMuonPF2PATMotherId[event.zPairIndex.second] == 9000006 ) {
+                h_muon2PtGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.second]);
+                h_genMuon2PtGenuine->Fill(event.genMuonPF2PATPT[event.zPairIndex.second]);
+            }
+
+            if ( event.genMuonPF2PATMotherId[event.zPairIndex.first] == 9000006 && event.genMuonPF2PATMotherId[event.zPairIndex.second] == 9000006 ) {
+                h_muonDeltaRGenuine->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second));
+                h_genMuonDeltaRGenuine->Fill( deltaR(event.genMuonPF2PATEta[event.zPairIndex.first], event.genMuonPF2PATPhi[event.zPairIndex.first], event.genMuonPF2PATEta[event.zPairIndex.second], event.genMuonPF2PATPhi[event.zPairIndex.second]) );
+            }
 	
             if (!event.metFilters()) continue;
 
@@ -378,6 +399,12 @@ int main(int argc, char* argv[]) {
     h_muonPtGenuine->Write();
     h_muon1PtGenuine->Write();
     h_muon2PtGenuine->Write();
+    h_muonDeltaRGenuine->Write();
+
+    h_genMuonPtGenuine->Write();
+    h_genMuon1PtGenuine->Write();
+    h_genMuon2PtGenuine->Write();
+    h_genMuonDeltaRGenuine->Write();
 
     h_leadingMuonPt->Write();
     h_subleadingMuonPt->Write();
