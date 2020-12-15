@@ -1247,7 +1247,13 @@ int main(int argc, char* argv[])
 	      
     //Muon momentum comparison    
     Int_t muonIndex1{-1}; Int_t muonIndex2{-1};
-    Float_t muonpt1{-1}; Float_t muonpt2{-1};	      
+    Float_t muonpt1{-1}; Float_t muonpt2{-1};
+	      
+    Int_t p1Index1{-1}; Int_t p1Index2{-1};
+    Float_t p1pt1{-1}; Float_t p1pt2{-1};
+	      
+    Int_t p2Index1{-1}; Int_t p2Index2{-1};
+    Float_t p2pt1{-1}; Float_t p2pt2{-1};
 
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){ 
@@ -1351,8 +1357,29 @@ int main(int argc, char* argv[])
 	      
 	//Refitted tracks pions   
 	for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-	   
-	   if(event.chsTkPairIndex1[k]==pionIndex1 && event.chsTkPairIndex2[k]==pionIndex2){	
+		
+	   if(event.chsTkPairTk1Pt[k]>p1pt1){
+             p1pt2=p1pt1;
+             p1pt1=event.chsTkPairTk1Pt[k];
+             p1Index2=p1Index1;
+             p1Index1=k;
+	   }
+           else if(event.chsTkPairTk1Pt[k]>p1pt2){
+                  p1pt2=event.chsTkPairTk1Pt[k];
+                  p1Index2=k;
+	   }
+		
+	   if(event.chsTkPairTk2Pt[k]>p2pt1){
+             p2pt2=p2pt1;
+             p2pt1=event.chsTkPairTk2Pt[k];
+             p2Index2=p2Index1;
+             p2Index1=k;
+	   }
+           else if(event.chsTkPairTk2Pt[k]>p2pt2){
+                  p2pt2=event.chsTkPairTk2Pt[k];
+                  p2Index2=k;
+	   }	
+	   if(event.chsTkPairIndex1[k]==p1Index1 && event.chsTkPairIndex2[k]==p2Index1){	
 	   
 	     //h_pion1PairsPt->Fill(event.chsTkPairTk1Pt[k]); 
 	     //h_pion2PairsPt->Fill(event.chsTkPairTk2Pt[k]); 
