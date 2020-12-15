@@ -455,6 +455,18 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
 
     if ( !getDileptonCand(event, event.muonIndexTight) ) return false;
 
+    // Get CHS
+    std::vector<int> chsIndex;
+    for (Int_t k = 0; k < event.numPackedCands; k++) {
+        if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
+        if (event.packedCandsCharge[k] == 0 ) continue;
+        if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
+//        if (mcTruth_ && !event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[k]]) continue;
+        chsIndex.emplace_back(k);
+    }
+
+    if ( chsIndex.size() < 2 ) return false;
+
     getDihadronCand(event, event.chsIndex);
 //    if ( !getDihadronCand(event, event.chsIndex) ) return false;
 
@@ -717,7 +729,45 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
 }
 
 bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) const {
+
     if (chs.size() > 1) {
+
+        int idx1 {-1}, idx2 {-1};
+        float pt1 {-1}, pt2 {-1};
+        for ( unsigned int i{0}; i < chs.size(); i++ ) {
+            if ( event.packedCandsCharge[i] == 0 ) continue;
+            if ( event.packedCandsPseudoTrkPt[i] > pt1 ) {
+                idx1 = i;
+                pt1 = event.packedCandsPseudoTrkPt[i];
+           }
+        }
+        for ( unsigned int j{0}; j < chs.size(); j++ ) {
+            if ( idx1 == j ) continue;
+            if ( event.packedCandsCharge[j] != -event.packedCandsCharge[idx1] ) continue;
+            if ( event.packedCandsPseudoTrkPt[j] > pt2 ) {
+                idx2 = j;
+                pt2 = event.packedCandsPseudoTrkPt[j];
+            }
+        }
+
+        if ( idx1 < 0 || idx2 < 0 ) return false;
+ 
+        TLorentzVector chs1 {event.packedCandsPseudoTrkPx[idx1],event.packedCandsPseudoTrkPy[idx1],event.packedCandsPseudoTrkPz[idx1],event.packedCandsE[idx1]};
+        TLorentzVector chs2 {event.packedCandsPseudoTrkPx[idx2],event.packedCandsPseudoTrkPy[idx2],event.packedCandsPseudoTrkPz[idx2],event.packedCandsE[idx2]};
+
+        event.chsPairIndex.first = idx1;
+        event.chsPairIndex.second = idx2;
+
+        event.chsPairTrkIndex = getChsTrackPairIndex(event);
+
+        event.chsPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex],event.chsTkPairTk1Py[event.chsPairTrkIndex],event.chsTkPairTk1Pz[event.chsPairTrkIndex],event.packedCandsE[event.chsPairIndex.first]};
+        event.chsPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex],event.chsTkPairTk2Py[event.chsPairTrkIndex],event.chsTkPairTk2Pz[event.chsPairTrkIndex],event.packedCandsE[event.chsPairIndex.second]};
+
+        return true;
+
+      }
+
+/*    if (chs.size() > 1) {
         double closestMass {9999.};
         for ( unsigned int i{0}; i < chs.size(); i++ ) {
             for ( unsigned int j{i+1}; j < chs.size(); j++ ) {
@@ -734,6 +784,7 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
                 }
             }
         }
+
         event.chsPairTrkIndex = getChsTrackPairIndex(event);
 
         event.chsPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex],event.chsTkPairTk1Py[event.chsPairTrkIndex],event.chsTkPairTk1Pz[event.chsPairTrkIndex],event.packedCandsE[event.chsPairIndex.first]};
@@ -741,6 +792,7 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
 
         if ( closestMass < 9999. ) return true;
     }
+*/
     return false;
 }
 

@@ -572,16 +572,16 @@ bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) {
                 pt2 = event.packedCandsPseudoTrkPt[j];
             }
         }
-	TLorentzVector chs1, chs2;
-        chs1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[idx1],event.packedCandsPseudoTrkEta[idx1],event.packedCandsPseudoTrkPhi[idx1],event.packedCandsE[idx1]);
-        chs2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[idx2],event.packedCandsPseudoTrkEta[idx2],event.packedCandsPseudoTrkPhi[idx2],event.packedCandsE[idx2]);
 
-        event.chsPairVec.first = chs1;
-        event.chsPairVec.second = chs2;
+        if ( idx1 < 0 || idx2 < 0 ) return false;
+
+        event.chsPairVec.first  = TLorentzVector {event.packedCandsPseudoTrkPx[idx1],event.packedCandsPseudoTrkPy[idx1],event.packedCandsPseudoTrkPz[idx1],event.packedCandsE[idx1]};
+        event.chsPairVec.second = TLorentzVector {event.packedCandsPseudoTrkPx[idx2],event.packedCandsPseudoTrkPy[idx2],event.packedCandsPseudoTrkPz[idx2],event.packedCandsE[idx2]};
+
         event.chsPairIndex.first = idx1;
         event.chsPairIndex.second = idx2;
 
-        if ( idx1 > -1 && idx2 > -1 ) return true;
+        return true;
 
     }
 

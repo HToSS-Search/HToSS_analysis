@@ -787,9 +787,6 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
          }},
 	{"chsPairMassRefit",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             TLorentzVector chs1, chs2;
-             chs1.SetPtEtaPhiE( event.chsTkPairTk1Pt[event.chsPairTrkIndex], event.chsTkPairTk1Eta[event.chsPairTrkIndex], event.chsTkPairTk1Phi[event.chsPairTrkIndex], event.packedCandsE[event.chsTkPairIndex1[event.chsPairTrkIndex]] );
-             chs2.SetPtEtaPhiE( event.chsTkPairTk2Pt[event.chsPairTrkIndex], event.chsTkPairTk2Eta[event.chsPairTrkIndex], event.chsTkPairTk2Phi[event.chsPairTrkIndex], event.packedCandsE[event.chsTkPairIndex2[event.chsPairTrkIndex]] );
              return {(event.chsPairVecRefitted.first + event.chsPairVecRefitted.second).M()};
          }},
 	{"chsPairPtRefit",
