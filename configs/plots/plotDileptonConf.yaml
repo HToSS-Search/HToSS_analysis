@@ -631,6 +631,14 @@ plots:
     fillExp: "discalarMass"
     xAxisLabel: "m_{h} (GeV/c)"
     cutStage: 0
+  - title: "Refitted #Delta (m_{a1}, m_{a2})"
+    name: "discalarDeltaMassRefit"
+    xMin: -20.
+    xMax: 20.0
+    nBins: 200
+    fillExp: "discalarDeltaMassRefit"
+    xAxisLabel: "m_{a1} - m_{a2} (GeV/c)"
+    cutStage: 0
   - title: "Higgs candidiate p_{T}"
     name: "discalarPt"
     xMin: 0.
