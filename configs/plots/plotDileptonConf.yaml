@@ -127,6 +127,54 @@ plots:
     fillExp: "lep2DZSig"
     xAxisLabel: "lepton 2 d_{Z} significance"
     cutStage: 0
+  - title: "Leading charged hadron track p_{T}"
+    name: "chs1TrkPt"
+    xMax: 200.
+    xMin: 0.
+    nBins: 200
+    fillExp: "chs1TrkPt"
+    xAxisLabel: "track p_{T} leading charged hadron track (GeV/c)"
+    cutStage: 0
+  - title: "Leading charged hadron track #eta"
+    name: "chs1TrkEta"
+    xMax: 3.
+    xMin: 0.
+    nBins: 120
+    fillExp: "chs1TrkEta"
+    xAxisLabel: "track #eta leading charged hadron track"
+    cutStage: 0
+  - title: "Leading charged hadron track #phi"
+    name: "chs1TrkPhi"
+    xMax: 3.2
+    xMin: -3.2
+    nBins: 300
+    fillExp: "chs1TrkPhi"
+    xAxisLabel: "track #phi leading charged hadron track (GeV/c)"
+    cutStage: 0
+  - title: "Subleading charged hadron track p_{T}"
+    name: "chs2TrkPt"
+    xMax: 200.
+    xMin: 0.
+    nBins: 200
+    fillExp: "chs2TrkPt"
+    xAxisLabel: "track p_{T} subleading charged hadron track (GeV/c)"
+    cutStage: 0
+  - title: "Subleading charged hadron track #eta"
+    name: "chs2TrkEta"
+    xMax: 3.
+    xMin: 0.
+    nBins: 120
+    fillExp: "chs2TrkEta"
+    xAxisLabel: "track #eta subleading charged hadron track"
+    cutStage: 0
+  - title: "Leading charged hadron track #phi"
+    name: "chs2TrkPhi"
+    xMax: 3.2
+    xMin: -3.2
+    nBins: 300
+    fillExp: "chs2TrkPhi"
+    xAxisLabel: "track #phi subleading charged hadron track (GeV/c)"
+    cutStage: 0
   - title: "E_{T}^{miss}"
     name: "met"
     xMax: 200.
@@ -425,8 +473,8 @@ plots:
     cutStage: 0
   - title: "Z #phi"
     name: "zPairPhi"
-    xMin: 3.2
-    xMax: -3.2
+    xMin: -3.2
+    xMax: 3.2
     nBins: 80
     fillExp: "zPairPhi"
     xAxisLabel: "#phi dilepton"
@@ -470,7 +518,7 @@ plots:
     nBins: 100
     fillExp: "zLepDelR"
     xAxisLabel: "#Delta(r) (cm) between the leptons"
-    cutStage: 1
+    cutStage: 0
   - title: "#Delta(#phi) between the leptons"
     name: "zLepDelPhi"
     xMin: 0.
@@ -478,7 +526,7 @@ plots:
     nBins: 100
     fillExp: "zLepDelPhi"
     xAxisLabel: "#Delta(#phi) between the leptons"
-    cutStage: 1
+    cutStage: 0
   - title: "#Delta(Z) between the leptons"
     name: "zLepDelZ"
     xMin: 0.
@@ -486,7 +534,7 @@ plots:
     nBins: 100
     fillExp: "zLepDelZ"
     xAxisLabel: "#Delta(z) (cm) between the leptons"
-    cutStage: 1
+    cutStage: 0
   - title: "#Delta(R) between Leading Z Lepton and b-Jet"
     name: "zLep1BjetDelR"
     xMin: 0.
@@ -630,7 +678,7 @@ plots:
     nBins: 1000
     fillExp: "mumuVtxPx"
     xAxisLabel: "Vertex p_{x} (GeV/c)"
-    cutStage: 1
+    cutStage: 0
   - title: "Muon Track Vertex p_{y}"
     name: "mumuVtxPy"
     xMin: -300.
@@ -638,7 +686,7 @@ plots:
     nBins: 1000
     fillExp: "mumuVtxPy"
     xAxisLabel: "Vertex p_{y} (GeV/c)"
-    cutStage: 1
+    cutStage: 0
   - title: "Muon Track Vertex p_{z}"
     name: "mumuVtxPz"
     xMin: -300.
@@ -646,7 +694,7 @@ plots:
     nBins: 1000
     fillExp: "mumuVtxPz"
     xAxisLabel: "Vertex p_{z} (GeV/c)"
-    cutStage: 1
+    cutStage: 0
   - title: "Muon Track Vertex p"
     name: "mumuVtxP"
     xMin: 0.
@@ -654,7 +702,7 @@ plots:
     nBins: 800
     fillExp: "mumuVtxP"
     xAxisLabel: "Vertex momentum (GeV/c)"
-    cutStage: 1
+    cutStage: 0
   - title: "Muon Track Vertex x Displacement"
     name: "mumuVx"
     xMin: -100.
@@ -662,7 +710,7 @@ plots:
     nBins: 400
     fillExp: "mumuVx"
     xAxisLabel: "v_{x} (cm)"
-    cutStage: 1
+    cutStage: 0
   - title: "Muon Track Vertex y Displacement"
     name: "mumuVy"
     xMin: -100.
@@ -670,7 +718,7 @@ plots:
     nBins: 400
     fillExp: "mumuVy"
     xAxisLabel: "v_{y} (cm)"
-    cutStage: 1
+    cutStage: 0
   - title: "Muon Track Vertex z Displacement"
     name: "mumuVz"
     xMin: -100.
@@ -678,7 +726,7 @@ plots:
     nBins: 400
     fillExp: "mumuVz"
     xAxisLabel: "v_{z} (cm)"
-    cutStage: 1
+    cutStage: 0
   - title: "Muon Track Vertex Displacement"
     name: "mumuVabs"
     xMin: 0.
@@ -686,7 +734,7 @@ plots:
     nBins: 400
     fillExp: "mumuVabs"
     xAxisLabel: "v (cm)"
-    cutStage: 1
+    cutStage: 0
   - title: "Muon Track Vertex #chi^{2}/N_{dof}"
     name: "mumuVtxChi2Ndof"
     xMin: 0.
@@ -694,7 +742,7 @@ plots:
     nBins: 500
     fillExp: "mumuVtxChi2Ndof"
     xAxisLabel: "#chi^{2}/N_{dof}"
-    cutStage: 1
+    cutStage: 0
   - title: "Muon Vertex 2D Angle"
     name: "mumuVtxAngleXY"
     xMin: -1.5
@@ -702,7 +750,7 @@ plots:
     nBins: 120
     fillExp: "mumuVtxAngleXY"
     xAxisLabel: "vertex xy angle"
-    cutStage: 1
+    cutStage: 0
   - title: "Muon Vertex 3D Angle"
     name: "mumuVtxAngleXYZ"
     xMin: -1.5
@@ -710,7 +758,7 @@ plots:
     nBins: 120
     fillExp: "mumuVtxAngleXY"
     xAxisLabel: "vertex xyz angle"
-    cutStage: 1
+    cutStage: 0
   - title: "Muon Vertex XY Signifiance"
     name: "mumuVtxSigXY"
     xMin: 0.
@@ -718,7 +766,7 @@ plots:
     nBins: 600
     fillExp: "mumuVtxSigXY"
     xAxisLabel: "vertex xy significance"
-    cutStage: 1
+    cutStage: 0
   - title: "Muon Vertex XYZ Signifiance"
     name: "mumuVtxSigXYZ"
     xMin: 0.  
@@ -726,7 +774,7 @@ plots:
     nBins: 600
     fillExp: "mumuVtxSigXYZ"
     xAxisLabel: "vertex xyz significance"
-    cutStage: 1
+    cutStage: 0
   - title: "Closest distance of approach between muons pre-vertex fit"
     name: "mumuVtxDca"
     xMin: 0.
@@ -734,7 +782,7 @@ plots:
     nBins: 100
     fillExp: "mumuVtxDca"
     xAxisLabel: "Distance of closest approach (cm)"
-    cutStage: 1
+    cutStage: 0
   - title: "Pre-refit leading muon track p_{T}"
     name: "mumuTrkInnerPtOld1"
     xMin: 0.
@@ -742,7 +790,7 @@ plots:
     nBins: 400
     fillExp: "mumuTrkInnerPtOld1"
     xAxisLabel: "muon track p_{T} (GeV/c)"
-    cutStage: 1
+    cutStage: 0
   - title: "Pre-refit leading muon track #eta"
     name: "mumuTrkInnerEtaOld1"
     xMin: -3.
@@ -750,7 +798,7 @@ plots:
     nBins: 600
     fillExp: "mumuTrkInnerEtaOld1"
     xAxisLabel: "muon track #eta"
-    cutStage: 1
+    cutStage: 0
   - title: "Pre-refit leading muon track #chi^{2}/N_{dof}"
     name: "mumuTrkInnerChi2NdofOld1"
     xMin: 0.
@@ -758,7 +806,7 @@ plots:
     nBins: 500
     fillExp: "mumuTrkInnerChi2NdofOld1"
     xAxisLabel: "muon track #chi^{2}/N_{dof}"
-    cutStage: 1
+    cutStage: 0
   - title: "Pre-refit subleading muon track p_{T}"
     name: "mumuTrkInnerPtOld2"
     xMin: 0.
@@ -766,7 +814,7 @@ plots:
     nBins: 400
     fillExp: "mumuTrkInnerPtOld2"
     xAxisLabel: "muon track p_{T} (GeV/c)"
-    cutStage: 1
+    cutStage: 0
   - title: "Pre-refit subleading muon track #eta"
     name: "mumuTrkInnerEtaOld2"
     xMin: -3.
@@ -774,7 +822,7 @@ plots:
     nBins: 600
     fillExp: "mumuTrkInnerEtaOld2"
     xAxisLabel: "muon track #eta"
-    cutStage: 1
+    cutStage: 0
   - title: "Pre-refit subleading muon track #chi^{2}/N_{dof}"
     name: "mumuTrkInnerChi2NdofOld2"
     xMin: 0.
@@ -782,7 +830,7 @@ plots:
     nBins: 500
     fillExp: "mumuTrkInnerChi2NdofOld2"
     xAxisLabel: "muon track #chi^{2}/N_{dof}"
-    cutStage: 1
+    cutStage: 0
   - title: "Refitted leading muon track p_{T}"
     name: "mumuTrkInnerPtNew1"
     xMin: 0.
@@ -790,7 +838,7 @@ plots:
     nBins: 400
     fillExp: "mumuTrkInnerPtNew1"
     xAxisLabel: "muon track p_{T} (GeV/c)"
-    cutStage: 1
+    cutStage: 0
   - title: "Refitted leading muon track #eta"
     name: "mumuTrkInnerEtaNew1"
     xMin: -3.
@@ -798,7 +846,7 @@ plots:
     nBins: 600
     fillExp: "mumuTrkInnerEtaNew1"
     xAxisLabel: "muon track #eta"
-    cutStage: 1
+    cutStage: 0
   - title: "Refitted leading muon track #chi^{2}/N_{dof}"
     name: "mumuTrkInnerChi2NdofNew1"
     xMin: 0.
@@ -806,7 +854,7 @@ plots:
     nBins: 500
     fillExp: "mumuTrkInnerChi2NdofNew1"
     xAxisLabel: "muon track #chi^{2}/N_{dof}"
-    cutStage: 1
+    cutStage: 0
   - title: "Refitted subleading muon track p_{T}"
     name: "mumuTrkInnerPtNew2"
     xMin: 0.
@@ -814,7 +862,7 @@ plots:
     nBins: 400
     fillExp: "mumuTrkInnerPtNew2"
     xAxisLabel: "muon track p_{T} (GeV/c)"
-    cutStage: 1
+    cutStage: 0
   - title: "Refitted subleading muon track #eta"
     name: "mumuTrkInnerEtaNew2"
     xMin: -3.
@@ -822,7 +870,7 @@ plots:
     nBins: 600
     fillExp: "mumuTrkInnerEtaNew2"
     xAxisLabel: "muon track #eta"
-    cutStage: 1
+    cutStage: 0
   - title: "Refitted subleading muon track #chi^{2}/N_{dof}"
     name: "mumuTrkInnerChi2NdofNew2"
     xMin: 0.
@@ -830,4 +878,5 @@ plots:
     nBins: 500
     fillExp: "mumuTrkInnerChi2NdofNew2"
     xAxisLabel: "muon track #chi^{2}/N_{dof}"
-    cutStage: 1
+    cutStage: 0
+

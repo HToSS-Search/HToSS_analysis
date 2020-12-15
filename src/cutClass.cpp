@@ -454,7 +454,9 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
 //    event.muonMomentumSF = getRochesterSFs(event);
 
     if ( !getDileptonCand(event, event.muonIndexTight) ) return false;
-    if ( !getDihadronCand(event, event.chsIndex) ) return false;
+
+    getDihadronCand(event, event.chsIndex);
+//    if ( !getDihadronCand(event, event.chsIndex) ) return false;
 
 //    eventWeight *= getLeptonWeight(event, syst);
 
