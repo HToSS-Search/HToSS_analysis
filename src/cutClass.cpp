@@ -313,7 +313,7 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
 //    if (event.bTagIndex.size() < numbJets_) return false;
 //    if (event.bTagIndex.size() > maxbJets_) return false;
 
-    if ( (event.zPairLeptons.first + event.zPairLeptons.second + event.chsPairVec.first + event.chsPairVec.second).M() > higgsMassCut_ && !skipScalarMassCut_ ) return false;
+    if ( ((event.zPairLeptons.first + event.zPairLeptons.second + event.chsPairVec.first + event.chsPairVec.second).M() - 125.2) > higgsMassCut_ && !skipScalarMassCut_ ) return false;
 
     if (doPlots_) plotMap["higgsSel"]->fillAllPlots(event, eventWeight);
     if (doPlots_ || fillCutFlow_) cutFlow.Fill(3.5, eventWeight);
