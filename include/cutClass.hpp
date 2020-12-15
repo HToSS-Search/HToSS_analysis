@@ -99,6 +99,7 @@ class Cuts
     // z and w inv cuts
     double scalarMassCut_;
     double skMass_;
+    double chsMass_;
     double higgsMassCut_;
     double invWMassCut_;
 
@@ -288,6 +289,10 @@ class Cuts
     void setScalarMass(double mass)
     {
         skMass_ = mass;
+    }
+    void setChsCandidateMass(double mass)
+    {
+        chsMass_ = mass/1000.;
     }
     void setJetRegion(const unsigned nJets,
                       const unsigned nBets,

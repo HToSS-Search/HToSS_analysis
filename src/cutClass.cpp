@@ -52,6 +52,7 @@ Cuts::Cuts(const bool doPlots,
 
     , scalarMassCut_{10.}
     , skMass_{2.}
+    , chsMass_{0.13957018}
     , higgsMassCut_{20.}
     , invWMassCut_{999999.}
 
@@ -696,8 +697,8 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                     if (!(event.muonPF2PATCharge[muons[0]] * event.muonPF2PATCharge[muons[1]] >= 0)) return false;
                 }
 
-                TLorentzVector lepton1{event.muonPF2PATPX[muons[0]], event.muonPF2PATPY[muons[0]], event.muonPF2PATPZ[muons[0]], event.muonPF2PATE[muons[0]]};
-                TLorentzVector lepton2{event.muonPF2PATPX[muons[1]], event.muonPF2PATPY[muons[1]], event.muonPF2PATPZ[muons[1]], event.muonPF2PATE[muons[1]]};
+                TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
+                TLorentzVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
 
                 // lepton1 *= event.muonMomentumSF.at(0);
                 // lepton2 *= event.muonMomentumSF.at(1);
@@ -715,12 +716,14 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                 }
             }
         }
+
+        if ( closestMass > 9999. ) return false;
         event.mumuTrkIndex = getMuonTrackPairIndex(event);
 
-        event.zPairLeptonsRefitted.first = TLorentzVector{event.muonTkPairPF2PATTk1Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Pz[event.mumuTrkIndex], event.muonPF2PATE[event.zPairIndex.first]};
-        event.zPairLeptonsRefitted.second = TLorentzVector{event.muonTkPairPF2PATTk2Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Pz[event.mumuTrkIndex], event.muonPF2PATE[event.zPairIndex.second]};
+        event.zPairLeptonsRefitted.first  = TLorentzVector{event.muonTkPairPF2PATTk1Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
+        event.zPairLeptonsRefitted.second = TLorentzVector{event.muonTkPairPF2PATTk2Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
 
-        if ( closestMass < 9999. ) return true;
+        return true;
     }
     else {
         return false; // Not dilepton candidate if this is the case ...
@@ -742,7 +745,7 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
            }
         }
         for ( unsigned int j{0}; j < chs.size(); j++ ) {
-            if ( idx1 == j ) continue;
+            if ( idx1 == j ) continue; // exclude highest pT track already found
             if ( event.packedCandsCharge[j] != -event.packedCandsCharge[idx1] ) continue;
             if ( event.packedCandsPseudoTrkPt[j] > pt2 ) {
                 idx2 = j;
@@ -760,8 +763,8 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
 
         event.chsPairTrkIndex = getChsTrackPairIndex(event);
 
-        event.chsPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex],event.chsTkPairTk1Py[event.chsPairTrkIndex],event.chsTkPairTk1Pz[event.chsPairTrkIndex],event.packedCandsE[event.chsPairIndex.first]};
-        event.chsPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex],event.chsTkPairTk2Py[event.chsPairTrkIndex],event.chsTkPairTk2Pz[event.chsPairTrkIndex],event.packedCandsE[event.chsPairIndex.second]};
+        event.chsPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex], event.chsTkPairTk1Py[event.chsPairTrkIndex], event.chsTkPairTk1Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
+        event.chsPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex], event.chsTkPairTk2Py[event.chsPairTrkIndex], event.chsTkPairTk2Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
 
         return true;
 
@@ -1574,18 +1577,14 @@ double Cuts::muonSF(const double& pt, const double& eta, const int& syst) const
 
 int Cuts::getMuonTrackPairIndex(const AnalysisEvent& event) const { 
     for (int i{0}; i < event.numMuonTrackPairsPF2PAT; i++) {
-        if (event.muonTkPairPF2PATIndex1[i] != event.zPairIndex.first) continue;
-        if (event.muonTkPairPF2PATIndex2[i] != event.zPairIndex.second) continue;
-        return i;
+        if (event.muonTkPairPF2PATIndex1[i] == event.zPairIndex.first && event.muonTkPairPF2PATIndex2[i] == event.zPairIndex.second) return i;
     }
     return -1;
 }
 
 int Cuts::getChsTrackPairIndex(const AnalysisEvent& event) const { 
     for (int i{0}; i < event.numChsTrackPairs; i++) {
-        if (event.chsTkPairIndex1[i] != event.chsPairIndex.first) continue;
-        if (event.chsTkPairIndex2[i] != event.chsPairIndex.second) continue;
-        return i;
+        if (event.chsTkPairIndex1[i] == event.chsPairIndex.first && event.chsTkPairIndex2[i] == event.chsPairIndex.second) return i;
     }
     return -1;
 }

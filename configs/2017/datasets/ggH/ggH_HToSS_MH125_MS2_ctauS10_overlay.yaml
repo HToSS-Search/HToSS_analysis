@@ -6,7 +6,7 @@ cross_section: 21.46
 mc: true
 histogram: "ggH_HToSS_MS2_ctauS10"
 colour: "#3d3a3e"
-label: "H#rightarrowaa M_{a}=2 c_{#tau}=10"
+label: "H#rightarrowaa m_{a}=2 c_{#tau}=10"
 plot_type: "l"
 
 

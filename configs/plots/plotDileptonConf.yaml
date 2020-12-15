@@ -450,8 +450,8 @@ plots:
   - title: "Dilepton Invariant Mass"
     name: "zPairMass"
     xMin: 0.
-    xMax: 11.
-    nBins: 30
+    xMax: 10.
+    nBins: 1000
     fillExp: "zPairMass"
     xAxisLabel: "m_{ll} (GeV/c^{2})"
     cutStage: 0
@@ -482,8 +482,8 @@ plots:
   - title: "Dilepton Invariant Mass (Refitted)"
     name: "zPairMassRefit"
     xMin: 0.
-    xMax: 11.
-    nBins: 30
+    xMax: 10.
+    nBins: 1000
     fillExp: "zPairMassRefit"
     xAxisLabel: "m_{ll} (GeV/c^{2})"
     cutStage: 0
@@ -514,8 +514,8 @@ plots:
   - title: "Dihadron Invariant Mass"
     name: "chsPairMass"
     xMin: 0.
-    xMax: 11.
-    nBins: 30
+    xMax: 10.
+    nBins: 1000
     fillExp: "chsPairMass"
     xAxisLabel: "m_{dihadron} (GeV/c^{2})"
     cutStage: 0
@@ -570,8 +570,8 @@ plots:
   - title: "Refitted dihadrons Invariant Mass"
     name: "chsPairMassRefit"
     xMin: 0.
-    xMax: 11.
-    nBins: 30
+    xMax: 10.
+    nBins: 1000
     fillExp: "chsPairMassRefit"
     xAxisLabel: "m_{dihadron} (GeV/c^{2})"
     cutStage: 0
@@ -627,16 +627,16 @@ plots:
     name: "discalarMass"
     xMin: 75.0
     xMax: 175.0
-    nBins: 200
+    nBins: 2000
     fillExp: "discalarMass"
     xAxisLabel: "m_{h} (GeV/c)"
     cutStage: 0
-  - title: "Refitted #Delta (m_{a1}, m_{a2})"
-    name: "discalarDeltaMassRefit"
+  - title: "#Delta (m_{a1}, m_{a2})"
+    name: "discalarDeltaMass"
     xMin: -20.
     xMax: 20.0
     nBins: 200
-    fillExp: "discalarDeltaMassRefit"
+    fillExp: "discalarDeltaMass"
     xAxisLabel: "m_{a1} - m_{a2} (GeV/c)"
     cutStage: 0
   - title: "Higgs candidiate p_{T}"
@@ -691,7 +691,7 @@ plots:
     name: "discalarMassRefit"
     xMin: 75.0
     xMax: 175.0
-    nBins: 200
+    nBins: 2000
     fillExp: "discalarMassRefit"
     xAxisLabel: "m_{h} (GeV/c)"
     cutStage: 0

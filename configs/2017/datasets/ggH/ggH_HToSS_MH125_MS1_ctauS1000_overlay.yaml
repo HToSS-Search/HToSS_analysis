@@ -6,6 +6,6 @@ cross_section: 21.46
 mc: true
 histogram: "ggH_HToSS_MS1_ctauS1000"
 colour: "#006699"
-label: "H#rightarrowaa M_{a}=1 c_{#tau}=1000"
+label: "H#rightarrowaa m_{a}=1 c_{#tau}=1000"
 plot_type: "l"
 

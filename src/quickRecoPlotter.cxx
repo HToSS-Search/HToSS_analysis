@@ -37,15 +37,18 @@ std::vector<int> getLooseMuons(const AnalysisEvent& event, const bool& mcTruth);
 std::vector<int> getPromptMuons(const AnalysisEvent& event, const std::vector<int>& muonIndex, const bool getPrompt );
 bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const float scalarMass, const bool exactlyTwo);
 bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs);
+int getMuonTrackPairIndex(const AnalysisEvent& event);
+int getChsTrackPairIndex(const AnalysisEvent& event);
 bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
 float deltaR(float eta1, float phi1, float eta2, float phi2);
 
 namespace fs = boost::filesystem;
 
 // Lepton cut variables
-//const float looseMuonEta_ {2.8}, looseMuonPt_ {6.}, looseMuonPtLeading_ {15.}, looseMuonRelIso_ {100.};
-const float looseMuonEta_ {2.8}, looseMuonPt_ {0.}, looseMuonPtLeading_ {0.}, looseMuonRelIso_ {100.};
+const float looseMuonEta_ {2.8}, looseMuonPt_ {6.}, looseMuonPtLeading_ {15.}, looseMuonRelIso_ {100.};
+//const float looseMuonEta_ {2.8}, looseMuonPt_ {0.}, looseMuonPtLeading_ {0.}, looseMuonRelIso_ {100.};
 const float invZMassCut_ {10.0};
+const float chsMass_{0.13957018};
 
 int main(int argc, char* argv[]) {
     auto timerStart = std::chrono::high_resolution_clock::now(); 
@@ -83,6 +86,7 @@ int main(int argc, char* argv[]) {
     TH1F* h_muonPtOverDeltaR     { new TH1F("h_muonPtOverDeltaR",       "p_{T}/#Delta R", 5000, 0., 10.)};
     TH2F* h_muonPtOverDeltaR2D   { new TH2F("h_muonPtOverDeltaR2D",     "", 200, 0., 100., 500, 0., 5.)};
     TH1F* h_diMuonMass           { new TH1F("h_diMuonMass",             ";Mass", 100, 0., 4.0)};
+    TH1F* h_diMuonRefittedMass   { new TH1F("h_diMuonRefittedMass",     ";Mass", 100, 0., 4.0)};
 
     TH1F* h_leadingChsPt         { new TH1F("h_leadingChsPt", 	        ";p_{T}", 200, 0., 100.)};
     TH1F* h_subleadingChsPt      { new TH1F("h_subleadingChsPt",        ";p_{T}", 200, 0., 100.)};
@@ -91,12 +95,15 @@ int main(int argc, char* argv[]) {
     TH1F* h_diChsPtOverDeltaR    { new TH1F("h_diChsPtOverDeltaR",      "p_{T}/#Delta R", 5000, 0., 10.)};
     TH2F* h_diChsPtOverDeltaR2D  { new TH2F("h_diChsPtOverDeltaR2D",    "; p_{T}; #Delta R", 200, 0., 100., 500, 0., 10.)};
     TH1F* h_diChsMass            { new TH1F("h_diChsMass",              ";Mass", 100, 0., 4.0)};
+    TH1F* h_diChsRefittedMass    { new TH1F("h_diChsRefittedMass",      ";Mass", 100, 0., 4.0)};
 
     TH1F* h_scalarDeltaR         { new TH1F("h_scalarDeltaR",           ";#Delta R", 500, 0., 10.)};
     TH2F* h_scalarMasses         { new TH2F("h_scalarMasses",           ";#mu#mu Mass; #pi#pi Mass", 100, 0., 4.0, 100, 0., 4.0)};
+    TH2F* h_scalarRefittedMasses { new TH2F("h_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi Mass", 100, 0., 4.0, 100, 0., 4.0)};
     TH1F* h_scalarMass           { new TH1F("h_scalarMass",             ";Higgs Mass", 200, 75., 175.)};
+    TH1F* h_scalarRefittedMass   { new TH1F("h_scalarRefittedMass",      ";Higgs Mass", 200, 75., 175.)};
 
-    TH1F* h_leadingChsJetPt         { new TH1F("h_leadingChsJetPt", 	        ";p_{T}", 200, 0., 100.)};
+    TH1F* h_leadingChsJetPt         { new TH1F("h_leadingChsJetPt",          ";p_{T}", 200, 0., 100.)};
     TH1F* h_subleadingChsJetPt      { new TH1F("h_subleadingChsJetPt",        ";p_{T}", 200, 0., 100.)};
     TH1F* h_chsJetDeltaR            { new TH1F("h_ChsJetDeltaR",              ";#Delta R", 500, 0., 4.)};
     TH1F* h_diChsJetPt              { new TH1F("h_diChsJetPt",                ";p_{T}", 400, 0., 200.)};
@@ -117,6 +124,7 @@ int main(int argc, char* argv[]) {
     TH1F* ht_muonPtOverDeltaR    { new TH1F("ht_muonPtOverDeltaR",      "p_{T}/#Delta R", 5000, 0., 10.)};
     TH2F* ht_muonPtOverDeltaR2D  { new TH2F("ht_muonPtOverDeltaR2D",    "; p_{T}; #Delta R", 200, 0., 100., 500, 0., 5.)};
     TH1F* ht_diMuonMass          { new TH1F("ht_diMuonMass",            "Mass", 100, 0., 4.0)};
+    TH1F* ht_diMuonRefittedMass  { new TH1F("ht_diMuonRefittedMass",    ";Mass", 100, 0., 4.0)};
 
     TH1F* ht_leadingChsPt        { new TH1F("ht_leadingChsPt",          ";p_{T}", 200, 0., 100.)};
     TH1F* ht_subleadingChsPt     { new TH1F("ht_subleadingChsPt",       ";p_{T}", 200, 0., 100.)};
@@ -125,10 +133,13 @@ int main(int argc, char* argv[]) {
     TH1F* ht_diChsPtOverDeltaR   { new TH1F("ht_diChsPtOverDeltaR",     "p_{T}/#Delta R", 5000, 0., 10.)};
     TH2F* ht_diChsPtOverDeltaR2D { new TH2F("ht_diChsPtOverDeltaR2D",   "; p_{T}; #Delta R", 200, 0., 100., 500, 0., 10.)};
     TH1F* ht_diChsMass           { new TH1F("ht_diChsMass",             "'Mass", 100, 0., 4.0)};
+    TH1F* ht_diChsRefittedMass   { new TH1F("ht_diChsRefittedMass",     ";Mass", 100, 0., 4.0)};
 
-    TH1F* ht_scalarDeltaR        { new TH1F("ht_scalarDeltaR",          ";#Delta R", 500, 0., 10.)};
-    TH2F* ht_scalarMasses        { new TH2F("ht_scalarMasses",          ";#mu#mu Mass; a#bar{a} Mass", 100, 0., 4.0, 100, 0., 4.0)};
-    TH1F* ht_scalarMass          { new TH1F("ht_scalarMass",            "Higgs Mass", 200, 75., 175.)};
+    TH1F* ht_scalarDeltaR          { new TH1F("ht_scalarDeltaR",          ";#Delta R", 500, 0., 10.)};
+    TH2F* ht_scalarMasses          { new TH2F("ht_scalarMasses",          ";#mu#mu Mass; a#bar{a} Mass", 100, 0., 4.0, 100, 0., 4.0)};
+    TH2F* ht_scalarRefittedMasses  { new TH2F("ht_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi Mass", 100, 0., 4.0, 100, 0., 4.0)};
+    TH1F* ht_scalarMass            { new TH1F("ht_scalarMass",            "Higgs Mass", 200, 75., 175.)};
+    TH1F* ht_scalarRefittedMass    { new TH1F("ht_scalarRefittedMass",    "Higgs Mass", 200, 75., 175.)};
 
     TH1F* ht_leadingChsJetPt         { new TH1F("ht_leadingChsJetPt", 	        ";p_{T}", 200, 0., 100.)};
     TH1F* ht_subleadingChsJetPt      { new TH1F("ht_subleadingChsJetPt",        ";p_{T}", 200, 0., 100.)};
@@ -267,8 +278,8 @@ int main(int argc, char* argv[]) {
 
             for (Int_t k = 0; k < event.numMuonPF2PAT; k++ ){
                 if ( event.genMuonPF2PATMotherId[k] == 9000006 )  {
-                    h_muonPtGenuine->Fill(event.muonPF2PATPt[k]);
-                    h_genMuonPtGenuine->Fill(event.genMuonPF2PATPT[k]);
+                    h_muonPtGenuine->Fill(event.muonPF2PATPt[k],datasetWeight);
+                    h_genMuonPtGenuine->Fill(event.genMuonPF2PATPT[k],datasetWeight);
                 }
             }
 
@@ -280,17 +291,17 @@ int main(int argc, char* argv[]) {
             getDileptonCand( event, looseMuonIndex, scalarMass_, exactlyTwo_);
 
             if ( event.genMuonPF2PATMotherId[event.zPairIndex.first] == 9000006 )  {
-                h_muon1PtGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.first]);
-                h_genMuon1PtGenuine->Fill(event.genMuonPF2PATPT[event.zPairIndex.first]);
+                h_muon1PtGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.first],datasetWeight);
+                h_genMuon1PtGenuine->Fill(event.genMuonPF2PATPT[event.zPairIndex.first],datasetWeight);
             }
             if ( event.genMuonPF2PATMotherId[event.zPairIndex.second] == 9000006 ) {
-                h_muon2PtGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.second]);
-                h_genMuon2PtGenuine->Fill(event.genMuonPF2PATPT[event.zPairIndex.second]);
+                h_muon2PtGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.second],datasetWeight);
+                h_genMuon2PtGenuine->Fill(event.genMuonPF2PATPT[event.zPairIndex.second],datasetWeight);
             }
 
             if ( event.genMuonPF2PATMotherId[event.zPairIndex.first] == 9000006 && event.genMuonPF2PATMotherId[event.zPairIndex.second] == 9000006 ) {
-                h_muonDeltaRGenuine->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second));
-                h_genMuonDeltaRGenuine->Fill( deltaR(event.genMuonPF2PATEta[event.zPairIndex.first], event.genMuonPF2PATPhi[event.zPairIndex.first], event.genMuonPF2PATEta[event.zPairIndex.second], event.genMuonPF2PATPhi[event.zPairIndex.second]) );
+                h_muonDeltaRGenuine->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second),datasetWeight);
+                h_genMuonDeltaRGenuine->Fill( deltaR(event.genMuonPF2PATEta[event.zPairIndex.first], event.genMuonPF2PATPhi[event.zPairIndex.first], event.genMuonPF2PATEta[event.zPairIndex.second], event.genMuonPF2PATPhi[event.zPairIndex.second]), datasetWeight );
             }
 	
             if (!event.metFilters()) continue;
@@ -324,70 +335,78 @@ int main(int argc, char* argv[]) {
             jet1Vec.SetPtEtaPhiE(event.jetPF2PATPt[jetIndex1], event.jetPF2PATEta[jetIndex1], event.jetPF2PATPhi[jetIndex1], event.jetPF2PATE[jetIndex1]);
             jet2Vec.SetPtEtaPhiE(event.jetPF2PATPt[jetIndex2], event.jetPF2PATEta[jetIndex2], event.jetPF2PATPhi[jetIndex2], event.jetPF2PATE[jetIndex2]);
 
-            h_leadingMuonPt->Fill(muon1Vec.Pt());
-            h_subleadingMuonPt->Fill(muon2Vec.Pt());
-            h_muonDeltaR->Fill(muon1Vec.DeltaR(muon2Vec));
-            h_dimuonPt->Fill( (muon1Vec + muon2Vec).Pt() );
-            h_muonPtOverDeltaR->Fill( ((muon1Vec + muon2Vec).Pt())/(muon1Vec.DeltaR(muon2Vec) + 1.0e-06) );
-            h_muonPtOverDeltaR2D->Fill( (muon1Vec + muon2Vec).Pt(), muon1Vec.DeltaR(muon2Vec) );
-            h_diMuonMass->Fill((muon1Vec + muon2Vec).M() );
+            h_leadingMuonPt->Fill(muon1Vec.Pt(),datasetWeight);
+            h_subleadingMuonPt->Fill(muon2Vec.Pt(),datasetWeight);
+            h_muonDeltaR->Fill(muon1Vec.DeltaR(muon2Vec),datasetWeight);
+            h_dimuonPt->Fill( (muon1Vec + muon2Vec).Pt(),datasetWeight );
+            h_muonPtOverDeltaR->Fill( ((muon1Vec + muon2Vec).Pt())/(muon1Vec.DeltaR(muon2Vec) + 1.0e-06),datasetWeight );
+            h_muonPtOverDeltaR2D->Fill( (muon1Vec + muon2Vec).Pt(), muon1Vec.DeltaR(muon2Vec),datasetWeight );
+            h_diMuonMass->Fill((muon1Vec + muon2Vec).M(),datasetWeight );
+            h_diMuonRefittedMass->Fill((event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(),datasetWeight );
 
-            h_leadingChsPt->Fill(chs1Vec.Pt());
-      	    h_subleadingChsPt->Fill(chs2Vec.Pt());
-      	    if ( (chs1Vec+chs2Vec).M() < 5.) h_chsDeltaR->Fill(chs1Vec.DeltaR(chs2Vec));
-      	    h_diChsPt->Fill( (chs1Vec+chs2Vec).Pt() );
-      	    h_diChsPtOverDeltaR->Fill( ((chs1Vec+chs2Vec).Pt())/ (chs1Vec.DeltaR(chs2Vec) + 1.0e-06) );
-      	    h_diChsPtOverDeltaR2D->Fill( (chs1Vec+chs2Vec).Pt(), chs1Vec.DeltaR(chs2Vec) );
-            h_diChsMass->Fill( (chs1Vec+chs2Vec).M() );
+            h_leadingChsPt->Fill(chs1Vec.Pt(),datasetWeight);
+      	    h_subleadingChsPt->Fill(chs2Vec.Pt(),datasetWeight);
+      	    if ( (chs1Vec+chs2Vec).M() < 5.) h_chsDeltaR->Fill(chs1Vec.DeltaR(chs2Vec),datasetWeight);
+      	    h_diChsPt->Fill( (chs1Vec+chs2Vec).Pt(),datasetWeight );
+      	    h_diChsPtOverDeltaR->Fill( ((chs1Vec+chs2Vec).Pt())/ (chs1Vec.DeltaR(chs2Vec) + 1.0e-06),datasetWeight );
+      	    h_diChsPtOverDeltaR2D->Fill( (chs1Vec+chs2Vec).Pt(), chs1Vec.DeltaR(chs2Vec),datasetWeight );
+            h_diChsMass->Fill( (chs1Vec+chs2Vec).M(),datasetWeight );
+            h_diChsRefittedMass->Fill( (event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
 
-            h_scalarDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR( (chs1Vec+chs2Vec) ) );
-            h_scalarMasses->Fill( (muon1Vec+muon2Vec).M(), (chs1Vec+chs2Vec).M() );
-            h_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M() );
+            h_scalarDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR( (chs1Vec+chs2Vec) ),datasetWeight );
+            h_scalarMasses->Fill( (muon1Vec+muon2Vec).M(), (chs1Vec+chs2Vec).M(),datasetWeight );
+            h_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
+            h_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M(),datasetWeight );
+            h_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
 
-            h_leadingChsJetPt->Fill( jet1Vec.Pt() );
-            h_subleadingChsJetPt->Fill( jet2Vec.Pt() );
-            h_chsJetDeltaR->Fill( jet1Vec.DeltaR(jet2Vec) );
-            h_diChsJetPt->Fill( (jet1Vec+jet2Vec).Pt() );
-            h_diChsJEtPtOverDeltaR->Fill( ((jet1Vec+jet2Vec).Pt())/ (jet1Vec.DeltaR(jet2Vec) + 1.0e-06) );
-            h_diChsJEtPtOverDeltaR2D->Fill( (jet1Vec+jet2Vec).Pt(), jet1Vec.DeltaR(jet2Vec) );
-            h_diChsJetMass->Fill( (jet1Vec+jet2Vec).M() );
+            h_leadingChsJetPt->Fill( jet1Vec.Pt(),datasetWeight );
+            h_subleadingChsJetPt->Fill( jet2Vec.Pt(),datasetWeight );
+            h_chsJetDeltaR->Fill( jet1Vec.DeltaR(jet2Vec),datasetWeight );
+            h_diChsJetPt->Fill( (jet1Vec+jet2Vec).Pt(),datasetWeight );
+            h_diChsJEtPtOverDeltaR->Fill( ((jet1Vec+jet2Vec).Pt())/ (jet1Vec.DeltaR(jet2Vec) + 1.0e-06),datasetWeight );
+            h_diChsJEtPtOverDeltaR2D->Fill( (jet1Vec+jet2Vec).Pt(), jet1Vec.DeltaR(jet2Vec),datasetWeight );
+            h_diChsJetMass->Fill( (jet1Vec+jet2Vec).M(),datasetWeight );
 
-            h_scalarJetDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR(jet1Vec+jet2Vec) );
-            h_scalarJetMasses->Fill( (muon1Vec+muon2Vec).M(), (jet1Vec+jet2Vec).M() );
-            h_scalarJetMass->Fill( (muon1Vec+muon2Vec+jet1Vec+jet2Vec).M() );
+            h_scalarJetDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR(jet1Vec+jet2Vec),datasetWeight );
+            h_scalarJetMasses->Fill( (muon1Vec+muon2Vec).M(), (jet1Vec+jet2Vec).M(),datasetWeight );
+            h_scalarJetMass->Fill( (muon1Vec+muon2Vec+jet1Vec+jet2Vec).M(),datasetWeight );
 
             if ( passTriggers ) {
-                ht_leadingMuonPt->Fill(muon1Vec.Pt());
-                ht_subleadingMuonPt->Fill(muon2Vec.Pt());
-                ht_muonDeltaR->Fill(muon1Vec.DeltaR(muon2Vec));
-                ht_dimuonPt->Fill( (muon1Vec + muon2Vec).Pt() );
-                ht_muonPtOverDeltaR->Fill( ((muon1Vec + muon2Vec).Pt())/(muon1Vec.DeltaR(muon2Vec) + 1.0e-06) );
-                ht_muonPtOverDeltaR2D->Fill( (muon1Vec + muon2Vec).Pt(), muon1Vec.DeltaR(muon2Vec) );
-                ht_diMuonMass->Fill((muon1Vec + muon2Vec).M() );
+                ht_leadingMuonPt->Fill(muon1Vec.Pt(),datasetWeight);
+                ht_subleadingMuonPt->Fill(muon2Vec.Pt(),datasetWeight);
+                ht_muonDeltaR->Fill(muon1Vec.DeltaR(muon2Vec),datasetWeight);
+                ht_dimuonPt->Fill( (muon1Vec + muon2Vec).Pt(),datasetWeight );
+                ht_muonPtOverDeltaR->Fill( ((muon1Vec + muon2Vec).Pt())/(muon1Vec.DeltaR(muon2Vec) + 1.0e-06),datasetWeight );
+                ht_muonPtOverDeltaR2D->Fill( (muon1Vec + muon2Vec).Pt(), muon1Vec.DeltaR(muon2Vec),datasetWeight );
+                ht_diMuonMass->Fill((muon1Vec + muon2Vec).M(),datasetWeight );
+                ht_diMuonRefittedMass->Fill((event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(),datasetWeight );
 
-                ht_leadingChsPt->Fill(chs1Vec.Pt());
-                ht_subleadingChsPt->Fill(chs2Vec.Pt());
-      	        ht_chsDeltaR->Fill(chs1Vec.DeltaR(chs2Vec));
-                ht_diChsPt->Fill( (chs1Vec+chs2Vec).Pt() );
-      	        ht_diChsPtOverDeltaR->Fill( ((chs1Vec+chs2Vec).Pt())/ (chs1Vec.DeltaR(chs2Vec) + 1.0e-06) );
-                ht_diChsPtOverDeltaR2D->Fill( (chs1Vec+chs2Vec).Pt(), chs1Vec.DeltaR(chs2Vec) );
-                ht_diChsMass->Fill( (chs1Vec+chs2Vec).M() );
+                ht_leadingChsPt->Fill(chs1Vec.Pt(),datasetWeight);
+                ht_subleadingChsPt->Fill(chs2Vec.Pt(),datasetWeight);
+      	        ht_chsDeltaR->Fill(chs1Vec.DeltaR(chs2Vec),datasetWeight);
+                ht_diChsPt->Fill( (chs1Vec+chs2Vec).Pt(),datasetWeight );
+      	        ht_diChsPtOverDeltaR->Fill( ((chs1Vec+chs2Vec).Pt())/ (chs1Vec.DeltaR(chs2Vec) + 1.0e-06),datasetWeight );
+                ht_diChsPtOverDeltaR2D->Fill( (chs1Vec+chs2Vec).Pt(), chs1Vec.DeltaR(chs2Vec),datasetWeight );
+                ht_diChsMass->Fill( (chs1Vec+chs2Vec).M(),datasetWeight );
+                ht_diChsRefittedMass->Fill( (event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
 
-                ht_scalarDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR( (chs1Vec+chs2Vec) ) );
-                ht_scalarMasses->Fill( (muon1Vec+muon2Vec).M(), (chs1Vec+chs2Vec).M() );
-                ht_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M() );
+                ht_scalarDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR( (chs1Vec+chs2Vec) ),datasetWeight );
+                ht_scalarMasses->Fill( (muon1Vec+muon2Vec).M(), (chs1Vec+chs2Vec).M(),datasetWeight );
+                ht_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
+                ht_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M(),datasetWeight );
+                ht_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
 
-                h_leadingChsJetPt->Fill( jet1Vec.Pt() );
-                h_subleadingChsJetPt->Fill( jet2Vec.Pt() );
-                h_chsJetDeltaR->Fill( jet1Vec.DeltaR(jet2Vec) );
-                h_diChsJetPt->Fill( (jet1Vec+jet2Vec).Pt() );
-                h_diChsJEtPtOverDeltaR->Fill( ((jet1Vec+jet2Vec).Pt())/ (jet1Vec.DeltaR(jet2Vec) + 1.0e-06) );
-                h_diChsJEtPtOverDeltaR2D->Fill( (jet1Vec+jet2Vec).Pt(), jet1Vec.DeltaR(jet2Vec) );
-                h_diChsJetMass->Fill( (jet1Vec+jet2Vec).M() );
+                h_leadingChsJetPt->Fill( jet1Vec.Pt(),datasetWeight );
+                h_subleadingChsJetPt->Fill( jet2Vec.Pt(),datasetWeight );
+                h_chsJetDeltaR->Fill( jet1Vec.DeltaR(jet2Vec),datasetWeight );
+                h_diChsJetPt->Fill( (jet1Vec+jet2Vec).Pt(),datasetWeight );
+                h_diChsJEtPtOverDeltaR->Fill( ((jet1Vec+jet2Vec).Pt())/ (jet1Vec.DeltaR(jet2Vec) + 1.0e-06),datasetWeight );
+                h_diChsJEtPtOverDeltaR2D->Fill( (jet1Vec+jet2Vec).Pt(), jet1Vec.DeltaR(jet2Vec),datasetWeight );
+                h_diChsJetMass->Fill( (jet1Vec+jet2Vec).M(),datasetWeight );
 
-                h_scalarJetDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR(jet1Vec+jet2Vec) );
-                h_scalarJetMasses->Fill( (muon1Vec+muon2Vec).M(), (jet1Vec+jet2Vec).M() );
-                h_scalarJetMass->Fill( (muon1Vec+muon2Vec+jet1Vec+jet2Vec).M() );
+                h_scalarJetDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR(jet1Vec+jet2Vec),datasetWeight );
+                h_scalarJetMasses->Fill( (muon1Vec+muon2Vec).M(), (jet1Vec+jet2Vec).M(),datasetWeight );
+                h_scalarJetMass->Fill( (muon1Vec+muon2Vec+jet1Vec+jet2Vec).M(),datasetWeight );
             }
             
         } // end event loop
@@ -413,6 +432,7 @@ int main(int argc, char* argv[]) {
     h_muonPtOverDeltaR->Write();
     h_muonPtOverDeltaR2D->Write();   
     h_diMuonMass->Write();
+    h_diMuonRefittedMass->Write();
 
     h_leadingChsPt->Write();
     h_subleadingChsPt->Write();
@@ -421,10 +441,13 @@ int main(int argc, char* argv[]) {
     h_diChsPtOverDeltaR->Write();
     h_diChsPtOverDeltaR2D->Write();
     h_diChsMass->Write();
+    h_diChsRefittedMass->Write();
 
     h_scalarDeltaR->Write();
     h_scalarMasses->Write();
+    h_scalarRefittedMasses->Write();
     h_scalarMass->Write();
+    h_scalarRefittedMass->Write();
 
     h_leadingChsJetPt->Write();
     h_subleadingChsJetPt->Write();
@@ -446,6 +469,7 @@ int main(int argc, char* argv[]) {
     ht_muonPtOverDeltaR->Write();
     ht_muonPtOverDeltaR2D->Write();   
     ht_diMuonMass->Write();
+    ht_diMuonRefittedMass->Write();
 
     ht_leadingChsPt->Write();
     ht_subleadingChsPt->Write();
@@ -454,10 +478,13 @@ int main(int argc, char* argv[]) {
     ht_diChsPtOverDeltaR->Write();
     ht_diChsPtOverDeltaR2D->Write();
     ht_diChsMass->Write();
+    ht_diChsRefittedMass->Write();
 
     ht_scalarDeltaR->Write();
     ht_scalarMasses->Write();
+    ht_scalarRefittedMasses->Write();
     ht_scalarMass->Write();
+    ht_scalarRefittedMass->Write();
 
     ht_leadingChsJetPt->Write();
     ht_subleadingChsJetPt->Write();
@@ -519,6 +546,12 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const 
         event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
         event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[1]];
         event.zPairIndex.second = lepton1.Pt() > lepton2.Pt() ? muons[1] : muons[0];
+
+        event.mumuTrkIndex = getMuonTrackPairIndex(event);
+
+        event.zPairLeptonsRefitted.first  = TLorentzVector{event.muonTkPairPF2PATTk1Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
+        event.zPairLeptonsRefitted.second = TLorentzVector{event.muonTkPairPF2PATTk2Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
+
         return true;
     }
     else if (!exactlyTwo && muons.size() > 1) {
@@ -546,6 +579,11 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const 
                 }
             }
         }
+        event.mumuTrkIndex = getMuonTrackPairIndex(event);
+
+        event.zPairLeptonsRefitted.first  = TLorentzVector{event.muonTkPairPF2PATTk1Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
+        event.zPairLeptonsRefitted.second = TLorentzVector{event.muonTkPairPF2PATTk2Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
+
         if ( closestMass < 9999. ) return true;
     }
     return false;
@@ -581,6 +619,11 @@ bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) {
         event.chsPairIndex.first = idx1;
         event.chsPairIndex.second = idx2;
 
+        event.chsPairTrkIndex = getChsTrackPairIndex(event);
+
+        event.chsPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex],event.chsTkPairTk1Py[event.chsPairTrkIndex],event.chsTkPairTk1Pz[event.chsPairTrkIndex],std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
+        event.chsPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex],event.chsTkPairTk2Py[event.chsPairTrkIndex],event.chsTkPairTk2Pz[event.chsPairTrkIndex],std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
+
         return true;
 
     }
@@ -588,6 +631,23 @@ bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) {
     return false;
 }
 
+int getMuonTrackPairIndex(const AnalysisEvent& event) {
+    for (int i{0}; i < event.numMuonTrackPairsPF2PAT; i++) {
+        if (event.muonTkPairPF2PATIndex1[i] != event.zPairIndex.first) continue;
+        if (event.muonTkPairPF2PATIndex2[i] != event.zPairIndex.second) continue;
+        return i;
+    }
+    return -1;
+}
+
+int getChsTrackPairIndex(const AnalysisEvent& event) {
+    for (int i{0}; i < event.numChsTrackPairs; i++) {
+        if (event.chsTkPairIndex1[i] != event.chsPairIndex.first) continue;
+        if (event.chsTkPairIndex2[i] != event.chsPairIndex.second) continue;
+        return i;
+    }
+    return -1;
+}
 
 bool scalarGrandparent (const AnalysisEvent& event, const Int_t& k, const Int_t& grandparentId) {
 

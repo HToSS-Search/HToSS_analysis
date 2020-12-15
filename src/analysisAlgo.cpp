@@ -147,6 +147,9 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         "skMass",
         po::value<float>(&skMass)->default_value(2.),
         "Set target scalar mass.")(
+        "chsMass",
+        po::value<float>(&chsMass)->default_value(139.57018),
+        "Set charged hadron candidate assumed mass (MeV).")(
         "mhCut",
         po::value<float>(&mhCut)->default_value(20.),
         "Apply an mHiggs cut.")(
@@ -348,6 +351,7 @@ void AnalysisAlgo::setupCuts()
     cutObj->setScalarCut(msCut);
     cutObj->setHiggsCut(mhCut);
     cutObj->setScalarMass(skMass);
+    cutObj->setChsCandidateMass(chsMass);
     if (doZplusCR_)
     {
         cutObj->setZplusControlRegionFlag(true);
