@@ -1352,7 +1352,7 @@ int main(int argc, char* argv[])
 	//Refitted tracks pions   
 	for(Int_t k{0}; k<event.numChsTrackPairs;k++){
 	   
-	   if(event.chsTkPairIndex1[k]==pionIndex1 && event.chsTkPairIndex2[k]==pionIndex2){	
+	   if(event.chsTkPairIndex1[k]==0 && event.chsTkPairIndex2[k]==1){	
 	   
 	     //h_pion1PairsPt->Fill(event.chsTkPairTk1Pt[k]); 
 	     //h_pion2PairsPt->Fill(event.chsTkPairTk2Pt[k]); 
