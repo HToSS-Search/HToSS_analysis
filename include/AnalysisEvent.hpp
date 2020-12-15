@@ -2431,12 +2431,15 @@ class AnalysisEvent
     std::vector<int> bTagIndex;
 
     std::pair<TLorentzVector, TLorentzVector> zPairLeptons;
+    std::pair<TLorentzVector, TLorentzVector> zPairLeptonsRefitted;
     std::pair<float, float> zPairRelIso;
     std::pair<int, int> zPairIndex;
     int mumuTrkIndex;
 
     std::pair<TLorentzVector, TLorentzVector> chsPairVec;
+    std::pair<TLorentzVector, TLorentzVector> chsPairVecRefitted;
     std::pair<int, int> chsPairIndex;
+    int chsPairTrkIndex;
 
     std::pair<TLorentzVector, TLorentzVector> wPairQuarks;
     std::pair<int, int> wPairIndex;

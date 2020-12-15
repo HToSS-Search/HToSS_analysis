@@ -56,11 +56,13 @@ class AnalysisAlgo
     int systToRun;
     int channelsToRun;
     bool skipTrig;
+    bool skipScalarCut;
     std::string mvaDir;
     bool customJetRegion;
     float metCut;
     float msCut;
     float skMass;
+    float mhCut;
     float mwCut;
     bool is2016_;
     bool doNPLs_;

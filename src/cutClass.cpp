@@ -52,6 +52,7 @@ Cuts::Cuts(const bool doPlots,
 
     , scalarMassCut_{10.}
     , skMass_{2.}
+    , higgsMassCut_{20.}
     , invWMassCut_{999999.}
 
     , numJets_{0}
@@ -83,6 +84,8 @@ Cuts::Cuts(const bool doPlots,
 
     // Skips running trigger stuff
     , skipTrigger_{false}
+    // Skips scalar mass cuts
+    , skipScalarMassCut_{false}
 
     // Are we making b-tag efficiency plots?
     , makeBTagEffPlots_{false}
@@ -298,18 +301,21 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     if (!makeLeptonCuts(event, eventWeight, plotMap, cutFlow, systToRun)) return false;
 
     std::tie(event.jetIndex, event.jetSmearValue) =  makeJetCuts(event, systToRun, eventWeight, true);
-
-    if (event.jetIndex.size() < numJets_) return false;
-    if (event.jetIndex.size() > maxJets_) return false;
-
     event.bTagIndex = makeBCuts(event, event.jetIndex, systToRun);
 
-    if (doPlots_ || fillCutFlow_) cutFlow.Fill(2.5, eventWeight);
-    if (doPlots_) plotMap["jetSel"]->fillAllPlots(event, eventWeight);
+    if ( (event.chsPairVec.first + event.chsPairVec.second).M() > scalarMassCut_ && !skipScalarMassCut_ ) return false;
 
-    if (event.bTagIndex.size() < numbJets_) return false;
-    if (event.bTagIndex.size() > maxbJets_) return false;
-    if (doPlots_) plotMap["bTag"]->fillAllPlots(event, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(2.5, eventWeight);
+    if (doPlots_) plotMap["trackSel"]->fillAllPlots(event, eventWeight);
+
+//    if (event.jetIndex.size() < numJets_) return false;
+//    if (event.jetIndex.size() > maxJets_) return false;
+//    if (event.bTagIndex.size() < numbJets_) return false;
+//    if (event.bTagIndex.size() > maxbJets_) return false;
+
+    if ( (event.zPairLeptons.first + event.zPairLeptons.second + event.chsPairVec.first + event.chsPairVec.second).M() > higgsMassCut_ && !skipScalarMassCut_ ) return false;
+
+    if (doPlots_) plotMap["higgsSel"]->fillAllPlots(event, eventWeight);
     if (doPlots_ || fillCutFlow_) cutFlow.Fill(3.5, eventWeight);
 
     // Do wMass stuff
@@ -404,7 +410,7 @@ std::vector<double> Cuts::getRochesterSFs(const AnalysisEvent& event) const
 }
 
 // Make lepton cuts. Will become customisable in a config later on.
-bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<std::string, std::shared_ptr<Plots>>& plotMap, TH1D& cutFlow, const int& syst, const bool& skipScalarMassCut) {
+bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<std::string, std::shared_ptr<Plots>>& plotMap, TH1D& cutFlow, const int& syst ) {
 
     ////Do lepton selection.
 
@@ -446,8 +452,8 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
     if (postLepSelTree_) postLepSelTree_->Fill();
 
 //    event.muonMomentumSF = getRochesterSFs(event);
-    if ( !getDileptonCand(event, event.muonIndexTight) ) return false;
 
+    if ( !getDileptonCand(event, event.muonIndexTight) ) return false;
     if ( !getDihadronCand(event, event.chsIndex) ) return false;
 
 //    eventWeight *= getLeptonWeight(event, syst);
@@ -473,7 +479,7 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
         }
     }
 
-    if ( (event.zPairLeptons.first + event.zPairLeptons.second).M() > scalarMassCut_ && !skipScalarMassCut ) return false;
+    if ( (event.zPairLeptons.first + event.zPairLeptons.second).M() > scalarMassCut_ && !skipScalarMassCut_ ) return false;
 
     if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, syst, eventWeight, false);
     if (doPlots_) plotMap["zMass"]->fillAllPlots(event, eventWeight);
@@ -691,11 +697,15 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                     event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
                     event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
                     event.zPairIndex.second = lepton1.Pt() > lepton2.Pt() ? muons[j] : muons[i];
-                    event.mumuTrkIndex = getMuonTrackPairIndex(event);
                     closestMass = invMass;
                 }
             }
         }
+        event.mumuTrkIndex = getMuonTrackPairIndex(event);
+
+        event.zPairLeptonsRefitted.first = TLorentzVector{event.muonTkPairPF2PATTk1Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Pz[event.mumuTrkIndex], event.muonPF2PATE[event.zPairIndex.first]};
+        event.zPairLeptonsRefitted.second = TLorentzVector{event.muonTkPairPF2PATTk2Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Pz[event.mumuTrkIndex], event.muonPF2PATE[event.zPairIndex.second]};
+
         if ( closestMass < 9999. ) return true;
     }
     else {
@@ -710,9 +720,8 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
         for ( unsigned int i{0}; i < chs.size(); i++ ) {
             for ( unsigned int j{i+1}; j < chs.size(); j++ ) {
                 if (event.packedCandsCharge[i] * event.packedCandsCharge[j] >= 0) continue;
-                TLorentzVector chs1, chs2;
-                chs1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[i],event.packedCandsPseudoTrkEta[i],event.packedCandsPseudoTrkPhi[i],event.packedCandsE[i]);
-                chs2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[j],event.packedCandsPseudoTrkEta[j],event.packedCandsPseudoTrkPhi[j],event.packedCandsE[j]);
+                TLorentzVector chs1{event.packedCandsPseudoTrkPx[i],event.packedCandsPseudoTrkPy[i],event.packedCandsPseudoTrkPz[i],event.packedCandsE[i]};
+                TLorentzVector chs2{event.packedCandsPseudoTrkPx[j],event.packedCandsPseudoTrkPy[j],event.packedCandsPseudoTrkPz[j],event.packedCandsE[j]};
                 double invMass { (chs1+chs2).M() };
                 if ( std::abs(( invMass - skMass_ )) < std::abs(closestMass) ) {
                     event.chsPairVec.first = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
@@ -723,6 +732,11 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
                 }
             }
         }
+        event.chsPairTrkIndex = getChsTrackPairIndex(event);
+
+        event.chsPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex],event.chsTkPairTk1Py[event.chsPairTrkIndex],event.chsTkPairTk1Pz[event.chsPairTrkIndex],event.packedCandsE[event.chsPairIndex.first]};
+        event.chsPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex],event.chsTkPairTk2Py[event.chsPairTrkIndex],event.chsTkPairTk2Pz[event.chsPairTrkIndex],event.packedCandsE[event.chsPairIndex.second]};
+
         if ( closestMass < 9999. ) return true;
     }
     return false;
@@ -1534,6 +1548,15 @@ int Cuts::getMuonTrackPairIndex(const AnalysisEvent& event) const {
     for (int i{0}; i < event.numMuonTrackPairsPF2PAT; i++) {
         if (event.muonTkPairPF2PATIndex1[i] != event.zPairIndex.first) continue;
         if (event.muonTkPairPF2PATIndex2[i] != event.zPairIndex.second) continue;
+        return i;
+    }
+    return -1;
+}
+
+int Cuts::getChsTrackPairIndex(const AnalysisEvent& event) const { 
+    for (int i{0}; i < event.numChsTrackPairs; i++) {
+        if (event.chsTkPairIndex1[i] != event.chsPairIndex.first) continue;
+        if (event.chsTkPairIndex2[i] != event.chsPairIndex.second) continue;
         return i;
     }
     return -1;

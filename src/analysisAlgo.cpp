@@ -31,6 +31,8 @@ AnalysisAlgo::AnalysisAlgo()
     , cutConfName{}
     , plotConfName{}
     , customJetRegion{false}
+    , skipTrig{false}
+    , skipScalarCut{false}
     , is2016_{false}
     , doNPLs_{false}
     , doZplusCR_{false}
@@ -129,6 +131,7 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         "    emu ss    - 32\n"
         "0 runs the channels specified in the config file")(
         "skipTrig", po::bool_switch(&skipTrig), "Skip running triggers.")(
+        "skipScalarCut", po::bool_switch(&skipScalarCut), "Skip scalar mass cuts.")(
         "mvaDir",
         po::value<std::string>(&mvaDir),
         "Output directory for the MVA files.")(
@@ -144,6 +147,9 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         "skMass",
         po::value<float>(&skMass)->default_value(2.),
         "Set target scalar mass.")(
+        "mhCut",
+        po::value<float>(&mhCut)->default_value(20.),
+        "Apply an mHiggs cut.")(
         "mwCut",
         po::value<float>(&mwCut)->default_value(20.),
         "Apply an mW cut. Dilepton only.");
@@ -331,6 +337,7 @@ void AnalysisAlgo::setupCuts()
 
     // For studying some trigger things. Default is false.
     cutObj->setSkipTrig(skipTrig);
+    cutObj->setSkipScalarCut(skipScalarCut);
     if (customJetRegion)
     {
         cutObj->setJetRegion(
@@ -339,6 +346,7 @@ void AnalysisAlgo::setupCuts()
     cutObj->setMetCut(metCut);
     cutObj->setMWCut(mwCut);
     cutObj->setScalarCut(msCut);
+    cutObj->setHiggsCut(mhCut);
     cutObj->setScalarMass(skMass);
     if (doZplusCR_)
     {
@@ -351,9 +359,9 @@ void AnalysisAlgo::setupPlots()
     // Do a little initialisation for the plots here. Will later on be done in a
     // config file. Initialise plot stage names.
     stageNames.emplace_back(std::make_pair("lepSel", "Muon Cuts"));
-    stageNames.emplace_back(std::make_pair("zMass", "m_{#mu#mu} Cuts"));
-    stageNames.emplace_back(std::make_pair("jetSel", "Jet Cuts"));
-    stageNames.emplace_back(std::make_pair("bTag", "b-tag Cuts"));
+    stageNames.emplace_back(std::make_pair("zMass", "m_{#mu#mu} Cut"));
+    stageNames.emplace_back(std::make_pair("trackSel", "Charged Track Cuts"));
+    stageNames.emplace_back(std::make_pair("higgsSel", "m_{aa} Cut"));
 //    stageNames.emplace_back(std::make_pair("wMass", "W Mass Cuts"));
 }
 

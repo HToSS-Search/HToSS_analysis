@@ -20,8 +20,7 @@ class Cuts
                         double& eventWeight,
                         std::map<std::string, std::shared_ptr<Plots>>& plotMap,
                         TH1D& cutFlow,
-                        const int& syst,
-                        const bool& skipScalarMassCut = false);
+                        const int& syst);
     std::pair<std::vector<int>, std::vector<double>>
         makeJetCuts(const AnalysisEvent& event,
                     const int syst,
@@ -59,6 +58,8 @@ class Cuts
 
     // grab the muon track pair index for selected muons
     int getMuonTrackPairIndex(const AnalysisEvent& event) const;
+    // grab the chs track pair index for selected muons
+    int getChsTrackPairIndex(const AnalysisEvent& event) const;
 
     // set to true to fill in histograms/spit out other info
     bool doPlots_;
@@ -98,6 +99,7 @@ class Cuts
     // z and w inv cuts
     double scalarMassCut_;
     double skMass_;
+    double higgsMassCut_;
     double invWMassCut_;
 
     // Tight jet cuts
@@ -161,6 +163,8 @@ class Cuts
 
     // For removing trigger cuts. Will be set to false by default
     bool skipTrigger_;
+    // For skipping scalar mass cuts. Will be set to false by default
+    bool skipScalarMassCut_;
 
     // For making b-tagging efficiencies. Needed for reweighting and
     // systematics.
@@ -261,6 +265,10 @@ class Cuts
     {
         skipTrigger_ = skip;
     }
+    void setSkipScalarCut(bool skip)
+    {
+        skipScalarMassCut_ = skip;
+    }
     void setMetCut(double cut)
     {
         metDileptonCut_ = cut;
@@ -272,6 +280,10 @@ class Cuts
     void setScalarCut(double cut)
     {
         scalarMassCut_ = cut;
+    }
+    void setHiggsCut(double cut)
+    {
+        higgsMassCut_ = cut;
     }
     void setScalarMass(double mass)
     {
