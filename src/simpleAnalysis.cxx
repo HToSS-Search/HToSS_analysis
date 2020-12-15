@@ -1358,7 +1358,7 @@ int main(int argc, char* argv[])
 	//Refitted tracks pions   
 	for(Int_t k{0}; k<event.numChsTrackPairs;k++){
 		
-	   if(event.chsTkPairIndex1[k]==muonIndex1 && event.chsTkPairIndex2[k]==muonIndex1){	
+	  // if(event.chsTkPairIndex1[k]==muonIndex1 && event.chsTkPairIndex2[k]==muonIndex1){	
 	   
 	     //h_pion1PairsPt->Fill(event.chsTkPairTk1Pt[k]); 
 	     //h_pion2PairsPt->Fill(event.chsTkPairTk2Pt[k]); 
@@ -1384,7 +1384,7 @@ int main(int argc, char* argv[])
 	     //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
              //h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
              
-	   }
+	 //  }
 	     
 	}  
 	      
