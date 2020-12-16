@@ -1354,24 +1354,26 @@ int main(int argc, char* argv[])
 	   }
 	     
 	}  
-	      
-	//Refitted tracks pions   
-	for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-	   std::cout<<"Opnieuw "<<std::endl;	
-	   std::cout<<"Index1 "<<event.chsTkPairIndex1[k]<<std::endl;
-	   std::cout<<"Index2 "<<event.chsTkPairIndex2[k]<<std::endl;
-	   std::cout<<"Pion1 "<<pionIndex1<<std::endl;
-	   std::cout<<"Pion2 "<<pionIndex2<<std::endl;
-	   if(event.chsTkPairIndex1[k]==pionIndex1 && event.chsTkPairIndex2[k]==pionIndex1){	
+	if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsCharge[pionIndex1]==-(event.packedCandsCharge[pionIndex2])){
+      
+	  //Refitted tracks pions   
+	  for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+	     std::cout<<"Opnieuw "<<std::endl;	
+	     std::cout<<"Index1 "<<event.chsTkPairIndex1[k]<<std::endl;
+	     std::cout<<"Index2 "<<event.chsTkPairIndex2[k]<<std::endl;
+	     std::cout<<"Pion1 "<<pionIndex1<<std::endl;
+	     std::cout<<"Pion2 "<<pionIndex2<<std::endl;
+	     if(event.chsTkPairIndex1[k]==pionIndex1 && event.chsTkPairIndex2[k]==pionIndex1){	
 		   
-	     TLorentzVector Mu1  {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
-             TLorentzVector Mu2  {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Px[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
+	       TLorentzVector Mu1  {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
+               TLorentzVector Mu2  {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Px[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
 	 
-             h_pionre12InvMass->Fill((Mu1+Mu2).M());
+               h_pionre12InvMass->Fill((Mu1+Mu2).M());
+	     }
+	  }
+	}   
+	 
 	
-	   }
-	     
-	}  
 	      
       }//end of single/double muon trigger
     }//end of met filter
