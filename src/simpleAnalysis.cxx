@@ -1357,34 +1357,19 @@ int main(int argc, char* argv[])
 	      
 	//Refitted tracks pions   
 	for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-		
-	  // if(event.chsTkPairIndex1[k]==muonIndex1 && event.chsTkPairIndex2[k]==muonIndex1){	
-	   
-	     //h_pion1PairsPt->Fill(event.chsTkPairTk1Pt[k]); 
-	     //h_pion2PairsPt->Fill(event.chsTkPairTk2Pt[k]); 
+	   std::cout<<"Opnieuw "<<std::endl;	
+	   std::cout<<"Index1 "<<event.chsTkPairIndex1[k]<<std::endl;
+	   std::cout<<"Index2 "<<event.chsTkPairIndex2[k]<<std::endl;
+	   std::cout<<"Pion1 "<<pionIndex1<<std::endl;
+	   std::cout<<"Pion2 "<<pionIndex2<<std::endl;
+	   if(event.chsTkPairIndex1[k]==pionIndex1 && event.chsTkPairIndex2[k]==pionIndex1){	
 		   
-	     /*if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsCharge[pionIndex1]==-(event.packedCandsCharge[pionIndex2])){
-
-	       TLorentzVector VecMu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], event.packedCandsE[pionIndex1]};
-               TLorentzVector VecMu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], event.packedCandsE[pionIndex2]};
+	     TLorentzVector Mu1  {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
+             TLorentzVector Mu2  {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Px[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
 	 
-	       h_muon1refitInvMass->Fill(VecMu1.M());
-	       h_muon2refitInvMass->Fill(VecMu2.M());
-               h_muon12refitInvMass->Fill((VecMu1+VecMu2).M());        
-	     }*/
-		   
-	     TLorentzVector Mu1  {event.chsTkPairTk1Px[event.chsTkPairIndex1[k]], event.chsTkPairTk1Py[event.chsTkPairIndex1[k]], event.chsTkPairTk1Pz[event.chsTkPairIndex1[k]], std::sqrt(event.chsTkPairTk1P2[event.chsTkPairIndex1[k]]+std::pow(0.1396,2))};
-             TLorentzVector Mu2  {event.chsTkPairTk2Px[event.chsTkPairIndex2[k]], event.chsTkPairTk2Py[event.chsTkPairIndex2[k]], event.chsTkPairTk2Px[event.chsTkPairIndex2[k]], std::sqrt(event.chsTkPairTk2P2[event.chsTkPairIndex2[k]]+std::pow(0.1396,2))};
-	 
-	     //h_refit1InvMass->Fill(Mu1.M());
-	     //h_refit2InvMass->Fill(Mu2.M());
              h_pionre12InvMass->Fill((Mu1+Mu2).M());
 	
-		   
-	     //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k]);
-             //h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]));
-             
-	 //  }
+	   }
 	     
 	}  
 	      
