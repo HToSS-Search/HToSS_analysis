@@ -14,10 +14,10 @@
 
 void triggerEfficiencyPlotMacro() {
 
-    TFile* inFile1  =  new TFile ("plots/triggerDistributions/output_HtoSS_MS1_ctau1_raw.root");
-    TFile* inFile2  =  new TFile ("plots/triggerDistributions/output_HtoSS_MS1_ctau10_raw.root");
-    TFile* inFile3  =  new TFile ("plots/triggerDistributions/output_HtoSS_MS1_ctau100_raw.root");
-    TFile* inFile4  =  new TFile ("plots/triggerDistributions/output_HtoSS_MS1_ctau1000_raw.root");
+    TFile* inFile1  =  new TFile ("plots/triggerDistributions/output_HtoSS_MS2_ctau1_raw.root");
+    TFile* inFile2  =  new TFile ("plots/triggerDistributions/output_HtoSS_MS2_ctau10_raw.root");
+    TFile* inFile3  =  new TFile ("plots/triggerDistributions/output_HtoSS_MS2_ctau100_raw.root");
+    TFile* inFile4  =  new TFile ("plots/triggerDistributions/output_HtoSS_MS2_ctau1000_raw.root");
 
     TH1F* h_leadingMuonPt_muTrig_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonPt_muTrig");
     TH1F* h_leadingMuonPt_muTrig_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonPt_muTrig");
@@ -47,14 +47,14 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonPt_muTrig_ctau1->GetXaxis()->SetTitleSize(0.05);
     h_leadingMuonPt_muTrig_ctau1->GetXaxis()->SetTitleOffset(1.3);
     h_leadingMuonPt_muTrig_ctau1->GetXaxis()->SetTitleFont(42);
-    h_leadingMuonPt_muTrig_ctau1->GetYaxis()->SetRangeUser(0.0, 1.01);
+    h_leadingMuonPt_muTrig_ctau1->GetYaxis()->SetRangeUser(0.0, 1.0);
     h_leadingMuonPt_muTrig_ctau1->GetYaxis()->SetTitle("#mu trigger efficiency");
     h_leadingMuonPt_muTrig_ctau1->GetYaxis()->SetLabelFont(42);
     h_leadingMuonPt_muTrig_ctau1->GetYaxis()->SetLabelSize(0.035);
     h_leadingMuonPt_muTrig_ctau1->GetYaxis()->SetTitleSize(0.035);
     h_leadingMuonPt_muTrig_ctau1->GetYaxis()->SetTitleOffset(0);
     h_leadingMuonPt_muTrig_ctau1->GetYaxis()->SetTitleFont(42);
-    h_leadingMuonPt_muTrig_ctau1->GetYaxis()->SetNdivisions(520);
+    h_leadingMuonPt_muTrig_ctau1->GetYaxis()->SetNdivisions(510);
     h_leadingMuonPt_muTrig_ctau1->SetLineColor(8);
     h_leadingMuonPt_muTrig_ctau1->SetMarkerColor(8);
     h_leadingMuonPt_muTrig_ctau1->SetMarkerStyle(4);
@@ -79,9 +79,9 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonPt_muTrig_ctau1000->SetMarkerSize(1);
     h_leadingMuonPt_muTrig_ctau1000->Draw("HIST p same");
 
-    TLegend *leg_muTrig = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
+    TLegend *leg_muTrig = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_muTrig->SetBorderSize(0);
-    leg_muTrig->SetTextSize(0.02);
+    leg_muTrig->SetTextSize(0.03);
     leg_muTrig->SetLineColor(1);
     leg_muTrig->SetLineStyle(1);
     leg_muTrig->SetLineWidth(1);
@@ -144,14 +144,14 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonPt_mumuTrig_ctau1->GetXaxis()->SetTitleSize(0.05);
     h_leadingMuonPt_mumuTrig_ctau1->GetXaxis()->SetTitleOffset(1.3);
     h_leadingMuonPt_mumuTrig_ctau1->GetXaxis()->SetTitleFont(42);
-    h_leadingMuonPt_mumuTrig_ctau1->GetYaxis()->SetRangeUser(0.0, 0.51);
+    h_leadingMuonPt_mumuTrig_ctau1->GetYaxis()->SetRangeUser(0.0, 1.0);
     h_leadingMuonPt_mumuTrig_ctau1->GetYaxis()->SetTitle("#mu#mu trigger efficiency");
     h_leadingMuonPt_mumuTrig_ctau1->GetYaxis()->SetLabelFont(42);
     h_leadingMuonPt_mumuTrig_ctau1->GetYaxis()->SetLabelSize(0.035);
     h_leadingMuonPt_mumuTrig_ctau1->GetYaxis()->SetTitleSize(0.035);
     h_leadingMuonPt_mumuTrig_ctau1->GetYaxis()->SetTitleOffset(0);
     h_leadingMuonPt_mumuTrig_ctau1->GetYaxis()->SetTitleFont(42);
-    h_leadingMuonPt_mumuTrig_ctau1->GetYaxis()->SetNdivisions(520);
+    h_leadingMuonPt_mumuTrig_ctau1->GetYaxis()->SetNdivisions(510);
     h_leadingMuonPt_mumuTrig_ctau1->SetLineColor(8);
     h_leadingMuonPt_mumuTrig_ctau1->SetMarkerColor(8);
     h_leadingMuonPt_mumuTrig_ctau1->SetMarkerStyle(4);
@@ -176,9 +176,9 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonPt_mumuTrig_ctau1000->SetMarkerSize(1);
     h_leadingMuonPt_mumuTrig_ctau1000->Draw("HIST p same");
 
-    TLegend *leg_mumuTrig = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
+    TLegend *leg_mumuTrig = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_mumuTrig->SetBorderSize(0);
-    leg_mumuTrig->SetTextSize(0.02);
+    leg_mumuTrig->SetTextSize(0.03);
     leg_mumuTrig->SetLineColor(1);
     leg_mumuTrig->SetLineStyle(1);
     leg_mumuTrig->SetLineWidth(1);
@@ -239,7 +239,7 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonPt_L2muTrig_ctau1->GetXaxis()->SetTitleSize(0.05);
     h_leadingMuonPt_L2muTrig_ctau1->GetXaxis()->SetTitleOffset(1.3);
     h_leadingMuonPt_L2muTrig_ctau1->GetXaxis()->SetTitleFont(42);
-    h_leadingMuonPt_L2muTrig_ctau1->GetYaxis()->SetRangeUser(0.0, 0.20);
+    h_leadingMuonPt_L2muTrig_ctau1->GetYaxis()->SetRangeUser(0.0, 1.0);
     h_leadingMuonPt_L2muTrig_ctau1->GetYaxis()->SetTitle("L2/no vtx #mu#mu trigger efficiency");
     h_leadingMuonPt_L2muTrig_ctau1->GetYaxis()->SetLabelFont(42);
     h_leadingMuonPt_L2muTrig_ctau1->GetYaxis()->SetLabelSize(0.035);
@@ -271,9 +271,9 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonPt_L2muTrig_ctau1000->SetMarkerSize(1);
     h_leadingMuonPt_L2muTrig_ctau1000->Draw("HIST p same");
 
-    TLegend *leg_L2muTrig = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
+    TLegend *leg_L2muTrig = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_L2muTrig->SetBorderSize(0);
-    leg_L2muTrig->SetTextSize(0.02);
+    leg_L2muTrig->SetTextSize(0.03);
     leg_L2muTrig->SetLineColor(1);
     leg_L2muTrig->SetLineStyle(1);
     leg_L2muTrig->SetLineWidth(1);

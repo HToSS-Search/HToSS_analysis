@@ -549,7 +549,7 @@ plots:
     xMax: 5.
     nBins: 500
     fillExp: "chsPairDeltaR"
-    xAxisLabel: "#Deltar (cm)"
+    xAxisLabel: "#Deltar"
     cutStage: 0
   - title: "#Delta#phi between charged hadron tracks"
     name: "chsPairDeltaPhi"
@@ -605,7 +605,7 @@ plots:
     xMax: 5.
     nBins: 500
     fillExp: "chsPairDeltaRRefit"
-    xAxisLabel: "#Deltar (cm)"
+    xAxisLabel: "#Deltar"
     cutStage: 0
   - title: "#Delta#phi between refitted charged hadron tracks"
     name: "chsPairDeltaPhiRefit"
@@ -630,6 +630,22 @@ plots:
     nBins: 2000
     fillExp: "discalarMass"
     xAxisLabel: "m_{h} (GeV/c)"
+    cutStage: 0
+  - title: "Higgs candidiate mass"
+    name: "discalarMassNew"
+    xMin: 75.0
+    xMax: 175.0
+    nBins: 2000
+    fillExp: "discalarMassNew"
+    xAxisLabel: "m_{h} (GeV/c)"
+    cutStage: 0
+  - title: "#Delta (m_{a1}, m_{a2})"
+    name: "discalarDeltaMassNew"
+    xMin: -20.
+    xMax: 20.0
+    nBins: 400
+    fillExp: "discalarDeltaMassNew"
+    xAxisLabel: "m_{a1} - m_{a2} (GeV/c)"
     cutStage: 0
   - title: "#Delta (m_{a1}, m_{a2})"
     name: "discalarDeltaMass"
@@ -669,7 +685,15 @@ plots:
     xMax: 5.
     nBins: 500
     fillExp: "discalarDeltaR"
-    xAxisLabel: "#Deltar (cm)"
+    xAxisLabel: "#Deltar"
+    cutStage: 0
+  - title: "#DeltaR between scalars"
+    name: "discalarDeltaRNew"
+    xMin: 0.
+    xMax: 5.
+    nBins: 500
+    fillExp: "discalarDeltaRNew"
+    xAxisLabel: "#Deltar"
     cutStage: 0
   - title: "#Delta#phi between scalars"
     name: "discalarDeltaPhi"
@@ -733,7 +757,7 @@ plots:
     xMax: 5.
     nBins: 500
     fillExp: "discalarDeltaRRefit"
-    xAxisLabel: "#Deltar (cm)"
+    xAxisLabel: "#Deltar"
     cutStage: 0
   - title: "#Delta#phi between refitted scalars"
     name: "discalarDeltaPhiRefit"
@@ -789,7 +813,7 @@ plots:
     xMax: 5.
     nBins: 500
     fillExp: "zLepDelR"
-    xAxisLabel: "#Deltar (cm)"
+    xAxisLabel: "#Deltar"
     cutStage: 0
   - title: "#Delta(#phi) between the leptons"
     name: "zLepDelPhi"

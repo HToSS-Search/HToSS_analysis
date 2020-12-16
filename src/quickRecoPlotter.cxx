@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
     TH1F* h_subleadingMuonPt     { new TH1F("h_subleadingMuonPt",       ";p_{T}", 200, 0., 100.)};
     TH1F* h_muonDeltaR           { new TH1F("h_muonDeltaR",             ";#Delta R", 500, 0., 1.)}; 
     TH1F* h_dimuonPt             { new TH1F("h_dimuonPt",               ";p_{T}", 400, 0., 200.)};
-    TH1F* h_muonPtOverDeltaR     { new TH1F("h_muonPtOverDeltaR",       "p_{T}/#Delta R", 5000, 0., 10.)};
+    TH1F* h_muonPtOverDeltaR     { new TH1F("h_muonPtOverDeltaR",       "p_{T}/#Delta R", 4000, 0., 10.)};
     TH2F* h_muonPtOverDeltaR2D   { new TH2F("h_muonPtOverDeltaR2D",     "", 200, 0., 100., 500, 0., 5.)};
     TH1F* h_diMuonMass           { new TH1F("h_diMuonMass",             ";Mass", 100, 0., 4.0)};
     TH1F* h_diMuonRefittedMass   { new TH1F("h_diMuonRefittedMass",     ";Mass", 100, 0., 4.0)};
@@ -92,13 +92,14 @@ int main(int argc, char* argv[]) {
     TH1F* h_subleadingChsPt      { new TH1F("h_subleadingChsPt",        ";p_{T}", 200, 0., 100.)};
     TH1F* h_chsDeltaR            { new TH1F("h_chsDeltaR",              ";#Delta R", 500, 0., 4.)};
     TH1F* h_diChsPt              { new TH1F("h_diChsPt",                ";p_{T}", 400, 0., 200.)};
-    TH1F* h_diChsPtOverDeltaR    { new TH1F("h_diChsPtOverDeltaR",      "p_{T}/#Delta R", 5000, 0., 10.)};
+    TH1F* h_diChsPtOverDeltaR    { new TH1F("h_diChsPtOverDeltaR",      "p_{T}/#Delta R", 4000, 0., 10.)};
     TH2F* h_diChsPtOverDeltaR2D  { new TH2F("h_diChsPtOverDeltaR2D",    "; p_{T}; #Delta R", 200, 0., 100., 500, 0., 10.)};
     TH1F* h_diChsMass            { new TH1F("h_diChsMass",              ";Mass", 100, 0., 4.0)};
     TH1F* h_diChsRefittedMass    { new TH1F("h_diChsRefittedMass",      ";Mass", 100, 0., 4.0)};
 
     TH1F* h_scalarDeltaR         { new TH1F("h_scalarDeltaR",           ";#Delta R", 500, 0., 10.)};
-    TH2F* h_scalarMasses         { new TH2F("h_scalarMasses",           ";#mu#mu Mass; #pi#pi Mass", 500, 0., 4.0, 500, 0., 4.0)};
+    TH2F* h_scalarMasses         { new TH2F("h_scalarMasses",           ";#mu#mu Mass; #pi#pi Mass", 400, 0., 4.0, 400, 0., 4.0)};
+    TH2F* h_scalarMassesNew      { new TH2F("h_scalarMassesNew",        ";#mu#mu Mass; #pi#pi Mass", 400, 0., 4.0, 400, 0., 4.0)};
     TH2F* h_scalarRefittedMasses { new TH2F("h_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi Mass", 50, 0., 4.0, 50, 0., 4.0)};
     TH1F* h_scalarMass           { new TH1F("h_scalarMass",             ";Higgs Mass", 200, 75., 175.)};
     TH1F* h_scalarRefittedMass   { new TH1F("h_scalarRefittedMass",      ";Higgs Mass", 200, 75., 175.)};
@@ -136,8 +137,9 @@ int main(int argc, char* argv[]) {
     TH1F* ht_diChsRefittedMass   { new TH1F("ht_diChsRefittedMass",     ";Mass", 100, 0., 4.0)};
 
     TH1F* ht_scalarDeltaR          { new TH1F("ht_scalarDeltaR",          ";#Delta R", 500, 0., 10.)};
-    TH2F* ht_scalarMasses          { new TH2F("ht_scalarMasses",          ";#mu#mu Mass; a#bar{a} Mass", 50, 0., 4.0, 50, 0., 4.0)};
-    TH2F* ht_scalarRefittedMasses  { new TH2F("ht_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi Mass", 50, 0., 4.0, 50, 0., 4.0)};
+    TH2F* ht_scalarMasses          { new TH2F("ht_scalarMasses",          ";#mu#mu Mass; #pi#pi mass", 400, 0., 4.0, 400, 0., 4.0)};
+    TH2F* ht_scalarMassesNew       { new TH2F("ht_scalarMassesNew",       ";#mu#mu Mass; #pi#pi mass", 400, 0., 4.0,400, 0., 4.0)};
+    TH2F* ht_scalarRefittedMasses  { new TH2F("ht_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi mass", 50, 0., 4.0, 50, 0., 4.0)};
     TH1F* ht_scalarMass            { new TH1F("ht_scalarMass",            "Higgs Mass", 200, 75., 175.)};
     TH1F* ht_scalarRefittedMass    { new TH1F("ht_scalarRefittedMass",    "Higgs Mass", 200, 75., 175.)};
 
@@ -314,11 +316,18 @@ int main(int argc, char* argv[]) {
 //            const int index1 {event.zPairIndex.first}, index2 {event.zPairIndex.second};
             const TLorentzVector muon1Vec {event.zPairLeptons.first}, muon2Vec {event.zPairLeptons.second};
 
+             int idx1 {event.muonPF2PATPackedCandIndex[event.zPairIndex.first]};
+             int idx2 {event.muonPF2PATPackedCandIndex[event.zPairIndex.second]};
+
+            TLorentzVector muon1VecNew{event.packedCandsPseudoTrkPx[idx1], event.packedCandsPseudoTrkPy[idx1], event.packedCandsPseudoTrkPz[idx1], event.packedCandsE[idx1]};
+            TLorentzVector muon2VecNew{event.packedCandsPseudoTrkPx[idx2], event.packedCandsPseudoTrkPy[idx2], event.packedCandsPseudoTrkPz[idx2], event.packedCandsE[idx2]};
+
             // Get CHS
             std::vector<int> chsIndex;
             for (Int_t k = 0; k < event.numPackedCands; k++) {
                 if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
                 if (event.packedCandsCharge[k] == 0 ) continue;
+                if ( std::abs(event.packedCandsPdgId[k]) != 211 ) continue;
                 if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
 //                if (mcTruth_ && !event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[k]]) continue;
                 chsIndex.emplace_back(k);
@@ -353,8 +362,11 @@ int main(int argc, char* argv[]) {
             h_diChsMass->Fill( (chs1Vec+chs2Vec).M(),datasetWeight );
             h_diChsRefittedMass->Fill( (event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
 
+///
+
             h_scalarDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR( (chs1Vec+chs2Vec) ),datasetWeight );
             h_scalarMasses->Fill( (muon1Vec+muon2Vec).M(), (chs1Vec+chs2Vec).M(),datasetWeight );
+            h_scalarMassesNew->Fill( (muon1VecNew+muon2VecNew).M(), (chs1Vec+chs2Vec).M(),datasetWeight );
             h_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
             h_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M(),datasetWeight );
             h_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
@@ -445,6 +457,7 @@ int main(int argc, char* argv[]) {
 
     h_scalarDeltaR->Write();
     h_scalarMasses->Write();
+    h_scalarMassesNew->Write();
     h_scalarRefittedMasses->Write();
     h_scalarMass->Write();
     h_scalarRefittedMass->Write();
@@ -597,6 +610,7 @@ bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) {
         float pt1 {-1}, pt2 {-1};
         for ( unsigned int i{0}; i < chs.size(); i++ ) {
             if ( event.packedCandsCharge[i] == 0 ) continue;
+            if ( std::abs(event.packedCandsPdgId[i]) != 211 ) continue;
             if ( event.packedCandsPseudoTrkPt[i] > pt1 ) {
                 idx1 = i;
                 pt1 = event.packedCandsPseudoTrkPt[i];
@@ -605,6 +619,7 @@ bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) {
         for ( unsigned int j{0}; j < chs.size(); j++ ) {
             if ( idx1 == j ) continue;
             if ( event.packedCandsCharge[j] != -event.packedCandsCharge[idx1] ) continue;
+            if ( std::abs(event.packedCandsPdgId[j]) != 211 ) continue;
             if ( event.packedCandsPseudoTrkPt[j] > pt2 ) {
                 idx2 = j;
                 pt2 = event.packedCandsPseudoTrkPt[j];

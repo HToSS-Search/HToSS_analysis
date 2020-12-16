@@ -463,6 +463,7 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
     for (Int_t k = 0; k < event.numPackedCands; k++) {
         if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
         if (event.packedCandsCharge[k] == 0 ) continue;
+        if ( std::abs(event.packedCandsPdgId[k]) != 211 ) continue;
         if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
 //        if (mcTruth_ && !event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[k]]) continue;
         chsIndex.emplace_back(k);
@@ -741,6 +742,7 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
         float pt1 {-1}, pt2 {-1};
         for ( unsigned int i{0}; i < chs.size(); i++ ) {
             if ( event.packedCandsCharge[i] == 0 ) continue;
+            if ( std::abs(event.packedCandsPdgId[i]) != 211 ) continue;
             if ( event.packedCandsPseudoTrkPt[i] > pt1 ) {
                 idx1 = i;
                 pt1 = event.packedCandsPseudoTrkPt[i];
@@ -749,6 +751,7 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
         for ( unsigned int j{0}; j < chs.size(); j++ ) {
             if ( idx1 == j ) continue; // exclude highest pT track already found
             if ( event.packedCandsCharge[j] != -event.packedCandsCharge[idx1] ) continue;
+            if ( std::abs(event.packedCandsPdgId[j]) != 211 ) continue;
             if ( event.packedCandsPseudoTrkPt[j] > pt2 ) {
                 idx2 = j;
                 pt2 = event.packedCandsPseudoTrkPt[j];
