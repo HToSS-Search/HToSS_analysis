@@ -44,6 +44,7 @@ HistogramPlotter::HistogramPlotter(std::vector<std::string> legOrder,
     gErrorIgnoreLevel = kInfo;
 
     extensions_.emplace_back(".root");
+    extensions_.emplace_back(".pdf");
 
     // Make three labels but don't put anything in them just yet. This will be
     // called on the plotting object if we want a label.
@@ -796,8 +797,8 @@ void HistogramPlotter::setTDRStyle()
     // tdrStyle->SetDateY(Float_t y = 0.01);
 
     // For the statistics box:
-    tdrStyle->SetOptFile(0);
-    tdrStyle->SetOptStat(0); // To display the mean and RMS:   SetOptStat("mr");
+    tdrStyle->SetOptFile(1);
+    tdrStyle->SetOptStat(1); // To display the mean and RMS:   SetOptStat("mr");
     tdrStyle->SetStatColor(kWhite);
     tdrStyle->SetStatFont(42);
     tdrStyle->SetStatFontSize(0.025);

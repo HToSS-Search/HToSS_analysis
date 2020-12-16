@@ -98,8 +98,8 @@ int main(int argc, char* argv[]) {
     TH1F* h_diChsRefittedMass    { new TH1F("h_diChsRefittedMass",      ";Mass", 100, 0., 4.0)};
 
     TH1F* h_scalarDeltaR         { new TH1F("h_scalarDeltaR",           ";#Delta R", 500, 0., 10.)};
-    TH2F* h_scalarMasses         { new TH2F("h_scalarMasses",           ";#mu#mu Mass; #pi#pi Mass", 100, 0., 4.0, 100, 0., 4.0)};
-    TH2F* h_scalarRefittedMasses { new TH2F("h_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi Mass", 100, 0., 4.0, 100, 0., 4.0)};
+    TH2F* h_scalarMasses         { new TH2F("h_scalarMasses",           ";#mu#mu Mass; #pi#pi Mass", 500, 0., 4.0, 500, 0., 4.0)};
+    TH2F* h_scalarRefittedMasses { new TH2F("h_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi Mass", 50, 0., 4.0, 50, 0., 4.0)};
     TH1F* h_scalarMass           { new TH1F("h_scalarMass",             ";Higgs Mass", 200, 75., 175.)};
     TH1F* h_scalarRefittedMass   { new TH1F("h_scalarRefittedMass",      ";Higgs Mass", 200, 75., 175.)};
 
@@ -136,8 +136,8 @@ int main(int argc, char* argv[]) {
     TH1F* ht_diChsRefittedMass   { new TH1F("ht_diChsRefittedMass",     ";Mass", 100, 0., 4.0)};
 
     TH1F* ht_scalarDeltaR          { new TH1F("ht_scalarDeltaR",          ";#Delta R", 500, 0., 10.)};
-    TH2F* ht_scalarMasses          { new TH2F("ht_scalarMasses",          ";#mu#mu Mass; a#bar{a} Mass", 100, 0., 4.0, 100, 0., 4.0)};
-    TH2F* ht_scalarRefittedMasses  { new TH2F("ht_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi Mass", 100, 0., 4.0, 100, 0., 4.0)};
+    TH2F* ht_scalarMasses          { new TH2F("ht_scalarMasses",          ";#mu#mu Mass; a#bar{a} Mass", 50, 0., 4.0, 50, 0., 4.0)};
+    TH2F* ht_scalarRefittedMasses  { new TH2F("ht_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi Mass", 50, 0., 4.0, 50, 0., 4.0)};
     TH1F* ht_scalarMass            { new TH1F("ht_scalarMass",            "Higgs Mass", 200, 75., 175.)};
     TH1F* ht_scalarRefittedMass    { new TH1F("ht_scalarRefittedMass",    "Higgs Mass", 200, 75., 175.)};
 
@@ -278,8 +278,8 @@ int main(int argc, char* argv[]) {
 
             for (Int_t k = 0; k < event.numMuonPF2PAT; k++ ){
                 if ( event.genMuonPF2PATMotherId[k] == 9000006 )  {
-                    h_muonPtGenuine->Fill(event.muonPF2PATPt[k],datasetWeight);
-                    h_genMuonPtGenuine->Fill(event.genMuonPF2PATPT[k],datasetWeight);
+                    h_muonPtGenuine->Fill(event.muonPF2PATPt[k]);
+                    h_genMuonPtGenuine->Fill(event.genMuonPF2PATPT[k]);
                 }
             }
 
@@ -300,8 +300,8 @@ int main(int argc, char* argv[]) {
             }
 
             if ( event.genMuonPF2PATMotherId[event.zPairIndex.first] == 9000006 && event.genMuonPF2PATMotherId[event.zPairIndex.second] == 9000006 ) {
-                h_muonDeltaRGenuine->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second),datasetWeight);
-                h_genMuonDeltaRGenuine->Fill( deltaR(event.genMuonPF2PATEta[event.zPairIndex.first], event.genMuonPF2PATPhi[event.zPairIndex.first], event.genMuonPF2PATEta[event.zPairIndex.second], event.genMuonPF2PATPhi[event.zPairIndex.second]), datasetWeight );
+                h_muonDeltaRGenuine->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second));
+                h_genMuonDeltaRGenuine->Fill( deltaR(event.genMuonPF2PATEta[event.zPairIndex.first], event.genMuonPF2PATPhi[event.zPairIndex.first], event.genMuonPF2PATEta[event.zPairIndex.second], event.genMuonPF2PATPhi[event.zPairIndex.second]) );
             }
 	
             if (!event.metFilters()) continue;

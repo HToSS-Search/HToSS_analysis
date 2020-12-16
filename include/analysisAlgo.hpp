@@ -62,6 +62,7 @@ class AnalysisAlgo
     float metCut;
     float msCut;
     float skMass;
+    float chsMass;
     float mhCut;
     float mwCut;
     bool is2016_;

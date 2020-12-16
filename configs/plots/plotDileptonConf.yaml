@@ -450,8 +450,8 @@ plots:
   - title: "Dilepton Invariant Mass"
     name: "zPairMass"
     xMin: 0.
-    xMax: 10.
-    nBins: 1000
+    xMax: 5.
+    nBins: 400
     fillExp: "zPairMass"
     xAxisLabel: "m_{ll} (GeV/c^{2})"
     cutStage: 0
@@ -482,8 +482,8 @@ plots:
   - title: "Dilepton Invariant Mass (Refitted)"
     name: "zPairMassRefit"
     xMin: 0.
-    xMax: 10.
-    nBins: 1000
+    xMax: 5.
+    nBins: 400
     fillExp: "zPairMassRefit"
     xAxisLabel: "m_{ll} (GeV/c^{2})"
     cutStage: 0
@@ -635,7 +635,7 @@ plots:
     name: "discalarDeltaMass"
     xMin: -20.
     xMax: 20.0
-    nBins: 200
+    nBins: 400
     fillExp: "discalarDeltaMass"
     xAxisLabel: "m_{a1} - m_{a2} (GeV/c)"
     cutStage: 0
@@ -699,7 +699,7 @@ plots:
     name: "discalarDeltaMassRefit"
     xMin: -20.
     xMax: 20.0
-    nBins: 200
+    nBins: 400
     fillExp: "discalarDeltaMassRefit"
     xAxisLabel: "m_{a1} - m_{a2} (GeV/c)"
     cutStage: 0
@@ -786,11 +786,11 @@ plots:
   - title: "#Delta(R) between the leptons"
     name: "zLepDelR"
     xMin: 0.
-    xMax: 8.5
-    nBins: 100
+    xMax: 5.
+    nBins: 500
     fillExp: "zLepDelR"
     xAxisLabel: "#Deltar (cm)"
-    cutStage: 1
+    cutStage: 0
   - title: "#Delta(#phi) between the leptons"
     name: "zLepDelPhi"
     xMin: 0.
@@ -798,7 +798,7 @@ plots:
     nBins: 100
     fillExp: "zLepDelPhi"
     xAxisLabel: "#Delta#phi"
-    cutStage: 1
+    cutStage: 0
   - title: "#Delta(Z) between the leptons"
     name: "zLepDelZ"
     xMin: 0.
@@ -806,15 +806,15 @@ plots:
     nBins: 100
     fillExp: "zLepDelZ"
     xAxisLabel: "#Deltaz (cm)"
-    cutStage: 1
+    cutStage: 0
   - title: "#Delta(R) between the refitted leptons"
     name: "zLepDelRRefit"
     xMin: 0.
-    xMax: 8.5
-    nBins: 100
+    xMax: 5.
+    nBins: 500
     fillExp: "zLepDelRRefit"
     xAxisLabel: "#Delta(r) (cm)"
-    cutStage: 1
+    cutStage: 0
   - title: "#Delta(#phi) between the refitted leptons"
     name: "zLepDelPhiRefit"
     xMin: 0.
@@ -822,7 +822,7 @@ plots:
     nBins: 100
     fillExp: "zLepDelPhiRefit"
     xAxisLabel: "#Delta#phi"
-    cutStage: 1
+    cutStage: 0
   - title: "#DeltaZ between the refitted leptons"
     name: "zLepDelZRefit"
     xMin: 0.
@@ -830,7 +830,7 @@ plots:
     nBins: 100
     fillExp: "zLepDelZRefit"
     xAxisLabel: "#Deltaz (cm)"
-    cutStage: 1
+    cutStage: 0
   - title: "#Delta(R) between Leading Z Lepton and b-Jet"
     name: "zLep1BjetDelR"
     xMin: 0.
