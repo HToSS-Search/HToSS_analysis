@@ -61,7 +61,6 @@ class AnalysisAlgo
     bool customJetRegion;
     float metCut;
     float msCut;
-    float skMass;
     float chsMass;
     float mhCut;
     float mwCut;

@@ -1,0 +1,11 @@
+name: "ggH_HToSS_MS2_ctauS0"
+locations:
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ggH/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS2_ctauS0/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ggH/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS2_ctauS0_ext1/"
+cross_section: 21.46
+mc: true
+histogram: "ggH_HToSS_MS2_ctauS0"
+colour: "#a65628"
+label: "H#rightarrowaa m_{a}=2 c_{#tau}=0"
+plot_type: "f"
+

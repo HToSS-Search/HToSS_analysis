@@ -103,6 +103,60 @@ int main(int argc, char* argv[])
     TH1F* h_delR_truth_L2muTrig                {new TH1F("h_delR_truth_L2muTrig",               "Trigger turn-on for signal; p_{T} (GeV); #Delta R", 100, 0., 1.0)};
     TH1F* h_delR_L2muTrig                      {new TH1F("h_delR_L2muTrig",                    "Trigger turn-on for signal; p_{T} (GeV); #Delta R", 100, 0., 1.0)};
 
+    // packed PF cands info
+
+    TProfile* p_packedCandUsage            {new TProfile("p_packedCandUsage",     "Pointers to physics objects assoc with packed pf cand", 8, -0.5, 7.5)};
+    TProfile* p_packedElectronUsage        {new TProfile("p_packedElectronUsage", "Pointers to physics objects assoc with packed pf cand electron", 8, -0.5, 7.5)};
+    TProfile* p_packedMuonUsage            {new TProfile("p_packedMuonUsage",     "Pointers to physics objects assoc with packed pf cand muon", 8, -0.5, 7.5)};
+    TProfile* p_packedChsUsage             {new TProfile("p_packedChsUsage",      "Pointers to physics objects assoc with packed pf cand charged hadrons", 8, -0.5, 7.5)};
+
+    TProfile* p_muonPackedCandId            {new TProfile("p_muonPackedCandId",     "ID of packed PF cand associated to a PAT Muon", 8, -0.5, 7.5)};
+
+    p_packedCandUsage->GetXaxis()->SetBinLabel(1, "None");
+    p_packedCandUsage->GetXaxis()->SetBinLabel(2, "e");
+    p_packedCandUsage->GetXaxis()->SetBinLabel(3, "#mu");
+    p_packedCandUsage->GetXaxis()->SetBinLabel(4, "jets");
+    p_packedCandUsage->GetXaxis()->SetBinLabel(5, "e+#mu");
+    p_packedCandUsage->GetXaxis()->SetBinLabel(6, "e+jets");
+    p_packedCandUsage->GetXaxis()->SetBinLabel(7, "#mu+jets");
+    p_packedCandUsage->GetXaxis()->SetBinLabel(8, "e+#mu+jets");
+
+    p_packedElectronUsage->GetXaxis()->SetBinLabel(1, "None");
+    p_packedElectronUsage->GetXaxis()->SetBinLabel(2, "e");
+    p_packedElectronUsage->GetXaxis()->SetBinLabel(3, "#mu");
+    p_packedElectronUsage->GetXaxis()->SetBinLabel(4, "jets");
+    p_packedElectronUsage->GetXaxis()->SetBinLabel(5, "e+#mu");
+    p_packedElectronUsage->GetXaxis()->SetBinLabel(6, "e+jets");
+    p_packedElectronUsage->GetXaxis()->SetBinLabel(7, "#mu+jets");
+    p_packedElectronUsage->GetXaxis()->SetBinLabel(8, "e+#mu+jets");
+
+    p_packedMuonUsage->GetXaxis()->SetBinLabel(1, "None");
+    p_packedMuonUsage->GetXaxis()->SetBinLabel(2, "e");
+    p_packedMuonUsage->GetXaxis()->SetBinLabel(3, "#mu");
+    p_packedMuonUsage->GetXaxis()->SetBinLabel(4, "jets");
+    p_packedMuonUsage->GetXaxis()->SetBinLabel(5, "e+#mu");
+    p_packedMuonUsage->GetXaxis()->SetBinLabel(6, "e+jets");
+    p_packedMuonUsage->GetXaxis()->SetBinLabel(7, "#mu+jets");
+    p_packedMuonUsage->GetXaxis()->SetBinLabel(8, "e+#mu+jets");
+
+    p_packedChsUsage->GetXaxis()->SetBinLabel(1, "None");
+    p_packedChsUsage->GetXaxis()->SetBinLabel(2, "e");
+    p_packedChsUsage->GetXaxis()->SetBinLabel(3, "#mu");
+    p_packedChsUsage->GetXaxis()->SetBinLabel(4, "jets");
+    p_packedChsUsage->GetXaxis()->SetBinLabel(5, "e+#mu");
+    p_packedChsUsage->GetXaxis()->SetBinLabel(6, "e+jets");
+    p_packedChsUsage->GetXaxis()->SetBinLabel(7, "#mu+jets");
+    p_packedChsUsage->GetXaxis()->SetBinLabel(8, "e+#mu+jets");
+
+    p_muonPackedCandId->GetXaxis()->SetBinLabel(1, "None");
+    p_muonPackedCandId->GetXaxis()->SetBinLabel(2, "e");
+    p_muonPackedCandId->GetXaxis()->SetBinLabel(3, "#mu");
+    p_muonPackedCandId->GetXaxis()->SetBinLabel(4, "jets");
+    p_muonPackedCandId->GetXaxis()->SetBinLabel(5, "e+#mu");
+    p_muonPackedCandId->GetXaxis()->SetBinLabel(6, "e+jets");
+    p_muonPackedCandId->GetXaxis()->SetBinLabel(7, "#mu+jets");
+    p_muonPackedCandId->GetXaxis()->SetBinLabel(8, "e+#mu+jets");
+
     // Reco Muon Histos
     TH1F* h_numMuons                   {new TH1F("h_numMuons",                 "number of reco muons in the event", 21, -0.5, 20.5)};
     TH1F* h_numMuonsFromScalar         {new TH1F("h_numMuonsFromScalar",       "number of reco muons with motherId = scalarId", 21, -0.5, 20.5)};
@@ -462,8 +516,55 @@ int main(int argc, char* argv[])
                 }
             }
 
-//            if (! ( passDimuonTrigger || passSingleMuonTrigger ) ) continue;
+            if (! ( passDimuonTrigger || passSingleMuonTrigger ) ) continue;
 
+            for (Int_t k = 0; k < event.numPackedCands; k++) {
+                const bool matchedEle  {event.packedCandsElectronIndex[k] >= 0};
+                const bool matchedMuon {event.packedCandsMuonIndex[k] >= 0};
+                const bool matchedJet  {event.packedCandsJetIndex[k] >= 0};
+
+                p_packedCandUsage->Fill( 1.0, (!matchedEle && !matchedMuon && !matchedJet) );
+                p_packedCandUsage->Fill( 2.0, (matchedEle && !matchedMuon && !matchedJet) );
+                p_packedCandUsage->Fill( 3.0, (!matchedEle && matchedMuon && !matchedJet) );
+                p_packedCandUsage->Fill( 4.0, (!matchedEle && !matchedMuon && matchedJet) );
+                p_packedCandUsage->Fill( 5.0, (matchedEle && matchedMuon && !matchedJet) );
+                p_packedCandUsage->Fill( 6.0, (matchedEle && !matchedMuon && matchedJet) );
+                p_packedCandUsage->Fill( 7.0, (!matchedEle && !matchedMuon && matchedJet) );
+                p_packedCandUsage->Fill( 8.0, (matchedEle && matchedMuon && matchedJet) );
+
+                const Int_t pid = std::abs(event.packedCandsPdgId[k]);
+                if ( pid == 11 ) {
+                    p_packedElectronUsage->Fill( 1.0, (!matchedEle && !matchedMuon && !matchedJet) );
+                    p_packedElectronUsage->Fill( 2.0, (matchedEle && !matchedMuon && !matchedJet) );
+                    p_packedElectronUsage->Fill( 3.0, (!matchedEle && matchedMuon && !matchedJet) );
+                    p_packedElectronUsage->Fill( 4.0, (!matchedEle && !matchedMuon && matchedJet) );
+                    p_packedElectronUsage->Fill( 5.0, (matchedEle && matchedMuon && !matchedJet) );
+                    p_packedElectronUsage->Fill( 6.0, (matchedEle && !matchedMuon && matchedJet) );
+                    p_packedElectronUsage->Fill( 7.0, (!matchedEle && !matchedMuon && matchedJet) );
+                    p_packedElectronUsage->Fill( 8.0, (matchedEle && matchedMuon && matchedJet) );
+                }
+                else if ( pid == 13 ) {
+                    p_packedMuonUsage->Fill( 1.0, (!matchedEle && !matchedMuon && !matchedJet) );
+                    p_packedMuonUsage->Fill( 2.0, (matchedEle && !matchedMuon && !matchedJet) );
+                    p_packedMuonUsage->Fill( 3.0, (!matchedEle && matchedMuon && !matchedJet) );
+                    p_packedMuonUsage->Fill( 4.0, (!matchedEle && !matchedMuon && matchedJet) );
+                    p_packedMuonUsage->Fill( 5.0, (matchedEle && matchedMuon && !matchedJet) );
+                    p_packedMuonUsage->Fill( 6.0, (matchedEle && !matchedMuon && matchedJet) );
+                    p_packedMuonUsage->Fill( 7.0, (!matchedEle && !matchedMuon && matchedJet) );
+                    p_packedMuonUsage->Fill( 8.0, (matchedEle && matchedMuon && matchedJet) );
+                }
+                else if ( pid == 211 ) {
+                    p_packedChsUsage->Fill( 1.0, (!matchedEle && !matchedMuon && !matchedJet) );
+                    p_packedChsUsage->Fill( 2.0, (matchedEle && !matchedMuon && !matchedJet) );
+                    p_packedChsUsage->Fill( 3.0, (!matchedEle && matchedMuon && !matchedJet) );
+                    p_packedChsUsage->Fill( 4.0, (!matchedEle && !matchedMuon && matchedJet) );
+                    p_packedChsUsage->Fill( 5.0, (matchedEle && matchedMuon && !matchedJet) );
+                    p_packedChsUsage->Fill( 6.0, (matchedEle && !matchedMuon && matchedJet) );
+                    p_packedChsUsage->Fill( 7.0, (!matchedEle && !matchedMuon && matchedJet) );
+                    p_packedChsUsage->Fill( 8.0, (matchedEle && matchedMuon && matchedJet) );
+                }
+            }
+ 
             std::vector<int> looseMuonIndex = getLooseMuons(event);
 
             h_numMuons->Fill(looseMuonIndex.size());
@@ -475,7 +576,25 @@ int main(int argc, char* argv[])
 
             // reco muon loop
             for ( auto it = looseMuonIndex.begin(); it != looseMuonIndex.end(); it++ ) {
-      	       	if (event.genMuonPF2PATMotherId[*it] == 9000006) numMuonsFromScalar++;
+
+                bool matchedEle {false}, matchedMuon {false}, matchedJet {false};
+                if (event.muonPF2PATNumSourceCandidates[*it] > 0) {
+                    const int index {event.muonPF2PATPackedCandIndex[*it]};
+                    if ( event.packedCandsElectronIndex[index] >= 0 ) matchedEle = true;
+                    if ( event.packedCandsMuonIndex[index] >= 0 ) matchedMuon = true;
+                    if ( event.packedCandsJetIndex[index] >= 0 ) matchedJet = true;
+                }
+
+                p_muonPackedCandId->Fill( 1.0, (!matchedEle && !matchedMuon && !matchedJet) );
+                p_muonPackedCandId->Fill( 2.0, (matchedEle && !matchedMuon && !matchedJet) );
+                p_muonPackedCandId->Fill( 3.0, (!matchedEle && matchedMuon && !matchedJet) );
+                p_muonPackedCandId->Fill( 4.0, (!matchedEle && !matchedMuon && matchedJet) );
+                p_muonPackedCandId->Fill( 5.0, (matchedEle && matchedMuon && !matchedJet) );
+                p_muonPackedCandId->Fill( 6.0, (matchedEle && !matchedMuon && matchedJet) );
+                p_muonPackedCandId->Fill( 7.0, (!matchedEle && !matchedMuon && matchedJet) );
+                p_muonPackedCandId->Fill( 8.0, (matchedEle && matchedMuon && matchedJet) );
+
+     	       	if (event.genMuonPF2PATMotherId[*it] == 9000006) numMuonsFromScalar++;
                 if (event.genMuonPF2PATPromptFinalState[*it]) numMuonsPromptFinalState++;
 
                 int motherId = std::abs(event.genMuonPF2PATMotherId[*it]);
@@ -759,6 +878,11 @@ int main(int argc, char* argv[])
     h_delR_truth_L2muTrig->Write();
     h_delR_L2muTrig->Write();
 
+    p_packedCandUsage->Write();
+    p_packedElectronUsage->Write();
+    p_packedMuonUsage->Write();
+    p_packedChsUsage->Write();
+    p_muonPackedCandId->Write();
 
     h_numMuons->Write();
     h_numMuonsFromScalar->Write();
