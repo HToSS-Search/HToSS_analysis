@@ -1104,7 +1104,7 @@ bool scalarGrandparent (const AnalysisEvent& event, const Int_t& k, const Int_t&
 
     if (motherId == 0 || motherIndex == -1) return false; // if no parent, then mother Id is null and there's no index, quit search
     else if (motherId == std::abs(grandparentId)) return true; // if mother is granparent being searched for, return true
-    else if (motherIndex > event.NGENPARMAX) return false; // index exceeds stored genParticle range, return false for safety
+    else if (motherIndex >= event.NGENPARMAX) return false; // index exceeds stored genParticle range, return false for safety
     else {
 //        std::cout << "Going up the ladder ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
 //        debugCounter++;
