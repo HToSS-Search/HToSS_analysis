@@ -30,16 +30,13 @@ class Cuts
                                              const std::vector<int> jets,
                                              const int syst = 0) const;
 
-    [[gnu::pure]] std::vector<int>
-        getTightEles(const AnalysisEvent& event) const;
-    [[gnu::pure]] std::vector<int>
-        getLooseEles(const AnalysisEvent& event) const;
-    [[gnu::pure]] std::vector<int>
-        getTightMuons(const AnalysisEvent& event) const;
-    [[gnu::pure]] std::vector<int>
-        getLooseMuons(const AnalysisEvent& event) const;
+    [[gnu::pure]] std::vector<int> getTightEles(const AnalysisEvent& event) const;
+    [[gnu::pure]] std::vector<int> getLooseEles(const AnalysisEvent& event) const;
+    [[gnu::pure]] std::vector<int> getTightMuons(const AnalysisEvent& event) const;
+    [[gnu::pure]] std::vector<int> getLooseMuons(const AnalysisEvent& event) const;
+    [[gnu::pure]] std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) const;
     bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) const;
-    bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) const;
+    bool getDihadronCand(AnalysisEvent& event) const;
     double getWbosonQuarksCand(AnalysisEvent& event,
                                const std::vector<int>& jets,
                                const int& syst) const;
@@ -98,7 +95,6 @@ class Cuts
 
     // z and w inv cuts
     double scalarMassCut_;
-    double skMass_;
     double chsMass_;
     double higgsMassCut_;
     double invWMassCut_;
@@ -285,10 +281,6 @@ class Cuts
     void setHiggsCut(double cut)
     {
         higgsMassCut_ = cut;
-    }
-    void setScalarMass(double mass)
-    {
-        skMass_ = mass;
     }
     void setChsCandidateMass(double mass)
     {

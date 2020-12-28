@@ -458,20 +458,11 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
     if ( !getDileptonCand(event, event.muonIndexTight) ) return false;
 
     // Get CHS
-    std::vector<int> chsIndex;
-    for (Int_t k = 0; k < event.numPackedCands; k++) {
-        if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
-        if (event.packedCandsCharge[k] == 0 ) continue;
-        if ( std::abs(event.packedCandsPdgId[k]) != 211 ) continue;
-        if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
-//        if (mcTruth_ && !event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[k]]) continue;
-        chsIndex.emplace_back(k);
-    }
+    event.chsIndex = getChargedHadronTracks(event);
+    if ( event.chsIndex.size() < 2 ) return false;
 
-    if ( chsIndex.size() < 2 ) return false;
-
-    getDihadronCand(event, chsIndex);
-//    if ( !getDihadronCand(event, chsIndex) ) return false;
+    getDihadronCand(event);
+//    if ( !getDihadronCand(event) ) return false;
 
 //    eventWeight *= getLeptonWeight(event, syst);
 
@@ -505,12 +496,10 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
     return true;
 }
 
-std::vector<int> Cuts::getTightEles(const AnalysisEvent& event) const
-{
+std::vector<int> Cuts::getTightEles(const AnalysisEvent& event) const {
     std::vector<int> electrons;
 
-    for (int i{0}; i < event.numElePF2PAT; i++)
-    {
+    for (int i{0}; i < event.numElePF2PAT; i++) {
         if (!event.elePF2PATIsGsf[i])
             continue;
 
@@ -521,12 +510,10 @@ std::vector<int> Cuts::getTightEles(const AnalysisEvent& event) const
 
         if (std::abs(event.elePF2PATSCEta[i]) > tightEleEta_)
             continue;
-
+ 
         // Ensure we aren't in the barrel/endcap gap and below the max safe eta
         // range
-        if ((std::abs(event.elePF2PATSCEta[i]) > 1.4442
-             && std::abs(event.elePF2PATSCEta[i]) < 1.566)
-            || std::abs(event.elePF2PATSCEta[i]) > 2.50)
+        if ((std::abs(event.elePF2PATSCEta[i]) > 1.4442 && std::abs(event.elePF2PATSCEta[i]) < 1.566) || std::abs(event.elePF2PATSCEta[i]) > 2.50)
             continue;
 
         // VID cut
@@ -534,16 +521,13 @@ std::vector<int> Cuts::getTightEles(const AnalysisEvent& event) const
             continue;
 
         // Cuts not part of the tuned ID
-        if (std::abs(event.elePF2PATSCEta[i]) <= 1.479)
-        {
+        if (std::abs(event.elePF2PATSCEta[i]) <= 1.479) {
             if (std::abs(event.elePF2PATD0PV[i]) >= 0.05)
                 continue;
             if (std::abs(event.elePF2PATDZPV[i]) >= 0.10)
                 continue;
         }
-        else if (std::abs(event.elePF2PATSCEta[i]) > 1.479
-                 && std::abs(event.elePF2PATSCEta[i]) < 2.50)
-        {
+        else if (std::abs(event.elePF2PATSCEta[i]) > 1.479 && std::abs(event.elePF2PATSCEta[i]) < 2.50) {
             if (std::abs(event.elePF2PATD0PV[i]) >= 0.10)
                 continue;
             if (std::abs(event.elePF2PATDZPV[i]) >= 0.20)
@@ -554,11 +538,9 @@ std::vector<int> Cuts::getTightEles(const AnalysisEvent& event) const
     return electrons;
 }
 
-std::vector<int> Cuts::getLooseEles(const AnalysisEvent& event) const
-{
+std::vector<int> Cuts::getLooseEles(const AnalysisEvent& event) const {
     std::vector<int> electrons;
-    for (int i{0}; i < event.numElePF2PAT; i++)
-    {
+    for (int i{0}; i < event.numElePF2PAT; i++) {
         if (electrons.size() < 1 && event.elePF2PATPT[i] <= looseElePtLeading_)
             continue;
         else if (electrons.size() >= 1 && event.elePF2PATPT[i] <= looseElePt_)
@@ -568,9 +550,7 @@ std::vector<int> Cuts::getLooseEles(const AnalysisEvent& event) const
 
         // Ensure we aren't in the barrel/endcap gap and below the max safe
         // eta range
-        if ((std::abs(event.elePF2PATSCEta[i]) > 1.4442
-             && std::abs(event.elePF2PATSCEta[i]) < 1.566)
-            || std::abs(event.elePF2PATSCEta[i]) > 2.50)
+        if ((std::abs(event.elePF2PATSCEta[i]) > 1.4442 && std::abs(event.elePF2PATSCEta[i]) < 1.566) || std::abs(event.elePF2PATSCEta[i]) > 2.50)
             continue;
 
         // VID cut
@@ -578,16 +558,13 @@ std::vector<int> Cuts::getLooseEles(const AnalysisEvent& event) const
             continue;
 
         // Cuts not part of the tuned ID
-        if (std::abs(event.elePF2PATSCEta[i]) <= 1.479)
-        {
+        if (std::abs(event.elePF2PATSCEta[i]) <= 1.479) {
             if (std::abs(event.elePF2PATD0PV[i]) >= 0.05)
                 continue;
             if (std::abs(event.elePF2PATDZPV[i]) >= 0.10)
                 continue;
         }
-        else if (std::abs(event.elePF2PATSCEta[i]) > 1.479
-                 && std::abs(event.elePF2PATSCEta[i]) < 2.50)
-        {
+        else if (std::abs(event.elePF2PATSCEta[i]) > 1.479 && std::abs(event.elePF2PATSCEta[i]) < 2.50) {
             if (std::abs(event.elePF2PATD0PV[i]) >= 0.10)
                 continue;
             if (std::abs(event.elePF2PATDZPV[i]) >= 0.20)
@@ -598,18 +575,14 @@ std::vector<int> Cuts::getLooseEles(const AnalysisEvent& event) const
     return electrons;
 }
 
-std::vector<int> Cuts::getTightMuons(const AnalysisEvent& event) const
-{
+std::vector<int> Cuts::getTightMuons(const AnalysisEvent& event) const {
     std::vector<int> muons;
-    if (is2016_)
-    {
-        for (int i{0}; i < event.numMuonPF2PAT; i++)
-        {
+    if (is2016_) {
+        for (int i{0}; i < event.numMuonPF2PAT; i++) {
             if (!event.muonPF2PATIsPFMuon[i])
                 continue;
 
-            if (muons.size() < 1
-                && event.muonPF2PATPt[i] <= tightMuonPtLeading_)
+            if (muons.size() < 1 && event.muonPF2PATPt[i] <= tightMuonPtLeading_)
                 continue;
             else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= tightMuonPt_)
                 continue;
@@ -641,17 +614,10 @@ std::vector<int> Cuts::getTightMuons(const AnalysisEvent& event) const
             muons.emplace_back(i);
         }
     }
-    else
-    {
-        for (int i{0}; i < event.numMuonPF2PAT; i++)
-        {
-            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATTightCutId[i]
-                && event.muonPF2PATPfIsoTight[i]
-                && std::abs(event.muonPF2PATEta[i]) <= tightMuonEta_)
-            {
-                if (event.muonPF2PATPt[i]
-                    >= (muons.empty() ? tightMuonPtLeading_ : tightMuonPt_))
-                {
+    else {
+        for (int i{0}; i < event.numMuonPF2PAT; i++) {
+            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATTightCutId[i] && event.muonPF2PATPfIsoTight[i] && std::abs(event.muonPF2PATEta[i]) <= tightMuonEta_) {
+                if (event.muonPF2PATPt[i] >= (muons.empty() ? tightMuonPtLeading_ : tightMuonPt_)) {
                     muons.emplace_back(i);
                 }
             }
@@ -660,8 +626,7 @@ std::vector<int> Cuts::getTightMuons(const AnalysisEvent& event) const
     return muons;
 }
 
-std::vector<int> Cuts::getLooseMuons(const AnalysisEvent& event) const
-{
+std::vector<int> Cuts::getLooseMuons(const AnalysisEvent& event) const {
     std::vector<int> muons;
     if (is2016_) {
         for (int i{0}; i < event.numMuonPF2PAT; i++) {
@@ -683,6 +648,19 @@ std::vector<int> Cuts::getLooseMuons(const AnalysisEvent& event) const
         }
     }
     return muons;
+}
+
+std::vector<int> Cuts::getChargedHadronTracks(const AnalysisEvent& event) const {
+    std::vector<int> chs;
+    for (Int_t k = 0; k < event.numPackedCands; k++) {
+        if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
+        if (event.packedCandsCharge[k] == 0 ) continue;
+        if ( std::abs(event.packedCandsPdgId[k]) != 211 ) continue;
+        if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
+//        if (mcTruth_ && !event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[k]]) continue;
+        chs.emplace_back(k);
+    }
+    return chs;
 }
 
 bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) const {    // Check if there are at least two electrons first. Otherwise use muons.
@@ -767,13 +745,13 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
     return false;
 }
 
-bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) const {
+bool Cuts::getDihadronCand(AnalysisEvent& event) const {
 
-    if (chs.size() > 1) {
+    if (event.chsIndex.size() > 1) {
 
         int idx1 {-1}, idx2 {-1};
         float pt1 {-1}, pt2 {-1};
-        for ( unsigned int i{0}; i < chs.size(); i++ ) {
+        for ( unsigned int i{0}; i < event.chsIndex.size(); i++ ) {
             if ( event.packedCandsCharge[i] == 0 ) continue;
             if ( std::abs(event.packedCandsPdgId[i]) != 211 ) continue;
             if ( event.packedCandsPseudoTrkPt[i] > pt1 ) {
@@ -781,7 +759,7 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
                 pt1 = event.packedCandsPseudoTrkPt[i];
            }
         }
-        for ( unsigned int j{0}; j < chs.size(); j++ ) {
+        for ( unsigned int j{0}; j < event.chsIndex.size(); j++ ) {
             if ( idx1 == j ) continue; // exclude highest pT track already found
             if ( event.packedCandsCharge[j] != -event.packedCandsCharge[idx1] ) continue;
             if ( std::abs(event.packedCandsPdgId[j]) != 211 ) continue;
