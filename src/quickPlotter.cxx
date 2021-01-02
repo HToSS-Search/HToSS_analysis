@@ -519,9 +519,9 @@ int main(int argc, char* argv[])
             if (! ( passDimuonTrigger || passSingleMuonTrigger ) ) continue;
 
             for (Int_t k = 0; k < event.numPackedCands; k++) {
-                const bool matchedEle  {event.packedCandsElectronIndex[k] >= 0};
-                const bool matchedMuon {event.packedCandsMuonIndex[k] >= 0};
-                const bool matchedJet  {event.packedCandsJetIndex[k] >= 0};
+                const bool matchedEle  {event.packedCandsElectronIndex[k] > -1};
+                const bool matchedMuon {event.packedCandsMuonIndex[k] > -1 };
+                const bool matchedJet  {event.packedCandsJetIndex[k] > -1};
 
                 p_packedCandUsage->Fill( 1.0, (!matchedEle && !matchedMuon && !matchedJet) );
                 p_packedCandUsage->Fill( 2.0, (matchedEle && !matchedMuon && !matchedJet) );
