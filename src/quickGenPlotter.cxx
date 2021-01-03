@@ -427,7 +427,14 @@ int main(int argc, char* argv[]) {
             if (! ( passDimuonTrigger || passSingleMuonTrigger || passL2MuonTrigger || passDimuonNoVtxTrigger ) ) continue;
             if (!event.metFilters()) continue;
  
+            unsigned int nScalarJets {0};
+            for ( Int_t k = 0; k < event.numJetPF2PAT; k++ ) {
+                if ( event.genJetPF2PATScalarAncestor[k] == 1 ) nScalarJets++;
+            }
+
             event.muonIndexLoose = getLooseMuons(event);
+            std::vector<int> chsIndex = getChargedHadronTracks(event);
+            getDihadronCand(event, chsIndex);
 
             if ( event.muonIndexLoose.size() < 2 ) continue;
 
@@ -441,6 +448,7 @@ int main(int argc, char* argv[]) {
             h_recoSubleadingMuonPt->Fill( (event.zPairLeptons.second).Pt() );
 
             const bool genuineRecoMuon1 {std::abs(event.genMuonPF2PATMotherId[event.zPairIndex.first]) == 9000006}, genuineRecoMuon2 {std::abs(event.genMuonPF2PATMotherId[event.zPairIndex.second]) == 9000006};
+            const bool muonFromMuon1  {std::abs(event.genMuonPF2PATMotherId[event.zPairIndex.first]) == 13}, muonFromMuon2 {std::abs(event.genMuonPF2PATMotherId[event.zPairIndex.second]) == 13 };
 
             p_numPromptMuons->Fill( 1.0, event.genMuonPF2PATPromptDecayed[event.zPairIndex.first] );
             p_numPromptMuons->Fill( 1.0, event.genMuonPF2PATPromptDecayed[event.zPairIndex.second] );
@@ -453,6 +461,7 @@ int main(int argc, char* argv[]) {
             p_recoSelectedMuonMatching->Fill( 2.0, bool (genuineRecoMuon1 && !genuineRecoMuon2) );
             p_recoSelectedMuonMatching->Fill( 3.0, bool (!genuineRecoMuon1 && genuineRecoMuon2) );
             p_recoSelectedMuonMatching->Fill( 4.0, bool (!genuineRecoMuon1 && !genuineRecoMuon2) );
+            p_recoSelectedMuonMatching->Fill( 5.0, bool (muonFromMuon1 && muonFromMuon2) );
 
             // Look at loose muons that are matched to MC truth only
             if ( !getDileptonCand( event, event.muonIndexLoose, true ) ) continue;
@@ -478,6 +487,42 @@ int main(int argc, char* argv[]) {
                 p_fakeSelected->Fill( 6.0, bool ( nMuonsFromMuons == 1 ) );
                 p_fakeSelected->Fill( 7.0, bool ( nMuonsFromMuons == 2 ) );
                 p_fakeSelected->Fill( 8.0, bool ( nMuonsFromMuons > 2 ) );
+            }
+
+            if ( chsIndex.size() < 2 ) continue;
+
+            if ( nScalarJets > 1 ) {
+                const int idx1 {event.chsPairIndex.first}, idx2 {event.chsPairIndex.second};
+                const int jetIdx1 {event.packedCandsJetIndex[idx1]}, jetIdx2 {event.packedCandsJetIndex[idx2]};
+
+                if ( jetIdx1 < 0 || jetIdx2 < 0 ) continue;
+
+                bool jetFromScalar1 {event.genJetPF2PATScalarAncestor[jetIdx1]}, jetFromScalar2 {event.genJetPF2PATScalarAncestor[jetIdx2]};
+
+                TLorentzVector jet1 {event.jetPF2PATPx[idx1], event.jetPF2PATPy[idx1], event.jetPF2PATPz[idx1], event.jetPF2PATE[idx1]};
+                TLorentzVector jet2 {event.jetPF2PATPx[idx2], event.jetPF2PATPy[idx2], event.jetPF2PATPz[idx2], event.jetPF2PATE[idx2]};
+
+                const float chsDeltaR {event.chsPairVec.first.DeltaR(event.chsPairVec.second)}, jetDeltaR {jet1.DeltaR(jet2)};
+
+                p_selectedChsMatching->Fill( 1.0, bool (jetFromScalar1 && jetFromScalar2) );
+                p_selectedChsMatching->Fill( 2.0, bool (jetFromScalar1 && !jetFromScalar2) );
+                p_selectedChsMatching->Fill( 3.0, bool (!jetFromScalar1 && jetFromScalar2) );
+                p_selectedChsMatching->Fill( 4.0, bool (!jetFromScalar1 && !jetFromScalar2) );
+                p_selectedChsMatching->Fill( 5.0, bool (jetFromScalar1) );
+                p_selectedChsMatching->Fill( 6.0, bool (jetFromScalar2) );
+
+                h_chsDeltaR->Fill(chsDeltaR);
+                h_chsJetDeltaR->Fill(jetDeltaR);
+
+                if ( jetFromScalar1 && jetFromScalar2 ) {
+                    h_chsGenDeltaR->Fill(chsDeltaR);
+                    h_chsJetGenDeltaR->Fill(jetDeltaR);
+                }
+                else if (!jetFromScalar1 && !jetFromScalar2) {
+                    h_chsFakeDeltaR->Fill(chsDeltaR);
+                    h_chsJetFakeDeltaR->Fill(jetDeltaR);
+                }
+
             }
 
         } // end event loop
@@ -529,6 +574,15 @@ int main(int argc, char* argv[]) {
 
     p_fakeSelected->Write();
 
+    p_selectedChsMatching->Write();
+
+    h_chsDeltaR->Write();
+    h_chsGenDeltaR->Write();
+    h_chsFakeDeltaR->Write();
+    h_chsJetDeltaR->Write();
+    h_chsJetGenDeltaR->Write();
+    h_chsJetFakeDeltaR->Write();
+
     outFile->Close();
 
 //    std::cout << "Max nGenPar: " << maxGenPars << std::endl;    
@@ -553,7 +607,6 @@ std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) {
     for (Int_t k = 0; k < event.numPackedCands; k++) {
         if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
         if (event.packedCandsCharge[k] == 0 ) continue;
-        if ( std::abs(event.packedCandsPdgId[k]) != 211 ) continue;
         if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
 //        if (mcTruth_ && !event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[k]]) continue;
         chs.emplace_back(k);
@@ -564,7 +617,7 @@ std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) {
 
 
 bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool mcTruth) {
-    double maxDeltaR {400.4};
+    double maxDeltaR {0.4};
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
 
