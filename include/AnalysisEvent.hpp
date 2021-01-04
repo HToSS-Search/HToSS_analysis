@@ -2412,6 +2412,7 @@ class AnalysisEvent
 
     bool isMC_{};
     const bool is2016_{};
+    const bool is2018_{};
 
     std::vector<double> muonMomentumSF;
     std::vector<double> jetSmearValue;
@@ -2424,15 +2425,22 @@ class AnalysisEvent
     std::vector<int> photonIndexLoose;
     std::vector<int> jetIndex;
     std::vector<int> displacedJetIndex;
+    std::vector<int> chsIndex;
     double totalJetHt;
     double selectedJetIncHt;
     double selectedJetTracksHt;
     std::vector<int> bTagIndex;
 
     std::pair<TLorentzVector, TLorentzVector> zPairLeptons;
+    std::pair<TLorentzVector, TLorentzVector> zPairLeptonsRefitted;
     std::pair<float, float> zPairRelIso;
     std::pair<int, int> zPairIndex;
     int mumuTrkIndex;
+
+    std::pair<TLorentzVector, TLorentzVector> chsPairVec;
+    std::pair<TLorentzVector, TLorentzVector> chsPairVecRefitted;
+    std::pair<int, int> chsPairIndex;
+    int chsPairTrkIndex;
 
     std::pair<TLorentzVector, TLorentzVector> wPairQuarks;
     std::pair<int, int> wPairIndex;
@@ -2444,7 +2452,7 @@ class AnalysisEvent
     Int_t numVert;
     TBranch* b_numVert;
 
-    AnalysisEvent(bool isMC, TTree* tree, bool is2016);
+    AnalysisEvent(bool isMC, TTree* tree, bool is2016, bool is2018);
     virtual ~AnalysisEvent();
     Int_t GetEntry(const Long64_t entry);
     Long64_t LoadTree(const Long64_t entry);
@@ -2475,8 +2483,9 @@ class AnalysisEvent
 
 inline AnalysisEvent::AnalysisEvent(const bool isMC,
                                     TTree* tree,
-                                    const bool is2016)
-    : fChain{nullptr}, isMC_{isMC}, is2016_{is2016}
+                                    const bool is2016,
+                                    const bool is2018)
+    : fChain{nullptr}, isMC_{isMC}, is2016_{is2016}, is2018_{is2018}
 {
     // if parameter tree is not specified (or zero), connect the file
     // used to generate this class and read the Tree.

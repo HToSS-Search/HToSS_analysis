@@ -58,9 +58,14 @@ int main(int argc, char* argv[])
   std::map<int, int> pdgIdMap; // declare map of int, int - first int corresponds to pdgId, second will note how many times a particle with that pdgId has been found
   std::string outFileString{"plots/distributions/output.root"}; //
   const bool is2016_ {false}; // analysis framework is setup to run over multiple years - as we are considering 2017 conditions currently, this is set to false for safety.
+  const bool is2018_ {false}; // analysis framework is setup to run over multiple years - as we are considering 2017 conditions currently, this is set to false for safety.
   Long64_t nEvents; // Max number of events to consider per dataset. Default is set in config file, but can be overriden with command line arguements
   Long64_t totalEvents {0}; // Counter for total number of events
-  const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + (is2016_ ? "2016" : "2017") + "/"};
+  std::string era {""};
+  if (is2016_) era = {"2016"};
+  else if (is2018_) era = {"2018"};
+  else era = {"2017"};
+  const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "/"};
 
 	
 	
@@ -368,7 +373,7 @@ int main(int argc, char* argv[])
           continue;
       }
 
-      AnalysisEvent event{dataset->isMC(), datasetChain, is2016_};
+      AnalysisEvent event{dataset->isMC(), datasetChain, is2016_, is2018_};
 
       Long64_t numberOfEvents{datasetChain->GetEntries()};
       if (nEvents && nEvents < numberOfEvents) numberOfEvents = nEvents;
