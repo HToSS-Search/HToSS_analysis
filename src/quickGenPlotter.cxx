@@ -85,8 +85,8 @@ int main(int argc, char* argv[]) {
     TH1F* h_genLeadingKaonPt      {new TH1F("h_genLeadingKaonPt",      "Leading generator Kaon", 300, 0., 150.)};
     TH1F* h_genSubleadingKaonPt   {new TH1F("h_genSubleadingKaonPt",   "Subleading generator Kaon", 300, 0., 150.)};
 
-//    TH1F* h_genDiscalarDeltaR_mumu_pipi     {new TH1F("h_genDiscalarDeltaR_mumu_pipi",      "#DeltaR_{#mu#mu#pi#pi}^{gen}", 500, 0., 10.)};
-//    TH1F* h_genDiscalarDeltaR_mumu_kaonkaon {new TH1F("h_genDiscalarDeltaR_mumu_kaonkaon",  "#DeltaR_{#mu#muKK}^{gen}", 500, 0., 10.)};
+    TH1F* h_genDiscalarDeltaR_mumu_pipi     {new TH1F("h_genDiscalarDeltaR_mumu_pipi",      "#DeltaR_{#mu#mu#pi#pi}^{gen}", 500, 0., 10.)};
+    TH1F* h_genDiscalarDeltaR_mumu_kaonkaon {new TH1F("h_genDiscalarDeltaR_mumu_kaonkaon",  "#DeltaR_{#mu#muKK}^{gen}", 500, 0., 10.)};
 
     // Reco plots
 
@@ -359,7 +359,7 @@ int main(int argc, char* argv[]) {
                 h_genLeadingMuonPt->Fill( genMuon1.Pt() );
                 h_genSubleadingMuonPt->Fill( genMuon2.Pt() );
             }
-/*
+
             if ( genPionIndex.size() == 2 ) {
                 bool firstLeading {false};
                 if ( event.genParPt[genPionIndex[0]] > event.genParPt[genPionIndex[1]] ) firstLeading = true;
@@ -367,7 +367,7 @@ int main(int argc, char* argv[]) {
                 if (firstLeading) {
                     genPion1.SetPtEtaPhiE(event.genParPt[genPionIndex[0]], event.genParEta[genPionIndex[0]], event.genParPhi[genPionIndex[0]], event.genParE[genPionIndex[0]]);
                     genPion2.SetPtEtaPhiE(event.genParPt[genPionIndex[1]], event.genParEta[genPionIndex[1]], event.genParPhi[genPionIndex[1]], event.genParE[genPionIndex[1]]);
-                    if ( genPion1.Pt() < 0.5 || genPion2.Pt() < 0.5 ) break;
+                    if ( genPion1.Pt() < 0.5 || genPion2.Pt() < 0.5 ) continue;
                     h_genDipionDeltaR->Fill( genPion1.DeltaR(genPion2) );
                     h_genDipionMass->Fill( (genPion1+genPion2).M() );
                     h_genDipionPt->Fill( (genPion1+genPion2).Pt() );
@@ -379,7 +379,7 @@ int main(int argc, char* argv[]) {
                 else {
                     genPion1.SetPtEtaPhiE(event.genParPt[genPionIndex[1]], event.genParEta[genPionIndex[1]], event.genParPhi[genPionIndex[1]], event.genParE[genPionIndex[1]]);
                     genPion2.SetPtEtaPhiE(event.genParPt[genPionIndex[0]], event.genParEta[genPionIndex[0]], event.genParPhi[genPionIndex[0]], event.genParE[genPionIndex[0]]);
-                    if ( genPion1.Pt() < 0.5 || genPion2.Pt() < 0.5 ) break;
+                    if ( genPion1.Pt() < 0.5 || genPion2.Pt() < 0.5 ) continue;
                     h_genDipionDeltaR->Fill( genPion1.DeltaR(genPion2) );
                     h_genDipionMass->Fill( (genPion1+genPion2).M() );
                     h_genDipionPt->Fill( (genPion1+genPion2).Pt() );
@@ -390,14 +390,14 @@ int main(int argc, char* argv[]) {
                 }
             }
 
-            if ( genKaonIndex.size() == 2 ) {
+           if ( genKaonIndex.size() == 2 ) {
                 bool firstLeading {false};
                 if ( event.genParPt[genKaonIndex[0]] > event.genParPt[genKaonIndex[1]] ) firstLeading = true;
                 TLorentzVector genKaon1, genKaon2;
                 if (firstLeading) {
                     genKaon1.SetPtEtaPhiE(event.genParPt[genKaonIndex[0]], event.genParEta[genKaonIndex[0]], event.genParPhi[genKaonIndex[0]], event.genParE[genKaonIndex[0]]);
                     genKaon2.SetPtEtaPhiE(event.genParPt[genKaonIndex[1]], event.genParEta[genKaonIndex[1]], event.genParPhi[genKaonIndex[1]], event.genParE[genKaonIndex[1]]);
-                    if ( genKaon1.Pt() < 0.5 || genKaon2.Pt() < 0.5 ) break;
+                    if ( genKaon1.Pt() < 0.5 || genKaon2.Pt() < 0.5 ) continue;
                     h_genDikaonDeltaR->Fill( genKaon1.DeltaR(genKaon2) );
                     h_genDikaonMass->Fill( (genKaon1+genKaon2).M() );
                     h_genDikaonPt->Fill( (genKaon1+genKaon2).Pt() );
@@ -409,7 +409,7 @@ int main(int argc, char* argv[]) {
                 else {
                     genKaon1.SetPtEtaPhiE(event.genParPt[genKaonIndex[1]], event.genParEta[genKaonIndex[1]], event.genParPhi[genKaonIndex[1]], event.genParE[genKaonIndex[1]]);
                     genKaon2.SetPtEtaPhiE(event.genParPt[genKaonIndex[0]], event.genParEta[genKaonIndex[0]], event.genParPhi[genKaonIndex[0]], event.genParE[genKaonIndex[0]]);
-                    if ( genKaon1.Pt() < 0.5 || genKaon2.Pt() < 0.5 ) break;
+                    if ( genKaon1.Pt() < 0.5 || genKaon2.Pt() < 0.5 ) continue;
                     h_genDikaonDeltaR->Fill( genKaon1.DeltaR(genKaon2) );
                     h_genDikaonMass->Fill( (genKaon1+genKaon2).M() );
                     h_genDikaonPt->Fill( (genKaon1+genKaon2).Pt() );
@@ -419,7 +419,7 @@ int main(int argc, char* argv[]) {
                     if ( genMuonSortedIndex.size() == 2 ) h_genDiscalarDeltaR_mumu_kaonkaon->Fill( (genMuon1+genMuon2).DeltaR( (genKaon1+genKaon2) ) );
                 }
             }
-*/
+
             const bool passSingleMuonTrigger {event.muTrig()}, passDimuonTrigger {event.mumuTrig()};
             const bool passL2MuonTrigger {event.mumuL2Trig()}, passDimuonNoVtxTrigger {event.mumuNoVtxTrig()};
 
@@ -642,8 +642,8 @@ int main(int argc, char* argv[]) {
     h_genLeadingKaonPt->Write();
     h_genSubleadingKaonPt->Write();
 
-//    h_genDiscalarDeltaR_mumu_pipi->Write();
-//    h_genDiscalarDeltaR_mumu_kaonkaon->Write();
+    h_genDiscalarDeltaR_mumu_pipi->Write();
+    h_genDiscalarDeltaR_mumu_kaonkaon->Write();
 
     h_recoDimuonDeltaR->Write();
     h_recoDimuonMass->Write();
