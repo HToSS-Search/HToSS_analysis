@@ -58,6 +58,7 @@ int main(int argc, char* argv[]) {
    
     std::string outFileString{"plots/distributions/output.root"};
     bool is2016_;
+    bool is2018_;
     Long64_t nEvents;
     Long64_t totalEvents {0};
     const std::regex mask{".*\\.root"};
@@ -215,7 +216,8 @@ int main(int argc, char* argv[]) {
         ",u",
         po::bool_switch(&usePostLepTree),
         "Use post lepton selection trees.")(
-        "2016", po::bool_switch(&is2016_), "Use 2016 conditions (SFs, et al.).");
+        "2016", po::bool_switch(&is2016_), "Use 2016 conditions (SFs, et al.).")(
+        "2018", po::bool_switch(&is2018_), "Use 2018 conditions (SFs, et al.).");
     po::variables_map vm;
 
     try
@@ -229,6 +231,13 @@ int main(int argc, char* argv[]) {
         }
 
         po::notify(vm);
+
+        if ( is2016_ && is2018_ ) {
+            throw std::logic_error(
+                "Default condition is to use 2017. One cannot set "
+                "condition to be BOTH 2016 AND 2018! Chose only "
+                " one or none!");
+        }
     }
     catch (po::error& e)
     {
@@ -262,8 +271,13 @@ int main(int argc, char* argv[]) {
     std::cout << "Using lumi: " << totalLumi << std::endl;
 
     bool datasetFilled{false};
-    const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + (is2016_ ? "2016" : "2017") + "/"};
-//    const std::string postLepSelSkimInputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + (is2016_ ? "2016" : "2017") + "/"};
+
+    std::string era {""};
+    if (is2016_) era = "2016";
+    else if (is2018_) era = "2018";
+    else era = "2017";
+    const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "/"};
+//    const std::string postLepSelSkimInputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "/"};
 
     // Begin to loop over all datasets
     for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset)
@@ -295,7 +309,7 @@ int main(int argc, char* argv[]) {
             continue;
         }
 
-        AnalysisEvent event{dataset->isMC(), datasetChain, is2016_};
+        AnalysisEvent event{dataset->isMC(), datasetChain, is2016_, is2018_};
 
         Long64_t numberOfEvents{datasetChain->GetEntries()};
         if (nEvents && nEvents < numberOfEvents) numberOfEvents = nEvents;
@@ -739,19 +753,22 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
 
 bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chsIndex ) {
 
-    double maxDeltaR {0.4};
+    double maxDeltaR {10.0};
     for ( unsigned int i{0}; i < chsIndex.size(); i++ ) {
 
-//        if ( event.packedCandsMuonIndex[i] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
-//        if ( event.packedCandsMuonIndex[i] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
+        if ( event.packedCandsMuonIndex[i] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
+        if ( event.packedCandsMuonIndex[i] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
 
         for ( unsigned int j{i+1}; j < chsIndex.size(); j++ ) {
+        if ( event.packedCandsMuonIndex[j] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
+        if ( event.packedCandsMuonIndex[j] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
+
             if ( std::abs(event.packedCandsPdgId[i]) != 211 || std::abs(event.packedCandsPdgId[j]) != 211 ) continue;
             if (event.packedCandsCharge[i] * event.packedCandsCharge[j] >= 0) continue;
             TLorentzVector chs1 {event.packedCandsPx[i], event.packedCandsPy[i], event.packedCandsPz[i], event.packedCandsE[i]};
             TLorentzVector chs2 {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
             double delR { chs1.DeltaR(chs2) };
-//            if ( delR < maxDeltaR  ) {
+            if ( delR < maxDeltaR  ) {
                 event.chsPairVec.first  = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
                 event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
                 event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chsIndex[i] : chsIndex[j];
@@ -763,7 +780,7 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chsIndex ) {
                 event.chsPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex], event.chsTkPairTk2Py[event.chsPairTrkIndex], event.chsTkPairTk2Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
 
                 return true;
-//            }
+            }
         }
     }
     return false;

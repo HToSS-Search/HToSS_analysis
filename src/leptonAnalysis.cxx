@@ -23,6 +23,7 @@ int main(int argc, char* argv[])
     std::string inputDir{};
     std::string outFileString{"plots/distributions/output.root"};
     bool is2016;
+    bool is2018;
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
@@ -33,7 +34,8 @@ int main(int argc, char* argv[])
         "outfile,o",
         po::value<std::string>(&outFileString)->default_value(outFileString),
         "Output file for plots.")(
-        "2016", po::bool_switch(&is2016), "Use 2016 conditions (SFs, et al.).");
+        "2016", po::bool_switch(&is2016), "Use 2016 conditions (SFs, et al.).")(
+        "2018", po::bool_switch(&is2018), "Use 2018 conditions (SFs, et al.).");
     po::variables_map vm;
 
     try
@@ -160,7 +162,7 @@ int main(int argc, char* argv[])
          lIt != inputTrees.end();
          ++lIt)
     {
-        AnalysisEvent* lEvent{new AnalysisEvent{true, *lIt, is2016}};
+        AnalysisEvent* lEvent{new AnalysisEvent{true, *lIt, is2016, is2018}};
 
         Long64_t lNumEvents{(*lIt)->GetEntries()};
         totalEvents += lNumEvents;

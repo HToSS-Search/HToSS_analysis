@@ -64,6 +64,7 @@ class Cuts
     bool invertLepCut_; // For background estimation
     bool makeEventDump_;
     const bool is2016_;
+    const bool is2018_;
 
     // Tight electron cuts
     unsigned numTightEle_;
@@ -215,7 +216,8 @@ class Cuts
     Cuts(const bool doPlots,
          const bool fillCutFlows,
          const bool invertLepCut,
-         const bool is2016);
+         const bool is2016,
+         const bool is2018);
     ~Cuts();
     bool makeCuts(AnalysisEvent& event,
                   double& eventWeight,

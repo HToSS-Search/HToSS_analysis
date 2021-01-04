@@ -89,6 +89,7 @@ int main(int argc, char* argv[])
    
     std::string outFileString{"plots/distributions/output.root"};
     bool is2016_;
+    bool is2018_;
     Long64_t nEvents;
     Long64_t totalEvents {0};
     const std::regex mask{".*\\.root"};
@@ -248,7 +249,8 @@ int main(int argc, char* argv[])
         ",n",
         po::value<Long64_t>(&nEvents)->default_value(0),
         "The number of events to be run over. All if set to 0.")(
-        "2016", po::bool_switch(&is2016_), "Use 2016 conditions (SFs, et al.).");
+        "2016", po::bool_switch(&is2016_), "Use 2016 conditions (SFs, et al.).")(
+        "2018", po::bool_switch(&is2018_), "Use 2018 conditions (SFs, et al.).");
     po::variables_map vm;
 
     try
@@ -318,7 +320,7 @@ int main(int argc, char* argv[])
             continue;
         }
 
-        AnalysisEvent event{dataset->isMC(), datasetChain, is2016_};
+        AnalysisEvent event{dataset->isMC(), datasetChain, is2016_, is2018_};
 
         Long64_t numberOfEvents{datasetChain->GetEntries()};
         if (nEvents && nEvents < numberOfEvents) numberOfEvents = nEvents;
@@ -1517,7 +1519,7 @@ bool scalarGrandparent (const AnalysisEvent& event, const Int_t& k, const Int_t&
 
     if (motherId == 0 || motherIndex == -1) return false; // if no parent, then mother Id is null and there's no index, quit search
     else if (motherId == std::abs(grandparentId)) return true; // if mother is granparent being searched for, return true
-    else if (motherIndex > event.NGENPARMAX) return false; // index exceeds stored genParticle range, return false for safety
+    else if (motherIndex >= event.NGENPARMAX) return false; // index exceeds stored genParticle range, return false for safety
     else {
 //        std::cout << "Going up the ladder ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
 //        debugCounter++;

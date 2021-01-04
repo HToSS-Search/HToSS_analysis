@@ -57,14 +57,16 @@ class MvaEvent : public AnalysisEvent
 
     MvaEvent(bool isMC = true,
              TTree* tree = nullptr,
-             bool is2016 = false);
+             bool is2016 = false,
+             bool is2018 = false);
     virtual ~MvaEvent();
 };
 
 inline MvaEvent::MvaEvent(bool isMC,
                           TTree* tree,
-                          bool is2016)
-    : AnalysisEvent{isMC, tree, is2016}
+                          bool is2016,
+                          bool is2018)
+    : AnalysisEvent{isMC, tree, is2016, is2018}
 {
     fChain->SetBranchAddress("isMC", &isMC, &b_isMC);
     fChain->SetBranchAddress("eventWeight", &eventWeight, &b_eventWeight);

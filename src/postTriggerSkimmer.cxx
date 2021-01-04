@@ -25,15 +25,13 @@ int main(int argc, char* argv[])
     std::vector<std::string> singleLeptonDirs;
     std::string datasetName;
     std::string channel;
-    bool is2016;
+    bool is2016_;
+    bool is2018_;
 
     int singleElectron{0};
     int dupElectron{0};
     int singleMuon{0};
     int dupMuon{0};
-
-    const std::string postTriggerSkimDir{
-        "/data0/data/TopPhysics/postTriggerSkims201"s + (is2016 ? "6/" : "7/")};
 
     // Define command-line flags
     namespace po = boost::program_options;
@@ -42,7 +40,8 @@ int main(int argc, char* argv[])
         "channel,c",
         po::value<std::string>(&channel)->required(),
         "Channel to operate over. Either ee, emu or mumu.")(
-        "2016", po::bool_switch(&is2016), "Use 2016 conditions (SFs, et al.).")(
+        "2016", po::bool_switch(&is2016_), "Use 2016 conditions (SFs, et al.).")(
+        "2018", po::bool_switch(&is2018_), "Use 2018 conditions (SFs, et al.).")(
         "dileptonDirs,d",
         po::value<std::vector<std::string>>(&dileptonDirs)
             ->multitoken()
@@ -70,12 +69,25 @@ int main(int argc, char* argv[])
         }
 
         po::notify(vm);
+
+        if ( is2016_ && is2018_ ) {
+            throw std::logic_error(
+                "Default condition is to use 2017. One cannot set "
+                "condition to be BOTH 2016 AND 2018! Chose only "
+                " one or none!");
+        }
     }
     catch (const po::error& e)
     {
         std::cerr << "ERROR: " << e.what() << std::endl;
         return 1;
     }
+
+    std::string era {""};
+    if (is2016_) era = "2016";
+    else if (is2018_) era = "2018";
+    else era = "2017";
+    const std::string postTriggerSkimDir{"/data0/data/TopPhysics/postTriggerSkims" + era};
 
     const std::regex mask{".*\\.root"};
     int fileNum{0};
@@ -124,7 +136,7 @@ int main(int argc, char* argv[])
                 boost::numeric_cast<unsigned long>(numberOfEvents),
                 std::cout,
                 outFilePath + "\n"};
-            AnalysisEvent event{false, &datasetChain, is2016};
+            AnalysisEvent event{false, &datasetChain, is2016_, is2018_};
 
             for (long long int i{0}; i < numberOfEvents; i++)
             {
@@ -223,7 +235,7 @@ int main(int argc, char* argv[])
                 boost::numeric_cast<unsigned long>(numberOfEvents),
                 std::cout,
                 outFilePath + "\n"};
-            AnalysisEvent event{false, &datasetChain, is2016};
+            AnalysisEvent event{false, &datasetChain, is2016_, is2018_};
 
             for (long long int i{0}; i < numberOfEvents; i++)
             {

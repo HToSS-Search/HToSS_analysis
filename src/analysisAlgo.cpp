@@ -34,6 +34,7 @@ AnalysisAlgo::AnalysisAlgo()
     , skipTrig{false}
     , skipScalarCut{false}
     , is2016_{false}
+    , is2018_{false}
     , doNPLs_{false}
     , doZplusCR_{false}
 {}
@@ -58,6 +59,9 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         "2016",
         po::bool_switch(&is2016_),
         "Use 2016 conditions (SFs, et al.).")(
+        "2018",
+        po::bool_switch(&is2018_),
+        "Use 2018 conditions (SFs, et al.).")(
         ",n",
         po::value<long>(&nEvents)->default_value(0),
         "The number of events to be run over. All if set to 0.")(
@@ -165,6 +169,12 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
 
         po::notify(vm);
 
+        if ( is2016_ && is2018_ ) {
+            throw std::logic_error(
+                "Default condition is to use 2017. One cannot set "
+                "condition to be BOTH 2016 AND 2018! Chose only "
+                " one or none!");
+        }
         if (vm.count("channels") && !vm.count("config")) {
             throw std::logic_error(
                 "--channels requires --config to be specified");
@@ -258,23 +268,7 @@ void AnalysisAlgo::setupSystematics()
         systNames.emplace_back("__fsr__minus");
     }
 
-    if (!is2016_)
-    { // If 2017 mode, get 2017 PU
-        // Make pileupReweighting stuff here
-        dataPileupFile = new TFile{"pileup/2017/truePileupTest.root", "READ"};
-        dataPU = dynamic_cast<TH1D*>(dataPileupFile->Get("pileup")->Clone());
-        mcPileupFile = new TFile{"pileup/2017/pileupMC.root", "READ"};
-        mcPU = dynamic_cast<TH1D*>(mcPileupFile->Get("pileup")->Clone());
-
-        // Get systematic files too.
-        systUpFile = new TFile{"pileup/2017/truePileupUp.root", "READ"};
-        pileupUpHist = dynamic_cast<TH1D*>(systUpFile->Get("pileup")->Clone());
-        systDownFile = new TFile{"pileup/2017/truePileupDown.root", "READ"};
-        pileupDownHist =
-            dynamic_cast<TH1D*>(systDownFile->Get("pileup")->Clone());
-    }
-    else
-    {
+    if (is2016_) { // If 2016 mode, get 2016 PU
         // Make pileupReweighting stuff here
         dataPileupFile = new TFile{"pileup/2016/truePileupTest.root", "READ"};
         dataPU = dynamic_cast<TH1D*>(dataPileupFile->Get("pileup")->Clone());
@@ -285,8 +279,34 @@ void AnalysisAlgo::setupSystematics()
         systUpFile = new TFile{"pileup/2016/truePileupUp.root", "READ"};
         pileupUpHist = dynamic_cast<TH1D*>(systUpFile->Get("pileup")->Clone());
         systDownFile = new TFile{"pileup/2016/truePileupDown.root", "READ"};
-        pileupDownHist =
-            dynamic_cast<TH1D*>(systDownFile->Get("pileup")->Clone());
+        pileupDownHist = dynamic_cast<TH1D*>(systDownFile->Get("pileup")->Clone());
+
+    }
+    else if (is2018_) {
+        // Make pileupReweighting stuff here
+        dataPileupFile = new TFile{"pileup/2018/truePileupTest.root", "READ"};
+        dataPU = dynamic_cast<TH1D*>(dataPileupFile->Get("pileup")->Clone());
+        mcPileupFile = new TFile{"pileup/2018/pileupMC.root", "READ"};
+        mcPU = dynamic_cast<TH1D*>(mcPileupFile->Get("pileup")->Clone());
+
+        // Get systematic files too.
+        systUpFile = new TFile{"pileup/2018/truePileupUp.root", "READ"};
+        pileupUpHist = dynamic_cast<TH1D*>(systUpFile->Get("pileup")->Clone());
+        systDownFile = new TFile{"pileup/2018/truePileupDown.root", "READ"};
+        pileupDownHist = dynamic_cast<TH1D*>(systDownFile->Get("pileup")->Clone());
+    }
+    else { // If 2017 mode, get 2017 PU
+        // Make pileupReweighting stuff here
+        dataPileupFile = new TFile{"pileup/2017/truePileupTest.root", "READ"};
+        dataPU = dynamic_cast<TH1D*>(dataPileupFile->Get("pileup")->Clone());
+        mcPileupFile = new TFile{"pileup/2017/pileupMC.root", "READ"};
+        mcPU = dynamic_cast<TH1D*>(mcPileupFile->Get("pileup")->Clone());
+
+        // Get systematic files too.
+        systUpFile = new TFile{"pileup/2017/truePileupUp.root", "READ"};
+        pileupUpHist = dynamic_cast<TH1D*>(systUpFile->Get("pileup")->Clone());
+        systDownFile = new TFile{"pileup/2017/truePileupDown.root", "READ"};
+        pileupDownHist = dynamic_cast<TH1D*>(systDownFile->Get("pileup")->Clone());
     }
 
     puReweight = dynamic_cast<TH1D*>(dataPU->Clone());
@@ -323,7 +343,7 @@ void AnalysisAlgo::setupCuts()
 {
     // Make cuts object. The methods in it should perhaps just be i nthe
     // AnalysisEvent class....
-    cutObj = new Cuts{plots, plots, invertLepCut, is2016_};
+    cutObj = new Cuts{plots, plots, invertLepCut, is2016_, is2018_};
 
     try
     {
@@ -376,8 +396,12 @@ void AnalysisAlgo::runMainAnalysis() {
 
     bool datasetFilled{false};
 
-    const std::string postLepSelSkimOutputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + (is2016_ ? "2016" : "2017") + "/"};
-    const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + (is2016_ ? "2016" : "2017") + "/"};
+    std::string era {""};
+    if (is2016_) era = "2016";
+    else if (is2018_) era = "2018";
+    else era = "2017";
+    const std::string postLepSelSkimOutputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "/"};
+    const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "/"};
 
 
     // Begin to loop over all datasets
@@ -637,7 +661,7 @@ void AnalysisAlgo::runMainAnalysis() {
                 std::cout << "No entries in tree, skipping..." << std::endl;
                 continue;
             }
-            AnalysisEvent event{dataset->isMC(), datasetChain, is2016_};
+            AnalysisEvent event{dataset->isMC(), datasetChain, is2016_, is2018_};
 
             // Adding in some stuff here to make a skim file out of post lep sel
             // stuff
@@ -1217,7 +1241,7 @@ void AnalysisAlgo::savePlots()
     if (plots)
     {
         HistogramPlotter plotObj =
-            HistogramPlotter(legOrder, plotOrder, datasetInfos, is2016_);
+            HistogramPlotter(legOrder, plotOrder, datasetInfos, is2016_, is2018_);
 
         // If either making or reading in histos, then set the correct read in
         // directory

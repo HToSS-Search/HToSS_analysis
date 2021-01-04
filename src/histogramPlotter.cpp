@@ -25,13 +25,15 @@ const bool writeExtraText(false);
 HistogramPlotter::HistogramPlotter(std::vector<std::string> legOrder,
                                    std::vector<std::string> plotOrder,
                                    std::map<std::string, datasetInfo> dsetMap,
-                                   const bool is2016)
+                                   const bool is2016,
+                                   const bool is2018)
     : // Initialise a load of variables. Labels are empty by default, but this
       // can be changed by calling set label routines.
     lumiStr_{}
     , outputFolder_{}
     , postfix_{"defaultPostfix"}
     , is2016_{is2016}
+    , is2018_{is2018}
     , loadHistos_{false}
     ,
 
@@ -349,8 +351,9 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
     std::string canvasName = plotName + subLabel + postfix_;
     int pos = 0;
     if (writeExtraText) canvasName += "-prelim";
-    if (!is2016_) canvasName += "-2017";
-    else canvasName += "-2016";
+    if (is2016_) canvasName += "-2016";
+    else if (is2018_) canvasName += "-2018";
+    else canvasName += "-2017";
 
     TCanvas* canvy = new TCanvas((canvasName).c_str(), (canvasName).c_str(), 50, 50, W, H);
     canvy->cd();
@@ -593,6 +596,7 @@ void HistogramPlotter::CMS_lumi(TPad* pad, int posX)
 
     TString lumi_2016 = "35.86 fb^{-1}";
     TString lumi_2017 = "41.86 fb^{-1}";
+    TString lumi_2018 = "59.74 fb^{-1}";
 
     bool drawLogo = false;
 
@@ -641,14 +645,16 @@ void HistogramPlotter::CMS_lumi(TPad* pad, int posX)
     pad->cd();
 
     TString lumiText;
-    if (!is2016_)
-    {
-        lumiText += lumi_2017;
+    if (is2016_) {
+        lumiText += lumi_2016;
         lumiText += " (13 TeV)";
     }
-    else
-    {
-        lumiText += lumi_2016;
+    else if (is2018_) {
+        lumiText += lumi_2018;
+        lumiText += " (13 TeV)";
+    }
+    else {
+        lumiText += lumi_2017;
         lumiText += " (13 TeV)";
     }
 

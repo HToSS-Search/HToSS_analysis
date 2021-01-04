@@ -20,11 +20,13 @@
 Cuts::Cuts(const bool doPlots,
            const bool fillCutFlows,
            const bool invertLepCut,
-           const bool is2016)
+           const bool is2016,
+           const bool is2018)
     : doPlots_{doPlots}
     , fillCutFlow_{fillCutFlows}
     , invertLepCut_{invertLepCut}
     , is2016_{is2016}
+    , is2018_{is2018}
 
     , numTightEle_{0}
     , tightElePt_{0.}

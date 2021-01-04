@@ -26,6 +26,7 @@ class HistogramPlotter
     std::string postfix_; // Will be appended to name of saved files. Defaults
                           // to aPostfix. Set with setter.
     const bool is2016_; // Era
+    const bool is2018_; // Era
     bool loadHistos_;
 
     // Orders of various things and information regarding plotting.
@@ -52,6 +53,7 @@ class HistogramPlotter
     HistogramPlotter(std::vector<std::string>,
                      std::vector<std::string>,
                      std::map<std::string, datasetInfo>,
+                     const bool,
                      const bool);
     ~HistogramPlotter();
     // methods to set various bits of information in the class. This is so that

@@ -59,6 +59,7 @@ int main(int argc, char* argv[])
    
     std::string outFileString{"plots/distributions/output.root"};
     bool is2016_;
+    bool is2018_;
     Long64_t nEvents;
     Long64_t totalEvents {0};
     const std::regex mask{".*\\.root"};
@@ -344,6 +345,7 @@ int main(int argc, char* argv[])
         po::bool_switch(&usePostLepTree),
         "Use post lepton selection trees.")(
         "2016", po::bool_switch(&is2016_), "Use 2016 conditions (SFs, et al.).")(
+        "2018", po::bool_switch(&is2018_), "Use 2018 conditions (SFs, et al.).")(
         "scalarMass,s",
         po::value<float>(&scalarMass_)->default_value(2.0),
         "scalar mass being searched for.")(
@@ -361,6 +363,12 @@ int main(int argc, char* argv[])
         }
 
         po::notify(vm);
+        if ( is2016_ && is2018_ ) {
+            throw std::logic_error(
+                "Default condition is to use 2017. One cannot set "
+                "condition to be BOTH 2016 AND 2018! Chose only "
+                " one or none!");
+        }
     }
     catch (po::error& e)
     {
@@ -394,8 +402,12 @@ int main(int argc, char* argv[])
     std::cout << "Using lumi: " << totalLumi << std::endl;
 
     bool datasetFilled{false};
-    const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + (is2016_ ? "2016" : "2017") + "/"};
-//    const std::string postLepSelSkimInputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + (is2016_ ? "2016" : "2017") + "/"};
+    std::string era {""};
+    if (is2016_) era = "2016";
+    if (is2018_) era = "2018";
+    else era = "2017";
+    const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "/"};
+//    const std::string postLepSelSkimInputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "/"};
 
     // Begin to loop over all datasets
     for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset)
@@ -427,7 +439,7 @@ int main(int argc, char* argv[])
             continue;
         }
 
-        AnalysisEvent event{dataset->isMC(), datasetChain, is2016_};
+        AnalysisEvent event{dataset->isMC(), datasetChain, is2016_, is2018_};
 
         Long64_t numberOfEvents{datasetChain->GetEntries()};
         if (nEvents && nEvents < numberOfEvents) numberOfEvents = nEvents;
