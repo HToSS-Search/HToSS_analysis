@@ -47,6 +47,11 @@ namespace fs = boost::filesystem;
 const float looseMuonEta_ {2.8}, looseMuonPt_ {6.}, looseMuonPtLeading_ {15.}, looseMuonRelIso_ {100.};
 const float invZMassCut_ {10.0}, chsMass_{0.13957018};
 
+// Diparticle cuts
+double maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4};
+double higgsTolerence_ {10.};
+
+
 int main(int argc, char* argv[]) {
     auto timerStart = std::chrono::high_resolution_clock::now(); 
 
@@ -65,14 +70,14 @@ int main(int argc, char* argv[]) {
 
     // Gen Histos
 
-    TH1F* h_genDimuonDeltaR       {new TH1F("h_genDimuonDeltaR",       "Dimuon gen deltaR", 500, 0., 10.)};
+    TH1F* h_genDimuonDeltaR       {new TH1F("h_genDimuonDeltaR",       "Dimuon gen deltaR", 50, 0., 1.)};
     TH1F* h_genDimuonMass         {new TH1F("h_genDimuonMass",         "Dimuon gen mass", 30, 0., 11.)};
     TH1F* h_genDimuonPt           {new TH1F("h_genDimuonPt",           "Dimuon gen Pt",  200, 0., 200)}; 
     TH1F* h_genDimuonEta          {new TH1F("h_genDimuonEta",          "Dimuon gen Eta", 60, 0., 5.)};
     TH1F* h_genLeadingMuonPt      {new TH1F("h_genLeadingMuonPt",      "Leading generator muon", 300, 0., 150.)};
     TH1F* h_genSubleadingMuonPt   {new TH1F("h_genSubleadingMuonPt",   "Subleading generator muon", 300, 0., 150.)};
 
-    TH1F* h_genDipionDeltaR       {new TH1F("h_genDipionDeltaR",       "Dipion gen deltaR", 500, 0., 10.)};
+    TH1F* h_genDipionDeltaR       {new TH1F("h_genDipionDeltaR",       "Dipion gen deltaR", 50, 0., 1.)};
     TH1F* h_genDipionMass         {new TH1F("h_genDipionMass",         "Dipion gen mass", 30, 0., 11.)};
     TH1F* h_genDipionPt           {new TH1F("h_genDipionPt",           "Dipion gen Pt",  200, 0., 200)}; 
     TH1F* h_genDipionEta          {new TH1F("h_genDipionEta",          "Dipion gen Eta", 60, 0., 5.)};
@@ -110,6 +115,26 @@ int main(int argc, char* argv[]) {
     p_recoSelectedMuonMatching->GetXaxis()->SetBinLabel(4, "Both genuine muons fake");
     p_recoSelectedMuonMatching->GetXaxis()->SetBinLabel(5, "Both muons from muons");
 
+    TProfile* p_leadingMuonIso            {new TProfile ("p_leadingMuonIso", "Leading muon iso cuts", 8, 0.5, 8.5, "ymax = 1.0")};
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(1, "PF Iso Very Loose");
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(2, "PF Iso Loose");
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(3, "PF Iso Medium");
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(4, "PF Iso Tight");
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(5, "PF Iso Very Tight");
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(6, "PF Iso Very Very Tight");
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(7, "Tk Iso Loose");
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(8, "Tk Iso Tight");
+
+    TProfile* p_subleadingMuonIso         {new TProfile ("p_subleadingMuonIso", "Subleading muon iso cuts", 8, 0.5, 8.5, "ymax = 1.0")};
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(1, "PF Iso Very Loose");
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(2, "PF Iso Loose");
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(3, "PF Iso Medium");
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(4, "PF Iso Tight");
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(5, "PF Iso Very Tight");
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(6, "PF Iso Very Very Tight");
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(7, "Tk Iso Loose");
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(8, "Tk Iso Tight");
+
     TH1F* h_recoGenDimuonDeltaR        {new TH1F("h_recoGenDimuonDeltaR",     "Dimuon recoGen deltaR", 500, 0., 10.)};
     TH1F* h_recoGenDimuonMass          {new TH1F("h_recoGenDimuonMass",       "Dimuon recoGen mass", 30, 0., 11.)};
     TH1F* h_recoGenDimuonPt            {new TH1F("h_recoGenDimuonPt",         "Dimuon recoGen Pt",  200, 0., 200)}; 
@@ -127,13 +152,21 @@ int main(int argc, char* argv[]) {
     p_fakeSelected->GetXaxis()->SetBinLabel(7, "2 #mu from #mu in event");
     p_fakeSelected->GetXaxis()->SetBinLabel(8, "2+ #mu from #mu in event");
 
-    TProfile* p_selectedChsMatching {new TProfile ("p_selectedChsMatching", "Ancestry of chs cands matched to jets", 6, 0.5, 6.5, "ymax = 1.0")};
-    p_selectedChsMatching->GetXaxis()->SetBinLabel(1, "Both jets genuine");
-    p_selectedChsMatching->GetXaxis()->SetBinLabel(2, "Leading jet genuine, subleading fake");
-    p_selectedChsMatching->GetXaxis()->SetBinLabel(3, "Subleading jet genuine, leading fake");
-    p_selectedChsMatching->GetXaxis()->SetBinLabel(4, "Both jets fake");
-    p_selectedChsMatching->GetXaxis()->SetBinLabel(5, "Leading jet genuine");
-    p_selectedChsMatching->GetXaxis()->SetBinLabel(6, "Subleading jet genuine");
+    TProfile* p_selectedChsJetsMatching {new TProfile ("p_selectedChsJetsMatching", "Ancestry of chs cands matched to jets", 6, 0.5, 6.5, "ymax = 1.0")};
+    p_selectedChsJetsMatching->GetXaxis()->SetBinLabel(1, "Both jets genuine");
+    p_selectedChsJetsMatching->GetXaxis()->SetBinLabel(2, "Leading jet genuine, subleading fake");
+    p_selectedChsJetsMatching->GetXaxis()->SetBinLabel(3, "Subleading jet genuine, leading fake");
+    p_selectedChsJetsMatching->GetXaxis()->SetBinLabel(4, "Both jets fake");
+    p_selectedChsJetsMatching->GetXaxis()->SetBinLabel(5, "Leading jet genuine");
+    p_selectedChsJetsMatching->GetXaxis()->SetBinLabel(6, "Subleading jet genuine");
+
+    TProfile* p_selectedChsLeptonsMatching {new TProfile ("p_selectedChsLeptonsMatching", "Ancestry of chs cands matched to leptons", 6, 0.5, 6.5, "ymax = 1.0")};
+    p_selectedChsLeptonsMatching->GetXaxis()->SetBinLabel(1, "Both leptons genuine");
+    p_selectedChsLeptonsMatching->GetXaxis()->SetBinLabel(2, "Leading lepton genuine, subleading fake");
+    p_selectedChsLeptonsMatching->GetXaxis()->SetBinLabel(3, "Subleading lepton genuine, leading fake");
+    p_selectedChsLeptonsMatching->GetXaxis()->SetBinLabel(4, "Both leptons fake");
+    p_selectedChsLeptonsMatching->GetXaxis()->SetBinLabel(5, "Leading lepton genuine");
+    p_selectedChsLeptonsMatching->GetXaxis()->SetBinLabel(6, "Subleading lepton genuine");
 
     TH1F* h_chsDeltaR               {new TH1F("h_chsDeltaR",          "#DeltaR between chs from scalars", 500, 0., 10.)};
     TH1F* h_chsGenDeltaR            {new TH1F("h_chsGenDeltaR",       "#DeltaR between genuine chs from scalars", 500, 0., 10.)};
@@ -220,12 +253,10 @@ int main(int argc, char* argv[]) {
         "2018", po::bool_switch(&is2018_), "Use 2018 conditions (SFs, et al.).");
     po::variables_map vm;
 
-    try
-    {
+    try {
         po::store(po::parse_command_line(argc, argv, desc), vm);
 
-        if (vm.count("help"))
-        {
+        if (vm.count("help")) {
             std::cout << desc;
             return 0;
         }
@@ -239,8 +270,7 @@ int main(int argc, char* argv[]) {
                 " one or none!");
         }
     }
-    catch (po::error& e)
-    {
+    catch (po::error& e) {
         std::cerr << "ERROR: " << e.what() << std::endl;
         return 1;
     }
@@ -248,15 +278,13 @@ int main(int argc, char* argv[]) {
     // Some vectors that will be filled in the parsing
     totalLumi = 0;
 
-    try
-    {
+    try {
         Parser::parse_config(config,
                              datasets,
                              totalLumi,
                              usePostLepTree);
     }
-    catch (const std::exception)
-    {
+    catch (const std::exception) {
         std::cerr << "ERROR Problem with a confugration file, see previous "
                      "errors for more details. If this is the only error, the "
                      "problem is with the main configuration file."
@@ -265,9 +293,8 @@ int main(int argc, char* argv[]) {
     }
 
     if (totalLumi == 0.)
-    {
         totalLumi = usePreLumi;
-    }
+
     std::cout << "Using lumi: " << totalLumi << std::endl;
 
     bool datasetFilled{false};
@@ -280,8 +307,7 @@ int main(int argc, char* argv[]) {
 //    const std::string postLepSelSkimInputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "/"};
 
     // Begin to loop over all datasets
-    for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset)
-    {
+    for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset) {
         datasetFilled = false;
         TChain* datasetChain{new TChain{dataset->treeName().c_str()}};
         datasetChain->SetAutoSave(0);
@@ -442,12 +468,16 @@ int main(int argc, char* argv[]) {
  
             unsigned int nScalarJets {0};
             for ( Int_t k = 0; k < event.numJetPF2PAT; k++ ) {
-                if ( event.genJetPF2PATScalarAncestor[k] == 1 ) nScalarJets++;
+                if ( event.genJetPF2PATScalarAncestor[k] == 1 && event.jetPF2PATJetCharge[k] != 0 ) nScalarJets++;
+//                if ( event.genJetPF2PATScalarAncestor[k] == 1 && (std::abs(event.genJetPF2PATPID[k]) == 211 || std::abs(event.genJetPF2PATPID[k]) == 321) ) nScalarJets++;
+            }
+
+            unsigned int nScalarLeptons {0};
+            for ( Int_t k = 0; k < event.numMuonPF2PAT; k++ ) {
             }
 
             event.muonIndexLoose = getLooseMuons(event);
             std::vector<int> chsIndex = getChargedHadronTracks(event);
-            getDihadronCand(event, chsIndex);
 
             if ( event.muonIndexLoose.size() < 2 ) continue;
 
@@ -477,8 +507,29 @@ int main(int argc, char* argv[]) {
             p_recoSelectedMuonMatching->Fill( 5.0, bool (muonFromMuon1 && muonFromMuon2) );
 
             // Look at loose muons that are matched to MC truth only
-            if ( !getDileptonCand( event, event.muonIndexLoose, true ) ) continue;
+//            if ( !getDileptonCand( event, event.muonIndexLoose, true ) ) continue;
+/*
+            bool leadingVeryVeryTightIso {event.muonPF2PATComRelIsodBeta[event.zPairIndex.first] < 0.05 ? true : false};
+            bool subleadingVeryVeryTightIso {event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] < 0.05 ? true : false};
 
+            p_leadingMuonIso->Fill( 1.0, event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first] );
+            p_leadingMuonIso->Fill( 2.0, event.muonPF2PATPfIsoLoose[event.zPairIndex.first] );
+            p_leadingMuonIso->Fill( 3.0, event.muonPF2PATPfIsoMedium[event.zPairIndex.first] );
+            p_leadingMuonIso->Fill( 4.0, event.muonPF2PATPfIsoTight[event.zPairIndex.first] );
+            p_leadingMuonIso->Fill( 5.0, event.muonPF2PATPfIsoVeryTight[event.zPairIndex.first] );
+            p_leadingMuonIso->Fill( 6.0, int(leadingVeryVeryTightIso) );
+            p_leadingMuonIso->Fill( 7.0, event.muonPF2PATTkIsoLoose[event.zPairIndex.first] );
+            p_leadingMuonIso->Fill( 8.0, event.muonPF2PATTkIsoTight[event.zPairIndex.first] );
+
+            p_subleadingMuonIso->Fill( 1.0, event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.second] );
+            p_subleadingMuonIso->Fill( 2.0, event.muonPF2PATPfIsoLoose[event.zPairIndex.second] );
+            p_subleadingMuonIso->Fill( 3.0, event.muonPF2PATPfIsoMedium[event.zPairIndex.second] );
+            p_subleadingMuonIso->Fill( 4.0, event.muonPF2PATPfIsoTight[event.zPairIndex.second] );
+            p_subleadingMuonIso->Fill( 5.0, event.muonPF2PATPfIsoVeryTight[event.zPairIndex.second] );
+            p_subleadingMuonIso->Fill( 6.0, int(subleadingVeryVeryTightIso) );
+            p_subleadingMuonIso->Fill( 7.0, event.muonPF2PATTkIsoLoose[event.zPairIndex.second] );
+            p_subleadingMuonIso->Fill( 8.0, event.muonPF2PATTkIsoTight[event.zPairIndex.second] );
+*/
             h_recoGenDimuonDeltaR->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second));
             h_recoGenDimuonMass->Fill( (event.zPairLeptons.first + event.zPairLeptons.second).M() );
             h_recoGenDimuonPt->Fill( (event.zPairLeptons.first + event.zPairLeptons.second).Pt() );
@@ -503,6 +554,7 @@ int main(int argc, char* argv[]) {
             }
 
             if ( chsIndex.size() < 2 ) continue;
+            if (!getDihadronCand(event, chsIndex)) continue;
 
             if ( nScalarJets > 1 ) {
                 const int idx1 {event.chsPairIndex.first}, idx2 {event.chsPairIndex.second};
@@ -517,12 +569,12 @@ int main(int argc, char* argv[]) {
 
                 const float chsDeltaR {event.chsPairVec.first.DeltaR(event.chsPairVec.second)}, jetDeltaR {jet1.DeltaR(jet2)};
 
-                p_selectedChsMatching->Fill( 1.0, bool (jetFromScalar1 && jetFromScalar2) );
-                p_selectedChsMatching->Fill( 2.0, bool (jetFromScalar1 && !jetFromScalar2) );
-                p_selectedChsMatching->Fill( 3.0, bool (!jetFromScalar1 && jetFromScalar2) );
-                p_selectedChsMatching->Fill( 4.0, bool (!jetFromScalar1 && !jetFromScalar2) );
-                p_selectedChsMatching->Fill( 5.0, bool (jetFromScalar1) );
-                p_selectedChsMatching->Fill( 6.0, bool (jetFromScalar2) );
+                p_selectedChsJetsMatching->Fill( 1.0, bool (jetFromScalar1 && jetFromScalar2) );
+                p_selectedChsJetsMatching->Fill( 2.0, bool (jetFromScalar1 && !jetFromScalar2) );
+                p_selectedChsJetsMatching->Fill( 3.0, bool (!jetFromScalar1 && jetFromScalar2) );
+                p_selectedChsJetsMatching->Fill( 4.0, bool (!jetFromScalar1 && !jetFromScalar2) );
+                p_selectedChsJetsMatching->Fill( 5.0, bool (jetFromScalar1) );
+                p_selectedChsJetsMatching->Fill( 6.0, bool (jetFromScalar2) );
 
                 h_chsDeltaR->Fill(chsDeltaR);
                 h_chsJetDeltaR->Fill(jetDeltaR);
@@ -669,6 +721,9 @@ int main(int argc, char* argv[]) {
     p_numPromptMuons->Write();
     p_recoSelectedMuonMatching->Write();
 
+    p_leadingMuonIso->Write();
+    p_subleadingMuonIso->Write();
+
     h_recoGenDimuonDeltaR->Write();
     h_recoGenDimuonMass->Write();
     h_recoGenDimuonPt->Write();
@@ -678,7 +733,8 @@ int main(int argc, char* argv[]) {
 
     p_fakeSelected->Write();
 
-    p_selectedChsMatching->Write();
+    p_selectedChsJetsMatching->Write();
+    p_selectedChsLeptonsMatching->Write();
 
     h_chsDeltaR->Write();
     h_chsGenDeltaR->Write();
@@ -718,7 +774,6 @@ std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) {
         if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
         if (event.packedCandsCharge[k] == 0 ) continue;
         if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
-//        if (mcTruth_ && !event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[k]]) continue;
         chs.emplace_back(k);
     }
 
@@ -727,7 +782,6 @@ std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) {
 
 
 bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool mcTruth) {
-    double maxDeltaR {0.4};
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
 
@@ -737,7 +791,7 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
             TLorentzVector lepton1{event.muonPF2PATPX[i], event.muonPF2PATPY[i], event.muonPF2PATPZ[i], event.muonPF2PATE[i]};
             TLorentzVector lepton2{event.muonPF2PATPX[j], event.muonPF2PATPY[j], event.muonPF2PATPZ[j], event.muonPF2PATE[j]};
             double delR { lepton1.DeltaR(lepton2) };
-            if ( delR < maxDeltaR  ) {
+            if ( delR < maxDileptonDeltaR_  ) {
                 event.zPairLeptons.first  = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
                 event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
                 event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[i] : muons[j];
@@ -753,7 +807,6 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
 
 bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chsIndex ) {
 
-    double maxDeltaR {10.0};
     for ( unsigned int i{0}; i < chsIndex.size(); i++ ) {
 
         if ( event.packedCandsMuonIndex[i] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
@@ -768,7 +821,8 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chsIndex ) {
             TLorentzVector chs1 {event.packedCandsPx[i], event.packedCandsPy[i], event.packedCandsPz[i], event.packedCandsE[i]};
             TLorentzVector chs2 {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
             double delR { chs1.DeltaR(chs2) };
-            if ( delR < maxDeltaR  ) {
+            double higgsMass { (chs1+chs2+event.zPairLeptons.first+event.zPairLeptons.second).M() };
+            if ( delR < maxChsDeltaR_  && (higgsMass - 125.) < higgsTolerence_ ) {
                 event.chsPairVec.first  = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
                 event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
                 event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chsIndex[i] : chsIndex[j];

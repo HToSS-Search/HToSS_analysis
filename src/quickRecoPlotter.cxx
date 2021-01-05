@@ -33,10 +33,12 @@
 #include <vector>
 #include <map>
 
-std::vector<int> getLooseMuons(const AnalysisEvent& event, const bool& mcTruth);
+std::vector<int> getLooseMuons(const AnalysisEvent& event);
 std::vector<int> getPromptMuons(const AnalysisEvent& event, const std::vector<int>& muonIndex, const bool getPrompt );
-bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons);
-bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs);
+std::vector<int> getChargedHadronTracks(const AnalysisEvent& event);
+
+bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool mcTruth = false);
+bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chsIndex);
 int getMuonTrackPairIndex(const AnalysisEvent& event);
 int getChsTrackPairIndex(const AnalysisEvent& event);
 bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
@@ -46,9 +48,11 @@ namespace fs = boost::filesystem;
 
 // Lepton cut variables
 const float looseMuonEta_ {2.8}, looseMuonPt_ {6.}, looseMuonPtLeading_ {15.}, looseMuonRelIso_ {100.};
-//const float looseMuonEta_ {2.8}, looseMuonPt_ {0.}, looseMuonPtLeading_ {0.}, looseMuonRelIso_ {100.};
-const float invZMassCut_ {10.0};
-const float chsMass_{0.13957018};
+const float invZMassCut_ {10.0}, chsMass_{0.13957018};
+
+// Diparticle cuts
+double maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4};
+double higgsTolerence_ {10.};
 
 int main(int argc, char* argv[]) {
     auto timerStart = std::chrono::high_resolution_clock::now(); 
@@ -292,7 +296,7 @@ int main(int argc, char* argv[]) {
             }
 
             // Get muons
-            std::vector<int> looseMuonIndex = getLooseMuons(event, mcTruth_);
+            std::vector<int> looseMuonIndex = getLooseMuons(event);
 
             if ( looseMuonIndex.size() < 2 ) continue;
 
@@ -329,19 +333,10 @@ int main(int argc, char* argv[]) {
             TLorentzVector muon2VecNew{event.packedCandsPseudoTrkPx[idx2], event.packedCandsPseudoTrkPy[idx2], event.packedCandsPseudoTrkPz[idx2], event.packedCandsE[idx2]};
 
             // Get CHS
-            std::vector<int> chsIndex;
-            for (Int_t k = 0; k < event.numPackedCands; k++) {
-                if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
-                if (event.packedCandsCharge[k] == 0 ) continue;
-                if ( std::abs(event.packedCandsPdgId[k]) != 211 ) continue;
-                if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
-//                if (mcTruth_ && !event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[k]]) continue;
-                chsIndex.emplace_back(k);
-            }
 
+            std::vector<int> chsIndex = getChargedHadronTracks(event);
             if ( chsIndex.size() < 2 ) continue;
-
-            getDihadronCand( event, chsIndex );
+            if (!getDihadronCand(event, chsIndex)) continue;
 
             const TLorentzVector chs1Vec{event.chsPairVec.first}, chs2Vec{event.chsPairVec.second};
 
@@ -526,10 +521,9 @@ int main(int argc, char* argv[]) {
     std::cout << "\nFinished. Took " << duration.count() << " seconds" <<std::endl;
 }
 
-std::vector<int> getLooseMuons(const AnalysisEvent& event, const bool& mcTruth) {
+std::vector<int> getLooseMuons(const AnalysisEvent& event) {
     std::vector<int> muons;
     for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-       if ( mcTruth && event.genMuonPF2PATMotherId[i] != 9000006 ) continue;
        if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] /*&& event.muonPF2PATPfIsoLoose[i]*/ && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
            if (event.muonPF2PATPt[i] >= (muons.empty() ? looseMuonPtLeading_ : looseMuonPt_)) muons.emplace_back(i);
         }
@@ -545,90 +539,75 @@ std::vector<int> getPromptMuons(const AnalysisEvent& event, const std::vector<in
     return muons;
 }
 
-bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) {
+std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) {
+    std::vector<int> chs;
+    for (Int_t k = 0; k < event.numPackedCands; k++) {
+        if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
+        if (event.packedCandsCharge[k] == 0 ) continue;
+        if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
+        chs.emplace_back(k);
+    }
 
-    if (muons.size() > 1) {
-        int idx1 {-1}, idx2 {-1};
-        float pt1 {-1}, pt2 {-1};
+    return chs;
+}
 
-        for ( unsigned int i{0}; i < muons.size(); i++ ) {
-            if ( event.muonPF2PATCharge[i] == 0 ) continue;
-            if ( event.muonPF2PATPt[i] > pt1 ) {
-                idx1 = i;
-                pt1 = event.muonPF2PATPt[i];
-           }
-	}
-	for ( unsigned int j{0}; j < muons.size(); j++ ) {
-            if ( idx1 == j ) continue; // exclude highest pT track already found
-            if ( event.muonPF2PATCharge[j] != -event.muonPF2PATCharge[idx1] ) continue;
-            if ( event.muonPF2PATPt[j] > pt2 ) {
-                idx2 = j;
-                pt2 = event.muonPF2PATPt[j];
+bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool mcTruth) {
+    for ( unsigned int i{0}; i < muons.size(); i++ ) {
+        for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
+
+            if (event.muonPF2PATCharge[i] * event.muonPF2PATCharge[j] >= 0) continue;
+            if ( mcTruth && event.genMuonPF2PATMotherId[i] == 9000006 && event.genMuonPF2PATMotherId[j] == 9000006) continue;
+
+            TLorentzVector lepton1{event.muonPF2PATPX[i], event.muonPF2PATPY[i], event.muonPF2PATPZ[i], event.muonPF2PATE[i]};
+            TLorentzVector lepton2{event.muonPF2PATPX[j], event.muonPF2PATPY[j], event.muonPF2PATPZ[j], event.muonPF2PATE[j]};
+            double delR { lepton1.DeltaR(lepton2) };
+            if ( delR < maxDileptonDeltaR_  ) {
+                event.zPairLeptons.first  = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
+                event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
+                event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[i] : muons[j];
+                event.zPairIndex.second  = lepton1.Pt() > lepton2.Pt() ? muons[j] : muons[i];
+                event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
+                event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
+                return true;
             }
-  	}
-
-        if ( idx1 < 0 || idx2 < 0 ) return false;
- 
-        event.zPairLeptons.first  = TLorentzVector {event.muonPF2PATPX[idx1], event.muonPF2PATPY[idx1], event.muonPF2PATPZ[idx1], event.muonPF2PATE[idx1]};
-        event.zPairLeptons.second = TLorentzVector {event.muonPF2PATPX[idx2], event.muonPF2PATPY[idx2], event.muonPF2PATPZ[idx2], event.muonPF2PATE[idx2]};
-
-        event.zPairIndex.first  = idx1;
-        event.zPairIndex.second = idx2;
-
-        event.zPairRelIso.first = event.muonPF2PATComRelIsodBeta[idx1];
-        event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[idx2];
-
-        event.mumuTrkIndex = getMuonTrackPairIndex(event);
-
-        event.zPairLeptonsRefitted.first  = TLorentzVector{event.muonTkPairPF2PATTk1Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
-        event.zPairLeptonsRefitted.second = TLorentzVector{event.muonTkPairPF2PATTk2Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
-
-        return true;
+	}
     }
     return false;
 }
 
-bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) {
 
-    if (chs.size() > 1) {
+bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chsIndex ) {
 
-        int idx1 {-1}, idx2 {-1};
-        float pt1 {-1}, pt2 {-1};
-        for ( unsigned int i{0}; i < chs.size(); i++ ) {
-            if ( event.packedCandsCharge[i] == 0 ) continue;
-            if ( std::abs(event.packedCandsPdgId[i]) != 211 ) continue;
-            if ( event.packedCandsPseudoTrkPt[i] > pt1 ) {
-                idx1 = i;
-                pt1 = event.packedCandsPseudoTrkPt[i];
-           }
-        }
-        for ( unsigned int j{0}; j < chs.size(); j++ ) {
-            if ( idx1 == j ) continue;
-            if ( event.packedCandsCharge[j] != -event.packedCandsCharge[idx1] ) continue;
-            if ( std::abs(event.packedCandsPdgId[j]) != 211 ) continue;
-            if ( event.packedCandsPseudoTrkPt[j] > pt2 ) {
-                idx2 = j;
-                pt2 = event.packedCandsPseudoTrkPt[j];
+    for ( unsigned int i{0}; i < chsIndex.size(); i++ ) {
+
+        if ( event.packedCandsMuonIndex[i] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
+        if ( event.packedCandsMuonIndex[i] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
+
+        for ( unsigned int j{i+1}; j < chsIndex.size(); j++ ) {
+        if ( event.packedCandsMuonIndex[j] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
+        if ( event.packedCandsMuonIndex[j] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
+
+            if ( std::abs(event.packedCandsPdgId[i]) != 211 || std::abs(event.packedCandsPdgId[j]) != 211 ) continue;
+            if (event.packedCandsCharge[i] * event.packedCandsCharge[j] >= 0) continue;
+            TLorentzVector chs1 {event.packedCandsPx[i], event.packedCandsPy[i], event.packedCandsPz[i], event.packedCandsE[i]};
+            TLorentzVector chs2 {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
+            double delR { chs1.DeltaR(chs2) };
+            double higgsMass { (chs1+chs2+event.zPairLeptons.first+event.zPairLeptons.second).M() };
+            if ( delR < maxChsDeltaR_  && (higgsMass - 125.) < higgsTolerence_ ) {
+                event.chsPairVec.first  = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
+                event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
+                event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chsIndex[i] : chsIndex[j];
+                event.chsPairIndex.second = chs1.Pt() > chs2.Pt() ? chsIndex[j] : chsIndex[i];
+
+                event.chsPairTrkIndex = getChsTrackPairIndex(event);
+
+                event.chsPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex], event.chsTkPairTk1Py[event.chsPairTrkIndex], event.chsTkPairTk1Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
+                event.chsPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex], event.chsTkPairTk2Py[event.chsPairTrkIndex], event.chsTkPairTk2Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
+
+                return true;
             }
-        }
-
-        if ( idx1 < 0 || idx2 < 0 ) return false;
-
-        event.chsPairVec.first  = TLorentzVector {event.packedCandsPseudoTrkPx[idx1],event.packedCandsPseudoTrkPy[idx1],event.packedCandsPseudoTrkPz[idx1],event.packedCandsE[idx1]};
-        event.chsPairVec.second = TLorentzVector {event.packedCandsPseudoTrkPx[idx2],event.packedCandsPseudoTrkPy[idx2],event.packedCandsPseudoTrkPz[idx2],event.packedCandsE[idx2]};
-
-        event.chsPairIndex.first = idx1;
-        event.chsPairIndex.second = idx2;
-
-        event.chsPairTrkIndex = getChsTrackPairIndex(event);
-
-        event.chsPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex],event.chsTkPairTk1Py[event.chsPairTrkIndex],event.chsTkPairTk1Pz[event.chsPairTrkIndex],std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
-        event.chsPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex],event.chsTkPairTk2Py[event.chsPairTrkIndex],event.chsTkPairTk2Pz[event.chsPairTrkIndex],std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
-
-        return true;
-
+	}
     }
-
     return false;
 }
 
@@ -643,9 +622,7 @@ int getMuonTrackPairIndex(const AnalysisEvent& event) {
 
 int getChsTrackPairIndex(const AnalysisEvent& event) {
     for (int i{0}; i < event.numChsTrackPairs; i++) {
-        if (event.chsTkPairIndex1[i] != event.chsPairIndex.first) continue;
-        if (event.chsTkPairIndex2[i] != event.chsPairIndex.second) continue;
-        return i;
+        if (event.chsTkPairIndex1[i] == event.chsPairIndex.first && event.chsTkPairIndex2[i] == event.chsPairIndex.second) return i;
     }
     return -1;
 }
