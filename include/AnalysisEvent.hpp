@@ -127,6 +127,9 @@ class AnalysisEvent
     Int_t genElePF2PATPromptDecayed[NELECTRONSMAX];
     Int_t genElePF2PATPromptFinalState[NELECTRONSMAX];
     Int_t genElePF2PATHardProcess[NELECTRONSMAX];
+    Int_t genElePF2PATPythiaSixStatusThree[NELECTRONSMAX];
+    Int_t genElePF2PATScalarAncestor[NELECTRONSMAX];
+    Int_t genElePF2PATDirectScalarAncestor[NELECTRONSMAX];
 
     static constexpr size_t NMUONSMAX{20};
     Int_t numMuonPF2PAT;
@@ -212,6 +215,9 @@ class AnalysisEvent
     Int_t genMuonPF2PATPromptDecayed[NMUONSMAX];
     Int_t genMuonPF2PATPromptFinalState[NMUONSMAX];
     Int_t genMuonPF2PATHardProcess[NMUONSMAX];
+    Int_t genMuonPF2PATPythiaSixStatusThree[NMUONSMAX];
+    Int_t genMuonPF2PATScalarAncestor[NMUONSMAX];
+    Int_t genMuonPF2PATDirectScalarAncestor[NMUONSMAX];
 
     static constexpr size_t NMUONTKPAIRMAX{100};	
     Int_t   numMuonTrackPairsPF2PAT;	
@@ -1341,6 +1347,9 @@ class AnalysisEvent
     TBranch* b_genElePF2PATPromptDecayed; //!
     TBranch* b_genElePF2PATPromptFinalState; //!
     TBranch* b_genElePF2PATHardProcess; //!
+    TBranch* b_genElePF2PATPythiaSixStatusThree; //!  
+    TBranch* b_genElePF2PATScalarAncestor; //!  ;
+    TBranch* b_genElePF2PATDirectScalarAncestor; //!  
     TBranch* b_numMuonPF2PAT; //!
     TBranch* b_muonPF2PATE; //!
     TBranch* b_muonPF2PATET; //!
@@ -1424,6 +1433,9 @@ class AnalysisEvent
     TBranch* b_genMuonPF2PATPromptDecayed; //!
     TBranch* b_genMuonPF2PATPromptFinalState; //!
     TBranch* b_genMuonPF2PATHardProcess; //!
+    TBranch* b_genMuonPF2PATPythiaSixStatusThree; //!   
+    TBranch* b_genMuonPF2PATScalarAncestor; //!  ;   
+    TBranch* b_genMuonPF2PATDirectScalarAncestor; //!   
     TBranch* b_numMuonTrackPairsPF2PAT; //!	
     TBranch* b_muonTkPairPF2PATIndex1; //!	
     TBranch* b_muonTkPairPF2PATIndex2; //!	
@@ -2626,6 +2638,9 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
        fChain->SetBranchAddress("genElePF2PATPromptDecayed", genElePF2PATPromptDecayed, &b_genElePF2PATPromptDecayed);
        fChain->SetBranchAddress("genElePF2PATPromptFinalState", genElePF2PATPromptFinalState, &b_genElePF2PATPromptFinalState);
        fChain->SetBranchAddress("genElePF2PATHardProcess", genElePF2PATHardProcess, &b_genElePF2PATHardProcess);
+       fChain->SetBranchAddress("genElePF2PATPythiaSixStatusThree", genElePF2PATPythiaSixStatusThree, &b_genElePF2PATPythiaSixStatusThree);
+       fChain->SetBranchAddress("genElePF2PATScalarAncestor", genElePF2PATScalarAncestor, &b_genElePF2PATScalarAncestor);
+       fChain->SetBranchAddress("genElePF2PATDirectScalarAncestor", genElePF2PATDirectScalarAncestor, &b_genElePF2PATDirectScalarAncestor);
    }
    fChain->SetBranchAddress("numMuonPF2PAT", &numMuonPF2PAT, &b_numMuonPF2PAT);
    fChain->SetBranchAddress("muonPF2PATE", muonPF2PATE, &b_muonPF2PATE);
@@ -2715,6 +2730,9 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
        fChain->SetBranchAddress("genMuonPF2PATPromptDecayed", genMuonPF2PATPromptDecayed, &b_genMuonPF2PATPromptDecayed);
        fChain->SetBranchAddress("genMuonPF2PATPromptFinalState", genMuonPF2PATPromptFinalState, &b_genMuonPF2PATPromptFinalState);
        fChain->SetBranchAddress("genMuonPF2PATHardProcess", genMuonPF2PATHardProcess, &b_genMuonPF2PATHardProcess);
+       fChain->SetBranchAddress("genMuonPF2PATPythiaSixStatusThree", genMuonPF2PATPythiaSixStatusThree, &b_genMuonPF2PATPythiaSixStatusThree);
+       fChain->SetBranchAddress("genMuonPF2PATScalarAncestor", genMuonPF2PATScalarAncestor, &b_genMuonPF2PATScalarAncestor);
+       fChain->SetBranchAddress("genMuonPF2PATDirectScalarAncestor", genMuonPF2PATDirectScalarAncestor, &b_genMuonPF2PATDirectScalarAncestor);
    }
    fChain->SetBranchAddress("numMuonTrackPairsPF2PAT", &numMuonTrackPairsPF2PAT, &b_numMuonTrackPairsPF2PAT);	
    fChain->SetBranchAddress("muonTkPairPF2PATIndex1", muonTkPairPF2PATIndex1, &b_muonTkPairPF2PATIndex1); 	
