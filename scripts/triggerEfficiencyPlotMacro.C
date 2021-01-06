@@ -667,7 +667,7 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_muTrigDelR->Modified();
     Cavnas_muTrigDelR->cd();
     Cavnas_muTrigDelR->SetSelected(Cavnas_muTrigDelR);
-    Cavnas_muTrigDelR->SaveAs( "muTrig_pT_eff.pdf" );
+    Cavnas_muTrigDelR->SaveAs( "muTrig_DelR_eff.pdf" );
 
     //
 
@@ -776,7 +776,7 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_mumuTrigDelR->Modified();
     Cavnas_mumuTrigDelR->cd();
     Cavnas_mumuTrigDelR->SetSelected(Cavnas_mumuTrigDelR);
-    Cavnas_mumuTrigDelR->SaveAs( "mumuTrig_pT_eff.pdf" );
+    Cavnas_mumuTrigDelR->SaveAs( "mumuTrig_DelR_eff.pdf" );
 
     TH1F* h_delR_L2muTrigDelR_ctau0    = (TH1F*)inFile0->Get("h_delR_L2muTrig");
     TH1F* h_delR_L2muTrigDelR_ctau1    = (TH1F*)inFile1->Get("h_delR_L2muTrig");
@@ -883,7 +883,7 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_L2muTrigDelR->Modified();
     Cavnas_L2muTrigDelR->cd();
     Cavnas_L2muTrigDelR->SetSelected(Cavnas_L2muTrigDelR);
-    Cavnas_L2muTrigDelR->SaveAs( "L2muTrig_pT_eff.pdf" );
+    Cavnas_L2muTrigDelR->SaveAs( "L2muTrig_DelR_eff.pdf" );
 
     TH1F* h_delR_muOrMumuTrigDelR_ctau0    = (TH1F*)inFile0->Get("h_delR_muOrMumuTrig");
     TH1F* h_delR_muOrMumuTrigDelR_ctau1    = (TH1F*)inFile1->Get("h_delR_muOrMumuTrig");
@@ -990,7 +990,7 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_muOrMumuTrigDelR->Modified();
     Cavnas_muOrMumuTrigDelR->cd();
     Cavnas_muOrMumuTrigDelR->SetSelected(Cavnas_muOrMumuTrigDelR);
-    Cavnas_muOrMumuTrigDelR->SaveAs( "muOrMumuTrig_pT_eff.pdf" );
+    Cavnas_muOrMumuTrigDelR->SaveAs( "muOrMumuTrig_DelR_eff.pdf" );
 
     TH1F* h_delR_ORTrigDelR_ctau0    = (TH1F*)inFile0->Get("h_delR_ORTrig");
     TH1F* h_delR_ORTrigDelR_ctau1    = (TH1F*)inFile1->Get("h_delR_ORTrig");
@@ -1097,6 +1097,6 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_ORTrigDelR->Modified();
     Cavnas_ORTrigDelR->cd();
     Cavnas_ORTrigDelR->SetSelected(Cavnas_ORTrigDelR);
-    Cavnas_ORTrigDelR->SaveAs( "ORTrig_pT_eff.pdf" );
+    Cavnas_ORTrigDelR->SaveAs( "ORTrig_DelR_eff.pdf" );
 
 }
