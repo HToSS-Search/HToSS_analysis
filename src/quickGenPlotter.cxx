@@ -96,6 +96,8 @@ int main(int argc, char* argv[]) {
 
     // Reco plots
 
+    TH1F* h_numLooseMuons           {new TH1F("h_numLooseMuons",         "Number of loose muons IDed", 10, -0.5, 9.5)};
+
     TH1F* h_recoDimuonDeltaR        {new TH1F("h_recoDimuonDeltaR",      "Dimuon reco deltaR", 500, 0., 10.)};
     TH1F* h_recoDimuonMass          {new TH1F("h_recoDimuonMass",        "Dimuon reco mass", 30, 0., 11.)};
     TH1F* h_recoDimuonPt            {new TH1F("h_recoDimuonPt",          "Dimuon reco Pt",  200, 0., 200)}; 
@@ -485,6 +487,8 @@ int main(int argc, char* argv[]) {
             event.muonIndexLoose = getLooseMuons(event);
             std::vector<int> chsIndex = getChargedHadronTracks(event);
 
+            h_numLooseMuons->Fill(event.muonIndexLoose.size());
+
             if ( event.muonIndexLoose.size() < 2 ) continue;
 
             if ( !getDileptonCand( event, event.muonIndexLoose ) ) continue;
@@ -727,6 +731,8 @@ int main(int argc, char* argv[]) {
 
     h_genDiscalarDeltaR_mumu_pipi->Write();
     h_genDiscalarDeltaR_mumu_kaonkaon->Write();
+
+    h_numLooseMuons->Write();
 
     h_recoDimuonDeltaR->Write();
     h_recoDimuonMass->Write();
