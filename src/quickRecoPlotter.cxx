@@ -300,7 +300,7 @@ int main(int argc, char* argv[]) {
 
             if ( looseMuonIndex.size() < 2 ) continue;
 
-            getDileptonCand( event, looseMuonIndex);
+            getDileptonCand( event, looseMuonIndex, false);
 
             if ( event.genMuonPF2PATMotherId[event.zPairIndex.first] == 9000006 )  {
                 h_muon1PtGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.first],datasetWeight);
@@ -365,8 +365,8 @@ int main(int argc, char* argv[]) {
 
 ///
 
-            h_scalarDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR( (chs1Vec+chs2Vec) ),datasetWeight );
-            h_scalarMasses->Fill( (muon1Vec+muon2Vec).M(), (chs1Vec+chs2Vec).M(),datasetWeight );
+            h_scalarDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR( (chs1Vec+chs2Vec) ), datasetWeight );
+            h_scalarMasses->Fill( (muon1Vec+muon2Vec).M(), (chs1Vec+chs2Vec).M(), datasetWeight );
             h_scalarMassesNew->Fill( (muon1VecNew+muon2VecNew).M(), (chs1Vec+chs2Vec).M(),datasetWeight );
             h_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
             h_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M(),datasetWeight );

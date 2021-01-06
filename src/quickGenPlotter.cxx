@@ -103,17 +103,23 @@ int main(int argc, char* argv[]) {
     TH1F* h_recoLeadingMuonPt       {new TH1F("h_recoLeadingMuonPt",     "Leading generator muon", 300, 0., 150.)};
     TH1F* h_recoSubleadingMuonPt    {new TH1F("h_recoSubleadingMuonPt",  "Subleading generator muon", 300, 0., 150.)};
 
-    TProfile* p_numPromptMuons            {new TProfile ("p_numPromptMuons", "Muon flags for selected reco muons", 3, 0.5, 3.5, "ymax = 1.0")};
+    TProfile* p_numPromptMuons            {new TProfile ("p_numPromptMuons", "Muon flags for selected reco muons", 6, 0.5, 6.5, "ymax = 1.0")};
     p_numPromptMuons->GetXaxis()->SetBinLabel(1, "Prompt Decayed");
     p_numPromptMuons->GetXaxis()->SetBinLabel(2, "Prompt Final State");
     p_numPromptMuons->GetXaxis()->SetBinLabel(3, "Hard Process");
+    p_numPromptMuons->GetXaxis()->SetBinLabel(4, "Likely Pythia6 Status 3");
+    p_numPromptMuons->GetXaxis()->SetBinLabel(5, "ScalarAncestor");
+    p_numPromptMuons->GetXaxis()->SetBinLabel(6, "DirectScalarAncestor");
 
-    TProfile* p_recoSelectedMuonMatching  {new TProfile ("p_recoSelectedMuonMatching", "Selected leading/subleading reco muon ancestry", 5, 0.5, 5.5, "ymax = 1.0")};
+    TProfile* p_recoSelectedMuonMatching  {new TProfile ("p_recoSelectedMuonMatching", "Selected leading/subleading reco muon ancestry", 8, 0.5, 8.5, "ymax = 1.0")};
     p_recoSelectedMuonMatching->GetXaxis()->SetBinLabel(1, "Both muons genuine");
     p_recoSelectedMuonMatching->GetXaxis()->SetBinLabel(2, "Leading muon geunine");
     p_recoSelectedMuonMatching->GetXaxis()->SetBinLabel(3, "Subleading muon genuine");
-    p_recoSelectedMuonMatching->GetXaxis()->SetBinLabel(4, "Both genuine muons fake");
-    p_recoSelectedMuonMatching->GetXaxis()->SetBinLabel(5, "Both muons from muons");
+    p_recoSelectedMuonMatching->GetXaxis()->SetBinLabel(4, "Both muons fake");
+    p_recoSelectedMuonMatching->GetXaxis()->SetBinLabel(5, "Both muons from leptonic scalar decays");  
+    p_recoSelectedMuonMatching->GetXaxis()->SetBinLabel(6, "Leading muon from leptonic scalar decay");  
+    p_recoSelectedMuonMatching->GetXaxis()->SetBinLabel(7, "Subleading muon from leptonic scalar decay");  
+    p_recoSelectedMuonMatching->GetXaxis()->SetBinLabel(8, "Both muons not from leptonic scalar decays");  
 
     TProfile* p_leadingMuonIso            {new TProfile ("p_leadingMuonIso", "Leading muon iso cuts", 8, 0.5, 8.5, "ymax = 1.0")};
     p_leadingMuonIso->GetXaxis()->SetBinLabel(1, "PF Iso Very Loose");
@@ -490,8 +496,10 @@ int main(int argc, char* argv[]) {
             h_recoLeadingMuonPt->Fill( (event.zPairLeptons.first).Pt() );
             h_recoSubleadingMuonPt->Fill( (event.zPairLeptons.second).Pt() );
 
-            const bool genuineRecoMuon1 {std::abs(event.genMuonPF2PATMotherId[event.zPairIndex.first]) == 9000006}, genuineRecoMuon2 {std::abs(event.genMuonPF2PATMotherId[event.zPairIndex.second]) == 9000006};
-            const bool muonFromMuon1  {std::abs(event.genMuonPF2PATMotherId[event.zPairIndex.first]) == 13}, muonFromMuon2 {std::abs(event.genMuonPF2PATMotherId[event.zPairIndex.second]) == 13 };
+            // Add comparison between leptonic and hadronic scalar decayed muons
+
+            const bool muonFromScalar1 {event.genMuonPF2PATScalarAncestor[event.zPairIndex.first]}, muonFromScalar2 {event.genMuonPF2PATScalarAncestor[event.zPairIndex.second]};
+            const bool muonDirectFromScalar1 {event.genMuonPF2PATDirectScalarAncestor[event.zPairIndex.first]}, muonDirectFromScalar2 {event.genMuonPF2PATDirectScalarAncestor[event.zPairIndex.second]};
 
             p_numPromptMuons->Fill( 1.0, event.genMuonPF2PATPromptDecayed[event.zPairIndex.first] );
             p_numPromptMuons->Fill( 1.0, event.genMuonPF2PATPromptDecayed[event.zPairIndex.second] );
@@ -499,12 +507,21 @@ int main(int argc, char* argv[]) {
             p_numPromptMuons->Fill( 2.0, event.genMuonPF2PATPromptFinalState[event.zPairIndex.second] );
             p_numPromptMuons->Fill( 3.0, event.genMuonPF2PATHardProcess[event.zPairIndex.first] );
             p_numPromptMuons->Fill( 3.0, event.genMuonPF2PATHardProcess[event.zPairIndex.second] );
+            p_numPromptMuons->Fill( 4.0, event.genMuonPF2PATPythiaSixStatusThree[event.zPairIndex.first] );
+            p_numPromptMuons->Fill( 4.0, event.genMuonPF2PATPythiaSixStatusThree[event.zPairIndex.second] );
+            p_numPromptMuons->Fill( 5.0, int (muonFromScalar1) );
+            p_numPromptMuons->Fill( 5.0, int (muonFromScalar2) );
+            p_numPromptMuons->Fill( 6.0, int (muonDirectFromScalar1) );
+            p_numPromptMuons->Fill( 6.0, int (muonDirectFromScalar2) );
 
-            p_recoSelectedMuonMatching->Fill( 1.0, bool (genuineRecoMuon1 && genuineRecoMuon2) );
-            p_recoSelectedMuonMatching->Fill( 2.0, bool (genuineRecoMuon1 && !genuineRecoMuon2) );
-            p_recoSelectedMuonMatching->Fill( 3.0, bool (!genuineRecoMuon1 && genuineRecoMuon2) );
-            p_recoSelectedMuonMatching->Fill( 4.0, bool (!genuineRecoMuon1 && !genuineRecoMuon2) );
-            p_recoSelectedMuonMatching->Fill( 5.0, bool (muonFromMuon1 && muonFromMuon2) );
+            p_recoSelectedMuonMatching->Fill( 1.0, bool (muonFromScalar1 && muonFromScalar2) );
+            p_recoSelectedMuonMatching->Fill( 2.0, bool (muonFromScalar1 && !muonFromScalar2) );
+            p_recoSelectedMuonMatching->Fill( 3.0, bool (!muonFromScalar1 && muonFromScalar2) );
+            p_recoSelectedMuonMatching->Fill( 4.0, bool (!muonFromScalar1 && !muonFromScalar2) );
+            p_recoSelectedMuonMatching->Fill( 5.0, bool (muonDirectFromScalar1 && muonDirectFromScalar2) );
+            p_recoSelectedMuonMatching->Fill( 6.0, bool (muonDirectFromScalar1 && !muonDirectFromScalar2) );
+            p_recoSelectedMuonMatching->Fill( 7.0, bool (!muonDirectFromScalar1 && muonDirectFromScalar2) );
+            p_recoSelectedMuonMatching->Fill( 8.0, bool (!muonDirectFromScalar1 && !muonDirectFromScalar2) );
 
             // Look at loose muons that are matched to MC truth only
 //            if ( !getDileptonCand( event, event.muonIndexLoose, true ) ) continue;
@@ -537,7 +554,7 @@ int main(int argc, char* argv[]) {
             h_recoGenLeadingMuonPt->Fill( (event.zPairLeptons.first).Pt() );
             h_recoGenSubleadingMuonPt->Fill( (event.zPairLeptons.second).Pt() );
 
-            if ( !genuineRecoMuon1 && !genuineRecoMuon2 ) {
+            if ( !muonFromScalar1 && !muonFromScalar2 ) {
                 unsigned int nGenuineMuons {0}, nMuonsFromMuons{0};
                 for ( auto it = event.muonIndexLoose.begin(); it != event.muonIndexLoose.end(); it++ ){
                     if ( std::abs(event.genMuonPF2PATMotherId[*it]) == 9000006 ) nGenuineMuons++;
