@@ -4,8 +4,6 @@ outputFolder: "plots/2017/mumu/"
 outputPostfix: "mumu"
 channelName: "mumu"
 datasets:
-# HToSS
-  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS10.yaml"
 # QCD
   - "configs/2017/datasets/QCD/QCD_Pt-15to20_MuEnrichedPt5.yaml"
   - "configs/2017/datasets/QCD/QCD_Pt-20to30_MuEnrichedPt5.yaml"
@@ -66,3 +64,5 @@ datasets:
   - "configs/2017/datasets/VVV/WWZ.yaml"
   - "configs/2017/datasets/VVV/WZZ.yaml"
   - "configs/2017/datasets/VVV/ZZZ.yaml"
+# HToSS
+  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS10.yaml"
