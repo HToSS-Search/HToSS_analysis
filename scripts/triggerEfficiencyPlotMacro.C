@@ -629,7 +629,7 @@ void triggerEfficiencyPlotMacro() {
     h_delR_muTrigDelR_ctau1000->SetMarkerSize(1);
     h_delR_muTrigDelR_ctau1000->Draw("HIST p same");
 
-    TLegend *leg_muTrigDelR = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
+    TLegend *leg_muTrigDelR = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_muTrigDelR->SetBorderSize(0);
     leg_muTrigDelR->SetTextSize(0.03);
     leg_muTrigDelR->SetLineColor(1);
@@ -738,7 +738,7 @@ void triggerEfficiencyPlotMacro() {
     h_delR_mumuTrigDelR_ctau1000->SetMarkerSize(1);
     h_delR_mumuTrigDelR_ctau1000->Draw("HIST p same");
 
-    TLegend *leg_mumuTrigDelR = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
+    TLegend *leg_mumuTrigDelR = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_mumuTrigDelR->SetBorderSize(0);
     leg_mumuTrigDelR->SetTextSize(0.03);
     leg_mumuTrigDelR->SetLineColor(1);
@@ -845,7 +845,7 @@ void triggerEfficiencyPlotMacro() {
     h_delR_L2muTrigDelR_ctau1000->SetMarkerSize(1);
     h_delR_L2muTrigDelR_ctau1000->Draw("HIST p same");
 
-    TLegend *leg_L2muTrigDelR = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
+    TLegend *leg_L2muTrigDelR = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_L2muTrigDelR->SetBorderSize(0);
     leg_L2muTrigDelR->SetTextSize(0.03);
     leg_L2muTrigDelR->SetLineColor(1);
@@ -952,7 +952,7 @@ void triggerEfficiencyPlotMacro() {
     h_delR_muOrMumuTrigDelR_ctau1000->SetMarkerSize(1);
     h_delR_muOrMumuTrigDelR_ctau1000->Draw("HIST p same");
 
-    TLegend *leg_muOrMumuTrigDelR = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
+    TLegend *leg_muOrMumuTrigDelR = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_muOrMumuTrigDelR->SetBorderSize(0);
     leg_muOrMumuTrigDelR->SetTextSize(0.03);
     leg_muOrMumuTrigDelR->SetLineColor(1);
@@ -1059,7 +1059,7 @@ void triggerEfficiencyPlotMacro() {
     h_delR_ORTrigDelR_ctau1000->SetMarkerSize(1);
     h_delR_ORTrigDelR_ctau1000->Draw("HIST p same");
 
-    TLegend *leg_ORTrigDelR = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
+    TLegend *leg_ORTrigDelR = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_ORTrigDelR->SetBorderSize(0);
     leg_ORTrigDelR->SetTextSize(0.03);
     leg_ORTrigDelR->SetLineColor(1);

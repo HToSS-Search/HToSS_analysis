@@ -370,7 +370,7 @@ class AnalysisEvent
     Float_t tauPF2PATPhi[NTAUSMAX];
     Float_t tauPF2PATEta[NTAUSMAX];
 */
-/*
+
     static constexpr size_t NPHOTONSMAX{30};
     Int_t numPhoPF2PAT;
     Float_t phoPF2PATE[NPHOTONSMAX];
@@ -431,7 +431,9 @@ class AnalysisEvent
     Int_t genPhoPF2PATIsPhoton[NPHOTONSMAX];
     Int_t genPhoPF2PATIsConvertedPhoton[NPHOTONSMAX];
     Int_t genPhoPF2PATIsJet[NPHOTONSMAX];
-*/
+    Int_t genPhoPF2PATScalarAncestor[NPHOTONSMAX];
+    Int_t genPhoPF2PATDirectScalarAncestor[NPHOTONSMAX];
+
 /*
     static constexpr size_t NOOTPHOTONSMAX{30};
     Int_t numPhoOOT_PF2PAT;
@@ -1582,7 +1584,6 @@ class AnalysisEvent
     TBranch* b_tauPF2PATPhi; //!
     TBranch* b_tauPF2PATEta; //!
 */
-/*
     TBranch* b_numPhoPF2PAT; //!
     TBranch* b_phoPF2PATE; //!
     TBranch* b_phoPF2PATSigmaE; //!
@@ -1642,7 +1643,8 @@ class AnalysisEvent
     TBranch* b_genPhoPF2PATIsPhoton; //!
     TBranch* b_genPhoPF2PATIsConvertedPhoton; //!
     TBranch* b_genPhoPF2PATIsJet; //!
-*/
+    TBranch* b_genPhoPF2PATScalarAncestor; //!
+    TBranch* b_genPhoPF2PATDirectScalarAncestor; //!
 /*
     TBranch* b_numPhoOOT_PF2PAT; //!
     TBranch* b_phoOOT_PF2PATE; //!
@@ -2897,7 +2899,6 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
    fChain->SetBranchAddress("tauPF2PATPhi", tauPF2PATPhi, &b_tauPF2PATPhi);
    fChain->SetBranchAddress("tauPF2PATEta", tauPF2PATEta, &b_tauPF2PATEta);
 */
-/*
    fChain->SetBranchAddress("numPhoPF2PAT", &numPhoPF2PAT, &b_numPhoPF2PAT);
    fChain->SetBranchAddress("phoPF2PATE", phoPF2PATE, &b_phoPF2PATE);
    fChain->SetBranchAddress("phoPF2PATSigmaE", phoPF2PATSigmaE, &b_phoPF2PATSigmaE);
@@ -2958,8 +2959,9 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
       fChain->SetBranchAddress("genPhoPF2PATIsPhoton", genPhoPF2PATIsPhoton, &b_genPhoPF2PATIsPhoton);
       fChain->SetBranchAddress("genPhoPF2PATIsConvertedPhoton", genPhoPF2PATIsConvertedPhoton, &b_genPhoPF2PATIsConvertedPhoton);
       fChain->SetBranchAddress("genPhoPF2PATIsJet", genPhoPF2PATIsJet, &b_genPhoPF2PATIsJet);
+      fChain->SetBranchAddress("genPhoPF2PATScalarAncestor", genPhoPF2PATScalarAncestor, &b_genPhoPF2PATScalarAncestor);
+      fChain->SetBranchAddress("genPhoPF2PATDirectScalarAncestor", genPhoPF2PATDirectScalarAncestor, &b_genPhoPF2PATDirectScalarAncestor);
    }
-*/
 /*
    fChain->SetBranchAddress("numPhoOOT_PF2PAT", &numPhoOOT_PF2PAT, &b_numPhoOOT_PF2PAT);
    fChain->SetBranchAddress("phoOOT_PF2PATE", phoOOT_PF2PATE, &b_phoOOT_PF2PATE);
