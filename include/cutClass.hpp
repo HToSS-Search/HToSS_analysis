@@ -36,7 +36,7 @@ class Cuts
     [[gnu::pure]] std::vector<int> getLooseMuons(const AnalysisEvent& event) const;
     [[gnu::pure]] std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) const;
     bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) const;
-    bool getDihadronCand(AnalysisEvent& event) const;
+    bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) const;
     double getWbosonQuarksCand(AnalysisEvent& event,
                                const std::vector<int>& jets,
                                const int& syst) const;
@@ -94,9 +94,10 @@ class Cuts
     double looseMuonEta_;
     double looseMuonRelIso_;
 
-    // z and w inv cuts
     double scalarMassCut_;
+    double maxDileptonDeltaR_;
     double chsMass_;
+    double maxChsDeltaR_;
     double higgsMassCut_;
     double invWMassCut_;
 

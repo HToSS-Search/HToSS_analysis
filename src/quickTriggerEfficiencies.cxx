@@ -419,11 +419,11 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
 
-            if (event.muonPF2PATCharge[i] * event.muonPF2PATCharge[j] >= 0) continue;
-            if ( mcTruth && event.genMuonPF2PATMotherId[i] == 9000006 && event.genMuonPF2PATMotherId[j] == 9000006) continue;
+            if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
+            if ( mcTruth && event.genMuonPF2PATMotherId[muons[i]] == 9000006 && event.genMuonPF2PATMotherId[muons[j]] == 9000006) continue;
 
-            TLorentzVector lepton1{event.muonPF2PATPX[i], event.muonPF2PATPY[i], event.muonPF2PATPZ[i], event.muonPF2PATE[i]};
-            TLorentzVector lepton2{event.muonPF2PATPX[j], event.muonPF2PATPY[j], event.muonPF2PATPZ[j], event.muonPF2PATE[j]};
+            TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
+            TLorentzVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
             double delR { lepton1.DeltaR(lepton2) };
             if ( delR < maxDileptonDeltaR_  ) {
                 event.zPairLeptons.first  = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
@@ -434,7 +434,7 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
                 event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
                 return true;
             }
-        }
+	}
     }
     return false;
 }

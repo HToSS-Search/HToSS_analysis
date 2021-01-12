@@ -870,6 +870,7 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
                 event.zPairIndex.second  = lepton1.Pt() > lepton2.Pt() ? muons[j] : muons[i];
                 event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
                 event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
+
                 return true;
             }
         }

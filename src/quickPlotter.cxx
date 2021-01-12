@@ -35,7 +35,7 @@
 
 std::vector<int> getLooseMuons(const AnalysisEvent& event);
 std::vector<int> getPromptMuons(const AnalysisEvent& event, const std::vector<int>& muonIndex, const bool getPrompt );
-bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const float scalarMass, const bool exactlyTwo);
+bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool mcTruth = false);
 bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
 float deltaR(float eta1, float phi1, float eta2, float phi2);
 
@@ -44,9 +44,10 @@ namespace fs = boost::filesystem;
 // Lepton cut variables
 const float looseMuonEta_ {2.8}, looseMuonPt_ {6.}, looseMuonPtLeading_ {15.}, looseMuonRelIso_ {100.};
 const float invZMassCut_ {10.0};
+// Diparticle cuts
+double maxDileptonDeltaR_ {0.4};
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     auto timerStart = std::chrono::high_resolution_clock::now(); 
 
     std::string config;
@@ -54,8 +55,6 @@ int main(int argc, char* argv[])
     double totalLumi;
     double usePreLumi;
     bool usePostLepTree {false};
-    float scalarMass_;
-    bool exactlyTwo_ {false};
    
     std::string outFileString{"plots/distributions/output.root"};
     bool is2016_;
@@ -345,11 +344,7 @@ int main(int argc, char* argv[])
         po::bool_switch(&usePostLepTree),
         "Use post lepton selection trees.")(
         "2016", po::bool_switch(&is2016_), "Use 2016 conditions (SFs, et al.).")(
-        "2018", po::bool_switch(&is2018_), "Use 2018 conditions (SFs, et al.).")(
-        "scalarMass,s",
-        po::value<float>(&scalarMass_)->default_value(2.0),
-        "scalar mass being searched for.")(
-        ",e", po::bool_switch(&exactlyTwo_), "only use events with exactly two loose muons");
+        "2018", po::bool_switch(&is2018_), "Use 2018 conditions (SFs, et al.).");
     po::variables_map vm;
 
     try
@@ -663,7 +658,7 @@ int main(int argc, char* argv[])
 
             if ( looseMuonIndex.size() != 2 ) continue;
 
-            if ( !getDileptonCand( event, looseMuonIndex, scalarMass_, exactlyTwo_) ) continue;
+            if ( !getDileptonCand( event, looseMuonIndex ) ) continue;
 
             if ( (event.zPairLeptons.first + event.zPairLeptons.second).M() > invZMassCut_ ) continue;
 
@@ -1053,58 +1048,29 @@ std::vector<int> getPromptMuons(const AnalysisEvent& event, const std::vector<in
     return muons;
 }
 
-bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const float skMass, const bool exactlyTwo) {
-    if (exactlyTwo && muons.size() == 2) {
+bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool mcTruth) {
+    for ( unsigned int i{0}; i < muons.size(); i++ ) {
+        for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
 
-        if (event.muonPF2PATCharge[muons[0]] * event.muonPF2PATCharge[muons[1]] >= 0) return false;
+            if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
+            if ( mcTruth && event.genMuonPF2PATMotherId[muons[i]] == 9000006 && event.genMuonPF2PATMotherId[muons[j]] == 9000006) continue;
 
-        TLorentzVector lepton1{event.muonPF2PATPX[muons[0]],
-                               event.muonPF2PATPY[muons[0]],
-                               event.muonPF2PATPZ[muons[0]],
-                               event.muonPF2PATE[muons[0]]};
-        TLorentzVector lepton2{event.muonPF2PATPX[muons[1]],
-                               event.muonPF2PATPY[muons[1]],
-                               event.muonPF2PATPZ[muons[1]],
-                               event.muonPF2PATE[muons[1]]};
-
-        event.zPairLeptons.first = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
-        event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[0] : muons[1];
-        event.zPairRelIso.first = event.muonPF2PATComRelIsodBeta[muons[0]];
-        event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
-        event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[1]];
-        event.zPairIndex.second = lepton1.Pt() > lepton2.Pt() ? muons[1] : muons[0];
-        return true;
-    }
-    else if (!exactlyTwo && muons.size() > 1) {
-        double closestMass {9999.};
-        for ( unsigned int i{0}; i < muons.size(); i++ ) {
-            for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
-                if (event.muonPF2PATCharge[i] * event.muonPF2PATCharge[j] >= 0) continue;
-                TLorentzVector lepton1{event.muonPF2PATPX[i],
-                                       event.muonPF2PATPY[i],
-                                       event.muonPF2PATPZ[i],
-                                       event.muonPF2PATE[i]};
-                TLorentzVector lepton2{event.muonPF2PATPX[j],
-                                       event.muonPF2PATPY[j],
-                                       event.muonPF2PATPZ[j],
-                                       event.muonPF2PATE[j]};
-                double invMass { (lepton1+lepton2).M() };
-                if ( std::abs(( invMass - skMass )) < std::abs(closestMass) ) {
-                    event.zPairLeptons.first = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
-                    event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[0] : muons[1];
-                    event.zPairRelIso.first = event.muonPF2PATComRelIsodBeta[muons[0]];
-                    event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
-                    event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[1]];
-                    event.zPairIndex.second = lepton1.Pt() > lepton2.Pt() ? muons[1] : muons[0];
-                    closestMass = ( invMass - skMass );
-                }
+            TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
+            TLorentzVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
+            double delR { lepton1.DeltaR(lepton2) };
+            if ( delR < maxDileptonDeltaR_  ) {
+                event.zPairLeptons.first  = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
+                event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
+                event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[i] : muons[j];
+                event.zPairIndex.second  = lepton1.Pt() > lepton2.Pt() ? muons[j] : muons[i];
+                event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
+                event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
+                return true;
             }
-        }
-        if ( closestMass < 9999. ) return true;
+	}
     }
     return false;
 }
-
 
 bool scalarGrandparent (const AnalysisEvent& event, const Int_t& k, const Int_t& grandparentId) {
 
