@@ -127,6 +127,9 @@ class AnalysisEvent
     Int_t genElePF2PATPromptDecayed[NELECTRONSMAX];
     Int_t genElePF2PATPromptFinalState[NELECTRONSMAX];
     Int_t genElePF2PATHardProcess[NELECTRONSMAX];
+    Int_t genElePF2PATPythiaSixStatusThree[NELECTRONSMAX];
+    Int_t genElePF2PATScalarAncestor[NELECTRONSMAX];
+    Int_t genElePF2PATDirectScalarAncestor[NELECTRONSMAX];
 
     static constexpr size_t NMUONSMAX{20};
     Int_t numMuonPF2PAT;
@@ -212,6 +215,9 @@ class AnalysisEvent
     Int_t genMuonPF2PATPromptDecayed[NMUONSMAX];
     Int_t genMuonPF2PATPromptFinalState[NMUONSMAX];
     Int_t genMuonPF2PATHardProcess[NMUONSMAX];
+    Int_t genMuonPF2PATPythiaSixStatusThree[NMUONSMAX];
+    Int_t genMuonPF2PATScalarAncestor[NMUONSMAX];
+    Int_t genMuonPF2PATDirectScalarAncestor[NMUONSMAX];
 
     static constexpr size_t NMUONTKPAIRMAX{100};	
     Int_t   numMuonTrackPairsPF2PAT;	
@@ -364,7 +370,7 @@ class AnalysisEvent
     Float_t tauPF2PATPhi[NTAUSMAX];
     Float_t tauPF2PATEta[NTAUSMAX];
 */
-/*
+
     static constexpr size_t NPHOTONSMAX{30};
     Int_t numPhoPF2PAT;
     Float_t phoPF2PATE[NPHOTONSMAX];
@@ -425,7 +431,9 @@ class AnalysisEvent
     Int_t genPhoPF2PATIsPhoton[NPHOTONSMAX];
     Int_t genPhoPF2PATIsConvertedPhoton[NPHOTONSMAX];
     Int_t genPhoPF2PATIsJet[NPHOTONSMAX];
-*/
+    Int_t genPhoPF2PATScalarAncestor[NPHOTONSMAX];
+    Int_t genPhoPF2PATDirectScalarAncestor[NPHOTONSMAX];
+
 /*
     static constexpr size_t NOOTPHOTONSMAX{30};
     Int_t numPhoOOT_PF2PAT;
@@ -543,7 +551,7 @@ class AnalysisEvent
     Int_t packedCandsElectronIndex[NPACKEDCANDSMAX];
     Int_t packedCandsMuonIndex[NPACKEDCANDSMAX];
 //    Int_t packedCandsTauIndex[NPACKEDCANDSMAX];
-//    Int_t packedCandsPhotonIndex[NPACKEDCANDSMAX];
+    Int_t packedCandsPhotonIndex[NPACKEDCANDSMAX];
     Int_t packedCandsJetIndex[NPACKEDCANDSMAX];
     Int_t packedCandsHasTrackDetails[NPACKEDCANDSMAX];
     Float_t packedCandsDzError[NPACKEDCANDSMAX];
@@ -1341,6 +1349,9 @@ class AnalysisEvent
     TBranch* b_genElePF2PATPromptDecayed; //!
     TBranch* b_genElePF2PATPromptFinalState; //!
     TBranch* b_genElePF2PATHardProcess; //!
+    TBranch* b_genElePF2PATPythiaSixStatusThree; //!  
+    TBranch* b_genElePF2PATScalarAncestor; //!  ;
+    TBranch* b_genElePF2PATDirectScalarAncestor; //!  
     TBranch* b_numMuonPF2PAT; //!
     TBranch* b_muonPF2PATE; //!
     TBranch* b_muonPF2PATET; //!
@@ -1424,6 +1435,9 @@ class AnalysisEvent
     TBranch* b_genMuonPF2PATPromptDecayed; //!
     TBranch* b_genMuonPF2PATPromptFinalState; //!
     TBranch* b_genMuonPF2PATHardProcess; //!
+    TBranch* b_genMuonPF2PATPythiaSixStatusThree; //!   
+    TBranch* b_genMuonPF2PATScalarAncestor; //!  ;   
+    TBranch* b_genMuonPF2PATDirectScalarAncestor; //!   
     TBranch* b_numMuonTrackPairsPF2PAT; //!	
     TBranch* b_muonTkPairPF2PATIndex1; //!	
     TBranch* b_muonTkPairPF2PATIndex2; //!	
@@ -1570,7 +1584,6 @@ class AnalysisEvent
     TBranch* b_tauPF2PATPhi; //!
     TBranch* b_tauPF2PATEta; //!
 */
-/*
     TBranch* b_numPhoPF2PAT; //!
     TBranch* b_phoPF2PATE; //!
     TBranch* b_phoPF2PATSigmaE; //!
@@ -1630,7 +1643,8 @@ class AnalysisEvent
     TBranch* b_genPhoPF2PATIsPhoton; //!
     TBranch* b_genPhoPF2PATIsConvertedPhoton; //!
     TBranch* b_genPhoPF2PATIsJet; //!
-*/
+    TBranch* b_genPhoPF2PATScalarAncestor; //!
+    TBranch* b_genPhoPF2PATDirectScalarAncestor; //!
 /*
     TBranch* b_numPhoOOT_PF2PAT; //!
     TBranch* b_phoOOT_PF2PATE; //!
@@ -1745,7 +1759,7 @@ class AnalysisEvent
     TBranch* b_packedCandsElectronIndex; //!
     TBranch* b_packedCandsMuonIndex; //!
 //    TBranch* b_packedCandsTauIndex; //!
-//    TBranch* b_packedCandsPhotonIndex; //!
+    TBranch* b_packedCandsPhotonIndex; //!
     TBranch* b_packedCandsJetIndex; //!
     TBranch* b_packedCandsHasTrackDetails; //!
     TBranch* b_packedCandsDzError; //!
@@ -2626,6 +2640,9 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
        fChain->SetBranchAddress("genElePF2PATPromptDecayed", genElePF2PATPromptDecayed, &b_genElePF2PATPromptDecayed);
        fChain->SetBranchAddress("genElePF2PATPromptFinalState", genElePF2PATPromptFinalState, &b_genElePF2PATPromptFinalState);
        fChain->SetBranchAddress("genElePF2PATHardProcess", genElePF2PATHardProcess, &b_genElePF2PATHardProcess);
+       fChain->SetBranchAddress("genElePF2PATPythiaSixStatusThree", genElePF2PATPythiaSixStatusThree, &b_genElePF2PATPythiaSixStatusThree);
+       fChain->SetBranchAddress("genElePF2PATScalarAncestor", genElePF2PATScalarAncestor, &b_genElePF2PATScalarAncestor);
+       fChain->SetBranchAddress("genElePF2PATDirectScalarAncestor", genElePF2PATDirectScalarAncestor, &b_genElePF2PATDirectScalarAncestor);
    }
    fChain->SetBranchAddress("numMuonPF2PAT", &numMuonPF2PAT, &b_numMuonPF2PAT);
    fChain->SetBranchAddress("muonPF2PATE", muonPF2PATE, &b_muonPF2PATE);
@@ -2715,6 +2732,9 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
        fChain->SetBranchAddress("genMuonPF2PATPromptDecayed", genMuonPF2PATPromptDecayed, &b_genMuonPF2PATPromptDecayed);
        fChain->SetBranchAddress("genMuonPF2PATPromptFinalState", genMuonPF2PATPromptFinalState, &b_genMuonPF2PATPromptFinalState);
        fChain->SetBranchAddress("genMuonPF2PATHardProcess", genMuonPF2PATHardProcess, &b_genMuonPF2PATHardProcess);
+       fChain->SetBranchAddress("genMuonPF2PATPythiaSixStatusThree", genMuonPF2PATPythiaSixStatusThree, &b_genMuonPF2PATPythiaSixStatusThree);
+       fChain->SetBranchAddress("genMuonPF2PATScalarAncestor", genMuonPF2PATScalarAncestor, &b_genMuonPF2PATScalarAncestor);
+       fChain->SetBranchAddress("genMuonPF2PATDirectScalarAncestor", genMuonPF2PATDirectScalarAncestor, &b_genMuonPF2PATDirectScalarAncestor);
    }
    fChain->SetBranchAddress("numMuonTrackPairsPF2PAT", &numMuonTrackPairsPF2PAT, &b_numMuonTrackPairsPF2PAT);	
    fChain->SetBranchAddress("muonTkPairPF2PATIndex1", muonTkPairPF2PATIndex1, &b_muonTkPairPF2PATIndex1); 	
@@ -2879,7 +2899,6 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
    fChain->SetBranchAddress("tauPF2PATPhi", tauPF2PATPhi, &b_tauPF2PATPhi);
    fChain->SetBranchAddress("tauPF2PATEta", tauPF2PATEta, &b_tauPF2PATEta);
 */
-/*
    fChain->SetBranchAddress("numPhoPF2PAT", &numPhoPF2PAT, &b_numPhoPF2PAT);
    fChain->SetBranchAddress("phoPF2PATE", phoPF2PATE, &b_phoPF2PATE);
    fChain->SetBranchAddress("phoPF2PATSigmaE", phoPF2PATSigmaE, &b_phoPF2PATSigmaE);
@@ -2940,8 +2959,9 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
       fChain->SetBranchAddress("genPhoPF2PATIsPhoton", genPhoPF2PATIsPhoton, &b_genPhoPF2PATIsPhoton);
       fChain->SetBranchAddress("genPhoPF2PATIsConvertedPhoton", genPhoPF2PATIsConvertedPhoton, &b_genPhoPF2PATIsConvertedPhoton);
       fChain->SetBranchAddress("genPhoPF2PATIsJet", genPhoPF2PATIsJet, &b_genPhoPF2PATIsJet);
+      fChain->SetBranchAddress("genPhoPF2PATScalarAncestor", genPhoPF2PATScalarAncestor, &b_genPhoPF2PATScalarAncestor);
+      fChain->SetBranchAddress("genPhoPF2PATDirectScalarAncestor", genPhoPF2PATDirectScalarAncestor, &b_genPhoPF2PATDirectScalarAncestor);
    }
-*/
 /*
    fChain->SetBranchAddress("numPhoOOT_PF2PAT", &numPhoOOT_PF2PAT, &b_numPhoOOT_PF2PAT);
    fChain->SetBranchAddress("phoOOT_PF2PATE", phoOOT_PF2PATE, &b_phoOOT_PF2PATE);
@@ -3058,7 +3078,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
    fChain->SetBranchAddress("packedCandsElectronIndex", packedCandsElectronIndex, &b_packedCandsElectronIndex);
    fChain->SetBranchAddress("packedCandsMuonIndex", packedCandsMuonIndex, &b_packedCandsMuonIndex);
 //   fChain->SetBranchAddress("packedCandsTauIndex", packedCandsTauIndex, &b_packedCandsTauIndex);
-//   fChain->SetBranchAddress("packedCandsPhotonIndex", packedCandsPhotonIndex, &b_packedCandsPhotonIndex);
+   fChain->SetBranchAddress("packedCandsPhotonIndex", packedCandsPhotonIndex, &b_packedCandsPhotonIndex);
    fChain->SetBranchAddress("packedCandsJetIndex", packedCandsJetIndex, &b_packedCandsJetIndex);
    fChain->SetBranchAddress("packedCandsHasTrackDetails", packedCandsHasTrackDetails, &b_packedCandsHasTrackDetails);
    fChain->SetBranchAddress("packedCandsDzError", packedCandsDzError, &b_packedCandsDzError);
