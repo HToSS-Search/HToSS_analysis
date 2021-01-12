@@ -632,8 +632,8 @@ int main(int argc, char* argv[]) {
 
             p_selectedChsMatching->Fill( 1.0, bool (  (matchedEle1 || matchedMuon1 || matchedJet1 || matchedPhoton1) &&  (matchedEle2 || matchedMuon2 || matchedJet2 || matchedPhoton2) ) );
             p_selectedChsMatching->Fill( 2.0, bool (  (matchedEle1 || matchedMuon1 || matchedJet1 || matchedPhoton1) && !matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2 ) );
-            p_selectedChsMatching->Fill( 3.0, bool ( !matchedEle1 && !matchedMuon1 && !matchedJet1 && !matchedPhoton1 &&  (matchedEle2 || matchedMuon2 || matchedJet2 || matchedPhoton2) ) );
-            p_selectedChsMatching->Fill( 4.0, bool ( !matchedEle1 &matchedMuon1 && !matchedJet1 && !matchedEle2  !matchedMuon2 && !matchedJet2 && !matchedPhoton2 ) );
+            p_selectedChsMatching->Fill( 3.0, bool ( !matchedEle1 && !matchedMuon1 && !matchedJet1 && !matchedPhoton1 && (matchedEle2 || matchedMuon2 || matchedJet2 || matchedPhoton2) ) );
+            p_selectedChsMatching->Fill( 4.0, bool ( !matchedEle1 &matchedMuon1 && !matchedJet1 && !matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2 ) );
             p_selectedChsMatching->Fill( 5.0, bool (matchedEle1 || matchedMuon1 || matchedJet1 || matchedPhoton1) );
             p_selectedChsMatching->Fill( 6.0, bool (matchedEle2 || matchedMuon2 || matchedJet2 || matchedPhoton2) );
 
@@ -658,7 +658,7 @@ int main(int argc, char* argv[]) {
             p_packedCandUsage1->Fill( 13.0, (matchedEle1 && matchedMuon1 && !matchedJet1 && matchedPhoton1) );
             p_packedCandUsage1->Fill( 14.0, (matchedEle1 && !matchedMuon1 && matchedJet1 && matchedPhoton1) );
             p_packedCandUsage1->Fill( 15.0, (!matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
-            p_packedCandUsage1->Fill( 16.0  (matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
+            p_packedCandUsage1->Fill( 16.0, (matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
 
             p_packedCandUsage2->Fill( 1.0,  (!matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
             p_packedCandUsage2->Fill( 2.0,  (matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
@@ -675,7 +675,7 @@ int main(int argc, char* argv[]) {
             p_packedCandUsage2->Fill( 13.0, (matchedEle2 && matchedMuon2 && !matchedJet2 && matchedPhoton2) );
             p_packedCandUsage2->Fill( 14.0, (matchedEle2 && !matchedMuon2 && matchedJet2 && matchedPhoton2) );
             p_packedCandUsage2->Fill( 15.0, (!matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
-            p_packedCandUsage2->Fill( 16.0  (matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
+            p_packedCandUsage2->Fill( 16.0, (matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
 
 
             if ( (matchedEle1 || matchedMuon1 || matchedJet1 || matchedPhoton1) ) { 
@@ -694,7 +694,7 @@ int main(int argc, char* argv[]) {
                 p_packedCandUsageGen1->Fill( 13.0, (matchedEle1 && matchedMuon1 && !matchedJet1 && matchedPhoton1) );
                 p_packedCandUsageGen1->Fill( 14.0, (matchedEle1 && !matchedMuon1 && matchedJet1 && matchedPhoton1) );
                 p_packedCandUsageGen1->Fill( 15.0, (!matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
-                p_packedCandUsageGen1->Fill( 16.0  (matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 16.0, (matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
             }
             else if ( !matchedEle1 && !matchedMuon1 && !matchedJet1 &&!matchedPhoton1 ) {
                 p_packedCandUsageFake1->Fill( 1.0, (!validEle1 && !validMuon1 && !validJet1) );
@@ -713,7 +713,7 @@ int main(int argc, char* argv[]) {
                 p_packedCandUsageFake1->Fill( 13.0, (matchedEle1 && matchedMuon1 && !matchedJet1 && matchedPhoton1) );
                 p_packedCandUsageFake1->Fill( 14.0, (matchedEle1 && !matchedMuon1 && matchedJet1 && matchedPhoton1) );
                 p_packedCandUsageFake1->Fill( 15.0, (!matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
-                p_packedCandUsageFake1->Fill( 16.0  (matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 16.0, (matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
             }
             if ( (matchedEle2 || matchedMuon2 || matchedJet2 || matchedPhoton2) ) { 
                 p_packedCandUsageGen2->Fill( 1.0,  (!matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
@@ -731,7 +731,7 @@ int main(int argc, char* argv[]) {
                 p_packedCandUsageGen2->Fill( 13.0, (matchedEle2 && matchedMuon2 && !matchedJet2 && matchedPhoton2) );
                 p_packedCandUsageGen2->Fill( 14.0, (matchedEle2 && !matchedMuon2 && matchedJet2 && matchedPhoton2) );
                 p_packedCandUsageGen2->Fill( 15.0, (!matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
-               p_packedCandUsageGen2->Fill( 16.0  (matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 16.0, (matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
             }
             else if ( !matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2) {
                 p_packedCandUsageFake2->Fill( 1.0,  (!matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
@@ -749,7 +749,7 @@ int main(int argc, char* argv[]) {
                 p_packedCandUsageFake2->Fill( 13.0, (matchedEle2 && matchedMuon2 && !matchedJet2 && matchedPhoton2) );
                 p_packedCandUsageFake2->Fill( 14.0, (matchedEle2 && !matchedMuon2 && matchedJet2 && matchedPhoton2) );
                 p_packedCandUsageFake2->Fill( 15.0, (!matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
-                p_packedCandUsageFake2->Fill( 16.0  (matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 16.0, (matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
             }
 
         } // end event loop
