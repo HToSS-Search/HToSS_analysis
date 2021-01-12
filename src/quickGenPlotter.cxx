@@ -36,7 +36,7 @@
 std::vector<int> getLooseMuons(const AnalysisEvent& event);
 std::vector<int> getChargedHadronTracks(const AnalysisEvent& event);
 bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool mcTruth = false);
-bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chsIndex, bool mcTruth = false);
+bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth = false);
 int getChsTrackPairIndex(const AnalysisEvent& event);
 bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
 float deltaR(float eta1, float phi1, float eta2, float phi2);
@@ -857,11 +857,11 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
 
-            if (event.muonPF2PATCharge[i] * event.muonPF2PATCharge[j] >= 0) continue;
-            if ( mcTruth && event.genMuonPF2PATMotherId[i] == 9000006 && event.genMuonPF2PATMotherId[j] == 9000006) continue;
+            if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
+            if ( mcTruth && event.genMuonPF2PATMotherId[muons[i]] == 9000006 && event.genMuonPF2PATMotherId[muons[j]] == 9000006) continue;
 
-            TLorentzVector lepton1{event.muonPF2PATPX[i], event.muonPF2PATPY[i], event.muonPF2PATPZ[i], event.muonPF2PATE[i]};
-            TLorentzVector lepton2{event.muonPF2PATPX[j], event.muonPF2PATPY[j], event.muonPF2PATPZ[j], event.muonPF2PATE[j]};
+            TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
+            TLorentzVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
             double delR { lepton1.DeltaR(lepton2) };
             if ( delR < maxDileptonDeltaR_  ) {
                 event.zPairLeptons.first  = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
@@ -877,46 +877,46 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
     return false;
 }
 
-bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chsIndex, bool mcTruth ) {
+bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth ) {
 
-    for ( unsigned int i{0}; i < chsIndex.size(); i++ ) {
+    for ( unsigned int i{0}; i < chs.size(); i++ ) {
 
-        if ( event.packedCandsMuonIndex[i] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
-        if ( event.packedCandsMuonIndex[i] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
+        if ( event.packedCandsMuonIndex[chs[i]] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
+        if ( event.packedCandsMuonIndex[chs[i]] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
 
         if ( mcTruth ) {
-            if ( event.packedCandsElectronIndex[i] < 0  && event.packedCandsMuonIndex[i] < 0 && event.packedCandsJetIndex[i] < 0 ) continue;
-            if ( event.packedCandsElectronIndex[i] >= 0 && event.genElePF2PATScalarAncestor[event.packedCandsElectronIndex[i]] < 1 ) continue;
-            if ( event.packedCandsMuonIndex[i] >= 0     && event.genMuonPF2PATScalarAncestor[event.packedCandsMuonIndex[i]] < 1 ) continue;
-            if ( event.packedCandsJetIndex[i] >= 0      && event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[i]] < 1 ) continue;
+            if ( event.packedCandsElectronIndex[chs[i]] < 0  && event.packedCandsMuonIndex[chs[i]] < 0 && event.packedCandsJetIndex[chs[i]] < 0 ) continue;
+            if ( event.packedCandsElectronIndex[chs[i]] >= 0 && event.genElePF2PATScalarAncestor[event.packedCandsElectronIndex[chs[i]]] < 1 ) continue;
+            if ( event.packedCandsMuonIndex[chs[i]] >= 0     && event.genMuonPF2PATScalarAncestor[event.packedCandsMuonIndex[chs[i]]] < 1 ) continue;
+            if ( event.packedCandsJetIndex[chs[i]] >= 0      && event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[chs[i]]] < 1 ) continue;
         }
 
-        if ( event.packedCandsElectronIndex[i] >= 0 && event.packedCandsMuonIndex[i] < 0 && event.packedCandsJetIndex[i] < 0 ) continue;
+        if ( event.packedCandsElectronIndex[chs[i]] > -1 && event.packedCandsMuonIndex[chs[i]] < 0 && event.packedCandsJetIndex[chs[i]] < 0 && event.packedCandsPhotonIndex[chs[i]] < 0 ) continue;
 
-        for ( unsigned int j{i+1}; j < chsIndex.size(); j++ ) {
-            if ( event.packedCandsMuonIndex[j] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
-            if ( event.packedCandsMuonIndex[j] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
+        for ( unsigned int j{i+1}; j < chs.size(); j++ ) {
+            if ( event.packedCandsMuonIndex[chs[j]] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
+            if ( event.packedCandsMuonIndex[chs[j]] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
 
             if ( mcTruth ) {
-                if ( event.packedCandsElectronIndex[i] < 0  && event.packedCandsMuonIndex[i] < 0 && event.packedCandsJetIndex[i] < 0 ) continue;
-                if ( event.packedCandsElectronIndex[i] >= 0 && event.genElePF2PATScalarAncestor[event.packedCandsElectronIndex[i]] < 1 ) continue;
-                if ( event.packedCandsMuonIndex[i] >= 0     && event.genMuonPF2PATScalarAncestor[event.packedCandsMuonIndex[i]] < 1 ) continue;
-                if ( event.packedCandsJetIndex[i] >= 0      && event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[i]] < 1 ) continue;
+                if ( event.packedCandsElectronIndex[chs[j]] < 0  && event.packedCandsMuonIndex[chs[j]] < 0 && event.packedCandsJetIndex[chs[j]] < 0 ) continue;
+                if ( event.packedCandsElectronIndex[chs[j]] >= 0 && event.genElePF2PATScalarAncestor[event.packedCandsElectronIndex[chs[j]]] < 1 ) continue;
+                if ( event.packedCandsMuonIndex[chs[j]] >= 0     && event.genMuonPF2PATScalarAncestor[event.packedCandsMuonIndex[chs[j]]] < 1 ) continue;
+                if ( event.packedCandsJetIndex[chs[j]] >= 0      && event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[chs[j]]] < 1 ) continue;
             }
 
-            if ( event.packedCandsElectronIndex[j] >= 0 && event.packedCandsMuonIndex[j] < 0 && event.packedCandsJetIndex[j] < 0 ) continue;
+            if ( event.packedCandsElectronIndex[chs[j]] > -1 && event.packedCandsMuonIndex[chs[j]] < 0 && event.packedCandsJetIndex[chs[j]] < 0 && event.packedCandsPhotonIndex[chs[j]] < 0 ) continue;
 
-            if ( std::abs(event.packedCandsPdgId[i]) != 211 || std::abs(event.packedCandsPdgId[j]) != 211 ) continue;
-            if (event.packedCandsCharge[i] * event.packedCandsCharge[j] >= 0) continue;
-            TLorentzVector chs1 {event.packedCandsPx[i], event.packedCandsPy[i], event.packedCandsPz[i], event.packedCandsE[i]};
-            TLorentzVector chs2 {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
+            if ( std::abs(event.packedCandsPdgId[chs[i]]) != 211 || std::abs(event.packedCandsPdgId[chs[j]]) != 211 ) continue;
+            if (event.packedCandsCharge[chs[i]] * event.packedCandsCharge[chs[j]] >= 0) continue;
+            TLorentzVector chs1 {event.packedCandsPx[chs[i]], event.packedCandsPy[chs[i]], event.packedCandsPz[chs[i]], event.packedCandsE[chs[i]]};
+            TLorentzVector chs2 {event.packedCandsPx[chs[j]], event.packedCandsPy[chs[j]], event.packedCandsPz[chs[j]], event.packedCandsE[chs[j]]};
             double delR { chs1.DeltaR(chs2) };
             double higgsMass { (chs1+chs2+event.zPairLeptons.first+event.zPairLeptons.second).M() };
             if ( delR < maxChsDeltaR_  && (higgsMass - 125.) < higgsTolerence_ ) {
                 event.chsPairVec.first  = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
                 event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
-                event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chsIndex[i] : chsIndex[j];
-                event.chsPairIndex.second = chs1.Pt() > chs2.Pt() ? chsIndex[j] : chsIndex[i];
+                event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chs[i] : chs[j];
+                event.chsPairIndex.second = chs1.Pt() > chs2.Pt() ? chs[j] : chs[i];
 
                 event.chsPairTrkIndex = getChsTrackPairIndex(event);
 
