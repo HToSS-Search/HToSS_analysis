@@ -176,66 +176,114 @@ int main(int argc, char* argv[]) {
 
     // packed PF cands info
 
-    TProfile* p_packedCandUsage1           {new TProfile("p_packedCandUsage1",     "Pointers to physics objects assoc with leading packed pf cand", 8, -0.5, 7.5)};
-    TProfile* p_packedCandUsageGen1        {new TProfile("p_packedCandUsageGen1",  "Pointers to physics objects assoc with genuine leading packed pf cand", 8, -0.5, 7.5)};
-    TProfile* p_packedCandUsageFake1       {new TProfile("p_packedCandUsageFake1", "Pointers to physics objects assoc with fake leading packed pf cand", 8, -0.5, 7.5)};
-    TProfile* p_packedCandUsage2           {new TProfile("p_packedCandUsage2",     "Pointers to physics objects assoc with subleading packed pf cand", 8, -0.5, 7.5)};
-    TProfile* p_packedCandUsageGen2        {new TProfile("p_packedCandUsageGen2",  "Pointers to physics objects assoc with genuine subleading packed pf cand", 8, -0.5, 7.5)};
-    TProfile* p_packedCandUsageFake2       {new TProfile("p_packedCandUsageFake2", "Pointers to physics objects assoc with fake subleading packed pf cand", 8, -0.5, 7.5)};
+    TProfile* p_packedCandUsage1           {new TProfile("p_packedCandUsage1",     "Pointers to physics objects assoc with leading packed pf cand", 16, -0.5, 15.5)};
+    TProfile* p_packedCandUsageGen1        {new TProfile("p_packedCandUsageGen1",  "Pointers to physics objects assoc with genuine leading packed pf cand", 16, -0.5, 15.5)};
+    TProfile* p_packedCandUsageFake1       {new TProfile("p_packedCandUsageFake1", "Pointers to physics objects assoc with fake leading packed pf cand", 16, -0.5, 15.5)};
+    TProfile* p_packedCandUsage2           {new TProfile("p_packedCandUsage2",     "Pointers to physics objects assoc with subleading packed pf cand", 16, -0.5, 15.5)};
+    TProfile* p_packedCandUsageGen2        {new TProfile("p_packedCandUsageGen2",  "Pointers to physics objects assoc with genuine subleading packed pf cand", 16, -0.5, 15.5)};
+    TProfile* p_packedCandUsageFake2       {new TProfile("p_packedCandUsageFake2", "Pointers to physics objects assoc with fake subleading packed pf cand", 16, -0.5, 15.5)};
 
-    p_packedCandUsage1->GetXaxis()->SetBinLabel(1, "None");
-    p_packedCandUsage1->GetXaxis()->SetBinLabel(2, "e");
-    p_packedCandUsage1->GetXaxis()->SetBinLabel(3, "#mu");
-    p_packedCandUsage1->GetXaxis()->SetBinLabel(4, "jets");
-    p_packedCandUsage1->GetXaxis()->SetBinLabel(5, "e+#mu");
-    p_packedCandUsage1->GetXaxis()->SetBinLabel(6, "e+jets");
-    p_packedCandUsage1->GetXaxis()->SetBinLabel(7, "#mu+jets");
-    p_packedCandUsage1->GetXaxis()->SetBinLabel(8, "e+#mu+jets");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(1,  "None");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(2,  "e");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(3,  "#mu");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(4,  "jets");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(5,  "#gamma");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(6,  "e+#mu");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(7,  "e+jets");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(8,  "e+#gamma");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(9,  "#mu+jets");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(10, "#mu+#gamma");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(11, "jets+#gamma");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(12, "e+#mu+jets");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(13, "e+#mu+#gamma");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(14, "e+jets+#gamma");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(15, "#mu+jets+#gamma");
+    p_packedCandUsage1->GetXaxis()->SetBinLabel(16, "e+#mu+jets+#gamma");
 
     p_packedCandUsageGen1->GetXaxis()->SetBinLabel(1, "None");
-    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(2, "e");
-    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(3, "#mu");
-    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(4, "jets");
-    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(5, "e+#mu");
-    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(6, "e+jets");
-    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(7, "#mu+jets");
-    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(8, "e+#mu+jets");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(2,  "e");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(3,  "#mu");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(4,  "jets");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(5,  "#gamma");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(6,  "e+#mu");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(7,  "e+jets");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(8,  "e+#gamma");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(9,  "#mu+jets");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(10, "#mu+#gamma");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(11, "jets+#gamma");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(12, "e+#mu+jets");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(13, "e+#mu+#gamma");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(14, "e+jets+#gamma");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(15, "#mu+jets+#gamma");
+    p_packedCandUsageGen1->GetXaxis()->SetBinLabel(16, "e+#mu+jets+#gamma");
 
     p_packedCandUsageFake1->GetXaxis()->SetBinLabel(1, "None");
-    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(2, "e");
-    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(3, "#mu");
-    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(4, "jets");
-    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(5, "e+#mu");
-    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(6, "e+jets");
-    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(7, "#mu+jets");
-    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(8, "e+#mu+jets");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(2,  "e");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(3,  "#mu");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(4,  "jets");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(5,  "#gamma");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(6,  "e+#mu");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(7,  "e+jets");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(8,  "e+#gamma");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(9,  "#mu+jets");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(10, "#mu+#gamma");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(11, "jets+#gamma");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(12, "e+#mu+jets");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(13, "e+#mu+#gamma");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(14, "e+jets+#gamma");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(15, "#mu+jets+#gamma");
+    p_packedCandUsageFake1->GetXaxis()->SetBinLabel(16, "e+#mu+jets+#gamma");
 
     p_packedCandUsage2->GetXaxis()->SetBinLabel(1, "None");
-    p_packedCandUsage2->GetXaxis()->SetBinLabel(2, "e");
-    p_packedCandUsage2->GetXaxis()->SetBinLabel(3, "#mu");
-    p_packedCandUsage2->GetXaxis()->SetBinLabel(4, "jets");
-    p_packedCandUsage2->GetXaxis()->SetBinLabel(5, "e+#mu");
-    p_packedCandUsage2->GetXaxis()->SetBinLabel(6, "e+jets");
-    p_packedCandUsage2->GetXaxis()->SetBinLabel(7, "#mu+jets");
-    p_packedCandUsage2->GetXaxis()->SetBinLabel(8, "e+#mu+jets");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(2,  "e");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(3,  "#mu");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(4,  "jets");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(5,  "#gamma");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(6,  "e+#mu");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(7,  "e+jets");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(8,  "e+#gamma");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(9,  "#mu+jets");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(10, "#mu+#gamma");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(11, "jets+#gamma");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(12, "e+#mu+jets");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(13, "e+#mu+#gamma");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(14, "e+jets+#gamma");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(15, "#mu+jets+#gamma");
+    p_packedCandUsage2->GetXaxis()->SetBinLabel(16, "e+#mu+jets+#gamma");
 
     p_packedCandUsageGen2->GetXaxis()->SetBinLabel(1, "None");
-    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(2, "e");
-    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(3, "#mu");
-    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(4, "jets");
-    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(5, "e+#mu");
-    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(6, "e+jets");
-    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(7, "#mu+jets");
-    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(8, "e+#mu+jets");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(2,  "e");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(3,  "#mu");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(4,  "jets");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(5,  "#gamma");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(6,  "e+#mu");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(7,  "e+jets");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(8,  "e+#gamma");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(9,  "#mu+jets");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(10, "#mu+#gamma");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(11, "jets+#gamma");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(12, "e+#mu+jets");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(13, "e+#mu+#gamma");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(14, "e+jets+#gamma");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(15, "#mu+jets+#gamma");
+    p_packedCandUsageGen2->GetXaxis()->SetBinLabel(16, "e+#mu+jets+#gamma");
 
     p_packedCandUsageFake2->GetXaxis()->SetBinLabel(1, "None");
-    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(2, "e");
-    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(3, "#mu");
-    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(4, "jets");
-    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(5, "e+#mu");
-    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(6, "e+jets");
-    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(7, "#mu+jets");
-    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(8, "e+#mu+jets");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(2,  "e");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(3,  "#mu");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(4,  "jets");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(5,  "#gamma");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(6,  "e+#mu");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(7,  "e+jets");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(8,  "e+#gamma");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(9,  "#mu+jets");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(10, "#mu+#gamma");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(11, "jets+#gamma");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(12, "e+#mu+jets");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(13, "e+#mu+#gamma");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(14, "e+jets+#gamma");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(15, "#mu+jets+#gamma");
+    p_packedCandUsageFake2->GetXaxis()->SetBinLabel(16, "e+#mu+jets+#gamma");
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
@@ -565,90 +613,143 @@ int main(int argc, char* argv[]) {
             // CHS bit
             const int idx1 {event.chsPairIndex.first}, idx2 {event.chsPairIndex.second};
 
-            const bool validEle1  {event.packedCandsElectronIndex[idx1] > -1},  validEle2  {event.packedCandsElectronIndex[idx2] > -1};
-            const bool validMuon1 {event.packedCandsMuonIndex[idx1]     > -1 }, validMuon2 {event.packedCandsMuonIndex[idx2]     > -1};
-            const bool validJet1  {event.packedCandsJetIndex[idx1]      > -1},  validJet2  {event.packedCandsJetIndex[idx2]      > -1};
+            const bool validEle1    {event.packedCandsElectronIndex[idx1] > -1},  validEle2    {event.packedCandsElectronIndex[idx2] > -1};
+            const bool validMuon1   {event.packedCandsMuonIndex[idx1]     > -1 }, validMuon2   {event.packedCandsMuonIndex[idx2]     > -1};
+            const bool validJet1    {event.packedCandsJetIndex[idx1]      > -1},  validJet2    {event.packedCandsJetIndex[idx2]      > -1};
+            const bool validPhoton1 {event.packedCandsPhotonIndex[idx1]   > -1},  validPhoton2 {event.packedCandsPhotonIndex[idx2]   > -1}; 
 
-            const int eleIndex1  {validEle1  ? event.packedCandsElectronIndex[idx1] : -1}, eleIndex2  {validEle2  ? event.packedCandsElectronIndex[idx2] : -1};
-            const int muonIndex1 {validMuon1 ? event.packedCandsMuonIndex[idx1]     : -1}, muonIndex2 {validMuon2 ? event.packedCandsMuonIndex[idx2]     : -1};
-            const int jetIndex1  {validJet1  ? event.packedCandsJetIndex[idx1]      : -1}, jetIndex2  {validJet2  ? event.packedCandsJetIndex[idx2]      : -1};
-
-            const bool matchedEle1  {validEle1  ? event.genElePF2PATScalarAncestor[eleIndex1]   : false}, matchedEle2  {validEle2  ? event.genElePF2PATScalarAncestor[eleIndex2]    : false};
-            const bool matchedMuon1 {validMuon1 ? event.genMuonPF2PATScalarAncestor[validMuon1] : false}, matchedMuon2 {validMuon2 ? event.genMuonPF2PATScalarAncestor[validMuon2] : false};
-            const bool matchedJet1  {validJet1  ? event.genJetPF2PATScalarAncestor[jetIndex1]   : false}, matchedJet2  {validJet2  ? event.genJetPF2PATScalarAncestor[jetIndex2]  	: false};
+            const int eleIndex1    {validEle1    ? event.packedCandsElectronIndex[idx1] : -1}, eleIndex2    {validEle2    ? event.packedCandsElectronIndex[idx2] : -1};
+            const int muonIndex1   {validMuon1   ? event.packedCandsMuonIndex[idx1]     : -1}, muonIndex2   {validMuon2   ? event.packedCandsMuonIndex[idx2]     : -1};
+            const int jetIndex1    {validJet1    ? event.packedCandsJetIndex[idx1]      : -1}, jetIndex2    {validJet2    ? event.packedCandsJetIndex[idx2]      : -1};
+            const int photonIndex1 {validPhoton1 ? event.packedCandsPhotonIndex[idx1]   : -1}, photonIndex2 {validPhoton2 ? event.packedCandsPhotonIndex[idx2]   : -1};
+ 
+            const bool matchedEle1    {validEle1    ? event.genElePF2PATScalarAncestor[eleIndex1]    : false}, matchedEle2    {validEle2    ? event.genElePF2PATScalarAncestor[eleIndex2]    : false};
+            const bool matchedMuon1   {validMuon1   ? event.genMuonPF2PATScalarAncestor[validMuon1]  : false}, matchedMuon2   {validMuon2   ? event.genMuonPF2PATScalarAncestor[validMuon2] : false};
+            const bool matchedJet1    {validJet1    ? event.genJetPF2PATScalarAncestor[jetIndex1]    : false}, matchedJet2    {validJet2    ? event.genJetPF2PATScalarAncestor[jetIndex2]  	: false};
+            const bool matchedPhoton1 {validPhoton1 ? event.genPhoPF2PATScalarAncestor[photonIndex1] : false}, matchedPhoton2 {validPhoton2 ? event.genPhoPF2PATScalarAncestor[photonIndex2] : false};
 
             const float chsDeltaR {event.chsPairVec.first.DeltaR(event.chsPairVec.second)};
 
-            p_selectedChsMatching->Fill( 1.0, bool (  (matchedEle1 || matchedMuon1 || matchedJet1) &&  (matchedEle2 || matchedMuon2 || matchedJet2) ) );
-            p_selectedChsMatching->Fill( 2.0, bool (  (matchedEle1 || matchedMuon1 || matchedJet1) && !(matchedEle2 || matchedMuon2 || matchedJet2) ) );
-            p_selectedChsMatching->Fill( 3.0, bool ( !(matchedEle1 || matchedMuon1 || matchedJet1) &&  (matchedEle2 || matchedMuon2 || matchedJet2) ) );
-            p_selectedChsMatching->Fill( 4.0, bool ( !(matchedEle1 || matchedMuon1 || matchedJet1) && !(matchedEle2 || matchedMuon2 || matchedJet2) ) );
-            p_selectedChsMatching->Fill( 5.0, bool (matchedEle1 || matchedMuon1 || matchedJet1) );
-            p_selectedChsMatching->Fill( 6.0, bool (matchedEle2 || matchedMuon2 || matchedJet2) );
+            p_selectedChsMatching->Fill( 1.0, bool (  (matchedEle1 || matchedMuon1 || matchedJet1 || matchedPhoton1) &&  (matchedEle2 || matchedMuon2 || matchedJet2 || matchedPhoton2) ) );
+            p_selectedChsMatching->Fill( 2.0, bool (  (matchedEle1 || matchedMuon1 || matchedJet1 || matchedPhoton1) && !matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2 ) );
+            p_selectedChsMatching->Fill( 3.0, bool ( !matchedEle1 && !matchedMuon1 && !matchedJet1 && !matchedPhoton1 &&  (matchedEle2 || matchedMuon2 || matchedJet2 || matchedPhoton2) ) );
+            p_selectedChsMatching->Fill( 4.0, bool ( !matchedEle1 &matchedMuon1 && !matchedJet1 && !matchedEle2  !matchedMuon2 && !matchedJet2 && !matchedPhoton2 ) );
+            p_selectedChsMatching->Fill( 5.0, bool (matchedEle1 || matchedMuon1 || matchedJet1 || matchedPhoton1) );
+            p_selectedChsMatching->Fill( 6.0, bool (matchedEle2 || matchedMuon2 || matchedJet2 || matchedPhoton2) );
 
             h_chsDeltaR->Fill(chsDeltaR);
-            if (  (matchedEle1 || matchedMuon1 || matchedJet1) &&  (matchedEle2 || matchedMuon2 || matchedJet2) ) h_chsBothGenDeltaR->Fill(chsDeltaR);
-            if (  (matchedEle1 || matchedMuon1 || matchedJet1) && !(matchedEle2 || matchedMuon2 || matchedJet2) ) h_chsLeadingGenDeltaR->Fill(chsDeltaR);
-            if ( !(matchedEle1 || matchedMuon1 || matchedJet1) &&  (matchedEle2 || matchedMuon2 || matchedJet2) )h_chsSubleadingGenDeltaR->Fill(chsDeltaR);
-            if ( !(matchedEle1 || matchedMuon1 || matchedJet1) && !(matchedEle2 || matchedMuon2 || matchedJet2)) h_chsBothFakeDeltaR->Fill(chsDeltaR);
+            if (  (matchedEle1 || matchedMuon1 || matchedJet1 || matchedPhoton1) &&  (matchedEle2 || matchedMuon2 || matchedJet2 || matchedPhoton2) ) h_chsBothGenDeltaR->Fill(chsDeltaR);
+            if (  (matchedEle1 || matchedMuon1 || matchedJet1) && !matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2 ) h_chsLeadingGenDeltaR->Fill(chsDeltaR);
+            if ( !matchedEle1 && !matchedMuon1 && !matchedJet1 && !matchedPhoton1 &&  (matchedEle2 || matchedMuon2 || matchedJet2 || matchedPhoton2) )h_chsSubleadingGenDeltaR->Fill(chsDeltaR);
+            if ( !matchedEle1 && !matchedMuon1 && !matchedJet1 && !matchedPhoton1 && !matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2 ) h_chsBothFakeDeltaR->Fill(chsDeltaR);
 
-            p_packedCandUsage1->Fill( 1.0, (!matchedEle1 && !matchedMuon1 && !matchedJet1) );
-            p_packedCandUsage1->Fill( 2.0, (matchedEle1 && !matchedMuon1 && !matchedJet1) );
-            p_packedCandUsage1->Fill( 3.0, (!matchedEle1 && matchedMuon1 && !matchedJet1) );
-            p_packedCandUsage1->Fill( 4.0, (!matchedEle1 && !matchedMuon1 && matchedJet1) );
-            p_packedCandUsage1->Fill( 5.0, (matchedEle1 && matchedMuon1 && !matchedJet1) );
-            p_packedCandUsage1->Fill( 6.0, (matchedEle1 && !matchedMuon1 && matchedJet1) );
-            p_packedCandUsage1->Fill( 7.0, (!matchedEle1 && !matchedMuon1 && matchedJet1) );
-            p_packedCandUsage1->Fill( 8.0, (matchedEle1 && matchedMuon1 && matchedJet1) );
+            p_packedCandUsage1->Fill( 1.0,  (!matchedEle1 && !matchedMuon1 && !matchedJet1 && !matchedPhoton1) );
+            p_packedCandUsage1->Fill( 2.0,  (matchedEle1 && !matchedMuon1 && !matchedJet1 && !matchedPhoton1) );
+            p_packedCandUsage1->Fill( 3.0,  (!matchedEle1 && matchedMuon1 && !matchedJet1 && !matchedPhoton1) );
+            p_packedCandUsage1->Fill( 4.0,  (!matchedEle1 && !matchedMuon1 && matchedJet1 && !matchedPhoton1) );
+            p_packedCandUsage1->Fill( 5.0,  (!matchedEle1 && !matchedMuon1 && !matchedJet1 && matchedPhoton1) );
+            p_packedCandUsage1->Fill( 6.0,  (matchedEle1 && matchedMuon1 && !matchedJet1 && !matchedPhoton1) );
+            p_packedCandUsage1->Fill( 7.0,  (matchedEle1 && !matchedMuon1 && matchedJet1 && !matchedPhoton1) );
+            p_packedCandUsage1->Fill( 8.0,  (matchedEle1 && !matchedMuon1 && !matchedJet1 && matchedPhoton1) );
+            p_packedCandUsage1->Fill( 9.0,  (!matchedEle1 && matchedMuon1 && matchedJet1 && !matchedPhoton1) );
+            p_packedCandUsage1->Fill( 10.0, (!matchedEle1 && matchedMuon1 && !matchedJet1 && matchedPhoton1) );
+            p_packedCandUsage1->Fill( 11.0, (!matchedEle1 && !matchedMuon1 && matchedJet1 && matchedPhoton1) );
+            p_packedCandUsage1->Fill( 12.0, (matchedEle1 && matchedMuon1 && matchedJet1 && !matchedPhoton1) );
+            p_packedCandUsage1->Fill( 13.0, (matchedEle1 && matchedMuon1 && !matchedJet1 && matchedPhoton1) );
+            p_packedCandUsage1->Fill( 14.0, (matchedEle1 && !matchedMuon1 && matchedJet1 && matchedPhoton1) );
+            p_packedCandUsage1->Fill( 15.0, (!matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
+            p_packedCandUsage1->Fill( 16.0  (matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
 
-            p_packedCandUsage2->Fill( 1.0, (!matchedEle2 && !matchedMuon2 && !matchedJet2) );
-            p_packedCandUsage2->Fill( 2.0, (matchedEle2 && !matchedMuon2 && !matchedJet2) );
-            p_packedCandUsage2->Fill( 3.0, (!matchedEle2 && matchedMuon2 && !matchedJet2) );
-            p_packedCandUsage2->Fill( 4.0, (!matchedEle2 && !matchedMuon2 && matchedJet2) );
-            p_packedCandUsage2->Fill( 5.0, (matchedEle2 && matchedMuon2 && !matchedJet2) );
-            p_packedCandUsage2->Fill( 6.0, (matchedEle2 && !matchedMuon2 && matchedJet2) );
-            p_packedCandUsage2->Fill( 7.0, (!matchedEle2 && !matchedMuon2 && matchedJet2) );
-            p_packedCandUsage2->Fill( 8.0, (matchedEle2 && matchedMuon2 && matchedJet2) );
+            p_packedCandUsage2->Fill( 1.0,  (!matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
+            p_packedCandUsage2->Fill( 2.0,  (matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
+            p_packedCandUsage2->Fill( 3.0,  (!matchedEle2 && matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
+            p_packedCandUsage2->Fill( 4.0,  (!matchedEle2 && !matchedMuon2 && matchedJet2 && !matchedPhoton2) );
+            p_packedCandUsage2->Fill( 5.0,  (!matchedEle2 && !matchedMuon2 && !matchedJet2 && matchedPhoton2) );
+            p_packedCandUsage2->Fill( 6.0,  (matchedEle2 && matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
+            p_packedCandUsage2->Fill( 7.0,  (matchedEle2 && !matchedMuon2 && matchedJet2 && !matchedPhoton2) );
+            p_packedCandUsage2->Fill( 8.0,  (matchedEle2 && !matchedMuon2 && !matchedJet2 && matchedPhoton2) );
+            p_packedCandUsage2->Fill( 9.0,  (!matchedEle2 && matchedMuon2 && matchedJet2 && !matchedPhoton2) );
+            p_packedCandUsage2->Fill( 10.0, (!matchedEle2 && matchedMuon2 && !matchedJet2 && matchedPhoton2) );
+            p_packedCandUsage2->Fill( 11.0, (!matchedEle2 && !matchedMuon2 && matchedJet2 && matchedPhoton2) );
+            p_packedCandUsage2->Fill( 12.0, (matchedEle2 && matchedMuon2 && matchedJet2 && !matchedPhoton2) );
+            p_packedCandUsage2->Fill( 13.0, (matchedEle2 && matchedMuon2 && !matchedJet2 && matchedPhoton2) );
+            p_packedCandUsage2->Fill( 14.0, (matchedEle2 && !matchedMuon2 && matchedJet2 && matchedPhoton2) );
+            p_packedCandUsage2->Fill( 15.0, (!matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
+            p_packedCandUsage2->Fill( 16.0  (matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
 
-            if ( (matchedEle1 || matchedMuon1 || matchedJet1) ) { 
-                p_packedCandUsageGen1->Fill( 1.0, (!validEle1 && !validMuon1 && !validJet1) );
-                p_packedCandUsageGen1->Fill( 2.0, (validEle1 && !validMuon1 && !validJet1) );
-                p_packedCandUsageGen1->Fill( 3.0, (!validEle1 && validMuon1 && !validJet1) );
-                p_packedCandUsageGen1->Fill( 4.0, (!validEle1 && !validMuon1 && validJet1) );
-                p_packedCandUsageGen1->Fill( 5.0, (validEle1 && validMuon1 && !validJet1) );
-                p_packedCandUsageGen1->Fill( 6.0, (validEle1 && !validMuon1 && validJet1) );
-                p_packedCandUsageGen1->Fill( 7.0, (!validEle1 && !validMuon1 && validJet1) );
-                p_packedCandUsageGen1->Fill( 8.0, (validEle1 && validMuon1 && validJet1) );
+
+            if ( (matchedEle1 || matchedMuon1 || matchedJet1 || matchedPhoton1) ) { 
+                p_packedCandUsageGen1->Fill( 1.0,  (!matchedEle1 && !matchedMuon1 && !matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 2.0,  (matchedEle1 && !matchedMuon1 && !matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 3.0,  (!matchedEle1 && matchedMuon1 && !matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 4.0,  (!matchedEle1 && !matchedMuon1 && matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 5.0,  (!matchedEle1 && !matchedMuon1 && !matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 6.0,  (matchedEle1 && matchedMuon1 && !matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 7.0,  (matchedEle1 && !matchedMuon1 && matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 8.0,  (matchedEle1 && !matchedMuon1 && !matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 9.0,  (!matchedEle1 && matchedMuon1 && matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 10.0, (!matchedEle1 && matchedMuon1 && !matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 11.0, (!matchedEle1 && !matchedMuon1 && matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 12.0, (matchedEle1 && matchedMuon1 && matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 13.0, (matchedEle1 && matchedMuon1 && !matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 14.0, (matchedEle1 && !matchedMuon1 && matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 15.0, (!matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageGen1->Fill( 16.0  (matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
             }
-            else if ( !matchedEle1 && !matchedMuon1 && !matchedJet1 ) {
+            else if ( !matchedEle1 && !matchedMuon1 && !matchedJet1 &&!matchedPhoton1 ) {
                 p_packedCandUsageFake1->Fill( 1.0, (!validEle1 && !validMuon1 && !validJet1) );
-                p_packedCandUsageFake1->Fill( 2.0, (validEle1 && !validMuon1 && !validJet1) );
-                p_packedCandUsageFake1->Fill( 3.0, (!validEle1 && validMuon1 && !validJet1) );
-                p_packedCandUsageFake1->Fill( 4.0, (!validEle1 && !validMuon1 && validJet1) );
-                p_packedCandUsageFake1->Fill( 5.0, (validEle1 && validMuon1 && !validJet1) );
-                p_packedCandUsageFake1->Fill( 6.0, (validEle1 && !validMuon1 && validJet1) );
-                p_packedCandUsageFake1->Fill( 7.0, (!validEle1 && !validMuon1 && validJet1) );
-                p_packedCandUsageFake1->Fill( 8.0, (validEle1 && validMuon1 && validJet1) );
+                p_packedCandUsageFake1->Fill( 1.0,  (!matchedEle1 && !matchedMuon1 && !matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 2.0,  (matchedEle1 && !matchedMuon1 && !matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 3.0,  (!matchedEle1 && matchedMuon1 && !matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 4.0,  (!matchedEle1 && !matchedMuon1 && matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 5.0,  (!matchedEle1 && !matchedMuon1 && !matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 6.0,  (matchedEle1 && matchedMuon1 && !matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 7.0,  (matchedEle1 && !matchedMuon1 && matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 8.0,  (matchedEle1 && !matchedMuon1 && !matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 9.0,  (!matchedEle1 && matchedMuon1 && matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 10.0, (!matchedEle1 && matchedMuon1 && !matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 11.0, (!matchedEle1 && !matchedMuon1 && matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 12.0, (matchedEle1 && matchedMuon1 && matchedJet1 && !matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 13.0, (matchedEle1 && matchedMuon1 && !matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 14.0, (matchedEle1 && !matchedMuon1 && matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 15.0, (!matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
+                p_packedCandUsageFake1->Fill( 16.0  (matchedEle1 && matchedMuon1 && matchedJet1 && matchedPhoton1) );
             }
-            if ( (matchedEle2 || matchedMuon2 || matchedJet2) ) { 
-                p_packedCandUsageGen2->Fill( 1.0, (!validEle2 && !validMuon2 && !validJet2) );
-                p_packedCandUsageGen2->Fill( 2.0, (validEle2 && !validMuon2 && !validJet2) );
-                p_packedCandUsageGen2->Fill( 3.0, (!validEle2 && validMuon2 && !validJet2) );
-                p_packedCandUsageGen2->Fill( 4.0, (!validEle2 && !validMuon2 && validJet2) );
-                p_packedCandUsageGen2->Fill( 5.0, (validEle2 && validMuon2 && !validJet2) );
-                p_packedCandUsageGen2->Fill( 6.0, (validEle2 && !validMuon2 && validJet2) );
-                p_packedCandUsageGen2->Fill( 7.0, (!validEle2 && !validMuon2 && validJet2) );
-                p_packedCandUsageGen2->Fill( 8.0, (validEle2 && validMuon2 && validJet2) );
+            if ( (matchedEle2 || matchedMuon2 || matchedJet2 || matchedPhoton2) ) { 
+                p_packedCandUsageGen2->Fill( 1.0,  (!matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 2.0,  (matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 3.0,  (!matchedEle2 && matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 4.0,  (!matchedEle2 && !matchedMuon2 && matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 5.0,  (!matchedEle2 && !matchedMuon2 && !matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 6.0,  (matchedEle2 && matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 7.0,  (matchedEle2 && !matchedMuon2 && matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 8.0,  (matchedEle2 && !matchedMuon2 && !matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 9.0,  (!matchedEle2 && matchedMuon2 && matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 10.0, (!matchedEle2 && matchedMuon2 && !matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 11.0, (!matchedEle2 && !matchedMuon2 && matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 12.0, (matchedEle2 && matchedMuon2 && matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 13.0, (matchedEle2 && matchedMuon2 && !matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 14.0, (matchedEle2 && !matchedMuon2 && matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageGen2->Fill( 15.0, (!matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
+               p_packedCandUsageGen2->Fill( 16.0  (matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
             }
-            else if ( !matchedEle2 && !matchedMuon2 && !matchedJet2 ) {
-                p_packedCandUsageFake2->Fill( 1.0, (!validEle2 && !validMuon2 && !validJet2) );
-                p_packedCandUsageFake2->Fill( 2.0, (validEle2 && !validMuon2 && !validJet2) );
-                p_packedCandUsageFake2->Fill( 3.0, (!validEle2 && validMuon2 && !validJet2) );
-                p_packedCandUsageFake2->Fill( 4.0, (!validEle2 && !validMuon2 && validJet2) );
-                p_packedCandUsageFake2->Fill( 5.0, (validEle2 && validMuon2 && !validJet2) );
-                p_packedCandUsageFake2->Fill( 6.0, (validEle2 && !validMuon2 && validJet2) );
-                p_packedCandUsageFake2->Fill( 7.0, (!validEle2 && !validMuon2 && validJet2) );
-                p_packedCandUsageFake2->Fill( 8.0, (validEle2 && validMuon2 && validJet2) );
+            else if ( !matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2) {
+                p_packedCandUsageFake2->Fill( 1.0,  (!matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 2.0,  (matchedEle2 && !matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 3.0,  (!matchedEle2 && matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 4.0,  (!matchedEle2 && !matchedMuon2 && matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 5.0,  (!matchedEle2 && !matchedMuon2 && !matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 6.0,  (matchedEle2 && matchedMuon2 && !matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 7.0,  (matchedEle2 && !matchedMuon2 && matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 8.0,  (matchedEle2 && !matchedMuon2 && !matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 9.0,  (!matchedEle2 && matchedMuon2 && matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 10.0, (!matchedEle2 && matchedMuon2 && !matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 11.0, (!matchedEle2 && !matchedMuon2 && matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 12.0, (matchedEle2 && matchedMuon2 && matchedJet2 && !matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 13.0, (matchedEle2 && matchedMuon2 && !matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 14.0, (matchedEle2 && !matchedMuon2 && matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 15.0, (!matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
+                p_packedCandUsageFake2->Fill( 16.0  (matchedEle2 && matchedMuon2 && matchedJet2 && matchedPhoton2) );
             }
 
         } // end event loop

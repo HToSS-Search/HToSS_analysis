@@ -551,7 +551,7 @@ class AnalysisEvent
     Int_t packedCandsElectronIndex[NPACKEDCANDSMAX];
     Int_t packedCandsMuonIndex[NPACKEDCANDSMAX];
 //    Int_t packedCandsTauIndex[NPACKEDCANDSMAX];
-//    Int_t packedCandsPhotonIndex[NPACKEDCANDSMAX];
+    Int_t packedCandsPhotonIndex[NPACKEDCANDSMAX];
     Int_t packedCandsJetIndex[NPACKEDCANDSMAX];
     Int_t packedCandsHasTrackDetails[NPACKEDCANDSMAX];
     Float_t packedCandsDzError[NPACKEDCANDSMAX];
@@ -1759,7 +1759,7 @@ class AnalysisEvent
     TBranch* b_packedCandsElectronIndex; //!
     TBranch* b_packedCandsMuonIndex; //!
 //    TBranch* b_packedCandsTauIndex; //!
-//    TBranch* b_packedCandsPhotonIndex; //!
+    TBranch* b_packedCandsPhotonIndex; //!
     TBranch* b_packedCandsJetIndex; //!
     TBranch* b_packedCandsHasTrackDetails; //!
     TBranch* b_packedCandsDzError; //!
@@ -3078,7 +3078,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
    fChain->SetBranchAddress("packedCandsElectronIndex", packedCandsElectronIndex, &b_packedCandsElectronIndex);
    fChain->SetBranchAddress("packedCandsMuonIndex", packedCandsMuonIndex, &b_packedCandsMuonIndex);
 //   fChain->SetBranchAddress("packedCandsTauIndex", packedCandsTauIndex, &b_packedCandsTauIndex);
-//   fChain->SetBranchAddress("packedCandsPhotonIndex", packedCandsPhotonIndex, &b_packedCandsPhotonIndex);
+   fChain->SetBranchAddress("packedCandsPhotonIndex", packedCandsPhotonIndex, &b_packedCandsPhotonIndex);
    fChain->SetBranchAddress("packedCandsJetIndex", packedCandsJetIndex, &b_packedCandsJetIndex);
    fChain->SetBranchAddress("packedCandsHasTrackDetails", packedCandsHasTrackDetails, &b_packedCandsHasTrackDetails);
    fChain->SetBranchAddress("packedCandsDzError", packedCandsDzError, &b_packedCandsDzError);
