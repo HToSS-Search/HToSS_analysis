@@ -9,6 +9,7 @@
 *.d
 *.save*
 bin/
+lib/
 /plots/
 configs/2016/datasets/fileLists/*
 configs/2017/datasets/fileLists/*
