@@ -1,7 +1,6 @@
 name: "ggH_HToSS_MS2_ctauS10"
 locations:
      - "/user/cbossuyt/HToSS_analysis/localInput/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS2_ctauS10"
-     - "/user/cbossuyt/HToSS_analysis/localInput/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS2_ctauS10_ext1"
 cross_section: 21.46
 mc: true
 histogram: "ggH_HToSS_MS2_ctauS10"
