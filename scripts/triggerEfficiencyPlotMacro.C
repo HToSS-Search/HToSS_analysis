@@ -1542,11 +1542,11 @@ void triggerEfficiencyPlotMacro() {
 
     // mass
 
-    TH1F* h_mass_muTrigMass_ctau0    = (TH1F*)inFile0->Get("h_mass_muTrig");
-    TH1F* h_mass_muTrigMass_ctau1    = (TH1F*)inFile1->Get("h_mass_muTrig");
-    TH1F* h_mass_muTrigMass_ctau10   = (TH1F*)inFile2->Get("h_mass_muTrig");
-    TH1F* h_mass_muTrigMass_ctau100  = (TH1F*)inFile3->Get("h_mass_muTrig");
-    TH1F* h_mass_muTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_mass_muTrig");
+    TH1F* h_mass_muTrigMass_ctau0    = (TH1F*)inFile0->Get("h_diMuonMass_muTrig");
+    TH1F* h_mass_muTrigMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_muTrig");
+    TH1F* h_mass_muTrigMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_muTrig");
+    TH1F* h_mass_muTrigMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_muTrig");
+    TH1F* h_mass_muTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_muTrig");
 
     TCanvas *Cavnas_muTrigMass = new TCanvas("Cavnas_muTrigMass", "Cavnas_muTrigMass",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -1651,11 +1651,11 @@ void triggerEfficiencyPlotMacro() {
 
     //
 
-    TH1F* h_mass_mumuTrigMass_ctau0    = (TH1F*)inFile0->Get("h_mass_mumuTrig");
-    TH1F* h_mass_mumuTrigMass_ctau1    = (TH1F*)inFile1->Get("h_mass_mumuTrig");
-    TH1F* h_mass_mumuTrigMass_ctau10   = (TH1F*)inFile2->Get("h_mass_mumuTrig");
-    TH1F* h_mass_mumuTrigMass_ctau100  = (TH1F*)inFile3->Get("h_mass_mumuTrig");
-    TH1F* h_mass_mumuTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_mass_mumuTrig");
+    TH1F* h_mass_mumuTrigMass_ctau0    = (TH1F*)inFile0->Get("h_diMuonMass_mumuTrig");
+    TH1F* h_mass_mumuTrigMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_mumuTrig");
+    TH1F* h_mass_mumuTrigMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_mumuTrig");
+    TH1F* h_mass_mumuTrigMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_mumuTrig");
+    TH1F* h_mass_mumuTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_mumuTrig");
 
     TCanvas *Cavnas_mumuTrigMass = new TCanvas("Cavnas_mumuTrigMass", "Cavnas_mumuTrigMass",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -1760,11 +1760,11 @@ void triggerEfficiencyPlotMacro() {
 
     //
 
-    TH1F* h_mass_mumuTrigMassCutMass_ctau0    = (TH1F*)inFile0->Get("h_mass_mumuTrigMassCut");
-    TH1F* h_mass_mumuTrigMassCutMass_ctau1    = (TH1F*)inFile1->Get("h_mass_mumuTrigMassCut");
-    TH1F* h_mass_mumuTrigMassCutMass_ctau10   = (TH1F*)inFile2->Get("h_mass_mumuTrigMassCut");
-    TH1F* h_mass_mumuTrigMassCutMass_ctau100  = (TH1F*)inFile3->Get("h_mass_mumuTrigMassCut");
-    TH1F* h_mass_mumuTrigMassCutMass_ctau1000 = (TH1F*)inFile4->Get("h_mass_mumuTrigMassCut");
+    TH1F* h_mass_mumuTrigMassCutMass_ctau0    = (TH1F*)inFile0->Get("h_diMuonMass_mumuTrigMassCut");
+    TH1F* h_mass_mumuTrigMassCutMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_mumuTrigMassCut");
+    TH1F* h_mass_mumuTrigMassCutMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_mumuTrigMassCut");
+    TH1F* h_mass_mumuTrigMassCutMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_mumuTrigMassCut");
+    TH1F* h_mass_mumuTrigMassCutMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_mumuTrigMassCut");
 
     TCanvas *Cavnas_mumuTrigMassCutMass = new TCanvas("Cavnas_mumuTrigMassCutMass", "Cavnas_mumuTrigMassCutMass",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -1869,11 +1869,11 @@ void triggerEfficiencyPlotMacro() {
 
     //
 
-    TH1F* h_mass_mumuTrigNoMassCutMass_ctau0    = (TH1F*)inFile0->Get("h_mass_mumuTrigNoMassCut");
-    TH1F* h_mass_mumuTrigNoMassCutMass_ctau1    = (TH1F*)inFile1->Get("h_mass_mumuTrigNoMassCut");
-    TH1F* h_mass_mumuTrigNoMassCutMass_ctau10   = (TH1F*)inFile2->Get("h_mass_mumuTrigNoMassCut");
-    TH1F* h_mass_mumuTrigNoMassCutMass_ctau100  = (TH1F*)inFile3->Get("h_mass_mumuTrigNoMassCut");
-    TH1F* h_mass_mumuTrigNoMassCutMass_ctau1000 = (TH1F*)inFile4->Get("h_mass_mumuTrigNoMassCut");
+    TH1F* h_mass_mumuTrigNoMassCutMass_ctau0    = (TH1F*)inFile0->Get("h_diMuonMass_mumuTrigNoMassCut");
+    TH1F* h_mass_mumuTrigNoMassCutMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_mumuTrigNoMassCut");
+    TH1F* h_mass_mumuTrigNoMassCutMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_mumuTrigNoMassCut");
+    TH1F* h_mass_mumuTrigNoMassCutMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_mumuTrigNoMassCut");
+    TH1F* h_mass_mumuTrigNoMassCutMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_mumuTrigNoMassCut");
 
     TCanvas *Cavnas_mumuTrigNoMassCutMass = new TCanvas("Cavnas_mumuTrigNoMassCutMass", "Cavnas_mumuTrigNoMassCutMass",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -1978,11 +1978,11 @@ void triggerEfficiencyPlotMacro() {
 
     //
 
-    TH1F* h_mass_L2muTrigMass_ctau0    = (TH1F*)inFile0->Get("h_mass_L2muTrig");
-    TH1F* h_mass_L2muTrigMass_ctau1    = (TH1F*)inFile1->Get("h_mass_L2muTrig");
-    TH1F* h_mass_L2muTrigMass_ctau10   = (TH1F*)inFile2->Get("h_mass_L2muTrig");
-    TH1F* h_mass_L2muTrigMass_ctau100  = (TH1F*)inFile3->Get("h_mass_L2muTrig");
-    TH1F* h_mass_L2muTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_mass_L2muTrig");
+    TH1F* h_mass_L2muTrigMass_ctau0    = (TH1F*)inFile0->Get("h_diMuonMass_L2muTrig");
+    TH1F* h_mass_L2muTrigMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_L2muTrig");
+    TH1F* h_mass_L2muTrigMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_L2muTrig");
+    TH1F* h_mass_L2muTrigMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_L2muTrig");
+    TH1F* h_mass_L2muTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_L2muTrig");
 
     TCanvas *Cavnas_L2muTrigMass = new TCanvas("Cavnas_L2muTrigMass", "Cavnas_L2muTrigMass",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -2085,11 +2085,11 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_L2muTrigMass->SetSelected(Cavnas_L2muTrigMass);
     Cavnas_L2muTrigMass->SaveAs( "L2muTrig_mass_eff.pdf" );
 
-    TH1F* h_mass_muOrMumuTrigMass_ctau0    = (TH1F*)inFile0->Get("h_mass_muOrMumuTrig");
-    TH1F* h_mass_muOrMumuTrigMass_ctau1    = (TH1F*)inFile1->Get("h_mass_muOrMumuTrig");
-    TH1F* h_mass_muOrMumuTrigMass_ctau10   = (TH1F*)inFile2->Get("h_mass_muOrMumuTrig");
-    TH1F* h_mass_muOrMumuTrigMass_ctau100  = (TH1F*)inFile3->Get("h_mass_muOrMumuTrig");
-    TH1F* h_mass_muOrMumuTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_mass_muOrMumuTrig");
+    TH1F* h_mass_muOrMumuTrigMass_ctau0    = (TH1F*)inFile0->Get("h_diMuonMass_muOrMumuTrig");
+    TH1F* h_mass_muOrMumuTrigMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_muOrMumuTrig");
+    TH1F* h_mass_muOrMumuTrigMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_muOrMumuTrig");
+    TH1F* h_mass_muOrMumuTrigMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_muOrMumuTrig");
+    TH1F* h_mass_muOrMumuTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_muOrMumuTrig");
 
     TCanvas *Cavnas_muOrMumuTrigMass = new TCanvas("Cavnas_muOrMumuTrigMass", "Cavnas_muOrMumuTrigMass",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -2192,11 +2192,11 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_muOrMumuTrigMass->SetSelected(Cavnas_muOrMumuTrigMass);
     Cavnas_muOrMumuTrigMass->SaveAs( "muOrMumuTrig_mass_eff.pdf" );
 
-    TH1F* h_mass_ORTrigMass_ctau0    = (TH1F*)inFile0->Get("h_mass_ORTrig");
-    TH1F* h_mass_ORTrigMass_ctau1    = (TH1F*)inFile1->Get("h_mass_ORTrig");
-    TH1F* h_mass_ORTrigMass_ctau10   = (TH1F*)inFile2->Get("h_mass_ORTrig");
-    TH1F* h_mass_ORTrigMass_ctau100  = (TH1F*)inFile3->Get("h_mass_ORTrig");
-    TH1F* h_mass_ORTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_mass_ORTrig");
+    TH1F* h_mass_ORTrigMass_ctau0    = (TH1F*)inFile0->Get("h_diMuonMass_ORTrig");
+    TH1F* h_mass_ORTrigMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_ORTrig");
+    TH1F* h_mass_ORTrigMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_ORTrig");
+    TH1F* h_mass_ORTrigMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_ORTrig");
+    TH1F* h_mass_ORTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_ORTrig");
 
     TCanvas *Cavnas_ORTrigMass = new TCanvas("Cavnas_ORTrigMass", "Cavnas_ORTrigMass",0,0,1280,925);
     gStyle->SetOptStat(0);
