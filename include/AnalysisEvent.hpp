@@ -2477,6 +2477,8 @@ class AnalysisEvent
 //    bool eeTrig() const;
 //    bool muEGTrig() const;
     bool mumuTrig() const;
+    bool mumuTrig_noMassCut() const;
+    bool mumuTrig_massCut() const;
     bool mumuL2Trig() const;
     bool mumuNoVtxTrig() const;
 
@@ -4013,6 +4015,51 @@ inline bool AnalysisEvent::mumuTrig() const
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v13 > 0
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v14 > 0
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v1 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v2 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v3 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v7 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v8 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v1 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v2 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4 > 0;
+}
+
+inline bool AnalysisEvent::mumuTrig_noMassCut() const
+{
+    return is2016_ ? (eventRun < 280919
+// 2016 triggers
+                      && (HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v2 > 0
+                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v3 > 0
+                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v4 > 0
+                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v6 > 0
+                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v2 > 0
+                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v3 > 0
+                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v5 > 0))
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v2 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v3 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v4 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v7 > 0
+                         || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2 > 0
+                         || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v3 > 0
+                         || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v6 > 0
+//2017 triggers
+                   : HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v8 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v9 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v10 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v11 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v12 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v13 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v14 > 0;
+}
+
+inline bool AnalysisEvent::mumuTrig_massCut() const
+{
+    return is2016_ ? false
+// 2016 triggers
+//2017 triggers
+                   : HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v1 > 0
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v2 > 0
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v3 > 0
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4 > 0

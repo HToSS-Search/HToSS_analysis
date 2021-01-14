@@ -69,12 +69,14 @@ int main(int argc, char* argv[])
 
     // Quick and dirty trigger plots
     // denom
-    TH1F* h_leadingMuonPt_truth            {new TH1F("h_leadingMuonPt_truth",      "", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_truth         {new TH1F("h_subLeadingMuonPt_truth",   "", 200, 0., 100.)};
-    TH1F* h_leadingMuonPt                  {new TH1F("h_leadingMuonPt",            "", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt               {new TH1F("h_subLeadingMuonPt",         "", 200, 0., 100.)};
-    TH1F* h_delR_truth                     {new TH1F("h_delR_truth",               "", 100, 0., 1.0)};
-    TH1F* h_delR                           {new TH1F("h_delR",                     "", 100, 0., 1.0)};
+    TH1F* h_leadingMuonPt_truth                  {new TH1F("h_leadingMuonPt_truth",      "", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_truth               {new TH1F("h_subLeadingMuonPt_truth",   "", 200, 0., 100.)};
+    TH1F* h_leadingMuonPt                        {new TH1F("h_leadingMuonPt",            "", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt                     {new TH1F("h_subLeadingMuonPt",         "", 200, 0., 100.)};
+    TH1F* h_delR_truth                           {new TH1F("h_delR_truth",               "", 100, 0., 1.0)};
+    TH1F* h_delR                                 {new TH1F("h_delR",                     "", 100, 0., 1.0)};
+    TH1F* h_diMuonMass_truth                     {new TH1F("h_diMuonMass_truth",         "", 200, 0., 100.)}; 
+    TH1F* h_diMuonMass                           {new TH1F("h_diMuonMass",               "", 200, 0., 100.)};
     // numerator - single mu
     TH1F* h_leadingMuonPt_truth_muTrig           {new TH1F("h_leadingMuonPt_truth_muTrig",      "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
     TH1F* h_subLeadingMuonPt_truth_muTrig        {new TH1F("h_subLeadingMuonPt_truth_muTrig",   "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
@@ -82,20 +84,44 @@ int main(int argc, char* argv[])
     TH1F* h_subLeadingMuonPt_muTrig              {new TH1F("h_subLeadingMuonPt_muTrig",         "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
     TH1F* h_delR_truth_muTrig                    {new TH1F("h_delR_truth_muTrig",               "Trigger turn-on for signal; #Delta R; #mu trigger #epsilon", 100, 0., 1.0)};
     TH1F* h_delR_muTrig                          {new TH1F("h_delR_muTrig",                     "Trigger turn-on for signal; #Delta R; #mu trigger #epsilon", 100, 0., 1.0)};
-    // numerator - doubele mu
+    TH1F* h_diMuonMass_truth_muTrig              {new TH1F("h_diMuonMass_truth_muTrig",         "Trigger turn-on for signal; m_{#mu#mu}; #mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_diMuonMass_muTrig                    {new TH1F("h_diMuonMass_muTrig",               "Trigger turn-on for signal; m_{#mu#mu}; #mu trigger #epsilon", 200, 0., 100.)};
+    // numerator - double mu
     TH1F* h_leadingMuonPt_truth_mumuTrig         {new TH1F("h_leadingMuonPt_truth_mumuTrig",      "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epsilon", 200, 0., 100.)};
     TH1F* h_subLeadingMuonPt_truth_mumuTrig      {new TH1F("h_subLeadingMuonPt_truth_mumuTrig",   "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epsilon", 200, 0., 100.)};
     TH1F* h_leadingMuonPt_mumuTrig               {new TH1F("h_leadingMuonPt_mumuTrig",            "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epsilon", 200, 0., 100.)};
     TH1F* h_subLeadingMuonPt_mumuTrig            {new TH1F("h_subLeadingMuonPt_mumuTrig",         "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epsilon", 200, 0., 100.)};
     TH1F* h_delR_truth_mumuTrig                  {new TH1F("h_delR_truth_mumuTrig",               "Trigger turn-on for signal; #Delta R; #mu#mu trigger #epsilon", 100, 0., 1.0)};
-    TH1F* h_delR_mumuTrig                        {new TH1F("h_delR_mumuTrig",                    "Trigger turn-on for signal;  #Delta R; #mu#mu trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_delR_mumuTrig                        {new TH1F("h_delR_mumuTrig",                     "Trigger turn-on for signal;  #Delta R; #mu#mu trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_diMuonMass_truth_mumuTrig            {new TH1F("h_diMuonMass_truth_mumuTrig",         "Trigger turn-on for signal; m_{#mu#mu}; #mu#mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_diMuonMass_mumuTrig                  {new TH1F("h_diMuonMass_mumuTrig",               "Trigger turn-on for signal; m_{#mu#mu}; #mu#mu trigger #epsilon", 200, 0., 100.)};    
+    // numerator - double mu with mass cuts
+    TH1F* h_leadingMuonPt_truth_mumuTrigMassCut      {new TH1F("h_leadingMuonPt_truth_mumuTrigMassCut",    "Trigger turn-on for signal; p_{T} (GeV); #mu#mu+mass cut trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_truth_mumuTrigMassCut   {new TH1F("h_subLeadingMuonPt_truth_mumuTrigMassCut", "Trigger turn-on for signal; p_{T} (GeV); #mu#mu+mass cut trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_leadingMuonPt_mumuTrigMassCut            {new TH1F("h_leadingMuonPt_mumuTrigMassCut",          "Trigger turn-on for signal; p_{T} (GeV); #mu#mu+mass cut trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_mumuTrigMassCut         {new TH1F("h_subLeadingMuonPt_mumuTrigMassCut",       "Trigger turn-on for signal; p_{T} (GeV); #mu#mu+mass cut trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_delR_truth_mumuTrigMassCut               {new TH1F("h_delR_truth_mumuTrigMassCut",             "Trigger turn-on for signal; p_{T} (GeV); #mu#mu+mass cut trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_delR_mumuTrigMassCut                     {new TH1F("h_delR_mumuTrigMassCut",                   "Trigger turn-on for signal; p_{T} (GeV); #mu#mu+mass cut trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_diMuonMass_truth_mumuTrigMassCut         {new TH1F("h_diMuonMass_truth_mumuTrigMassCut",       "Trigger turn-on for signal; m_{#mu#mu}; #mu#mu+mass cut trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_diMuonMass_mumuTrigMassCut               {new TH1F("h_diMuonMass_mumuTrigMassCut",             "Trigger turn-on for signal; m_{#mu#mu}; #mu#mu+mass cut trigger #epsilon", 200, 0., 100.)};
+    // numerator - double mu with mass cuts
+    TH1F* h_leadingMuonPt_truth_mumuTrigNoMassCut    {new TH1F("h_leadingMuonPt_truth_mumuTrigNoMassCut",    "Trigger turn-on for signal; p_{T} (GeV); #mu#mu+no mass cut trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_truth_mumuTrigNoMassCut {new TH1F("h_subLeadingMuonPt_truth_mumuTrigNoMassCut", "Trigger turn-on for signal; p_{T} (GeV); #mu#mu+no mass cut trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_leadingMuonPt_mumuTrigNoMassCut          {new TH1F("h_leadingMuonPt_mumuTrigNoMassCut",          "Trigger turn-on for signal; p_{T} (GeV); #mu#mu+no mass cut trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_mumuTrigNoMassCut       {new TH1F("h_subLeadingMuonPt_mumuTrigNoMassCut",       "Trigger turn-on for signal; p_{T} (GeV); #mu#mu+no mass cut trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_delR_truth_mumuTrigNoMassCut             {new TH1F("h_delR_truth_mumuTrigNoMassCut",             "Trigger turn-on for signal; p_{T} (GeV); #mu#mu+no mass cut trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_delR_mumuTrigNoMassCut                   {new TH1F("h_delR_mumuTrigNoMassCut",                   "Trigger turn-on for signal; p_{T} (GeV); #mu#mu+no mass cut trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_diMuonMass_truth_mumuTrigNoMassCut       {new TH1F("h_diMuonMass_truth_mumuTrigNoMassCut",        "Trigger turn-on for signal; m_{#mu#mu}; #mu#mu+no mass cut trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_diMuonMass_mumuTrigNoMassCut             {new TH1F("h_diMuonMass_mumuTrigNoMassCut",              "Trigger turn-on for signal; m_{#mu#mu}; #mu#mu+no mass cut trigger #epsilon", 200, 0., 100.)};
     // numerator - L2 mu
     TH1F* h_leadingMuonPt_truth_L2muTrig         {new TH1F("h_leadingMuonPt_truth_L2muTrig",      "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epsilon", 200, 0., 100.)};
     TH1F* h_subLeadingMuonPt_truth_L2muTrig      {new TH1F("h_subLeadingMuonPt_truth_L2muTrig",   "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epsilon", 200, 0., 100.)};
     TH1F* h_leadingMuonPt_L2muTrig               {new TH1F("h_leadingMuonPt_L2muTrig",            "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epsilon", 200, 0., 100.)};
     TH1F* h_subLeadingMuonPt_L2muTrig            {new TH1F("h_subLeadingMuonPt_L2muTrig",         "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_delR_truth_L2muTrig                  {new TH1F("h_delR_truth_L2muTrig",               "Trigger turn-on for signal; #Delta R; L2 #mu#	mu trigger #epsilon", 100, 0., 1.0)};
-    TH1F* h_delR_L2muTrig                        {new TH1F("h_delR_L2muTrig",                    "Trigger turn-on for signal; #Delta R;  L2 #mu#mu trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_delR_truth_L2muTrig                  {new TH1F("h_delR_truth_L2muTrig",               "Trigger turn-on for signal; #Delta R; L2 #mu#mu trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_delR_L2muTrig                        {new TH1F("h_delR_L2muTrig",                     "Trigger turn-on for signal; #Delta R;  L2 #mu#mu trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_diMuonMass_truth_L2muTrig            {new TH1F("h_diMuonMass_truth_L2muTrig",         "Trigger turn-on for signal; m_{#mu#mu}; L2 #mu#mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_diMuonMass_L2muTrig                  {new TH1F("h_diMuonMass_L2muTrig",               "Trigger turn-on for signal; m_{#mu#mu}; L2 #mu#mu trigger #epsilon", 200, 0., 100.)};
     // numerator single OR double mu
     TH1F* h_leadingMuonPt_truth_muOrMumuTrig     {new TH1F("h_leadingMuonPt_truth_muOrMumuTrig",      "Trigger turn-on for signal; p_{T} (GeV); #mu OR #mu#mu trigger #epsilon", 200, 0., 100.)};
     TH1F* h_subLeadingMuonPt_truth_muOrMumuTrig  {new TH1F("h_subLeadingMuonPt_truth_muOrMumuTrig",   "Trigger turn-on for signal; p_{T} (GeV); #mu OR #mu#mu trigger #epsilon", 200, 0., 100.)};
@@ -103,6 +129,8 @@ int main(int argc, char* argv[])
     TH1F* h_subLeadingMuonPt_muOrMumuTrig        {new TH1F("h_subLeadingMuonPt_muOrMumuTrig",         "Trigger turn-on for signal; p_{T} (GeV); #mu OR #mu#mu trigger #epsilon", 200, 0., 100.)};
     TH1F* h_delR_truth_muOrMumuTrig              {new TH1F("h_delR_truth_muOrMumuTrig",               "Trigger turn-on for signal; #Delta R; #mu OR #mu#mu trigger #epsilon", 100, 0., 1.0)};
     TH1F* h_delR_muOrMumuTrig                    {new TH1F("h_delR_muOrMumuTrig",                     "Trigger turn-on for signal; #Delta R; #mu OR #mu#mu trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_diMuonMass_truth_muOrMumuTrig        {new TH1F("h_diMuonMass_truth_muOrMumuTrig",         "Trigger turn-on for signal; m_{#mu#mu}; #mu OR #mu#mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_diMuonMass_muOrMumuTrig              {new TH1F("h_diMuonMass_muOrMumuTrig",               "Trigger turn-on for signal; m_{#mu#mu}; #mu OR #mu#mu trigger #epsilon", 200, 0., 100.)};
     // numerator single OR double or L2 mu
     TH1F* h_leadingMuonPt_truth_ORTrig           {new TH1F("h_leadingMuonPt_truth_ORTrig",      "Trigger turn-on for signal; p_{T} (GeV); OR all #mu triggers #epsilon", 200, 0., 100.)};
     TH1F* h_subLeadingMuonPt_truth_ORTrig        {new TH1F("h_subLeadingMuonPt_truth_ORTrig",   "Trigger turn-on for signal; p_{T} (GeV); OR all #mu triggers #epsilon", 200, 0., 100.)};
@@ -110,6 +138,8 @@ int main(int argc, char* argv[])
     TH1F* h_subLeadingMuonPt_ORTrig              {new TH1F("h_subLeadingMuonPt_ORTrig",         "Trigger turn-on for signal; p_{T} (GeV); OR all #mu triggers #epsilon", 200, 0., 100.)};
     TH1F* h_delR_truth_ORTrig                    {new TH1F("h_delR_truth_ORTrig",               "Trigger turn-on for signal; #Delta R; OR all #mu triggers #epsilon", 100, 0., 1.0)};
     TH1F* h_delR_ORTrig                          {new TH1F("h_delR_ORTrig",                     "Trigger turn-on for signal; #Delta R; OR all #mu triggers #epsilon", 100, 0., 1.0)};
+    TH1F* h_diMuonMass_truth_ORTrig              {new TH1F("h_diMuonMass_truth_ORTrig",         "Trigger turn-on for signal; m_{#mu#mu}; OR all #mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_diMuonMass_ORTrig                    {new TH1F("h_diMuonMass_ORTrig",               "Trigger turn-on for signal; m_{#mu#mu}; OR all #mu trigger #epsilon", 200, 0., 100.)};
 
     namespace po = boost::program_options;
 
@@ -242,6 +272,7 @@ int main(int argc, char* argv[])
 
             const bool passSingleMuonTrigger {event.muTrig()}, passDimuonTrigger {event.mumuTrig()};
             const bool passL2MuonTrigger {event.mumuL2Trig()}, passDimuonNoVtxTrigger {event.mumuNoVtxTrig()};
+            const bool passDiMuonNoMassCutTrigger {event.mumuTrig_noMassCut()}, passDiMuonMassCutTrigger {event.mumuTrig_massCut()};
 
             if ( event.numMuonPF2PAT > 1 ) {
                 // fill muon pT plots pre-triggers
@@ -254,10 +285,15 @@ int main(int argc, char* argv[])
                     else if (mu1 >= 0 && mu2 > 0) break;
                 }
 
-                TLorentzVector muon1, muon2; 
+                const TLorentzVector muon1_truth {event.muonPF2PATPX[mu1], event.muonPF2PATPY[mu1], event.muonPF2PATPZ[mu1], event.muonPF2PATE[mu1]};
+                const TLorentzVector muon2_truth {event.muonPF2PATPX[mu2], event.muonPF2PATPY[mu2], event.muonPF2PATPZ[mu2], event.muonPF2PATE[mu2]}; 
+                const TLorentzVector muon1 {event.muonPF2PATPX[0], event.muonPF2PATPY[0], event.muonPF2PATPZ[0], event.muonPF2PATE[0]};
+                const TLorentzVector muon2 {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]}; 
 	
-                float delR_truth = deltaR(event.muonPF2PATEta[mu1], event.muonPF2PATPhi[mu1], event.muonPF2PATEta[mu2], event.muonPF2PATPhi[mu2]);
-                float delR = deltaR(event.muonPF2PATEta[0], event.muonPF2PATPhi[0], event.muonPF2PATEta[1], event.muonPF2PATPhi[1]);
+                const float delR_truth = deltaR(event.muonPF2PATEta[mu1], event.muonPF2PATPhi[mu1], event.muonPF2PATEta[mu2], event.muonPF2PATPhi[mu2]);
+                const float delR       = deltaR(event.muonPF2PATEta[0], event.muonPF2PATPhi[0], event.muonPF2PATEta[1], event.muonPF2PATPhi[1]);
+                const float mass_truth = (muon1_truth + muon2_truth).M();
+                const float mass       = (muon1 + muon2).M();
 
                 // Fill general pT/dR (with and without scalar parentage)
                 h_leadingMuonPt_truth->Fill(event.muonPF2PATPt[mu1]);
@@ -266,6 +302,9 @@ int main(int argc, char* argv[])
                 h_subLeadingMuonPt->Fill(event.muonPF2PATPt[1]);
                 h_delR_truth->Fill(delR_truth);
                 h_delR->Fill(delR);
+                h_diMuonMass_truth->Fill(mass_truth);
+                h_diMuonMass->Fill(mass);
+
                 // Fill pT post trigger (with and without scalar parentage)
                 if (passSingleMuonTrigger) {
                     h_leadingMuonPt_truth_muTrig->Fill(event.muonPF2PATPt[mu1]);
@@ -274,6 +313,8 @@ int main(int argc, char* argv[])
                     h_subLeadingMuonPt_muTrig->Fill(event.muonPF2PATPt[1]);
                     h_delR_truth_muTrig->Fill(delR_truth);
                     h_delR_muTrig->Fill(delR);
+                    h_diMuonMass_truth_muTrig->Fill(mass_truth);
+                    h_diMuonMass_muTrig->Fill(mass);
                 }
                 if (passDimuonTrigger) {
                     h_leadingMuonPt_truth_mumuTrig->Fill(event.muonPF2PATPt[mu1]);
@@ -282,6 +323,28 @@ int main(int argc, char* argv[])
                     h_subLeadingMuonPt_mumuTrig->Fill(event.muonPF2PATPt[1]);
                     h_delR_truth_mumuTrig->Fill(delR_truth);
                     h_delR_mumuTrig->Fill(delR);
+                    h_diMuonMass_truth_mumuTrig->Fill(mass_truth);
+                    h_diMuonMass_mumuTrig->Fill(mass);
+                }
+                if (passDiMuonNoMassCutTrigger) {
+                    h_leadingMuonPt_truth_mumuTrigNoMassCut->Fill(event.muonPF2PATPt[mu1]);
+                    h_subLeadingMuonPt_truth_mumuTrigNoMassCut->Fill(event.muonPF2PATPt[mu2]);
+                    h_leadingMuonPt_mumuTrigNoMassCut->Fill(event.muonPF2PATPt[0]);
+                    h_subLeadingMuonPt_mumuTrigNoMassCut->Fill(event.muonPF2PATPt[1]);
+                    h_delR_truth_mumuTrigNoMassCut->Fill(delR_truth);
+                    h_delR_mumuTrigNoMassCut->Fill(delR);
+                    h_diMuonMass_truth_mumuTrigNoMassCut->Fill(mass_truth);
+                    h_diMuonMass_mumuTrigNoMassCut->Fill(mass);
+                }
+                if (passDiMuonMassCutTrigger) {
+                    h_leadingMuonPt_truth_mumuTrigMassCut->Fill(event.muonPF2PATPt[mu1]);
+                    h_subLeadingMuonPt_truth_mumuTrigMassCut->Fill(event.muonPF2PATPt[mu2]);
+                    h_leadingMuonPt_mumuTrigMassCut->Fill(event.muonPF2PATPt[0]);
+                    h_subLeadingMuonPt_mumuTrigMassCut->Fill(event.muonPF2PATPt[1]);
+                    h_delR_truth_mumuTrigMassCut->Fill(delR_truth);
+                    h_delR_mumuTrigMassCut->Fill(delR);
+                    h_diMuonMass_truth_mumuTrigMassCut->Fill(mass_truth);
+                    h_diMuonMass_mumuTrigMassCut->Fill(mass);
                 }
                 if (passL2MuonTrigger || passDimuonNoVtxTrigger) {
                     h_leadingMuonPt_truth_L2muTrig->Fill(event.muonPF2PATPt[mu1]);
@@ -290,6 +353,8 @@ int main(int argc, char* argv[])
                     h_subLeadingMuonPt_L2muTrig->Fill(event.muonPF2PATPt[1]);
                     h_delR_truth_L2muTrig->Fill(delR_truth);
                     h_delR_L2muTrig->Fill(delR);
+                    h_diMuonMass_truth_L2muTrig->Fill(mass_truth);
+                    h_diMuonMass_L2muTrig->Fill(mass);
                 }
                 if (passSingleMuonTrigger || passDimuonTrigger) {
                     h_leadingMuonPt_truth_muOrMumuTrig->Fill(event.muonPF2PATPt[mu1]);
@@ -298,6 +363,8 @@ int main(int argc, char* argv[])
                     h_subLeadingMuonPt_muOrMumuTrig->Fill(event.muonPF2PATPt[1]);
                     h_delR_truth_muOrMumuTrig->Fill(delR_truth);
                     h_delR_muOrMumuTrig->Fill(delR);
+                    h_diMuonMass_truth_muOrMumuTrig->Fill(mass_truth);
+                    h_diMuonMass_muOrMumuTrig->Fill(mass);
                 }
                 if (passSingleMuonTrigger || passDimuonTrigger || passL2MuonTrigger || passDimuonNoVtxTrigger) {
                     h_leadingMuonPt_truth_ORTrig->Fill(event.muonPF2PATPt[mu1]);
@@ -306,6 +373,8 @@ int main(int argc, char* argv[])
                     h_subLeadingMuonPt_ORTrig->Fill(event.muonPF2PATPt[1]);
                     h_delR_truth_ORTrig->Fill(delR_truth);
                     h_delR_ORTrig->Fill(delR);
+                    h_diMuonMass_truth_ORTrig->Fill(mass_truth);
+                    h_diMuonMass_ORTrig->Fill(mass);
                 }
             }
 
@@ -328,6 +397,8 @@ int main(int argc, char* argv[])
     h_subLeadingMuonPt_muTrig->Divide(h_subLeadingMuonPt);
     h_delR_truth_muTrig->Divide(h_delR_truth);
     h_delR_muTrig->Divide(h_delR);
+    h_diMuonMass_truth_muTrig->Divide(h_diMuonMass_truth);
+    h_diMuonMass_muTrig->Divide(h_diMuonMass);
 
     h_leadingMuonPt_truth_mumuTrig->Divide(h_leadingMuonPt_truth);
     h_subLeadingMuonPt_truth_mumuTrig->Divide(h_subLeadingMuonPt_truth);
@@ -335,6 +406,26 @@ int main(int argc, char* argv[])
     h_subLeadingMuonPt_mumuTrig->Divide(h_subLeadingMuonPt);
     h_delR_truth_mumuTrig->Divide(h_delR_truth);
     h_delR_mumuTrig->Divide(h_delR);
+    h_diMuonMass_truth_mumuTrig->Divide(h_diMuonMass_truth);
+    h_diMuonMass_mumuTrig->Divide(h_diMuonMass);
+
+    h_leadingMuonPt_truth_mumuTrigNoMassCut->Divide(h_leadingMuonPt_truth);
+    h_subLeadingMuonPt_truth_mumuTrigNoMassCut->Divide(h_subLeadingMuonPt_truth);
+    h_leadingMuonPt_mumuTrigNoMassCut->Divide(h_leadingMuonPt);
+    h_subLeadingMuonPt_mumuTrigNoMassCut->Divide(h_subLeadingMuonPt);
+    h_delR_truth_mumuTrigNoMassCut->Divide(h_delR_truth);
+    h_delR_mumuTrigNoMassCut->Divide(h_delR);
+    h_diMuonMass_truth_mumuTrigNoMassCut->Divide(h_diMuonMass_truth);
+    h_diMuonMass_mumuTrigNoMassCut->Divide(h_diMuonMass);
+
+    h_leadingMuonPt_truth_mumuTrigMassCut->Divide(h_leadingMuonPt_truth);
+    h_subLeadingMuonPt_truth_mumuTrigMassCut->Divide(h_subLeadingMuonPt_truth);
+    h_leadingMuonPt_mumuTrigMassCut->Divide(h_leadingMuonPt);
+    h_subLeadingMuonPt_mumuTrigMassCut->Divide(h_subLeadingMuonPt);
+    h_delR_truth_mumuTrigMassCut->Divide(h_delR_truth);
+    h_delR_mumuTrigMassCut->Divide(h_delR);
+    h_diMuonMass_truth_mumuTrigMassCut->Divide(h_diMuonMass_truth);
+    h_diMuonMass_mumuTrigMassCut->Divide(h_diMuonMass);
 
     h_leadingMuonPt_truth_L2muTrig->Divide(h_leadingMuonPt_truth);
     h_subLeadingMuonPt_truth_L2muTrig->Divide(h_subLeadingMuonPt_truth);
@@ -342,6 +433,8 @@ int main(int argc, char* argv[])
     h_subLeadingMuonPt_L2muTrig->Divide(h_subLeadingMuonPt);
     h_delR_truth_L2muTrig->Divide(h_delR_truth);
     h_delR_L2muTrig->Divide(h_delR);
+    h_diMuonMass_truth_L2muTrig->Divide(h_diMuonMass_truth);
+    h_diMuonMass_L2muTrig->Divide(h_diMuonMass);
 
     h_leadingMuonPt_truth_muOrMumuTrig->Divide(h_leadingMuonPt_truth);
     h_subLeadingMuonPt_truth_muOrMumuTrig->Divide(h_subLeadingMuonPt_truth);
@@ -349,6 +442,8 @@ int main(int argc, char* argv[])
     h_subLeadingMuonPt_muOrMumuTrig->Divide(h_subLeadingMuonPt);
     h_delR_truth_muOrMumuTrig->Divide(h_delR_truth);
     h_delR_muOrMumuTrig->Divide(h_delR);
+    h_diMuonMass_truth_muOrMumuTrig->Divide(h_diMuonMass_truth);
+    h_diMuonMass_muOrMumuTrig->Divide(h_diMuonMass);
 
     h_leadingMuonPt_truth_ORTrig->Divide(h_leadingMuonPt_truth);
     h_subLeadingMuonPt_truth_ORTrig->Divide(h_subLeadingMuonPt_truth);
@@ -356,6 +451,8 @@ int main(int argc, char* argv[])
     h_subLeadingMuonPt_ORTrig->Divide(h_subLeadingMuonPt);
     h_delR_truth_ORTrig->Divide(h_delR_truth);
     h_delR_ORTrig->Divide(h_delR);
+    h_diMuonMass_truth_ORTrig->Divide(h_diMuonMass_truth);
+    h_diMuonMass_ORTrig->Divide(h_diMuonMass);
 
     h_leadingMuonPt_truth_muTrig->Write();
     h_subLeadingMuonPt_truth_muTrig->Write();
@@ -363,30 +460,58 @@ int main(int argc, char* argv[])
     h_subLeadingMuonPt_muTrig->Write();
     h_delR_truth_muTrig->Write();
     h_delR_muTrig->Write();
+    h_diMuonMass_truth_muTrig->Write();
+    h_diMuonMass_muTrig->Write();
     h_leadingMuonPt_truth_mumuTrig->Write();
     h_subLeadingMuonPt_truth_mumuTrig->Write();
     h_leadingMuonPt_mumuTrig->Write();
     h_subLeadingMuonPt_mumuTrig->Write();
     h_delR_truth_mumuTrig->Write();
     h_delR_mumuTrig->Write();
+    h_diMuonMass_truth_mumuTrig->Write();
+    h_diMuonMass_mumuTrig->Write();
+
+    h_leadingMuonPt_truth_mumuTrigNoMassCut->Write();
+    h_subLeadingMuonPt_truth_mumuTrigNoMassCut->Write();
+    h_leadingMuonPt_mumuTrigNoMassCut->Write();
+    h_subLeadingMuonPt_mumuTrigNoMassCut->Write();
+    h_delR_truth_mumuTrigNoMassCut->Write();
+    h_delR_mumuTrigNoMassCut->Write();
+    h_diMuonMass_truth_mumuTrigNoMassCut->Write();
+    h_diMuonMass_mumuTrigNoMassCut->Write();
+    h_leadingMuonPt_truth_mumuTrigMassCut->Write();
+    h_subLeadingMuonPt_truth_mumuTrigMassCut->Write();
+    h_leadingMuonPt_mumuTrigMassCut->Write();
+    h_subLeadingMuonPt_mumuTrigMassCut->Write();
+    h_delR_truth_mumuTrigMassCut->Write();
+    h_delR_mumuTrigMassCut->Write();
+    h_diMuonMass_truth_mumuTrigMassCut->Write();
+    h_diMuonMass_mumuTrigMassCut->Write();
+
     h_leadingMuonPt_truth_L2muTrig->Write();
     h_subLeadingMuonPt_truth_L2muTrig->Write();
     h_leadingMuonPt_L2muTrig->Write();
     h_subLeadingMuonPt_L2muTrig->Write();
     h_delR_truth_L2muTrig->Write();
     h_delR_L2muTrig->Write();
+    h_diMuonMass_truth_L2muTrig->Write();
+    h_diMuonMass_L2muTrig->Write();
     h_leadingMuonPt_truth_muOrMumuTrig->Write();
     h_subLeadingMuonPt_truth_muOrMumuTrig->Write();
     h_leadingMuonPt_muOrMumuTrig->Write();
     h_subLeadingMuonPt_muOrMumuTrig->Write();
     h_delR_truth_muOrMumuTrig->Write();
     h_delR_muOrMumuTrig->Write();
+    h_diMuonMass_truth_muOrMumuTrig->Write();
+    h_diMuonMass_muOrMumuTrig->Write();
     h_leadingMuonPt_truth_ORTrig->Write();
     h_subLeadingMuonPt_truth_ORTrig->Write();
     h_leadingMuonPt_ORTrig->Write();
     h_subLeadingMuonPt_ORTrig->Write();
     h_delR_truth_ORTrig->Write();
     h_delR_ORTrig->Write();
+    h_diMuonMass_truth_ORTrig->Write();
+    h_diMuonMass_ORTrig->Write();
 
     outFile->Close();
 

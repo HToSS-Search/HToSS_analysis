@@ -182,11 +182,77 @@ int main(int argc, char* argv[]) {
     p_selectedChsMatching->GetXaxis()->SetBinLabel(5, "Leading track genuine");
     p_selectedChsMatching->GetXaxis()->SetBinLabel(6, "Subleading track genuine");
 
-    TH1F* h_chsDeltaR               {new TH1F("h_chsDeltaR",              "#DeltaR between selected chs tracks", 50, 0., 1.)};
-    TH1F* h_chsBothGenDeltaR        {new TH1F("h_chsBothGenDeltaR",       "#DeltaR between both genuine chs tracks", 50, 0., 1.)};
-    TH1F* h_chsLeadingGenDeltaR     {new TH1F("h_chsLeadingGenDeltaR",    "#DeltaR between leading gen/subleading fake chs tracks", 50, 0., 1.)};
-    TH1F* h_chsSubleadingGenDeltaR  {new TH1F("h_chsSubleadingGenDeltaR", "#DeltaR between leading fake/subleading gen chs tracks", 50, 0., 1.)};
-    TH1F* h_chsBothFakeDeltaR       {new TH1F("h_chsBothFakeDeltaR",      "#DeltaR between both fake chs tracks", 50, 0., 1.)};
+    TH1F* h_chsPt1                   {new TH1F("h_chsPt1",                 "Leading charged hadron track p_{T}", 200, 0.0, 100.)};
+    TH1F* h_chsPt2                   {new TH1F("h_chsPt2",                 "Subleading charged hadron track p_{T}", 200, 0.0, 100.)};
+    TH1F* h_chsPtBothGen1            {new TH1F("h_chsPtBothGen1",          "Leading charged hadron track p_{T} - both tracks genuine", 200, 0.0, 100.)};
+    TH1F* h_chsPtBothGen2            {new TH1F("h_chsPtBothGen2",          "Subleading charged hadron track p_{T} - both tracks genuine", 200, 0.0, 100.)};
+    TH1F* h_chsPtLeadingGen1         {new TH1F("h_chsPtLeadingGen1",       "Leading charged hadron track p_{T} - leading genuine/subleading fake", 200, 0.0, 100.)};
+    TH1F* h_chsPtLeadingGen2         {new TH1F("h_chsPtLeadingGen2",       "Subleading charged hadron track p_{T} - leading genuine/subleading fake", 200, 0.0, 100.)};
+    TH1F* h_chsPtSubleadingGen1      {new TH1F("h_chsPtSubleadingGen1",    "Leading charged hadron track p_{T} - subleading genuine/leading fake", 200, 0.0, 100.)};
+    TH1F* h_chsPtSubleadingGen2      {new TH1F("h_chsPtSubleadingGen2",    "Subleading charged hadron track p_{T} - subleading genuine/leading fake", 200, 0.0, 100.)};
+    TH1F* h_chsPtBothFake1           {new TH1F("h_chsPtBothFake1",         "Leading charged hadron track p_{T} - both tracks fake", 200, 0.0, 100.)};
+    TH1F* h_chsPtBothFake2           {new TH1F("h_chsPtBothFake2",         "Subleading charged hadron track p_{T} - both tracks fake", 200, 0.0, 100.)};
+    TH1F* h_chsPtGen1                {new TH1F("h_chsPtGen1",              "Leading genuine charged hadron track p_{T}", 200, 0.0, 100.)};
+    TH1F* h_chsPtGen2                {new TH1F("h_chsPtGen2",              "Subleading genuine charged hadron track p_{T}", 200, 0.0, 100.)};
+    TH1F* h_chsPtFake1               {new TH1F("h_chsPtFake1",             "Leading fake charged hadron track p_{T}", 200, 0.0, 100.)};
+    TH1F* h_chsPtFake2               {new TH1F("h_chsPtFake2",             "Subleading fake charged hadron track p_{T}", 200, 0.0, 100.)};
+
+    TH1F* h_chsEta1                  {new TH1F("h_chsEta1",                "Leading charged hadron track #eta", 300, -3.0, 3.0)};
+    TH1F* h_chsEta2                  {new TH1F("h_chsEta2",                "Subleading charged hadron track #eta", 300, -3.0, 3.0)};
+    TH1F* h_chsEtaBothGen1           {new TH1F("h_chsEtaBothGen1",         "Leading charged hadron track #eta - both tracks genuine", 300, -3.0, 3.0)};
+    TH1F* h_chsEtaBothGen2           {new TH1F("h_chsEtaBothGen2",         "Subleading charged hadron track #eta - both tracks genuine", 300, -3.0, 3.0)};
+    TH1F* h_chsEtaLeadingGen1        {new TH1F("h_chsEtaLeadingGen1",	   "Leading charged hadron track #eta - leading genuine/subleading fake", 300, -3.0, 3.0)};
+    TH1F* h_chsEtaLeadingGen2        {new TH1F("h_chsEtaLeadingGen2",	   "Subleading charged hadron track #eta - leading genuine/subleading fake", 300, -3.0, 3.0)};
+    TH1F* h_chsEtaSubleadingGen1     {new TH1F("h_chsEtaSubleadingGen1",   "Leading charged hadron track #eta - subleading genuine/leading fake", 300, -3.0, 3.0)};
+    TH1F* h_chsEtaSubleadingGen2     {new TH1F("h_chsEtaSubleadingGen2",   "Subleading charged hadron track #eta - subleading genuine/leading fake", 300, -3.0, 3.0)};
+    TH1F* h_chsEtaBothFake1          {new TH1F("h_chsEtaBothFake1",        "Leading charged hadron track #eta - both tracks fake", 300, -3.0, 3.0)};
+    TH1F* h_chsEtaBothFake2          {new TH1F("h_chsEtaBothFake2",        "Subleading charged hadron track #eta - both tracks fake", 300, -3.0, 3.0)};
+    TH1F* h_chsEtaGen1               {new TH1F("h_chsEtaGen1",             "Leading genuine charged hadron track #eta", 300, -3.0, 3.0)};
+    TH1F* h_chsEtaGen2               {new TH1F("h_chsEtaGen2",             "Subleading genuine charged hadron track #eta", 300, -3.0, 3.0)};
+    TH1F* h_chsEtaFake1              {new TH1F("h_chsEtaFake1",            "Leading fake charged hadron track #eta", 300, -3.0, 3.0)};
+    TH1F* h_chsEtaFake2              {new TH1F("h_chsEtaFake2",            "Subleading fake charged hadron track #eta", 300, -3.0, 3.0)};
+
+    TH1F* h_chsDeltaR                {new TH1F("h_chsDeltaR",              "#DeltaR between selected chs tracks", 50, 0., 1.)};
+    TH1F* h_chsBothGenDeltaR         {new TH1F("h_chsBothGenDeltaR",       "#DeltaR between both genuine chs tracks", 50, 0., 1.)};
+    TH1F* h_chsLeadingGenDeltaR      {new TH1F("h_chsLeadingGenDeltaR",    "#DeltaR between leading gen/subleading fake chs tracks", 50, 0., 1.)};
+    TH1F* h_chsSubleadingGenDeltaR   {new TH1F("h_chsSubleadingGenDeltaR", "#DeltaR between leading fake/subleading gen chs tracks", 50, 0., 1.)};
+    TH1F* h_chsBothFakeDeltaR        {new TH1F("h_chsBothFakeDeltaR",      "#DeltaR between both fake chs tracks", 50, 0., 1.)};
+
+    TH1F* h_chsTkChi2Ndof1                          {new TH1F("h_chsTkChi2Ndof1",                "Leading charged hadron track #chi^{2}/Ndof", 200, .0, 10.0)};
+    TH1F* h_chsTkChi2Ndof2                          {new TH1F("h_chsTkChi2Ndof2",                "Subleading charged hadron track #chi^{2}/Ndof", 200, .0, 10.0)};
+    TH1F* h_chsTkChi2NdofBothGen1                   {new TH1F("h_chsTkChi2NdofBothGen1",         "Leading charged hadron track #chi^{2}/Ndof - both tracks genuine", 200, .0, 10.0)};
+    TH1F* h_chsTkChi2NdofBothGen2                   {new TH1F("h_chsTkChi2NdofBothGen2",         "Subleading charged hadron track #chi^{2}/Ndof - both tracks genuine", 200, .0, 10.0)};
+    TH1F* h_chsTkChi2NdofLeadingGen1                {new TH1F("h_chsTkChi2NdofLeadingGen1",	 "Leading charged hadron track #chi^{2}/Ndof - leading genuine/subleading fake", 200, .0, 10.0)};
+    TH1F* h_chsTkChi2NdofLeadingGen2                {new TH1F("h_chsTkChi2NdofLeadingGen2",	 "Subleading charged hadron track #chi^{2}/Ndof - leading genuine/subleading fake", 200, .0, 10.0)};
+    TH1F* h_chsTkChi2NdofSubleadingGen1             {new TH1F("h_chsTkChi2NdofSubleadingGen1",   "Leading charged hadron track #chi^{2}/Ndof - subleading genuine/leading fake", 200, .0, 10.0)};
+    TH1F* h_chsTkChi2NdofSubleadingGen2             {new TH1F("h_chsTkChi2NdofSubleadingGen2",   "Subleading charged hadron track #chi^{2}/Ndof - subleading genuine/leading fake", 200, .0, 10.0)};
+    TH1F* h_chsTkChi2NdofBothFake1                  {new TH1F("h_chsTkChi2NdofBothFake1",        "Leading charged hadron track #chi^{2}/Ndof - both tracks fake", 200, .0, 10.0)};
+    TH1F* h_chsTkChi2NdofBothFake2                  {new TH1F("h_chsTkChi2NdofBothFake2",        "Subleading charged hadron track #chi^{2}/Ndof - both tracks fake", 200, .0, 10.0)};
+    TH1F* h_chsTkChi2NdofGen1                       {new TH1F("h_chsTkChi2NdofGen1",             "Leading genuine charged hadron track #chi^{2}/Ndof", 200, .0, 10.0)};
+    TH1F* h_chsTkChi2NdofGen2                       {new TH1F("h_chsTkChi2NdofGen2",             "Subleading genuine charged hadron track #chi^{2}/Ndof", 200, .0, 10.0)};
+    TH1F* h_chsTkChi2NdofFake1                      {new TH1F("h_chsTkChi2NdofFake1",            "Leading fake charged hadron track #chi^{2}/Ndof", 200, .0, 10.0)};
+    TH1F* h_chsTkChi2NdofFake2                      {new TH1F("h_chsTkChi2NdofFake2",            "Subleading fake charged hadron track #chi^{2}/Ndof", 200, .0, 10.0)};
+
+    TH1F* h_chsRefittedTkChi2Ndof1                  {new TH1F("h_chsRefittedTkChi2Ndof1",                "Leading charged hadron refitted track #chi^{2}/Ndof", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkChi2Ndof2                  {new TH1F("h_chsRefittedTkChi2Ndof2",                "Subleading charged hadron refitted track #chi^{2}/Ndof", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkChi2NdofBothGen1           {new TH1F("h_chsRefittedTkChi2NdofBothGen1",         "Leading charged hadron refitted track #chi^{2}/Ndof - both tracks genuine", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkChi2NdofBothGen2           {new TH1F("h_chsRefittedTkChi2NdofBothGen2",         "Subleading charged hadron refitted track #chi^{2}/Ndof - both tracks genuine", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkChi2NdofLeadingGen1        {new TH1F("h_chsRefittedTkChi2NdofLeadingGen1",	 "Leading charged hadron refitted track #chi^{2}/Ndof - leading genuine/subleading fake", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkChi2NdofLeadingGen2        {new TH1F("h_chsRefittedTkChi2NdofLeadingGen2",	 "Subleading charged hadron refitted track #chi^{2}/Ndof - leading genuine/subleading fake", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkChi2NdofSubleadingGen1     {new TH1F("h_chsRefittedTkChi2NdofSubleadingGen1",   "Leading charged hadron refitted track #chi^{2}/Ndof - subleading genuine/leading fake", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkChi2NdofSubleadingGen2     {new TH1F("h_chsRefittedTkChi2NdofSubleadingGen2",   "Subleading charged hadron refitted track #chi^{2}/Ndof - subleading genuine/leading fake", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkChi2NdofBothFake1          {new TH1F("h_chsRefittedTkChi2NdofBothFake1",        "Leading charged hadron refitted track #chi^{2}/Ndof - both tracks fake", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkChi2NdofBothFake2          {new TH1F("h_chsRefittedTkChi2NdofBothFake2",        "Subleading charged hadron refitted track #chi^{2}/Ndof - both tracks fake", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkChi2NdofGen1               {new TH1F("h_chsRefittedTkChi2NdofGen1",             "Leading genuine charged hadron refitted track #chi^{2}/Ndof", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkChi2NdofGen2               {new TH1F("h_chsRefittedTkChi2NdofGen2",             "Subleading genuine charged hadron refitted track #chi^{2}/Ndof", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkChi2NdofFake1              {new TH1F("h_chsRefittedTkChi2NdofFake1",            "Leading fake charged hadron refitted track #chi^{2}/Ndof", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkChi2NdofFake2              {new TH1F("h_chsRefittedTkChi2NdofFake2",            "Subleading fake charged hadron refitted track #chi^{2}/Ndof", 200, .0, 10.0)};
+
+    TH1F* h_chsRefittedTkPairChi2Ndof               {new TH1F("h_chsRefittedTkPairChi2Ndof",              "Refitted charged hadron track pair #chi^{2}/Ndof", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkPairChi2NdofBothGen        {new TH1F("h_chsRefittedTkPairChi2NdofBothGen",       "Refitted charged hadron track pair #chi^{2}/Ndof (Both gen)", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkPairChi2NdofLeadingGen     {new TH1F("h_chsRefittedTkPairChi2NdofLeadingGen",    "Refitted charged hadron track pair #chi^{2}/Ndof (Leading gen)", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkPairChi2NdofSubleadingGen  {new TH1F("h_chsRefittedTkPairChi2NdofSubleadingGen", "Refitted charged hadron track pair #chi^{2}/Ndof (Subleading gen)", 200, .0, 10.0)};
+    TH1F* h_chsRefittedTkPairChi2NdofFake           {new TH1F("h_chsRefittedTkPairChi2NdofFake",          "Refitted charged hadron track pair #chi^{2}/Ndof (Both fake)", 200, .0, 10.0)};
 
     // packed PF cands info
 
@@ -701,6 +767,76 @@ int main(int argc, char* argv[]) {
             p_selectedChsMatching->Fill( 5.0, leadingGen );
             p_selectedChsMatching->Fill( 6.0, subleadingGen );
 
+            h_chsPt1->Fill(event.chsPairVec.first.Pt());
+            h_chsPt2->Fill(event.chsPairVec.second.Pt());
+            if ( leadingGen &&  subleadingGen) h_chsPtBothGen1->Fill(event.chsPairVec.first.Pt());
+            if ( leadingGen &&  subleadingGen) h_chsPtBothGen2->Fill(event.chsPairVec.second.Pt());
+            if ( leadingGen && !subleadingGen) h_chsPtLeadingGen1->Fill(event.chsPairVec.first.Pt());
+            if ( leadingGen && !subleadingGen) h_chsPtLeadingGen2->Fill(event.chsPairVec.second.Pt());
+            if (!leadingGen &&  subleadingGen) h_chsPtSubleadingGen1->Fill(event.chsPairVec.first.Pt());
+            if (!leadingGen &&  subleadingGen) h_chsPtSubleadingGen2->Fill(event.chsPairVec.second.Pt());
+            if (!leadingGen && !subleadingGen) h_chsPtBothFake1->Fill(event.chsPairVec.first.Pt());
+            if (!leadingGen && !subleadingGen) h_chsPtBothFake2->Fill(event.chsPairVec.second.Pt());
+            if (  leadingGen )    h_chsPtGen1->Fill(event.chsPairVec.first.Pt());
+            if (  subleadingGen ) h_chsPtGen2->Fill(event.chsPairVec.second.Pt());
+            if ( !leadingGen )    h_chsPtFake1->Fill(event.chsPairVec.first.Pt());
+            if ( !subleadingGen ) h_chsPtFake2->Fill(event.chsPairVec.second.Pt());
+
+            h_chsEta1->Fill(event.chsPairVec.first.Eta());
+            h_chsEta2->Fill(event.chsPairVec.second.Eta());
+            if ( leadingGen &&  subleadingGen) h_chsEtaBothGen1->Fill(event.chsPairVec.first.Eta());
+            if ( leadingGen &&  subleadingGen) h_chsEtaBothGen2->Fill(event.chsPairVec.second.Eta());
+            if ( leadingGen && !subleadingGen) h_chsEtaLeadingGen1->Fill(event.chsPairVec.first.Eta());
+            if ( leadingGen && !subleadingGen) h_chsEtaLeadingGen2->Fill(event.chsPairVec.second.Eta());
+            if (!leadingGen &&  subleadingGen) h_chsEtaSubleadingGen1->Fill(event.chsPairVec.first.Eta());
+            if (!leadingGen &&  subleadingGen) h_chsEtaSubleadingGen2->Fill(event.chsPairVec.second.Eta());
+            if (!leadingGen && !subleadingGen) h_chsEtaBothFake1->Fill(event.chsPairVec.first.Eta());
+            if (!leadingGen && !subleadingGen) h_chsEtaBothFake2->Fill(event.chsPairVec.second.Eta());
+            if (  leadingGen )    h_chsEtaGen1->Fill(event.chsPairVec.first.Eta());
+            if (  subleadingGen ) h_chsEtaGen2->Fill(event.chsPairVec.second.Eta());
+            if ( !leadingGen )    h_chsEtaFake1->Fill(event.chsPairVec.first.Eta());
+            if ( !subleadingGen ) h_chsEtaFake2->Fill(event.chsPairVec.second.Eta());
+
+            h_chsTkChi2Ndof1->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.first]);
+            h_chsTkChi2Ndof2->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.second]);
+            if ( leadingGen &&  subleadingGen) h_chsTkChi2NdofBothGen1->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.first]);
+            if ( leadingGen &&  subleadingGen) h_chsTkChi2NdofBothGen2->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.second]);
+            if ( leadingGen && !subleadingGen) h_chsTkChi2NdofLeadingGen1->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.first]);
+            if ( leadingGen && !subleadingGen) h_chsTkChi2NdofLeadingGen2->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.second]);
+            if (!leadingGen &&  subleadingGen) h_chsTkChi2NdofSubleadingGen1->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.first]);
+            if (!leadingGen &&  subleadingGen) h_chsTkChi2NdofSubleadingGen2->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.second]);
+            if (!leadingGen && !subleadingGen) h_chsTkChi2NdofBothFake1->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.first]);
+            if (!leadingGen && !subleadingGen) h_chsTkChi2NdofBothFake2->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.second]);
+            if (  leadingGen )    h_chsTkChi2NdofGen1->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.first]);
+            if (  subleadingGen ) h_chsTkChi2NdofGen2->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.second]);
+            if ( !leadingGen )    h_chsTkChi2NdofFake1->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.first]);
+            if ( !subleadingGen ) h_chsTkChi2NdofFake2->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.second]);
+
+            const int chsTkPairIndex {event.chsPairTrkIndex};
+            const float refittedChsTk1Chi2Ndof {event.chsTkPairTk1Chi2[chsTkPairIndex]/(event.chsTkPairTk1Ndof[chsTkPairIndex] + 1.0e-06)};
+            const float refittedChsTk2Chi2Ndof {event.chsTkPairTk2Chi2[chsTkPairIndex]/(event.chsTkPairTk2Ndof[chsTkPairIndex] + 1.0e-06)};
+
+            h_chsRefittedTkChi2Ndof1->Fill(refittedChsTk1Chi2Ndof);
+            h_chsRefittedTkChi2Ndof2->Fill(refittedChsTk2Chi2Ndof);
+            if ( leadingGen &&  subleadingGen) h_chsRefittedTkChi2NdofBothGen1->Fill(refittedChsTk1Chi2Ndof);
+            if ( leadingGen &&  subleadingGen) h_chsRefittedTkChi2NdofBothGen2->Fill(refittedChsTk2Chi2Ndof);
+            if ( leadingGen && !subleadingGen) h_chsRefittedTkChi2NdofLeadingGen1->Fill(refittedChsTk1Chi2Ndof);
+            if ( leadingGen && !subleadingGen) h_chsRefittedTkChi2NdofLeadingGen2->Fill(refittedChsTk2Chi2Ndof);
+            if (!leadingGen &&  subleadingGen) h_chsRefittedTkChi2NdofSubleadingGen1->Fill(refittedChsTk1Chi2Ndof);
+            if (!leadingGen &&  subleadingGen) h_chsRefittedTkChi2NdofSubleadingGen2->Fill(refittedChsTk2Chi2Ndof);
+            if (!leadingGen && !subleadingGen) h_chsRefittedTkChi2NdofBothFake1->Fill(refittedChsTk1Chi2Ndof);
+            if (!leadingGen && !subleadingGen) h_chsRefittedTkChi2NdofBothFake2->Fill(refittedChsTk2Chi2Ndof);
+            if (  leadingGen )    h_chsRefittedTkChi2NdofGen1->Fill(refittedChsTk1Chi2Ndof);
+            if (  subleadingGen ) h_chsRefittedTkChi2NdofGen2->Fill(refittedChsTk2Chi2Ndof);
+            if ( !leadingGen )    h_chsRefittedTkChi2NdofFake1->Fill(refittedChsTk1Chi2Ndof);
+            if ( !subleadingGen ) h_chsRefittedTkChi2NdofFake2->Fill(refittedChsTk2Chi2Ndof);
+
+            h_chsRefittedTkPairChi2Ndof->Fill(event.chsTkPairTkVtxChi2[chsTkPairIndex]);
+            if ( leadingGen &&  subleadingGen) h_chsRefittedTkPairChi2NdofBothGen->Fill(event.chsTkPairTkVtxChi2[chsTkPairIndex]);
+            if ( leadingGen && !subleadingGen) h_chsRefittedTkPairChi2NdofLeadingGen->Fill(event.chsTkPairTkVtxChi2[chsTkPairIndex]);
+            if (!leadingGen && !subleadingGen) h_chsRefittedTkPairChi2NdofSubleadingGen->Fill(event.chsTkPairTkVtxChi2[chsTkPairIndex]);
+            if (!leadingGen && !subleadingGen) h_chsRefittedTkPairChi2NdofFake->Fill(event.chsTkPairTkVtxChi2[chsTkPairIndex]);
+
             h_chsDeltaR->Fill(chsDeltaR);
 
             if (  leadingGen &&  subleadingGen )
@@ -887,11 +1023,77 @@ int main(int argc, char* argv[]) {
 
     p_selectedChsMatching->Write();
 
+    h_chsPt1->Write();
+    h_chsPt2->Write();
+    h_chsPtBothGen1->Write();
+    h_chsPtBothGen2->Write();
+    h_chsPtLeadingGen1->Write();
+    h_chsPtLeadingGen2->Write();
+    h_chsPtSubleadingGen1->Write();
+    h_chsPtSubleadingGen2->Write();
+    h_chsPtBothFake1->Write();
+    h_chsPtBothFake2->Write();
+    h_chsPtGen1->Write();
+    h_chsPtGen2->Write();
+    h_chsPtFake1->Write();
+    h_chsPtFake2->Write();
+
+    h_chsEta1->Write();
+    h_chsEta2->Write();
+    h_chsEtaBothGen1->Write();
+    h_chsEtaBothGen2->Write();
+    h_chsEtaLeadingGen1->Write();
+    h_chsEtaLeadingGen2->Write();
+    h_chsEtaSubleadingGen1->Write();
+    h_chsEtaSubleadingGen2->Write();
+    h_chsEtaBothFake1->Write();
+    h_chsEtaBothFake2->Write();
+    h_chsEtaGen1->Write();
+    h_chsEtaGen2->Write();
+    h_chsEtaFake1->Write();
+    h_chsEtaFake2->Write();
+
     h_chsDeltaR->Write();
     h_chsBothGenDeltaR->Write();
     h_chsLeadingGenDeltaR->Write();
     h_chsSubleadingGenDeltaR->Write();
     h_chsBothFakeDeltaR->Write();
+
+    h_chsTkChi2Ndof1->Write();
+    h_chsTkChi2Ndof2->Write();
+    h_chsTkChi2NdofBothGen1->Write();
+    h_chsTkChi2NdofBothGen2->Write();
+    h_chsTkChi2NdofLeadingGen1->Write();
+    h_chsTkChi2NdofLeadingGen2->Write();
+    h_chsTkChi2NdofSubleadingGen1->Write();
+    h_chsTkChi2NdofSubleadingGen2->Write();
+    h_chsTkChi2NdofBothFake1->Write();
+    h_chsTkChi2NdofBothFake2->Write();
+    h_chsTkChi2NdofGen1->Write();
+    h_chsTkChi2NdofGen2->Write();
+    h_chsTkChi2NdofFake1->Write();
+    h_chsTkChi2NdofFake2->Write();
+
+    h_chsRefittedTkChi2Ndof1->Write();
+    h_chsRefittedTkChi2Ndof2->Write();
+    h_chsRefittedTkChi2NdofBothGen1->Write();
+    h_chsRefittedTkChi2NdofBothGen2->Write();
+    h_chsRefittedTkChi2NdofLeadingGen1->Write();
+    h_chsRefittedTkChi2NdofLeadingGen2->Write();
+    h_chsRefittedTkChi2NdofSubleadingGen1->Write();
+    h_chsRefittedTkChi2NdofSubleadingGen2->Write();
+    h_chsRefittedTkChi2NdofBothFake1->Write();
+    h_chsRefittedTkChi2NdofBothFake2->Write();
+    h_chsRefittedTkChi2NdofGen1->Write();
+    h_chsRefittedTkChi2NdofGen2->Write();
+    h_chsRefittedTkChi2NdofFake1->Write();
+    h_chsRefittedTkChi2NdofFake2->Write();
+
+    h_chsRefittedTkPairChi2Ndof->Write();
+    h_chsRefittedTkPairChi2NdofBothGen->Write();
+    h_chsRefittedTkPairChi2NdofLeadingGen->Write();
+    h_chsRefittedTkPairChi2NdofSubleadingGen->Write();
+    h_chsRefittedTkPairChi2NdofFake->Write();
 
     p_packedCandUsage1->Write();
     p_packedCandUsageGen1->Write();

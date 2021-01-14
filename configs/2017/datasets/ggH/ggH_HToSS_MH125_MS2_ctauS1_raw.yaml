@@ -4,7 +4,7 @@ locations:
 cross_section: 21.46
 mc: true
 histogram: "ggH_HToSS_MS2_ctauS1"
-colour: "#a65628"
+colour: "#fc0303"
 label: "H#rightarrowaa m_{a}=2 c_{#tau}=1"
-plot_type: "f"
+plot_type: "l"
 
