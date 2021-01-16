@@ -71,6 +71,12 @@ int main(int argc, char* argv[]) {
 
     // Gen Histos
 
+    TProfile* p_genHadronicDecayFractions {new TProfile ("p_genHadronicDecayFractions", "Hadronic scalar decay mode fractions", 4, 0.5, 4.5, "ymax = 1.0")};
+    p_genHadronicDecayFractions->GetXaxis()->SetBinLabel(1, "#pi#pi");
+    p_genHadronicDecayFractions->GetXaxis()->SetBinLabel(2, "KK");
+    p_genHadronicDecayFractions->GetXaxis()->SetBinLabel(3, "K_{S}^{0}K_{S}^{0}");
+    p_genHadronicDecayFractions->GetXaxis()->SetBinLabel(4, "K^{+}K^{-}");
+
     TH1F* h_genDimuonDeltaR       {new TH1F("h_genDimuonDeltaR",       "Dimuon gen deltaR", 50, 0., 1.)};
     TH1F* h_genDimuonMass         {new TH1F("h_genDimuonMass",         "Dimuon gen mass", 30, 0., 11.)};
     TH1F* h_genDimuonPt           {new TH1F("h_genDimuonPt",           "Dimuon gen Pt",  200, 0., 200)}; 
@@ -491,21 +497,34 @@ int main(int argc, char* argv[]) {
             std::vector<int> genMuonSortedIndex;
             std::vector<int> genPionIndex;
             std::vector<int> genKaonIndex;
+            std::vector<int> genKshortIndex;
 
             // gen particle loop
             for ( Int_t k = 0; k < event.nGenPar; k++ ) {
                 const int pid { std::abs(event.genParId[k]) };
                 const int motherId { std::abs(event.genParMotherId[k]) };
+
+                const bool hasScalarGrandparent {scalarGrandparent(event, k, 9000006)};
+
                 if ( pid == 13 && motherId == 9000006) {
                     genMuonIndex.emplace_back(k);
                 }
                 else if ( pid == 211 && motherId < 6 && motherId > 0 ) {
-                    if ( scalarGrandparent(event, k, 9000006) ) genPionIndex.emplace_back(k);
+                    if ( hasScalarGrandparent ) genPionIndex.emplace_back(k);
                 }
-                else if ( pid == 321  && motherId < 6 && motherId > 0 ) {
-                    if ( scalarGrandparent(event, k, 9000006) ) genKaonIndex.emplace_back(k);
+                else if ( pid == 321 && motherId < 6 && motherId > 0 ) {
+                    if ( hasScalarGrandparent ) genKaonIndex.emplace_back(k);
+                }
+                else if ( pid == 310 && motherId < 6 && motherId > 0 ) {
+                    if ( hasScalarGrandparent ) genKshortIndex.emplace_back(k);
                 }
             }
+
+            p_genHadronicDecayFractions->Fill(1.0, bool (genPionIndex.size() >= 2) );
+            p_genHadronicDecayFractions->Fill(2.0, bool (genKaonIndex.size() >= 2 || genKshortIndex.size() >= 2) );
+            p_genHadronicDecayFractions->Fill(3.0, bool (genKshortIndex.size() >= 2) );
+            p_genHadronicDecayFractions->Fill(4.0, bool (genKaonIndex.size() >= 2) );
+
 
             TLorentzVector genMuon1, genMuon2;
             if ( genMuonIndex.size() == 2 ) {
@@ -961,6 +980,8 @@ int main(int argc, char* argv[]) {
 
     TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
     outFile->cd();
+
+    p_genHadronicDecayFractions->Write();
 
     h_genDimuonDeltaR->Write();
     h_genDimuonMass->Write();
