@@ -1565,7 +1565,7 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_muTrigMass->cd();
 
     h_mass_muTrigMass_ctau0->SetTitle("");
-    h_mass_muTrigMass_ctau0->GetXaxis()->SetTitle("#DeltaR (#mu#mu)");
+    h_mass_muTrigMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
     h_mass_muTrigMass_ctau0->GetXaxis()->SetLabelFont(42);
     h_mass_muTrigMass_ctau0->GetXaxis()->SetLabelSize(0.05);
     h_mass_muTrigMass_ctau0->GetXaxis()->SetTitleSize(0.05);
@@ -1674,7 +1674,7 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_mumuTrigMass->cd();
 
     h_mass_mumuTrigMass_ctau0->SetTitle("");
-    h_mass_mumuTrigMass_ctau0->GetXaxis()->SetTitle("#DeltaR (#mu#mu)");
+    h_mass_mumuTrigMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
     h_mass_mumuTrigMass_ctau0->GetXaxis()->SetLabelFont(42);
     h_mass_mumuTrigMass_ctau0->GetXaxis()->SetLabelSize(0.05);
     h_mass_mumuTrigMass_ctau0->GetXaxis()->SetTitleSize(0.05);
@@ -1783,7 +1783,7 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_mumuTrigMassCutMass->cd();
 
     h_mass_mumuTrigMassCutMass_ctau0->SetTitle("");
-    h_mass_mumuTrigMassCutMass_ctau0->GetXaxis()->SetTitle("#DeltaR (#mu#mu)");
+    h_mass_mumuTrigMassCutMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
     h_mass_mumuTrigMassCutMass_ctau0->GetXaxis()->SetLabelFont(42);
     h_mass_mumuTrigMassCutMass_ctau0->GetXaxis()->SetLabelSize(0.05);
     h_mass_mumuTrigMassCutMass_ctau0->GetXaxis()->SetTitleSize(0.05);
@@ -1892,7 +1892,7 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_mumuTrigNoMassCutMass->cd();
 
     h_mass_mumuTrigNoMassCutMass_ctau0->SetTitle("");
-    h_mass_mumuTrigNoMassCutMass_ctau0->GetXaxis()->SetTitle("#DeltaR (#mu#mu)");
+    h_mass_mumuTrigNoMassCutMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
     h_mass_mumuTrigNoMassCutMass_ctau0->GetXaxis()->SetLabelFont(42);
     h_mass_mumuTrigNoMassCutMass_ctau0->GetXaxis()->SetLabelSize(0.05);
     h_mass_mumuTrigNoMassCutMass_ctau0->GetXaxis()->SetTitleSize(0.05);
@@ -2001,7 +2001,7 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_L2muTrigMass->cd();
 
     h_mass_L2muTrigMass_ctau0->SetTitle("");
-    h_mass_L2muTrigMass_ctau0->GetXaxis()->SetTitle("#DeltaR (#mu#mu)");
+    h_mass_L2muTrigMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
     h_mass_L2muTrigMass_ctau0->GetXaxis()->SetLabelFont(42);
     h_mass_L2muTrigMass_ctau0->GetXaxis()->SetLabelSize(0.05);
     h_mass_L2muTrigMass_ctau0->GetXaxis()->SetTitleSize(0.05);
@@ -2108,7 +2108,7 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_muOrMumuTrigMass->cd();
 
     h_mass_muOrMumuTrigMass_ctau0->SetTitle("");
-    h_mass_muOrMumuTrigMass_ctau0->GetXaxis()->SetTitle("#DeltaR (#mu#mu)");
+    h_mass_muOrMumuTrigMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
     h_mass_muOrMumuTrigMass_ctau0->GetXaxis()->SetLabelFont(42);
     h_mass_muOrMumuTrigMass_ctau0->GetXaxis()->SetLabelSize(0.05);
     h_mass_muOrMumuTrigMass_ctau0->GetXaxis()->SetTitleSize(0.05);
@@ -2215,7 +2215,7 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_ORTrigMass->cd();
 
     h_mass_ORTrigMass_ctau0->SetTitle("");
-    h_mass_ORTrigMass_ctau0->GetXaxis()->SetTitle("#DeltaR (#mu#mu)");
+    h_mass_ORTrigMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
     h_mass_ORTrigMass_ctau0->GetXaxis()->SetLabelFont(42);
     h_mass_ORTrigMass_ctau0->GetXaxis()->SetLabelSize(0.05);
     h_mass_ORTrigMass_ctau0->GetXaxis()->SetTitleSize(0.05);
