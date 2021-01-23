@@ -45,11 +45,11 @@ float deltaR(float eta1, float phi1, float eta2, float phi2);
 namespace fs = boost::filesystem;
 
 // Lepton cut variables
-const float looseMuonEta_ {2.8}, looseMuonPt_ {6.}, looseMuonPtLeading_ {15.}, looseMuonRelIso_ {100.};
+const float looseMuonEta_ {2.4}, looseMuonPt_ {10.}, looseMuonPtLeading_ {30.}, looseMuonRelIso_ {100.};
 const float invZMassCut_ {10.0}, chsMass_{0.13957018};
 
 // Diparticle cuts
-double maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4};
+double maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {9990.4};
 double higgsTolerence_ {10.};
 
 
@@ -171,12 +171,11 @@ int main(int argc, char* argv[]) {
     TH1F* h_numMatchedChsTracksFromScalars {new TH1F("h_numMatchedChsTracksFromScalars", "Number of matched charged hadron PF cands from scalars", 100, -0.5, 99.5)};
     TH1F* h_numMatchedChsFromScalarsExcMu  {new TH1F("h_numMatchedChsFromScalarsExcMu",  "Number of matched charged hadron PF cands from scalars (exc selected muons)", 100, -0.5, 99.5)};
 
-    TH1F* h_diScalarDeltaR     {new TH1F("h_diScalarDeltaR",    "#DeltaR between scalar candidates", 500, 0., 10.)};
-    TH1F* h_diScalarGenDeltaR  {new TH1F("h_diScalarGenDeltaR", "#DeltaR between genuine scalar candidates", 500, 0., 10.)};
-
+    TH1F* h_diScalarDeltaR                      {new TH1F("h_diScalarDeltaR",     "#DeltaR between scalar candidates", 500, 0., 10.)};
+    TH1F* h_diScalarGenDeltaR                   {new TH1F("h_diScalarGenDeltaR",  "#DeltaR between genuine scalar candidates", 500, 0., 10.)};
+    TH1F* h_diScalarFakeDeltaR                  {new TH1F("h_diScalarFakeDeltaR", "#DeltaR between genuine scalar candidates", 500, 0., 10.)};
     TH1F* h_diScalarDeltaR_refittedMuons        {new TH1F("h_diScalarDeltaR_refittedMuons",       "#DeltaR between scalar candidates (refitted #mu#mu)", 500, 0., 10.)};
     TH1F* h_diScalarGenDeltaR_refittedMuons     {new TH1F("h_diScalarGenDeltaR_refittedMuons",    "#DeltaR between genuine scalar candidates (refitted #mu#mu)", 500, 0., 10.)};
-
     TH1F* h_diScalarDeltaR_refittedMuonsChs     {new TH1F("h_diScalarDeltaR_refittedMuonsChs",    "#DeltaR between scalar candidates (refitted #mumu + qq)", 500, 0., 10.)};
     TH1F* h_diScalarGenDeltaR_refittedMuonsChs  {new TH1F("h_diScalarGenDeltaR_refittedMuonsChs", "#DeltaR between genuine scalar candidates (refitted #mumu + qq)", 500, 0., 10.)};
 
@@ -187,6 +186,12 @@ int main(int argc, char* argv[]) {
     p_selectedChsMatching->GetXaxis()->SetBinLabel(4, "Both tracks fake");
     p_selectedChsMatching->GetXaxis()->SetBinLabel(5, "Leading track genuine");
     p_selectedChsMatching->GetXaxis()->SetBinLabel(6, "Subleading track genuine");
+
+    TH1F* h_diChsPt                  {new TH1F("h_diChsPt",                "Dimuon p_{T}", 200, 0.0, 100.)};
+    TH1F* h_diChsPtBothGen           {new TH1F("h_diChsPtBothGen",         "Dimuon p_{T}", 200, 0.0, 100.)};
+    TH1F* h_diChsPtLeadingGen        {new TH1F("h_diChsPtLeadingGen",      "Dimuon p_{T}", 200, 0.0, 100.)};
+    TH1F* h_diChsPtSubleadingGen     {new TH1F("h_diChsPtSubleadingGen",   "Dimuon p_{T}", 200, 0.0, 100.)};
+    TH1F* h_diChsPtBothFake          {new TH1F("h_diChsPtBothFake",        "Dimuon p_{T}", 200, 0.0, 100.)};
 
     TH1F* h_chsPt1                   {new TH1F("h_chsPt1",                 "Leading charged hadron track p_{T}", 200, 0.0, 100.)};
     TH1F* h_chsPt2                   {new TH1F("h_chsPt2",                 "Subleading charged hadron track p_{T}", 200, 0.0, 100.)};
@@ -616,7 +621,8 @@ int main(int argc, char* argv[]) {
             const bool passSingleMuonTrigger {event.muTrig()}, passDimuonTrigger {event.mumuTrig()};
             const bool passL2MuonTrigger {event.mumuL2Trig()}, passDimuonNoVtxTrigger {event.mumuNoVtxTrig()};
 
-            if (! ( passDimuonTrigger || passSingleMuonTrigger || passL2MuonTrigger || passDimuonNoVtxTrigger ) ) continue;
+//            if (! ( passDimuonTrigger || passSingleMuonTrigger || passL2MuonTrigger || passDimuonNoVtxTrigger ) ) continue;
+            if ( !passSingleMuonTrigger ) continue;
             if (!event.metFilters()) continue;
  
             event.muonIndexLoose = getLooseMuons(event);
@@ -774,6 +780,7 @@ int main(int argc, char* argv[]) {
 
             h_diScalarDeltaR->Fill( leptonicScalarVec.DeltaR(hadronicScalarVec) );
             if ( leadingGen && subleadingGen ) h_diScalarGenDeltaR->Fill( leptonicScalarVec.DeltaR(hadronicScalarVec) );
+            if ( !leadingGen && !subleadingGen ) h_diScalarFakeDeltaR->Fill( leptonicScalarVec.DeltaR(hadronicScalarVec) );
             h_diScalarDeltaR_refittedMuons->Fill( refittedLeptonicScalarVec.DeltaR(hadronicScalarVec) );
             if ( leadingGen && subleadingGen ) h_diScalarGenDeltaR_refittedMuons->Fill( refittedLeptonicScalarVec.DeltaR(hadronicScalarVec) );
             h_diScalarDeltaR_refittedMuonsChs->Fill( refittedLeptonicScalarVec.DeltaR(refittedHadronicScalarVec) );
@@ -785,6 +792,12 @@ int main(int argc, char* argv[]) {
             p_selectedChsMatching->Fill( 4.0, bool ( !leadingGen && !subleadingGen ) );
             p_selectedChsMatching->Fill( 5.0, leadingGen );
             p_selectedChsMatching->Fill( 6.0, subleadingGen );
+
+            h_diChsPt->Fill(hadronicScalarVec.Pt());
+            if ( leadingGen &&  subleadingGen) h_diChsPtBothGen->Fill(hadronicScalarVec.Pt());
+            if ( leadingGen && !subleadingGen) h_diChsPtLeadingGen->Fill(hadronicScalarVec.Pt());
+            if (!leadingGen &&  subleadingGen) h_diChsPtSubleadingGen->Fill(hadronicScalarVec.Pt());
+            if (!leadingGen && !subleadingGen) h_diChsPtBothFake->Fill(hadronicScalarVec.Pt());
 
             h_chsPt1->Fill(event.chsPairVec.first.Pt());
             h_chsPt2->Fill(event.chsPairVec.second.Pt());
@@ -1037,12 +1050,19 @@ int main(int argc, char* argv[]) {
 
     h_diScalarDeltaR->Write();
     h_diScalarGenDeltaR->Write();
+    h_diScalarFakeDeltaR->Write();
     h_diScalarDeltaR_refittedMuons->Write();
     h_diScalarGenDeltaR_refittedMuons->Write();
     h_diScalarDeltaR_refittedMuonsChs->Write();
     h_diScalarGenDeltaR_refittedMuonsChs->Write();
 
     p_selectedChsMatching->Write();
+
+    h_diChsPt->Write();
+    h_diChsPtBothGen->Write();
+    h_diChsPtLeadingGen->Write();
+    h_diChsPtSubleadingGen->Write();
+    h_diChsPtBothFake->Write();
 
     h_chsPt1->Write();
     h_chsPt2->Write();
@@ -1216,10 +1236,11 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
             TLorentzVector chs1 {event.packedCandsPx[chs[i]], event.packedCandsPy[chs[i]], event.packedCandsPz[chs[i]], event.packedCandsE[chs[i]]};
             TLorentzVector chs2 {event.packedCandsPx[chs[j]], event.packedCandsPy[chs[j]], event.packedCandsPz[chs[j]], event.packedCandsE[chs[j]]};
 
+            double pT { (chs1+chs2).Pt() };
             double delR { chs1.DeltaR(chs2) };
             double higgsMass { (chs1+chs2+event.zPairLeptons.first+event.zPairLeptons.second).M() };
 
-            if ( delR < maxChsDeltaR_ && (higgsMass - 125.) < higgsTolerence_ ) {
+            if ( delR < maxChsDeltaR_ && (higgsMass - 125.) < higgsTolerence_ && pT >= 0. ) {
                 event.chsPairVec.first  = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
                 event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
                 event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chs[i] : chs[j];
