@@ -2477,6 +2477,8 @@ class AnalysisEvent
 //    bool eeTrig() const;
 //    bool muEGTrig() const;
     bool mumuTrig() const;
+    bool mumuTrig_noMassCut() const;
+    bool mumuTrig_massCut() const;
     bool mumuL2Trig() const;
     bool mumuNoVtxTrig() const;
 
@@ -2495,23 +2497,16 @@ class AnalysisEvent
 
 };
 
-inline AnalysisEvent::AnalysisEvent(const bool isMC,
-                                    TTree* tree,
-                                    const bool is2016,
-                                    const bool is2018)
-    : fChain{nullptr}, isMC_{isMC}, is2016_{is2016}, is2018_{is2018}
-{
+inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2016, const bool is2018) : fChain{nullptr}, isMC_{isMC}, is2016_{is2016}, is2018_{is2018} {
     // if parameter tree is not specified (or zero), connect the file
     // used to generate this class and read the Tree.
-    if (tree == nullptr)
-    {
+    if (tree == nullptr) {
 #ifdef SINGLE_TREE
         // The following code should be used if you want this class to access
         // a single tree instead of a chain
         TFile* f = (TFile*)gROOT->GetListOfFiles()->FindObject(
             "/data1/tW2012/mc/ttbarInclusive/MC_Ntuple_out_9_0_MJP_skim.root");
-        if (!f || !f->IsOpen())
-        {
+        if (!f || !f->IsOpen()) {
             f = new TFile("/data1/tW2012/mc/ttbarInclusive/"
                           "MC_Ntuple_out_9_0_MJP_skim.root");
         }
@@ -2529,8 +2524,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
     }
 
     // clang-format off
-   if (!tree)
-   {
+   if (!tree) {
        return;
    }
    fChain = tree;
@@ -3788,13 +3782,48 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC,
    fChain->SetBranchAddress("eventNum", &eventNum, &b_eventNum);
    fChain->SetBranchAddress("eventLumiblock", &eventLumiblock, &b_eventLumiblock);
    fChain->SetBranchAddress("numVert", &numVert, &b_numVert);
+
+  muonMomentumSF = {};
+  jetSmearValue = {};
+
+  electronIndexTight = {};
+  electronIndexLoose = {};
+  muonIndexTight = {};
+  muonIndexLoose = {};
+  photonIndexTight = {};
+  photonIndexLoose = {};
+  jetIndex = {};
+  displacedJetIndex = {};
+  chsIndex = {};
+  totalJetHt = -1.0;
+  selectedJetIncHt = -1.0;
+  selectedJetTracksHt = -1.0;
+  bTagIndex = {};
+
+  std::pair<TLorentzVector, TLorentzVector> zPairLeptons = {};
+  std::pair<TLorentzVector, TLorentzVector> zPairLeptonsRefitted = {};
+  std::pair<float, float> zPairRelIso = {};
+  std::pair<int, int> zPairIndex = {};
+  mumuTrkIndex = -1;
+
+  std::pair<TLorentzVector, TLorentzVector> chsPairVec = {};
+  std::pair<TLorentzVector, TLorentzVector> chsPairVecRefitted = {};
+  std::pair<int, int> chsPairIndex = {};
+  chsPairTrkIndex = -1;
+
+  std::pair<TLorentzVector, TLorentzVector> wPairQuarks = {};
+  std::pair<int, int> wPairIndex = {};
+
+  wLepton = {};
+  wLepIndex = -1;
+  wLeptonRelIso = -1.;
+
 }
 // clang-format on
 
 inline AnalysisEvent::~AnalysisEvent()
 {
-    if (!fChain)
-    {
+    if (!fChain) {
         return;
     }
     delete fChain->GetCurrentFile();
@@ -3803,8 +3832,7 @@ inline AnalysisEvent::~AnalysisEvent()
 inline Int_t AnalysisEvent::GetEntry(const Long64_t entry)
 {
     // Read contents of entry.
-    if (!fChain)
-    {
+    if (!fChain) {
         return 0;
     }
     return fChain->GetEntry(entry);
@@ -3813,17 +3841,14 @@ inline Int_t AnalysisEvent::GetEntry(const Long64_t entry)
 inline Long64_t AnalysisEvent::LoadTree(const Long64_t entry)
 {
     // Set the environment to read one entry
-    if (!fChain)
-    {
+    if (!fChain) {
         return -5;
     }
     Long64_t centry = fChain->LoadTree(entry);
-    if (centry < 0)
-    {
+    if (centry < 0) {
         return centry;
     }
-    if (fChain->GetTreeNumber() != fCurrent)
-    {
+    if (fChain->GetTreeNumber() != fCurrent) {
         fCurrent = fChain->GetTreeNumber();
     }
     return centry;
@@ -4013,6 +4038,51 @@ inline bool AnalysisEvent::mumuTrig() const
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v13 > 0
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v14 > 0
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v1 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v2 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v3 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v7 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v8 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v1 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v2 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4 > 0;
+}
+
+inline bool AnalysisEvent::mumuTrig_noMassCut() const
+{
+    return is2016_ ? (eventRun < 280919
+// 2016 triggers
+                      && (HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v2 > 0
+                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v3 > 0
+                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v4 > 0
+                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v6 > 0
+                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v2 > 0
+                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v3 > 0
+                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v5 > 0))
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v2 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v3 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v4 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v7 > 0
+                         || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2 > 0
+                         || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v3 > 0
+                         || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v6 > 0
+//2017 triggers
+                   : HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v8 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v9 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v10 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v11 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v12 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v13 > 0
+                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v14 > 0;
+}
+
+inline bool AnalysisEvent::mumuTrig_massCut() const
+{
+    return is2016_ ? false
+// 2016 triggers
+//2017 triggers
+                   : HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v1 > 0
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v2 > 0
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v3 > 0
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4 > 0
