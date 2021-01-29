@@ -809,15 +809,13 @@ void AnalysisAlgo::runMainAnalysis() {
               || dataset->name() == "QCD_Pt-80to120_MuEnrichedPt5") {
                hasLHE = false;
             }
-
-            TMVA::Timer* lEventTimer{
-                new TMVA::Timer{boost::numeric_cast<int>(numberOfEvents), "Running over dataset ...", false}};
+            TMVA::Timer* lEventTimer{new TMVA::Timer{boost::numeric_cast<int>(numberOfEvents), "Running over dataset ...", false}};
             lEventTimer->DrawProgressBar(0, "");
+            std::cout << "Numnber of events: " << numberOfEvents << std::endl;
             for (int i{0}; i < numberOfEvents; i++) {
                 std::stringstream lSStrFoundEvents;
                 lSStrFoundEvents << foundEvents;
-                lEventTimer->DrawProgressBar(
-                    i, ("Found " + lSStrFoundEvents.str() + " events."));
+                lEventTimer->DrawProgressBar(i, ("Found " + lSStrFoundEvents.str() + " events."));
                 event.GetEntry(i);
                 // Do the systematics indicated by the systematic flag, oooor
                 // just do data if that's your thing. Whatevs.
@@ -825,16 +823,11 @@ void AnalysisAlgo::runMainAnalysis() {
                 for (unsigned systInd{0}; systInd < systNames.size(); systInd++)
                 {
                     if (!dataset->isMC() && systInd > 0)
-                    {
                         break;
-                    }
                     //	std::cout << systInd << " " << systMask << std::endl;
-                    if (systInd > 0 && !(systMask & systToRun))
-                    {
+                    if (systInd > 0 && !(systMask & systToRun)) {
                         if (systInd > 0)
-                        {
                             systMask = systMask << 1;
-                        }
                         continue;
                     }
 

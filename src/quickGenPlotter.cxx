@@ -171,9 +171,9 @@ int main(int argc, char* argv[]) {
     TH1F* h_numMatchedChsTracksFromScalars {new TH1F("h_numMatchedChsTracksFromScalars", "Number of matched charged hadron PF cands from scalars", 100, -0.5, 99.5)};
     TH1F* h_numMatchedChsFromScalarsExcMu  {new TH1F("h_numMatchedChsFromScalarsExcMu",  "Number of matched charged hadron PF cands from scalars (exc selected muons)", 100, -0.5, 99.5)};
 
-    TH1F* h_diScalarDeltaR                      {new TH1F("h_diScalarDeltaR",     "#DeltaR between scalar candidates", 500, 0., 10.)};
-    TH1F* h_diScalarGenDeltaR                   {new TH1F("h_diScalarGenDeltaR",  "#DeltaR between genuine scalar candidates", 500, 0., 10.)};
-    TH1F* h_diScalarFakeDeltaR                  {new TH1F("h_diScalarFakeDeltaR", "#DeltaR between genuine scalar candidates", 500, 0., 10.)};
+    TH1F* h_diScalarDeltaR                      {new TH1F("h_diScalarDeltaR",     "#DeltaR between scalar candidates", 300, 0., 6.)};
+    TH1F* h_diScalarGenDeltaR                   {new TH1F("h_diScalarGenDeltaR",  "#DeltaR between genuine scalar candidates", 300, 0., 6.)};
+    TH1F* h_diScalarFakeDeltaR                  {new TH1F("h_diScalarFakeDeltaR", "#DeltaR between genuine scalar candidates", 300, 0., 6.)};
     TH1F* h_diScalarDeltaR_refittedMuons        {new TH1F("h_diScalarDeltaR_refittedMuons",       "#DeltaR between scalar candidates (refitted #mu#mu)", 500, 0., 10.)};
     TH1F* h_diScalarGenDeltaR_refittedMuons     {new TH1F("h_diScalarGenDeltaR_refittedMuons",    "#DeltaR between genuine scalar candidates (refitted #mu#mu)", 500, 0., 10.)};
     TH1F* h_diScalarDeltaR_refittedMuonsChs     {new TH1F("h_diScalarDeltaR_refittedMuonsChs",    "#DeltaR between scalar candidates (refitted #mumu + qq)", 500, 0., 10.)};
@@ -222,6 +222,21 @@ int main(int argc, char* argv[]) {
     TH1F* h_chsEtaGen2               {new TH1F("h_chsEtaGen2",             "Subleading genuine charged hadron track #eta", 300, -3.0, 3.0)};
     TH1F* h_chsEtaFake1              {new TH1F("h_chsEtaFake1",            "Leading fake charged hadron track #eta", 300, -3.0, 3.0)};
     TH1F* h_chsEtaFake2              {new TH1F("h_chsEtaFake2",            "Subleading fake charged hadron track #eta", 300, -3.0, 3.0)};
+
+    TH1F* h_chsIso1                  {new TH1F("h_chsIso1",                "Leading charged hadron track iso", 500, .0, 1.5)};
+    TH1F* h_chsIso2                  {new TH1F("h_chsIso2",                "Subleading charged hadron track iso", 500, .0, 1.5)};
+    TH1F* h_chsIsoBothGen1           {new TH1F("h_chsIsoBothGen1",         "Leading charged hadron track iso - both tracks genuine", 500, .0, 1.5)};
+    TH1F* h_chsIsoBothGen2           {new TH1F("h_chsIsoBothGen2",         "Subleading charged hadron track iso - both tracks genuine", 500, .0, 1.5)};
+    TH1F* h_chsIsoLeadingGen1        {new TH1F("h_chsIsoLeadingGen1",	   "Leading charged hadron track iso - leading genuine/subleading fake", 500, .0, 1.5)};
+    TH1F* h_chsIsoLeadingGen2        {new TH1F("h_chsIsoLeadingGen2",	   "Subleading charged hadron track iso - leading genuine/subleading fake", 500, .0, 1.5)};
+    TH1F* h_chsIsoSubleadingGen1     {new TH1F("h_chsIsoSubleadingGen1",   "Leading charged hadron track iso - subleading genuine/leading fake", 500, .0, 1.5)};
+    TH1F* h_chsIsoSubleadingGen2     {new TH1F("h_chsIsoSubleadingGen2",   "Subleading charged hadron track iso - subleading genuine/leading fake", 500, .0, 1.5)};
+    TH1F* h_chsIsoBothFake1          {new TH1F("h_chsIsoBothFake1",        "Leading charged hadron track iso - both tracks fake", 500, .0, 1.5)};
+    TH1F* h_chsIsoBothFake2          {new TH1F("h_chsIsoBothFake2",        "Subleading charged hadron track iso - both tracks fake", 500, .0, 1.5)};
+    TH1F* h_chsIsoGen1               {new TH1F("h_chsIsoGen1",             "Leading genuine charged hadron track iso", 500, .0, 1.5)};
+    TH1F* h_chsIsoGen2               {new TH1F("h_chsIsoGen2",             "Subleading genuine charged hadron track iso", 500, .0, 1.5)};
+    TH1F* h_chsIsoFake1              {new TH1F("h_chsIsoFake1",            "Leading fake charged hadron track iso", 500, .0, 1.5)};
+    TH1F* h_chsIsoFake2              {new TH1F("h_chsIsoFake2",            "Subleading fake charged hadron track iso", 500, .0, 1.5)};
 
     TH1F* h_chsDeltaR                {new TH1F("h_chsDeltaR",              "#DeltaR between selected chs tracks", 50, 0., 1.)};
     TH1F* h_chsBothGenDeltaR         {new TH1F("h_chsBothGenDeltaR",       "#DeltaR between both genuine chs tracks", 50, 0., 1.)};
@@ -776,7 +791,7 @@ int main(int argc, char* argv[]) {
 
             const TLorentzVector leptonicScalarVec {event.zPairLeptons.first + event.zPairLeptons.second}, hadronicScalarVec {event.chsPairVec.first + event.chsPairVec.second};
             const TLorentzVector refittedLeptonicScalarVec {event.zPairLeptonsRefitted.first + event.zPairLeptonsRefitted.second};
-            const TLorentzVector refittedHadronicScalarVec {event.chsPairVecRefitted.first + event.chsPairVecRefitted.second};
+            const TLorentzVector refittedHadronicScalarVec {event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second};
 
             h_diScalarDeltaR->Fill( leptonicScalarVec.DeltaR(hadronicScalarVec) );
             if ( leadingGen && subleadingGen ) h_diScalarGenDeltaR->Fill( leptonicScalarVec.DeltaR(hadronicScalarVec) );
@@ -813,6 +828,21 @@ int main(int argc, char* argv[]) {
             if (  subleadingGen ) h_chsPtGen2->Fill(event.chsPairVec.second.Pt());
             if ( !leadingGen )    h_chsPtFake1->Fill(event.chsPairVec.first.Pt());
             if ( !subleadingGen ) h_chsPtFake2->Fill(event.chsPairVec.second.Pt());
+
+            h_chsIso1->Fill(event.chsPairTrkIso.first);
+            h_chsIso2->Fill(event.chsPairTrkIso.second);
+            if ( leadingGen &&  subleadingGen) h_chsIsoBothGen1->Fill(event.chsPairTrkIso.first);
+            if ( leadingGen &&  subleadingGen) h_chsIsoBothGen2->Fill(event.chsPairTrkIso.second);
+            if ( leadingGen && !subleadingGen) h_chsIsoLeadingGen1->Fill(event.chsPairTrkIso.first);
+            if ( leadingGen && !subleadingGen) h_chsIsoLeadingGen2->Fill(event.chsPairTrkIso.second);
+            if (!leadingGen &&  subleadingGen) h_chsIsoSubleadingGen1->Fill(event.chsPairTrkIso.first);
+            if (!leadingGen &&  subleadingGen) h_chsIsoSubleadingGen2->Fill(event.chsPairTrkIso.second);
+            if (!leadingGen && !subleadingGen) h_chsIsoBothFake1->Fill(event.chsPairTrkIso.first);
+            if (!leadingGen && !subleadingGen) h_chsIsoBothFake2->Fill(event.chsPairTrkIso.second);
+            if (  leadingGen )    h_chsIsoGen1->Fill(event.chsPairTrkIso.first);
+            if (  subleadingGen ) h_chsIsoGen2->Fill(event.chsPairTrkIso.second);
+            if ( !leadingGen )    h_chsIsoFake1->Fill(event.chsPairTrkIso.first);
+            if ( !subleadingGen ) h_chsIsoFake2->Fill(event.chsPairTrkIso.second);
 
             h_chsEta1->Fill(event.chsPairVec.first.Eta());
             h_chsEta2->Fill(event.chsPairVec.second.Eta());
@@ -1094,6 +1124,21 @@ int main(int argc, char* argv[]) {
     h_chsEtaFake1->Write();
     h_chsEtaFake2->Write();
 
+    h_chsIso1->Write();
+    h_chsIso2->Write();
+    h_chsIsoBothGen1->Write();
+    h_chsIsoBothGen2->Write();
+    h_chsIsoLeadingGen1->Write();
+    h_chsIsoLeadingGen2->Write();
+    h_chsIsoSubleadingGen1->Write();
+    h_chsIsoSubleadingGen2->Write();
+    h_chsIsoBothFake1->Write();
+    h_chsIsoBothFake2->Write();
+    h_chsIsoGen1->Write();
+    h_chsIsoGen2->Write();
+    h_chsIsoFake1->Write();
+    h_chsIsoFake2->Write();
+
     h_chsDeltaR->Write();
     h_chsBothGenDeltaR->Write();
     h_chsLeadingGenDeltaR->Write();
@@ -1246,10 +1291,32 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
                 event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chs[i] : chs[j];
                 event.chsPairIndex.second = chs1.Pt() > chs2.Pt() ? chs[j] : chs[i];
 
-                event.chsPairTrkIndex = getChsTrackPairIndex(event);
+                TLorentzVector chsTrk1 {event.packedCandsPseudoTrkPt[event.chsPairIndex.first], event.packedCandsPseudoTrkEta[event.chsPairIndex.first], event.packedCandsPseudoTrkPhi[event.chsPairIndex.first], event.packedCandsE[event.chsPairIndex.first]};
+                TLorentzVector chsTrk2 {event.packedCandsPseudoTrkPt[event.chsPairIndex.second], event.packedCandsPseudoTrkEta[event.chsPairIndex.second], event.packedCandsPseudoTrkPhi[event.chsPairIndex.second], event.packedCandsE[event.chsPairIndex.second]};
 
-                event.chsPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex], event.chsTkPairTk1Py[event.chsPairTrkIndex], event.chsTkPairTk1Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
-                event.chsPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex], event.chsTkPairTk2Py[event.chsPairTrkIndex], event.chsTkPairTk2Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
+                event.chsTrkPairVec.first  = chsTrk1;
+                event.chsTrkPairVec.second = chsTrk2;
+
+                event.chsPairTrkIndex = getChsTrackPairIndex(event);
+                event.chsTrkPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex], event.chsTkPairTk1Py[event.chsPairTrkIndex], event.chsTkPairTk1Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
+                event.chsTrkPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex], event.chsTkPairTk2Py[event.chsPairTrkIndex], event.chsTkPairTk2Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
+
+                float iso1 {0.0}, iso2 {0.0};
+
+                for (Int_t k = 0; k < event.numPackedCands; k++) {
+                    TLorentzVector packedCandVec{event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]};
+                    if ( k != chs[i] ) {
+                        if (event.chsPairVec.first.DeltaR(packedCandVec) < 0.3) iso1 += packedCandVec.Pt();
+                    }
+                    if ( k != chs[j] ) {
+                        if (event.chsPairVec.second.DeltaR(packedCandVec) < 0.3) iso2 += packedCandVec.Pt();
+
+                    }
+                }
+
+                event.chsPairTrkIso.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
+                event.chsPairTrkIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
+
                 return true;
             }
             else continue;

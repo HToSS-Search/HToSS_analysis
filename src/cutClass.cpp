@@ -55,7 +55,7 @@ Cuts::Cuts(const bool doPlots,
     , scalarMassCut_{10.}
     , maxDileptonDeltaR_{0.4}
     , chsMass_{0.13957018}
-    , maxChsDeltaR_ {0.4}
+    , maxChsDeltaR_ {999999}
     , higgsMassCut_{20.}
     , invWMassCut_{999999.}
 
@@ -726,8 +726,8 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
 
                 event.chsPairTrkIndex = getChsTrackPairIndex(event);
 
-                event.chsPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex], event.chsTkPairTk1Py[event.chsPairTrkIndex], event.chsTkPairTk1Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
-                event.chsPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex], event.chsTkPairTk2Py[event.chsPairTrkIndex], event.chsTkPairTk2Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
+                event.chsTrkPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex], event.chsTkPairTk1Py[event.chsPairTrkIndex], event.chsTkPairTk1Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
+                event.chsTrkPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex], event.chsTkPairTk2Py[event.chsPairTrkIndex], event.chsTkPairTk2Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
 
                 return true;
             }

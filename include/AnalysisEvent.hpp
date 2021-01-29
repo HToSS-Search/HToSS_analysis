@@ -373,7 +373,7 @@ class AnalysisEvent
 
     static constexpr size_t NPHOTONSMAX{30};
     Int_t numPhoPF2PAT;
-    Float_t phoPF2PATE[NPHOTONSMAX];
+/*    Float_t phoPF2PATE[NPHOTONSMAX];
     Float_t phoPF2PATSigmaE[NPHOTONSMAX];
     Float_t phoPF2PATET[NPHOTONSMAX];
     Float_t phoPF2PATPhi[NPHOTONSMAX];
@@ -431,7 +431,7 @@ class AnalysisEvent
     Int_t genPhoPF2PATIsPhoton[NPHOTONSMAX];
     Int_t genPhoPF2PATIsConvertedPhoton[NPHOTONSMAX];
     Int_t genPhoPF2PATIsJet[NPHOTONSMAX];
-    Int_t genPhoPF2PATScalarAncestor[NPHOTONSMAX];
+*/    Int_t genPhoPF2PATScalarAncestor[NPHOTONSMAX];
     Int_t genPhoPF2PATDirectScalarAncestor[NPHOTONSMAX];
 
 /*
@@ -1585,7 +1585,7 @@ class AnalysisEvent
     TBranch* b_tauPF2PATEta; //!
 */
     TBranch* b_numPhoPF2PAT; //!
-    TBranch* b_phoPF2PATE; //!
+/*    TBranch* b_phoPF2PATE; //!
     TBranch* b_phoPF2PATSigmaE; //!
     TBranch* b_phoPF2PATET; //!
     TBranch* b_phoPF2PATPhi; //!
@@ -1642,9 +1642,10 @@ class AnalysisEvent
     TBranch* b_genPhoPF2PATMotherId; //!
     TBranch* b_genPhoPF2PATIsPhoton; //!
     TBranch* b_genPhoPF2PATIsConvertedPhoton; //!
-    TBranch* b_genPhoPF2PATIsJet; //!
+*/    TBranch* b_genPhoPF2PATIsJet; //!
     TBranch* b_genPhoPF2PATScalarAncestor; //!
     TBranch* b_genPhoPF2PATDirectScalarAncestor; //!
+
 /*
     TBranch* b_numPhoOOT_PF2PAT; //!
     TBranch* b_phoOOT_PF2PATE; //!
@@ -2452,7 +2453,9 @@ class AnalysisEvent
     int mumuTrkIndex;
 
     std::pair<TLorentzVector, TLorentzVector> chsPairVec;
-    std::pair<TLorentzVector, TLorentzVector> chsPairVecRefitted;
+    std::pair<TLorentzVector, TLorentzVector> chsTrkPairVec;
+    std::pair<TLorentzVector, TLorentzVector> chsTrkPairVecRefitted;
+    std::pair<float, float> chsPairTrkIso;
     std::pair<int, int> chsPairIndex;
     int chsPairTrkIndex;
 
@@ -2894,7 +2897,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
    fChain->SetBranchAddress("tauPF2PATEta", tauPF2PATEta, &b_tauPF2PATEta);
 */
    fChain->SetBranchAddress("numPhoPF2PAT", &numPhoPF2PAT, &b_numPhoPF2PAT);
-   fChain->SetBranchAddress("phoPF2PATE", phoPF2PATE, &b_phoPF2PATE);
+/*   fChain->SetBranchAddress("phoPF2PATE", phoPF2PATE, &b_phoPF2PATE);
    fChain->SetBranchAddress("phoPF2PATSigmaE", phoPF2PATSigmaE, &b_phoPF2PATSigmaE);
    fChain->SetBranchAddress("phoPF2PATET", phoPF2PATET, &b_phoPF2PATET);
    fChain->SetBranchAddress("phoPF2PATPhi", phoPF2PATPhi, &b_phoPF2PATPhi);
@@ -2938,8 +2941,8 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
    fChain->SetBranchAddress("phoPF2PATMvaIdWp90", phoPF2PATMvaIdWp90, &b_phoPF2PATMvaIdWp90);
    fChain->SetBranchAddress("phoPF2PATNumSourceCandidates", phoPF2PATNumSourceCandidates, &b_phoPF2PATNumSourceCandidates);
    fChain->SetBranchAddress("phoPF2PATPackedCandIndex", phoPF2PATPackedCandIndex, &b_phoPF2PATPackedCandIndex);
-   if (isMC) {
-      fChain->SetBranchAddress("genPhoPF2PATPt", genPhoPF2PATPt, &b_genPhoPF2PATPt);
+*/   if (isMC) {
+/*      fChain->SetBranchAddress("genPhoPF2PATPt", genPhoPF2PATPt, &b_genPhoPF2PATPt);
       fChain->SetBranchAddress("genPhoPF2PATET", genPhoPF2PATET, &b_genPhoPF2PATET);
       fChain->SetBranchAddress("genPhoPF2PATEta", genPhoPF2PATEta, &b_genPhoPF2PATEta);
       fChain->SetBranchAddress("genPhoPF2PATTheta", genPhoPF2PATTheta, &b_genPhoPF2PATTheta);
@@ -2953,9 +2956,10 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
       fChain->SetBranchAddress("genPhoPF2PATIsPhoton", genPhoPF2PATIsPhoton, &b_genPhoPF2PATIsPhoton);
       fChain->SetBranchAddress("genPhoPF2PATIsConvertedPhoton", genPhoPF2PATIsConvertedPhoton, &b_genPhoPF2PATIsConvertedPhoton);
       fChain->SetBranchAddress("genPhoPF2PATIsJet", genPhoPF2PATIsJet, &b_genPhoPF2PATIsJet);
-      fChain->SetBranchAddress("genPhoPF2PATScalarAncestor", genPhoPF2PATScalarAncestor, &b_genPhoPF2PATScalarAncestor);
+*/      fChain->SetBranchAddress("genPhoPF2PATScalarAncestor", genPhoPF2PATScalarAncestor, &b_genPhoPF2PATScalarAncestor);
       fChain->SetBranchAddress("genPhoPF2PATDirectScalarAncestor", genPhoPF2PATDirectScalarAncestor, &b_genPhoPF2PATDirectScalarAncestor);
    }
+
 /*
    fChain->SetBranchAddress("numPhoOOT_PF2PAT", &numPhoOOT_PF2PAT, &b_numPhoOOT_PF2PAT);
    fChain->SetBranchAddress("phoOOT_PF2PATE", phoOOT_PF2PATE, &b_phoOOT_PF2PATE);
@@ -3808,6 +3812,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
 
   std::pair<TLorentzVector, TLorentzVector> chsPairVec = {};
   std::pair<TLorentzVector, TLorentzVector> chsPairVecRefitted = {};
+  std::pair<float, float> chsPairTrkIso = {};
   std::pair<int, int> chsPairIndex = {};
   chsPairTrkIndex = -1;
 

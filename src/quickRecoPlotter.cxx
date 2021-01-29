@@ -361,16 +361,16 @@ int main(int argc, char* argv[]) {
       	    h_diChsPtOverDeltaR->Fill( ((chs1Vec+chs2Vec).Pt())/ (chs1Vec.DeltaR(chs2Vec) + 1.0e-06),datasetWeight );
       	    h_diChsPtOverDeltaR2D->Fill( (chs1Vec+chs2Vec).Pt(), chs1Vec.DeltaR(chs2Vec),datasetWeight );
             h_diChsMass->Fill( (chs1Vec+chs2Vec).M(),datasetWeight );
-            h_diChsRefittedMass->Fill( (event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
+            h_diChsRefittedMass->Fill( (event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
 
 ///
 
             h_scalarDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR( (chs1Vec+chs2Vec) ), datasetWeight );
             h_scalarMasses->Fill( (muon1Vec+muon2Vec).M(), (chs1Vec+chs2Vec).M(), datasetWeight );
             h_scalarMassesNew->Fill( (muon1VecNew+muon2VecNew).M(), (chs1Vec+chs2Vec).M(),datasetWeight );
-            h_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
+            h_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
             h_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M(),datasetWeight );
-            h_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
+            h_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
 
             h_leadingChsJetPt->Fill( jet1Vec.Pt(),datasetWeight );
             h_subleadingChsJetPt->Fill( jet2Vec.Pt(),datasetWeight );
@@ -401,13 +401,13 @@ int main(int argc, char* argv[]) {
       	        ht_diChsPtOverDeltaR->Fill( ((chs1Vec+chs2Vec).Pt())/ (chs1Vec.DeltaR(chs2Vec) + 1.0e-06),datasetWeight );
                 ht_diChsPtOverDeltaR2D->Fill( (chs1Vec+chs2Vec).Pt(), chs1Vec.DeltaR(chs2Vec),datasetWeight );
                 ht_diChsMass->Fill( (chs1Vec+chs2Vec).M(),datasetWeight );
-                ht_diChsRefittedMass->Fill( (event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
+                ht_diChsRefittedMass->Fill( (event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
 
                 ht_scalarDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR( (chs1Vec+chs2Vec) ),datasetWeight );
                 ht_scalarMasses->Fill( (muon1Vec+muon2Vec).M(), (chs1Vec+chs2Vec).M(),datasetWeight );
-                ht_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
+                ht_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
                 ht_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M(),datasetWeight );
-                ht_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsPairVecRefitted.first+event.chsPairVecRefitted.second).M(),datasetWeight );
+                ht_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
 
                 h_leadingChsJetPt->Fill( jet1Vec.Pt(),datasetWeight );
                 h_subleadingChsJetPt->Fill( jet2Vec.Pt(),datasetWeight );
@@ -620,8 +620,8 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
 
                 event.chsPairTrkIndex = getChsTrackPairIndex(event);
 
-                event.chsPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex], event.chsTkPairTk1Py[event.chsPairTrkIndex], event.chsTkPairTk1Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
-                event.chsPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex], event.chsTkPairTk2Py[event.chsPairTrkIndex], event.chsTkPairTk2Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
+                event.chsTrkPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex], event.chsTkPairTk1Py[event.chsPairTrkIndex], event.chsTkPairTk1Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
+                event.chsTrkPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex], event.chsTkPairTk2Py[event.chsPairTrkIndex], event.chsTkPairTk2Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
 
                 return true;
             }
