@@ -1231,9 +1231,9 @@ class AnalysisEvent
     Float_t genParE[NGENPARMAX];
     Float_t genParPt[NGENPARMAX];
     Int_t genParId[NGENPARMAX];
-    Int_t genParVx[NGENPARMAX];
-    Int_t genParVy[NGENPARMAX];
-    Int_t genParVz[NGENPARMAX];
+    Float_t genParVx[NGENPARMAX];
+    Float_t genParVy[NGENPARMAX];
+    Float_t genParVz[NGENPARMAX];
     Int_t genParMotherId[NGENPARMAX];
     Int_t genParMotherIndex[NGENPARMAX];
     Int_t genParNumDaughters[NGENPARMAX];
