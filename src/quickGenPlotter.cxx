@@ -77,6 +77,8 @@ int main(int argc, char* argv[]) {
     p_genHadronicDecayFractions->GetXaxis()->SetBinLabel(3, "K_{S}^{0}K_{S}^{0}");
     p_genHadronicDecayFractions->GetXaxis()->SetBinLabel(4, "K^{+}K^{-}");
 
+    TH1F* h_scalarEnergy          {new TH1F("h_scalarEnergy",          "scalar energy; [GeV]", 5000, 0., 2500)};
+
     TH1F* h_genDimuonDeltaR       {new TH1F("h_genDimuonDeltaR",       "Dimuon gen deltaR", 50, 0., 1.)};
     TH1F* h_genDimuonMass         {new TH1F("h_genDimuonMass",         "Dimuon gen mass", 30, 0., 11.)};
     TH1F* h_genDimuonPt           {new TH1F("h_genDimuonPt",           "Dimuon gen Pt",  200, 0., 200)}; 
@@ -315,36 +317,56 @@ int main(int argc, char* argv[]) {
     TH1F* h_chsVz                            {new TH1F("h_chsVz",            "v_{z}",      200, -50., 50.)};
     TH1F* h_chsVxy                           {new TH1F("h_chsVxy",           "v_{xy}",     200,  0.,  100.)};
     TH1F* h_chsVd                            {new TH1F("h_chsVd",            "v_{d}",      200,  0., 100.)};
+    TH1F* h_chsVxSig                         {new TH1F("h_chsVxSig",         "v_{x}",      200, -50., 50.)};
+    TH1F* h_chsVySig                         {new TH1F("h_chsVySig",         "v_{y}",      200, -50., 50.)};
+    TH1F* h_chsVzSig                         {new TH1F("h_chsVzSig",         "v_{z}",      200, -50., 50.)};
+    TH1F* h_chsVxySig                        {new TH1F("h_chsVxySig",        "v_{xy}",     200,  0.,  100.)};
+    TH1F* h_chsVdSig                         {new TH1F("h_chsVdSig",         "v_{d}",      200,  0., 100.)};
     TH1F* h_chsVtxAngleXY                    {new TH1F("h_chsVtxAngleXY",    "angle XY", 250, -1.2, 1.2)};
     TH1F* h_chsVtxDistSigXY                  {new TH1F("h_chsVtxDistSigXY",  "angle XY signficance", 100, 0., 1.)};
     TH1F* h_chsVtxAngleXYZ                   {new TH1F("h_chsVtxAngleXYZ",   "angle XYZ", 250, -1.2, 1.2)};
     TH1F* h_chsVtxDistSigXYZ                 {new TH1F("h_chsVtxDistSigXYZ", "angle XYZ signficance", 100, 0., 1.)};
 
-    TH1F* h_chsVxBothGen                     {new TH1F("h_chsVxBothGen",   "v_{x}",      200, -50., 50.)};
-    TH1F* h_chsVyBothGen                     {new TH1F("h_chsVyBothGen",   "v_{y}",      200, -50., 50.)};
-    TH1F* h_chsVzBothGen                     {new TH1F("h_chsVzBothGen",   "v_{z}",      200, -50., 50.)};
-    TH1F* h_chsVxyBothGen                    {new TH1F("h_chsVxyBothGen",  "v_{xy}",     200,  0.,  100.)};
-    TH1F* h_chsVdBothGen                     {new TH1F("h_chsVdBothGen",   "v_{d}",      200,  0., 100.)};
+    TH1F* h_chsVxBothGen                     {new TH1F("h_chsVxBothGen",        "v_{x}",      200, -50., 50.)};
+    TH1F* h_chsVyBothGen                     {new TH1F("h_chsVyBothGen",        "v_{y}",      200, -50., 50.)};
+    TH1F* h_chsVzBothGen                     {new TH1F("h_chsVzBothGen",        "v_{z}",      200, -50., 50.)};
+    TH1F* h_chsVxyBothGen                    {new TH1F("h_chsVxyBothGen",       "v_{xy}",     200,  0.,  100.)};
+    TH1F* h_chsVdBothGen                     {new TH1F("h_chsVdBothGen",        "v_{d}",      200,  0., 100.)};
+    TH1F* h_chsVxSigGen                      {new TH1F("h_chsVxSigGen",         "v_{x}",      200, -50., 50.)};
+    TH1F* h_chsVySigGen                      {new TH1F("h_chsVySigGen",         "v_{y}",      200, -50., 50.)};
+    TH1F* h_chsVzSigGen                      {new TH1F("h_chsVzSigGen",         "v_{z}",      200, -50., 50.)};
+    TH1F* h_chsVxySigGen                     {new TH1F("h_chsVxySigGen",        "v_{xy}",     200,  0.,  100.)};
+    TH1F* h_chsVdSigGen                      {new TH1F("h_chsVdSigGen",         "v_{d}",      200,  0., 100.)};
     TH1F* h_chsVtxAngleXYGen                 {new TH1F("h_chsVtxAngleXYGen",    "angle XY", 250, -1.2, 1.2)};
     TH1F* h_chsVtxDistSigXYGen               {new TH1F("h_chsVtxDistSigXYGen",  "angle XY signficance", 100, 0., 1.)};
     TH1F* h_chsVtxAngleXYZGen                {new TH1F("h_chsVtxAngleXYZGen",   "angle XYZ", 250, -1.2, 1.2)};
     TH1F* h_chsVtxDistSigXYZGen              {new TH1F("h_chsVtxDistSigXYZGen", "angle XYZ signficance", 100, 0., 1.)};
 
-    TH1F* h_chsVxComb                        {new TH1F("h_chsVxComb",      "v_{x}",      200, -50., 50.)};
-    TH1F* h_chsVyComb                        {new TH1F("h_chsVyComb",      "v_{y}",      200, -50., 50.)};
-    TH1F* h_chsVzComb                        {new TH1F("h_chsVzComb",      "v_{z}",      200, -50., 50.)};
-    TH1F* h_chsVxyComb                       {new TH1F("h_chsVxyComb",     "v_{xy}",     200,  0.,  100.)};
-    TH1F* h_chsVdComb                        {new TH1F("h_chsVdComb",      "v_{d}",      200,  0., 100.)};
+    TH1F* h_chsVxComb                        {new TH1F("h_chsVxComb",            "v_{x}",      200, -50., 50.)};
+    TH1F* h_chsVyComb                        {new TH1F("h_chsVyComb",            "v_{y}",      200, -50., 50.)};
+    TH1F* h_chsVzComb                        {new TH1F("h_chsVzComb",            "v_{z}",      200, -50., 50.)};
+    TH1F* h_chsVxyComb                       {new TH1F("h_chsVxyComb",           "v_{xy}",     200,  0.,  100.)};
+    TH1F* h_chsVdComb                        {new TH1F("h_chsVdComb",            "v_{d}",      200,  0., 100.)};
+    TH1F* h_chsVxSigComb                     {new TH1F("h_chsVxSigComb",         "v_{x}",      200, -50., 50.)};
+    TH1F* h_chsVySigComb                     {new TH1F("h_chsVySigComb",         "v_{y}",      200, -50., 50.)};
+    TH1F* h_chsVzSigComb                     {new TH1F("h_chsVzSigComb",         "v_{z}",      200, -50., 50.)};
+    TH1F* h_chsVxySigComb                    {new TH1F("h_chsVxySigComb",        "v_{xy}",     200,  0.,  100.)};
+    TH1F* h_chsVdSigComb                     {new TH1F("h_chsVdSigComb",         "v_{d}",      200,  0., 100.)};
     TH1F* h_chsVtxAngleXYComb                {new TH1F("h_chsVtxAngleXYComb",    "angle XY", 250, -1.2, 1.2)};
     TH1F* h_chsVtxDistSigXYComb              {new TH1F("h_chsVtxDistSigXYComb",  "angle XY signficance", 100, 0., 1.)};
     TH1F* h_chsVtxAngleXYZComb               {new TH1F("h_chsVtxAngleXYZComb",   "angle XYZ", 250, -1.2, 1.2)};
     TH1F* h_chsVtxDistSigXYZComb             {new TH1F("h_chsVtxDistSigXYZComb", "angle XYZ signficance", 100, 0., 1.)};
 
-    TH1F* h_chsVxBothFake                    {new TH1F("h_chsVxBothFake",  "v_{x}",      200, -50., 50.)};
-    TH1F* h_chsVyBothFake                    {new TH1F("h_chsVyBothFake",  "v_{y}",      200, -50., 50.)};
-    TH1F* h_chsVzBothFake                    {new TH1F("h_chsVzBothFake",  "v_{z}",      200, -50., 50.)};
-    TH1F* h_chsVxyBothFake                   {new TH1F("h_chsVxyBothFake", "v_{xy}",     200,  0.,  100.)};
-    TH1F* h_chsVdBothFake                    {new TH1F("h_chsVdBothFake",  "v_{d}",      200,  0., 100.)};
+    TH1F* h_chsVxBothFake                    {new TH1F("h_chsVxBothFake",        "v_{x}",      200, -50., 50.)};
+    TH1F* h_chsVyBothFake                    {new TH1F("h_chsVyBothFake",        "v_{y}",      200, -50., 50.)};
+    TH1F* h_chsVzBothFake                    {new TH1F("h_chsVzBothFake",        "v_{z}",      200, -50., 50.)};
+    TH1F* h_chsVxyBothFake                   {new TH1F("h_chsVxyBothFake",       "v_{xy}",     200,  0.,  100.)};
+    TH1F* h_chsVdBothFake                    {new TH1F("h_chsVdBothFake",        "v_{d}",      200,  0., 100.)};
+    TH1F* h_chsVxSigFake                     {new TH1F("h_chsVxSigFake",         "v_{x}",      200, -50., 50.)};
+    TH1F* h_chsVySigFake                     {new TH1F("h_chsVySigFake",         "v_{y}",      200, -50., 50.)};
+    TH1F* h_chsVzSigFake                     {new TH1F("h_chsVzSigFake",         "v_{z}",      200, -50., 50.)};
+    TH1F* h_chsVxySigFake                    {new TH1F("h_chsVxySigFake",        "v_{xy}",     200,  0.,  100.)};
+    TH1F* h_chsVdSigFake                     {new TH1F("h_chsVdSigFake",         "v_{d}",      200,  0., 100.)};
     TH1F* h_chsVtxAngleXYFake                {new TH1F("h_chsVtxAngleXYFake",    "angle XY", 250, -1.2, 1.2)};
     TH1F* h_chsVtxDistSigXYFake              {new TH1F("h_chsVtxDistSigXYFake",  "angle XY signficance", 100, 0., 1.)};
     TH1F* h_chsVtxAngleXYZFake               {new TH1F("h_chsVtxAngleXYZFake",   "angle XYZ", 250, -1.2, 1.2)};
@@ -629,6 +651,8 @@ int main(int argc, char* argv[]) {
             for ( Int_t k = 0; k < event.nGenPar; k++ ) {
                 const int pid { std::abs(event.genParId[k]) };
                 const int motherId { std::abs(event.genParMotherId[k]) };
+
+                if (motherId == 9000006) h_scalarEnergy->Fill(event.genParE[k]);
 
                 const bool hasScalarGrandparent {scalarGrandparent(event, k, 9000006)};
 
@@ -1104,14 +1128,24 @@ int main(int argc, char* argv[]) {
 
             const float vx {event.chsTkPairTkVx[event.chsPairTrkIndex]}, vy {event.chsTkPairTkVy[event.chsPairTrkIndex]}, vz {event.chsTkPairTkVz[event.chsPairTrkIndex]};
             const float vxy {std::sqrt( vx*vx* + vy*vy )}, vd {std::sqrt( vx*vx* + vy*vy + vz*vz )};
-            const float angleXY {event.muonTkPairPF2PATTkVtxAngleXY[event.chsPairTrkIndex]}, angleXYZ {event.muonTkPairPF2PATTkVtxDistMagXY[event.chsPairTrkIndex]/(event.muonTkPairPF2PATTkVtxDistMagXYSigma[event.chsPairTrkIndex]+1.0e-06)};
-            const float distSigXY {event.muonTkPairPF2PATTkVtxAngleXYZ[event.chsPairTrkIndex]}, distSigXYZ {event.muonTkPairPF2PATTkVtxDistMagXYZ[event.chsPairTrkIndex]/(event.muonTkPairPF2PATTkVtxDistMagXYZSigma[event.chsPairTrkIndex]+1.0e-06)};
+
+            const float vxSig {vx/(event.chsTkPairTkVtxCov00[event.chsPairTrkIndex] + 1.0e-06)}, vySig {vy/(event.chsTkPairTkVtxCov11[event.chsPairTrkIndex] + 1.0e-06)}, vzSig {vz/(event.chsTkPairTkVtxCov22[event.chsPairTrkIndex] + 1.0e-06)};
+            const float vxySig {vxy/(std::sqrt(event.chsTkPairTkVtxCov00[event.chsPairTrkIndex]*event.chsTkPairTkVtxCov00[event.chsPairTrkIndex]+event.chsTkPairTkVtxCov11[event.chsPairTrkIndex]*event.chsTkPairTkVtxCov11[event.chsPairTrkIndex] - 2*event.chsTkPairTkVtxCov01[event.chsPairTrkIndex]*event.chsTkPairTkVtxCov10[event.chsPairTrkIndex]) + 1.0e-06)};
+            const float vdSig {0};
+
+            const float angleXY {event.chsTkPairTkVtxAngleXY[event.chsPairTrkIndex]}, angleXYZ {event.chsTkPairTkVtxDistMagXY[event.chsPairTrkIndex]/(event.chsTkPairTkVtxDistMagXYSigma[event.chsPairTrkIndex]+1.0e-06)};
+            const float distSigXY {event.chsTkPairTkVtxAngleXYZ[event.chsPairTrkIndex]}, distSigXYZ {event.chsTkPairTkVtxDistMagXYZ[event.chsPairTrkIndex]/(event.chsTkPairTkVtxDistMagXYZSigma[event.chsPairTrkIndex]+1.0e-06)};
 
             h_chsVx->Fill(vx);
             h_chsVy->Fill(vy);
             h_chsVz->Fill(vz);
             h_chsVxy->Fill(vxy);
             h_chsVd->Fill(vd);
+            h_chsVxSig->Fill(vxSig);
+            h_chsVySig->Fill(vxSig);
+            h_chsVzSig->Fill(vxSig);
+            h_chsVxySig->Fill(vxSig);
+            h_chsVdSig->Fill(vxSig);
             h_chsVtxAngleXY->Fill(angleXY);
        	    h_chsVtxDistSigXY->Fill(distSigXY);
        	    h_chsVtxAngleXYZ->Fill(angleXYZ);
@@ -1123,6 +1157,11 @@ int main(int argc, char* argv[]) {
                 h_chsVzBothGen->Fill(vz);
                 h_chsVxyBothGen->Fill(vxy);
                 h_chsVdBothGen->Fill(vd);
+                h_chsVxSigGen->Fill(vxSig);
+                h_chsVySigGen->Fill(vySig);
+                h_chsVzSigGen->Fill(vzSig);
+                h_chsVxySigGen->Fill(vxySig);
+                h_chsVdSigGen->Fill(vdSig);
                 h_chsVtxAngleXYGen->Fill(angleXY);
                 h_chsVtxDistSigXYGen->Fill(distSigXY);
                 h_chsVtxAngleXYZGen->Fill(angleXYZ);
@@ -1134,6 +1173,11 @@ int main(int argc, char* argv[]) {
                 h_chsVzComb->Fill(vz);
                 h_chsVxyComb->Fill(vxy);
                 h_chsVdComb->Fill(vd);
+                h_chsVxSigComb->Fill(vxSig);
+                h_chsVySigComb->Fill(vySig);
+                h_chsVzSigComb->Fill(vzSig);
+                h_chsVxySigComb->Fill(vxySig);
+                h_chsVdSigComb->Fill(vdSig);
                 h_chsVtxAngleXYComb->Fill(angleXY);
                 h_chsVtxDistSigXYComb->Fill(distSigXY);
                 h_chsVtxAngleXYZComb->Fill(angleXYZ);
@@ -1145,6 +1189,11 @@ int main(int argc, char* argv[]) {
                 h_chsVzBothFake->Fill(vz);
                 h_chsVxyBothFake->Fill(vxy);
                 h_chsVdBothFake->Fill(vd);
+                h_chsVxSigFake->Fill(vxSig);
+                h_chsVySigFake->Fill(vySig);
+                h_chsVzSigFake->Fill(vzSig);
+                h_chsVxySigFake->Fill(vxySig);
+                h_chsVdSigFake->Fill(vdSig);
                 h_chsVtxAngleXYFake->Fill(angleXY);
                 h_chsVtxDistSigXYFake->Fill(distSigXY);
                 h_chsVtxAngleXYZFake->Fill(angleXYZ);
@@ -1266,6 +1315,8 @@ int main(int argc, char* argv[]) {
     outFile->cd();
 
     p_genHadronicDecayFractions->Write();
+
+    h_scalarEnergy->Write();
 
     h_genDimuonDeltaR->Write();
     h_genDimuonMass->Write();
@@ -1454,6 +1505,11 @@ int main(int argc, char* argv[]) {
     h_chsVz->Write();
     h_chsVxy->Write();
     h_chsVd->Write();
+    h_chsVxSig->Write();
+    h_chsVySig->Write();
+    h_chsVzSig->Write();
+    h_chsVxySig->Write();
+    h_chsVdSig->Write();
     h_chsVtxAngleXY->Write();
     h_chsVtxDistSigXY->Write();
     h_chsVtxAngleXYZ->Write();
@@ -1464,6 +1520,11 @@ int main(int argc, char* argv[]) {
     h_chsVzBothGen->Write();
     h_chsVxyBothGen->Write();
     h_chsVdBothGen->Write();
+    h_chsVxSigGen->Write();
+    h_chsVySigGen->Write();
+    h_chsVzSigGen->Write();
+    h_chsVxySigGen->Write();
+    h_chsVdSigGen->Write();
     h_chsVtxAngleXYGen->Write();
     h_chsVtxDistSigXYGen->Write();
     h_chsVtxAngleXYZGen->Write();
@@ -1474,6 +1535,11 @@ int main(int argc, char* argv[]) {
     h_chsVzComb->Write();
     h_chsVxyComb->Write();
     h_chsVdComb->Write();
+    h_chsVxSigComb->Write();
+    h_chsVySigComb->Write();
+    h_chsVzSigComb->Write();
+    h_chsVxySigComb->Write();
+    h_chsVdSigComb->Write();
     h_chsVtxAngleXYComb->Write();
     h_chsVtxDistSigXYComb->Write();
     h_chsVtxAngleXYZComb->Write();
@@ -1484,6 +1550,11 @@ int main(int argc, char* argv[]) {
     h_chsVzBothFake->Write();
     h_chsVxyBothFake->Write();
     h_chsVdBothFake->Write();
+    h_chsVxSigFake->Write();
+    h_chsVySigFake->Write();
+    h_chsVzSigFake->Write();
+    h_chsVxySigFake->Write();
+    h_chsVdSigFake->Write();
     h_chsVtxAngleXYFake->Write();
     h_chsVtxDistSigXYFake->Write();
     h_chsVtxAngleXYZFake->Write();
@@ -1655,12 +1726,9 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
                     TLorentzVector packedCandVec;
                     packedCandVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
 
-                    if ( k != event.chsPairIndex.first ) {
-                        if (event.chsPairVec.first.DeltaR(packedCandVec) < 0.3)  iso1 += packedCandVec.Pt();
-                    }
-                    if ( k != event.chsPairIndex.second ) {
-                        if (event.chsPairVec.second.DeltaR(packedCandVec) < 0.3) iso2 += packedCandVec.Pt();
-                    }
+                    if ( k == event.chsPairIndex.first || k == event.chsPairIndex.second ) continue;
+                    if (event.chsPairVec.first.DeltaR(packedCandVec) < 0.3)  iso1 += packedCandVec.Pt();
+                    if (event.chsPairVec.second.DeltaR(packedCandVec) < 0.3) iso2 += packedCandVec.Pt();
                 }
 
                 event.chsPairTrkIso.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
