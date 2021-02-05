@@ -281,7 +281,7 @@ int main(int argc, char* argv[])
                 int mu1 {-1}, mu2{-1};
                 for ( Int_t k{0}; k < event.numMuonPF2PAT; k++ ) {
                     if ( event.genMuonPF2PATScalarAncestor[k] && mu1 < 0 ) mu1 = k;
-                    else if ( event.genMuonPF2PATScalarAncestor[k] == 9000006 && mu2 < 0 ) mu2 = k;
+                    else if ( event.genMuonPF2PATScalarAncestor[k] && mu2 < 0 ) mu2 = k;
                     else if (mu1 >= 0 && mu2 > 0) break;
                 }
 
