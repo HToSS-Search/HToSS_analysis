@@ -1215,7 +1215,7 @@ bool Cuts::triggerCuts(const AnalysisEvent& event,
         if (channel == "mumu")
 //        else if (channel == "mumu")
         {
-            if (muTrig || mumuTrig) {
+            if (muTrig) {
                 twgt = 0.97170;
                 if (syst == 1) twgt += 0.01;
                 else if (syst == 2) twgt -= 0.01;
@@ -1246,7 +1246,7 @@ bool Cuts::triggerCuts(const AnalysisEvent& event,
         if (channel == "mumu")
 //        else if (channel == "mumu")
         {
-            if (muTrig || mumuTrig) { // If doubleMuon or singleMuon trigger fires ...
+            if (muTrig) { // If doubleMuon or singleMuon trigger fires ...
 
                 // eff pre-HIP fix: 0.98069  +/- -0.00070/0.00073; eff post-HIP
                 // fix: 0.99061 +/- -0.00057/0.00061;
@@ -1298,8 +1298,8 @@ bool Cuts::triggerCuts(const AnalysisEvent& event,
     if (channel == "mumu") {
         // Trigger logic for double + single triggers
 ////        if ( (mumuTrig || muTrig) && !(eeTrig || muEGTrig || eTrig)) { // Old tZq logic
-        if ( mumuTrig || muTrig || mumuL2Trig || mumuNoVtxTrig ) {
-//        if ( mumuTrig ) {
+//        if ( mumuTrig || muTrig || mumuL2Trig || mumuNoVtxTrig ) {
+        if ( muTrig ) {
             if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
             return true;
         }
