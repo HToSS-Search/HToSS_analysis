@@ -99,6 +99,7 @@ class Cuts
     double chsMass_;
     double maxChsDeltaR_;
     double higgsMassCut_;
+    double higgsTolerence_;
     double invWMassCut_;
 
     // Tight jet cuts

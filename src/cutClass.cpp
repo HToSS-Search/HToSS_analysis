@@ -57,6 +57,7 @@ Cuts::Cuts(const bool doPlots,
     , chsMass_{0.13957018}
     , maxChsDeltaR_ {999999}
     , higgsMassCut_{20.}
+    , higgsTolerence_ {10.}
     , invWMassCut_{999999.}
 
     , numJets_{0}
@@ -684,6 +685,18 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                 event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
                 event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
 
+                float iso1 {0.0}, iso2 {0.0};
+                for (int k = 0; k < event.numPackedCands; k++) {
+                    TLorentzVector packedCandVec;
+                    packedCandVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
+
+                    if ( k == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || k == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
+                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 )  iso1 += packedCandVec.Pt();
+                    if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.3 ) iso2 += packedCandVec.Pt();
+                }
+                event.zPairNewIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                event.zPairNewIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
+
                 event.mumuTrkIndex = getMuonTrackPairIndex(event);
 
                 event.zPairLeptonsRefitted.first  = TLorentzVector{event.muonTkPairPF2PATTk1Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
@@ -698,42 +711,64 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
 
 bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) const {
 
-
     for ( unsigned int i{0}; i < chs.size(); i++ ) {
 
         if ( event.packedCandsMuonIndex[chs[i]] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
         if ( event.packedCandsMuonIndex[chs[i]] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
 
         for ( unsigned int j{i+1}; j < chs.size(); j++ ) {
+
             if ( event.packedCandsMuonIndex[chs[j]] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
             if ( event.packedCandsMuonIndex[chs[j]] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
-
-            if ( std::abs(event.packedCandsPdgId[chs[i]]) != 211 || std::abs(event.packedCandsPdgId[chs[j]]) != 211 ) continue;
 
             if (event.packedCandsCharge[chs[i]] * event.packedCandsCharge[chs[j]] >= 0) continue;
 
             TLorentzVector chs1 {event.packedCandsPx[chs[i]], event.packedCandsPy[chs[i]], event.packedCandsPz[chs[i]], event.packedCandsE[chs[i]]};
             TLorentzVector chs2 {event.packedCandsPx[chs[j]], event.packedCandsPy[chs[j]], event.packedCandsPz[chs[j]], event.packedCandsE[chs[j]]};
 
+            double pT { (chs1+chs2).Pt() };
             double delR { chs1.DeltaR(chs2) };
             double higgsMass { (chs1+chs2+event.zPairLeptons.first+event.zPairLeptons.second).M() };
 
-            if ( delR < maxChsDeltaR_ ) {
+            if ( delR < maxChsDeltaR_ && (higgsMass - 125.) < higgsTolerence_ ) {
                 event.chsPairVec.first  = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
                 event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
                 event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chs[i] : chs[j];
                 event.chsPairIndex.second = chs1.Pt() > chs2.Pt() ? chs[j] : chs[i];
 
-                event.chsPairTrkIndex = getChsTrackPairIndex(event);
+                TLorentzVector chsTrk1, chsTrk2;
+                chsTrk1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[event.chsPairIndex.first], event.packedCandsPseudoTrkEta[event.chsPairIndex.first], event.packedCandsPseudoTrkPhi[event.chsPairIndex.first], event.packedCandsE[event.chsPairIndex.first]);
+                chsTrk2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[event.chsPairIndex.second], event.packedCandsPseudoTrkEta[event.chsPairIndex.second], event.packedCandsPseudoTrkPhi[event.chsPairIndex.second], event.packedCandsE[event.chsPairIndex.second]);
 
-                event.chsTrkPairVecRefitted.first  = TLorentzVector{event.chsTkPairTk1Px[event.chsPairTrkIndex], event.chsTkPairTk1Py[event.chsPairTrkIndex], event.chsTkPairTk1Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
-                event.chsTrkPairVecRefitted.second = TLorentzVector{event.chsTkPairTk2Px[event.chsPairTrkIndex], event.chsTkPairTk2Py[event.chsPairTrkIndex], event.chsTkPairTk2Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
+                event.chsTrkPairVec.first  = chsTrk1;
+                event.chsTrkPairVec.second = chsTrk2;
+
+                event.chsPairTrkIndex = getChsTrackPairIndex(event);
+                TLorentzVector chsTrk1Refitted, chsTrk2Refitted;
+                chsTrk1Refitted.SetPtEtaPhiE(event.chsTkPairTk1Px[event.chsPairTrkIndex], event.chsTkPairTk1Py[event.chsPairTrkIndex], event.chsTkPairTk1Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2)));
+                chsTrk2Refitted.SetPtEtaPhiE(event.chsTkPairTk2Px[event.chsPairTrkIndex], event.chsTkPairTk2Py[event.chsPairTrkIndex], event.chsTkPairTk2Pz[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2)));
+                event.chsTrkPairVecRefitted.first  = chsTrk1Refitted;
+                event.chsTrkPairVecRefitted.second = chsTrk2Refitted;
+
+                float iso1 {0.0}, iso2 {0.0};
+
+                for (int k = 0; k < event.numPackedCands; k++) {
+                    TLorentzVector packedCandVec;
+                    packedCandVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
+
+                    if ( k == event.chsPairIndex.first || k == event.chsPairIndex.second ) continue;
+                    if (event.chsPairVec.first.DeltaR(packedCandVec) < 0.3)  iso1 += packedCandVec.Pt();
+                    if (event.chsPairVec.second.DeltaR(packedCandVec) < 0.3) iso2 += packedCandVec.Pt();
+                }
+
+                event.chsPairTrkIso.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
+                event.chsPairTrkIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
 
                 return true;
             }
+            else continue;
         }
     }
-
     return false;
 }
 

@@ -133,7 +133,7 @@ plots:
     xMin: 0.
     nBins: 200
     fillExp: "chs1TrkPt"
-    xAxisLabel: "track p_{T} leading charged hadron track (GeV/c)"
+    xAxisLabel: "track p_{T} (GeV/c)"
     cutStage: 0
   - title: "Leading charged hadron track #eta"
     name: "chs1TrkEta"
@@ -141,7 +141,7 @@ plots:
     xMin: 0.
     nBins: 120
     fillExp: "chs1TrkEta"
-    xAxisLabel: "track #eta leading charged hadron track"
+    xAxisLabel: "track #eta"
     cutStage: 0
   - title: "Leading charged hadron track #phi"
     name: "chs1TrkPhi"
@@ -149,7 +149,15 @@ plots:
     xMin: -3.2
     nBins: 300
     fillExp: "chs1TrkPhi"
-    xAxisLabel: "track #phi leading charged hadron track (GeV/c)"
+    xAxisLabel: "track #phi"
+    cutStage: 0
+  - title: "Leading charged hadron isolation"
+    name: "chs1TrkIso"
+    xMax: 10.0
+    xMin: 0.0
+    nBins: 200
+    fillExp: "chs1TrkIso"
+    xAxisLabel: Track iso"
     cutStage: 0
   - title: "Subleading charged hadron track p_{T}"
     name: "chs2TrkPt"
@@ -157,7 +165,7 @@ plots:
     xMin: 0.
     nBins: 200
     fillExp: "chs2TrkPt"
-    xAxisLabel: "track p_{T} subleading charged hadron track (GeV/c)"
+    xAxisLabel: "track p_{T} (GeV/c)"
     cutStage: 0
   - title: "Subleading charged hadron track #eta"
     name: "chs2TrkEta"
@@ -165,7 +173,7 @@ plots:
     xMin: 0.
     nBins: 120
     fillExp: "chs2TrkEta"
-    xAxisLabel: "track #eta subleading charged hadron track"
+    xAxisLabel: "track #eta"
     cutStage: 0
   - title: "Leading charged hadron track #phi"
     name: "chs2TrkPhi"
@@ -173,7 +181,15 @@ plots:
     xMin: -3.2
     nBins: 300
     fillExp: "chs2TrkPhi"
-    xAxisLabel: "track #phi subleading charged hadron track (GeV/c)"
+    xAxisLabel: "track #phi"
+    cutStage: 0
+  - title: "Subleading charged hadron isolation"
+    name: "chs2TrkIso"
+    xMax: 10.0
+    xMin: 0.0
+    nBins: 200
+    fillExp: "chs2TrkIso"
+    xAxisLabel: Track iso"
     cutStage: 0
   - title: "E_{T}^{miss}"
     name: "met"
@@ -431,21 +447,37 @@ plots:
     fillExp: "zLepton2Phi"
     xAxisLabel: "#phi second Z lepton"
     cutStage: 0
-  - title: "Leading Z Lepton Relative Isolation"
+  - title: "Leading lepton relative isolation"
     name: "zLepton1RelIso"
     xMax: 0.2
     xMin: 0.
     nBins: 500
     fillExp: "zLepton1RelIso"
-    xAxisLabel: "RelIso Z lepton 1"
+    xAxisLabel: "Relative isolation"
     cutStage: 0
-  - title: "Second Z Lepton Relative Isolation"
+  - title: "Subleading lepton relative isolation"
     name: "zLepton2RelIso"
     xMax: 0.2
     xMin: 0.
     nBins: 500
     fillExp: "zLepton2RelIso"
-    xAxisLabel: "RelIso Z lepton 2"
+    xAxisLabel: "Relative isolation"
+    cutStage: 0
+  - title: "Leading lepton isolation (recalculated)"
+    name: "zLepton1NewIso"
+    xMax: 0.2
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton1NewIso"
+    xAxisLabel: "Isolation (recalculated)"
+    cutStage: 0
+  - title: "Subleading lepton isolation (recalculated)"
+    name: "zLepton2NewIso"
+    xMax: 0.2
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton2NewIso"
+    xAxisLabel: "Isolation (recalculated)"
     cutStage: 0
   - title: "Dilepton Invariant Mass"
     name: "zPairMass"

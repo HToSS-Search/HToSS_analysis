@@ -2449,6 +2449,7 @@ class AnalysisEvent
     std::pair<TLorentzVector, TLorentzVector> zPairLeptons;
     std::pair<TLorentzVector, TLorentzVector> zPairLeptonsRefitted;
     std::pair<float, float> zPairRelIso;
+    std::pair<float, float> zPairNewIso;
     std::pair<int, int> zPairIndex;
     int mumuTrkIndex;
 
@@ -3807,6 +3808,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
   std::pair<TLorentzVector, TLorentzVector> zPairLeptons = {};
   std::pair<TLorentzVector, TLorentzVector> zPairLeptonsRefitted = {};
   std::pair<float, float> zPairRelIso = {};
+  std::pair<float, float> zPairNewIso = {};
   std::pair<int, int> zPairIndex = {};
   mumuTrkIndex = -1;
 

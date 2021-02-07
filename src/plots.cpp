@@ -194,6 +194,9 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
         {"chs1TrkPhi", [](const AnalysisEvent& event) -> std::vector<float> {
              return {event.chsPairVec.first.Phi()};
          }},
+        {"chs1TrkIso", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.chsPairTrkIso.first};
+         }},
         {"chs2TrkPt", [](const AnalysisEvent& event) -> std::vector<float> {
              return {event.chsPairVec.second.Pt()};
          }},
@@ -202,6 +205,9 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
          }},
         {"chs2TrkPhi", [](const AnalysisEvent& event) -> std::vector<float> {
              return {event.chsPairVec.second.Phi()};
+         }},
+        {"chs2TrkIso", [](const AnalysisEvent&event) -> std::vector<float> {
+             return {event.chsPairTrkIso.second};
          }},
         {"met",
          [](const AnalysisEvent& event) -> std::vector<float> {
@@ -716,6 +722,14 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
         {"zLepton2RelIso",
          [](const AnalysisEvent& event) -> std::vector<float> {
              return {event.zPairRelIso.second};
+         }},
+        {"zLepton1NewIso",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.zPairNewIso.first};
+         }},
+        {"zLepton2NewIso",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.zPairNewIso.second};
          }},
         {"zLepton1Phi",
          [](const AnalysisEvent& event) -> std::vector<float> {
