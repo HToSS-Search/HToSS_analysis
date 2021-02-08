@@ -73,36 +73,6 @@ int main(int argc, char* argv[]) {
     p_kaonAncestry->GetXaxis()->SetBinLabel(4, "D0");
     p_kaonAncestry->GetXaxis()->SetBinLabel(5, "D^{#pm}_{S}");
 
-    // Quick and dirty trigger plots
-    // denom
-    TH1F* h_leadingMuonPt_truth            {new TH1F("h_leadingMuonPt_truth",      "", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_truth         {new TH1F("h_subLeadingMuonPt_truth",   "", 200, 0., 100.)};
-    TH1F* h_leadingMuonPt                  {new TH1F("h_leadingMuonPt",            "", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt               {new TH1F("h_subLeadingMuonPt",         "", 200, 0., 100.)};
-    TH1F* h_delR_truth                     {new TH1F("h_delR_truth",               "", 100, 0., 1.0)};
-    TH1F* h_delR                           {new TH1F("h_delR",                     "", 100, 0., 1.0)};
-    // numerator - single mu
-    TH1F* h_leadingMuonPt_truth_muTrig     {new TH1F("h_leadingMuonPt_truth_muTrig",      "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_truth_muTrig  {new TH1F("h_subLeadingMuonPt_truth_muTrig",   "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_leadingMuonPt_muTrig           {new TH1F("h_leadingMuonPt_muTrig",            "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_muTrig        {new TH1F("h_subLeadingMuonPt_muTrig",         "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_delR_truth_muTrig              {new TH1F("h_delR_truth_muTrig",               "Trigger turn-on for signal; p_{T} (GeV); #Delta R", 100, 0., 1.0)};
-    TH1F* h_delR_muTrig                    {new TH1F("h_delR_muTrig",                     "Trigger turn-on for signal; p_{T} (GeV); #Delta R", 100, 0., 1.0)};
-    // numerator - doubele mu
-    TH1F* h_leadingMuonPt_truth_mumuTrig       {new TH1F("h_leadingMuonPt_truth_mumuTrig",      "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_truth_mumuTrig    {new TH1F("h_subLeadingMuonPt_truth_mumuTrig",   "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_leadingMuonPt_mumuTrig             {new TH1F("h_leadingMuonPt_mumuTrig",            "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_mumuTrig          {new TH1F("h_subLeadingMuonPt_mumuTrig",         "Trigger turn-on for signal; p_{T} (GeV); #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_delR_truth_mumuTrig                {new TH1F("h_delR_truth_mumuTrig",               "Trigger turn-on for signal; p_{T} (GeV); #Delta R", 100, 0., 1.0)};
-    TH1F* h_delR_mumuTrig                      {new TH1F("h_delR_mumuTrig",                    "Trigger turn-on for signal; p_{T} (GeV); #Delta R", 100, 0., 1.0)};
-    // numerator - L2 mu
-    TH1F* h_leadingMuonPt_truth_L2muTrig       {new TH1F("h_leadingMuonPt_truth_L2muTrig",      "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_truth_L2muTrig    {new TH1F("h_subLeadingMuonPt_truth_L2muTrig",   "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_leadingMuonPt_L2muTrig             {new TH1F("h_leadingMuonPt_L2muTrig",            "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_L2muTrig          {new TH1F("h_subLeadingMuonPt_L2muTrig",         "Trigger turn-on for signal; p_{T} (GeV); L2 #mu#mu trigger #epislon", 200, 0., 100.)};
-    TH1F* h_delR_truth_L2muTrig                {new TH1F("h_delR_truth_L2muTrig",               "Trigger turn-on for signal; p_{T} (GeV); #Delta R", 100, 0., 1.0)};
-    TH1F* h_delR_L2muTrig                      {new TH1F("h_delR_L2muTrig",                    "Trigger turn-on for signal; p_{T} (GeV); #Delta R", 100, 0., 1.0)};
-
     // packed PF cands info
 
     TProfile* p_packedCandUsage            {new TProfile("p_packedCandUsage",     "Pointers to physics objects assoc with packed pf cand", 8, -0.5, 7.5)};
@@ -476,53 +446,6 @@ int main(int argc, char* argv[]) {
             const bool passSingleMuonTrigger {event.muTrig()}, passDimuonTrigger {event.mumuTrig()};
             const bool passL2MuonTrigger {event.mumuL2Trig()}, passDimuonNoVtxTrigger {event.mumuNoVtxTrig()};
 
-            if ( event.numMuonPF2PAT > 1 ) {
-                // fill muon pT plots pre-triggers
-                //// ID requirements PF muon? no pT cut
-                //// reco pT 
-                int mu1 {-1}, mu2{-1};
-                for ( Int_t k{0}; k < event.numMuonPF2PAT; k++ ) {
-                    if ( event.genMuonPF2PATMotherId[k] == 9000006 && mu1 < 0 ) mu1 = k;
-                    else if ( event.genMuonPF2PATMotherId[k] == 9000006 && mu2 < 0 ) mu2 = k;
-                    else if (mu1 >= 0 && mu2 > 0) break;
-                }
-
-                float delR_truth = deltaR(event.muonPF2PATEta[mu1], event.muonPF2PATPhi[mu1], event.muonPF2PATEta[mu2], event.muonPF2PATPhi[mu2]);
-                float delR = deltaR(event.muonPF2PATEta[0], event.muonPF2PATPhi[0], event.muonPF2PATEta[1], event.muonPF2PATPhi[1]);
-                // Fill general pT/dR (with and without scalar parentage)
-                h_leadingMuonPt_truth->Fill(event.muonPF2PATPt[mu1]);
-                h_subLeadingMuonPt_truth->Fill(event.muonPF2PATPt[mu2]);
-                h_leadingMuonPt->Fill(event.muonPF2PATPt[0]);
-                h_subLeadingMuonPt->Fill(event.muonPF2PATPt[1]);
-                h_delR_truth->Fill(delR_truth);
-                h_delR->Fill(delR);
-                // Fill pT post trigger (with and without scalar parentage)
-                if (passSingleMuonTrigger) {
-                    h_leadingMuonPt_truth_muTrig->Fill(event.muonPF2PATPt[mu1]);
-                    h_subLeadingMuonPt_truth_muTrig->Fill(event.muonPF2PATPt[mu2]);
-                    h_leadingMuonPt_muTrig->Fill(event.muonPF2PATPt[0]);
-                    h_subLeadingMuonPt_muTrig->Fill(event.muonPF2PATPt[1]);
-                    h_delR_truth_muTrig->Fill(delR_truth);
-                    h_delR_muTrig->Fill(delR);
-                }
-                if (passDimuonTrigger) {
-                    h_leadingMuonPt_truth_mumuTrig->Fill(event.muonPF2PATPt[mu1]);
-                    h_subLeadingMuonPt_truth_mumuTrig->Fill(event.muonPF2PATPt[mu2]);
-                    h_leadingMuonPt_mumuTrig->Fill(event.muonPF2PATPt[0]);
-                    h_subLeadingMuonPt_mumuTrig->Fill(event.muonPF2PATPt[1]);
-                    h_delR_truth_mumuTrig->Fill(delR_truth);
-                    h_delR_mumuTrig->Fill(delR);
-                }
-                if (passL2MuonTrigger || passDimuonNoVtxTrigger) {
-                    h_leadingMuonPt_truth_L2muTrig->Fill(event.muonPF2PATPt[mu1]);
-                    h_subLeadingMuonPt_truth_L2muTrig->Fill(event.muonPF2PATPt[mu2]);
-                    h_leadingMuonPt_L2muTrig->Fill(event.muonPF2PATPt[0]);
-                    h_subLeadingMuonPt_L2muTrig->Fill(event.muonPF2PATPt[1]);
-                    h_delR_truth_L2muTrig->Fill(delR_truth);
-                    h_delR_L2muTrig->Fill(delR);
-                }
-            }
-
             if (! ( passDimuonTrigger || passSingleMuonTrigger ) ) continue;
 
             for (Int_t k = 0; k < event.numPackedCands; k++) {
@@ -844,46 +767,6 @@ int main(int argc, char* argv[]) {
     outFile->cd();
 
     p_kaonAncestry->Write();
-
-    h_leadingMuonPt_truth_muTrig->Divide(h_leadingMuonPt_truth);
-    h_subLeadingMuonPt_truth_muTrig->Divide(h_subLeadingMuonPt_truth);
-    h_leadingMuonPt_muTrig->Divide(h_leadingMuonPt);
-    h_subLeadingMuonPt_muTrig->Divide(h_subLeadingMuonPt);
-    h_delR_truth_muTrig->Divide(h_delR_truth);
-    h_delR_muTrig->Divide(h_delR);
-
-    h_leadingMuonPt_truth_mumuTrig->Divide(h_leadingMuonPt_truth);
-    h_subLeadingMuonPt_truth_mumuTrig->Divide(h_subLeadingMuonPt_truth);
-    h_leadingMuonPt_mumuTrig->Divide(h_leadingMuonPt);
-    h_subLeadingMuonPt_mumuTrig->Divide(h_subLeadingMuonPt);
-    h_delR_truth_mumuTrig->Divide(h_delR_truth);
-    h_delR_mumuTrig->Divide(h_delR);
-
-    h_leadingMuonPt_truth_L2muTrig->Divide(h_leadingMuonPt_truth);
-    h_subLeadingMuonPt_truth_L2muTrig->Divide(h_subLeadingMuonPt_truth);
-    h_leadingMuonPt_L2muTrig->Divide(h_leadingMuonPt);
-    h_subLeadingMuonPt_L2muTrig->Divide(h_subLeadingMuonPt);
-    h_delR_truth_L2muTrig->Divide(h_delR_truth);
-    h_delR_L2muTrig->Divide(h_delR);
-
-    h_leadingMuonPt_truth_muTrig->Write();
-    h_subLeadingMuonPt_truth_muTrig->Write();
-    h_leadingMuonPt_muTrig->Write();
-    h_subLeadingMuonPt_muTrig->Write();
-    h_delR_truth_muTrig->Write();
-    h_delR_muTrig->Write();
-    h_leadingMuonPt_truth_mumuTrig->Write();
-    h_subLeadingMuonPt_truth_mumuTrig->Write();
-    h_leadingMuonPt_mumuTrig->Write();
-    h_subLeadingMuonPt_mumuTrig->Write();
-    h_delR_truth_mumuTrig->Write();
-    h_delR_mumuTrig->Write();
-    h_leadingMuonPt_truth_L2muTrig->Write();
-    h_subLeadingMuonPt_truth_L2muTrig->Write();
-    h_leadingMuonPt_L2muTrig->Write();
-    h_subLeadingMuonPt_L2muTrig->Write();
-    h_delR_truth_L2muTrig->Write();
-    h_delR_L2muTrig->Write();
 
     p_packedCandUsage->Write();
     p_packedElectronUsage->Write();

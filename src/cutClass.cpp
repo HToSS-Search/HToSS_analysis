@@ -1298,8 +1298,11 @@ bool Cuts::triggerCuts(const AnalysisEvent& event,
     if (channel == "mumu") {
         // Trigger logic for double + single triggers
 ////        if ( (mumuTrig || muTrig) && !(eeTrig || muEGTrig || eTrig)) { // Old tZq logic
-//        if ( mumuTrig || muTrig || mumuL2Trig || mumuNoVtxTrig ) {
-        if ( muTrig ) {
+        if ( postLepSelTree_ && (mumuTrig || muTrig || mumuL2Trig || mumuNoVtxTrig) ) {
+            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
+            return true;
+        }
+        if ( !postLepSelTree_ && muTrig ) {
             if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
             return true;
         }
