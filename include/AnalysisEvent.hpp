@@ -1231,9 +1231,9 @@ class AnalysisEvent
     Float_t genParE[NGENPARMAX];
     Float_t genParPt[NGENPARMAX];
     Int_t genParId[NGENPARMAX];
-    Int_t genParVx[NGENPARMAX];
-    Int_t genParVy[NGENPARMAX];
-    Int_t genParVz[NGENPARMAX];
+    Float_t genParVx[NGENPARMAX];
+    Float_t genParVy[NGENPARMAX];
+    Float_t genParVz[NGENPARMAX];
     Int_t genParMotherId[NGENPARMAX];
     Int_t genParMotherIndex[NGENPARMAX];
     Int_t genParNumDaughters[NGENPARMAX];
@@ -1645,6 +1645,7 @@ class AnalysisEvent
     TBranch* b_genPhoPF2PATIsJet; //!
     TBranch* b_genPhoPF2PATScalarAncestor; //!
     TBranch* b_genPhoPF2PATDirectScalarAncestor; //!
+
 /*
     TBranch* b_numPhoOOT_PF2PAT; //!
     TBranch* b_phoOOT_PF2PATE; //!
@@ -2448,11 +2449,14 @@ class AnalysisEvent
     std::pair<TLorentzVector, TLorentzVector> zPairLeptons;
     std::pair<TLorentzVector, TLorentzVector> zPairLeptonsRefitted;
     std::pair<float, float> zPairRelIso;
+    std::pair<float, float> zPairNewIso;
     std::pair<int, int> zPairIndex;
     int mumuTrkIndex;
 
     std::pair<TLorentzVector, TLorentzVector> chsPairVec;
-    std::pair<TLorentzVector, TLorentzVector> chsPairVecRefitted;
+    std::pair<TLorentzVector, TLorentzVector> chsTrkPairVec;
+    std::pair<TLorentzVector, TLorentzVector> chsTrkPairVecRefitted;
+    std::pair<float, float> chsPairTrkIso;
     std::pair<int, int> chsPairIndex;
     int chsPairTrkIndex;
 
@@ -2956,6 +2960,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
       fChain->SetBranchAddress("genPhoPF2PATScalarAncestor", genPhoPF2PATScalarAncestor, &b_genPhoPF2PATScalarAncestor);
       fChain->SetBranchAddress("genPhoPF2PATDirectScalarAncestor", genPhoPF2PATDirectScalarAncestor, &b_genPhoPF2PATDirectScalarAncestor);
    }
+
 /*
    fChain->SetBranchAddress("numPhoOOT_PF2PAT", &numPhoOOT_PF2PAT, &b_numPhoOOT_PF2PAT);
    fChain->SetBranchAddress("phoOOT_PF2PATE", phoOOT_PF2PATE, &b_phoOOT_PF2PATE);
@@ -3803,11 +3808,13 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
   std::pair<TLorentzVector, TLorentzVector> zPairLeptons = {};
   std::pair<TLorentzVector, TLorentzVector> zPairLeptonsRefitted = {};
   std::pair<float, float> zPairRelIso = {};
+  std::pair<float, float> zPairNewIso = {};
   std::pair<int, int> zPairIndex = {};
   mumuTrkIndex = -1;
 
   std::pair<TLorentzVector, TLorentzVector> chsPairVec = {};
   std::pair<TLorentzVector, TLorentzVector> chsPairVecRefitted = {};
+  std::pair<float, float> chsPairTrkIso = {};
   std::pair<int, int> chsPairIndex = {};
   chsPairTrkIndex = -1;
 
