@@ -157,7 +157,7 @@ plots:
     xMin: 0.0
     nBins: 200
     fillExp: "chs1TrkIso"
-    xAxisLabel: Track iso"
+    xAxisLabel: "Track iso"
     cutStage: 0
   - title: "Subleading charged hadron track p_{T}"
     name: "chs2TrkPt"
@@ -189,7 +189,7 @@ plots:
     xMin: 0.0
     nBins: 200
     fillExp: "chs2TrkIso"
-    xAxisLabel: Track iso"
+    xAxisLabel: "Track iso"
     cutStage: 0
   - title: "E_{T}^{miss}"
     name: "met"
@@ -547,7 +547,7 @@ plots:
     name: "chsPairMass"
     xMin: 0.
     xMax: 10.
-    nBins: 1000
+    nBins: 500
     fillExp: "chsPairMass"
     xAxisLabel: "m_{dihadron} (GeV/c^{2})"
     cutStage: 0
@@ -603,7 +603,7 @@ plots:
     name: "chsPairMassRefit"
     xMin: 0.
     xMax: 10.
-    nBins: 1000
+    nBins: 500
     fillExp: "chsPairMassRefit"
     xAxisLabel: "m_{dihadron} (GeV/c^{2})"
     cutStage: 0
