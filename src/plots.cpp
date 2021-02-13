@@ -1800,6 +1800,10 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
 	{"mumuVz", [](const AnalysisEvent& event) -> std::vector<float> {
              return {event.muonTkPairPF2PATTkVz[event.mumuTrkIndex]};
          }},
+	{"mumuVxy", [](const AnalysisEvent& event) -> std::vector<float> {
+             float vx {event.muonTkPairPF2PATTkVx[event.mumuTrkIndex]}, vy {event.muonTkPairPF2PATTkVy[event.mumuTrkIndex]};
+             return { std::sqrt(vx*vx + vy*vy) };
+         }},
 	{"mumuVabs", [](const AnalysisEvent& event) -> std::vector<float> {
              float vx {event.muonTkPairPF2PATTkVx[event.mumuTrkIndex]}, vy {event.muonTkPairPF2PATTkVy[event.mumuTrkIndex]}, vz {event.muonTkPairPF2PATTkVz[event.mumuTrkIndex]};
              return { std::sqrt(vx*vx + vy*vy + vz*vz) };
