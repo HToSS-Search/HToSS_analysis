@@ -469,6 +469,14 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
     getDihadronCand(event, event.chsIndex);
 //    if ( !getDihadronCand(event) ) return false;
 
+//// Apply side band cut for data
+    if (!isMC_) {
+        float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsTrkPairVec.first + event.chsTrkPairVec.second).M() );
+        float deltaM = std::abs( muScalarMass - hadScalarMass );
+        float k = 0.05;
+        if ( deltaM < 0.5*k*deltaM ) return false;
+    }
+
 //    eventWeight *= getLeptonWeight(event, syst);
 
     if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, syst, eventWeight, false);
@@ -1298,11 +1306,7 @@ bool Cuts::triggerCuts(const AnalysisEvent& event,
     if (channel == "mumu") {
         // Trigger logic for double + single triggers
 ////        if ( (mumuTrig || muTrig) && !(eeTrig || muEGTrig || eTrig)) { // Old tZq logic
-        if ( postLepSelTree_ && (mumuTrig || muTrig || mumuL2Trig || mumuNoVtxTrig) ) {
-            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
-            return true;
-        }
-        if ( !postLepSelTree_ && muTrig ) {
+        if ( muTrig ) {
             if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
             return true;
         }
