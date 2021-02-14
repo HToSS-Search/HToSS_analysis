@@ -172,9 +172,7 @@ int main(int argc, char* argv[])
   TH1F* h_muonDivDoubleL       {new TH1F("h_muonDivDoubleL",  "Turn-on Double #mu^{#pm} trigger leading p_{T}", 300, 0., 200.)};
   TH1F* h_muonCutDoubleS       {new TH1F("h_muonCutDoubleS",  "Double #mu^{#pm} trigger subleading p_{T}", 1000, 0., 200.)};
   TH1F* h_muonDivDoubleS       {new TH1F("h_muonDivDoubleS",  "Turn-on Double #mu^{#pm} trigger subleading p_{T}", 300, 0., 200.)};
-    
-  TH2F* h_MuonVertexPosXY         {new TH2F("h_MuonVertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
-  TH2F* h_MuonVertexPosRZ         {new TH2F("h_MuonVertexPosRZ", "Vertex Position RZ", 100, -150,150,100,-150,150)};	
+   	
 	
   //Packed candidates
   TH1F* h_packedCDxy    {new TH1F("h_packedCDxy", "Packed Candidate Dxy", 500,  -200., 200.)};
@@ -185,7 +183,8 @@ int main(int argc, char* argv[])
   TH2I* h_displacedXY   {new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150)};
   TH2I* h_displacedRZ   {new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250)};
 	
-	
+  TH2F* h_HVertexPosXY         {new TH2F("h_HVertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
+  TH2F* h_HVertexPosRZ         {new TH2F("h_HVertexPosRZ", "Vertex Position RZ", 100, -150,150,100,-150,150)};	
 	
   //Kaon mass assumption	
   TH1F* h_KhadronDeltaR  {new TH1F("h_KhadronDeltaR", "Two hadrons (kaons) #DeltaR",2500, -10., 10.)};
@@ -792,15 +791,7 @@ int main(int argc, char* argv[])
                h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M(), datasetWeight );
                //h_muonRecInvMass->Fit(Gaussian1);
 		
-		     
-               //Revealing the inner structure of the tracker layer?     
-	       h_MuonVertexPosXY->Fill(event.muonPF2PATVertX[0],event.muonPF2PATVertY[0], datasetWeight);
-	       h_MuonVertexPosXY->Fill(event.muonPF2PATVertX[1],event.muonPF2PATVertY[1], datasetWeight);
-		     
-	       h_MuonVertexPosRZ->Fill(std::abs(event.muonPF2PATVertZ[0]),std::sqrt(event.muonPF2PATVertX[0]*event.muonPF2PATVertX[0]+event.muonPF2PATVertY[0]*event.muonPF2PATVertY[0]), datasetWeight);
-	       h_MuonVertexPosRZ->Fill(std::abs(event.muonPF2PATVertZ[1]),std::sqrt(event.muonPF2PATVertX[1]*event.muonPF2PATVertX[1]+event.muonPF2PATVertY[1]*event.muonPF2PATVertY[1]), datasetWeight);
-		     
-		     
+		      
 		     
                if(event.muonPF2PATPt[0]>30 && event.muonPF2PATPt[1]>12){//combined (single+double, mix) p_T cut applied
              
@@ -959,7 +950,15 @@ int main(int argc, char* argv[])
            packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.1396,2)+std::pow(0.494,2)));
             
            h_KhadronDeltaR->Fill(packed1.DeltaR(packed2), datasetWeight);
-            
+           
+	   //Revealing the inner structure of the tracker layer?     
+	   h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex1],event.packedCandsVy[pionIndex1], datasetWeight);
+	   h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex2],event.packedCandsVy[pionIndex2], datasetWeight);
+		     
+	   h_HVertexPosRZ->Fill(std::abs(event.packedCandsVz[pionIndex1]),std::sqrt(event.packedCandsVx[pionIndex1]*event.packedCandsVx[pionIndex1]+event.packedCandsVy[pionIndex1]*event.packedCandsVy[pionIndex1]), datasetWeight);
+	   h_HVertexPosRZ->Fill(std::abs(event.packedCandsVz[pionIndex2]),std::sqrt(event.packedCandsVx[pionIndex2]*event.packedCandsVx[pionIndex2]+event.packedCandsVy[pionIndex2]*event.packedCandsVy[pionIndex2]), datasetWeight);
+	         
+		 
 	   if(packed1.DeltaR(packed2)<0.2){
              //Invariant mass for two hadrons
              TLorentzVector lhadron1  {event.packedCandsPseudoTrkPx[pionIndex1], event.packedCandsPseudoTrkPy[pionIndex1], event.packedCandsPseudoTrkPz[pionIndex1], std::sqrt(event.packedCandsE[pionIndex1]*event.packedCandsE[pionIndex1]-std::pow(0.1396,2)+std::pow(0.494,2))};
@@ -1585,12 +1584,6 @@ int main(int argc, char* argv[])
   h_muonDivDoubleS->GetXaxis()->SetTitle("GeV");
   h_muonDivDoubleS->Write();
 	
-  h_MuonVertexPosXY->GetXaxis()->SetTitle("Vertex position x");
-  h_MuonVertexPosXY->GetYaxis()->SetTitle("Vertex position y");
-  h_MuonVertexPosXY->Write();
-  h_MuonVertexPosRZ->GetXaxis()->SetTitle("Vertex position z");
-  h_MuonVertexPosRZ->GetYaxis()->SetTitle("R");
-  h_MuonVertexPosRZ->Write();
 	
   //Packed Candidates
   h_packedCDxy->Write();
@@ -1604,6 +1597,13 @@ int main(int argc, char* argv[])
   h_displacedRZ->GetXaxis()->SetTitle("Vertex position z");
   h_displacedRZ->GetYaxis()->SetTitle("R");
   h_displacedRZ->Write();
+	
+  h_HVertexPosXY->GetXaxis()->SetTitle("Vertex position x");
+  h_HVertexPosXY->GetYaxis()->SetTitle("Vertex position y");
+  h_HVertexPosXY->Write();
+  h_HVertexPosRZ->GetXaxis()->SetTitle("Vertex position z");
+  h_HVertexPosRZ->GetYaxis()->SetTitle("R");
+  h_HVertexPosRZ->Write();
 	
   //Kaon mass assumption	
   h_KhadronDeltaR->GetXaxis()->SetTitle("Radians");
