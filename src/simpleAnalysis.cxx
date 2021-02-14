@@ -150,8 +150,8 @@ int main(int argc, char* argv[])
   
     
   //Vertex position: muons, kaons, kshort, pions
-  TH2F* h_VertexPosXY  {new TH2I("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
-  TH2F* h_VertexPosRZ  {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250)};
+  TH2F* h_VertexPosXY  {new TH2F("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
+  TH2F* h_VertexPosRZ  {new TH2F("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250)};
     
   
 	
@@ -491,8 +491,8 @@ int main(int argc, char* argv[])
             h_genParScalarMuonPhi->Fill(genParPhi);
             h_genParScalarMuonE->Fill(genParE);
             h_VertexPosXY->Fill(genParVx,genParVy);
-            h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
-            h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
+            h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
+            h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
        
             if(event.genParPt[k]>gen1){
                 gen2=gen1;
@@ -520,8 +520,8 @@ int main(int argc, char* argv[])
           h_genParScalarCKaonPhi->Fill(genParPhi);
           h_genParScalarCKaonE->Fill(genParE);
           h_VertexPosXY->Fill(genParVx,genParVy);
-          h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
-          h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
+          h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
+          h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
         }
         //K short from scalar decay
         if (pdgId==310){
@@ -531,8 +531,8 @@ int main(int argc, char* argv[])
           h_genParScalarKShortPhi->Fill(genParPhi);
           h_genParScalarKShortE->Fill(genParE);
           h_VertexPosXY->Fill(genParVx,genParVy);
-          h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
-              h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
+          h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
+              h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
         }
         //Charged pion from scalar decay
         if (pdgId==211){
@@ -542,8 +542,8 @@ int main(int argc, char* argv[])
           h_genParScalarCPionPhi->Fill(genParPhi);
           h_genParScalarCPionE->Fill(genParE);
           h_VertexPosXY->Fill(genParVx,genParVy);
-          h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
-          h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
+          h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
+          h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
         }
         //Neutral pion from scalar decay
         if (pdgId==111){
@@ -553,8 +553,8 @@ int main(int argc, char* argv[])
           h_genParScalarNPionPhi->Fill(genParPhi);
           h_genParScalarNPionE->Fill(genParE);
           h_VertexPosXY->Fill(genParVx,genParVy);
-          h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx^2+genParVy^2));
-          h_VertexPosR->Fill(std::sqrt(genParVx^2+genParVy^2));
+          h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
+          h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
         }
       }
 
@@ -797,8 +797,8 @@ int main(int argc, char* argv[])
 	       h_MuonVertexPosXY->Fill(event.muonPF2PATVertX[0],event.muonPF2PATVertY[0], datasetWeight);
 	       h_MuonVertexPosXY->Fill(event.muonPF2PATVertX[1],event.muonPF2PATVertY[1], datasetWeight);
 		     
-	       h_MuonVertexPosRZ->Fill(std::abs(event.muonPF2PATVertZ[0]),std::sqrt(event.muonPF2PATVertX[0]+event.muonPF2PATVertX[0]), datasetWeight);
-	       h_MuonVertexPosRZ->Fill(std::abs(event.muonPF2PATVertZ[1]),std::sqrt(event.muonPF2PATVertX[1]+event.muonPF2PATVertX[1]), datasetWeight);
+	       h_MuonVertexPosRZ->Fill(std::abs(event.muonPF2PATVertZ[0]),std::sqrt(event.muonPF2PATVertX[0]*event.muonPF2PATVertX[0]+event.muonPF2PATVertY[0]*event.muonPF2PATVertY[0]), datasetWeight);
+	       h_MuonVertexPosRZ->Fill(std::abs(event.muonPF2PATVertZ[1]),std::sqrt(event.muonPF2PATVertX[1]*event.muonPF2PATVertX[1]+event.muonPF2PATVertY[1]*event.muonPF2PATVertY[1]), datasetWeight);
 		     
 		     
 		     
