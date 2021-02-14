@@ -113,8 +113,8 @@ int main(int argc, char* argv[])
   TH1F* h_MuonInvMass             {new TH1F("h_MuonInvMass", "Muon Invariant mass",1000, 0., 7.)};
   TH1F* h_Muon3DAngle             {new TH1F("h_Muon3DAngle", "Muon 3D Angle",1000,-10., 10.)};
 	
-  TH2I* h_MuonVertexPosXY         {new TH2I("h_MuonVertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
-  TH2I* h_MuonVertexPosRZ         {new TH2I("h_MuonVertexPosRZ", "Vertex Position RZ", 100, -150,150,100,-150,150)};
+  TH2F* h_MuonVertexPosXY         {new TH2F("h_MuonVertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
+  TH2F* h_MuonVertexPosRZ         {new TH2F("h_MuonVertexPosRZ", "Vertex Position RZ", 100, -150,150,100,-150,150)};
 	
   //Kaon from scalar decay
   TH1F* h_genParScalarCKaonPt      {new TH1F("h_genParScalarCKaonPt",  "K^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)};
