@@ -795,11 +795,11 @@ int main(int argc, char* argv[])
 		
 		     
                //Revealing the inner structure of the tracker layer?     
-	       h_MuonVertexPosXY->Fill(muonPF2PATVertX[0],muonPF2PATVertY[0], datasetWeight);
-	       h_MuonVertexPosXY->Fill(muonPF2PATVertX[1],muonPF2PATVertY[1], datasetWeight);
+	       h_MuonVertexPosXY->Fill(event.muonPF2PATVertX[0],event.muonPF2PATVertY[0], datasetWeight);
+	       h_MuonVertexPosXY->Fill(event.muonPF2PATVertX[1],event.muonPF2PATVertY[1], datasetWeight);
 		     
-	       h_MuonVertexPosRZ->Fill(std::abs(muonPF2PATVertZ[0]),std::sqrt(muonPF2PATVertX[0]+muonPF2PATVertX[0]), datasetWeight);
-	       h_MuonVertexPosRZ->Fill(std::abs(muonPF2PATVertZ[1]),std::sqrt(muonPF2PATVertX[1]+muonPF2PATVertX[1]), datasetWeight);
+	       h_MuonVertexPosRZ->Fill(std::abs(event.muonPF2PATVertZ[0]),std::sqrt(event.muonPF2PATVertX[0]+event.muonPF2PATVertX[0]), datasetWeight);
+	       h_MuonVertexPosRZ->Fill(std::abs(event.muonPF2PATVertZ[1]),std::sqrt(event.muonPF2PATVertX[1]+event.muonPF2PATVertX[1]), datasetWeight);
 		     
 		     
 		     
