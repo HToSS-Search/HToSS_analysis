@@ -4,6 +4,7 @@
 #include "TH1F.h"
 #include "TH1I.h"
 #include "TH2F.h"
+#include "TH2I.h"
 #include "TF1.h"
 #include "TLegend.h"
 #include "TStyle.h"
@@ -112,10 +113,7 @@ int main(int argc, char* argv[])
   TH1F* h_MuonDeltaPhi            {new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",2500, -3.5, 3.5)};
   TH1F* h_MuonInvMass             {new TH1F("h_MuonInvMass", "Muon Invariant mass",1000, 0., 7.)};
   TH1F* h_Muon3DAngle             {new TH1F("h_Muon3DAngle", "Muon 3D Angle",1000,-10., 10.)};
-	
-  TH2F* h_MuonVertexPosXY         {new TH2F("h_MuonVertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
-  TH2F* h_MuonVertexPosRZ         {new TH2F("h_MuonVertexPosRZ", "Vertex Position RZ", 100, -150,150,100,-150,150)};
-	
+		
   //Kaon from scalar decay
   TH1F* h_genParScalarCKaonPt      {new TH1F("h_genParScalarCKaonPt",  "K^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)};
   TH1F* h_genParScalarCKaonEta     {new TH1F("h_genParScalarCKaonEta", "K^{#pm} from scalar decay #eta",  200, -7., 7.)};
@@ -152,8 +150,8 @@ int main(int argc, char* argv[])
   
     
   //Vertex position: muons, kaons, kshort, pions
-  TH2I* h_VertexPosXY  {new TH2I("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
-  TH2I* h_VertexPosRZ  {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250)};
+  TH2F* h_VertexPosXY  {new TH2I("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
+  TH2F* h_VertexPosRZ  {new TH2I("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250)};
     
   
 	
@@ -175,7 +173,8 @@ int main(int argc, char* argv[])
   TH1F* h_muonCutDoubleS       {new TH1F("h_muonCutDoubleS",  "Double #mu^{#pm} trigger subleading p_{T}", 1000, 0., 200.)};
   TH1F* h_muonDivDoubleS       {new TH1F("h_muonDivDoubleS",  "Turn-on Double #mu^{#pm} trigger subleading p_{T}", 300, 0., 200.)};
     
-	
+  TH2F* h_MuonVertexPosXY         {new TH2F("h_MuonVertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
+  TH2F* h_MuonVertexPosRZ         {new TH2F("h_MuonVertexPosRZ", "Vertex Position RZ", 100, -150,150,100,-150,150)};	
 	
   //Packed candidates
   TH1F* h_packedCDxy    {new TH1F("h_packedCDxy", "Packed Candidate Dxy", 500,  -200., 200.)};
@@ -444,9 +443,9 @@ int main(int argc, char* argv[])
       const Int_t pdgId        { std::abs(event.genParId[k]) };
       const Int_t motherId     { std::abs(event.genParMotherId[k]) };
       const Int_t motherIndex  { std::abs(event.genParMotherIndex[k]) };
-      const Int_t genParVx     {event.genParVx[k]};
-      const Int_t genParVy     {event.genParVy[k]};
-      const Int_t genParVz     {event.genParVz[k]};
+      const Float_t genParVx     {event.genParVx[k]};
+      const Float_t genParVy     {event.genParVy[k]};
+      const Float_t genParVz     {event.genParVz[k]};
             
       const Float_t genParEta  { event.genParEta[k] };
       const Float_t genParPhi  { event.genParPhi[k] };
