@@ -112,7 +112,10 @@ int main(int argc, char* argv[])
   TH1F* h_MuonDeltaPhi            {new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",2500, -3.5, 3.5)};
   TH1F* h_MuonInvMass             {new TH1F("h_MuonInvMass", "Muon Invariant mass",1000, 0., 7.)};
   TH1F* h_Muon3DAngle             {new TH1F("h_Muon3DAngle", "Muon 3D Angle",1000,-10., 10.)};
-    
+	
+  TH2I* h_MuonVertexPosXY         {new TH2I("h_MuonVertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
+  TH2I* h_MuonVertexPosRZ         {new TH2I("h_MuonVertexPosRZ", "Vertex Position RZ", 100, -150,150,100,-150,150)};
+	
   //Kaon from scalar decay
   TH1F* h_genParScalarCKaonPt      {new TH1F("h_genParScalarCKaonPt",  "K^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)};
   TH1F* h_genParScalarCKaonEta     {new TH1F("h_genParScalarCKaonEta", "K^{#pm} from scalar decay #eta",  200, -7., 7.)};
@@ -789,6 +792,16 @@ int main(int argc, char* argv[])
 
                h_muonRecInvMass->Fill( (lVecMu1+lVecMu2).M(), datasetWeight );
                //h_muonRecInvMass->Fit(Gaussian1);
+		
+		     
+               //Revealing the inner structure of the tracker layer?     
+	       h_MuonVertexPosXY->Fill(muonPF2PATVertX[0],muonPF2PATVertY[0], datasetWeight);
+	       h_MuonVertexPosXY->Fill(muonPF2PATVertX[1],muonPF2PATVertY[1], datasetWeight);
+		     
+	       h_MuonVertexPosRZ->Fill(std::abs(muonPF2PATVertZ[0]),std::sqrt(muonPF2PATVertX[0]+muonPF2PATVertX[0]), datasetWeight);
+	       h_MuonVertexPosRZ->Fill(std::abs(muonPF2PATVertZ[1]),std::sqrt(muonPF2PATVertX[1]+muonPF2PATVertX[1]), datasetWeight);
+		     
+		     
 		     
                if(event.muonPF2PATPt[0]>30 && event.muonPF2PATPt[1]>12){//combined (single+double, mix) p_T cut applied
              
@@ -1572,7 +1585,14 @@ int main(int argc, char* argv[])
   h_muonCutDoubleS->Write();
   h_muonDivDoubleS->GetXaxis()->SetTitle("GeV");
   h_muonDivDoubleS->Write();
-    
+	
+  h_MuonVertexPosXY->GetXaxis()->SetTitle("Vertex position x");
+  h_MuonVertexPosXY->GetYaxis()->SetTitle("Vertex position y");
+  h_MuonVertexPosXY->Write();
+  h_MuonVertexPosRZ->GetXaxis()->SetTitle("Vertex position z");
+  h_MuonVertexPosRZ->GetYaxis()->SetTitle("R");
+  h_MuonVertexPosRZ->Write();
+	
   //Packed Candidates
   h_packedCDxy->Write();
   h_packedCDz->Write();
