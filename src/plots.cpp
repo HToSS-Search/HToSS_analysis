@@ -747,6 +747,10 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
          [](const AnalysisEvent& event) -> std::vector<float> {
              return {(event.zPairLeptons.first + event.zPairLeptons.second).Phi()};
          }},
+        {"zPairIso",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.zNewIso};
+         }},        
         {"zPairMassRefit",
          [](const AnalysisEvent& event) -> std::vector<float> {
                  return { (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M() };
@@ -779,6 +783,10 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
          [](const AnalysisEvent& event) -> std::vector<float> {
              return {(event.chsPairVec.first + event.chsPairVec.second).Phi()};
          }},
+        {"chsPairIso",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.chsTrkIso};
+         }},        
         {"chsPairDeltaR", [](const AnalysisEvent& event) -> std::vector<float> {
              return {event.chsPairVec.first.DeltaR(event.chsPairVec.second)};
          }},

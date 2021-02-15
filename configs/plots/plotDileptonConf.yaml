@@ -511,6 +511,14 @@ plots:
     fillExp: "zPairPhi"
     xAxisLabel: "#phi dilepton"
     cutStage: 0
+  - title: "Dilepton isolation"
+    name: "zPairIso"
+    xMin: 0.0
+    xMax: 1.0
+    nBins: 500
+    fillExp: "zPairIso"
+    xAxisLabel: "dilepton isolation"
+    cutStage: 0
   - title: "Dilepton Invariant Mass (Refitted)"
     name: "zPairMassRefit"
     xMin: 0.
@@ -574,6 +582,14 @@ plots:
     nBins: 80
     fillExp: "chsPairPhi"
     xAxisLabel: "#phi dihadron"
+    cutStage: 0
+  - title: "Dihadron isolation"
+    name: "chsPairIso"
+    xMin: 0.0
+    xMax: 1.0
+    nBins: 500
+    fillExp: "chsPairIso"
+    xAxisLabel: "isolation dihadron"
     cutStage: 0
   - title: "#DeltaR between charged hadron tracks"
     name: "chsPairDeltaR"

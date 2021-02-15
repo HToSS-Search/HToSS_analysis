@@ -696,7 +696,7 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                 event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
                 event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
 
-                float iso1 {0.0}, iso2 {0.0};
+                float iso {0.0}, iso1 {0.0}, iso2 {0.0};
                 for (int k = 0; k < event.numPackedCands; k++) {
                     TLorentzVector packedCandVec;
                     packedCandVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
@@ -704,9 +704,11 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                     if ( k == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || k == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
                     if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 )  iso1 += packedCandVec.Pt();
                     if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.3 ) iso2 += packedCandVec.Pt();
+                    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec)  < 0.3 ) iso += packedCandVec.Pt();
                 }
                 event.zPairNewIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
                 event.zPairNewIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                event.zNewIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
 
                 event.mumuTrkIndex = getMuonTrackPairIndex(event);
 
@@ -762,7 +764,7 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
                 event.chsTrkPairVecRefitted.first  = chsTrk1Refitted;
                 event.chsTrkPairVecRefitted.second = chsTrk2Refitted;
 
-                float iso1 {0.0}, iso2 {0.0};
+                float iso {0.0}, iso1 {0.0}, iso2 {0.0};
 
                 for (int k = 0; k < event.numPackedCands; k++) {
                     TLorentzVector packedCandVec;
@@ -771,10 +773,12 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
                     if ( k == event.chsPairIndex.first || k == event.chsPairIndex.second ) continue;
                     if (event.chsPairVec.first.DeltaR(packedCandVec) < 0.3)  iso1 += packedCandVec.Pt();
                     if (event.chsPairVec.second.DeltaR(packedCandVec) < 0.3) iso2 += packedCandVec.Pt();
+                    if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec) < 0.3 ) iso += packedCandVec.Pt();
                 }
 
                 event.chsPairTrkIso.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
                 event.chsPairTrkIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
+                event.chsTrkIso = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
 
                 return true;
             }
