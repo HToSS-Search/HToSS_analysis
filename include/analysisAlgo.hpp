@@ -68,6 +68,7 @@ class AnalysisAlgo
     bool is2018_;
     bool doNPLs_;
     bool doZplusCR_;
+    bool noData_;
 
     std::vector<Dataset> datasets;
     double totalLumi;

@@ -191,6 +191,9 @@ class Cuts
     // met and mtw cut values
     double metDileptonCut_;
 
+    // blinding flag
+    bool blind_;
+
     // Sets trigger from config file
     std::string cutConfTrigLabel_;
 

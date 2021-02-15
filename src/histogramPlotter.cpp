@@ -19,14 +19,14 @@
 // For debugging. *sigh*
 #include <iostream>
 
-const bool BLIND_PLOTS(true);
 const bool writeExtraText(false);
 
 HistogramPlotter::HistogramPlotter(std::vector<std::string> legOrder,
                                    std::vector<std::string> plotOrder,
                                    std::map<std::string, datasetInfo> dsetMap,
                                    const bool is2016,
-                                   const bool is2018)
+                                   const bool is2018,
+                                   const bool blindPlots)
     : // Initialise a load of variables. Labels are empty by default, but this
       // can be changed by calling set label routines.
     lumiStr_{}
@@ -42,6 +42,7 @@ HistogramPlotter::HistogramPlotter(std::vector<std::string> legOrder,
     plotOrder_{plotOrder}
     , legOrder_{legOrder}
     , dsetMap_{dsetMap}
+    , blindPlots_{blindPlots}
 {
     gErrorIgnoreLevel = kInfo;
 
@@ -326,7 +327,7 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
         }
     }
 
-    if (!BLIND_PLOTS) {
+    if (!blindPlots_) {
         // Initialise ratio plots
         ratioHisto = dynamic_cast<TH1D*>(plotMap["data"]->Clone());
         ratioHisto->Sumw2();
@@ -370,7 +371,7 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
     canvy->SetTickx(0);
     canvy->SetTicky(0);
 
-    if (!BLIND_PLOTS)
+    if (!blindPlots_)
     {
         // Top Histogram
         canvy_1 = new TPad("canvy_1", "newpad", 0.01, 0.315, 0.99, 0.99);
@@ -390,7 +391,7 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
 
     if ( !emptyStack ) {
         mcStack->Draw("HIST");
-        if (!BLIND_PLOTS) mcStack->GetHistogram()->GetXaxis()->SetLabelOffset(999);
+        if (!blindPlots_) mcStack->GetHistogram()->GetXaxis()->SetLabelOffset(999);
     }
 
     setLabelThree("");
@@ -437,7 +438,7 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
         mcStack->GetYaxis()->SetTitleOffset(L / W * 8.6);
         if (xAxisLabels.size() > 1) {
             for (unsigned i{1}; i <= xAxisLabels.size(); i++) {
-                if (!BLIND_PLOTS) {
+                if (!blindPlots_) {
                     mcStack->GetXaxis()->SetBinLabel(i, "");
                 }
                 else {
@@ -478,7 +479,7 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
 
     legend_->Draw();
 
-    if (!BLIND_PLOTS) {
+    if (!blindPlots_) {
         // Bottom ratio plots
         canvy->cd();
         canvy_2 = new TPad("canvy_2", "newpad2", 0.01, 0.01, 0.99, 0.3275);
@@ -532,7 +533,7 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
     }
 
     // writing the lumi information and the CMS "logo"
-    if (BLIND_PLOTS) {
+    if (blindPlots_) {
         CMS_lumi(canvy, pos);
         canvy->Update();
         canvy->RedrawAxis();

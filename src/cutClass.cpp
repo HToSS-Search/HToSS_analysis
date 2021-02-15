@@ -99,6 +99,9 @@ Cuts::Cuts(const bool doPlots,
     // MET and mTW cuts go here.
     , metDileptonCut_{50.0}
 
+    // blinding
+    , blind_{true}
+
 {
     std::cout << "\nInitialises fine" << std::endl;
     initialiseJECCors();
@@ -470,7 +473,7 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
 //    if ( !getDihadronCand(event) ) return false;
 
 //// Apply side band cut for data
-    if (!isMC_) {
+    if (!isMC_ && blind_) {
         float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsTrkPairVec.first + event.chsTrkPairVec.second).M() );
         float deltaM = std::abs( muScalarMass - hadScalarMass );
         float k = 0.05;

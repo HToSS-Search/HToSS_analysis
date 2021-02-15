@@ -37,6 +37,7 @@ AnalysisAlgo::AnalysisAlgo()
     , is2018_{false}
     , doNPLs_{false}
     , doZplusCR_{false}
+    , noData_ {true}
 {}
 
 AnalysisAlgo::~AnalysisAlgo() {}
@@ -73,7 +74,7 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         po::bool_switch(&useHistos),
         "Use saved histos to make plots")(
         "histoDir",
-        po::value<std::string>(&histoDir)->default_value("histos/mz20mw50/"),
+        po::value<std::string>(&histoDir)->default_value("histos/"),
         "The output directory for the histos used to make the plots.")(
         "outFolder,o",
         po::value<std::string>(&outFolder)->default_value("plots/"),
@@ -421,6 +422,8 @@ void AnalysisAlgo::runMainAnalysis() {
             }
 
             std::string chanName = channelSetup(channelInd);
+
+            if (!dataset->isMC()) noData_ = false;
 
             if (dataset->isMC() && skipMC) {
                 continue;
@@ -1231,36 +1234,27 @@ void AnalysisAlgo::savePlots()
 
     // Now test out the histogram plotter class I just wrote.
     // Make the plotting object.
-    if (plots)
-    {
-        HistogramPlotter plotObj =
-            HistogramPlotter(legOrder, plotOrder, datasetInfos, is2016_, is2018_);
+    if (plots) {
+        HistogramPlotter plotObj = HistogramPlotter(legOrder, plotOrder, datasetInfos, is2016_, is2018_, noData_);
 
         // If either making or reading in histos, then set the correct read in
         // directory
-        if ((makeHistos || useHistos) && plots)
-        {
+        if ( makeHistos || (useHistos && plots) ) {
             plotObj.setHistogramFolder(histoDir);
         }
 
         // If making histos, save the output!
-        if (makeHistos && plots)
-        {
+        if (makeHistos) {
             std::cout << "Saving histograms for later use ..." << std::endl;
-            for (unsigned i{0}; i < plotsVec.size(); i++)
-            {
+            for (unsigned i{0}; i < plotsVec.size(); i++) {
                 plotObj.saveHistos(plotsMap[plotsVec[i]]);
             }
-            plotObj.saveHistos(
-                cutFlowMap,
-                "cutFlow",
-                channel); // Don't forget to save the cutflow too!
+            plotObj.saveHistos(cutFlowMap, "cutFlow", channel); // Don't forget to save the cutflow too!
         }
 
         if (!makeHistos)
         {
-            if (useHistos)
-            {
+            if (useHistos) {
                 plotObj.loadHistos(); // If using saved histos, read them in ...
             }
             plotObj.setLabelOne("CMS Preliminary");
@@ -1268,8 +1262,7 @@ void AnalysisAlgo::savePlots()
             plotObj.setPostfix("");
             plotObj.setOutputFolder(outFolder);
 
-            for (unsigned i{0}; i < plotsVec.size(); i++)
-            {
+            for (unsigned i{0}; i < plotsVec.size(); i++) {
                 std::cout << plotsVec[i] << std::endl;
                 if (plots)
                 {

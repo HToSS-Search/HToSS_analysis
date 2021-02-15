@@ -449,7 +449,7 @@ plots:
     cutStage: 0
   - title: "Leading lepton relative isolation"
     name: "zLepton1RelIso"
-    xMax: 0.2
+    xMax: 1.0
     xMin: 0.
     nBins: 500
     fillExp: "zLepton1RelIso"
@@ -457,27 +457,27 @@ plots:
     cutStage: 0
   - title: "Subleading lepton relative isolation"
     name: "zLepton2RelIso"
-    xMax: 0.2
+    xMax: 1.0
     xMin: 0.
     nBins: 500
     fillExp: "zLepton2RelIso"
     xAxisLabel: "Relative isolation"
     cutStage: 0
-  - title: "Leading lepton isolation (recalculated)"
+  - title: "Leading lepton track isolation (recalculated)"
     name: "zLepton1NewIso"
-    xMax: 0.2
+    xMax: 1.0
     xMin: 0.
     nBins: 500
     fillExp: "zLepton1NewIso"
-    xAxisLabel: "Isolation (recalculated)"
+    xAxisLabel: "Track isolation (recalculated)"
     cutStage: 0
-  - title: "Subleading lepton isolation (recalculated)"
+  - title: "Subleading lepton track isolation (recalculated)"
     name: "zLepton2NewIso"
-    xMax: 0.2
+    xMax: 1.0
     xMin: 0.
     nBins: 500
     fillExp: "zLepton2NewIso"
-    xAxisLabel: "Isolation (recalculated)"
+    xAxisLabel: "Track isolation (recalculated)"
     cutStage: 0
   - title: "Dilepton Invariant Mass"
     name: "zPairMass"
@@ -1295,13 +1295,21 @@ plots:
     fillExp: "dichsVz"
     xAxisLabel: "v_{z} (cm)"
     cutStage: 1
-  - title: "Charged Hadron Track Vertex Displacement"
+  - title: "Charged Hadron Track Vertex Displacement (xy)"
+    name: "diChsVxy"
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "dichsVxy"
+    xAxisLabel: "v_{xy} (cm)"
+    cutStage: 1
+  - title: "Charged Hadron Track Vertex Displacement (xyz)"
     name: "dichsVabs"
     xMin: 0.
     xMax: 200.
     nBins: 400
     fillExp: "dichsVabs"
-    xAxisLabel: "v (cm)"
+    xAxisLabel: "v_{xyz} (cm)"
     cutStage: 1
   - title: "Charged Hadron Track Vertex #chi^{2}/N_{dof}"
     name: "dichsVtxChi2Ndof"
