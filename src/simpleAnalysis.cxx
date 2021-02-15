@@ -1374,11 +1374,11 @@ int main(int argc, char* argv[])
       
 	  //Refitted tracks pions   
 	  for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-	     std::cout<<"Opnieuw "<<std::endl;	
+	     /*std::cout<<"Opnieuw "<<std::endl;	
 	     std::cout<<"Index1 "<<event.chsTkPairIndex1[k]<<std::endl;
 	     std::cout<<"Index2 "<<event.chsTkPairIndex2[k]<<std::endl;
 	     std::cout<<"Pion1 "<<pionIndex1<<std::endl;
-	     std::cout<<"Pion2 "<<pionIndex2<<std::endl;
+	     std::cout<<"Pion2 "<<pionIndex2<<std::endl;*/
 	     if(event.chsTkPairIndex1[k]==pionIndex1 && event.chsTkPairIndex2[k]==pionIndex1){	
 		   
 	       TLorentzVector Mu1  {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
