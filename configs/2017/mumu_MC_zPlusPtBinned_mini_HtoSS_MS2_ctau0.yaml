@@ -39,5 +39,5 @@ datasets:
 #  - "configs/2017/datasets/wPlusJets/wPlusJets_HT-1200To2500.yaml"
 #  - "configs/2017/datasets/wPlusJets/wPlusJets_HT-2500ToInf.yaml"
 # HToSS
-  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS10.yaml"
+  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS0.yaml"
 

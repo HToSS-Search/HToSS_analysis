@@ -4,6 +4,6 @@ locations:
 cross_section: 88.29
 mc: true
 histogram: "ttbar"
-colour: "#cc0000"
+colour: "#8aefff"
 label: "t#bar{t}"
 plot_type: "f"
