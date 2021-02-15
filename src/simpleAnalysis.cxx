@@ -402,7 +402,7 @@ int main(int argc, char* argv[])
           
           
     //GENERATOR PARTICLE STUFF
-    std::vector<int> nrofHiggs;
+    /*std::vector<int> nrofHiggs;
     std::vector<int> nrofScalar; //Number of scalars
     std::vector<int> nrofMuon;
     std::vector<int> nrofKaon;
@@ -413,7 +413,7 @@ int main(int argc, char* argv[])
     Float_t gen1=0; Float_t gen2=0;
     //std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
          
-       for (Int_t k{0}; k < event.nGenPar; k++) {
+       for (Int_t k{0}; k < event.nGenPar; k++) {*/
      
           //Print out event record
 
@@ -436,7 +436,7 @@ int main(int argc, char* argv[])
 
 
 
-
+/*
 
       // get variables for this event that have been stored in ROOT nTuple tree
       const Int_t pdgId        { std::abs(event.genParId[k]) };
@@ -737,7 +737,7 @@ int main(int argc, char* argv[])
         
     /// END GENERATOR PARTICLE STUFF
 
-    
+    */
           
           
     
