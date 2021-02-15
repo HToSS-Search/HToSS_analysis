@@ -404,7 +404,6 @@ void AnalysisAlgo::runMainAnalysis() {
     const std::string postLepSelSkimOutputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "/"};
     const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "/"};
 
-
     // Begin to loop over all datasets
     for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset) {
         datasetFilled = false;
@@ -471,36 +470,15 @@ void AnalysisAlgo::runMainAnalysis() {
                             datasetInfos[histoName].legLabel = plotLabel;
                             datasetInfos[histoName].legType = plotType;
                         }
-                        if (plots)
-                        { // Only make all the plots if it's entirely necessary.
-                            std::cout << "Made plots under " << histoName
-                                      << " : " << systNames[systInd] + channel
-                                      << std::endl;
-                            if (plotsMap.find(channel) == plotsMap.end())
-                            {
-                                plotsVec.emplace_back(systNames[systInd]
-                                                      + channel);
+                        if (plots)  { // Only make all the plots if it's entirely necessary.
+                            std::cout << "Made plots under " << histoName << " : " << systNames[systInd] + channel << std::endl;
+                            if (plotsMap.find(channel) == plotsMap.end())  {
+                                plotsVec.emplace_back(systNames[systInd] + channel);
                             }
-                            plotsMap[systNames[systInd] + channel]
-                                    [(histoName)] = {};
-                            for (unsigned j{0}; j < stageNames.size(); j++)
-                            {
-                                plotsMap[systNames[systInd] + channel]
-                                        [histoName][stageNames[j].first] =
-                                            std::make_shared<Plots>(
-                                                plotTitles,
-                                                plotNames,
-                                                xMin,
-                                                xMax,
-                                                nBins,
-                                                fillExp,
-                                                xAxisLabels,
-                                                cutStage,
-                                                j,
-                                                histoName + "_"
-                                                    + stageNames[j].first
-                                                    + systNames[systInd] + "_"
-                                                    + channel);
+                            plotsMap[systNames[systInd] + channel][(histoName)] = {};
+                            for (unsigned j{0}; j < stageNames.size(); j++) {
+                                plotsMap[systNames[systInd] + channel] [histoName][stageNames[j].first] = std::make_shared<Plots>(
+                                                plotTitles, plotNames, xMin, xMax, nBins, fillExp, xAxisLabels, cutStage, j, histoName + "_" + stageNames[j].first + systNames[systInd] + "_" + channel);
                             }
                         }
                     } // end cutFlow find loop
@@ -521,8 +499,7 @@ void AnalysisAlgo::runMainAnalysis() {
                 if (!datasetFilled) {
                     if (!dataset->fillChain(datasetChain)) {
                         std::cerr
-                            << "There was a problem constructing the chain for "
-                            << dataset->name() << ". Continuing with next dataset.\n";
+                            << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
                         continue;
                     }
                     datasetFilled = true;

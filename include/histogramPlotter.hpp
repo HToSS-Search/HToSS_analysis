@@ -35,7 +35,7 @@ class HistogramPlotter
     std::map<std::string, datasetInfo> dsetMap_;
 
     // plots data/MC bit?
-    const bool blindPlots_;
+    const bool noDataPresent_;
 
     std::vector<std::string>
         extensions_; // Will default to saving root and png files.
@@ -59,7 +59,7 @@ class HistogramPlotter
                      std::map<std::string, datasetInfo>,
                      const bool,
                      const bool,
-                     const bool = true);
+                     const bool noDataPresent = true);
     ~HistogramPlotter();
     // methods to set various bits of information in the class. This is so that
     // it doesn't have to set in the constructor. Defaults to current stuff, but

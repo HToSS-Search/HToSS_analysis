@@ -20,26 +20,19 @@ Plots::Plots(const std::vector<std::string> titles, const std::vector<std::strin
         plotPoint[i].fillExp = functionMap.at(fillExps[i]);
         plotPoint[i].xAxisLabel = xAxisLabels[i];
         plotPoint[i].plotHist =
-            new TH1D{plotName.c_str(),
-                     (plotName + ";" + plotPoint[i].xAxisLabel).c_str(),
-                     nBins[i],
-                     xMins[i],
-                     xMaxs[i]};
-        plotPoint[i].fillPlot =
-            boost::numeric_cast<unsigned>(cutStage[i]) <= thisCutStage;
+            new TH1D{plotName.c_str(), (plotName + ";" + plotPoint[i].xAxisLabel).c_str(), nBins[i], xMins[i], xMaxs[i]};
+        plotPoint[i].fillPlot = boost::numeric_cast<unsigned>(cutStage[i]) <= thisCutStage;
     }
 }
 
-Plots::~Plots()
-{
+Plots::~Plots() {
     for (unsigned i{0}; i < plotPoint.size(); i++)
         delete plotPoint[i].plotHist;
 }
 
 std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisEvent&)>> Plots::getFncMap() const {
     return {
-        {"lep1Pt",
-         [](const AnalysisEvent& event) -> std::vector<float> {
+        {"lep1Pt", [](const AnalysisEvent& event) -> std::vector<float> {
              if (event.electronIndexTight.size() > 1) {
                  TLorentzVector tempVec{
                      event.elePF2PATPX[event.electronIndexTight[0]],
@@ -58,8 +51,7 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
                  return {tempVec.Pt()};
              }
          }},
-        {"lep1Eta",
-         [](const AnalysisEvent& event) -> std::vector<float> {
+        {"lep1Eta", [](const AnalysisEvent& event) -> std::vector<float> {
              if (event.electronIndexTight.size() > 1) {
                  return {std::abs(event.elePF2PATSCEta[event.electronIndexTight[0]])};
              }
@@ -73,8 +65,7 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
                  return {tempVec.Eta()};
              }
          }},
-        {"lep2Pt",
-         [](const AnalysisEvent& event) -> std::vector<float> {
+        {"lep2Pt", [](const AnalysisEvent& event) -> std::vector<float> {
              if (event.electronIndexTight.size() > 1) {
                  TLorentzVector tempVec{
                      event.elePF2PATPX[event.electronIndexTight[1]],
@@ -93,11 +84,9 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
                  return {tempVec.Pt()};
              }
          }},
-        {"lep2Eta",
-         [](const AnalysisEvent& event) -> std::vector<float> {
+        {"lep2Eta", [](const AnalysisEvent& event) -> std::vector<float> {
              if (event.electronIndexTight.size() > 1) {
-                 return {std::abs(
-                     event.elePF2PATSCEta[event.electronIndexTight[1]])};
+                 return {std::abs(event.elePF2PATSCEta[event.electronIndexTight[1]])};
              }
              else {
                  TLorentzVector tempVec{
@@ -1882,6 +1871,10 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
          }},
 	{"dichsVz", [](const AnalysisEvent& event) -> std::vector<float> {
              return {event.muonTkPairPF2PATTkVz[event.mumuTrkIndex]};
+         }},
+	{"dichsVxy", [](const AnalysisEvent& event) -> std::vector<float> {
+             float vx {event.muonTkPairPF2PATTkVx[event.mumuTrkIndex]}, vy {event.muonTkPairPF2PATTkVy[event.mumuTrkIndex]};
+             return { std::sqrt(vx*vx + vy*vy) };
          }},
 	{"dichsVabs", [](const AnalysisEvent& event) -> std::vector<float> {
              float vx {event.muonTkPairPF2PATTkVx[event.mumuTrkIndex]}, vy {event.muonTkPairPF2PATTkVy[event.mumuTrkIndex]}, vz {event.muonTkPairPF2PATTkVz[event.mumuTrkIndex]};
