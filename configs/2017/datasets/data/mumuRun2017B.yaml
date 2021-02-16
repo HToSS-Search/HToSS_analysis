@@ -1,0 +1,10 @@
+name: "mumuRun2017B"
+locations:
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/SingleMuon/Run2017B"
+luminosity: 4771.868717846
+mc: false
+histogram: "data"
+label: "Data"
+plot_type: "p"
+colour: "#ffffff"
+trigger_flag: "mCt"
