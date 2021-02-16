@@ -1312,7 +1312,7 @@ plots:
     xAxisLabel: "v_{z} (cm)"
     cutStage: 1
   - title: "Charged Hadron Track Vertex Displacement (xy)"
-    name: "diChsVxy"
+    name: "dichsVxy"
     xMin: 0.
     xMax: 200.
     nBins: 400
