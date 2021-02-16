@@ -1103,13 +1103,13 @@ plots:
     fillExp: "mumuVxy"
     xAxisLabel: "v_{xy} (cm)"
     cutStage: 1
-  - title: "Muon Track Vertex Displacement (xvz)"
+  - title: "Muon Track Vertex Displacement (xyz)"
     name: "mumuVabs"
     xMin: 0.
     xMax: 200.
     nBins: 400
     fillExp: "mumuVabs"
-    xAxisLabel: "v_{xvz} (cm)"
+    xAxisLabel: "v_{xyz} (cm)"
     cutStage: 1
   - title: "Muon Track Vertex #chi^{2}/N_{dof}"
     name: "mumuVtxChi2Ndof"
