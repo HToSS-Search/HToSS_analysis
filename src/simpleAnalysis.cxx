@@ -1594,10 +1594,10 @@ int main(int argc, char* argv[])
   h_displacedRZ->GetYaxis()->SetTitle("R");
   h_displacedRZ->Write();
 	
-  h_HVertexPosXY->GetXaxis()->SetTitle("V_x (cm)");
-  h_HVertexPosXY->GetYaxis()->SetTitle("V_y (cm)");
+  h_HVertexPosXY->GetXaxis()->SetTitle("V_{x} (cm)");
+  h_HVertexPosXY->GetYaxis()->SetTitle("V_{y} (cm)");
   h_HVertexPosXY->Write();
-  h_HVertexPosRZ->GetXaxis()->SetTitle("V_z (cm)");
+  h_HVertexPosRZ->GetXaxis()->SetTitle("V_{z} (cm)");
   h_HVertexPosRZ->GetYaxis()->SetTitle("R (cm)");
   h_HVertexPosRZ->Write();
 	
@@ -1662,10 +1662,10 @@ int main(int argc, char* argv[])
   h_PIso4->GetXaxis()->SetTitle("Relative isolation sum");
   h_PIso4->GetYaxis()->SetTitle("Particle momentum");
   h_PIso4->Write();
-  h_PmuonsInvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^2)");
+  h_PmuonsInvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
   h_PmuonsInvMass->GetYaxis()->SetTitle("Events");
   h_PmuonsInvMass->Write();
-  h_PhadronInvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^2)");
+  h_PhadronInvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
   h_PhadronInvMass->GetYaxis()->SetTitle("Events");
   h_PhadronInvMass->Write();
   h_PhadronInvMass2->GetXaxis()->SetTitle("GeV");
@@ -1679,7 +1679,7 @@ int main(int argc, char* argv[])
   h_PantiscalarInvMass->Write();
   h_PscalarInvMass->GetXaxis()->SetTitle("GeV");
   h_PscalarInvMass->Write();
-  h_PhiggsInvMass->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^2)");
+  h_PhiggsInvMass->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
   h_PhiggsInvMass->GetYaxis()->SetTitle("Events");
   h_PhiggsInvMass->Write();
   h_PhiggsDeltaR->GetYaxis()->SetTitle("Events");
@@ -1756,12 +1756,12 @@ int main(int argc, char* argv[])
   h_refit1InvMass->Write();
   h_refit2InvMass->GetXaxis()->SetTitle("GeV");
   h_refit2InvMass->Write();
-  h_refit12InvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^2)");
+  h_refit12InvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
   h_refit12InvMass->GetYaxis()->SetTitle("Events");
   h_refit12InvMass->Write();
  
   //Refitted tracks pions	
-  h_pionre12InvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^2)");
+  h_pionre12InvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
   h_pionre12InvMass->GetYaxis()->SetTitle("Events");
   h_pionre12InvMass->Write();
 	
