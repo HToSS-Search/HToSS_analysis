@@ -182,9 +182,6 @@ int main(int argc, char* argv[])
   TH1F* h_packedCVz     {new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.)};
   TH2I* h_displacedXY   {new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150)};
   TH2I* h_displacedRZ   {new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250)};
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-
-
 	
   TH2F* h_HVertexPosXY         {new TH2F("h_HVertexPosXY", "Pion track vertex XY", 500, -50,50,500,-50,50)};
   TH2F* h_HVertexPosRZ         {new TH2F("h_HVertexPosRZ", "Pion track vertex RZ", 500, -50,50,500,-50,50)};	
@@ -746,7 +743,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
     
           
           
-    
+    std::cout << __LINE__ << " : " << __FILE__ << std::endl;
           
           
     /// BEGIN Muon Reconstruction
@@ -859,7 +856,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
     //END Muon Reconstruction
           
           
-          
+      std::cout << __LINE__ << " : " << __FILE__ << std::endl;    
           
           
     //BEGIN Packed candidates
@@ -930,7 +927,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
       }
     }
     
-    
+    std::cout << __LINE__ << " : " << __FILE__ << std::endl;
     Float_t KIsoSum1=0;  Float_t KIsoSum2=0;
     Float_t KIsoSum3=0;  Float_t KIsoSum4=0;
    
@@ -956,14 +953,14 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
            packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.1396,2)+std::pow(0.494,2)));
             
            h_KhadronDeltaR->Fill(packed1.DeltaR(packed2), datasetWeight);
-           
+           std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	   //Revealing the inner structure of the tracker layer?     
 	   h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex1],event.packedCandsVy[pionIndex1], datasetWeight);
 	   h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex2],event.packedCandsVy[pionIndex2], datasetWeight);
 		     
 	   h_HVertexPosRZ->Fill(event.packedCandsVz[pionIndex1],std::sqrt(event.packedCandsVx[pionIndex1]*event.packedCandsVx[pionIndex1]+event.packedCandsVy[pionIndex1]*event.packedCandsVy[pionIndex1]), datasetWeight);
 	   h_HVertexPosRZ->Fill(event.packedCandsVz[pionIndex2],std::sqrt(event.packedCandsVx[pionIndex2]*event.packedCandsVx[pionIndex2]+event.packedCandsVy[pionIndex2]*event.packedCandsVy[pionIndex2]), datasetWeight);
-	         
+	  std::cout << __LINE__ << " : " << __FILE__ << std::endl;       
 		 
 	   if(packed1.DeltaR(packed2)<0.2){
              //Invariant mass for two hadrons
@@ -1093,7 +1090,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	      
 	      
 	      
-	     	 
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;     	 
 	
       
 	      
@@ -1144,7 +1141,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	     Pantiscalar.SetPxPyPzE(Ppx,Ppy,Ppz,PE);
 	     h_PantiscalarInvMass->Fill(Pantiscalar.M(), datasetWeight);
 	   }
-		 
+		std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
 	   for(Int_t k{0};k<event.numPackedCands;k++) {
               const Int_t packedId {event.packedCandsPdgId[k]};
               if(k!=pionIndex1 && k!=pionIndex2){
@@ -1201,7 +1198,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	     h_PscalarInvMass->Fill(Pscalar.M(), datasetWeight);
 	     //h_PscalarInvMass->Fit(Gaussian3);
 		   
-	   }
+	   }std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 		 
 	   for(Int_t k{0};k<event.numPackedCands;k++) {
               const Int_t packedId {event.packedCandsPdgId[k]};
@@ -1255,7 +1252,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
       }
     }//end of met filter   
 	      
-	      
+	    std::cout << __LINE__ << " : " << __FILE__ << std::endl;  
     //Pion and kaon comparison	      
     if(std::abs(Phiggs-125)<3){      
     h_pmassassump->Fill(Phadroninv,Khadroninv, datasetWeight); 
@@ -1308,7 +1305,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
           h_muonipackedPt->Fill(muonpackedPti.Pt(), datasetWeight);  
           h_muonipackedInvMass->Fill(muonpackedPti.M(), datasetWeight); 
 	}
-	  
+	  std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	      
 	      
 	//PAT muons      
@@ -1342,7 +1339,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	h_muon2RecInvMass->Fill(VecMu2.M(), datasetWeight);
         h_muon12RecInvMass->Fill((VecMu1+VecMu2).M(), datasetWeight);
 	     
-	      
+	   std::cout << __LINE__ << " : " << __FILE__ << std::endl;   
 	      
 	//Refitted tracks muons   
 	for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
@@ -1361,7 +1358,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	       h_muon2refitInvMass->Fill(VecMu2.M(), datasetWeight);
                h_muon12refitInvMass->Fill((VecMu1+VecMu2).M(), datasetWeight);
 	     }
-		   
+		   std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	     TLorentzVector Mu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2))};
              TLorentzVector Mu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], std::sqrt(event.muonTkPairPF2PATTk2P2[k]+std::pow(0.106,2))};
 	 
@@ -1396,7 +1393,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
       }//end of single/double muon trigger
     }//end of met filter
 	      
-	      
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;      
 	      
 	      
 	      
@@ -1588,7 +1585,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_muonCutDoubleS->Write();
   h_muonDivDoubleS->GetXaxis()->SetTitle("GeV");
   h_muonDivDoubleS->Write();
-	
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	
   //Packed Candidates
   h_packedCDxy->Write();
@@ -1649,7 +1646,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_KhiggsDeltaR->Write();  
 	
 	
-	
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   //Pion mass assumption	
   h_PhadronDeltaR->GetXaxis()->SetTitle("Radians");
   h_PhadronDeltaR->Write();
@@ -1688,7 +1685,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_Pinvmass->GetXaxis()->SetTitle("Hadron (pion) invariant mass (GeV)");
   h_Pinvmass->GetYaxis()->SetTitle("Muon invariant mass (GeV)");
   h_Pinvmass->Write();
-
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
   h_PantiscalarInvMass->GetXaxis()->SetTitle("GeV");
   h_PantiscalarInvMass->Write();
@@ -1733,7 +1730,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_muon2RecInvMass->Write();
   h_muon12RecInvMass->GetXaxis()->SetTitle("GeV");
   h_muon12RecInvMass->Write();
-	
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   //Packed muons
   h_muonipackedPt->GetXaxis()->SetTitle("GeV");
   h_muonipackedPt->Write();
@@ -1755,7 +1752,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_muon2packedPtTrk->Write();
   h_muon12packedInvMass->GetXaxis()->SetTitle("GeV");
   h_muon12packedInvMass->Write();	
-	
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   //Refitted tracks muons
   h_muon1PairsPt->GetXaxis()->SetTitle("GeV");	
   h_muon1PairsPt->Write();
@@ -1774,12 +1771,12 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_refit12InvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
   h_refit12InvMass->GetYaxis()->SetTitle("Events");
   h_refit12InvMass->Write();
- 
+ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   //Refitted tracks pions	
   h_pionre12InvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
   h_pionre12InvMass->GetYaxis()->SetTitle("Events");
   h_pionre12InvMass->Write();
-	
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   /*h_muonPairsXY->SetTitle("Vertex position x")
   h_muonPairsXY->SetTitle("Vertex position y")
   h_muonPairsXY->Write();
