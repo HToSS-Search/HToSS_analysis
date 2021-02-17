@@ -182,6 +182,9 @@ int main(int argc, char* argv[])
   TH1F* h_packedCVz     {new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.)};
   TH2I* h_displacedXY   {new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150)};
   TH2I* h_displacedRZ   {new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250)};
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+
 	
   TH2F* h_HVertexPosXY         {new TH2F("h_HVertexPosXY", "Pion track vertex XY", 500, -50,50,500,-50,50)};
   TH2F* h_HVertexPosRZ         {new TH2F("h_HVertexPosRZ", "Pion track vertex RZ", 500, -50,50,500,-50,50)};	
@@ -273,6 +276,9 @@ int main(int argc, char* argv[])
   TH2F* h_muonPairsRZ                 {new TH2F("h_muonPairsRZ", "Refitted tracks vertex RZ", 100, 0,20,100,0,250)};		
   */	  
 	
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+
 	
 	
 	
@@ -1425,7 +1431,10 @@ int main(int argc, char* argv[])
   }
 
     
-	
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+
+
 	
 	
     
@@ -1593,14 +1602,20 @@ int main(int argc, char* argv[])
   h_displacedRZ->GetXaxis()->SetTitle("Vertex position z");
   h_displacedRZ->GetYaxis()->SetTitle("R");
   h_displacedRZ->Write();
-	
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+
+
   h_HVertexPosXY->GetXaxis()->SetTitle("V_{x} (cm)");
   h_HVertexPosXY->GetYaxis()->SetTitle("V_{y} (cm)");
   h_HVertexPosXY->Write();
   h_HVertexPosRZ->GetXaxis()->SetTitle("V_{z} (cm)");
   h_HVertexPosRZ->GetYaxis()->SetTitle("R (cm)");
   h_HVertexPosRZ->Write();
-	
+	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+
+
   //Kaon mass assumption	
   h_KhadronDeltaR->GetXaxis()->SetTitle("Radians");
   h_KhadronDeltaR->Write();
