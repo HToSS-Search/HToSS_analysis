@@ -282,6 +282,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	
 	  
   namespace po = boost::program_options;
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
   // command line configuration parsing magic!
   po::options_description desc("Options");
@@ -302,6 +303,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         po::value<Long64_t>(&nEvents)->default_value(0),
         "The number of events to be run over. All if set to 0.");
   po::variables_map vm;
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
   try
     {
@@ -347,6 +349,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   std::cout << "Using lumi: " << totalLumi << std::endl;
 
   bool datasetFilled{false};
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
   // Begin to loop over all datasets
   for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset) {
@@ -370,6 +373,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
           std::cout << postLepSelSkimInputDir + dataset->name() + inputPostfix + "SmallSkim.root"  << std::endl;
           datasetChain->Add((postLepSelSkimInputDir + dataset->name() + inputPostfix + "SmallSkim.root").c_str());
       }
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
       // extract the dataset weight. MC = (lumi*crossSection)/(totalEvents), data = 1.0
       float datasetWeight{dataset->getDatasetWeight(totalLumi)};
@@ -399,7 +403,8 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
     event.GetEntry(i);
 
 
-          
+     std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+     
           
           
           
