@@ -1662,7 +1662,7 @@ int main(int argc, char* argv[])
   h_PIso4->GetXaxis()->SetTitle("Relative isolation sum");
   h_PIso4->GetYaxis()->SetTitle("Particle momentum");
   h_PIso4->Write();
-  h_PmuonsInvMass->GetXaxis()->SetTitle("m_{\mu\mu} (GeV/c^2)");
+  h_PmuonsInvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^2)");
   h_PmuonsInvMass->GetYaxis()->SetTitle("Events");
   h_PmuonsInvMass->Write();
   h_PhadronInvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^2)");
@@ -1756,7 +1756,7 @@ int main(int argc, char* argv[])
   h_refit1InvMass->Write();
   h_refit2InvMass->GetXaxis()->SetTitle("GeV");
   h_refit2InvMass->Write();
-  h_refit12InvMass->GetXaxis()->SetTitle("m_{\mu\mu} (GeV/c^2)");
+  h_refit12InvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^2)");
   h_refit12InvMass->GetYaxis()->SetTitle("Events");
   h_refit12InvMass->Write();
  
