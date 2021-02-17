@@ -265,10 +265,10 @@ int main(int argc, char* argv[])
   TH1F* h_muon12refitInvMass          {new TH1F("h_muon12refitInvMass", "Scalar Refit Invariant mass", 500, 0.,5.)};
   TH1F* h_refit1InvMass               {new TH1F("h_refit1InvMass", "Leading #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
   TH1F* h_refit2InvMass               {new TH1F("h_refit2InvMass", "Subleading #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
-  TH1F* h_refit12InvMass              {new TH1F("h_refit12InvMass", "Dimuon Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_refit12InvMass              {new TH1F("h_refit12InvMass", "Dimuon refit invariant mass", 500, 0.,5.)};
   
   //Refitted tracks pions
-  TH1F* h_pionre12InvMass              {new TH1F("h_pionre12InvMass", "Dipion Refit Invariant mass", 500, 0.,5.)};
+  TH1F* h_pionre12InvMass              {new TH1F("h_pionre12InvMass", "Dihadron (pion) refit invariant mass", 500, 0.,5.)};
   /*TH2F* h_muonPairsXY                 {new TH2F("h_muonPairsXY", "Refitted tracks vertex XY", 100, -150,150,100,-150,150)};
   TH2F* h_muonPairsRZ                 {new TH2F("h_muonPairsRZ", "Refitted tracks vertex RZ", 100, 0,20,100,0,250)};		
   */	  
@@ -1756,11 +1756,13 @@ int main(int argc, char* argv[])
   h_refit1InvMass->Write();
   h_refit2InvMass->GetXaxis()->SetTitle("GeV");
   h_refit2InvMass->Write();
-  h_refit12InvMass->GetXaxis()->SetTitle("GeV");
+  h_refit12InvMass->GetXaxis()->SetTitle("m_{\mu\mu} (GeV/c^2)");
+  h_refit12InvMass->GetYaxis()->SetTitle("Events");
   h_refit12InvMass->Write();
  
   //Refitted tracks pions	
-  h_pionre12InvMass->GetXaxis()->SetTitle("GeV");
+  h_pionre12InvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^2)");
+  h_pionre12InvMass->GetYaxis()->SetTitle("Events");
   h_pionre12InvMass->Write();
 	
   /*h_muonPairsXY->SetTitle("Vertex position x")
