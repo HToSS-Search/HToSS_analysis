@@ -183,8 +183,8 @@ int main(int argc, char* argv[])
   TH2I* h_displacedXY   {new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150)};
   TH2I* h_displacedRZ   {new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250)};
 	
-  TH2F* h_HVertexPosXY         {new TH2F("h_HVertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150)};
-  TH2F* h_HVertexPosRZ         {new TH2F("h_HVertexPosRZ", "Vertex Position RZ", 100, -150,150,100,-150,150)};	
+  TH2F* h_HVertexPosXY         {new TH2F("h_HVertexPosXY", "Pion track vertex XY", 500, -50,50,500,-50,50)};
+  TH2F* h_HVertexPosRZ         {new TH2F("h_HVertexPosRZ", "Pion track vertex RZ", 500, -50,50,500,-50,50)};	
 	
   //Kaon mass assumption	
   TH1F* h_KhadronDeltaR  {new TH1F("h_KhadronDeltaR", "Two hadrons (kaons) #DeltaR",2500, -10., 10.)};
@@ -209,23 +209,23 @@ int main(int argc, char* argv[])
   //Pion mass assumption
   TH1F* h_PhadronDeltaR  {new TH1F("h_PhadronDeltaR", "Two hadrons (pions) #DeltaR",2500, -10., 10.)};
   TH1F* h_PmuonsDeltaR   {new TH1F("h_PmuonsDeltaR", "Two muons #DeltaR",2500, -10., 10.)};
-  TH1F* h_PIsoSum1       {new TH1F("h_PIsoSum1",  "0.3 p_{T} Cone construction pion 1", 1000, 0., 50.)};
-  TH1F* h_PIsoSum2       {new TH1F("h_PIsoSum2",  "0.3 p_{T} Cone construction pion 2", 1000, 0., 50.)};
+  TH1F* h_PIsoSum1       {new TH1F("h_PIsoSum1",  "Leading pion relative isolation", 1000, 0., 50.)};
+  TH1F* h_PIsoSum2       {new TH1F("h_PIsoSum2",  "Subleading pion relative isolation", 1000, 0., 50.)};
   TH2F* h_PIso2          {new TH2F("h_PIso2", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.)};
-  TH1F* h_PIsoSum3       {new TH1F("h_PIsoSum3",  "0.3 p_{T} Cone construction muon 1", 1000, 0., 50.)};
-  TH1F* h_PIsoSum4       {new TH1F("h_PIsoSum4",  "0.3 p_{T} Cone construction muon 2", 1000, 0., 50.)};
+  TH1F* h_PIsoSum3       {new TH1F("h_PIsoSum3",  "Leading muon relative isolation", 1000, 0., 50.)};
+  TH1F* h_PIsoSum4       {new TH1F("h_PIsoSum4",  "Subleading muon relative isolation", 1000, 0., 50.)};
   TH2F* h_PIso4          {new TH2F("h_PIso4", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.)};
-  TH1F* h_PhadronInvMass {new TH1F("h_PhadronInvMass", "Two hadrons (pions) - Invariant mass",1000, 0., 7.)};
+  TH1F* h_PhadronInvMass {new TH1F("h_PhadronInvMass", "Dihadron (pion) invariant mass",1000, 0., 7.)};
   TH1F* h_PhadronInvMass2 {new TH1F("h_PhadronInvMass2", "Two hadrons (pions) - Invariant mass, smaller binning",500, 0., 7.)};
-  TH1F* h_PmuonsInvMass  {new TH1F("h_PmuonsInvMass", "Two muons - Invariant mass",1000, 0., 7.)};
+  TH1F* h_PmuonsInvMass  {new TH1F("h_PmuonsInvMass", "Dimuon invariant mass",1000, 0., 7.)};
   TF1* Gaussian2 	 {new TF1("Gaussian2","gaus",1.,3.)};
   TH2F* h_Pinvmass       {new TH2F("h_Pinvmass", "Invariant mass: charged hadrons (pions) vs muons", 1000, 0.,7.,1000,0.,7.)};
   
   TH1F* h_PantiscalarInvMass        {new TH1F("h_PantiscalarInvMass", "(Pion) Antiscalar Invariant mass", 1000, 0.,15.)};
   TH1F* h_PscalarInvMass            {new TH1F("h_PscalarInvMass", "Scalar Invariant mass", 1000, 0.,15.)};
   TF1* Gaussian3 	 	    {new TF1("Gaussian3","gaus",1.,3.)};
-  TH1F* h_PhiggsInvMass             {new TH1F("h_PhiggsInvMass",  "h_0 Invariant mass", 1000, 0., 200.)};   
-  TH1F* h_PhiggsDeltaR              {new TH1F("h_PhiggsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.)}; 	
+  TH1F* h_PhiggsInvMass             {new TH1F("h_PhiggsInvMass",  "Higgs invariant mass", 1000, 0., 200.)};   
+  TH1F* h_PhiggsDeltaR              {new TH1F("h_PhiggsDeltaR", "Discalar #DeltaR",2500, 0., 15.)}; 	
 	
   TH2F* h_massassump       {new TH2F("h_massassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.)};
   TH2F* h_pmassassump       {new TH2F("h_pmassassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.)};
@@ -955,8 +955,8 @@ int main(int argc, char* argv[])
 	   h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex1],event.packedCandsVy[pionIndex1], datasetWeight);
 	   h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex2],event.packedCandsVy[pionIndex2], datasetWeight);
 		     
-	   h_HVertexPosRZ->Fill(std::abs(event.packedCandsVz[pionIndex1]),std::sqrt(event.packedCandsVx[pionIndex1]*event.packedCandsVx[pionIndex1]+event.packedCandsVy[pionIndex1]*event.packedCandsVy[pionIndex1]), datasetWeight);
-	   h_HVertexPosRZ->Fill(std::abs(event.packedCandsVz[pionIndex2]),std::sqrt(event.packedCandsVx[pionIndex2]*event.packedCandsVx[pionIndex2]+event.packedCandsVy[pionIndex2]*event.packedCandsVy[pionIndex2]), datasetWeight);
+	   h_HVertexPosRZ->Fill(event.packedCandsVz[pionIndex1],std::sqrt(event.packedCandsVx[pionIndex1]*event.packedCandsVx[pionIndex1]+event.packedCandsVy[pionIndex1]*event.packedCandsVy[pionIndex1]), datasetWeight);
+	   h_HVertexPosRZ->Fill(event.packedCandsVz[pionIndex2],std::sqrt(event.packedCandsVx[pionIndex2]*event.packedCandsVx[pionIndex2]+event.packedCandsVy[pionIndex2]*event.packedCandsVy[pionIndex2]), datasetWeight);
 	         
 		 
 	   if(packed1.DeltaR(packed2)<0.2){
@@ -1594,11 +1594,11 @@ int main(int argc, char* argv[])
   h_displacedRZ->GetYaxis()->SetTitle("R");
   h_displacedRZ->Write();
 	
-  h_HVertexPosXY->GetXaxis()->SetTitle("Vertex position x");
-  h_HVertexPosXY->GetYaxis()->SetTitle("Vertex position y");
+  h_HVertexPosXY->GetXaxis()->SetTitle("V_x (cm)");
+  h_HVertexPosXY->GetYaxis()->SetTitle("V_y (cm)");
   h_HVertexPosXY->Write();
-  h_HVertexPosRZ->GetXaxis()->SetTitle("Vertex position z");
-  h_HVertexPosRZ->GetYaxis()->SetTitle("R");
+  h_HVertexPosRZ->GetXaxis()->SetTitle("V_z (cm)");
+  h_HVertexPosRZ->GetYaxis()->SetTitle("R (cm)");
   h_HVertexPosRZ->Write();
 	
   //Kaon mass assumption	
@@ -1640,19 +1640,33 @@ int main(int argc, char* argv[])
   h_PhadronDeltaR->Write();
   h_PmuonsDeltaR->GetXaxis()->SetTitle("Radians");
   h_PmuonsDeltaR->Write();
+  //h_PIsoSum1->SetTitle("Leading pion relative isolation");
+  h_PIsoSum1->GetYaxis()->SetTitle("Events");
+  h_PIsoSum1->GetXaxis()->SetTitle("Rel. iso");
   h_PIsoSum1->Write();
+  //h_PIsoSum2->SetTitle("Subleading pion relative isolation");
+  h_PIsoSum2->GetYaxis()->SetTitle("Events");
+  h_PIsoSum2->GetXaxis()->SetTitle("Rel. iso");
   h_PIsoSum2->Write();
   h_PIso2->GetXaxis()->SetTitle("Relative isolation sum");
   h_PIso2->GetYaxis()->SetTitle("Particle momentum");
   h_PIso2->Write();
+  //h_PIsoSum3->SetTitle("Leading muon relative isolation");
+  h_PIsoSum3->GetXaxis()->SetTitle("Rel. iso");
+  h_PIsoSum3->GetYaxis()->SetTitle("Events");
   h_PIsoSum3->Write();
+  //h_PIsoSum4->SetTitle("Subleading muon relative isolation");
+  h_PIsoSum4->GetXaxis()->SetTitle("Rel. iso");
+  h_PIsoSum4->GetYaxis()->SetTitle("Events");
   h_PIsoSum4->Write();
   h_PIso4->GetXaxis()->SetTitle("Relative isolation sum");
   h_PIso4->GetYaxis()->SetTitle("Particle momentum");
   h_PIso4->Write();
-  h_PmuonsInvMass->GetXaxis()->SetTitle("GeV");
+  h_PmuonsInvMass->GetXaxis()->SetTitle("m_{\mu\mu} (GeV/c^2)");
+  h_PmuonsInvMass->GetYaxis()->SetTitle("Events");
   h_PmuonsInvMass->Write();
-  h_PhadronInvMass->GetXaxis()->SetTitle("GeV");
+  h_PhadronInvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^2)");
+  h_PhadronInvMass->GetYaxis()->SetTitle("Events");
   h_PhadronInvMass->Write();
   h_PhadronInvMass2->GetXaxis()->SetTitle("GeV");
   h_PhadronInvMass2->Write();
@@ -1665,8 +1679,10 @@ int main(int argc, char* argv[])
   h_PantiscalarInvMass->Write();
   h_PscalarInvMass->GetXaxis()->SetTitle("GeV");
   h_PscalarInvMass->Write();
-  h_PhiggsInvMass->GetXaxis()->SetTitle("GeV");
+  h_PhiggsInvMass->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^2)");
+  h_PhiggsInvMass->GetYaxis()->SetTitle("Events");
   h_PhiggsInvMass->Write();
+  h_PhiggsDeltaR->GetYaxis()->SetTitle("Events");
   h_PhiggsDeltaR->GetXaxis()->SetTitle("Radians");
   h_PhiggsDeltaR->Write();  
 
