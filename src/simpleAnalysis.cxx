@@ -1278,14 +1278,7 @@ int main(int argc, char* argv[])
   }//end of met filter   
 	      
 	    
-    //Pion and kaon comparison	      
-    if(std::abs(Phiggs-125)<3){      
-    h_pmassassump->Fill(Phadroninv,Khadroninv, datasetWeight); 
-    } 
-    h_massassump->Fill(Phadroninv,Khadroninv, datasetWeight);
-    h_higgsassump->Fill(Phiggs,Khiggs, datasetWeight);      
-          
-	      
+         
 	      
 	      
 	      
