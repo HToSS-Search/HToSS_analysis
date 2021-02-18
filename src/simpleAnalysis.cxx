@@ -272,8 +272,7 @@ int main(int argc, char* argv[])
   /*TH2F* h_muonPairsXY                 {new TH2F("h_muonPairsXY", "Refitted tracks vertex XY", 100, -150,150,100,-150,150)};
   TH2F* h_muonPairsRZ                 {new TH2F("h_muonPairsRZ", "Refitted tracks vertex RZ", 100, 0,20,100,0,250)};		
   */	  
-	
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
 
 
 	
@@ -282,7 +281,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	
 	  
   namespace po = boost::program_options;
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
 
   // command line configuration parsing magic!
   po::options_description desc("Options");
@@ -303,7 +302,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         po::value<Long64_t>(&nEvents)->default_value(0),
         "The number of events to be run over. All if set to 0.");
   po::variables_map vm;
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
 
   try
     {
@@ -349,7 +348,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   std::cout << "Using lumi: " << totalLumi << std::endl;
 
   bool datasetFilled{false};
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
 
   // Begin to loop over all datasets
   for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset) {
@@ -373,7 +372,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
           std::cout << postLepSelSkimInputDir + dataset->name() + inputPostfix + "SmallSkim.root"  << std::endl;
           datasetChain->Add((postLepSelSkimInputDir + dataset->name() + inputPostfix + "SmallSkim.root").c_str());
       }
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
 
       // extract the dataset weight. MC = (lumi*crossSection)/(totalEvents), data = 1.0
       float datasetWeight{dataset->getDatasetWeight(totalLumi)};
@@ -403,7 +402,6 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
     event.GetEntry(i);
 
 
-     std::cout << __LINE__ << " : " << __FILE__ << std::endl;
      
           
           
@@ -748,7 +746,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
     
           
           
-    std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+   
           
           
     /// BEGIN Muon Reconstruction
@@ -860,8 +858,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
     //END Muon Reconstruction
           
-          
-      std::cout << __LINE__ << " : " << __FILE__ << std::endl;    
+    
           
           
     //BEGIN Packed candidates
@@ -932,7 +929,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
       }
     }
     
-    std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
     Float_t KIsoSum1=0;  Float_t KIsoSum2=0;
     Float_t KIsoSum3=0;  Float_t KIsoSum4=0;
    
@@ -958,14 +955,14 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
            packed2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkEta[pionIndex2],event.packedCandsPseudoTrkPhi[pionIndex2],std::sqrt(event.packedCandsE[pionIndex2]*event.packedCandsE[pionIndex2]-std::pow(0.1396,2)+std::pow(0.494,2)));
             
            h_KhadronDeltaR->Fill(packed1.DeltaR(packed2), datasetWeight);
-           std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+   
 	   //Revealing the inner structure of the tracker layer?     
 	   h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex1],event.packedCandsVy[pionIndex1], datasetWeight);
 	   h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex2],event.packedCandsVy[pionIndex2], datasetWeight);
 		     
 	   h_HVertexPosRZ->Fill(event.packedCandsVz[pionIndex1],std::sqrt(event.packedCandsVx[pionIndex1]*event.packedCandsVx[pionIndex1]+event.packedCandsVy[pionIndex1]*event.packedCandsVy[pionIndex1]), datasetWeight);
 	   h_HVertexPosRZ->Fill(event.packedCandsVz[pionIndex2],std::sqrt(event.packedCandsVx[pionIndex2]*event.packedCandsVx[pionIndex2]+event.packedCandsVy[pionIndex2]*event.packedCandsVy[pionIndex2]), datasetWeight);
-	  std::cout << __LINE__ << " : " << __FILE__ << std::endl;       
+   
 		 
 	   if(packed1.DeltaR(packed2)<0.2){
              //Invariant mass for two hadrons
@@ -1094,8 +1091,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
     }//end of met filter   
 	      
 	      
-	      
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;     	 
+		 
 	
       
 	      
@@ -1144,9 +1140,9 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
              PE=event.packedCandsE[pionIndex1]+event.packedCandsE[pionIndex2];
 		
 	     Pantiscalar.SetPxPyPzE(Ppx,Ppy,Ppz,PE);
-	     h_PantiscalarInvMass->Fill(Pantiscalar.M(), datasetWeight);
+	     
 	   }
-		std::cout << __LINE__ << " : " << __FILE__ << std::endl; 
+		
 	   for(Int_t k{0};k<event.numPackedCands;k++) {
               const Int_t packedId {event.packedCandsPdgId[k]};
               if(k!=pionIndex1 && k!=pionIndex2){
@@ -1200,10 +1196,10 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	     PME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
 	      
 	     Pscalar.SetPxPyPzE(PMpx,PMpy,PMpz,PME);
-	     h_PscalarInvMass->Fill(Pscalar.M(), datasetWeight);
+	     
 	     //h_PscalarInvMass->Fit(Gaussian3);
 		   
-	   }std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+	   }
 		 
 	   for(Int_t k{0};k<event.numPackedCands;k++) {
               const Int_t packedId {event.packedCandsPdgId[k]};
@@ -1239,16 +1235,21 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	     }
 	     h_PIsoSum3->Fill(PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1], datasetWeight);
              h_PIsoSum4->Fill(PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2], datasetWeight);
+		   
+	     h_PantiscalarInvMass->Fill(Pantiscalar.M(), datasetWeight);
+	     h_PscalarInvMass->Fill(Pscalar.M(), datasetWeight);
 	   }
 	 }
 	      
 	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2]) && muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
     
 	   if(mm3.DeltaR(mm4)<0.2 && packed3.DeltaR(packed4)<0.2){  
-	      Phiggs=(Pantiscalar+Pscalar).M();
-	      h_PhiggsInvMass->Fill(Phiggs, datasetWeight);
-	      h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(Pscalar), datasetWeight);
-	      h_Pinvmass->Fill(Phadroninv,Pmuoninv, datasetWeight); 
+	      if(std::abs((Pantiscalar+Pscalar).M()-125)<3){
+	        Phiggs=(Pantiscalar+Pscalar).M();
+	        h_PhiggsInvMass->Fill(Phiggs, datasetWeight);
+	        h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(Pscalar), datasetWeight);
+	        h_Pinvmass->Fill(Phadroninv,Pmuoninv, datasetWeight); 
+	      }
 	   }
 	    	 
 	 }
@@ -1257,7 +1258,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
       }
     }//end of met filter   
 	      
-	    std::cout << __LINE__ << " : " << __FILE__ << std::endl;  
+	    
     //Pion and kaon comparison	      
     if(std::abs(Phiggs-125)<3){      
     h_pmassassump->Fill(Phadroninv,Khadroninv, datasetWeight); 
@@ -1310,7 +1311,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
           h_muonipackedPt->Fill(muonpackedPti.Pt(), datasetWeight);  
           h_muonipackedInvMass->Fill(muonpackedPti.M(), datasetWeight); 
 	}
-	  std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+	 
 	      
 	      
 	//PAT muons      
@@ -1344,7 +1345,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	h_muon2RecInvMass->Fill(VecMu2.M(), datasetWeight);
         h_muon12RecInvMass->Fill((VecMu1+VecMu2).M(), datasetWeight);
 	     
-	   std::cout << __LINE__ << " : " << __FILE__ << std::endl;   
+	 
 	      
 	//Refitted tracks muons   
 	for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
@@ -1363,7 +1364,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 	       h_muon2refitInvMass->Fill(VecMu2.M(), datasetWeight);
                h_muon12refitInvMass->Fill((VecMu1+VecMu2).M(), datasetWeight);
 	     }
-		   std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+		  
 	     TLorentzVector Mu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2))};
              TLorentzVector Mu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], std::sqrt(event.muonTkPairPF2PATTk2P2[k]+std::pow(0.106,2))};
 	 
@@ -1398,7 +1399,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
       }//end of single/double muon trigger
     }//end of met filter
 	      
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;      
+	  
 	      
 	      
 	      
@@ -1433,7 +1434,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   }
 
     
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+	
 
 
 
@@ -1590,7 +1591,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_muonCutDoubleS->Write();
   h_muonDivDoubleS->GetXaxis()->SetTitle("GeV");
   h_muonDivDoubleS->Write();
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+	
 	
   //Packed Candidates
   h_packedCDxy->Write();
@@ -1604,7 +1605,6 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_displacedRZ->GetXaxis()->SetTitle("Vertex position z");
   h_displacedRZ->GetYaxis()->SetTitle("R");
   h_displacedRZ->Write();
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
 
 
@@ -1614,7 +1614,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_HVertexPosRZ->GetXaxis()->SetTitle("V_{z} (cm)");
   h_HVertexPosRZ->GetYaxis()->SetTitle("R (cm)");
   h_HVertexPosRZ->Write();
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+	
 
 
 
@@ -1651,7 +1651,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_KhiggsDeltaR->Write();  
 	
 	
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+	
   //Pion mass assumption	
   h_PhadronDeltaR->GetXaxis()->SetTitle("Radians");
   h_PhadronDeltaR->Write();
@@ -1690,11 +1690,13 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_Pinvmass->GetXaxis()->SetTitle("Hadron (pion) invariant mass (GeV)");
   h_Pinvmass->GetYaxis()->SetTitle("Muon invariant mass (GeV)");
   h_Pinvmass->Write();
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
-  h_PantiscalarInvMass->GetXaxis()->SetTitle("GeV");
+
+  h_PantiscalarInvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
+  h_PantiscalarInvMass->GetYaxis()->SetTitle("Events");
   h_PantiscalarInvMass->Write();
-  h_PscalarInvMass->GetXaxis()->SetTitle("GeV");
+  h_PscalarInvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+  h_PscalarInvMass->GetYaxis()->SetTitle("Events");
   h_PscalarInvMass->Write();
   h_PhiggsInvMass->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
   h_PhiggsInvMass->GetYaxis()->SetTitle("Events");
@@ -1735,7 +1737,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_muon2RecInvMass->Write();
   h_muon12RecInvMass->GetXaxis()->SetTitle("GeV");
   h_muon12RecInvMass->Write();
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+	
   //Packed muons
   h_muonipackedPt->GetXaxis()->SetTitle("GeV");
   h_muonipackedPt->Write();
@@ -1757,7 +1759,7 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_muon2packedPtTrk->Write();
   h_muon12packedInvMass->GetXaxis()->SetTitle("GeV");
   h_muon12packedInvMass->Write();	
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+	
   //Refitted tracks muons
   h_muon1PairsPt->GetXaxis()->SetTitle("GeV");	
   h_muon1PairsPt->Write();
@@ -1776,12 +1778,12 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
   h_refit12InvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
   h_refit12InvMass->GetYaxis()->SetTitle("Events");
   h_refit12InvMass->Write();
- std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
   //Refitted tracks pions	
   h_pionre12InvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
   h_pionre12InvMass->GetYaxis()->SetTitle("Events");
   h_pionre12InvMass->Write();
-	std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+	
   /*h_muonPairsXY->SetTitle("Vertex position x")
   h_muonPairsXY->SetTitle("Vertex position y")
   h_muonPairsXY->Write();
