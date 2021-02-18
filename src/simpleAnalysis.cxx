@@ -867,6 +867,9 @@ int main(int argc, char* argv[])
      
     Float_t pionpt1{-1}; Float_t pionpt2{-1};
     Float_t mupt1{-1}; Float_t mupt2{-1};
+	      
+    Float_t isoPrimP{-1}; Float_t isoSecP{-1};
+    Float_t isoPrimM{-1}; Float_t isoSecM{-1};
        
     if(event.metFilters()){
         
@@ -1235,8 +1238,11 @@ int main(int argc, char* argv[])
 	     }
 	     h_PIsoSum3->Fill(PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1], datasetWeight);
              h_PIsoSum4->Fill(PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2], datasetWeight);
-		   
-	     h_PantiscalarInvMass->Fill(Pantiscalar.M(), datasetWeight);
+	     
+	     if(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1){	   
+	       h_PantiscalarInvMass->Fill(Pantiscalar.M(), datasetWeight);
+	     }
+	     if(PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]<1){	   
 	     h_PscalarInvMass->Fill(Pscalar.M(), datasetWeight);
 	   }
 	 }
@@ -1244,7 +1250,7 @@ int main(int argc, char* argv[])
 	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2]) && muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
     
 	   if(mm3.DeltaR(mm4)<0.2 && packed3.DeltaR(packed4)<0.2){  
-	      if(std::abs((Pantiscalar+Pscalar).M()-125)<3){
+	      if(std::abs((Pantiscalar+Pscalar).M()-125)<3 && PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1 && PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]<1){
 	        Phiggs=(Pantiscalar+Pscalar).M();
 	        h_PhiggsInvMass->Fill(Phiggs, datasetWeight);
 	        h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(Pscalar), datasetWeight);
