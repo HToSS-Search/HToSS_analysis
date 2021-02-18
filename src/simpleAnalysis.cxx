@@ -959,13 +959,7 @@ int main(int argc, char* argv[])
             
            h_KhadronDeltaR->Fill(packed1.DeltaR(packed2), datasetWeight);
    
-	   //Revealing the inner structure of the tracker layer?     
-	   h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex1],event.packedCandsVy[pionIndex1], datasetWeight);
-	   h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex2],event.packedCandsVy[pionIndex2], datasetWeight);
-		     
-	   h_HVertexPosRZ->Fill(event.packedCandsVz[pionIndex1],std::sqrt(event.packedCandsVx[pionIndex1]*event.packedCandsVx[pionIndex1]+event.packedCandsVy[pionIndex1]*event.packedCandsVy[pionIndex1]), datasetWeight);
-	   h_HVertexPosRZ->Fill(event.packedCandsVz[pionIndex2],std::sqrt(event.packedCandsVx[pionIndex2]*event.packedCandsVx[pionIndex2]+event.packedCandsVy[pionIndex2]*event.packedCandsVy[pionIndex2]), datasetWeight);
-   
+	   
 		 
 	   if(packed1.DeltaR(packed2)<0.2){
              //Invariant mass for two hadrons
@@ -1235,36 +1229,54 @@ int main(int argc, char* argv[])
 	       h_PIsoSum1->Fill(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1], datasetWeight);    
 	       h_PIsoSum2->Fill(PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2], datasetWeight);
 	       h_PIso2->Fill(PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2],event.packedCandsPseudoTrkPt[pionIndex2], datasetWeight);
+		     
+	       if(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1){	   
+	         h_PantiscalarInvMass->Fill(Pantiscalar.M(), datasetWeight);
+	       }
+		     
+	       if(mm3.DeltaR(mm4)<0.2 && packed3.DeltaR(packed4)<0.2){  
+	         if(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1 && PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]<1){
+	           Phiggs=(Pantiscalar+Pscalar).M();
+	           h_PhiggsInvMass->Fill(Phiggs, datasetWeight);
+	           h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(Pscalar), datasetWeight);
+	           h_Pinvmass->Fill(Phadroninv,Pmuoninv, datasetWeight); 
+		 }
+	       }
+		  
+		
 	     }
 	     h_PIsoSum3->Fill(PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1], datasetWeight);
              h_PIsoSum4->Fill(PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2], datasetWeight);
 	     
-	     if(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1){	   
-	       h_PantiscalarInvMass->Fill(Pantiscalar.M(), datasetWeight);
-	     }
+	     
 	     if(PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]<1){	   
-	     h_PscalarInvMass->Fill(Pscalar.M(), datasetWeight);
+	       h_PscalarInvMass->Fill(Pscalar.M(), datasetWeight);
 	     }
 	   }
-	 }
-	      
-	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2]) && muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
-    
-	   if(mm3.DeltaR(mm4)<0.2 && packed3.DeltaR(packed4)<0.2){  
-	      if(std::abs((Pantiscalar+Pscalar).M()-125)<3 && PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1 && PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]<1){
-	        Phiggs=(Pantiscalar+Pscalar).M();
-	        h_PhiggsInvMass->Fill(Phiggs, datasetWeight);
-	        h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(Pscalar), datasetWeight);
-	        h_Pinvmass->Fill(Phadroninv,Pmuoninv, datasetWeight); 
-	      }
+	   if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2])){
+             if(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1){
+	       //Revealing the inner structure of the tracker layer?     
+	       h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex1],event.packedCandsVy[pionIndex1], datasetWeight);
+	       h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex2],event.packedCandsVy[pionIndex2], datasetWeight);
+	  	     
+	       h_HVertexPosRZ->Fill(event.packedCandsVz[pionIndex1],std::sqrt(event.packedCandsVx[pionIndex1]*event.packedCandsVx[pionIndex1]+event.packedCandsVy[pionIndex1]*event.packedCandsVy[pionIndex1]), datasetWeight);
+	       h_HVertexPosRZ->Fill(event.packedCandsVz[pionIndex2],std::sqrt(event.packedCandsVx[pionIndex2]*event.packedCandsVx[pionIndex2]+event.packedCandsVy[pionIndex2]*event.packedCandsVy[pionIndex2]), datasetWeight);
+	     }
 	   }
 	   
 	    	 
 	 }
-	       
+	     
+		   
+      }   
+	     
+	   
+    }
 	      
-      }
-    }//end of met filter   
+	      
+	      
+      }//end of for loop packed candidates
+  }//end of met filter   
 	      
 	    
     //Pion and kaon comparison	      
