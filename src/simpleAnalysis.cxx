@@ -221,8 +221,8 @@ int main(int argc, char* argv[])
   TF1* Gaussian2 	 {new TF1("Gaussian2","gaus",1.,3.)};
   TH2F* h_Pinvmass       {new TH2F("h_Pinvmass", "Invariant mass: charged hadrons (pions) vs muons", 1000, 0.,7.,1000,0.,7.)};
   
-  TH1F* h_PantiscalarInvMass        {new TH1F("h_PantiscalarInvMass", "(Pion) Antiscalar Invariant mass", 1000, 0.,15.)};
-  TH1F* h_PscalarInvMass            {new TH1F("h_PscalarInvMass", "Scalar Invariant mass", 1000, 0.,15.)};
+  TH1F* h_PantiscalarInvMass        {new TH1F("h_PantiscalarInvMass", "Dihadron (pion) invariant mass", 1000, 0.,15.)};
+  TH1F* h_PscalarInvMass            {new TH1F("h_PscalarInvMass", "Dimuon invariant mass", 1000, 0.,15.)};
   TF1* Gaussian3 	 	    {new TF1("Gaussian3","gaus",1.,3.)};
   TH1F* h_PhiggsInvMass             {new TH1F("h_PhiggsInvMass",  "Higgs invariant mass", 1000, 0., 200.)};   
   TH1F* h_PhiggsDeltaR              {new TH1F("h_PhiggsDeltaR", "Discalar #DeltaR",2500, 0., 15.)}; 	
@@ -265,7 +265,7 @@ int main(int argc, char* argv[])
   TH1F* h_muon12refitInvMass          {new TH1F("h_muon12refitInvMass", "Scalar Refit Invariant mass", 500, 0.,5.)};
   TH1F* h_refit1InvMass               {new TH1F("h_refit1InvMass", "Leading #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
   TH1F* h_refit2InvMass               {new TH1F("h_refit2InvMass", "Subleading #mu^{#pm} Refit Invariant mass", 500, 0.,5.)};
-  TH1F* h_refit12InvMass              {new TH1F("h_refit12InvMass", "Dimuon refit invariant mass", 500, 0.,5.)};
+  TH1F* h_refit12InvMass              {new TH1F("h_refit12InvMass", "Dimuon refitted invariant mass", 500, 0.,5.)};
   
   //Refitted tracks pions
   TH1F* h_pionre12InvMass              {new TH1F("h_pionre12InvMass", "Dihadron (pion) refit invariant mass", 500, 0.,5.)};
@@ -1379,20 +1379,20 @@ int main(int argc, char* argv[])
 	   }
 	     
 	}  
-	if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsCharge[pionIndex1]==-(event.packedCandsCharge[pionIndex2])){
+	
       
-	  //Refitted tracks pions   
-	  for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+	//Refitted tracks pions   
+	for(Int_t k{0}; k<event.numChsTrackPairs;k++){
 	     
-	     if(event.chsTkPairIndex1[k]==pionIndex1 && event.chsTkPairIndex2[k]==pionIndex1){	
+	   if(event.chsTkPairIndex1[k]==pionIndex1 && event.chsTkPairIndex2[k]==pionIndex1){	
 		   
-	       TLorentzVector Mu1  {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
-               TLorentzVector Mu2  {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Px[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
+	     TLorentzVector pi1  {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
+             TLorentzVector pi2  {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Px[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
 	 
-               h_pionre12InvMass->Fill((Mu1+Mu2).M(), datasetWeight);
-	     }
-	  }
-	}   
+             h_pionre12InvMass->Fill((pi1+pi2).M(), datasetWeight);
+	   }
+	}
+	   
 	 
 	
 	      
