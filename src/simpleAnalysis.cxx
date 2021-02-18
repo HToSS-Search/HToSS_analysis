@@ -1244,6 +1244,7 @@ int main(int argc, char* argv[])
 	     }
 	     if(PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]<1){	   
 	     h_PscalarInvMass->Fill(Pscalar.M(), datasetWeight);
+	     }
 	   }
 	 }
 	      
@@ -1257,6 +1258,7 @@ int main(int argc, char* argv[])
 	        h_Pinvmass->Fill(Phadroninv,Pmuoninv, datasetWeight); 
 	      }
 	   }
+	   
 	    	 
 	 }
 	       
