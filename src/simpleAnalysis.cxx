@@ -1232,6 +1232,14 @@ int main(int argc, char* argv[])
 		     
 	       if(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1){	   
 	         h_PantiscalarInvMass->Fill(Pantiscalar.M(), datasetWeight);
+		       
+		 //Revealing the inner structure of the tracker layer?     
+	         h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex1],event.packedCandsVy[pionIndex1], datasetWeight);
+	         h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex2],event.packedCandsVy[pionIndex2], datasetWeight);
+	  	     
+	         h_HVertexPosRZ->Fill(event.packedCandsVz[pionIndex1],std::sqrt(event.packedCandsVx[pionIndex1]*event.packedCandsVx[pionIndex1]+event.packedCandsVy[pionIndex1]*event.packedCandsVy[pionIndex1]), datasetWeight);
+	         h_HVertexPosRZ->Fill(event.packedCandsVz[pionIndex2],std::sqrt(event.packedCandsVx[pionIndex2]*event.packedCandsVx[pionIndex2]+event.packedCandsVy[pionIndex2]*event.packedCandsVy[pionIndex2]), datasetWeight);
+
 	       }
 		     
 	       if(mm3.DeltaR(mm4)<0.2 && packed3.DeltaR(packed4)<0.2){  
@@ -1242,9 +1250,9 @@ int main(int argc, char* argv[])
 	           h_Pinvmass->Fill(Phadroninv,Pmuoninv, datasetWeight); 
 		 }
 	       }
-		  
+	     }  
 		
-	     }
+	     
 	     h_PIsoSum3->Fill(PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1], datasetWeight);
              h_PIsoSum4->Fill(PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2], datasetWeight);
 	     
@@ -1253,16 +1261,7 @@ int main(int argc, char* argv[])
 	       h_PscalarInvMass->Fill(Pscalar.M(), datasetWeight);
 	     }
 	   }
-	   if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2])){
-             if(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1){
-	       //Revealing the inner structure of the tracker layer?     
-	       h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex1],event.packedCandsVy[pionIndex1], datasetWeight);
-	       h_HVertexPosXY->Fill(event.packedCandsVx[pionIndex2],event.packedCandsVy[pionIndex2], datasetWeight);
-	  	     
-	       h_HVertexPosRZ->Fill(event.packedCandsVz[pionIndex1],std::sqrt(event.packedCandsVx[pionIndex1]*event.packedCandsVx[pionIndex1]+event.packedCandsVy[pionIndex1]*event.packedCandsVy[pionIndex1]), datasetWeight);
-	       h_HVertexPosRZ->Fill(event.packedCandsVz[pionIndex2],std::sqrt(event.packedCandsVx[pionIndex2]*event.packedCandsVx[pionIndex2]+event.packedCandsVy[pionIndex2]*event.packedCandsVy[pionIndex2]), datasetWeight);
-	     }
-	   }
+	   
 	   
 	    	 
 	 }
