@@ -1262,23 +1262,18 @@ int main(int argc, char* argv[])
 	     }
 	   }
 	   
-	   
+	 
 	    	 
 	 }
 	     
-		   
-      }   
 	     
-	   
-    }
-	      
-	      
+           
 	      
       }//end of for loop packed candidates
   }//end of met filter   
 	      
 	    
-         
+      
 	      
 	      
 	      
