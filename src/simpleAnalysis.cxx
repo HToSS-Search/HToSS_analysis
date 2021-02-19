@@ -1541,7 +1541,7 @@ int main(int argc, char* argv[])
   h_KShortInvMass->GetXaxis()->SetTitle("GeV");
   h_KShortInvMass->Write();
   h_KShort3DAngle->Write();
-    ->Draw("HIST")
+   
   h_genParScalarCPionPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarCPionPt->Write();
   h_genParScalarCPionEta->Write();
@@ -1614,10 +1614,11 @@ int main(int argc, char* argv[])
   h_displacedRZ->Write();
 
 
-
+  h_HVertexPosXY->Draw("HIST");
   h_HVertexPosXY->GetXaxis()->SetTitle("V_{x} (cm)");
   h_HVertexPosXY->GetYaxis()->SetTitle("V_{y} (cm)");
   h_HVertexPosXY->Write();
+  h_HVertexPosRZ->Draw("HIST");
   h_HVertexPosRZ->GetXaxis()->SetTitle("V_{z} (cm)");
   h_HVertexPosRZ->GetYaxis()->SetTitle("R (cm)");
   h_HVertexPosRZ->Write();
@@ -1683,7 +1684,7 @@ int main(int argc, char* argv[])
   h_PIsoSum3->GetYaxis()->SetTitle("Events");
   h_PIsoSum3->Write();
   //h_PIsoSum4->SetTitle("Subleading muon relative isolation");
-  h_PIsoSum4->Draw("HIST")
+  h_PIsoSum4->Draw("HIST");
   h_PIsoSum4->GetXaxis()->SetTitle("Rel. iso");
   h_PIsoSum4->GetYaxis()->SetTitle("Events");
   h_PIsoSum4->Write();
@@ -1702,16 +1703,19 @@ int main(int argc, char* argv[])
   h_Pinvmass->GetYaxis()->SetTitle("Muon invariant mass (GeV)");
   h_Pinvmass->Write();
 
-
+  h_PantiscalarInvMass->Draw("HIST");
   h_PantiscalarInvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
   h_PantiscalarInvMass->GetYaxis()->SetTitle("Events");
   h_PantiscalarInvMass->Write();
+  h_PscalarInvMass->Draw("HIST");
   h_PscalarInvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
   h_PscalarInvMass->GetYaxis()->SetTitle("Events");
   h_PscalarInvMass->Write();
+  h_PhiggsInvMass->Draw("HIST");
   h_PhiggsInvMass->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
   h_PhiggsInvMass->GetYaxis()->SetTitle("Events");
   h_PhiggsInvMass->Write();
+  h_PhiggsDeltaR->Draw("HIST");
   h_PhiggsDeltaR->GetYaxis()->SetTitle("Events");
   h_PhiggsDeltaR->GetXaxis()->SetTitle("Radians");
   h_PhiggsDeltaR->Write();  
@@ -1786,11 +1790,13 @@ int main(int argc, char* argv[])
   h_refit1InvMass->Write();
   h_refit2InvMass->GetXaxis()->SetTitle("GeV");
   h_refit2InvMass->Write();
+  h_refit12InvMass->Draw("HIST");
   h_refit12InvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
   h_refit12InvMass->GetYaxis()->SetTitle("Events");
   h_refit12InvMass->Write();
 
   //Refitted tracks pions	
+  h_pionre12InvMass->Draw("HIST");
   h_pionre12InvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
   h_pionre12InvMass->GetYaxis()->SetTitle("Events");
   h_pionre12InvMass->Write();
