@@ -22,23 +22,23 @@
      TH1F* h_PIsoSum1_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum1");
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
-     
+     gStyle->SetOptStat(0);
   
      h_PIsoSum1_ctau0->SetTitle("Relative Isolation");
      h_PIsoSum1_ctau0->GetYaxis()->SetTitle("Events");
      h_PIsoSum1_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_ctau0->GetXaxis()->SetTitle("Rel. iso");
-     h_PIsoSum1_ctau0->Draw("HIST");
+     h_PIsoSum1_ctau0->Draw("HIST l");
  
      h_PIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
      h_PIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_ctau10->GetXaxis()->SetTitle("Rel. iso");
-     h_PIsoSum1_ctau10->Draw("HIST SAME");
+     h_PIsoSum1_ctau10->Draw("HIST l same");
    
      h_PIsoSum1_QCD->GetYaxis()->SetTitle("Events");
      h_PIsoSum1_QCD->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_QCD->GetXaxis()->SetTitle("Rel. iso");
-     h_PIsoSum1_QCD->Draw("HIST SAME");
+     h_PIsoSum1_QCD->Draw("HIST l same");
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
