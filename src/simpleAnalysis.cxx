@@ -1394,7 +1394,7 @@ int main(int argc, char* argv[])
 	   if(event.chsTkPairIndex1[k]==pionIndex1 && event.chsTkPairIndex2[k]==pionIndex1){	
 		   
 	     TLorentzVector pi1  {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
-             TLorentzVector pi2  {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Px[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
+             TLorentzVector pi2  {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
 	 
              h_pionre12InvMass->Fill((pi1+pi2).M(), datasetWeight);
 	   }
