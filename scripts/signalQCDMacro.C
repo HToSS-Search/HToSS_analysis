@@ -8,7 +8,9 @@
  #include "TLegend.h"
  #include "TLegendEntry.h"
  #include "TStyle.h"
+ #include "TString.h"
  #include "TLatex.h"
+ #include "TPRegexp.h
 
   void examplePlotMacro() {  
   
