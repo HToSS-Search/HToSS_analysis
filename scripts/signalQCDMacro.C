@@ -11,19 +11,42 @@
 
   void examplePlotMacro() {  
   
-     TFile inFile("ggH_MS2_ctau10.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
-     TH1F* h_genParPt = (TH1F*)inFile.Get("h_genParPt"); // Load in histogram
+     TFile inFile0("ggH_MS2_ctau0.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
+     TH1F* h_PIsoSum1_ctau0    = (TH1F*)inFile0.Get("h_PIsoSum1");
+     TFile inFile10("ggH_MS2_ctau10.root"); 
+     TH1F* h_PIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum1");
+     TFile inFileQCD("ggH_MS2_QCD.root"); 
+     TH1F* h_PIsoSum1_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum1");
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
+     
   
-     gPad->SetLogy(); // set log scale for y-axis on for objects drawn on the canvas from this point on
-
-     h_genParPt->GetXaxis()->SetTitle("p_{T} GeV"); // set a title for the x-axis
-     h_genParPt->GetXaxis()->SetRangeUser(0.0, 200.); // change the x-axis range to 0-200
+     h_PIsoSum1_ctau0->SetTitle("Relative Isolation");
+     h_PIsoSum1_ctau0->GetYaxis()->SetTitle("Events");
+     h_PIsoSum1_ctau0->GetXaxis()->SetTitle("Rel. iso");
+     h_PIsoSum1_ctau0->Draw("HIST");
  
-     h_genParPt->Draw("colz"); // draw histo on canvas
+     h_PIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
+     h_PIsoSum1_ctau10->GetXaxis()->SetTitle("Rel. iso");
+     h_PIsoSum1_ctau10->Draw("HIST SAME");
+   
+     h_PIsoSum1_QCD->GetYaxis()->SetTitle("Events");
+     h_PIsoSum1_QCD->GetXaxis()->SetTitle("Rel. iso");
+     h_PIsoSum1_QCD->Draw("HIST SAME");
+   
+     TLegend *legend = new TLegend(0.7,0.7,0.9,0.9);
+     legend->SetBorderSize(1)
+     legend->AddEntry(h_PIsoSum1_ctau0,”c_{#tau}=0”,”l”)
+     legend->SetMarkerColor(1);
+     legend->AddEntry(h_PIsoSum1_ctau10,”c_{#tau}=0”,”l”)
+     legend->SetMarkerColor(2);
+     legend->AddEntry(h_PIsoSum1_QCD,”QCD”,”l”)
+     legend->SetMarkerColor(4);
+     legend->Draw()
+   
+     
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("h_genParPt.gif"); // .pdf and other formats work too! 
+     canv1->SaveAs("h_PIsoSum1.gif"); // .pdf and other formats work too! 
      }
