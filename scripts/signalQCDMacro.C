@@ -26,25 +26,31 @@
   
      h_PIsoSum1_ctau0->SetTitle("Relative Isolation");
      h_PIsoSum1_ctau0->GetYaxis()->SetTitle("Events");
+     h_PIsoSum1_ctau0->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_ctau0->GetXaxis()->SetTitle("Rel. iso");
      h_PIsoSum1_ctau0->Draw("HIST");
  
      h_PIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
+     h_PIsoSum1_ctau10->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_ctau10->GetXaxis()->SetTitle("Rel. iso");
      h_PIsoSum1_ctau10->Draw("HIST SAME");
    
      h_PIsoSum1_QCD->GetYaxis()->SetTitle("Events");
+     h_PIsoSum1_QCD->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_QCD->GetXaxis()->SetTitle("Rel. iso");
      h_PIsoSum1_QCD->Draw("HIST SAME");
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
      TLegendEntry *legenda = legend1->AddEntry("h_PIsoSum1_ctau0","c_{#tau}=0","L");
-     legenda->SetMarkerColor(1);
-     legenda=legend1->AddEntry("h_PIsoSum1_ctau10","c_{#tau}=0","L");
      legenda->SetMarkerColor(2);
-     legenda=legend1->AddEntry("h_PIsoSum1_QCD","QCD","L");
+     legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("h_PIsoSum1_ctau10","c_{#tau}=0","L");
      legenda->SetMarkerColor(4);
+     legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("h_PIsoSum1_QCD","QCD","L");
+     legenda->SetMarkerColor(6);
+     legenda->SetMarkerSize(2);
      legend1->Draw();
    
      
