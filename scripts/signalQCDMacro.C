@@ -19,16 +19,19 @@
      TH1F* h_PIsoSum2_ctau0    = (TH1F*)inFile0.Get("h_PIsoSum2");
      TH1F* h_PIsoSum3_ctau0    = (TH1F*)inFile0.Get("h_PIsoSum3");
      TH1F* h_PIsoSum4_ctau0    = (TH1F*)inFile0.Get("h_PIsoSum4");
+     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PscalarInvMass");
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_PIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum1");
      TH1F* h_PIsoSum2_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum2");
      TH1F* h_PIsoSum3_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum3");
      TH1F* h_PIsoSum4_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum4");
+     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PscalarInvMass");
      TFile inFileQCD("ggH_MC_QCD.root"); 
      TH1F* h_PIsoSum1_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum1");
      TH1F* h_PIsoSum2_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum2");
      TH1F* h_PIsoSum3_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum3");
      TH1F* h_PIsoSum4_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum4");
+     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PscalarInvMass");
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
@@ -237,4 +240,56 @@
      // save canvas with drawn histogram
      canv4->SaveAs("h_PIsoSum4.gif"); 
    
+   
+     
+     TCanvas* canvs = new TCanvas ("canvs", "canvs", 50, 50, 800, 600); // Canvas to draw histogram on
+     gStyle->SetOptStat(0);
+     canvs->SetLineColor(0);
+     canvs->SetFillColor(0);
+   
+     h_PscalarInvMass_ctau0->SetTitle("Dimuon invariant mass");
+     h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
+     h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0.0, 3.); 
+     h_PscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_PscalarInvMass_ctau0->SetMarkerColor(2);
+     h_PscalarInvMass_ctau0->SetLineColor(2);
+     h_PscalarInvMass_ctau0->Draw("HIST");
+ 
+     h_PscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
+     h_PscalarInvMass_ctau10->GetXaxis()->SetRangeUser(0.0, 3.); 
+     h_PscalarInvMass_ctau10->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_PscalarInvMass_ctau10->SetMarkerColor(4);
+     h_PscalarInvMass_ctau10->SetLineColor(4);
+     h_PscalarInvMass_ctau10->Draw("HIST same");
+   
+     h_PscalarInvMass_QCD->GetYaxis()->SetTitle("Events");
+     h_PscalarInvMass_QCD->GetXaxis()->SetRangeUser(0.0, 3.); 
+     h_PscalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_PscalarInvMass_QCD->SetMarkerColor(6);
+     h_PscalarInvMass_QCD->SetLineColor(6);
+     h_PscalarInvMass_QCD->Draw("HIST same");
+   
+     TLegend *legends = new TLegend(0.7,0.7,0.9,0.9);
+     legends->SetBorderSize(1);
+     TLegendEntry *legendw = legends->AddEntry("h_PscalarInvMass_ctau0","c_{#tau}=0mm","L");
+     legendw->SetLineColor(2);
+     legendw->SetMarkerColor(2);
+     legendw->SetMarkerSize(2);
+     legendw=legends->AddEntry("h_PscalarInvMass_ctau10","c_{#tau}=10mm","L");
+     legendw->SetLineColor(4);
+     legendw->SetMarkerColor(4);
+     legendw->SetMarkerSize(2);
+     legendw=legends->AddEntry("h_PscalarInvMass_QCD","QCD","L");
+     legendw->SetLineColor(6);
+     legendw->SetMarkerColor(6);
+     legendw->SetMarkerSize(2);
+     legends->Draw();
+   
+     canvs->Modified();
+     canvs->cd();
+     canvs->SetSelected(canvs);
+     canvs->Draw(); // draw canvas!
+
+     // save canvas with drawn histogram
+     canvs->SaveAs("h_PscalarInvMass.gif"); 
      }
