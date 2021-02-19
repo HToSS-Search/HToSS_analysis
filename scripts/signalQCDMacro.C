@@ -26,17 +26,17 @@
   
      h_PIsoSum1_ctau0->SetTitle("Relative Isolation");
      h_PIsoSum1_ctau0->GetYaxis()->SetTitle("Events");
-     h_PIsoSum1_ctau0->SetRangeUser(0.0, 2.); 
+     h_PIsoSum1_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_ctau0->GetXaxis()->SetTitle("Rel. iso");
      h_PIsoSum1_ctau0->Draw("HIST");
  
      h_PIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
-     h_PIsoSum1_ctau10->SetRangeUser(0.0, 2.); 
+     h_PIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_ctau10->GetXaxis()->SetTitle("Rel. iso");
      h_PIsoSum1_ctau10->Draw("HIST SAME");
    
      h_PIsoSum1_QCD->GetYaxis()->SetTitle("Events");
-     h_PIsoSum1_QCD->SetRangeUser(0.0, 2.); 
+     h_PIsoSum1_QCD->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_QCD->GetXaxis()->SetTitle("Rel. iso");
      h_PIsoSum1_QCD->Draw("HIST SAME");
    
