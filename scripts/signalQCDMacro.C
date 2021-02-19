@@ -45,7 +45,7 @@
      TLegendEntry *legenda = legend1->AddEntry("h_PIsoSum1_ctau0","c_{#tau}=0","L");
      legenda->SetMarkerColor(2);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_PIsoSum1_ctau10","c_{#tau}=0","L");
+     legenda=legend1->AddEntry("h_PIsoSum1_ctau10","c_{#tau}=10","L");
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_PIsoSum1_QCD","QCD","L");
@@ -53,7 +53,9 @@
      legenda->SetMarkerSize(2);
      legend1->Draw();
    
-     
+     canv1->Modified();
+     canv1->cd();
+     canv1->SetSelected(canv1);
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
