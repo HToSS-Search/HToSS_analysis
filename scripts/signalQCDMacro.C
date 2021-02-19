@@ -6,7 +6,7 @@
  #include "TROOT.h"
  #include "TH1F.h"
  #include "TLegend.h"
- #include "TLegendEntry.h
+ #include "TLegendEntry.h"
  #include "TStyle.h"
  #include "TLatex.h"
 
