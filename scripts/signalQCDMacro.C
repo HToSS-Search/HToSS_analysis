@@ -36,11 +36,11 @@
    
      TLegend *legend = new TLegend(0.7,0.7,0.9,0.9);
      legend->SetBorderSize(1);
-     legend->AddEntry("h_PIsoSum1_ctau0",”c_{#tau}=0”,”L”)
+     legend->AddEntry("h_PIsoSum1_ctau0","c_{#tau}=0","L")
      legend->SetMarkerColor(1);
-     legend->AddEntry("h_PIsoSum1_ctau10",”c_{#tau}=0”,”L”)
+     legend->AddEntry("h_PIsoSum1_ctau10","c_{#tau}=0","L")
      legend->SetMarkerColor(2);
-     legend->AddEntry("h_PIsoSum1_QCD",”QCD”,”L”)
+     legend->AddEntry("h_PIsoSum1_QCD","QCD","L")
      legend->SetMarkerColor(4);
      legend->Draw()
    
