@@ -23,7 +23,8 @@
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
-  
+     canv1->SetFillColor(0);
+   
      h_PIsoSum1_ctau0->SetTitle("Relative Isolation");
      h_PIsoSum1_ctau0->GetYaxis()->SetTitle("Events");
      h_PIsoSum1_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
