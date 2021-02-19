@@ -1666,10 +1666,11 @@ int main(int argc, char* argv[])
   h_PmuonsDeltaR->GetXaxis()->SetTitle("Radians");
   h_PmuonsDeltaR->Write();
   //h_PIsoSum1->SetTitle("Leading pion relative isolation");
-  h_PIsoSum1->Draw("HIST B");
+  
   h_PIsoSum1->GetYaxis()->SetTitle("Events");
   h_PIsoSum1->GetXaxis()->SetTitle("Rel. iso");
   h_PIsoSum1->Write();
+  h_PIsoSum1->Draw("HIST");
   //h_PIsoSum2->SetTitle("Subleading pion relative isolation");
   h_PIsoSum2->Draw("HIST B");
   h_PIsoSum2->GetYaxis()->SetTitle("Events");
