@@ -37,15 +37,15 @@
      h_PIsoSum1_QCD->GetXaxis()->SetTitle("Rel. iso");
      h_PIsoSum1_QCD->Draw("HIST SAME");
    
-     TLegend *legend = new TLegend(0.7,0.7,0.9,0.9);
-     legend->SetBorderSize(1);
-     legend->AddEntry("h_PIsoSum1_ctau0","c_{#tau}=0","L");
-     legend->SetMarkerColor(1);
-     legend->AddEntry("h_PIsoSum1_ctau10","c_{#tau}=0","L");
-     legend->SetMarkerColor(2);
-     legend->AddEntry("h_PIsoSum1_QCD","QCD","L");
-     legend->SetMarkerColor(4);
-     legend->Draw();
+     TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
+     legend1->SetBorderSize(1);
+     TLegendEntry *legenda = legend1->AddEntry("h_PIsoSum1_ctau0","c_{#tau}=0","L");
+     legenda->SetMarkerColor(1);
+     legenda->AddEntry("h_PIsoSum1_ctau10","c_{#tau}=0","L");
+     legenda->SetMarkerColor(2);
+     legenda->AddEntry("h_PIsoSum1_QCD","QCD","L");
+     legenda->SetMarkerColor(4);
+     legend1->Draw();
    
      
      canv1->Draw(); // draw canvas!
