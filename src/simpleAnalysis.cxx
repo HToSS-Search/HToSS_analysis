@@ -1614,11 +1614,11 @@ int main(int argc, char* argv[])
   h_displacedRZ->Write();
 
 
-  h_HVertexPosXY->Draw("HIST");
+  h_HVertexPosXY->Draw("HIST B");
   h_HVertexPosXY->GetXaxis()->SetTitle("V_{x} (cm)");
   h_HVertexPosXY->GetYaxis()->SetTitle("V_{y} (cm)");
   h_HVertexPosXY->Write();
-  h_HVertexPosRZ->Draw("HIST");
+  h_HVertexPosRZ->Draw("HIST B");
   h_HVertexPosRZ->GetXaxis()->SetTitle("V_{z} (cm)");
   h_HVertexPosRZ->GetYaxis()->SetTitle("R (cm)");
   h_HVertexPosRZ->Write();
@@ -1666,12 +1666,12 @@ int main(int argc, char* argv[])
   h_PmuonsDeltaR->GetXaxis()->SetTitle("Radians");
   h_PmuonsDeltaR->Write();
   //h_PIsoSum1->SetTitle("Leading pion relative isolation");
-  h_PIsoSum1->Draw("HIST");
+  h_PIsoSum1->Draw("HIST B");
   h_PIsoSum1->GetYaxis()->SetTitle("Events");
   h_PIsoSum1->GetXaxis()->SetTitle("Rel. iso");
   h_PIsoSum1->Write();
   //h_PIsoSum2->SetTitle("Subleading pion relative isolation");
-  h_PIsoSum2->Draw("HIST");
+  h_PIsoSum2->Draw("HIST B");
   h_PIsoSum2->GetYaxis()->SetTitle("Events");
   h_PIsoSum2->GetXaxis()->SetTitle("Rel. iso");
   h_PIsoSum2->Write();
@@ -1679,12 +1679,12 @@ int main(int argc, char* argv[])
   h_PIso2->GetYaxis()->SetTitle("Particle momentum");
   h_PIso2->Write();
   //h_PIsoSum3->SetTitle("Leading muon relative isolation");
-  h_PIsoSum3->Draw("HIST");
+  h_PIsoSum3->Draw("HIST B");
   h_PIsoSum3->GetXaxis()->SetTitle("Rel. iso");
   h_PIsoSum3->GetYaxis()->SetTitle("Events");
   h_PIsoSum3->Write();
   //h_PIsoSum4->SetTitle("Subleading muon relative isolation");
-  h_PIsoSum4->Draw("HIST");
+  h_PIsoSum4->Draw("HIST B");
   h_PIsoSum4->GetXaxis()->SetTitle("Rel. iso");
   h_PIsoSum4->GetYaxis()->SetTitle("Events");
   h_PIsoSum4->Write();
