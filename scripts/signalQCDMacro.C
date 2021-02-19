@@ -22,6 +22,7 @@
      TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PscalarInvMass");
      TH1F* h_PantiscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PantiscalarInvMass");
      TH1F* h_PhiggsInvMass_ctau0    = (TH1F*)inFile0.Get("h_PhiggsInvMass");
+     TH1F* h_PhiggsDeltaR_ctau0    = (TH1F*)inFile0.Get("h_PhiggsDeltaR");
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_PIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum1");
      TH1F* h_PIsoSum2_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum2");
@@ -30,6 +31,7 @@
      TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PscalarInvMass");
      TH1F* h_PantiscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PantiscalarInvMass");
      TH1F* h_PhiggsInvMass_ctau10    = (TH1F*)inFile10.Get("h_PhiggsInvMass");
+     TH1F* h_PhiggsDeltaR_ctau10    = (TH1F*)inFile10.Get("h_PhiggsDeltaR");
      TFile inFileQCD("ggH_MC_QCD.root"); 
      TH1F* h_PIsoSum1_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum1");
      TH1F* h_PIsoSum2_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum2");
@@ -38,6 +40,7 @@
      TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PscalarInvMass");
      TH1F* h_PantiscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PantiscalarInvMass");
      TH1F* h_PhiggsInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PhiggsInvMass");
+     TH1F* h_PhiggsDeltaR_QCD    = (TH1F*)inFileQCD.Get("h_PhiggsDeltaR");
    
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
@@ -400,5 +403,56 @@
      canvh->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canvh->SaveAs("h_PhiggsInvMass.gif"); 
+     canvh->SaveAs("h_PhiggsInvMass.gif");
+   
+     TCanvas* canvhr = new TCanvas ("canvhr", "canvhr", 50, 50, 800, 600); // Canvas to draw histogram on
+     gStyle->SetOptStat(0);
+     canvhr->SetLineColor(0);
+     canvhr->SetFillColor(0);
+   
+     h_PhiggsDeltaR_ctau0->SetTitle("Discalar #Delta R");
+     h_PhiggsDeltaR_ctau0->GetYaxis()->SetTitle("Events");
+     h_PhiggsDeltaR_ctau0->GetXaxis()->SetRangeUser(0.0, 5.); 
+     h_PhiggsDeltaR_ctau0->GetXaxis()->SetTitle("Radians");
+     h_PhiggsDeltaR_ctau0->SetMarkerColor(2);
+     h_PhiggsDeltaR_ctau0->SetLineColor(2);
+     h_PhiggsDeltaR_ctau0->Draw("HIST");
+ 
+     h_PhiggsDeltaR_ctau10->GetYaxis()->SetTitle("Events");
+     h_PhiggsDeltaR_ctau10->GetXaxis()->SetRangeUser(0.0, 5.); 
+     h_PhiggsDeltaR_ctau10->GetXaxis()->SetTitle("Radians");
+     h_PhiggsDeltaR_ctau10->SetMarkerColor(4);
+     h_PhiggsDeltaR_ctau10->SetLineColor(4);
+     h_PhiggsDeltaR_ctau10->Draw("HIST same");
+   
+     h_PhiggsDeltaR_QCD->GetYaxis()->SetTitle("Events");
+     h_PhiggsDeltaR_QCD->GetXaxis()->SetRangeUser(0.0, 5.); 
+     h_PhiggsDeltaR_QCD->GetXaxis()->SetTitle("Radians");
+     h_PhiggsDeltaR_QCD->SetMarkerColor(6);
+     h_PhiggsDeltaR_QCD->SetLineColor(6);
+     h_PhiggsDeltaR_QCD->Draw("HIST same");
+   
+     TLegend *legendhr = new TLegend(0.7,0.7,0.9,0.9);
+     legendhr->SetBorderSize(1);
+     TLegendEntry *legendr = legendhr->AddEntry("h_PhiggsDeltaR_ctau0","c_{#tau}=0mm","L");
+     legendr->SetLineColor(2);
+     legendr->SetMarkerColor(2);
+     legendr->SetMarkerSize(2);
+     legendr=legendhr->AddEntry("h_PhiggsDeltaR_ctau10","c_{#tau}=10mm","L");
+     legendr->SetLineColor(4);
+     legendr->SetMarkerColor(4);
+     legendr->SetMarkerSize(2);
+     legendr=legendhr->AddEntry("h_PhiggsDeltaR_QCD","QCD","L");
+     legendr->SetLineColor(6);
+     legendr->SetMarkerColor(6);
+     legendr->SetMarkerSize(2);
+     legendhr->Draw();
+   
+     canvhr->Modified();
+     canvhr->cd();
+     canvhr->SetSelected(canvhr);
+     canvhr->Draw(); // draw canvas!
+
+     // save canvas with drawn histogram
+     canvhr->SaveAs("h_PhiggsDeltaR.gif");
      }
