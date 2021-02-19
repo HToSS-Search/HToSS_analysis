@@ -29,16 +29,19 @@
      h_PIsoSum1_ctau0->GetYaxis()->SetTitle("Events");
      h_PIsoSum1_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_ctau0->GetXaxis()->SetTitle("Rel. iso");
+     h_PIsoSum1_ctau0->SetMarkerColor(2);
      h_PIsoSum1_ctau0->Draw("HIST");
  
      h_PIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
      h_PIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_ctau10->GetXaxis()->SetTitle("Rel. iso");
+     h_PIsoSum1_ctau10->SetMarkerColor(4);
      h_PIsoSum1_ctau10->Draw("HIST same");
    
      h_PIsoSum1_QCD->GetYaxis()->SetTitle("Events");
      h_PIsoSum1_QCD->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_QCD->GetXaxis()->SetTitle("Rel. iso");
+     h_PIsoSum1_QCD->SetMarkerColor(6);
      h_PIsoSum1_QCD->Draw("HIST same");
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
