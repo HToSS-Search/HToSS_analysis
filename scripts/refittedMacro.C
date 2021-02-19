@@ -39,14 +39,14 @@
  
      h_refit12InvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_ctau10->GetXaxis()->SetRangeUser(0.0, 5.); 
-     h_refit12InvMass_ctau10->GetXaxis()->SetTitle(""m_{#mu#mu} (GeV/c^{2})");
+     h_refit12InvMass_ctau10->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_refit12InvMass_ctau10->SetMarkerColor(4);
      h_refit12InvMass_ctau10->SetLineColor(4);
      h_refit12InvMass_ctau10->Draw("HIST same");
    
      h_refit12InvMass_QCD->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_QCD->GetXaxis()->SetRangeUser(0.0, 5.); 
-     h_refit12InvMass_QCD->GetXaxis()->SetTitle(""m_{#mu#mu} (GeV/c^{2})");
+     h_refit12InvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_refit12InvMass_QCD->SetMarkerColor(6);
      h_refit12InvMass_QCD->SetLineColor(6);
      h_refit12InvMass_QCD->Draw("HIST same");
