@@ -41,9 +41,9 @@
      legend1->SetBorderSize(1);
      TLegendEntry *legenda = legend1->AddEntry("h_PIsoSum1_ctau0","c_{#tau}=0","L");
      legenda->SetMarkerColor(1);
-     legenda->AddEntry("h_PIsoSum1_ctau10","c_{#tau}=0","L");
+     legenda=legend1->AddEntry("h_PIsoSum1_ctau10","c_{#tau}=0","L");
      legenda->SetMarkerColor(2);
-     legenda->AddEntry("h_PIsoSum1_QCD","QCD","L");
+     legenda=legend1->AddEntry("h_PIsoSum1_QCD","QCD","L");
      legenda->SetMarkerColor(4);
      legend1->Draw();
    
