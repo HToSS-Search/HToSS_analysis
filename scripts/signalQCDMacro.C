@@ -45,6 +45,7 @@
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
+     canv1->SetLogy();
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
@@ -97,6 +98,7 @@
    
      TCanvas* canv2 = new TCanvas ("canv2", "canv2", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
+     canv2->SetLogy();
      canv2->SetLineColor(0);
      canv2->SetFillColor(0);
    
@@ -149,6 +151,7 @@
      
      TCanvas* canv3 = new TCanvas ("canv3", "canv3", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
+     canv3->SetLogy();
      canv3->SetLineColor(0);
      canv3->SetFillColor(0);
    
@@ -201,6 +204,7 @@
      
      TCanvas* canv4 = new TCanvas ("canv4", "canv4", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
+     canv4->SetLogy();
      canv4->SetLineColor(0);
      canv4->SetFillColor(0);
    
