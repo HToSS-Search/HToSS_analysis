@@ -30,7 +30,7 @@
      canv1->SetFillColor(0);
    
      h_refit12InvMass_ctau0->SetTitle("Refitted dimuon invariant mass");
-     h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(0.0, 40000.); 
+     h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(0.0, 80000.); 
      h_refit12InvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_ctau0->GetXaxis()->SetRangeUser(0.0, 5.); 
      h_refit12InvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
