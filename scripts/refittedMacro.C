@@ -29,14 +29,14 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     h_refit12InvMass_ctau0->SetTitle("Refitted dimuon invariant mass");
+     /*h_refit12InvMass_ctau0->SetTitle("Refitted dimuon invariant mass");
      h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(0.0, 65000.); 
      h_refit12InvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_ctau0->GetXaxis()->SetRangeUser(0.0, 5.); 
      h_refit12InvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_refit12InvMass_ctau0->SetMarkerColor(2);
      h_refit12InvMass_ctau0->SetLineColor(2);
-     h_refit12InvMass_ctau0->Draw("HIST");
+     h_refit12InvMass_ctau0->Draw("HIST");*/
  
      h_refit12InvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_ctau10->GetYaxis()->SetRangeUser(0.0, 20000.); 
@@ -44,7 +44,7 @@
      h_refit12InvMass_ctau10->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_refit12InvMass_ctau10->SetMarkerColor(4);
      h_refit12InvMass_ctau10->SetLineColor(4);
-     h_refit12InvMass_ctau10->Draw("HIST same");
+     h_refit12InvMass_ctau10->Draw("HIST");
    
      h_refit12InvMass_QCD->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_QCD->GetXaxis()->SetRangeUser(0.0, 5.); 
@@ -56,14 +56,14 @@
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_refit12InvMass_ctau0","c_{#tau}=0mm","L");
-     legenda->SetLineColor(2);
-     legenda->SetMarkerColor(2);
-     legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_refit12InvMass_ctau10","c_{#tau}=10mm","L");
+     TLegendEntry *legenda = legend1->AddEntry("h_refit12InvMass_ctau10","c_{#tau}=10mm","L");
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
+     /*legenda=legend1->AddEntry("h_refit12InvMass_ctau10","c_{#tau}=10mm","L");
+     legenda->SetLineColor(4);
+     legenda->SetMarkerColor(4);
+     legenda->SetMarkerSize(2);*/
      legenda=legend1->AddEntry("h_refit12InvMass_QCD","QCD","L");
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
