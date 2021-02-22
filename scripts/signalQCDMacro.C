@@ -261,13 +261,13 @@
      canvs->SetLineColor(0);
      canvs->SetFillColor(0);
    
-     h_PscalarInvMass_ctau0->SetTitle("Dimuon invariant mass");
+     /*h_PscalarInvMass_ctau0->SetTitle("Dimuon invariant mass");
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0.0, 4.); 
      h_PscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_PscalarInvMass_ctau0->SetMarkerColor(2);
      h_PscalarInvMass_ctau0->SetLineColor(2);
-     h_PscalarInvMass_ctau0->Draw("HIST");
+     h_PscalarInvMass_ctau0->Draw("HIST");*/
  
      h_PscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau10->GetXaxis()->SetRangeUser(0.0, 4.); 
@@ -285,14 +285,14 @@
    
      TLegend *legends = new TLegend(0.7,0.7,0.9,0.9);
      legends->SetBorderSize(1);
-     TLegendEntry *legendw = legends->AddEntry("h_PscalarInvMass_ctau0","c_{#tau}=0mm","L");
-     legendw->SetLineColor(2);
-     legendw->SetMarkerColor(2);
-     legendw->SetMarkerSize(2);
-     legendw=legends->AddEntry("h_PscalarInvMass_ctau10","c_{#tau}=10mm","L");
+     TLegendEntry *legendw = legends->AddEntry("h_PscalarInvMass_ctau10","c_{#tau}=10mm","L");
      legendw->SetLineColor(4);
      legendw->SetMarkerColor(4);
      legendw->SetMarkerSize(2);
+     /*legendw=legends->AddEntry("h_PscalarInvMass_ctau10","c_{#tau}=10mm","L");
+     legendw->SetLineColor(4);
+     legendw->SetMarkerColor(4);
+     legendw->SetMarkerSize(2);*/
      legendw=legends->AddEntry("h_PscalarInvMass_QCD","QCD","L");
      legendw->SetLineColor(6);
      legendw->SetMarkerColor(6);
@@ -312,13 +312,13 @@
      canva->SetLineColor(0);
      canva->SetFillColor(0);
    
-     h_PantiscalarInvMass_ctau0->SetTitle("Dihadron (pion) invariant mass");
+    /* h_PantiscalarInvMass_ctau0->SetTitle("Dihadron (pion) invariant mass");
      h_PantiscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PantiscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0.0, 3.); 
      h_PantiscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_PantiscalarInvMass_ctau0->SetMarkerColor(2);
      h_PantiscalarInvMass_ctau0->SetLineColor(2);
-     h_PantiscalarInvMass_ctau0->Draw("HIST");
+     h_PantiscalarInvMass_ctau0->Draw("HIST");*/
  
      h_PantiscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_PantiscalarInvMass_ctau10->GetXaxis()->SetRangeUser(0.0, 3.); 
@@ -336,14 +336,14 @@
    
      TLegend *legendan = new TLegend(0.7,0.7,0.9,0.9);
      legendan->SetBorderSize(1);
-     TLegendEntry *legendx = legendan->AddEntry("h_PantiscalarInvMass_ctau0","c_{#tau}=0mm","L");
-     legendx->SetLineColor(2);
-     legendx->SetMarkerColor(2);
-     legendx->SetMarkerSize(2);
-     legendx=legendan->AddEntry("h_PantiscalarInvMass_ctau10","c_{#tau}=10mm","L");
+     TLegendEntry *legendx = legendan->AddEntry("h_PantiscalarInvMass_ctau10","c_{#tau}=10mm","L");
      legendx->SetLineColor(4);
      legendx->SetMarkerColor(4);
      legendx->SetMarkerSize(2);
+     /*legendx=legendan->AddEntry("h_PantiscalarInvMass_ctau10","c_{#tau}=10mm","L");
+     legendx->SetLineColor(4);
+     legendx->SetMarkerColor(4);
+     legendx->SetMarkerSize(2);*/
      legendx=legendan->AddEntry("h_PantiscalarInvMass_QCD","QCD","L");
      legendx->SetLineColor(6);
      legendx->SetMarkerColor(6);
@@ -363,20 +363,20 @@
      canvh->SetLineColor(0);
      canvh->SetFillColor(0);
    
-     h_PhiggsInvMass_ctau0->SetTitle("Higgs invariant mass");
+     /*h_PhiggsInvMass_ctau0->SetTitle("Higgs invariant mass");
      h_PhiggsInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PhiggsInvMass_ctau0->GetXaxis()->SetRangeUser(0.0, 200.); 
      h_PhiggsInvMass_ctau0->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
      h_PhiggsInvMass_ctau0->SetMarkerColor(2);
      h_PhiggsInvMass_ctau0->SetLineColor(2);
-     h_PhiggsInvMass_ctau0->Draw("HIST");
+     h_PhiggsInvMass_ctau0->Draw("HIST");*/
  
      h_PhiggsInvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_PhiggsInvMass_ctau10->GetXaxis()->SetRangeUser(0.0, 200.); 
      h_PhiggsInvMass_ctau10->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
      h_PhiggsInvMass_ctau10->SetMarkerColor(4);
      h_PhiggsInvMass_ctau10->SetLineColor(4);
-     h_PhiggsInvMass_ctau10->Draw("HIST same");
+     h_PhiggsInvMass_ctau10->Draw("HIST");
    
      h_PhiggsInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PhiggsInvMass_QCD->GetXaxis()->SetRangeUser(0.0, 200.); 
@@ -387,14 +387,14 @@
    
      TLegend *legendh = new TLegend(0.7,0.7,0.9,0.9);
      legendh->SetBorderSize(1);
-     TLegendEntry *legendxx = legendh->AddEntry("h_PhiggsInvMass_ctau0","c_{#tau}=0mm","L");
-     legendxx->SetLineColor(2);
-     legendxx->SetMarkerColor(2);
-     legendxx->SetMarkerSize(2);
-     legendxx=legendh->AddEntry("h_PhiggsInvMass_ctau10","c_{#tau}=10mm","L");
+     TLegendEntry *legendxx = legendh->AddEntry("h_PhiggsInvMass_ctau10","c_{#tau}=10mm","L");
      legendxx->SetLineColor(4);
      legendxx->SetMarkerColor(4);
      legendxx->SetMarkerSize(2);
+     /*legendxx=legendh->AddEntry("h_PhiggsInvMass_ctau10","c_{#tau}=10mm","L");
+     legendxx->SetLineColor(4);
+     legendxx->SetMarkerColor(4);
+     legendxx->SetMarkerSize(2);*/
      legendxx=legendh->AddEntry("h_PhiggsInvMass_QCD","QCD","L");
      legendxx->SetLineColor(6);
      legendxx->SetMarkerColor(6);
@@ -414,20 +414,20 @@
      canvhr->SetLineColor(0);
      canvhr->SetFillColor(0);
    
-     h_PhiggsDeltaR_ctau0->SetTitle("Discalar #Delta R");
+     /*h_PhiggsDeltaR_ctau0->SetTitle("Discalar #Delta R");
      h_PhiggsDeltaR_ctau0->GetYaxis()->SetTitle("Events");
      h_PhiggsDeltaR_ctau0->GetXaxis()->SetRangeUser(0.0, 5.); 
      h_PhiggsDeltaR_ctau0->GetXaxis()->SetTitle("Radians");
      h_PhiggsDeltaR_ctau0->SetMarkerColor(2);
      h_PhiggsDeltaR_ctau0->SetLineColor(2);
-     h_PhiggsDeltaR_ctau0->Draw("HIST");
+     h_PhiggsDeltaR_ctau0->Draw("HIST");*/
  
      h_PhiggsDeltaR_ctau10->GetYaxis()->SetTitle("Events");
      h_PhiggsDeltaR_ctau10->GetXaxis()->SetRangeUser(0.0, 5.); 
      h_PhiggsDeltaR_ctau10->GetXaxis()->SetTitle("Radians");
      h_PhiggsDeltaR_ctau10->SetMarkerColor(4);
      h_PhiggsDeltaR_ctau10->SetLineColor(4);
-     h_PhiggsDeltaR_ctau10->Draw("HIST same");
+     h_PhiggsDeltaR_ctau10->Draw("HIST");
    
      h_PhiggsDeltaR_QCD->GetYaxis()->SetTitle("Events");
      h_PhiggsDeltaR_QCD->GetXaxis()->SetRangeUser(0.0, 5.); 
@@ -438,14 +438,14 @@
    
      TLegend *legendhr = new TLegend(0.7,0.7,0.9,0.9);
      legendhr->SetBorderSize(1);
-     TLegendEntry *legendr = legendhr->AddEntry("h_PhiggsDeltaR_ctau0","c_{#tau}=0mm","L");
-     legendr->SetLineColor(2);
-     legendr->SetMarkerColor(2);
-     legendr->SetMarkerSize(2);
-     legendr=legendhr->AddEntry("h_PhiggsDeltaR_ctau10","c_{#tau}=10mm","L");
+     TLegendEntry *legendr = legendhr->AddEntry("h_PhiggsDeltaR_ctau10","c_{#tau}=10mm","L");
      legendr->SetLineColor(4);
      legendr->SetMarkerColor(4);
      legendr->SetMarkerSize(2);
+     /*legendr=legendhr->AddEntry("h_PhiggsDeltaR_ctau10","c_{#tau}=10mm","L");
+     legendr->SetLineColor(4);
+     legendr->SetMarkerColor(4);
+     legendr->SetMarkerSize(2);*/
      legendr=legendhr->AddEntry("h_PhiggsDeltaR_QCD","QCD","L");
      legendr->SetLineColor(6);
      legendr->SetMarkerColor(6);
