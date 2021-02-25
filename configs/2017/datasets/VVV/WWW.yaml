@@ -4,6 +4,6 @@ locations:
 cross_section: 0.2086
 mc: true
 histogram: "VVV"
-colour: "#993399"
+colour: "#999999"
 label: "VVV"
 plot_type: "f"

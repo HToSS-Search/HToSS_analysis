@@ -3,7 +3,7 @@ locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/singleTop/tZq_ll_4f_ckm/"
 cross_section: 0.0758
 mc: true
-histogram: "tZq"
-colour: "#999999"
-label: "tZq"
+histogram: "SingleTop"
+colour: "#ff99cc"
+label: "Single top"
 plot_type: "f"
