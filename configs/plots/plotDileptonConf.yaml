@@ -673,17 +673,17 @@ plots:
     cutStage: 0
   - title: "Higgs candidiate mass"
     name: "discalarMass"
-    xMin: 75.0
-    xMax: 175.0
-    nBins: 2000
+    xMin: 100.0
+    xMax: 150.0
+    nBins: 200
     fillExp: "discalarMass"
     xAxisLabel: "m_{h} (GeV/c)"
     cutStage: 0
   - title: "Higgs candidiate mass"
     name: "discalarMassNew"
-    xMin: 75.0
-    xMax: 175.0
-    nBins: 2000
+    xMin: 100.0
+    xMax: 150.0
+    nBins: 200
     fillExp: "discalarMassNew"
     xAxisLabel: "m_{h} (GeV/c)"
     cutStage: 0
