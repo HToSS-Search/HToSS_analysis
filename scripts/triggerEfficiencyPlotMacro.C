@@ -779,6 +779,765 @@ void triggerEfficiencyPlotMacro() {
     Cavnas_ORTrigPt->SetSelected(Cavnas_ORTrigPt);
     Cavnas_ORTrigPt->SaveAs( "ORTrig_pT_eff.pdf" );
 
+    // eta
+
+    TH1F* h_leadingMuonEta_muTrigEta_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonEta_muTrig");
+    TH1F* h_leadingMuonEta_muTrigEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_muTrig");
+    TH1F* h_leadingMuonEta_muTrigEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_muTrig");
+    TH1F* h_leadingMuonEta_muTrigEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_muTrig");
+    TH1F* h_leadingMuonEta_muTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_muTrig");
+
+    TCanvas *Cavnas_muTrigEta = new TCanvas("Cavnas_muTrigEta", "Cavnas_muTrigEta",0,0,1280,925);
+    gStyle->SetOptStat(0);
+    Cavnas_muTrigEta->Range(-0.4860759,-0.2025316,2.551899,1.063291);
+    Cavnas_muTrigEta->SetFillColor(0);
+    Cavnas_muTrigEta->SetBorderMode(0);
+    Cavnas_muTrigEta->SetBorderSize(2);
+    Cavnas_muTrigEta->SetLeftMargin(0.15);
+    Cavnas_muTrigEta->SetRightMargin(0.05);
+    Cavnas_muTrigEta->SetTopMargin(0.05);
+    Cavnas_muTrigEta->SetBottomMargin(0.15);
+    Cavnas_muTrigEta->SetGridy();
+    Cavnas_muTrigEta->SetTickx(1);
+    Cavnas_muTrigEta->SetTicky(1);
+    Cavnas_muTrigEta->SetFrameBorderMode(0);
+    Cavnas_muTrigEta->cd();
+
+    h_leadingMuonEta_muTrigEta_ctau0->SetTitle("");
+    h_leadingMuonEta_muTrigEta_ctau0->GetXaxis()->SetTitle("leading muon #eta");
+    h_leadingMuonEta_muTrigEta_ctau0->GetXaxis()->SetLabelFont(42);
+    h_leadingMuonEta_muTrigEta_ctau0->GetXaxis()->SetLabelSize(0.05);
+    h_leadingMuonEta_muTrigEta_ctau0->GetXaxis()->SetTitleSize(0.05);
+    h_leadingMuonEta_muTrigEta_ctau0->GetXaxis()->SetTitleOffset(1.3);
+    h_leadingMuonEta_muTrigEta_ctau0->GetXaxis()->SetTitleFont(42);
+    h_leadingMuonEta_muTrigEta_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
+    h_leadingMuonEta_muTrigEta_ctau0->GetYaxis()->SetTitle("#mu trigger efficiency");
+    h_leadingMuonEta_muTrigEta_ctau0->GetYaxis()->SetLabelFont(42);
+    h_leadingMuonEta_muTrigEta_ctau0->GetYaxis()->SetLabelSize(0.035);
+    h_leadingMuonEta_muTrigEta_ctau0->GetYaxis()->SetTitleSize(0.035);
+    h_leadingMuonEta_muTrigEta_ctau0->GetYaxis()->SetTitleOffset(0);
+    h_leadingMuonEta_muTrigEta_ctau0->GetYaxis()->SetTitleFont(42);
+    h_leadingMuonEta_muTrigEta_ctau0->GetYaxis()->SetNdivisions(510);
+    h_leadingMuonEta_muTrigEta_ctau0->SetLineColor(9);
+    h_leadingMuonEta_muTrigEta_ctau0->SetMarkerColor(9);
+    h_leadingMuonEta_muTrigEta_ctau0->SetMarkerStyle(26);
+    h_leadingMuonEta_muTrigEta_ctau0->SetMarkerSize(1);
+    h_leadingMuonEta_muTrigEta_ctau0->Draw("HIST p");
+
+    h_leadingMuonEta_muTrigEta_ctau1->SetLineColor(8);
+    h_leadingMuonEta_muTrigEta_ctau1->SetMarkerColor(8);
+    h_leadingMuonEta_muTrigEta_ctau1->SetMarkerStyle(4);
+    h_leadingMuonEta_muTrigEta_ctau1->SetMarkerSize(1);
+    h_leadingMuonEta_muTrigEta_ctau1->Draw("HIST p same");
+
+    h_leadingMuonEta_muTrigEta_ctau10->SetLineColor(2);
+    h_leadingMuonEta_muTrigEta_ctau10->SetMarkerColor(2);
+    h_leadingMuonEta_muTrigEta_ctau10->SetMarkerStyle(5);
+    h_leadingMuonEta_muTrigEta_ctau10->SetMarkerSize(1);
+    h_leadingMuonEta_muTrigEta_ctau10->Draw("HIST p same");
+
+    h_leadingMuonEta_muTrigEta_ctau100->SetLineColor(1);
+    h_leadingMuonEta_muTrigEta_ctau100->SetMarkerColor(1);
+    h_leadingMuonEta_muTrigEta_ctau100->SetMarkerStyle(2);
+    h_leadingMuonEta_muTrigEta_ctau100->SetMarkerSize(1);
+    h_leadingMuonEta_muTrigEta_ctau100->Draw("HIST p same");
+
+    h_leadingMuonEta_muTrigEta_ctau1000->SetLineColor(4);
+    h_leadingMuonEta_muTrigEta_ctau1000->SetMarkerColor(4);
+    h_leadingMuonEta_muTrigEta_ctau1000->SetMarkerStyle(3);
+    h_leadingMuonEta_muTrigEta_ctau1000->SetMarkerSize(1);
+    h_leadingMuonEta_muTrigEta_ctau1000->Draw("HIST p same");
+
+    TLegend *leg_muTrigEta = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
+    leg_muTrigEta->SetBorderSize(0);
+    leg_muTrigEta->SetTextSize(0.03);
+    leg_muTrigEta->SetLineColor(1);
+    leg_muTrigEta->SetLineStyle(1);
+    leg_muTrigEta->SetLineWidth(1);
+    leg_muTrigEta->SetFillColor(0);
+    leg_muTrigEta->SetFillStyle(1001);
+    TLegendEntry *entry_muTrigEta = leg_muTrigEta->AddEntry("ms2_ctau0", "c_{#tau} = 0 mm", "P");
+    entry_muTrigEta->SetMarkerColor(9);
+    entry_muTrigEta->SetMarkerStyle(26);
+    entry_muTrigEta->SetMarkerSize(2);
+    entry_muTrigEta->SetTextFont(42);
+    entry_muTrigEta = leg_muTrigEta->AddEntry("ms2_ctau1", "c_{#tau} = 1 mm", "P");
+    entry_muTrigEta->SetMarkerColor(8);
+    entry_muTrigEta->SetMarkerStyle(4);
+    entry_muTrigEta->SetMarkerSize(2);
+    entry_muTrigEta->SetTextFont(42);
+    entry_muTrigEta = leg_muTrigEta->AddEntry("ms2_ctau10", "c_{#tau} = 10 mm", "P");
+    entry_muTrigEta->SetMarkerColor(2);
+    entry_muTrigEta->SetMarkerStyle(5);
+    entry_muTrigEta->SetMarkerSize(2);
+    entry_muTrigEta->SetTextFont(42);
+    entry_muTrigEta = leg_muTrigEta->AddEntry("ms2_ctau100", "c_{#tau} = 100 mm", "P");
+    entry_muTrigEta->SetMarkerColor(1);
+    entry_muTrigEta->SetMarkerStyle(2);
+    entry_muTrigEta->SetMarkerSize(2);
+    entry_muTrigEta->SetTextFont(42);
+    entry_muTrigEta = leg_muTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+    entry_muTrigEta->SetMarkerColor(4);
+    entry_muTrigEta->SetMarkerStyle(3);
+    entry_muTrigEta->SetMarkerSize(2);
+    entry_muTrigEta->SetTextFont(42);
+    leg_muTrigEta->Draw("HIST");
+
+    Cavnas_muTrigEta->Modified();
+    Cavnas_muTrigEta->cd();
+    Cavnas_muTrigEta->SetSelected(Cavnas_muTrigEta);
+    Cavnas_muTrigEta->SaveAs( "muTrig_eta_eff.pdf" );
+
+    //
+
+    TH1F* h_leadingMuonEta_mumuTrigEta_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonEta_mumuTrig");
+    TH1F* h_leadingMuonEta_mumuTrigEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_mumuTrig");
+    TH1F* h_leadingMuonEta_mumuTrigEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_mumuTrig");
+    TH1F* h_leadingMuonEta_mumuTrigEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_mumuTrig");
+    TH1F* h_leadingMuonEta_mumuTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_mumuTrig");
+
+    TCanvas *Cavnas_mumuTrigEta = new TCanvas("Cavnas_mumuTrigEta", "Cavnas_mumuTrigEta",0,0,1280,925);
+    gStyle->SetOptStat(0);
+    Cavnas_mumuTrigEta->Range(-0.4860759,-0.2025316,2.551899,1.063291);
+    Cavnas_mumuTrigEta->SetFillColor(0);
+    Cavnas_mumuTrigEta->SetBorderMode(0);
+    Cavnas_mumuTrigEta->SetBorderSize(2);
+    Cavnas_mumuTrigEta->SetLeftMargin(0.15);
+    Cavnas_mumuTrigEta->SetRightMargin(0.05);
+    Cavnas_mumuTrigEta->SetTopMargin(0.05);
+    Cavnas_mumuTrigEta->SetBottomMargin(0.15);
+    Cavnas_mumuTrigEta->SetGridy();
+    Cavnas_mumuTrigEta->SetTickx(1);
+    Cavnas_mumuTrigEta->SetTicky(1);
+    Cavnas_mumuTrigEta->SetFrameBorderMode(0);
+    Cavnas_mumuTrigEta->cd();
+
+    h_leadingMuonEta_mumuTrigEta_ctau0->SetTitle("");
+    h_leadingMuonEta_mumuTrigEta_ctau0->GetXaxis()->SetTitle("leading muon #eta");
+    h_leadingMuonEta_mumuTrigEta_ctau0->GetXaxis()->SetLabelFont(42);
+    h_leadingMuonEta_mumuTrigEta_ctau0->GetXaxis()->SetLabelSize(0.05);
+    h_leadingMuonEta_mumuTrigEta_ctau0->GetXaxis()->SetTitleSize(0.05);
+    h_leadingMuonEta_mumuTrigEta_ctau0->GetXaxis()->SetTitleOffset(1.3);
+    h_leadingMuonEta_mumuTrigEta_ctau0->GetXaxis()->SetTitleFont(42);
+    h_leadingMuonEta_mumuTrigEta_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
+    h_leadingMuonEta_mumuTrigEta_ctau0->GetYaxis()->SetTitle("#mu#mu trigger efficiency");
+    h_leadingMuonEta_mumuTrigEta_ctau0->GetYaxis()->SetLabelFont(42);
+    h_leadingMuonEta_mumuTrigEta_ctau0->GetYaxis()->SetLabelSize(0.035);
+    h_leadingMuonEta_mumuTrigEta_ctau0->GetYaxis()->SetTitleSize(0.035);
+    h_leadingMuonEta_mumuTrigEta_ctau0->GetYaxis()->SetTitleOffset(0);
+    h_leadingMuonEta_mumuTrigEta_ctau0->GetYaxis()->SetTitleFont(42);
+    h_leadingMuonEta_mumuTrigEta_ctau0->GetYaxis()->SetNdivisions(510);
+    h_leadingMuonEta_mumuTrigEta_ctau0->SetLineColor(9);
+    h_leadingMuonEta_mumuTrigEta_ctau0->SetMarkerColor(9);
+    h_leadingMuonEta_mumuTrigEta_ctau0->SetMarkerStyle(26);
+    h_leadingMuonEta_mumuTrigEta_ctau0->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigEta_ctau0->Draw("HIST p");
+
+    h_leadingMuonEta_mumuTrigEta_ctau1->SetLineColor(8);
+    h_leadingMuonEta_mumuTrigEta_ctau1->SetMarkerColor(8);
+    h_leadingMuonEta_mumuTrigEta_ctau1->SetMarkerStyle(4);
+    h_leadingMuonEta_mumuTrigEta_ctau1->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigEta_ctau1->Draw("HIST p same");
+
+    h_leadingMuonEta_mumuTrigEta_ctau10->SetLineColor(2);
+    h_leadingMuonEta_mumuTrigEta_ctau10->SetMarkerColor(2);
+    h_leadingMuonEta_mumuTrigEta_ctau10->SetMarkerStyle(5);
+    h_leadingMuonEta_mumuTrigEta_ctau10->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigEta_ctau10->Draw("HIST p same");
+
+    h_leadingMuonEta_mumuTrigEta_ctau100->SetLineColor(1);
+    h_leadingMuonEta_mumuTrigEta_ctau100->SetMarkerColor(1);
+    h_leadingMuonEta_mumuTrigEta_ctau100->SetMarkerStyle(2);
+    h_leadingMuonEta_mumuTrigEta_ctau100->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigEta_ctau100->Draw("HIST p same");
+
+    h_leadingMuonEta_mumuTrigEta_ctau1000->SetLineColor(4);
+    h_leadingMuonEta_mumuTrigEta_ctau1000->SetMarkerColor(4);
+    h_leadingMuonEta_mumuTrigEta_ctau1000->SetMarkerStyle(3);
+    h_leadingMuonEta_mumuTrigEta_ctau1000->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigEta_ctau1000->Draw("HIST p same");
+
+    TLegend *leg_mumuTrigEta = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
+    leg_mumuTrigEta->SetBorderSize(0);
+    leg_mumuTrigEta->SetTextSize(0.03);
+    leg_mumuTrigEta->SetLineColor(1);
+    leg_mumuTrigEta->SetLineStyle(1);
+    leg_mumuTrigEta->SetLineWidth(1);
+    leg_mumuTrigEta->SetFillColor(0);
+    leg_mumuTrigEta->SetFillStyle(1001);
+    TLegendEntry *entry_mumuTrigEta = leg_mumuTrigEta->AddEntry("ms2_ctau0", "c_{#tau} = 0 mm", "P");
+    entry_mumuTrigEta->SetMarkerColor(9);
+    entry_mumuTrigEta->SetMarkerStyle(26);
+    entry_mumuTrigEta->SetMarkerSize(2);
+    entry_mumuTrigEta->SetTextFont(42);
+    entry_mumuTrigEta = leg_mumuTrigEta->AddEntry("ms2_ctau1", "c_{#tau} = 1 mm", "P");
+    entry_mumuTrigEta->SetMarkerColor(8);
+    entry_mumuTrigEta->SetMarkerStyle(4);
+    entry_mumuTrigEta->SetMarkerSize(2);
+    entry_mumuTrigEta->SetTextFont(42);
+    entry_mumuTrigEta = leg_mumuTrigEta->AddEntry("ms2_ctau10", "c_{#tau} = 10 mm", "P");
+    entry_mumuTrigEta->SetMarkerColor(2);
+    entry_mumuTrigEta->SetMarkerStyle(5);
+    entry_mumuTrigEta->SetMarkerSize(2);
+    entry_mumuTrigEta->SetTextFont(42);
+    entry_mumuTrigEta = leg_mumuTrigEta->AddEntry("ms2_ctau100", "c_{#tau} = 100 mm", "P");
+    entry_mumuTrigEta->SetMarkerColor(1);
+    entry_mumuTrigEta->SetMarkerStyle(2);
+    entry_mumuTrigEta->SetMarkerSize(2);
+    entry_mumuTrigEta->SetTextFont(42);
+    entry_mumuTrigEta = leg_mumuTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+    entry_mumuTrigEta->SetMarkerColor(4);
+    entry_mumuTrigEta->SetMarkerStyle(3);
+    entry_mumuTrigEta->SetMarkerSize(2);
+    entry_mumuTrigEta->SetTextFont(42);
+    leg_mumuTrigEta->Draw("HIST");
+
+    Cavnas_mumuTrigEta->Modified();
+    Cavnas_mumuTrigEta->cd();
+    Cavnas_mumuTrigEta->SetSelected(Cavnas_mumuTrigEta);
+    Cavnas_mumuTrigEta->SaveAs( "mumuTrig_eta_eff.pdf" );
+
+    //
+
+    TH1F* h_leadingMuonEta_mumuTrigMassCutEta_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonEta_mumuTrigMassCut");
+    TH1F* h_leadingMuonEta_mumuTrigMassCutEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_mumuTrigMassCut");
+    TH1F* h_leadingMuonEta_mumuTrigMassCutEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_mumuTrigMassCut");
+    TH1F* h_leadingMuonEta_mumuTrigMassCutEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_mumuTrigMassCut");
+    TH1F* h_leadingMuonEta_mumuTrigMassCutEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_mumuTrigMassCut");
+
+    TCanvas *Cavnas_mumuTrigMassCutEta = new TCanvas("Cavnas_mumuTrigMassCutEta", "Cavnas_mumuTrigMassCutEta",0,0,1280,925);
+    gStyle->SetOptStat(0);
+    Cavnas_mumuTrigMassCutEta->Range(-0.4860759,-0.2025316,2.551899,1.063291);
+    Cavnas_mumuTrigMassCutEta->SetFillColor(0);
+    Cavnas_mumuTrigMassCutEta->SetBorderMode(0);
+    Cavnas_mumuTrigMassCutEta->SetBorderSize(2);
+    Cavnas_mumuTrigMassCutEta->SetLeftMargin(0.15);
+    Cavnas_mumuTrigMassCutEta->SetRightMargin(0.05);
+    Cavnas_mumuTrigMassCutEta->SetTopMargin(0.05);
+    Cavnas_mumuTrigMassCutEta->SetBottomMargin(0.15);
+    Cavnas_mumuTrigMassCutEta->SetGridy();
+    Cavnas_mumuTrigMassCutEta->SetTickx(1);
+    Cavnas_mumuTrigMassCutEta->SetTicky(1);
+    Cavnas_mumuTrigMassCutEta->SetFrameBorderMode(0);
+    Cavnas_mumuTrigMassCutEta->cd();
+
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->SetTitle("");
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->GetXaxis()->SetTitle("leading muon #eta");
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->GetXaxis()->SetLabelFont(42);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->GetXaxis()->SetLabelSize(0.05);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->GetXaxis()->SetTitleSize(0.05);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->GetXaxis()->SetTitleOffset(1.3);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->GetXaxis()->SetTitleFont(42);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->GetYaxis()->SetTitle("#mu#mu trigger efficiency");
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->GetYaxis()->SetLabelFont(42);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->GetYaxis()->SetLabelSize(0.035);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->GetYaxis()->SetTitleSize(0.035);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->GetYaxis()->SetTitleOffset(0);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->GetYaxis()->SetTitleFont(42);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->GetYaxis()->SetNdivisions(510);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->SetLineColor(9);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->SetMarkerColor(9);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->SetMarkerStyle(26);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau0->Draw("HIST p");
+
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau1->SetLineColor(8);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau1->SetMarkerColor(8);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau1->SetMarkerStyle(4);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau1->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau1->Draw("HIST p same");
+
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau10->SetLineColor(2);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau10->SetMarkerColor(2);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau10->SetMarkerStyle(5);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau10->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau10->Draw("HIST p same");
+
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau100->SetLineColor(1);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau100->SetMarkerColor(1);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau100->SetMarkerStyle(2);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau100->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau100->Draw("HIST p same");
+
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau1000->SetLineColor(4);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau1000->SetMarkerColor(4);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau1000->SetMarkerStyle(3);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau1000->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigMassCutEta_ctau1000->Draw("HIST p same");
+
+    TLegend *leg_mumuTrigMassCutEta = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
+    leg_mumuTrigMassCutEta->SetBorderSize(0);
+    leg_mumuTrigMassCutEta->SetTextSize(0.03);
+    leg_mumuTrigMassCutEta->SetLineColor(1);
+    leg_mumuTrigMassCutEta->SetLineStyle(1);
+    leg_mumuTrigMassCutEta->SetLineWidth(1);
+    leg_mumuTrigMassCutEta->SetFillColor(0);
+    leg_mumuTrigMassCutEta->SetFillStyle(1001);
+    TLegendEntry *entry_mumuTrigMassCutEta = leg_mumuTrigMassCutEta->AddEntry("ms2_ctau0", "c_{#tau} = 0 mm", "P");
+    entry_mumuTrigMassCutEta->SetMarkerColor(9);
+    entry_mumuTrigMassCutEta->SetMarkerStyle(26);
+    entry_mumuTrigMassCutEta->SetMarkerSize(2);
+    entry_mumuTrigMassCutEta->SetTextFont(42);
+    entry_mumuTrigMassCutEta = leg_mumuTrigMassCutEta->AddEntry("ms2_ctau1", "c_{#tau} = 1 mm", "P");
+    entry_mumuTrigMassCutEta->SetMarkerColor(8);
+    entry_mumuTrigMassCutEta->SetMarkerStyle(4);
+    entry_mumuTrigMassCutEta->SetMarkerSize(2);
+    entry_mumuTrigMassCutEta->SetTextFont(42);
+    entry_mumuTrigMassCutEta = leg_mumuTrigMassCutEta->AddEntry("ms2_ctau10", "c_{#tau} = 10 mm", "P");
+    entry_mumuTrigMassCutEta->SetMarkerColor(2);
+    entry_mumuTrigMassCutEta->SetMarkerStyle(5);
+    entry_mumuTrigMassCutEta->SetMarkerSize(2);
+    entry_mumuTrigMassCutEta->SetTextFont(42);
+    entry_mumuTrigMassCutEta = leg_mumuTrigMassCutEta->AddEntry("ms2_ctau100", "c_{#tau} = 100 mm", "P");
+    entry_mumuTrigMassCutEta->SetMarkerColor(1);
+    entry_mumuTrigMassCutEta->SetMarkerStyle(2);
+    entry_mumuTrigMassCutEta->SetMarkerSize(2);
+    entry_mumuTrigMassCutEta->SetTextFont(42);
+    entry_mumuTrigMassCutEta = leg_mumuTrigMassCutEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+    entry_mumuTrigMassCutEta->SetMarkerColor(4);
+    entry_mumuTrigMassCutEta->SetMarkerStyle(3);
+    entry_mumuTrigMassCutEta->SetMarkerSize(2);
+    entry_mumuTrigMassCutEta->SetTextFont(42);
+    leg_mumuTrigMassCutEta->Draw("HIST");
+
+    Cavnas_mumuTrigMassCutEta->Modified();
+    Cavnas_mumuTrigMassCutEta->cd();
+    Cavnas_mumuTrigMassCutEta->SetSelected(Cavnas_mumuTrigMassCutEta);
+    Cavnas_mumuTrigMassCutEta->SaveAs( "mumuTrigMassCut_Eta_eff.pdf" );
+
+// 
+
+    TH1F* h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonEta_mumuTrigNoMassCut");
+    TH1F* h_leadingMuonEta_mumuTrigNoMassCutEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_mumuTrigNoMassCut");
+    TH1F* h_leadingMuonEta_mumuTrigNoMassCutEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_mumuTrigNoMassCut");
+    TH1F* h_leadingMuonEta_mumuTrigNoMassCutEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_mumuTrigNoMassCut");
+    TH1F* h_leadingMuonEta_mumuTrigNoMassCutEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_mumuTrigNoMassCut");
+
+    TCanvas *Cavnas_mumuTrigNoMassCutEta = new TCanvas("Cavnas_mumuTrigNoMassCutEta", "Cavnas_mumuTrigNoMassCutEta",0,0,1280,925);
+    gStyle->SetOptStat(0);
+    Cavnas_mumuTrigNoMassCutEta->Range(-0.4860759,-0.2025316,2.551899,1.063291);
+    Cavnas_mumuTrigNoMassCutEta->SetFillColor(0);
+    Cavnas_mumuTrigNoMassCutEta->SetBorderMode(0);
+    Cavnas_mumuTrigNoMassCutEta->SetBorderSize(2);
+    Cavnas_mumuTrigNoMassCutEta->SetLeftMargin(0.15);
+    Cavnas_mumuTrigNoMassCutEta->SetRightMargin(0.05);
+    Cavnas_mumuTrigNoMassCutEta->SetTopMargin(0.05);
+    Cavnas_mumuTrigNoMassCutEta->SetBottomMargin(0.15);
+    Cavnas_mumuTrigNoMassCutEta->SetGridy();
+    Cavnas_mumuTrigNoMassCutEta->SetTickx(1);
+    Cavnas_mumuTrigNoMassCutEta->SetTicky(1);
+    Cavnas_mumuTrigNoMassCutEta->SetFrameBorderMode(0);
+    Cavnas_mumuTrigNoMassCutEta->cd();
+
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->SetTitle("");
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->GetXaxis()->SetTitle("leading muon #eta");
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->GetXaxis()->SetLabelFont(42);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->GetXaxis()->SetLabelSize(0.05);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->GetXaxis()->SetTitleSize(0.05);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->GetXaxis()->SetTitleOffset(1.3);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->GetXaxis()->SetTitleFont(42);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->GetYaxis()->SetTitle("#mu#mu trigger efficiency");
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->GetYaxis()->SetLabelFont(42);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->GetYaxis()->SetLabelSize(0.035);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->GetYaxis()->SetTitleSize(0.035);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->GetYaxis()->SetTitleOffset(0);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->GetYaxis()->SetTitleFont(42);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->GetYaxis()->SetNdivisions(510);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->SetLineColor(9);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->SetMarkerColor(9);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->SetMarkerStyle(26);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau0->Draw("HIST p");
+
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau1->SetLineColor(8);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau1->SetMarkerColor(8);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau1->SetMarkerStyle(4);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau1->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau1->Draw("HIST p same");
+
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau10->SetLineColor(2);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau10->SetMarkerColor(2);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau10->SetMarkerStyle(5);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau10->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau10->Draw("HIST p same");
+
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau100->SetLineColor(1);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau100->SetMarkerColor(1);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau100->SetMarkerStyle(2);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau100->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau100->Draw("HIST p same");
+
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau1000->SetLineColor(4);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau1000->SetMarkerColor(4);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau1000->SetMarkerStyle(3);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau1000->SetMarkerSize(1);
+    h_leadingMuonEta_mumuTrigNoMassCutEta_ctau1000->Draw("HIST p same");
+
+    TLegend *leg_mumuTrigNoMassCutEta = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
+    leg_mumuTrigNoMassCutEta->SetBorderSize(0);
+    leg_mumuTrigNoMassCutEta->SetTextSize(0.03);
+    leg_mumuTrigNoMassCutEta->SetLineColor(1);
+    leg_mumuTrigNoMassCutEta->SetLineStyle(1);
+    leg_mumuTrigNoMassCutEta->SetLineWidth(1);
+    leg_mumuTrigNoMassCutEta->SetFillColor(0);
+    leg_mumuTrigNoMassCutEta->SetFillStyle(1001);
+    TLegendEntry *entry_mumuTrigNoMassCutEta = leg_mumuTrigNoMassCutEta->AddEntry("ms2_ctau0", "c_{#tau} = 0 mm", "P");
+    entry_mumuTrigNoMassCutEta->SetMarkerColor(9);
+    entry_mumuTrigNoMassCutEta->SetMarkerStyle(26);
+    entry_mumuTrigNoMassCutEta->SetMarkerSize(2);
+    entry_mumuTrigNoMassCutEta->SetTextFont(42);
+    entry_mumuTrigNoMassCutEta = leg_mumuTrigNoMassCutEta->AddEntry("ms2_ctau1", "c_{#tau} = 1 mm", "P");
+    entry_mumuTrigNoMassCutEta->SetMarkerColor(8);
+    entry_mumuTrigNoMassCutEta->SetMarkerStyle(4);
+    entry_mumuTrigNoMassCutEta->SetMarkerSize(2);
+    entry_mumuTrigNoMassCutEta->SetTextFont(42);
+    entry_mumuTrigNoMassCutEta = leg_mumuTrigNoMassCutEta->AddEntry("ms2_ctau10", "c_{#tau} = 10 mm", "P");
+    entry_mumuTrigNoMassCutEta->SetMarkerColor(2);
+    entry_mumuTrigNoMassCutEta->SetMarkerStyle(5);
+    entry_mumuTrigNoMassCutEta->SetMarkerSize(2);
+    entry_mumuTrigNoMassCutEta->SetTextFont(42);
+    entry_mumuTrigNoMassCutEta = leg_mumuTrigNoMassCutEta->AddEntry("ms2_ctau100", "c_{#tau} = 100 mm", "P");
+    entry_mumuTrigNoMassCutEta->SetMarkerColor(1);
+    entry_mumuTrigNoMassCutEta->SetMarkerStyle(2);
+    entry_mumuTrigNoMassCutEta->SetMarkerSize(2);
+    entry_mumuTrigNoMassCutEta->SetTextFont(42);
+    entry_mumuTrigNoMassCutEta = leg_mumuTrigNoMassCutEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+    entry_mumuTrigNoMassCutEta->SetMarkerColor(4);
+    entry_mumuTrigNoMassCutEta->SetMarkerStyle(3);
+    entry_mumuTrigNoMassCutEta->SetMarkerSize(2);
+    entry_mumuTrigNoMassCutEta->SetTextFont(42);
+    leg_mumuTrigNoMassCutEta->Draw("HIST");
+
+    Cavnas_mumuTrigNoMassCutEta->Modified();
+    Cavnas_mumuTrigNoMassCutEta->cd();
+    Cavnas_mumuTrigNoMassCutEta->SetSelected(Cavnas_mumuTrigNoMassCutEta);
+    Cavnas_mumuTrigNoMassCutEta->SaveAs( "mumuTrigNoMassCut_Eta_eff.pdf" );
+
+    //
+
+    TH1F* h_leadingMuonEta_L2muTrigEta_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonEta_L2muTrig");
+    TH1F* h_leadingMuonEta_L2muTrigEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_L2muTrig");
+    TH1F* h_leadingMuonEta_L2muTrigEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_L2muTrig");
+    TH1F* h_leadingMuonEta_L2muTrigEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_L2muTrig");
+    TH1F* h_leadingMuonEta_L2muTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_L2muTrig");
+
+    TCanvas *Cavnas_L2muTrigEta = new TCanvas("Cavnas_L2muTrigEta", "Cavnas_L2muTrigEta",0,0,1280,925);
+    gStyle->SetOptStat(0);
+    Cavnas_L2muTrigEta->Range(-0.4860759,-0.2025316,2.551899,1.063291);
+    Cavnas_L2muTrigEta->SetFillColor(0);
+    Cavnas_L2muTrigEta->SetBorderMode(0);
+    Cavnas_L2muTrigEta->SetBorderSize(2);
+    Cavnas_L2muTrigEta->SetLeftMargin(0.15);
+    Cavnas_L2muTrigEta->SetRightMargin(0.05);
+    Cavnas_L2muTrigEta->SetTopMargin(0.05);
+    Cavnas_L2muTrigEta->SetBottomMargin(0.15);
+    Cavnas_L2muTrigEta->SetGridy();
+    Cavnas_L2muTrigEta->SetTickx(1);
+    Cavnas_L2muTrigEta->SetTicky(1);
+    Cavnas_L2muTrigEta->SetFrameBorderMode(0);
+    Cavnas_L2muTrigEta->cd();
+
+    h_leadingMuonEta_L2muTrigEta_ctau0->SetTitle("");
+    h_leadingMuonEta_L2muTrigEta_ctau0->GetXaxis()->SetTitle("leading muon #eta");
+    h_leadingMuonEta_L2muTrigEta_ctau0->GetXaxis()->SetLabelFont(42);
+    h_leadingMuonEta_L2muTrigEta_ctau0->GetXaxis()->SetLabelSize(0.05);
+    h_leadingMuonEta_L2muTrigEta_ctau0->GetXaxis()->SetTitleSize(0.05);
+    h_leadingMuonEta_L2muTrigEta_ctau0->GetXaxis()->SetTitleOffset(1.3);
+    h_leadingMuonEta_L2muTrigEta_ctau0->GetXaxis()->SetTitleFont(42);
+    h_leadingMuonEta_L2muTrigEta_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
+    h_leadingMuonEta_L2muTrigEta_ctau0->GetYaxis()->SetTitle("L2/no vtx #mu#mu trigger efficiency");
+    h_leadingMuonEta_L2muTrigEta_ctau0->GetYaxis()->SetLabelFont(42);
+    h_leadingMuonEta_L2muTrigEta_ctau0->GetYaxis()->SetLabelSize(0.035);
+    h_leadingMuonEta_L2muTrigEta_ctau0->GetYaxis()->SetTitleSize(0.035);
+    h_leadingMuonEta_L2muTrigEta_ctau0->GetYaxis()->SetTitleOffset(0);
+    h_leadingMuonEta_L2muTrigEta_ctau0->GetYaxis()->SetTitleFont(42);
+    h_leadingMuonEta_L2muTrigEta_ctau0->GetYaxis()->SetNdivisions(510);
+    h_leadingMuonEta_L2muTrigEta_ctau0->SetLineColor(9);
+    h_leadingMuonEta_L2muTrigEta_ctau0->SetMarkerColor(9);
+    h_leadingMuonEta_L2muTrigEta_ctau0->SetMarkerStyle(26);
+    h_leadingMuonEta_L2muTrigEta_ctau0->SetMarkerSize(1);
+    h_leadingMuonEta_L2muTrigEta_ctau0->Draw("HIST p");
+
+    h_leadingMuonEta_L2muTrigEta_ctau1->SetLineColor(8);
+    h_leadingMuonEta_L2muTrigEta_ctau1->SetMarkerColor(8);
+    h_leadingMuonEta_L2muTrigEta_ctau1->SetMarkerStyle(4);
+    h_leadingMuonEta_L2muTrigEta_ctau1->SetMarkerSize(1);
+    h_leadingMuonEta_L2muTrigEta_ctau1->Draw("HIST p same");
+
+    h_leadingMuonEta_L2muTrigEta_ctau10->SetLineColor(2);
+    h_leadingMuonEta_L2muTrigEta_ctau10->SetMarkerColor(2);
+    h_leadingMuonEta_L2muTrigEta_ctau10->SetMarkerStyle(5);
+    h_leadingMuonEta_L2muTrigEta_ctau10->SetMarkerSize(1);
+    h_leadingMuonEta_L2muTrigEta_ctau10->Draw("HIST p same");
+
+    h_leadingMuonEta_L2muTrigEta_ctau100->SetLineColor(1);
+    h_leadingMuonEta_L2muTrigEta_ctau100->SetMarkerColor(1);
+    h_leadingMuonEta_L2muTrigEta_ctau100->SetMarkerStyle(2);
+    h_leadingMuonEta_L2muTrigEta_ctau100->SetMarkerSize(1);
+    h_leadingMuonEta_L2muTrigEta_ctau100->Draw("HIST p same");
+
+    h_leadingMuonEta_L2muTrigEta_ctau1000->SetLineColor(4);
+    h_leadingMuonEta_L2muTrigEta_ctau1000->SetMarkerColor(4);
+    h_leadingMuonEta_L2muTrigEta_ctau1000->SetMarkerStyle(3);
+    h_leadingMuonEta_L2muTrigEta_ctau1000->SetMarkerSize(1);
+    h_leadingMuonEta_L2muTrigEta_ctau1000->Draw("HIST p same");
+
+    TLegend *leg_L2muTrigEta = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
+    leg_L2muTrigEta->SetBorderSize(0);
+    leg_L2muTrigEta->SetTextSize(0.03);
+    leg_L2muTrigEta->SetLineColor(1);
+    leg_L2muTrigEta->SetLineStyle(1);
+    leg_L2muTrigEta->SetLineWidth(1);
+    leg_L2muTrigEta->SetFillColor(0);
+    leg_L2muTrigEta->SetFillStyle(1001);
+    TLegendEntry *entry_L2muTrigEta = leg_L2muTrigEta->AddEntry("ms2_ctau0", "c_{#tau} = 0 mm", "P");
+    entry_L2muTrigEta->SetMarkerColor(9);
+    entry_L2muTrigEta->SetMarkerStyle(26);
+    entry_L2muTrigEta->SetMarkerSize(2);
+    entry_L2muTrigEta->SetTextFont(42);
+    entry_L2muTrigEta = leg_L2muTrigEta->AddEntry("ms2_ctau1", "c_{#tau} = 1 mm", "P");
+    entry_L2muTrigEta->SetMarkerColor(8);
+    entry_L2muTrigEta->SetMarkerStyle(4);
+    entry_L2muTrigEta->SetMarkerSize(2);
+    entry_L2muTrigEta->SetTextFont(42);
+    entry_L2muTrigEta = leg_L2muTrigEta->AddEntry("ms2_ctau10", "c_{#tau} = 10 mm", "P");
+    entry_L2muTrigEta->SetMarkerColor(2);
+    entry_L2muTrigEta->SetMarkerStyle(5);
+    entry_L2muTrigEta->SetMarkerSize(2);
+    entry_L2muTrigEta->SetTextFont(42);
+    entry_L2muTrigEta = leg_L2muTrigEta->AddEntry("ms2_ctau100", "c_{#tau} = 100 mm", "P");
+    entry_L2muTrigEta->SetMarkerColor(1);
+    entry_L2muTrigEta->SetMarkerStyle(2);
+    entry_L2muTrigEta->SetMarkerSize(2);
+    entry_L2muTrigEta->SetTextFont(42);
+    entry_L2muTrigEta = leg_L2muTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+    entry_L2muTrigEta->SetMarkerColor(4);
+    entry_L2muTrigEta->SetMarkerStyle(3);
+    entry_L2muTrigEta->SetMarkerSize(2);
+    entry_L2muTrigEta->SetTextFont(42);
+    leg_L2muTrigEta->Draw("HIST");
+
+    Cavnas_L2muTrigEta->Modified();
+    Cavnas_L2muTrigEta->cd();
+    Cavnas_L2muTrigEta->SetSelected(Cavnas_L2muTrigEta);
+    Cavnas_L2muTrigEta->SaveAs( "L2muTrig_eta_eff.pdf" );
+
+    TH1F* h_leadingMuonEta_muOrMumuTrigEta_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonEta_muOrMumuTrig");
+    TH1F* h_leadingMuonEta_muOrMumuTrigEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_muOrMumuTrig");
+    TH1F* h_leadingMuonEta_muOrMumuTrigEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_muOrMumuTrig");
+    TH1F* h_leadingMuonEta_muOrMumuTrigEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_muOrMumuTrig");
+    TH1F* h_leadingMuonEta_muOrMumuTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_muOrMumuTrig");
+
+    TCanvas *Cavnas_muOrMumuTrigEta = new TCanvas("Cavnas_muOrMumuTrigEta", "Cavnas_muOrMumuTrigEta",0,0,1280,925);
+    gStyle->SetOptStat(0);
+    Cavnas_muOrMumuTrigEta->Range(-0.4860759,-0.2025316,2.551899,1.063291);
+    Cavnas_muOrMumuTrigEta->SetFillColor(0);
+    Cavnas_muOrMumuTrigEta->SetBorderMode(0);
+    Cavnas_muOrMumuTrigEta->SetBorderSize(2);
+    Cavnas_muOrMumuTrigEta->SetLeftMargin(0.15);
+    Cavnas_muOrMumuTrigEta->SetRightMargin(0.05);
+    Cavnas_muOrMumuTrigEta->SetTopMargin(0.05);
+    Cavnas_muOrMumuTrigEta->SetBottomMargin(0.15);
+    Cavnas_muOrMumuTrigEta->SetGridy();
+    Cavnas_muOrMumuTrigEta->SetTickx(1);
+    Cavnas_muOrMumuTrigEta->SetTicky(1);
+    Cavnas_muOrMumuTrigEta->SetFrameBorderMode(0);
+    Cavnas_muOrMumuTrigEta->cd();
+
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->SetTitle("");
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->GetXaxis()->SetTitle("leading muon #eta");
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->GetXaxis()->SetLabelFont(42);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->GetXaxis()->SetLabelSize(0.05);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->GetXaxis()->SetTitleSize(0.05);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->GetXaxis()->SetTitleOffset(1.3);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->GetXaxis()->SetTitleFont(42);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->GetYaxis()->SetTitle("#mu#mu OR #mu trigger efficiency");
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->GetYaxis()->SetLabelFont(42);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->GetYaxis()->SetLabelSize(0.035);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->GetYaxis()->SetTitleSize(0.035);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->GetYaxis()->SetTitleOffset(0);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->GetYaxis()->SetTitleFont(42);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->GetYaxis()->SetNdivisions(510);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->SetLineColor(9);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->SetMarkerColor(9);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->SetMarkerStyle(26);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->SetMarkerSize(1);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau0->Draw("HIST p");
+
+    h_leadingMuonEta_muOrMumuTrigEta_ctau1->SetLineColor(8);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau1->SetMarkerColor(8);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau1->SetMarkerStyle(4);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau1->SetMarkerSize(1);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau1->Draw("HIST p same");
+
+    h_leadingMuonEta_muOrMumuTrigEta_ctau10->SetLineColor(2);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau10->SetMarkerColor(2);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau10->SetMarkerStyle(5);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau10->SetMarkerSize(1);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau10->Draw("HIST p same");
+
+    h_leadingMuonEta_muOrMumuTrigEta_ctau100->SetLineColor(1);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau100->SetMarkerColor(1);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau100->SetMarkerStyle(2);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau100->SetMarkerSize(1);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau100->Draw("HIST p same");
+
+    h_leadingMuonEta_muOrMumuTrigEta_ctau1000->SetLineColor(4);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau1000->SetMarkerColor(4);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau1000->SetMarkerStyle(3);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau1000->SetMarkerSize(1);
+    h_leadingMuonEta_muOrMumuTrigEta_ctau1000->Draw("HIST p same");
+
+    TLegend *leg_muOrMumuTrigEta = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
+    leg_muOrMumuTrigEta->SetBorderSize(0);
+    leg_muOrMumuTrigEta->SetTextSize(0.03);
+    leg_muOrMumuTrigEta->SetLineColor(1);
+    leg_muOrMumuTrigEta->SetLineStyle(1);
+    leg_muOrMumuTrigEta->SetLineWidth(1);
+    leg_muOrMumuTrigEta->SetFillColor(0);
+    leg_muOrMumuTrigEta->SetFillStyle(1001);
+    TLegendEntry *entry_muOrMumuTrigEta = leg_muOrMumuTrigEta->AddEntry("ms2_ctau0", "c_{#tau} = 0 mm", "P");
+    entry_muOrMumuTrigEta->SetMarkerColor(9);
+    entry_muOrMumuTrigEta->SetMarkerStyle(26);
+    entry_muOrMumuTrigEta->SetMarkerSize(2);
+    entry_muOrMumuTrigEta->SetTextFont(42);
+    entry_muOrMumuTrigEta = leg_muOrMumuTrigEta->AddEntry("ms2_ctau1", "c_{#tau} = 1 mm", "P");
+    entry_muOrMumuTrigEta->SetMarkerColor(8);
+    entry_muOrMumuTrigEta->SetMarkerStyle(4);
+    entry_muOrMumuTrigEta->SetMarkerSize(2);
+    entry_muOrMumuTrigEta->SetTextFont(42);
+    entry_muOrMumuTrigEta = leg_muOrMumuTrigEta->AddEntry("ms2_ctau10", "c_{#tau} = 10 mm", "P");
+    entry_muOrMumuTrigEta->SetMarkerColor(2);
+    entry_muOrMumuTrigEta->SetMarkerStyle(5);
+    entry_muOrMumuTrigEta->SetMarkerSize(2);
+    entry_muOrMumuTrigEta->SetTextFont(42);
+    entry_muOrMumuTrigEta = leg_muOrMumuTrigEta->AddEntry("ms2_ctau100", "c_{#tau} = 100 mm", "P");
+    entry_muOrMumuTrigEta->SetMarkerColor(1);
+    entry_muOrMumuTrigEta->SetMarkerStyle(2);
+    entry_muOrMumuTrigEta->SetMarkerSize(2);
+    entry_muOrMumuTrigEta->SetTextFont(42);
+    entry_muOrMumuTrigEta = leg_muOrMumuTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+    entry_muOrMumuTrigEta->SetMarkerColor(4);
+    entry_muOrMumuTrigEta->SetMarkerStyle(3);
+    entry_muOrMumuTrigEta->SetMarkerSize(2);
+    entry_muOrMumuTrigEta->SetTextFont(42);
+    leg_muOrMumuTrigEta->Draw("HIST");
+
+    Cavnas_muOrMumuTrigEta->Modified();
+    Cavnas_muOrMumuTrigEta->cd();
+    Cavnas_muOrMumuTrigEta->SetSelected(Cavnas_muOrMumuTrigEta);
+    Cavnas_muOrMumuTrigEta->SaveAs( "muOrMumuTrig_eta_eff.pdf" );
+
+    TH1F* h_leadingMuonEta_ORTrigEta_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonEta_ORTrig");
+    TH1F* h_leadingMuonEta_ORTrigEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_ORTrig");
+    TH1F* h_leadingMuonEta_ORTrigEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_ORTrig");
+    TH1F* h_leadingMuonEta_ORTrigEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_ORTrig");
+    TH1F* h_leadingMuonEta_ORTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_ORTrig");
+
+    TCanvas *Cavnas_ORTrigEta = new TCanvas("Cavnas_ORTrigEta", "Cavnas_ORTrigEta",0,0,1280,925);
+    gStyle->SetOptStat(0);
+    Cavnas_ORTrigEta->Range(-0.4860759,-0.2025316,2.551899,1.063291);
+    Cavnas_ORTrigEta->SetFillColor(0);
+    Cavnas_ORTrigEta->SetBorderMode(0);
+    Cavnas_ORTrigEta->SetBorderSize(2);
+    Cavnas_ORTrigEta->SetLeftMargin(0.15);
+    Cavnas_ORTrigEta->SetRightMargin(0.05);
+    Cavnas_ORTrigEta->SetTopMargin(0.05);
+    Cavnas_ORTrigEta->SetBottomMargin(0.15);
+    Cavnas_ORTrigEta->SetGridy();
+    Cavnas_ORTrigEta->SetTickx(1);
+    Cavnas_ORTrigEta->SetTicky(1);
+    Cavnas_ORTrigEta->SetFrameBorderMode(0);
+    Cavnas_ORTrigEta->cd();
+
+    h_leadingMuonEta_ORTrigEta_ctau0->SetTitle("");
+    h_leadingMuonEta_ORTrigEta_ctau0->GetXaxis()->SetTitle("leading muon #eta");
+    h_leadingMuonEta_ORTrigEta_ctau0->GetXaxis()->SetLabelFont(42);
+    h_leadingMuonEta_ORTrigEta_ctau0->GetXaxis()->SetLabelSize(0.05);
+    h_leadingMuonEta_ORTrigEta_ctau0->GetXaxis()->SetTitleSize(0.05);
+    h_leadingMuonEta_ORTrigEta_ctau0->GetXaxis()->SetTitleOffset(1.3);
+    h_leadingMuonEta_ORTrigEta_ctau0->GetXaxis()->SetTitleFont(42);
+    h_leadingMuonEta_ORTrigEta_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
+    h_leadingMuonEta_ORTrigEta_ctau0->GetYaxis()->SetTitle("OR #mu trigger efficiency");
+    h_leadingMuonEta_ORTrigEta_ctau0->GetYaxis()->SetLabelFont(42);
+    h_leadingMuonEta_ORTrigEta_ctau0->GetYaxis()->SetLabelSize(0.035);
+    h_leadingMuonEta_ORTrigEta_ctau0->GetYaxis()->SetTitleSize(0.035);
+    h_leadingMuonEta_ORTrigEta_ctau0->GetYaxis()->SetTitleOffset(0);
+    h_leadingMuonEta_ORTrigEta_ctau0->GetYaxis()->SetTitleFont(42);
+    h_leadingMuonEta_ORTrigEta_ctau0->GetYaxis()->SetNdivisions(510);
+    h_leadingMuonEta_ORTrigEta_ctau0->SetLineColor(9);
+    h_leadingMuonEta_ORTrigEta_ctau0->SetMarkerColor(9);
+    h_leadingMuonEta_ORTrigEta_ctau0->SetMarkerStyle(26);
+    h_leadingMuonEta_ORTrigEta_ctau0->SetMarkerSize(1);
+    h_leadingMuonEta_ORTrigEta_ctau0->Draw("HIST p");
+
+    h_leadingMuonEta_ORTrigEta_ctau1->SetLineColor(8);
+    h_leadingMuonEta_ORTrigEta_ctau1->SetMarkerColor(8);
+    h_leadingMuonEta_ORTrigEta_ctau1->SetMarkerStyle(4);
+    h_leadingMuonEta_ORTrigEta_ctau1->SetMarkerSize(1);
+    h_leadingMuonEta_ORTrigEta_ctau1->Draw("HIST p same");
+
+    h_leadingMuonEta_ORTrigEta_ctau10->SetLineColor(2);
+    h_leadingMuonEta_ORTrigEta_ctau10->SetMarkerColor(2);
+    h_leadingMuonEta_ORTrigEta_ctau10->SetMarkerStyle(5);
+    h_leadingMuonEta_ORTrigEta_ctau10->SetMarkerSize(1);
+    h_leadingMuonEta_ORTrigEta_ctau10->Draw("HIST p same");
+
+    h_leadingMuonEta_ORTrigEta_ctau100->SetLineColor(1);
+    h_leadingMuonEta_ORTrigEta_ctau100->SetMarkerColor(1);
+    h_leadingMuonEta_ORTrigEta_ctau100->SetMarkerStyle(2);
+    h_leadingMuonEta_ORTrigEta_ctau100->SetMarkerSize(1);
+    h_leadingMuonEta_ORTrigEta_ctau100->Draw("HIST p same");
+
+    h_leadingMuonEta_ORTrigEta_ctau1000->SetLineColor(4);
+    h_leadingMuonEta_ORTrigEta_ctau1000->SetMarkerColor(4);
+    h_leadingMuonEta_ORTrigEta_ctau1000->SetMarkerStyle(3);
+    h_leadingMuonEta_ORTrigEta_ctau1000->SetMarkerSize(1);
+    h_leadingMuonEta_ORTrigEta_ctau1000->Draw("HIST p same");
+
+    TLegend *leg_ORTrigEta = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
+    leg_ORTrigEta->SetBorderSize(0);
+    leg_ORTrigEta->SetTextSize(0.03);
+    leg_ORTrigEta->SetLineColor(1);
+    leg_ORTrigEta->SetLineStyle(1);
+    leg_ORTrigEta->SetLineWidth(1);
+    leg_ORTrigEta->SetFillColor(0);
+    leg_ORTrigEta->SetFillStyle(1001);
+    TLegendEntry *entry_ORTrigEta = leg_ORTrigEta->AddEntry("ms2_ctau0", "c_{#tau} = 0 mm", "P");
+    entry_ORTrigEta->SetMarkerColor(9);
+    entry_ORTrigEta->SetMarkerStyle(26);
+    entry_ORTrigEta->SetMarkerSize(2);
+    entry_ORTrigEta->SetTextFont(42);
+    entry_ORTrigEta = leg_ORTrigEta->AddEntry("ms2_ctau1", "c_{#tau} = 1 mm", "P");
+    entry_ORTrigEta->SetMarkerColor(8);
+    entry_ORTrigEta->SetMarkerStyle(4);
+    entry_ORTrigEta->SetMarkerSize(2);
+    entry_ORTrigEta->SetTextFont(42);
+    entry_ORTrigEta = leg_ORTrigEta->AddEntry("ms2_ctau10", "c_{#tau} = 10 mm", "P");
+    entry_ORTrigEta->SetMarkerColor(2);
+    entry_ORTrigEta->SetMarkerStyle(5);
+    entry_ORTrigEta->SetMarkerSize(2);
+    entry_ORTrigEta->SetTextFont(42);
+    entry_ORTrigEta = leg_ORTrigEta->AddEntry("ms2_ctau100", "c_{#tau} = 100 mm", "P");
+    entry_ORTrigEta->SetMarkerColor(1);
+    entry_ORTrigEta->SetMarkerStyle(2);
+    entry_ORTrigEta->SetMarkerSize(2);
+    entry_ORTrigEta->SetTextFont(42);
+    entry_ORTrigEta = leg_ORTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+    entry_ORTrigEta->SetMarkerColor(4);
+    entry_ORTrigEta->SetMarkerStyle(3);
+    entry_ORTrigEta->SetMarkerSize(2);
+    entry_ORTrigEta->SetTextFont(42);
+    leg_ORTrigEta->Draw("HIST");
+
+    Cavnas_ORTrigEta->Modified();
+    Cavnas_ORTrigEta->cd();
+    Cavnas_ORTrigEta->SetSelected(Cavnas_ORTrigEta);
+    Cavnas_ORTrigEta->SaveAs( "ORTrig_eta_eff.pdf" );
+
     // DeltaR
 
     TH1F* h_delR_muTrigDelR_ctau0    = (TH1F*)inFile0->Get("h_delR_muTrig");
