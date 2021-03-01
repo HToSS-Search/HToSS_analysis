@@ -115,7 +115,7 @@ int main(int argc, char* argv[])
     TH1F* h_leadingMuonEta_truth_mumuTrigMassCut     {new TH1F("h_leadingMuonEta_truth_mumuTrigMassCut",   "Trigger turn-on for signal; #eta; #mu#mu+mass cut trigger #epsilon", 300, -3., 3.)};
     TH1F* h_subLeadingMuonEta_truth_mumuTrigMassCut  {new TH1F("h_subLeadingMuonEta_truth_mumuTrigMassCut","Trigger turn-on for signal; #eta; #mu#mu+mass cut trigger #epsilon", 300, -3., 3.)};
     TH1F* h_leadingMuonEta_mumuTrigMassCut           {new TH1F("h_leadingMuonEta_mumuTrigMassCut",         "Trigger turn-on for signal; #eta; #mu#mu+mass cut trigger #epsilon", 300, -3., 3.)};
-    TH1F* h_subLeadingMuonEta_mumuTrigMassCut        {new TH1F("h_subLeadingMuonPt_mumuTrigMassCut",       "Trigger turn-on for signal; #eta; #mu#mu+mass cut trigger #epsilon", 300, -3., 3.)};
+    TH1F* h_subLeadingMuonEta_mumuTrigMassCut        {new TH1F("h_subLeadingMuonEta_mumuTrigMassCut",       "Trigger turn-on for signal; #eta; #mu#mu+mass cut trigger #epsilon", 300, -3., 3.)};
     TH1F* h_delR_truth_mumuTrigMassCut               {new TH1F("h_delR_truth_mumuTrigMassCut",             "Trigger turn-on for signal; p_{T} (GeV); #mu#mu+mass cut trigger #epsilon", 100, 0., 1.0)};
     TH1F* h_delR_mumuTrigMassCut                     {new TH1F("h_delR_mumuTrigMassCut",                   "Trigger turn-on for signal; p_{T} (GeV); #mu#mu+mass cut trigger #epsilon", 100, 0., 1.0)};
     TH1F* h_diMuonMass_truth_mumuTrigMassCut         {new TH1F("h_diMuonMass_truth_mumuTrigMassCut",       "Trigger turn-on for signal; m_{#mu#mu}; #mu#mu+mass cut trigger #epsilon", 200, 0., 100.)};

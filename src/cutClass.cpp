@@ -475,9 +475,8 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
 //// Apply side band cut for data
     if (!isMC_ && blind_) {
         float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsTrkPairVec.first + event.chsTrkPairVec.second).M() );
-        float deltaM = std::abs( muScalarMass - hadScalarMass );
-        float k = 0.05;
-        if ( deltaM < 0.5*k*deltaM ) return false;
+        if ( muScalarMass  < hadScalarMass*1.05 && muScalarMass  >= hadScalarMass*.95 ) return false;
+        if ( hadScalarMass < muScalarMass*1.05  && hadScalarMass >= muScalarMass*.95  ) return false;
     }
 
 //    eventWeight *= getLeptonWeight(event, syst);
@@ -779,9 +778,16 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
                 if ( event.chsTrkIso > 0.4 ) continue;
 
                 event.chsPairTrkIndex = getChsTrackPairIndex(event);
+
+                // If refit fails then reject event - all signal events pass refit, but QCD does not
+                if ( std::isnan(event.chsTkPairTk1Pt[event.chsPairTrkIndex])  || std::isnan(event.chsTkPairTk2Pt[event.chsPairTrkIndex]) ) return false;
+                if ( std::isnan(event.chsTkPairTk1P2[event.chsPairTrkIndex])  || std::isnan(event.chsTkPairTk2P2[event.chsPairTrkIndex]) ) return false;
+                if ( std::isnan(event.chsTkPairTk1Phi[event.chsPairTrkIndex]) || std::isnan(event.chsTkPairTk2Phi[event.chsPairTrkIndex]) ) return false;
+
                 TLorentzVector chsTrk1Refitted, chsTrk2Refitted;
                 chsTrk1Refitted.SetPtEtaPhiE(event.chsTkPairTk1Pt[event.chsPairTrkIndex], event.chsTkPairTk1Eta[event.chsPairTrkIndex], event.chsTkPairTk1Phi[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2)));
-                chsTrk2Refitted.SetPtEtaPhiE(event.chsTkPairTk2Pt[event.chsPairTrkIndex], event.chsTkPairTk2Eta[event.chsPairTrkIndex], event.chsTkPairTk2Phi[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2)));
+                chsTrk2Refitted.SetPtEtaPhiE(event.chsTkPairTk2Pt[event.chsPairTrkIndex], event.chsTkPairTk2Eta[event.chsPairTrkIndex], event.chsTkPairTk2Phi[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2)));	
+
                 event.chsTrkPairVecRefitted.first  = chsTrk1Refitted;
                 event.chsTrkPairVecRefitted.second = chsTrk2Refitted;
 
