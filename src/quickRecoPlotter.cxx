@@ -41,7 +41,6 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
 bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chsIndex, bool mcTruth = false);
 int getMuonTrackPairIndex(const AnalysisEvent& event);
 int getChsTrackPairIndex(const AnalysisEvent& event);
-bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
 float deltaR(float eta1, float phi1, float eta2, float phi2);
 
 namespace fs = boost::filesystem;
@@ -105,7 +104,9 @@ int main(int argc, char* argv[]) {
     TH2F* h_scalarMassesNew      { new TH2F("h_scalarMassesNew",        ";#mu#mu Mass; #pi#pi Mass", 400, 0., 4.0, 400, 0., 4.0)};
     TH2F* h_scalarRefittedMasses { new TH2F("h_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi Mass", 50, 0., 4.0, 50, 0., 4.0)};
     TH1F* h_scalarMass           { new TH1F("h_scalarMass",             ";Higgs Mass", 200, 75., 175.)};
-    TH1F* h_scalarRefittedMass   { new TH1F("h_scalarRefittedMass",      ";Higgs Mass", 200, 75., 175.)};
+    TH1F* h_scalarRefittedMass   { new TH1F("h_scalarRefittedMass",     ";Higgs Mass", 200, 75., 175.)};
+    TH2F* h_scalarRelIso         { new TH2F("h_scalarRelIso",           "RelIso;I_{#mu#mu};I_{#pi#pi}", 500, 0., 0.5, 500, 0., 0.5)};
+    TH2F* h_scalarIso            { new TH2F("h_scalarIso",              "Non-rel Iso;I_{#mu#mu};I_{#pi#pi}", 300, 0., 15, 300, 0., 15)};
 
     TH1F* h_leadingChsJetPt         { new TH1F("h_leadingChsJetPt",          ";p_{T}", 200, 0., 100.)};
     TH1F* h_subleadingChsJetPt      { new TH1F("h_subleadingChsJetPt",        ";p_{T}", 200, 0., 100.)};
@@ -139,12 +140,14 @@ int main(int argc, char* argv[]) {
     TH1F* ht_diChsMass           { new TH1F("ht_diChsMass",             "'Mass", 100, 0., 4.0)};
     TH1F* ht_diChsRefittedMass   { new TH1F("ht_diChsRefittedMass",     ";Mass", 100, 0., 4.0)};
 
-    TH1F* ht_scalarDeltaR          { new TH1F("ht_scalarDeltaR",          ";#Delta R", 500, 0., 10.)};
-    TH2F* ht_scalarMasses          { new TH2F("ht_scalarMasses",          ";#mu#mu Mass; #pi#pi mass", 400, 0., 4.0, 400, 0., 4.0)};
-    TH2F* ht_scalarMassesNew       { new TH2F("ht_scalarMassesNew",       ";#mu#mu Mass; #pi#pi mass", 400, 0., 4.0,400, 0., 4.0)};
+    TH1F* ht_scalarDeltaR          { new TH1F("ht_scalarDeltaR",           ";#Delta R", 500, 0., 10.)};
+    TH2F* ht_scalarMasses          { new TH2F("ht_scalarMasses",           ";#mu#mu Mass; #pi#pi mass", 400, 0., 4.0, 400, 0., 4.0)};
+    TH2F* ht_scalarMassesNew       { new TH2F("ht_scalarMassesNew",        ";#mu#mu Mass; #pi#pi mass", 400, 0., 4.0,400, 0., 4.0)};
     TH2F* ht_scalarRefittedMasses  { new TH2F("ht_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi mass", 50, 0., 4.0, 50, 0., 4.0)};
-    TH1F* ht_scalarMass            { new TH1F("ht_scalarMass",            "Higgs Mass", 200, 75., 175.)};
-    TH1F* ht_scalarRefittedMass    { new TH1F("ht_scalarRefittedMass",    "Higgs Mass", 200, 75., 175.)};
+    TH1F* ht_scalarMass            { new TH1F("ht_scalarMass",             "Higgs Mass", 200, 75., 175.)};
+    TH1F* ht_scalarRefittedMass    { new TH1F("ht_scalarRefittedMass",     "Higgs Mass", 200, 75., 175.)};
+    TH2F* ht_scalarRelIso          { new TH2F("ht_scalarRelIso",           "RelIso;I_{#mu#mu};I_{#pi#pi}", 500, 0., 0.5, 500, 0., 0.5)};
+    TH2F* ht_scalarIso             { new TH2F("ht_scalarIso",              "Non-rel Iso;I_{#mu#mu};I_{#pi#pi}", 300, 0., 15, 300, 0., 15)};
 
     TH1F* ht_leadingChsJetPt         { new TH1F("ht_leadingChsJetPt", 	        ";p_{T}", 200, 0., 100.)};
     TH1F* ht_subleadingChsJetPt      { new TH1F("ht_subleadingChsJetPt",        ";p_{T}", 200, 0., 100.)};
@@ -375,6 +378,8 @@ int main(int argc, char* argv[]) {
             h_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
             h_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M(),datasetWeight );
             h_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
+            h_scalarRelIso->Fill(event.zNewIso, event.chsTrkIso);
+            h_scalarIso->Fill(event.zNewIso*(muon1Vec+muon2Vec).Pt(), event.chsTrkIso*(chs1Vec+chs2Vec).Pt());
 
             h_leadingChsJetPt->Fill( jet1Vec.Pt(),datasetWeight );
             h_subleadingChsJetPt->Fill( jet2Vec.Pt(),datasetWeight );
@@ -412,6 +417,9 @@ int main(int argc, char* argv[]) {
                 ht_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
                 ht_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M(),datasetWeight );
                 ht_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
+                ht_scalarRelIso->Fill(event.zNewIso, event.chsTrkIso);
+                ht_scalarIso->Fill(event.zNewIso*(muon1Vec+muon2Vec).Pt(), event.chsTrkIso*(chs1Vec+chs2Vec).Pt());
+
 
                 h_leadingChsJetPt->Fill( jet1Vec.Pt(),datasetWeight );
                 h_subleadingChsJetPt->Fill( jet2Vec.Pt(),datasetWeight );
@@ -466,6 +474,8 @@ int main(int argc, char* argv[]) {
     h_scalarRefittedMasses->Write();
     h_scalarMass->Write();
     h_scalarRefittedMass->Write();
+    h_scalarRelIso->Write();
+    h_scalarIso->Write();
 
     h_leadingChsJetPt->Write();
     h_subleadingChsJetPt->Write();
@@ -503,6 +513,8 @@ int main(int argc, char* argv[]) {
     ht_scalarRefittedMasses->Write();
     ht_scalarMass->Write();
     ht_scalarRefittedMass->Write();
+    ht_scalarRelIso->Write();
+    ht_scalarIso->Write();
 
     ht_leadingChsJetPt->Write();
     ht_subleadingChsJetPt->Write();
@@ -574,6 +586,8 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
                 event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
 
                 float iso {0.0}, iso1 {0.0}, iso2 {0.0};
+                float iso_0p4 {0.0}, iso1_0p4 {0.0}, iso2_0p4 {0.0};
+
                 for (int k = 0; k < event.numPackedCands; k++) {
                     TLorentzVector packedCandVec;
                     packedCandVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
@@ -582,10 +596,18 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
                     if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 )  iso1 += packedCandVec.Pt();
                     if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.3 ) iso2 += packedCandVec.Pt();
                     if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec)  < 0.3 ) iso += packedCandVec.Pt();
+                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 )  iso1_0p4 += packedCandVec.Pt();
+                    if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.4 ) iso2_0p4 += packedCandVec.Pt();
+                    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec)  < 0.4 ) iso_0p4 += packedCandVec.Pt();
+
                 }
                 event.zPairNewIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
                 event.zPairNewIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
                 event.zNewIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+
+                event.zPairNewIso0p4.first  = iso1_0p4/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                event.zPairNewIso0p4.second = iso2_0p4/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                event.zNewIso0p4 = iso_0p4/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
 
 //                if ( event.zNewIso > 0.2 ) continue;
 
@@ -652,6 +674,7 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
                 event.chsTrkPairVec.second = chsTrk2;
 
                 float iso {0.0}, iso1 {0.0}, iso2 {0.0};
+                float iso_0p4 {0.0}, iso1_0p4 {0.0}, iso2_0p4 {0.0};
 
                 for (int k = 0; k < event.numPackedCands; k++) {
                     TLorentzVector packedCandVec;
@@ -661,11 +684,21 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
                     if (event.chsPairVec.first.DeltaR(packedCandVec) < 0.3)  iso1 += packedCandVec.Pt();
                     if (event.chsPairVec.second.DeltaR(packedCandVec) < 0.3) iso2 += packedCandVec.Pt();
                     if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec) < 0.3 ) iso += packedCandVec.Pt();
+                    if (event.chsPairVec.first.DeltaR(packedCandVec) < 0.4)  iso1_0p4 += packedCandVec.Pt();
+                    if (event.chsPairVec.second.DeltaR(packedCandVec) < 0.4) iso2_0p4 += packedCandVec.Pt();
+                    if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec) < 0.4 ) iso_0p4 += packedCandVec.Pt();
                 }
 
                 event.chsPairTrkIso.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
                 event.chsPairTrkIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
                 event.chsTrkIso = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
+
+                event.chsPairTrkIso0p4.first = iso1_0p4/(event.chsPairVec.first.Pt() + 1.0e-06);
+                event.chsPairTrkIso0p4.second = iso2_0p4/(event.chsPairVec.second.Pt() + 1.0e-06);
+                event.chsTrkIso0p4 = iso_0p4/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
+
+//                if (event.chsPairTrkIso.first > 0.4) continue;
+//                if (event.chsPairTrkIso.second > 0.4) continue;
 
                 if ( event.chsTrkIso > 0.4 ) continue;
 
@@ -696,25 +729,6 @@ int getChsTrackPairIndex(const AnalysisEvent& event) {
         if (event.chsTkPairIndex1[i] == event.chsPairIndex.first && event.chsTkPairIndex2[i] == event.chsPairIndex.second) return i;
     }
     return -1;
-}
-
-bool scalarGrandparent (const AnalysisEvent& event, const Int_t& k, const Int_t& grandparentId) {
-
-    const Int_t pdgId        { std::abs(event.genParId[k]) };
-    const Int_t numDaughters { event.genParNumDaughters[k] };
-    const Int_t motherId     { std::abs(event.genParMotherId[k]) };
-    const Int_t motherIndex  { std::abs(event.genParMotherIndex[k]) };
-
-
-    if (motherId == 0 || motherIndex == -1) return false; // if no parent, then mother Id is null and there's no index, quit search
-    else if (motherId == std::abs(grandparentId)) return true; // if mother is granparent being searched for, return true
-    else if (motherIndex >= event.NGENPARMAX) return false; // index exceeds stored genParticle range, return false for safety
-    else {
-//        std::cout << "Going up the ladder ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
-//        debugCounter++;
-//        std::cout << "debugCounter: " << debugCounter << std::endl;
-        return scalarGrandparent(event, motherIndex, grandparentId); // otherwise check mother's mother ...
-    }
 }
 
 float deltaR(float eta1, float phi1, float eta2, float phi2){

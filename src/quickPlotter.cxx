@@ -36,6 +36,7 @@
 std::vector<int> getLooseMuons(const AnalysisEvent& event);
 std::vector<int> getPromptMuons(const AnalysisEvent& event, const std::vector<int>& muonIndex, const bool getPrompt );
 bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool mcTruth = false);
+int getMuonTrackPairIndex(const AnalysisEvent& event);
 bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
 float deltaR(float eta1, float phi1, float eta2, float phi2);
 
@@ -948,11 +949,51 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
                 event.zPairIndex.second  = lepton1.Pt() > lepton2.Pt() ? muons[j] : muons[i];
                 event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
                 event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
+
+                float iso {0.0}, iso1 {0.0}, iso2 {0.0};
+                float iso_0p4 {0.0}, iso1_0p4 {0.0}, iso2_0p4 {0.0};
+
+                for (int k = 0; k < event.numPackedCands; k++) {
+                    TLorentzVector packedCandVec;
+                    packedCandVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
+
+                    if ( k == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || k == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
+                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 )  iso1 += packedCandVec.Pt();
+                    if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.3 ) iso2 += packedCandVec.Pt();
+                    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec)  < 0.3 ) iso += packedCandVec.Pt();
+                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 )  iso1_0p4 += packedCandVec.Pt();
+                    if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.4 ) iso2_0p4 += packedCandVec.Pt();
+                    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec)  < 0.4 ) iso_0p4 += packedCandVec.Pt();
+                }
+                event.zPairNewIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                event.zPairNewIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                event.zNewIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+
+                event.zPairNewIso0p4.first  = iso1_0p4/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                event.zPairNewIso0p4.second = iso2_0p4/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                event.zNewIso0p4 = iso_0p4/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+
+//                if ( event.zNewIso > 0.2 ) continue;
+
+                event.mumuTrkIndex = getMuonTrackPairIndex(event);
+
+//                if ( (event.muonTkPairPF2PATTkVtxChi2[event.mumuTrkIndex])/(event.muonTkPairPF2PATTkVtxNdof[event.mumuTrkIndex]+1.0e-06) > 10. ) continue;
+
+                event.zPairLeptonsRefitted.first  = TLorentzVector{event.muonTkPairPF2PATTk1Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
+                event.zPairLeptonsRefitted.second = TLorentzVector{event.muonTkPairPF2PATTk2Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
+
                 return true;
             }
-	}
+        }
     }
     return false;
+}
+
+int getMuonTrackPairIndex(const AnalysisEvent& event) { 
+    for (int i{0}; i < event.numMuonTrackPairsPF2PAT; i++) {
+        if (event.muonTkPairPF2PATIndex1[i] == event.zPairIndex.first && event.muonTkPairPF2PATIndex2[i] == event.zPairIndex.second) return i;
+    }
+    return -1;
 }
 
 bool scalarGrandparent (const AnalysisEvent& event, const Int_t& k, const Int_t& grandparentId) {
