@@ -368,21 +368,21 @@
    
      h_PhiggsInvMass_ctau0->SetTitle("Higgs invariant mass");
      h_PhiggsInvMass_ctau0->GetYaxis()->SetTitle("Events");
-     h_PhiggsInvMass_ctau0->GetXaxis()->SetRangeUser(0.0, 200.); 
+     h_PhiggsInvMass_ctau0->GetXaxis()->SetRangeUser(115., 135.); 
      h_PhiggsInvMass_ctau0->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
      h_PhiggsInvMass_ctau0->SetMarkerColor(2);
      h_PhiggsInvMass_ctau0->SetLineColor(2);
      h_PhiggsInvMass_ctau0->Draw("HIST");
  
      h_PhiggsInvMass_ctau10->GetYaxis()->SetTitle("Events");
-     h_PhiggsInvMass_ctau10->GetXaxis()->SetRangeUser(0.0, 200.); 
+     h_PhiggsInvMass_ctau10->GetXaxis()->SetRangeUser(115., 135.); 
      h_PhiggsInvMass_ctau10->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
      h_PhiggsInvMass_ctau10->SetMarkerColor(4);
      h_PhiggsInvMass_ctau10->SetLineColor(4);
-     h_PhiggsInvMass_ctau10->Draw("HIST");
+     h_PhiggsInvMass_ctau10->Draw("HIST same");
    
      h_PhiggsInvMass_QCD->GetYaxis()->SetTitle("Events");
-     h_PhiggsInvMass_QCD->GetXaxis()->SetRangeUser(0.0, 200.); 
+     h_PhiggsInvMass_QCD->GetXaxis()->SetRangeUser(115., 135.); 
      h_PhiggsInvMass_QCD->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
      h_PhiggsInvMass_QCD->SetMarkerColor(6);
      h_PhiggsInvMass_QCD->SetLineColor(6);
@@ -430,7 +430,7 @@
      h_PhiggsDeltaR_ctau10->GetXaxis()->SetTitle("Radians");
      h_PhiggsDeltaR_ctau10->SetMarkerColor(4);
      h_PhiggsDeltaR_ctau10->SetLineColor(4);
-     h_PhiggsDeltaR_ctau10->Draw("HIST");
+     h_PhiggsDeltaR_ctau10->Draw("HIST same");
    
      h_PhiggsDeltaR_QCD->GetYaxis()->SetTitle("Events");
      h_PhiggsDeltaR_QCD->GetXaxis()->SetRangeUser(0.0, 5.); 
