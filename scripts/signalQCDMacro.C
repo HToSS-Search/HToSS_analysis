@@ -414,6 +414,7 @@
    
      TCanvas* canvhr = new TCanvas ("canvhr", "canvhr", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
+     canvhr->SetLogy();
      canvhr->SetLineColor(0);
      canvhr->SetFillColor(0);
    
