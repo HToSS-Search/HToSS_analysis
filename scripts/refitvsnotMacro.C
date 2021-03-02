@@ -34,7 +34,7 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     h_refit12InvMass_ctau0->SetTitle("Dimuon invariant mass");
+     h_refit12InvMass_ctau0->SetTitle("Dimuon invariant mass with(out) refit");
      h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_refit12InvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_ctau0->GetXaxis()->SetRangeUser(0.0, 5.); 
@@ -80,18 +80,6 @@
      h_PscalarInvMass_QCD->SetMarkerColor(7);
      h_PscalarInvMass_QCD->SetLineColor(7);
      h_PscalarInvMass_QCD->Draw("HIST same");
-   
-    
-     legends->SetBorderSize(1);
-     TLegendEntry *legendw = legends->AddEntry("h_PscalarInvMass_ctau0","c_{#tau}=0mm","L");
-     legendw->SetLineColor(2);
-     legendw->SetMarkerColor(2);
-     legendw->SetMarkerSize(2);
-     legendw=legends->AddEntry("h_PscalarInvMass_ctau10","c_{#tau}=10mm","L");
-     legendw->SetLineColor(4);
-     legendw->SetMarkerColor(4);
-     legendw->SetMarkerSize(2);
-    
    
     
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
