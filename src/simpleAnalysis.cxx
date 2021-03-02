@@ -226,6 +226,7 @@ int main(int argc, char* argv[])
   TF1* Gaussian3 	 	    {new TF1("Gaussian3","gaus",1.,3.)};
   TH1F* h_PhiggsInvMass             {new TH1F("h_PhiggsInvMass",  "Higgs invariant mass", 1000, 0., 200.)};   
   TH1F* h_PhiggsDeltaR              {new TH1F("h_PhiggsDeltaR", "Discalar #DeltaR",2500, 0., 15.)}; 	
+  TH1F* h_Rrefit12InvMass              {new TH1F("h_Rrefit12InvMass", "Dimuon refitted invariant mass with requirements", 500, 0.,5.)};
 	
   TH2F* h_massassump       {new TH2F("h_massassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.)};
   TH2F* h_pmassassump       {new TH2F("h_pmassassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.)};
@@ -1248,6 +1249,15 @@ int main(int argc, char* argv[])
 	           h_PhiggsInvMass->Fill(Phiggs, datasetWeight);
 	           h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(Pscalar), datasetWeight);
 	           h_Pinvmass->Fill(Phadroninv,Pmuoninv, datasetWeight); 
+		  
+		   for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
+	   
+	              TLorentzVector Mu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2))};
+                      TLorentzVector Mu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], std::sqrt(event.muonTkPairPF2PATTk2P2[k]+std::pow(0.106,2))};
+	              h_Rrefit12InvMass->Fill((Mu1+Mu2).M(), datasetWeight);
+			   
+		   }	 
+		   
 		 }
 	       }
 	     }  
@@ -1712,7 +1722,10 @@ int main(int argc, char* argv[])
   h_PhiggsDeltaR->GetYaxis()->SetTitle("Events");
   h_PhiggsDeltaR->GetXaxis()->SetTitle("Radians");
   h_PhiggsDeltaR->Write();  
-
+  h_Rrefit12InvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+  h_Rrefit12InvMass->GetYaxis()->SetTitle("Events");
+  h_Rrefit12InvMass->Write();
+	
   h_massassump->GetXaxis()->SetTitle("Hadron (pion) invariant mass (GeV)");
   h_massassump->GetYaxis()->SetTitle("Hadron (kaon) invariant mass (GeV)");	
   h_massassump->Write();  
