@@ -10,7 +10,7 @@
  #include "TLatex.h"
  #include "TPRegexp.h"
 
-  void refittedMacro() {  
+  void refitvsnotMacro() {  
   
      TFile inFile0("ggH_MS2_ctau0.root"); 
      TH1F* h_refit12InvMass_ctau0    = (TH1F*)inFile0.Get("h_refit12InvMass");
