@@ -34,8 +34,8 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     h_refit12InvMass_ctau0->SetTitle("Refitted dimuon invariant mass");
-     h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(0.0, 65000.); 
+     h_refit12InvMass_ctau0->SetTitle("Dimuon invariant mass");
+     h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_refit12InvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_ctau0->GetXaxis()->SetRangeUser(0.0, 5.); 
      h_refit12InvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
@@ -44,7 +44,7 @@
      h_refit12InvMass_ctau0->Draw("HIST");
  
      h_refit12InvMass_ctau10->GetYaxis()->SetTitle("Events");
-     h_refit12InvMass_ctau10->GetYaxis()->SetRangeUser(0.0, 65000.); 
+     h_refit12InvMass_ctau10->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_refit12InvMass_ctau10->GetXaxis()->SetRangeUser(0.0, 5.); 
      h_refit12InvMass_ctau10->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_refit12InvMass_ctau10->SetMarkerColor(4);
@@ -53,25 +53,72 @@
    
      h_refit12InvMass_QCD->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_QCD->GetXaxis()->SetRangeUser(0.0, 5.); 
-     h_refit12InvMass_QCD->GetYaxis()->SetRangeUser(0.0, 65000.); 
+     h_refit12InvMass_QCD->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_refit12InvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_refit12InvMass_QCD->SetMarkerColor(6);
      h_refit12InvMass_QCD->SetLineColor(6);
      h_refit12InvMass_QCD->Draw("HIST same");
+     
    
+     h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
+     h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0.0, 5.); 
+     h_PscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_PscalarInvMass_ctau0->SetMarkerColor(3);
+     h_PscalarInvMass_ctau0->SetLineColor(3);
+     h_PscalarInvMass_ctau0->Draw("HIST same");
+ 
+     h_PscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
+     h_PscalarInvMass_ctau10->GetXaxis()->SetRangeUser(0.0, 5.); 
+     h_PscalarInvMass_ctau10->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_PscalarInvMass_ctau10->SetMarkerColor(5);
+     h_PscalarInvMass_ctau10->SetLineColor(5);
+     h_PscalarInvMass_ctau10->Draw("HIST same");
+   
+     h_PscalarInvMass_QCD->GetYaxis()->SetTitle("Events");
+     h_PscalarInvMass_QCD->GetXaxis()->SetRangeUser(0.0, 5.); 
+     h_PscalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_PscalarInvMass_QCD->SetMarkerColor(7);
+     h_PscalarInvMass_QCD->SetLineColor(7);
+     h_PscalarInvMass_QCD->Draw("HIST same");
+   
+    
+     legends->SetBorderSize(1);
+     TLegendEntry *legendw = legends->AddEntry("h_PscalarInvMass_ctau0","c_{#tau}=0mm","L");
+     legendw->SetLineColor(2);
+     legendw->SetMarkerColor(2);
+     legendw->SetMarkerSize(2);
+     legendw=legends->AddEntry("h_PscalarInvMass_ctau10","c_{#tau}=10mm","L");
+     legendw->SetLineColor(4);
+     legendw->SetMarkerColor(4);
+     legendw->SetMarkerSize(2);
+    
+   
+    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_refit12InvMass_ctau0","c_{#tau}=0mm","L");
+     TLegendEntry *legenda = legend1->AddEntry("h_refit12InvMass_ctau0","Refit c_{#tau}=0mm","L");
      legenda->SetLineColor(2);
      legenda->SetMarkerColor(2);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_refit12InvMass_ctau10","c_{#tau}=10mm","L");
+     legenda=legend1->AddEntry("h_refit12InvMass_ctau10","Refit c_{#tau}=10mm","L");
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_refit12InvMass_QCD","QCD","L");
+     legenda=legend1->AddEntry("h_refit12InvMass_QCD","Refit QCD","L");
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
+     legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("h_PscalarInvMass_ctau0","c_{#tau}=0mm","L");
+     legenda->SetLineColor(3);
+     legenda->SetMarkerColor(3);
+     legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("h_PscalarInvMass_ctau10","c_{#tau}=10mm","L");
+     legenda->SetLineColor(5);
+     legenda->SetMarkerColor(5);
+     legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("h_PscalarInvMass_QCD","QCD","L");
+     legenda->SetLineColor(7);
+     legenda->SetMarkerColor(7);
      legenda->SetMarkerSize(2);
      legend1->Draw();
    
