@@ -26,7 +26,6 @@
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
-     canv1->SetLogy();
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
@@ -71,6 +70,7 @@
      legenda->SetMarkerSize(2);
      legend1->Draw();
    
+     canv1->SetLogy();
      canv1->Modified();
      canv1->cd();
      canv1->SetSelected(canv1);
