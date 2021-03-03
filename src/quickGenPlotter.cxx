@@ -1617,6 +1617,7 @@ std::vector<int> getLooseMuons(const AnalysisEvent& event) {
     for (int i{0}; i < event.numMuonPF2PAT; i++)  {
        if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && /*event.muonPF2PATPfIsoVeryLoose[i] &&*/ std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
            if ( (event.muonPF2PATPt[i] >= muons.empty() && event.muonPF2PATPfIsoVeryLoose[i]) ? looseMuonPtLeading_ : looseMuonPt_) muons.emplace_back(i);
+//           if ( event.muonPF2PATPt[i] >= muons.empty() ? looseMuonPtLeading_ : looseMuonPt_) muons.emplace_back(i);
         }
     }
     return muons;
@@ -1654,7 +1655,7 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
                 event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
 
                 float iso {0.0}, iso1 {0.0}, iso2 {0.0};
-                float iso_0p4 {0.0}, iso1_0p4 {0.0}, iso2_0p4 {0.0};
+//                float iso_0p4 {0.0}, iso1_0p4 {0.0}, iso2_0p4 {0.0};
 
                 for (int k = 0; k < event.numPackedCands; k++) {
                     TLorentzVector packedCandVec;
@@ -1664,17 +1665,17 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
                     if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 )  iso1 += packedCandVec.Pt();
                     if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.3 ) iso2 += packedCandVec.Pt();
                     if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec)  < 0.3 ) iso += packedCandVec.Pt();
-                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 )  iso1_0p4 += packedCandVec.Pt();
-                    if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.4 ) iso2_0p4 += packedCandVec.Pt();
-                    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec)  < 0.4 ) iso_0p4 += packedCandVec.Pt();
+//                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 )  iso1_0p4 += packedCandVec.Pt();
+//                    if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.4 ) iso2_0p4 += packedCandVec.Pt();
+//                    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec)  < 0.4 ) iso_0p4 += packedCandVec.Pt();
                 }
                 event.zPairNewIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
                 event.zPairNewIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
                 event.zNewIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
 
-                event.zPairNewIso0p4.first  = iso1_0p4/(event.zPairLeptons.first.Pt() + 1.0e-06);
-                event.zPairNewIso0p4.second = iso2_0p4/(event.zPairLeptons.second.Pt() + 1.0e-06);
-                event.zNewIso0p4 = iso_0p4/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+//                event.zPairNewIso0p4.first  = iso1_0p4/(event.zPairLeptons.first.Pt() + 1.0e-06);
+//                event.zPairNewIso0p4.second = iso2_0p4/(event.zPairLeptons.second.Pt() + 1.0e-06);
+//                event.zNewIso0p4 = iso_0p4/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
 
 //                if ( event.zNewIso > 0.2 ) continue;
 
@@ -1741,7 +1742,7 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
                 event.chsTrkPairVec.second = chsTrk2;
 
                 float iso {0.0}, iso1 {0.0}, iso2 {0.0};
-                float iso_0p4 {0.0}, iso1_0p4 {0.0}, iso2_0p4 {0.0};
+//                float iso_0p4 {0.0}, iso1_0p4 {0.0}, iso2_0p4 {0.0};
 
                 for (int k = 0; k < event.numPackedCands; k++) {
 //                    if (event.packedCandsCharge[k] == 0 ) continue;
@@ -1753,18 +1754,18 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
                     if (event.chsPairVec.first.DeltaR(packedCandVec) < 0.3)  iso1 += packedCandVec.Pt();
                     if (event.chsPairVec.second.DeltaR(packedCandVec) < 0.3) iso2 += packedCandVec.Pt();
                     if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec) < 0.3 ) iso += packedCandVec.Pt();
-                    if (event.chsPairVec.first.DeltaR(packedCandVec) < 0.4)  iso1_0p4 += packedCandVec.Pt();
-                    if (event.chsPairVec.second.DeltaR(packedCandVec) < 0.4) iso2_0p4 += packedCandVec.Pt();
-                    if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec) < 0.4 ) iso_0p4 += packedCandVec.Pt();
+//                    if (event.chsPairVec.first.DeltaR(packedCandVec) < 0.4)  iso1_0p4 += packedCandVec.Pt();
+//                    if (event.chsPairVec.second.DeltaR(packedCandVec) < 0.4) iso2_0p4 += packedCandVec.Pt();
+//                    if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec) < 0.4 ) iso_0p4 += packedCandVec.Pt();
                 }
 
                 event.chsPairTrkIso.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
                 event.chsPairTrkIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
                 event.chsTrkIso = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
 
-                event.chsPairTrkIso0p4.first = iso1_0p4/(event.chsPairVec.first.Pt() + 1.0e-06);
-                event.chsPairTrkIso0p4.second = iso2_0p4/(event.chsPairVec.second.Pt() + 1.0e-06);
-                event.chsTrkIso0p4 = iso_0p4/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
+//                event.chsPairTrkIso0p4.first = iso1_0p4/(event.chsPairVec.first.Pt() + 1.0e-06);
+//                event.chsPairTrkIso0p4.second = iso2_0p4/(event.chsPairVec.second.Pt() + 1.0e-06);
+//                event.chsTrkIso0p4 = iso_0p4/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
 
 
                 if ( event.chsTrkIso > 0.4 ) continue;
