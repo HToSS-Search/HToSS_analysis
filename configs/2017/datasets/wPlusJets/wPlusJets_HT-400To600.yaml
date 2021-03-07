@@ -1,9 +1,0 @@
-name: "WJetsToLNu_HT-400To600"
-locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/Wjets/Wjets_HT_400To600/"
-cross_section: 57.48
-mc: true
-histogram: "wJets"
-colour: "#ffff33"
-label: "W+jets"
-plot_type: "f"

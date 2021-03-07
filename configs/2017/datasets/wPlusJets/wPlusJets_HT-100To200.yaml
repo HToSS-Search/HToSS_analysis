@@ -1,9 +1,0 @@
-name: "WJetsToLNu_HT-100To200"
-locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/Wjets/Wjets_HT_100To200/"
-cross_section: 1395.0
-mc: true
-histogram: "wJets"
-colour: "#ffff33"
-label: "W+jets"
-plot_type: "f"
