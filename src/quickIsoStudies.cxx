@@ -206,201 +206,203 @@ int main(int argc, char* argv[]) {
 
     // Begin to loop over all datasets
     for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset) {
-        datasetFilled = false;
-        TChain* datasetChain{new TChain{dataset->treeName().c_str()}};
-        datasetChain->SetAutoSave(0);
+      datasetFilled = false;
+      TChain* datasetChain{new TChain{dataset->treeName().c_str()}};
+      datasetChain->SetAutoSave(0);
 
-        std::cerr << "Processing dataset " << dataset->name() << std::endl;
-        if (!usePostLepTree) {
-            if (!datasetFilled) {
-                if (!dataset->fillChain(datasetChain)) {
-                    std::cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
-                    continue;
-                }
-                datasetFilled=true;
-            }
-        }
-        else {
-            std::cout << postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root" << std::endl;
-            datasetChain->Add((postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root").c_str());
-        }
+      std::cerr << "Processing dataset " << dataset->name() << std::endl;
+      if (!usePostLepTree) {
+	if (!datasetFilled) {
+	  if (!dataset->fillChain(datasetChain)) {
+	    std::cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
+	    continue;
+	  }
+	  datasetFilled=true;
+	}
+      }
+      else {
+	std::cout << postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root" << std::endl;
+	datasetChain->Add((postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root").c_str());
+      }
 
-        // extract the dataset weight. MC = (lumi*crossSection)/(totalEvents), data = 1.0
-        float datasetWeight{dataset->getDatasetWeight(totalLumi)};
-        std::cout << datasetChain->GetEntries() << " number of items in tree. Dataset weight: " << datasetWeight << std::endl;
-        if (datasetChain->GetEntries() == 0) {
-            std::cout << "No entries in tree, skipping..." << std::endl;
-            continue;
-        }
+      // extract the dataset weight. MC = (lumi*crossSection)/(totalEvents), data = 1.0
+      float datasetWeight{dataset->getDatasetWeight(totalLumi)};
+      std::cout << datasetChain->GetEntries() << " number of items in tree. Dataset weight: " << datasetWeight << std::endl;
+      if (datasetChain->GetEntries() == 0) {
+	std::cout << "No entries in tree, skipping..." << std::endl;
+	continue;
+      }
 
-        AnalysisEvent event{dataset->isMC(), datasetChain, is2016_, is2018_};
+      AnalysisEvent event{dataset->isMC(), datasetChain, is2016_, is2018_};
+      
+      Long64_t numberOfEvents{datasetChain->GetEntries()};
+      if (nEvents && nEvents < numberOfEvents) numberOfEvents = nEvents;
+      
+      TMVA::Timer* lEventTimer{ new TMVA::Timer{boost::numeric_cast<int>(numberOfEvents), "Running over dataset ...", false}}; 
+      lEventTimer->DrawProgressBar(0, "");
+      
+      totalEvents += numberOfEvents;
+      for (Long64_t i{0}; i < numberOfEvents; i++) {
+	
+	lEventTimer->DrawProgressBar(i,"");
+	
+	event.GetEntry(i);
+	
+	float eventWeight = 1.;
+	eventWeight *= datasetWeight;
 
-        Long64_t numberOfEvents{datasetChain->GetEntries()};
-        if (nEvents && nEvents < numberOfEvents) numberOfEvents = nEvents;
+	const bool passSingleMuonTrigger {event.muTrig()}, passDimuonTrigger {event.mumuTrig()};
+	const bool passL2MuonTrigger {event.mumuL2Trig()}, passDimuonNoVtxTrigger {event.mumuNoVtxTrig()};
 
-        TMVA::Timer* lEventTimer{ new TMVA::Timer{boost::numeric_cast<int>(numberOfEvents), "Running over dataset ...", false}}; 
-        lEventTimer->DrawProgressBar(0, "");
-    
-        totalEvents += numberOfEvents;
-        for (Long64_t i{0}; i < numberOfEvents; i++) {
-
-            lEventTimer->DrawProgressBar(i,"");
-
-            event.GetEntry(i);
-
-            float eventWeight = 1.;
-            eventWeight *= datasetWeight;
-
-            const bool passSingleMuonTrigger {event.muTrig()}, passDimuonTrigger {event.mumuTrig()};
-            const bool passL2MuonTrigger {event.mumuL2Trig()}, passDimuonNoVtxTrigger {event.mumuNoVtxTrig()};
-
-//            if (! ( passDimuonTrigger || passSingleMuonTrigger || passL2MuonTrigger || passDimuonNoVtxTrigger ) ) continue;
-            if ( !passSingleMuonTrigger ) continue;
-            if (!event.metFilters()) continue;
+//        if (! ( passDimuonTrigger || passSingleMuonTrigger || passL2MuonTrigger || passDimuonNoVtxTrigger ) ) continue;
+	if ( !passSingleMuonTrigger ) continue;
+	if (!event.metFilters()) continue;
  
-            event.muonIndexLoose = getLooseMuons(event);
+	event.muonIndexLoose = getLooseMuons(event);
 
-            if ( event.muonIndexLoose.size() < 2 ) continue;
+	if ( event.muonIndexLoose.size() < 2 ) continue;
 
-            if ( !getDileptonCand( event, event.muonIndexLoose, false ) ) continue;
+	if ( !getDileptonCand( event, event.muonIndexLoose, false ) ) continue;
 
-            // calculate isolation values for selected muons
-            // trk iso
-            float trkiso_0p3 {0.}, trkiso1_0p3 {0.}, trkiso2_0p3 {0.};
-            float trkiso_0p4 {0.}, trkiso1_0p4 {0.}, trkiso2_0p4 {0.};
-            // pf cand iso
-            //// separate components
-            float ch_iso_0p3 {0.}, ch_iso1_0p3 {0.}, ch_iso2_0p3 {0.};
-            float ch_iso_0p4 {0.}, ch_iso1_0p4 {0.}, ch_iso2_0p4 {0.};
-            //// ET
-            float nh_iso_0p3 {0.}, nh_iso1_0p3 {0.}, nh_iso2_0p3 {0.};
-            float nh_iso_0p4 {0.}, nh_iso1_0p4 {0.}, nh_iso2_0p4 {0.};
-            float gamma_iso_0p3 {0.}, gamma_iso1_0p3 {0.}, gamma_iso2_0p3 {0.};
-            float gamma_iso_0p4 {0.}, gamma_iso1_0p4 {0.}, gamma_iso2_0p4 {0.};
-            //// PT
-            float nh_iso_pT_0p3 {0.}, nh_iso1_pT_0p3 {0.}, nh_iso2_pT_0p3 {0.};
-            float nh_iso_pT_0p4 {0.}, nh_iso1_pT_0p4 {0.}, nh_iso2_pT_0p4 {0.};
-            float gamma_iso_pT_0p3 {0.}, gamma_iso1_pT_0p3 {0.}, gamma_iso2_pT_0p3 {0.};
-            float gamma_iso_pT_0p4 {0.}, gamma_iso1_pT_0p4 {0.}, gamma_iso2_pT_0p4 {0.};
-            //// combined
-            float pfCand_iso_0p3 {0.}, pfCand_iso1_0p3 {0.}, pfCand_iso2_0p3 {0.};
-            float pfCand_iso_0p4 {0.}, pfCand_iso1_0p4 {0.}, pfCand_iso2_0p4 {0.};
+	// calculate isolation values for selected muons
+	// trk iso
+	float trkiso_0p3 {0.}, trkiso1_0p3 {0.}, trkiso2_0p3 {0.};
+	float trkiso_0p4 {0.}, trkiso1_0p4 {0.}, trkiso2_0p4 {0.};
+	// pf cand iso
+	//// separate components
+	float ch_iso_0p3 {0.}, ch_iso1_0p3 {0.}, ch_iso2_0p3 {0.};
+	float ch_iso_0p4 {0.}, ch_iso1_0p4 {0.}, ch_iso2_0p4 {0.};
+	//// ET
+	float nh_iso_0p3 {0.}, nh_iso1_0p3 {0.}, nh_iso2_0p3 {0.};
+	float nh_iso_0p4 {0.}, nh_iso1_0p4 {0.}, nh_iso2_0p4 {0.};
+	float gamma_iso_0p3 {0.}, gamma_iso1_0p3 {0.}, gamma_iso2_0p3 {0.};
+	float gamma_iso_0p4 {0.}, gamma_iso1_0p4 {0.}, gamma_iso2_0p4 {0.};
+	//// PT
+	float nh_iso_pT_0p3 {0.}, nh_iso1_pT_0p3 {0.}, nh_iso2_pT_0p3 {0.};
+	float nh_iso_pT_0p4 {0.}, nh_iso1_pT_0p4 {0.}, nh_iso2_pT_0p4 {0.};
+	float gamma_iso_pT_0p3 {0.}, gamma_iso1_pT_0p3 {0.}, gamma_iso2_pT_0p3 {0.};
+	float gamma_iso_pT_0p4 {0.}, gamma_iso1_pT_0p4 {0.}, gamma_iso2_pT_0p4 {0.};
+	//// combined
+	float pfCand_iso_0p3 {0.}, pfCand_iso1_0p3 {0.}, pfCand_iso2_0p3 {0.};
+	float pfCand_iso_0p4 {0.}, pfCand_iso1_0p4 {0.}, pfCand_iso2_0p4 {0.};
 
-       	    for (int k = 0; k < event.numPackedCands; k++) {
-                // Skip packed cand if it is related to either selected muon
-                if ( k == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || k == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
-                // Skip low momentum PF cands
-      	        TLorentzVector packedCandVec;
-                packedCandVec.SetPxPyPzE(event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]);                
-                if ( packedCandVec.Pt() < 0.5 ) continue;
+	for (int k = 0; k < event.numPackedCands; k++) {
+	  // Skip packed cand if it is related to either selected muon
+	  if ( k == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || k == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
+	  // Skip low momentum PF cands
+	  TLorentzVector packedCandVec;
+	  packedCandVec.SetPxPyPzE(event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]);                
+	  if ( packedCandVec.Pt() < 0.5 ) continue;
+	  
+	  // Track iso
+	  if ( event.packedCandsHasTrackDetails[k] > 0 ) {
+	    TLorentzVector packedTrkVec;
+	    packedTrkVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
+	    if ( event.zPairLeptons.first.DeltaR(packedTrkVec)   < 0.3 )                             trkiso1_0p3 += packedTrkVec.Pt();
+	    if ( event.zPairLeptons.second.DeltaR(packedTrkVec)  < 0.3 )                             trkiso2_0p3 += packedTrkVec.Pt();
+	    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedTrkVec)  < 0.3 )  trkiso_0p3  += packedTrkVec.Pt();
+	    if ( event.zPairLeptons.first.DeltaR(packedTrkVec)   < 0.4 )                             trkiso1_0p4 += packedTrkVec.Pt();
+	    if ( event.zPairLeptons.second.DeltaR(packedTrkVec)  < 0.4 )                             trkiso2_0p4 += packedTrkVec.Pt();
+	    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedTrkVec)  < 0.4 )  trkiso_0p4  += packedTrkVec.Pt();
+	  }
+	  // PF cands a la PF iso
+	  int candId (std::abs(event.packedCandsPdgId[k]));
+	  if ( candId == 211 ) { // If charged hadron
+	    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 ){                           ch_iso1_0p3 += packedCandVec.Pt();
+	      if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.3 )                            ch_iso2_0p3 += packedCandVec.Pt();
+	      if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.3 ) ch_iso_0p3  += packedCandVec.Pt();
+	      if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 )                            ch_iso1_0p4 += packedCandVec.Pt();
+	      if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.4 )                            ch_iso2_0p4 += packedCandVec.Pt();
+	      if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.4 ) ch_iso_0p4  += packedCandVec.Pt();
+	    }
+	  }
+	  
+	  else if ( candId == 130 ) { // If neutral hadron
+	    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 ){
+	      nh_iso1_0p3    += packedCandVec.Et();
+	      nh_iso1_pT_0p3 += packedCandVec.Pt();
+	    }
+	    if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.3 ) {
+	      nh_iso2_0p3    += packedCandVec.Et();
+	      nh_iso2_pT_0p3 += packedCandVec.Pt();
+	    }
+	    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.3 ) {
+	      nh_iso_0p3     += packedCandVec.Et();
+	      nh_iso_pT_0p3  += packedCandVec.Pt();
+	    }
+	    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 ) {
+	      nh_iso1_0p4    += packedCandVec.Et();
+	      nh_iso1_pT_0p4 += packedCandVec.Pt();
+	    }
+	    if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.4 ) {
+	      nh_iso2_0p4    += packedCandVec.Et();
+	      nh_iso2_pT_0p4 += packedCandVec.Pt();
+	    }
+	    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.4 ) {
+	      nh_iso_0p4     += packedCandVec.Et();
+	      nh_iso_pT_0p4  += packedCandVec.Pt();
+	    }
+	  }
+	  else if ( candId == 22 ) { // If gamma
+	    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 ) {
+	      gamma_iso1_0p3 += packedCandVec.Et();
+	      gamma_iso1_pT_0p3 += packedCandVec.Pt();
+	    }
+	    if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.3 ) {
+	      gamma_iso2_0p3 += packedCandVec.Et();
+	      gamma_iso2_pT_0p3 += packedCandVec.Pt();
+	    }
+	    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.3 ) {
+	      gamma_iso_0p3  += packedCandVec.Et();
+	      gamma_iso_pT_0p3  += packedCandVec.Pt();
+	    }
+	    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 ) {
+	      gamma_iso1_0p4 += packedCandVec.Et();
+	      gamma_iso1_pT_0p4 += packedCandVec.Pt();
+	    }
+	    if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.4 ) {
+	      gamma_iso2_0p4 += packedCandVec.Et();
+	      gamma_iso2_pT_0p4 += packedCandVec.Pt();
+	    }
+	    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.4 ) {
+	      gamma_iso_0p4  += packedCandVec.Et();
+	      gamma_iso_pT_0p4  += packedCandVec.Pt();
+	    }
+	  }
+	  // All PF Cands
+	  if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 )                            pfCand_iso1_0p3 += packedCandVec.Pt();
+	  if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.3 )                            pfCand_iso2_0p3 += packedCandVec.Pt();
+	  if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.3 ) pfCand_iso_0p3  += packedCandVec.Pt();
+	  if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 )                            pfCand_iso1_0p4 += packedCandVec.Pt();
+	  if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.4 )                            pfCand_iso2_0p4 += packedCandVec.Pt();
+	  if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.4 ) pfCand_iso_0p4  += packedCandVec.Pt();
+	  
+	}
 
-                // Track iso
-                if ( event.packedCandsHasTrackDetails[k] > 0 ) {
-                    TLorentzVector packedTrkVec;
-                    packedTrkVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
-                    if ( event.zPairLeptons.first.DeltaR(packedTrkVec)   < 0.3 )                             trkiso1_0p3 += packedTrkVec.Pt();
-                    if ( event.zPairLeptons.second.DeltaR(packedTrkVec)  < 0.3 )                             trkiso2_0p3 += packedTrkVec.Pt();
-                    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedTrkVec)  < 0.3 )  trkiso_0p3  += packedTrkVec.Pt();
-                    if ( event.zPairLeptons.first.DeltaR(packedTrkVec)   < 0.4 )                             trkiso1_0p4 += packedTrkVec.Pt();
-                    if ( event.zPairLeptons.second.DeltaR(packedTrkVec)  < 0.4 )                             trkiso2_0p4 += packedTrkVec.Pt();
-                    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedTrkVec)  < 0.4 )  trkiso_0p4  += packedTrkVec.Pt();
-                }
-                // PF cands a la PF iso
-                int candId (std::abs(event.packedCandsPdgId[k]));
-                if ( candId == 211 ) { // If charged hadron
-                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 ){                           ch_iso1_0p3 += packedCandVec.Pt();
-                    if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.3 )                            ch_iso2_0p3 += packedCandVec.Pt();
-                    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.3 ) ch_iso_0p3  += packedCandVec.Pt();
-                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 )                            ch_iso1_0p4 += packedCandVec.Pt();
-                    if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.4 )                            ch_iso2_0p4 += packedCandVec.Pt();
-                    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.4 ) ch_iso_0p4  += packedCandVec.Pt();
-                }
-                else if ( candId == 130 ) { // If neutral hadron
-                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 ){
-                       nh_iso1_0p3    += packedCandVec.Et();
-                       nh_iso1_pT_0p3 += packedCandVec.Pt();
-                    }
-                    if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.3 ) {
-                       nh_iso2_0p3    += packedCandVec.Et();
-                       nh_iso2_pT_0p3 += packedCandVec.Pt();
-                    }
-                    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.3 ) {
-                       nh_iso_0p3     += packedCandVec.Et();
-                       nh_iso_pT_0p3  += packedCandVec.Pt();
-                    }
-                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 ) {
-                       nh_iso1_0p4    += packedCandVec.Et();
-                       nh_iso1_pT_0p4 += packedCandVec.Pt();
-                    }
-                    if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.4 ) {
-                       nh_iso2_0p4    += packedCandVec.Et();
-                       nh_iso2_pT_0p4 += packedCandVec.Pt();
-                    }
-                    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.4 ) {
-                       nh_iso_0p4     += packedCandVec.Et();
-                       nh_iso_pT_0p4  += packedCandVec.Pt();
-                    }
-                }
-                else if ( candId == 22 ) { // If gamma
-                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 ) {
-                       gamma_iso1_0p3 += packedCandVec.Et();
-                       gamma_iso1_pT_0p3 += packedCandVec.Pt();
-                    }
-                    if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.3 ) {
-                       gamma_iso2_0p3 += packedCandVec.Et();
-                       gamma_iso2_pT_0p3 += packedCandVec.Pt();
-                    }
-                    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.3 ) {
-                       gamma_iso_0p3  += packedCandVec.Et();
-                       gamma_iso_pT_0p3  += packedCandVec.Pt();
-                    }
-                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 ) {
-                       gamma_iso1_0p4 += packedCandVec.Et();
-                       gamma_iso1_pT_0p4 += packedCandVec.Pt();
-                    }
-                    if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.4 ) {
-                       gamma_iso2_0p4 += packedCandVec.Et();
-                       gamma_iso2_pT_0p4 += packedCandVec.Pt();
-                    }
-                    if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.4 ) {
-                       gamma_iso_0p4  += packedCandVec.Et();
-                       gamma_iso_pT_0p4  += packedCandVec.Pt();
-                    }
-                }
-                // All PF Cands
-                if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 )                            pfCand_iso1_0p3 += packedCandVec.Pt();
-                if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.3 )                            pfCand_iso2_0p3 += packedCandVec.Pt();
-                if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.3 ) pfCand_iso_0p3  += packedCandVec.Pt();
-                if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 )                            pfCand_iso1_0p4 += packedCandVec.Pt();
-                if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.4 )                            pfCand_iso2_0p4 += packedCandVec.Pt();
-                if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.4 ) pfCand_iso_0p4  += packedCandVec.Pt();
+	
+	// rel iso for tracks
+	const float trkreliso1_0p3 { trkiso1_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, trkreliso2_0p3 { trkiso2_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, trkreliso_0p3 { trkiso_0p3 / ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
+	const float trkreliso1_0p4 { trkiso1_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, trkreliso2_0p4 { trkiso2_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, trkreliso_0p4 { trkiso_0p4 / ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
 
-            }
+	// iso for PF (pT + ET sum)
+	const float pf_iso1_0p3 { ch_iso1_0p3 + std::max( float(0.0), nh_iso1_0p3 + gamma_iso1_0p3)}, pf_iso2_0p3 {ch_iso2_0p3 + std::max( float(0.0), nh_iso2_0p3 + gamma_iso2_0p3)}, pf_iso_0p3 {ch_iso_0p3 + std::max( float(0.0), nh_iso_0p3 + gamma_iso_0p3)};
+	const float pf_iso1_0p4 { ch_iso1_0p4 + std::max( float(0.0), nh_iso1_0p4 + gamma_iso1_0p4)}, pf_iso2_0p4 {ch_iso2_0p4 + std::max( float(0.0), nh_iso2_0p4 + gamma_iso2_0p4)}, pf_iso_0p4 {ch_iso_0p4 + std::max( float(0.0), nh_iso_0p4 + gamma_iso_0p4)};
+	// rel iso for PF (pT + ET sum)
+	const float pf_reliso1_0p3 { pf_iso1_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_0p3 { pf_iso2_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_0p3 { pf_iso_0p3 / ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
+	const float pf_reliso1_0p4 { pf_iso1_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_0p4 { pf_iso2_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_0p4 { pf_iso_0p4 / ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
 
-            
-            // rel iso for tracks
-            const float trkreliso1_0p3 { trkiso1_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, trkreliso2_0p3 { trkiso2_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, trkreliso_0p3 { trkiso_0p3 / ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
-            const float trkreliso1_0p4 { trkiso1_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, trkreliso2_0p4 { trkiso2_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, trkreliso_0p4 { trkiso_0p4 / ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
+	// iso for PF (pT only sum)
+	const float pf_iso1_pT_0p3 { ch_iso1_0p3 + nh_iso1_pT_0p3 + gamma_iso1_pT_0p3 }, pf_iso2_pT_0p3 { ch_iso2_0p3 + nh_iso2_pT_0p4 + gamma_iso2_pT_0p3 }, pf_iso_pT_0p3 { ch_iso_0p3 + nh_iso_pT_0p3 + gamma_iso_pT_0p3 };
+	const float pf_iso1_pT_0p4 { ch_iso1_0p4 + nh_iso1_pT_0p4 + gamma_iso1_pT_0p4 }, pf_iso2_pT_0p4 { ch_iso2_0p4 + nh_iso2_pT_0p4 + gamma_iso2_pT_0p4 }, pf_iso_pT_0p4 { ch_iso_0p4 + nh_iso_pT_0p4 + gamma_iso_pT_0p4 };
+	// rel iso for PF (pT only sum)
+	const float pf_reliso1_pT_0p3 { pf_iso1_pT_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_pT_0p3 { pf_iso2_pT_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_pT_0p3 { pf_iso_pT_0p3 / ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
+	const float pf_reliso1_pT_0p4 { pf_iso1_pT_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_pT_0p4 { pf_iso2_pT_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_pT_0p4 { pf_iso_pT_0p4 / ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
 
-            // iso for PF (pT + ET sum)
-            const float pf_iso1_0p3 { ch_iso1_0p3 + std::max( float(0.0), nh_iso1_0p3 + gamma_iso1_0p3)}, pf_iso2_0p3 {ch_iso2_0p3 + std::max( float(0.0), nh_iso2_0p3 + gamma_iso2_0p3)}, pf_iso_0p3 {ch_iso_0p3 + std::max( float(0.0), nh_iso_0p3 + gamma_iso_0p3)};
-            const float pf_iso1_0p4 { ch_iso1_0p4 + std::max( float(0.0), nh_iso1_0p4 + gamma_iso1_0p4)}, pf_iso2_0p4 {ch_iso2_0p4 + std::max( float(0.0), nh_iso2_0p4 + gamma_iso2_0p4)}, pf_iso_0p4 {ch_iso_0p4 + std::max( float(0.0), nh_iso_0p4 + gamma_iso_0p4)};
-            // rel iso for PF (pT + ET sum)
-            const float pf_reliso1_0p3 { pf_iso1_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_0p3 { pf_iso2_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_0p3 { pf_iso_0p3 / ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
-            const float pf_reliso1_0p4 { pf_iso1_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_0p4 { pf_iso2_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_0p4 { pf_iso_0p4 / ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
+	// rel iso for all pf cands
+	const float pfCand_reliso1_0p3 {pfCand_iso1_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pfCand_reliso2_0p3 {pfCand_iso2_0p3/ ( event.zPairLeptons.second.Pt()+1.0e-06) }, pfCand_reliso_0p3 { pfCand_iso_0p3/ ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
+	const float pfCand_reliso1_0p4 {pfCand_iso1_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pfCand_reliso2_0p4 {pfCand_iso2_0p4/ ( event.zPairLeptons.second.Pt()+1.0e-06) }, pfCand_reliso_0p4 { pfCand_iso_0p4/ ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
 
-            // iso for PF (pT only sum)
-            const float pf_iso1_pT_0p3 { ch_iso1_0p3 + nh_iso1_pT_0p3 + gamma_iso1_pT_0p3 }, pf_iso2_pT_0p3 { ch_iso2_0p3 + nh_iso2_pT_0p4 + gamma_iso2_pT_0p3 }, pf_iso_pT_0p3 { ch_iso_0p3 + nh_iso_pT_0p3 + gamma_iso_pT_0p3 };
-            const float pf_iso1_pT_0p4 { ch_iso1_0p4 + nh_iso1_pT_0p4 + gamma_iso1_pT_0p4 }, pf_iso2_pT_0p4 { ch_iso2_0p4 + nh_iso2_pT_0p4 + gamma_iso2_pT_0p4 }, pf_iso_pT_0p4 { ch_iso_0p4 + nh_iso_pT_0p4 + gamma_iso_pT_0p4 };
-            // rel iso for PF (pT only sum)
-            const float pf_reliso1_pT_0p3 { pf_iso1_pT_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_pT_0p3 { pf_iso2_pT_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_pT_0p3 { pf_iso_pT_0p3 / ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
-            const float pf_reliso1_pT_0p4 { pf_iso1_pT_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_pT_0p4 { pf_iso2_pT_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_pT_0p4 { pf_iso_pT_0p4 / ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
-
-            // rel iso for all pf cands
-            const float pfCand_reliso1_0p3 {pfCand_iso1_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pfCand_reliso2_0p3 {pfCand_iso2_0p3/ ( event.zPairLeptons.second.Pt()+1.0e-06) }, pfCand_reliso_0p3 { pfCand_iso_0p3/ ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
-            const float pfCand_reliso1_0p4 {pfCand_iso1_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pfCand_reliso2_0p4 {pfCand_iso2_0p4/ ( event.zPairLeptons.second.Pt()+1.0e-06) }, pfCand_reliso_0p4 { pfCand_iso_0p4/ ((event.chsPairVec.first+event.chsPairVec.second).Pt()+1.0e-06) };
-
-            // Fill muon histograms
+	// Fill muon histograms
 
             h_leadingMuonPFIso->Fill(event.zPairRelIso.first*event.zPairLeptons.first.Pt(), eventWeight);
             h_subleadingMuonPFIso->Fill(event.zPairRelIso.second*event.zPairLeptons.second.Pt(), eventWeight);
@@ -462,7 +464,7 @@ int main(int argc, char* argv[]) {
             h_dimuonAllPfCandsRelIso_0p4->Fill(pfCand_reliso_0p4, eventWeight);
 
 
-        } // end event loop
+      } // end event loop
     } // end dataset loop
 
     TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
