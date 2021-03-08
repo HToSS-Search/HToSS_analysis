@@ -1270,11 +1270,11 @@ int main(int argc, char* argv[])
 		      }   
 		   }
 		 }	 
+	        
 		   
-		   
-		 }
+		 
 	       }
-	     }  
+	     } //close pion!=-1 
 		
 	     
 	     h_PIsoSum3->Fill(PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1], datasetWeight);
@@ -1284,11 +1284,11 @@ int main(int argc, char* argv[])
 	     if(PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]<1){	   
 	       h_PscalarInvMass->Fill(Pscalar.M(), datasetWeight);
 	     }
-	   }
+	   }//close Higgs mass window
 	   
 	 
 	    	 
-	 }
+	 }//close muon!=-1
 	     
 	     
            
@@ -1417,13 +1417,15 @@ int main(int argc, char* argv[])
       
 	//Refitted tracks pions   
 	for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-	     
-	   if(event.chsTkPairIndex1[k]==pionIndex1 && event.chsTkPairIndex2[k]==pionIndex2){	
+	   if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsCharge[pionIndex1]==-(event.packedCandsCharge[pionIndex2])){
+ 
+	     if(event.chsTkPairIndex1[k]==pionIndex1 && event.chsTkPairIndex2[k]==pionIndex2){	
 		   
-	     TLorentzVector pi1  {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
-             TLorentzVector pi2  {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
+	       TLorentzVector pi1  {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
+               TLorentzVector pi2  {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
 	 
-             h_pionre12InvMass->Fill((pi1+pi2).M(), datasetWeight);
+               h_pionre12InvMass->Fill((pi1+pi2).M(), datasetWeight);
+	     }
 	   }
 	}
 	   
