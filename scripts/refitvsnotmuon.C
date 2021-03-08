@@ -34,7 +34,7 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     h_refit12InvMass_ctau0->SetTitle("Dimuon invariant mass with(out) refit");
+     h_refit12InvMass_ctau0->SetTitle("Refitted dimuon invariant mass");
      h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_refit12InvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_ctau0->GetXaxis()->SetRangeUser(0.0, 5.); 
@@ -59,7 +59,7 @@
      h_refit12InvMass_QCD->SetLineColor(6);
      h_refit12InvMass_QCD->Draw("HIST same");
      
-   
+   /*
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0.0, 5.); 
      h_PscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
@@ -79,7 +79,7 @@
      h_PscalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_PscalarInvMass_QCD->SetMarkerColor(52);
      h_PscalarInvMass_QCD->SetLineColor(52);
-     h_PscalarInvMass_QCD->Draw("HIST same");
+     h_PscalarInvMass_QCD->Draw("HIST same");*/
    
     
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
@@ -96,7 +96,7 @@
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_PscalarInvMass_ctau0","c_{#tau}=0mm","L");
+    /* legenda=legend1->AddEntry("h_PscalarInvMass_ctau0","c_{#tau}=0mm","L");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
@@ -107,7 +107,7 @@
      legenda=legend1->AddEntry("h_PscalarInvMass_QCD","QCD","L");
      legenda->SetLineColor(52);
      legenda->SetMarkerColor(52);
-     legenda->SetMarkerSize(2);
+     legenda->SetMarkerSize(2);*/
      legend1->Draw();
    
      canv1->Modified();
