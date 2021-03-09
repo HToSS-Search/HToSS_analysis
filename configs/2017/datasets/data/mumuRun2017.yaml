@@ -1,0 +1,14 @@
+name: "mumuRun2017"
+locations:
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/SingleMuon/Run2017B"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/SingleMuon/Run2017C"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/SingleMuon/Run2017D"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/SingleMuon/Run2017E"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/SingleMuon/Run2017F"
+luminosity: 39856.233113277
+mc: false
+histogram: "data"
+label: "Data"
+plot_type: "p"
+colour: "#ffffff"
+trigger_flag: "mCt"
