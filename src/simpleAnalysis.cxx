@@ -292,7 +292,7 @@ int main(int argc, char* argv[])
         po::value<std::string>(&config)->required(),
         "The configuration file to be used.")(
         "lumi,l",
-        po::value<double>(&usePreLumi)->default_value(41528.0),
+        po::value<double>(&usePreLumi)->default_value(4247.682053046),
         "Lumi to scale MC plots to.")(
         "outfile,o",
         po::value<std::string>(&outFileString)->default_value(outFileString),
