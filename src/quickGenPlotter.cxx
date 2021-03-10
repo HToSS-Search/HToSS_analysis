@@ -1612,7 +1612,7 @@ int main(int argc, char* argv[]) {
     std::cout << "\nFinished. Took " << duration.count() << " seconds" <<std::endl;
 }
 
-std::vector<int> 1getLooseMuons(const AnalysisEvent& event) {
+std::vector<int> getLooseMuons(const AnalysisEvent& event) {
     std::vector<int> muons;
     for (int i{0}; i < event.numMuonPF2PAT; i++)  {
        if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && event.muonPF2PATPfIsoLoose[i] && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
