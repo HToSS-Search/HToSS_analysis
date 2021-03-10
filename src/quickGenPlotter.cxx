@@ -1612,12 +1612,12 @@ int main(int argc, char* argv[]) {
     std::cout << "\nFinished. Took " << duration.count() << " seconds" <<std::endl;
 }
 
-std::vector<int> getLooseMuons(const AnalysisEvent& event) {
+std::vector<int> 1getLooseMuons(const AnalysisEvent& event) {
     std::vector<int> muons;
     for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-       if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && /*event.muonPF2PATPfIsoVeryLoose[i] &&*/ std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
-           if ( (event.muonPF2PATPt[i] >= muons.empty() && event.muonPF2PATPfIsoVeryLoose[i]) ? looseMuonPtLeading_ : looseMuonPt_) muons.emplace_back(i);
-//           if ( event.muonPF2PATPt[i] >= muons.empty() ? looseMuonPtLeading_ : looseMuonPt_) muons.emplace_back(i);
+       if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && event.muonPF2PATPfIsoLoose[i] && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
+//           if ( (event.muonPF2PATPt[i] >= muons.empty() && event.muonPF2PATPfIsoLoose[i]) ? looseMuonPtLeading_ : looseMuonPt_) muons.emplace_back(i);
+           if ( event.muonPF2PATPt[i] >= muons.empty() ? looseMuonPtLeading_ : looseMuonPt_) muons.emplace_back(i);
         }
     }
     return muons;

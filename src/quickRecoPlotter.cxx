@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
     TH1F* h_scalarDeltaR         { new TH1F("h_scalarDeltaR",           ";#Delta R", 500, 0., 10.)};
     TH2F* h_scalarMasses         { new TH2F("h_scalarMasses",           ";#mu#mu Mass; #pi#pi Mass", 400, 0., 4.0, 400, 0., 4.0)};
     TH2F* h_scalarMassesNew      { new TH2F("h_scalarMassesNew",        ";#mu#mu Mass; #pi#pi Mass", 400, 0., 4.0, 400, 0., 4.0)};
-    TH2F* h_scalarRefittedMasses { new TH2F("h_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi Mass", 50, 0., 4.0, 50, 0., 4.0)};
+    TH2F* h_scalarRefittedMasses { new TH2F("h_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi Mass", 400, 0., 4.0, 400, 0., 4.0)};
     TH1F* h_scalarMass           { new TH1F("h_scalarMass",             ";Higgs Mass", 200, 75., 175.)};
     TH1F* h_scalarRefittedMass   { new TH1F("h_scalarRefittedMass",     ";Higgs Mass", 200, 75., 175.)};
     TH2F* h_scalarRelIso         { new TH2F("h_scalarRelIso",           "RelIso;I_{#mu#mu};I_{#pi#pi}", 500, 0., 0.5, 500, 0., 0.5)};
@@ -142,8 +142,8 @@ int main(int argc, char* argv[]) {
 
     TH1F* ht_scalarDeltaR          { new TH1F("ht_scalarDeltaR",           ";#Delta R", 500, 0., 10.)};
     TH2F* ht_scalarMasses          { new TH2F("ht_scalarMasses",           ";#mu#mu Mass; #pi#pi mass", 400, 0., 4.0, 400, 0., 4.0)};
-    TH2F* ht_scalarMassesNew       { new TH2F("ht_scalarMassesNew",        ";#mu#mu Mass; #pi#pi mass", 400, 0., 4.0,400, 0., 4.0)};
-    TH2F* ht_scalarRefittedMasses  { new TH2F("ht_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi mass", 50, 0., 4.0, 50, 0., 4.0)};
+    TH2F* ht_scalarMassesNew       { new TH2F("ht_scalarMassesNew",        ";#mu#mu Mass; #pi#pi mass", 400, 0., 4.0, 400, 0., 4.0)};
+    TH2F* ht_scalarRefittedMasses  { new TH2F("ht_scalarRefittedMasses",   ";#mu#mu Mass; #pi#pi mass", 400, 0., 4.0,  400, 0., 4.0)};
     TH1F* ht_scalarMass            { new TH1F("ht_scalarMass",             "Higgs Mass", 200, 75., 175.)};
     TH1F* ht_scalarRefittedMass    { new TH1F("ht_scalarRefittedMass",     "Higgs Mass", 200, 75., 175.)};
     TH2F* ht_scalarRelIso          { new TH2F("ht_scalarRelIso",           "RelIso;I_{#mu#mu};I_{#pi#pi}", 500, 0., 0.5, 500, 0., 0.5)};
