@@ -536,8 +536,8 @@ class AnalysisEvent
     Int_t packedCandsCharge[NPACKEDCANDSMAX];
     Int_t packedCandsPdgId[NPACKEDCANDSMAX];
     Float_t packedCandsTime[NPACKEDCANDSMAX];
-//    Int_t packedCandsFromPV[NPACKEDCANDSMAX];
-//    Int_t packedCandsPVquality[NPACKEDCANDSMAX];
+    Int_t packedCandsFromPV[NPACKEDCANDSMAX];
+    Int_t packedCandsPVquality[NPACKEDCANDSMAX];
     Float_t packedCandsVx[NPACKEDCANDSMAX];
     Float_t packedCandsVy[NPACKEDCANDSMAX];
     Float_t packedCandsVz[NPACKEDCANDSMAX];
@@ -1745,8 +1745,8 @@ class AnalysisEvent
     TBranch* b_packedCandsCharge; //!
     TBranch* b_packedCandsPdgId; //!
     TBranch* b_packedCandsTime; //!
-//    TBranch* b_packedCandsFromPV; //!
-//    TBranch* b_packedCandsPVquality; //!
+    TBranch* b_packedCandsFromPV; //!
+    TBranch* b_packedCandsPVquality; //!
     TBranch* b_packedCandsVx; //!
     TBranch* b_packedCandsVy; //!
     TBranch* b_packedCandsVz; //!
@@ -3068,8 +3068,8 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
    fChain->SetBranchAddress("packedCandsCharge", packedCandsCharge, &b_packedCandsCharge);
    fChain->SetBranchAddress("packedCandsPdgId", packedCandsPdgId, &b_packedCandsPdgId);
    fChain->SetBranchAddress("packedCandsTime", packedCandsTime, &b_packedCandsTime);
-//   fChain->SetBranchAddress("packedCandsFromPV", packedCandsFromPV, &b_packedCandsFromPV);
-//   fChain->SetBranchAddress("packedCandsPVquality", packedCandsPVquality, &b_packedCandsPVquality);
+   fChain->SetBranchAddress("packedCandsFromPV", packedCandsFromPV, &b_packedCandsFromPV);
+   fChain->SetBranchAddress("packedCandsPVquality", packedCandsPVquality, &b_packedCandsPVquality);
    fChain->SetBranchAddress("packedCandsVx", packedCandsVx, &b_packedCandsVx);
    fChain->SetBranchAddress("packedCandsVy", packedCandsVy, &b_packedCandsVy);
    fChain->SetBranchAddress("packedCandsVz", packedCandsVz, &b_packedCandsVz);

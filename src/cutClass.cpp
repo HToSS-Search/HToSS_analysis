@@ -657,7 +657,7 @@ std::vector<int> Cuts::getLooseMuons(const AnalysisEvent& event) const {
     }
     else {
         for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && event.muonPF2PATPfIsoVeryLoose[i] && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
+            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && /*event.muonPF2PATPfIsoVeryLoose[i] &&*/ std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
                 if (event.muonPF2PATPt[i] >= (muons.empty() ? looseMuonPtLeading_ : looseMuonPt_)) muons.emplace_back(i);
             }
         }
