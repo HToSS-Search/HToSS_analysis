@@ -69,65 +69,79 @@ int main(int argc, char* argv[]) {
     Long64_t totalEvents {0};
     const std::regex mask{".*\\.root"};
 
-    TH1F* h_leadingMuonPFIso                     {new TH1F ("h_leadingMuonPFIso",                    "Leading muon PF iso; iso", 500, 0., 15.)};
-    TH1F* h_subleadingMuonPFIso                  {new TH1F ("h_subleadingMuonPFIso",                 "Subleading muon PF iso; iso", 500, 0., 15.)};
-    TH1F* h_leadingMuonPFRelIso                  {new TH1F ("h_leadingMuonPFRelIso",                 "Leading muon PF rel iso; rel iso", 500, 0., 5.)};
-    TH1F* h_subleadingMuonPFRelIso               {new TH1F ("h_subleadingMuonPFRelIso",              "Subleading muon PF rel iso; rel iso", 500, 0., 5.)};
+    TH1F* h_leadingMuonPFIso                         {new TH1F ("h_leadingMuonPFIso",                      "Leading muon PF iso; iso", 500, 0., 15.)};
+    TH1F* h_subleadingMuonPFIso                      {new TH1F ("h_subleadingMuonPFIso",                   "Subleading muon PF iso; iso", 500, 0., 15.)};
+    TH1F* h_leadingMuonPFRelIso                      {new TH1F ("h_leadingMuonPFRelIso",                   "Leading muon PF rel iso; rel iso", 500, 0., 5.)};
+    TH1F* h_subleadingMuonPFRelIso                   {new TH1F ("h_subleadingMuonPFRelIso",                "Subleading muon PF rel iso; rel iso", 500, 0., 5.)};
 
-    TH1F* h_leadingMuonTrkIso_0p3                {new TH1F ("h_leadingMuonTrkIso_0p3",               "Leading trk iso (0.3 cone); iso;", 500, 0., 15.)};
-    TH1F* h_leadingMuonTrkIso_0p4                {new TH1F ("h_leadingMuonTrkIso_0p4",               "Leading trk iso (0.4 cone); iso;", 500, 0., 15.)};
-    TH1F* h_leadingMuonPfCandIso_0p3             {new TH1F ("h_leadingMuonPfCandIso_0p3",            "Leading muon pf cand iso (0.3 cone); iso;", 500, 0., 15.)};
-    TH1F* h_leadingMuonPfCandIso_0p4             {new TH1F ("h_leadingMuonPfCandIso_0p4",            "Leading muon pf cand iso (0.4 cone); iso;", 500, 0., 15.)};
-    TH1F* h_leadingMuonPfCandPtIso_0p3           {new TH1F ("h_leadingMuonPfCandPtIso_0p3",          "Leading muon pf cand iso (p_{T} sum) (0.3 cone); iso;", 500, 0., 15.)};
-    TH1F* h_leadingMuonPfCandPtIso_0p4           {new TH1F ("h_leadingMuonPfCandPtIso_0p4",          "Leading muon pf cand iso (p_{T} sum) (0.4 cone); iso;", 500, 0., 15.)};
-    TH1F* h_leadingMuonAllPfCandsIso_0p3         {new TH1F ("h_leadingMuonAllPfCandsIso_0p3",        "Leading muon pf cand iso (all cands) (0.3 cone); iso;", 500, 0., 15.)};
-    TH1F* h_leadingMuonAllPfCandsIso_0p4         {new TH1F ("h_leadingMuonAllPfCandsIso_0p4",        "Leading muon pf cand iso (all cands) (0.4 cone); iso;", 500, 0., 15.)};
+    TH1F* h_leadingMuonTrkIso_0p3                    {new TH1F ("h_leadingMuonTrkIso_0p3",                 "Leading trk iso (0.3 cone); iso;", 500, 0., 15.)};
+    TH1F* h_leadingMuonTrkIso_0p4                    {new TH1F ("h_leadingMuonTrkIso_0p4",                 "Leading trk iso (0.4 cone); iso;", 500, 0., 15.)};
+    TH1F* h_leadingMuonPfCandIsoNoPU_0p3             {new TH1F ("h_leadingMuonPfCandIsoNoPU_0p3",          "Leading muon pf cand iso (0.3 cone) without PU corrections; iso;", 500, 0., 15.)};
+    TH1F* h_leadingMuonPfCandIsoNoPU_0p4             {new TH1F ("h_leadingMuonPfCandIsoNoPU_0p4",          "Leading muon pf cand iso (0.4 cone) without PU corrections; iso;", 500, 0., 15.)};
+    TH1F* h_leadingMuonPfCandPtIsoNoPU_0p3           {new TH1F ("h_leadingMuonPfCandPtIsoNoPU_0p3",        "Leading muon pf cand iso (p_{T} sum) (0.3 cone) without PU corrections; iso;", 500, 0., 15.)};
+    TH1F* h_leadingMuonPfCandPtIsoNoPU_0p4           {new TH1F ("h_leadingMuonPfCandPtIsoNoPU_0p4",        "Leading muon pf cand iso (p_{T} sum) (0.4 cone) without PU corrections; iso;", 500, 0., 15.)};
+    TH1F* h_leadingMuonPfCandIso_0p3                 {new TH1F ("h_leadingMuonPfCandIso_0p3",              "Leading muon pf cand iso (0.3 cone) with PU corrections; iso;", 500, 0., 15.)};
+    TH1F* h_leadingMuonPfCandIso_0p4                 {new TH1F ("h_leadingMuonPfCandIso_0p4",              "Leading muon pf cand iso (0.4 cone) with PU corrections; iso;", 500, 0., 15.)};
+    TH1F* h_leadingMuonPfCandPtIso_0p3               {new TH1F ("h_leadingMuonPfCandPtIso_0p3",            "Leading muon pf cand iso (p_{T} sum) (0.3 cone) with PU corrections; iso;", 500, 0., 15.)};
+    TH1F* h_leadingMuonPfCandPtIso_0p4               {new TH1F ("h_leadingMuonPfCandPtIso_0p4",            "Leading muon pf cand iso (p_{T} sum) (0.4 cone) with PU corrections; iso;", 500, 0., 15.)};
  
-    TH1F* h_subleadingMuonTrkIso_0p3             {new TH1F ("h_subleadingMuonTrkIso_0p3",            "Subleading trk iso (0.3 cone); iso;", 500, 0., 15.)};
-    TH1F* h_subleadingMuonTrkIso_0p4             {new TH1F ("h_subleadingMuonTrkIso_0p4",            "Subleading trk iso (0.4 cone); iso;", 500, 0., 15.)};
-    TH1F* h_subleadingMuonPfCandIso_0p3          {new TH1F ("h_subleadingMuonPfCandIso_0p3",         "Subleading muon pf cand iso (0.3 cone); iso;", 500, 0., 15.)};
-    TH1F* h_subleadingMuonPfCandIso_0p4          {new TH1F ("h_subleadingMuonPfCandIso_0p4",         "Subleading muon pf cand iso (0.4 cone); iso;", 500, 0., 15.)};
-    TH1F* h_subleadingMuonPfCandPtIso_0p3        {new TH1F ("h_subleadingMuonPfCandPtIso_0p3",       "Subleading muon pf cand iso (p_{T} sum) (0.3 cone); iso;", 500, 0., 15.)};
-    TH1F* h_subleadingMuonPfCandPtIso_0p4        {new TH1F ("h_subleadingMuonPfCandPtIso_0p4",       "Subeading muon pf cand iso (p_{T} sum) (0.4 cone); iso;", 500, 0., 15.)};
-    TH1F* h_subleadingMuonAllPfCandsIso_0p3      {new TH1F ("h_subleadingMuonAllPfCandsIso_0p3",     "Subleading muon pf cand iso (all cands) (0.3 cone); iso;", 500, 0., 15.)};
-    TH1F* h_subleadingMuonAllPfCandsIso_0p4      {new TH1F ("h_subleadingMuonAllPfCandsIso_0p4",     "Subleading muon pf cand iso (all cands) (0.4 cone); iso;", 500, 0., 15.)};
+    TH1F* h_subleadingMuonTrkIso_0p3                 {new TH1F ("h_subleadingMuonTrkIso_0p3",              "Subleading trk iso (0.3 cone); iso;", 500, 0., 15.)};
+    TH1F* h_subleadingMuonTrkIso_0p4                 {new TH1F ("h_subleadingMuonTrkIso_0p4",              "Subleading trk iso (0.4 cone); iso;", 500, 0., 15.)};
+    TH1F* h_subleadingMuonPfCandIsoNoPU_0p3          {new TH1F ("h_subleadingMuonPfCandIsoNoPU_0p3",       "Subleading muon pf cand iso (0.3 cone) without PU corrections; iso;", 500, 0., 15.)};
+    TH1F* h_subleadingMuonPfCandIsoNoPU_0p4          {new TH1F ("h_subleadingMuonPfCandIsoNoPU_0p4",       "Subleading muon pf cand iso (0.4 cone) without PU corrections; iso;", 500, 0., 15.)};
+    TH1F* h_subleadingMuonPfCandPtIsoNoPU_0p3        {new TH1F ("h_subleadingMuonPfCandPtIsoNoPU_0p3",     "Subleading muon pf cand iso (p_{T} sum) (0.3 cone) without PU corrections; iso;", 500, 0., 15.)};
+    TH1F* h_subleadingMuonPfCandPtIsoNoPU_0p4        {new TH1F ("h_subleadingMuonPfCandPtIsoNoPU_0p4",     "Subeading muon pf cand iso (p_{T} sum) (0.4 cone) without PU corrections; iso;", 500, 0., 15.)};
+    TH1F* h_subleadingMuonPfCandIso_0p3              {new TH1F ("h_subleadingMuonPfCandIso_0p3",           "Subleading muon pf cand iso (0.3 cone) with PU corrections; iso;", 500, 0., 15.)};
+    TH1F* h_subleadingMuonPfCandIso_0p4              {new TH1F ("h_subleadingMuonPfCandIso_0p4",           "Subleading muon pf cand iso (0.4 cone) with PU corrections; iso;", 500, 0., 15.)};
+    TH1F* h_subleadingMuonPfCandPtIso_0p3            {new TH1F ("h_subleadingMuonPfCandPtIso_0p3",         "Subleading muon pf cand iso (p_{T} sum) (0.3 cone) with PU corrections; iso;", 500, 0., 15.)};
+    TH1F* h_subleadingMuonPfCandPtIso_0p4            {new TH1F ("h_subleadingMuonPfCandPtIso_0p4",         "Subeading muon pf cand iso (p_{T} sum) (0.4 cone) with PU corrections; iso;", 500, 0., 15.)};
+
+    TH1F* h_leadingMuonTrkRelIso_0p3                 {new TH1F ("h_leadingMuonTrkRelIso_0p3",              "Leading trk rel iso (0.3 cone); rel iso;", 500, 0., 5.)};
+    TH1F* h_leadingMuonTrkRelIso_0p4                 {new TH1F ("h_leadingMuonTrkRelIso_0p4",              "Leading trk rel iso (0.4 cone); rel iso;", 500, 0., 5.)};
+    TH1F* h_leadingMuonPfCandRelIsoNoPU_0p3          {new TH1F ("h_leadingMuonPfCandRelIsoNoPU_0p3",       "Leading muon pf cand rel iso (0.3 cone) without PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_leadingMuonPfCandRelIsoNoPU_0p4          {new TH1F ("h_leadingMuonPfCandRelIsoNoPU_0p4",       "Leading muon pf cand rel iso (0.4 cone) without PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_leadingMuonPfCandPtRelIsoNoPU_0p3        {new TH1F ("h_leadingMuonPfCandPtRelIsoNoPU_0p3",     "Leading muon pf cand rel iso (p_{T} sum) (0.3 cone) without PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_leadingMuonPfCandPtRelIsoNoPU_0p4        {new TH1F ("h_leadingMuonPfCandPtRelIsoNoPU_0p4",     "Leading muon pf cand rel iso (p_{T} sum) (0.4 cone) without PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_leadingMuonPfCandRelIso_0p3              {new TH1F ("h_leadingMuonPfCandRelIso_0p3",           "Leading muon pf cand rel iso (0.3 cone) with PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_leadingMuonPfCandRelIso_0p4              {new TH1F ("h_leadingMuonPfCandRelIso_0p4",           "Leading muon pf cand rel iso (0.4 cone) with PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_leadingMuonPfCandPtRelIso_0p3            {new TH1F ("h_leadingMuonPfCandPtRelIso_0p3",         "Leading muon pf cand rel iso (p_{T} sum) (0.3 cone) with PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_leadingMuonPfCandPtRelIso_0p4            {new TH1F ("h_leadingMuonPfCandPtRelIso_0p4",         "Leading muon pf cand rel iso (p_{T} sum) (0.4 cone) with PU corrections; rel iso;", 500, 0., 5.)};
 
 
-    TH1F* h_leadingMuonTrkRelIso_0p3             {new TH1F ("h_leadingMuonTrkRelIso_0p3",            "Leading trk rel iso (0.3 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_leadingMuonTrkRelIso_0p4             {new TH1F ("h_leadingMuonTrkRelIso_0p4",            "Leading trk rel iso (0.4 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_leadingMuonPfCandRelIso_0p3          {new TH1F ("h_leadingMuonPfCandRelIso_0p3",         "Leading muon pf cand rel iso (0.3 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_leadingMuonPfCandRelIso_0p4          {new TH1F ("h_leadingMuonPfCandRelIso_0p4",         "Leading muon pf cand rel iso (0.4 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_leadingMuonPfCandPtRelIso_0p3        {new TH1F ("h_leadingMuonPfCandPtRelIso_0p3",       "Leading muon pf cand rel iso (p_{T} sum) (0.3 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_leadingMuonPfCandPtRelIso_0p4        {new TH1F ("h_leadingMuonPfCandPtRelIso_0p4",       "Leading muon pf cand rel iso (p_{T} sum) (0.4 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_leadingMuonAllPfCandsRelIso_0p3      {new TH1F ("h_leadingMuonAllPfCandsRelIso_0p3",     "Leading muon pf cand rel iso (all cands) (0.3 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_leadingMuonAllPfCandsRelIso_0p4      {new TH1F ("h_leadingMuonAllPfCandsRelIso_0p4",     "Leading muon pf cand rel iso (all cands) (0.4 cone); rel iso;", 500, 0., 5.)};
+    TH1F* h_subleadingMuonTrkRelIso_0p3              {new TH1F ("h_subleadingMuonTrkRelIso_0p3",           "Subleading trk rel iso (0.3 cone); rel iso;", 500, 0., 5.)};
+    TH1F* h_subleadingMuonTrkRelIso_0p4              {new TH1F ("h_subleadingMuonTrkRelIso_0p4",           "Subleading trk rel iso (0.4 cone); rel iso;", 500, 0., 5.)};
+    TH1F* h_subleadingMuonPfCandRelIsoNoPU_0p3       {new TH1F ("h_subleadingMuonPfCandRelIsoNoPU_0p3",    "Subleading muon pf cand rel iso (0.3 cone) without PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_subleadingMuonPfCandRelIsoNoPU_0p4       {new TH1F ("h_subleadingMuonPfCandRelIsoNoPU_0p4",    "Subleading muon pf cand rel iso (0.4 cone) without PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_subleadingMuonPfCandPtRelIsoNoPU_0p3     {new TH1F ("h_subleadingMuonPfCandPtRelIsoNoPU_0p3",  "Subleading muon pf cand rel iso (p_{T} sum) (0.3 cone) without PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_subleadingMuonPfCandPtRelIsoNoPU_0p4     {new TH1F ("h_subleadingMuonPfCandPtRelIsoNoPU_0p4",  "Subleading muon pf cand rel iso (p_{T} sum) (0.4 cone) without PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_subleadingMuonPfCandRelIso_0p3           {new TH1F ("h_subleadingMuonPfCandRelIso_0p3",        "Subleading muon pf cand rel iso (0.3 cone) with PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_subleadingMuonPfCandRelIso_0p4           {new TH1F ("h_subleadingMuonPfCandRelIso_0p4",        "Subleading muon pf cand rel iso (0.4 cone) with PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_subleadingMuonPfCandPtRelIso_0p3         {new TH1F ("h_subleadingMuonPfCandPtRelIso_0p3",      "Subleading muon pf cand rel iso (p_{T} sum) (0.3 cone) with PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_subleadingMuonPfCandPtRelIso_0p4         {new TH1F ("h_subleadingMuonPfCandPtRelIso_0p4",      "Subleading muon pf cand rel iso (p_{T} sum) (0.4 cone) with PU corrections; rel iso;", 500, 0., 5.)};
 
-    TH1F* h_subleadingMuonTrkRelIso_0p3          {new TH1F ("h_subleadingMuonTrkRelIso_0p3",         "Subleading trk rel iso (0.3 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_subleadingMuonTrkRelIso_0p4          {new TH1F ("h_subleadingMuonTrkRelIso_0p4",         "Subleading trk rel iso (0.4 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_subleadingMuonPfCandRelIso_0p3       {new TH1F ("h_subleadingMuonPfCandRelIso_0p3",      "Subleading muon pf cand rel iso (0.3 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_subleadingMuonPfCandRelIso_0p4       {new TH1F ("h_subleadingMuonPfCandRelIso_0p4",      "Subleading muon pf cand rel iso (0.4 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_subleadingMuonPfCandPtRelIso_0p3     {new TH1F ("h_subleadingMuonPfCandPtRelIso_0p3",    "Subleading muon pf cand rel iso (p_{T} sum) (0.3 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_subleadingMuonPfCandPtRelIso_0p4     {new TH1F ("h_subleadingMuonPfCandPtRelIso_0p4",    "Subleading muon pf cand rel iso (p_{T} sum) (0.4 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_subleadingMuonAllPfCandsRelIso_0p3   {new TH1F ("h_subleadingMuonAllPfCandsRelIso_0p3",  "Subleading muon pf cand rel iso (all cands) (0.3 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_subleadingMuonAllPfCandsRelIso_0p4   {new TH1F ("h_subleadingMuonAllPfCandsRelIso_0p4",  "Subleading muon pf cand rel iso (all cands) (0.4 cone); rel iso;", 500, 0., 5.)};
 
-    TH1F* h_dimuonTrkIso_0p3                     {new TH1F ("h_dimuonTrkIso_0p3",               "Dimuon trk iso (0.3 cone); iso;", 500, 0., 5.)};
-    TH1F* h_dimuonTrkIso_0p4                     {new TH1F ("h_dimuonTrkIso_0p4",               "Dimuon trk iso (0.4 cone); iso;", 500, 0., 5.)};
-    TH1F* h_dimuonPfCandIso_0p3                  {new TH1F ("h_dimuonPfCandIso_0p3",            "Dimuon pf cand iso (0.3 cone); iso;", 500, 0., 5.)};
-    TH1F* h_dimuonPfCandIso_0p4                  {new TH1F ("h_dimuonPfCandIso_0p4",            "Dimuon pf cand iso (0.4 cone); iso;", 500, 0., 5.)};
-    TH1F* h_dimuonPfCandPtIso_0p3                {new TH1F ("h_dimuonPfCandPtIso_0p3",          "Dimuon pf cand iso (p_{T} sum) (0.3 cone); iso;", 500, 0., 5.)};
-    TH1F* h_dimuonPfCandPtIso_0p4                {new TH1F ("h_dimuonPfCandPtIso_0p4",          "Dimuon pf cand iso (p_{T} sum)(0.4 cone); iso;", 500, 0., 5.)};
-    TH1F* h_dimuonAllPfCandsIso_0p3              {new TH1F ("h_dimuonAllPfCandsIso_0p3",        "Dimuon pf cand iso (all cands) (0.3 cone) ; iso;", 500, 0., 5.)};
-    TH1F* h_dimuonAllPfCandsIso_0p4              {new TH1F ("h_dimuonAllPfCandsIso_0p4",        "Dimuon pf cand iso (all cands) (0.4 cone); iso;", 500, 0., 5.)};
+    TH1F* h_dimuonTrkIso_0p3                         {new TH1F ("h_dimuonTrkIso_0p3",               "Dimuon trk iso (0.3 cone); iso;", 500, 0., 5.)};
+    TH1F* h_dimuonTrkIso_0p4                         {new TH1F ("h_dimuonTrkIso_0p4",               "Dimuon trk iso (0.4 cone); iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandIsoNoPU_0p3                  {new TH1F ("h_dimuonPfCandIsoNoPU_0p3",        "Dimuon pf cand iso (0.3 cone) without PU corrections; iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandIsoNoPU_0p4                  {new TH1F ("h_dimuonPfCandIsoNoPU_0p4",        "Dimuon pf cand iso (0.4 cone) without PU corrections; iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandPtIsoNoPU_0p3                {new TH1F ("h_dimuonPfCandPtIsoNoPU_0p3",      "Dimuon pf cand iso (p_{T} sum) (0.3 cone) without PU corrections; iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandPtIsoNoPU_0p4                {new TH1F ("h_dimuonPfCandPtIsoNoPU_0p4",      "Dimuon pf cand iso (p_{T} sum) (0.4 cone) without PU corrections; iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandIso_0p3                      {new TH1F ("h_dimuonPfCandIso_0p3",            "Dimuon pf cand iso (0.3 cone) with PU corrections; iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandIso_0p4                      {new TH1F ("h_dimuonPfCandIso_0p4",            "Dimuon pf cand iso (0.4 cone) with PU corrections; iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandPtIso_0p3                    {new TH1F ("h_dimuonPfCandPtIso_0p3",          "Dimuon pf cand iso (p_{T} sum) (0.3 cone) with PU corrections; iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandPtIso_0p4                    {new TH1F ("h_dimuonPfCandPtIso_0p4",          "Dimuon pf cand iso (p_{T} sum) (0.4 cone) with PU corrections; iso;", 500, 0., 5.)};
 
-    TH1F* h_dimuonTrkRelIso_0p3                  {new TH1F ("h_dimuonTrkRelIso_0p3",            "Dimuon trk rel iso (0.3 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_dimuonTrkRelIso_0p4                  {new TH1F ("h_dimuonTrkRelIso_0p4",            "Dimuon trk rel iso (0.4 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_dimuonPfCandRelIso_0p3               {new TH1F ("h_dimuonPfCandRelIso_0p3",         "Dimuon pf cand rel iso (0.3 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_dimuonPfCandRelIso_0p4               {new TH1F ("h_dimuonPfCandRelIso_0p4",         "Dimuon pf cand rel iso (0.4 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_dimuonPfCandPtRelIso_0p3             {new TH1F ("h_dimuonPfCandPtRelIso_0p3",       "Dimuon pf cand rel iso (p_{T} sum) (0.3 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_dimuonPfCandPtRelIso_0p4             {new TH1F ("h_dimuonPfCandPtRelIso_0p4",       "Dimuon pf cand rel iso (p_{T} sum)(0.4 cone); rel iso;", 500, 0., 5.)};
-    TH1F* h_dimuonAllPfCandsRelIso_0p3           {new TH1F ("h_dimuonAllPfCandsRelIso_0p3",     "Dimuon pf cand rel iso (all cands) (0.3 cone) ; rel iso;", 500, 0., 5.)};
-    TH1F* h_dimuonAllPfCandsRelIso_0p4           {new TH1F ("h_dimuonAllPfCandsRelIso_0p4",     "Dimuon pf cand rel iso (all cands) (0.4 cone); iso;", 500, 0., 5.)};
+    TH1F* h_dimuonTrkRelIso_0p3                      {new TH1F ("h_dimuonTrkRelIso_0p3",            "Dimuon trk rel iso (0.3 cone); rel iso;", 500, 0., 5.)};
+    TH1F* h_dimuonTrkRelIso_0p4                      {new TH1F ("h_dimuonTrkRelIso_0p4",            "Dimuon trk rel iso (0.4 cone); rel iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandRelIsoNoPU_0p3               {new TH1F ("h_dimuonPfCandRelIsoNoPU_0p3",     "Dimuon pf cand rel iso (0.3 cone) without PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandRelIsoNoPU_0p4               {new TH1F ("h_dimuonPfCandRelIsoNoPU_0p4",     "Dimuon pf cand rel iso (0.4 cone) without PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandPtRelIsoNoPU_0p3             {new TH1F ("h_dimuonPfCandPtRelIsoNoPU_0p3",   "Dimuon pf cand rel iso (p_{T} sum) (0.3 cone) without PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandPtRelIsoNoPU_0p4             {new TH1F ("h_dimuonPfCandPtRelIsoNoPU_0p4",   "Dimuon pf cand rel iso (p_{T} sum) (0.4 cone) without PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandRelIso_0p3                   {new TH1F ("h_dimuonPfCandRelIso_0p3",         "Dimuon pf cand rel iso (0.3 cone) with PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandRelIso_0p4                   {new TH1F ("h_dimuonPfCandRelIso_0p4",         "Dimuon pf cand rel iso (0.4 cone) with PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandPtRelIso_0p3                 {new TH1F ("h_dimuonPfCandPtRelIso_0p3",       "Dimuon pf cand rel iso (p_{T} sum) (0.3 cone) with PU corrections; rel iso;", 500, 0., 5.)};
+    TH1F* h_dimuonPfCandPtRelIso_0p4                 {new TH1F ("h_dimuonPfCandPtRelIso_0p4",       "Dimuon pf cand rel iso (p_{T} sum) (0.4 cone) with PU corrections; rel iso;", 500, 0., 5.)};
+
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
@@ -284,9 +298,6 @@ int main(int argc, char* argv[]) {
 	double nh_iso_pT_0p4 {0.}, nh_iso1_pT_0p4 {0.}, nh_iso2_pT_0p4 {0.};
 	double gamma_iso_pT_0p3 {0.}, gamma_iso1_pT_0p3 {0.}, gamma_iso2_pT_0p3 {0.};
 	double gamma_iso_pT_0p4 {0.}, gamma_iso1_pT_0p4 {0.}, gamma_iso2_pT_0p4 {0.};
-	//// combined
-	double pfCand_iso_0p3 {0.}, pfCand_iso1_0p3 {0.}, pfCand_iso2_0p3 {0.};
-	double pfCand_iso_0p4 {0.}, pfCand_iso1_0p4 {0.}, pfCand_iso2_0p4 {0.};
 
 	for (int k = 0; k < event.numPackedCands; k++) {
 	  // Skip packed cand if it is related to either selected muon
@@ -379,21 +390,20 @@ int main(int argc, char* argv[]) {
 	      gamma_iso_0p4  += packedCandVec.Et();
 	      gamma_iso_pT_0p4  += packedCandVec.Pt();
 	    }
-	  }
-	  // All PF Cands
-	  if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 )                            pfCand_iso1_0p3 += packedCandVec.Pt();
-	  if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.3 )                            pfCand_iso2_0p3 += packedCandVec.Pt();
-	  if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.3 ) pfCand_iso_0p3  += packedCandVec.Pt();
-	  if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 )                            pfCand_iso1_0p4 += packedCandVec.Pt();
-	  if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.4 )                            pfCand_iso2_0p4 += packedCandVec.Pt();
-	  if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.4 ) pfCand_iso_0p4  += packedCandVec.Pt();
-	  
+	  }	  
 	}
 
 	
 	// rel iso for tracks
 	const float trkreliso1_0p3 { trkiso1_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, trkreliso2_0p3 { trkiso2_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, trkreliso_0p3 { trkiso_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
 	const float trkreliso1_0p4 { trkiso1_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, trkreliso2_0p4 { trkiso2_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, trkreliso_0p4 { trkiso_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+
+	// iso for PF (pT + ET sum) - NO PU!
+	const float pf_iso1_noPU_0p3 { ch_iso1_0p3 + std::max( 0.0, nh_iso1_0p3 + gamma_iso1_0p3 )}, pf_iso2_noPU_0p3 {ch_iso2_0p3 + std::max( 0.0, nh_iso2_0p3 + gamma_iso2_0p3 )}, pf_iso_noPU_0p3 {ch_iso_0p3 + std::max( 0.0, nh_iso_0p3 + gamma_iso_0p3 )};
+	const float pf_iso1_noPU_0p4 { ch_iso1_0p4 + std::max( 0.0, nh_iso1_0p4 + gamma_iso1_0p4 )}, pf_iso2_noPU_0p4 {ch_iso2_0p4 + std::max( 0.0, nh_iso2_0p4 + gamma_iso2_0p4 )}, pf_iso_noPU_0p4 {ch_iso_0p4 + std::max( 0.0, nh_iso_0p4 + gamma_iso_0p4 )};
+	// rel iso for PF (pT + ET sum) - NO PU!
+	const float pf_reliso1_noPU_0p3 { pf_iso1_noPU_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_noPU_0p3 { pf_iso2_noPU_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_noPU_0p3 { pf_iso_noPU_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+	const float pf_reliso1_noPU_0p4 { pf_iso1_noPU_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_noPU_0p4 { pf_iso2_noPU_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_noPU_0p4 { pf_iso_noPU_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
 
 	// iso for PF (pT + ET sum)
 	const float pf_iso1_0p3 { ch_iso1_0p3 + std::max( 0.0, nh_iso1_0p3 + gamma_iso1_0p3 - 0.5*pu_iso1_0p3 )}, pf_iso2_0p3 {ch_iso2_0p3 + std::max( 0.0, nh_iso2_0p3 + gamma_iso2_0p3 - 0.5*pu_iso2_0p3 )}, pf_iso_0p3 {ch_iso_0p3 + std::max( 0.0, nh_iso_0p3 + gamma_iso_0p3 - 0.5*pu_iso_0p3 )};
@@ -402,6 +412,13 @@ int main(int argc, char* argv[]) {
 	const float pf_reliso1_0p3 { pf_iso1_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_0p3 { pf_iso2_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_0p3 { pf_iso_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
 	const float pf_reliso1_0p4 { pf_iso1_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_0p4 { pf_iso2_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_0p4 { pf_iso_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
 
+	// iso for PF (pT only sum) - NO PU!
+	const float pf_iso1_pT_noPU_0p3 { ch_iso1_0p3 + nh_iso1_pT_0p3 + gamma_iso1_pT_0p3 }, pf_iso2_pT_noPU_0p3 { ch_iso2_0p3 + nh_iso2_pT_0p4 + gamma_iso2_pT_0p3 }, pf_iso_pT_noPU_0p3 { ch_iso_0p3 + nh_iso_pT_0p3 + gamma_iso_pT_0p3 };
+	const float pf_iso1_pT_noPU_0p4 { ch_iso1_0p4 + nh_iso1_pT_0p4 + gamma_iso1_pT_0p4 }, pf_iso2_pT_noPU_0p4 { ch_iso2_0p4 + nh_iso2_pT_0p4 + gamma_iso2_pT_0p4 }, pf_iso_pT_noPU_0p4 { ch_iso_0p4 + nh_iso_pT_0p4 + gamma_iso_pT_0p4 };
+	// rel iso for PF (pT only sum) - NO PU!
+	const float pf_reliso1_pT_noPU_0p3 { pf_iso1_pT_noPU_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_pT_noPU_0p3 { pf_iso2_pT_noPU_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_pT_noPU_0p3 { pf_iso_pT_noPU_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+	const float pf_reliso1_pT_noPU_0p4 { pf_iso1_pT_noPU_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_pT_noPU_0p4 { pf_iso2_pT_noPU_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_pT_noPU_0p4 { pf_iso_pT_noPU_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+
 	// iso for PF (pT only sum)
 	const float pf_iso1_pT_0p3 { ch_iso1_0p3 + nh_iso1_pT_0p3 + gamma_iso1_pT_0p3 - 0.5*pu_iso1_0p3 }, pf_iso2_pT_0p3 { ch_iso2_0p3 + nh_iso2_pT_0p4 + gamma_iso2_pT_0p3  - 0.5*pu_iso2_0p3 }, pf_iso_pT_0p3 { ch_iso_0p3 + nh_iso_pT_0p3 + gamma_iso_pT_0p3 - 0.5*pu_iso_0p3};
 	const float pf_iso1_pT_0p4 { ch_iso1_0p4 + nh_iso1_pT_0p4 + gamma_iso1_pT_0p4 - 0.5*pu_iso1_0p4 }, pf_iso2_pT_0p4 { ch_iso2_0p4 + nh_iso2_pT_0p4 + gamma_iso2_pT_0p4  - 0.5*pu_iso2_0p4 }, pf_iso_pT_0p4 { ch_iso_0p4 + nh_iso_pT_0p4 + gamma_iso_pT_0p4 - 0.5*pu_iso_0p4 };
@@ -409,9 +426,6 @@ int main(int argc, char* argv[]) {
 	const float pf_reliso1_pT_0p3 { pf_iso1_pT_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_pT_0p3 { pf_iso2_pT_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_pT_0p3 { pf_iso_pT_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
 	const float pf_reliso1_pT_0p4 { pf_iso1_pT_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_pT_0p4 { pf_iso2_pT_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_pT_0p4 { pf_iso_pT_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
 
-	// rel iso for all pf cands
-	const float pfCand_reliso1_0p3 {pfCand_iso1_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pfCand_reliso2_0p3 {pfCand_iso2_0p3/ ( event.zPairLeptons.second.Pt()+1.0e-06) }, pfCand_reliso_0p3 { pfCand_iso_0p3/ ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
-	const float pfCand_reliso1_0p4 {pfCand_iso1_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pfCand_reliso2_0p4 {pfCand_iso2_0p4/ ( event.zPairLeptons.second.Pt()+1.0e-06) }, pfCand_reliso_0p4 { pfCand_iso_0p4/ ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
 
 	// Fill muon histograms
 
@@ -422,57 +436,74 @@ int main(int argc, char* argv[]) {
 
             h_leadingMuonTrkIso_0p3->Fill(trkiso1_0p3, eventWeight);
             h_leadingMuonTrkIso_0p4->Fill(trkiso1_0p4, eventWeight);
+            h_leadingMuonPfCandIsoNoPU_0p3->Fill(pf_iso1_noPU_0p3, eventWeight);
+            h_leadingMuonPfCandIsoNoPU_0p4->Fill(pf_iso1_noPU_0p4, eventWeight);
+            h_leadingMuonPfCandPtIsoNoPU_0p3->Fill(pf_iso1_pT_noPU_0p3, eventWeight);
+            h_leadingMuonPfCandPtIsoNoPU_0p4->Fill(pf_iso1_pT_noPU_0p4, eventWeight);
             h_leadingMuonPfCandIso_0p3->Fill(pf_iso1_0p3, eventWeight);
             h_leadingMuonPfCandIso_0p4->Fill(pf_iso1_0p4, eventWeight);
             h_leadingMuonPfCandPtIso_0p3->Fill(pf_iso1_pT_0p3, eventWeight);
             h_leadingMuonPfCandPtIso_0p4->Fill(pf_iso1_pT_0p4, eventWeight);
-            h_leadingMuonAllPfCandsIso_0p3->Fill(pfCand_iso1_0p3, eventWeight);
-            h_leadingMuonAllPfCandsIso_0p4->Fill(pfCand_iso1_0p4, eventWeight);
 
             h_subleadingMuonTrkIso_0p3->Fill(trkiso2_0p3, eventWeight);
             h_subleadingMuonTrkIso_0p4->Fill(trkiso2_0p4, eventWeight);
+
+            h_subleadingMuonPfCandIsoNoPU_0p3->Fill(pf_reliso2_noPU_0p3, eventWeight);
+            h_subleadingMuonPfCandIsoNoPU_0p4->Fill(pf_reliso2_noPU_0p4, eventWeight);
+            h_subleadingMuonPfCandPtIsoNoPU_0p3->Fill(pf_reliso2_pT_noPU_0p3, eventWeight);
+            h_subleadingMuonPfCandPtIsoNoPU_0p4->Fill(pf_reliso2_pT_noPU_0p4, eventWeight);
             h_subleadingMuonPfCandIso_0p3->Fill(pf_reliso2_0p3, eventWeight);
             h_subleadingMuonPfCandIso_0p4->Fill(pf_reliso2_0p4, eventWeight);
             h_subleadingMuonPfCandPtIso_0p3->Fill(pf_reliso2_pT_0p3, eventWeight);
             h_subleadingMuonPfCandPtIso_0p4->Fill(pf_reliso2_pT_0p4, eventWeight);
-            h_subleadingMuonAllPfCandsIso_0p3->Fill(pfCand_iso2_0p3, eventWeight);
-            h_subleadingMuonAllPfCandsIso_0p4->Fill(pfCand_iso2_0p4, eventWeight);
 
             h_leadingMuonTrkRelIso_0p3->Fill(trkreliso1_0p3, eventWeight);
             h_leadingMuonTrkRelIso_0p4->Fill(trkreliso1_0p4, eventWeight);
+
+            h_leadingMuonPfCandRelIsoNoPU_0p3->Fill(pf_reliso1_noPU_0p3, eventWeight);
+            h_leadingMuonPfCandRelIsoNoPU_0p4->Fill(pf_reliso1_noPU_0p4, eventWeight);
+            h_leadingMuonPfCandPtRelIsoNoPU_0p3->Fill(pf_reliso1_pT_noPU_0p3, eventWeight);
+            h_leadingMuonPfCandPtRelIsoNoPU_0p4->Fill(pf_reliso1_pT_noPU_0p4, eventWeight);
             h_leadingMuonPfCandRelIso_0p3->Fill(pf_reliso1_0p3, eventWeight);
             h_leadingMuonPfCandRelIso_0p4->Fill(pf_reliso1_0p4, eventWeight);
             h_leadingMuonPfCandPtRelIso_0p3->Fill(pf_reliso1_pT_0p3, eventWeight);
             h_leadingMuonPfCandPtRelIso_0p4->Fill(pf_reliso1_pT_0p4, eventWeight);
-            h_leadingMuonAllPfCandsRelIso_0p3->Fill(pfCand_reliso1_0p3, eventWeight);
-            h_leadingMuonAllPfCandsRelIso_0p4->Fill(pfCand_reliso1_0p4, eventWeight);
 
             h_subleadingMuonTrkRelIso_0p3->Fill(trkreliso2_0p3, eventWeight);
             h_subleadingMuonTrkRelIso_0p4->Fill(trkreliso2_0p4, eventWeight);
+
+            h_subleadingMuonPfCandRelIsoNoPU_0p3->Fill(pf_reliso2_noPU_0p3, eventWeight);
+            h_subleadingMuonPfCandRelIsoNoPU_0p4->Fill(pf_reliso2_noPU_0p4, eventWeight);
+            h_subleadingMuonPfCandPtRelIsoNoPU_0p3->Fill(pf_reliso2_pT_noPU_0p3, eventWeight);
+            h_subleadingMuonPfCandPtRelIsoNoPU_0p4->Fill(pf_reliso2_pT_noPU_0p4, eventWeight);
             h_subleadingMuonPfCandRelIso_0p3->Fill(pf_reliso2_0p3, eventWeight);
             h_subleadingMuonPfCandRelIso_0p4->Fill(pf_reliso2_0p4, eventWeight);
             h_subleadingMuonPfCandPtRelIso_0p3->Fill(pf_reliso2_pT_0p3, eventWeight);
             h_subleadingMuonPfCandPtRelIso_0p4->Fill(pf_reliso2_pT_0p4, eventWeight);
-            h_subleadingMuonAllPfCandsRelIso_0p3->Fill(pfCand_reliso2_0p3, eventWeight);
-            h_subleadingMuonAllPfCandsRelIso_0p4->Fill(pfCand_reliso2_0p4, eventWeight);
 
             h_dimuonTrkIso_0p3->Fill(trkiso_0p3, eventWeight);
             h_dimuonTrkIso_0p4->Fill(trkiso_0p4, eventWeight);
+ 
+            h_dimuonPfCandIsoNoPU_0p3->Fill(pf_iso_noPU_0p3, eventWeight);
+            h_dimuonPfCandIsoNoPU_0p4->Fill(pf_iso_noPU_0p4, eventWeight);
+            h_dimuonPfCandPtIsoNoPU_0p3->Fill(pf_iso_pT_noPU_0p3, eventWeight);
+            h_dimuonPfCandPtIsoNoPU_0p4->Fill(pf_iso_pT_noPU_0p4, eventWeight);
             h_dimuonPfCandIso_0p3->Fill(pf_iso_0p3, eventWeight);
             h_dimuonPfCandIso_0p4->Fill(pf_iso_0p4, eventWeight);
             h_dimuonPfCandPtIso_0p3->Fill(pf_iso_pT_0p3, eventWeight);
             h_dimuonPfCandPtIso_0p4->Fill(pf_iso_pT_0p4, eventWeight);
-            h_dimuonAllPfCandsIso_0p3->Fill(pfCand_iso_0p3, eventWeight);
-            h_dimuonAllPfCandsIso_0p4->Fill(pfCand_iso_0p4, eventWeight);
 
             h_dimuonTrkRelIso_0p3->Fill(trkreliso_0p3, eventWeight);
             h_dimuonTrkRelIso_0p4->Fill(trkreliso_0p4, eventWeight);
+
+            h_dimuonPfCandRelIsoNoPU_0p3->Fill(pf_reliso_noPU_0p3, eventWeight);
+            h_dimuonPfCandRelIsoNoPU_0p4->Fill(pf_reliso_noPU_0p4, eventWeight);
+            h_dimuonPfCandPtRelIsoNoPU_0p3->Fill(pf_reliso_pT_noPU_0p3, eventWeight);
+            h_dimuonPfCandPtRelIsoNoPU_0p4->Fill(pf_reliso_pT_noPU_0p4, eventWeight);
             h_dimuonPfCandRelIso_0p3->Fill(pf_reliso_0p3, eventWeight);
             h_dimuonPfCandRelIso_0p4->Fill(pf_reliso_0p4, eventWeight);
             h_dimuonPfCandPtRelIso_0p3->Fill(pf_reliso_pT_0p3, eventWeight);
             h_dimuonPfCandPtRelIso_0p4->Fill(pf_reliso_pT_0p4, eventWeight);
-            h_dimuonAllPfCandsRelIso_0p3->Fill(pfCand_reliso_0p3, eventWeight);
-            h_dimuonAllPfCandsRelIso_0p4->Fill(pfCand_reliso_0p4, eventWeight);
 
 
       } // end event loop
@@ -488,55 +519,68 @@ int main(int argc, char* argv[]) {
 /*
     h_leadingMuonTrkIso_0p3->Write();
     h_leadingMuonTrkIso_0p4->Write();
+    h_leadingMuonPfCandIsoNoPU_0p3->Write();
+    h_leadingMuonPfCandIsoNoPU_0p4->Write();
+    h_leadingMuonPfCandPtIsoNoPU_0p3->Write();
+    h_leadingMuonPfCandPtIsoNoPU_0p4->Write();
     h_leadingMuonPfCandIso_0p3->Write();
     h_leadingMuonPfCandIso_0p4->Write();
     h_leadingMuonPfCandPtIso_0p3->Write();
     h_leadingMuonPfCandPtIso_0p4->Write();
-    h_leadingMuonAllPfCandsIso_0p3->Write();
-    h_leadingMuonAllPfCandsIso_0p4->Write();
     h_subleadingMuonTrkIso_0p3->Write();
     h_subleadingMuonTrkIso_0p4->Write();
+    h_subleadingMuonPfCandIsoNoPU_0p3->Write();
+    h_subleadingMuonPfCandIsoNoPU_0p4->Write();
+    h_subleadingMuonPfCandPtIsoNoPU_0p3->Write();
+    h_subleadingMuonPfCandPtIsoNoPU_0p4->Write();
     h_subleadingMuonPfCandIso_0p3->Write();
     h_subleadingMuonPfCandIso_0p4->Write();
     h_subleadingMuonPfCandPtIso_0p3->Write();
     h_subleadingMuonPfCandPtIso_0p4->Write();
-    h_subleadingMuonAllPfCandsIso_0p3->Write();
-    h_subleadingMuonAllPfCandsIso_0p4->Write();
 */
     h_leadingMuonTrkRelIso_0p3->Write();
     h_leadingMuonTrkRelIso_0p4->Write();
+    h_leadingMuonPfCandRelIsoNoPU_0p3->Write();
+    h_leadingMuonPfCandRelIsoNoPU_0p4->Write();
+    h_leadingMuonPfCandPtRelIsoNoPU_0p3->Write();
+    h_leadingMuonPfCandPtRelIsoNoPU_0p4->Write();
     h_leadingMuonPfCandRelIso_0p3->Write();
     h_leadingMuonPfCandRelIso_0p4->Write();
     h_leadingMuonPfCandPtRelIso_0p3->Write();
     h_leadingMuonPfCandPtRelIso_0p4->Write();
-    h_leadingMuonAllPfCandsRelIso_0p3->Write();
-    h_leadingMuonAllPfCandsRelIso_0p4->Write();
+
     h_subleadingMuonTrkRelIso_0p3->Write();
     h_subleadingMuonTrkRelIso_0p4->Write();
+    h_subleadingMuonPfCandRelIsoNoPU_0p3->Write();
+    h_subleadingMuonPfCandRelIsoNoPU_0p4->Write();
+    h_subleadingMuonPfCandPtRelIsoNoPU_0p3->Write();
+    h_subleadingMuonPfCandPtRelIsoNoPU_0p4->Write();
     h_subleadingMuonPfCandRelIso_0p3->Write();
     h_subleadingMuonPfCandRelIso_0p4->Write();
     h_subleadingMuonPfCandPtRelIso_0p3->Write();
     h_subleadingMuonPfCandPtRelIso_0p4->Write();
-    h_subleadingMuonAllPfCandsRelIso_0p3->Write();
-    h_subleadingMuonAllPfCandsRelIso_0p4->Write();
 /*
     h_dimuonTrkIso_0p3->Write();
     h_dimuonTrkIso_0p4->Write();
+    h_dimuonPfCandIsoNoPU_0p3->Write();
+    h_dimuonPfCandIsoNoPU_0p4->Write();
+    h_dimuonPfCandPtIsoNoPU_0p3->Write();
+    h_dimuonPfCandPtIsoNoPU_0p4->Write();
     h_dimuonPfCandIso_0p3->Write();
     h_dimuonPfCandIso_0p4->Write();
     h_dimuonPfCandPtIso_0p3->Write();
     h_dimuonPfCandPtIso_0p4->Write();
-    h_dimuonAllPfCandsIso_0p3->Write();
-    h_dimuonAllPfCandsIso_0p4->Write();
 */
     h_dimuonTrkRelIso_0p3->Write();
     h_dimuonTrkRelIso_0p4->Write();
+    h_dimuonPfCandRelIsoNoPU_0p3->Write();
+    h_dimuonPfCandRelIsoNoPU_0p4->Write();
+    h_dimuonPfCandPtRelIsoNoPU_0p3->Write();
+    h_dimuonPfCandPtRelIsoNoPU_0p4->Write();
     h_dimuonPfCandRelIso_0p3->Write();
     h_dimuonPfCandRelIso_0p4->Write();
     h_dimuonPfCandPtRelIso_0p3->Write();
     h_dimuonPfCandPtRelIso_0p4->Write();
-    h_dimuonAllPfCandsRelIso_0p3->Write();
-    h_dimuonAllPfCandsRelIso_0p4->Write();
 
     outFile->Close();
 
