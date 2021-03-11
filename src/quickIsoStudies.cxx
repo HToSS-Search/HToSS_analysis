@@ -52,7 +52,6 @@ const float invZMassCut_ {10.0}, chsMass_{0.13957018};
 double maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4};
 double higgsTolerence_ {10.};
 
-
 int main(int argc, char* argv[]) {
     auto timerStart = std::chrono::high_resolution_clock::now(); 
 
@@ -356,8 +355,8 @@ int main(int argc, char* argv[]) {
 	double mu_trkiso_0p4 {0.}, mu_trkiso1_0p4 {0.}, mu_trkiso2_0p4 {0.};
 	// pf cand iso
 	//// separate components
-	double mu_ch_iso_0p3 {0.}, mu_ch_iso1_0p33 {0.}, mu_ch_iso2_0p33 {0.};
-	double mu_ch_iso_0p4 {0.}, mu_ch_iso1_0p34 {0.}, mu_ch_iso2_0p34 {0.};
+	double mu_ch_iso_0p3 {0.}, mu_ch_iso1_0p3 {0.}, mu_ch_iso2_0p3 {0.};
+	double mu_ch_iso_0p4 {0.}, mu_ch_iso1_0p4 {0.}, mu_ch_iso2_0p4 {0.};
         double mu_pu_iso_0p3 {0.}, mu_pu_iso1_0p3 {0.}, mu_pu_iso2_0p3 {0.};
         double mu_pu_iso_0p4 {0.}, mu_pu_iso1_0p4 {0.}, mu_pu_iso2_0p4 {0.};
 	//// ET
@@ -394,11 +393,11 @@ int main(int argc, char* argv[]) {
 	  int candId (std::abs(event.packedCandsPdgId[k]));
 	  if ( candId == 211 ) { // If charged hadron
             if ( event.packedCandsFromPV[k] >= 2 ) { // If from PV
-              if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 )                            mu_ch_iso1_0p33 += packedCandVec.Pt();
-	      if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.3 )                            mu_ch_iso2_0p33 += packedCandVec.Pt();
+              if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 )                            mu_ch_iso1_0p3 += packedCandVec.Pt();
+	      if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.3 )                            mu_ch_iso2_0p3 += packedCandVec.Pt();
 	      if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.3 ) mu_ch_iso_0p3  += packedCandVec.Pt();
-	      if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 )                            mu_ch_iso1_0p34 += packedCandVec.Pt();
-	      if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.4 )                            mu_ch_iso2_0p34 += packedCandVec.Pt();
+	      if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 )                            mu_ch_iso1_0p4 += packedCandVec.Pt();
+	      if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.4 )                            mu_ch_iso2_0p4 += packedCandVec.Pt();
 	      if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.4 ) mu_ch_iso_0p4  += packedCandVec.Pt();
 	    }
             else {
@@ -473,8 +472,8 @@ int main(int argc, char* argv[]) {
 	double mu_trkiso_0p4 {0.}, mu_trkiso1_0p4 {0.}, mu_trkiso2_0p4 {0.};
 	// pf cand iso
 	//// separate components
-	double mu_ch_iso_0p3 {0.}, mu_ch_iso1_0p33 {0.}, mu_ch_iso2_0p33 {0.};
-	double mu_ch_iso_0p4 {0.}, mu_ch_iso1_0p34 {0.}, mu_ch_iso2_0p34 {0.};
+	double mu_ch_iso_0p3 {0.}, mu_ch_iso1_0p3 {0.}, mu_ch_iso2_0p3 {0.};
+	double mu_ch_iso_0p4 {0.}, mu_ch_iso1_0p4 {0.}, mu_ch_iso2_0p4 {0.};
         double mu_pu_iso_0p3 {0.}, mu_pu_iso1_0p3 {0.}, mu_pu_iso2_0p3 {0.};
         double mu_pu_iso_0p4 {0.}, mu_pu_iso1_0p4 {0.}, mu_pu_iso2_0p4 {0.};
 	//// ET
@@ -511,11 +510,11 @@ int main(int argc, char* argv[]) {
 	  int candId (std::abs(event.packedCandsPdgId[k]));
 	  if ( candId == 211 ) { // If charged hadron
             if ( event.packedCandsFromPV[k] >= 2 ) { // If from PV
-              if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 )                            mu_ch_iso1_0p33 += packedCandVec.Pt();
-	      if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.3 )                            mu_ch_iso2_0p33 += packedCandVec.Pt();
+              if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.3 )                            mu_ch_iso1_0p3 += packedCandVec.Pt();
+	      if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.3 )                            mu_ch_iso2_0p3 += packedCandVec.Pt();
 	      if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.3 ) mu_ch_iso_0p3  += packedCandVec.Pt();
-	      if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 )                            mu_ch_iso1_0p34 += packedCandVec.Pt();
-	      if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.4 )                            mu_ch_iso2_0p34 += packedCandVec.Pt();
+	      if ( event.zPairLeptons.first.DeltaR(packedCandVec)  < 0.4 )                            mu_ch_iso1_0p4 += packedCandVec.Pt();
+	      if ( event.zPairLeptons.second.DeltaR(packedCandVec) < 0.4 )                            mu_ch_iso2_0p4 += packedCandVec.Pt();
 	      if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec) < 0.4 ) mu_ch_iso_0p4  += packedCandVec.Pt();
 	    }
             else {
@@ -586,36 +585,36 @@ int main(int argc, char* argv[]) {
         //// Calculate Iso's
         // Calculate Muon iso
 	// rel iso for tracks
-	const float trkreliso1_0p3 { mu_trkiso1_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, trkreliso2_0p3 { mu_trkiso2_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, trkreliso_0p3 { mu_trkiso_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
-	const float trkreliso1_0p4 { mu_trkiso1_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, trkreliso2_0p4 { mu_trkiso2_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, trkreliso_0p4 { mu_trkiso_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+	const float mu_trkreliso1_0p3 { mu_trkiso1_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, mu_trkreliso2_0p3 { mu_trkiso2_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, mu_trkreliso_0p3 { mu_trkiso_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+	const float mu_trkreliso1_0p4 { mu_trkiso1_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, mu_trkreliso2_0p4 { mu_trkiso2_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, mu_trkreliso_0p4 { mu_trkiso_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
 
 	// iso for PF (pT + ET sum) - NO PU!
-	const float pf_iso1_noPU_0p3 { mu_ch_iso1_0p33 + std::max( 0.0, mu_nh_iso1_0p3 + mu_gamma_iso1_0p3 )}, pf_iso2_noPU_0p3 {mu_ch_iso2_0p33 + std::max( 0.0, mu_nh_iso2_0p3 + mu_gamma_iso2_0p3 )}, pf_iso_noPU_0p3 {mu_ch_iso_0p3 + std::max( 0.0, mu_nh_iso_0p3 + mu_gamma_iso_0p3 )};
-	const float pf_iso1_noPU_0p4 { mu_ch_iso1_0p34 + std::max( 0.0, mu_nh_iso1_0p4 + mu_gamma_iso1_0p4 )}, pf_iso2_noPU_0p4 {mu_ch_iso2_0p34 + std::max( 0.0, mu_nh_iso2_0p4 + mu_gamma_iso2_0p4 )}, pf_iso_noPU_0p4 {mu_ch_iso_0p4 + std::max( 0.0, mu_nh_iso_0p4 + mu_gamma_iso_0p4 )};
+	const float mu_pf_iso1_noPU_0p3 { mu_ch_iso1_0p3 + std::max( 0.0, mu_nh_iso1_0p3 + mu_gamma_iso1_0p3 )}, mu_pf_iso2_noPU_0p3 {mu_ch_iso2_0p3 + std::max( 0.0, mu_nh_iso2_0p3 + mu_gamma_iso2_0p3 )}, mu_pf_iso_noPU_0p3 {mu_ch_iso_0p3 + std::max( 0.0, mu_nh_iso_0p3 + mu_gamma_iso_0p3 )};
+	const float mu_pf_iso1_noPU_0p4 { mu_ch_iso1_0p4 + std::max( 0.0, mu_nh_iso1_0p4 + mu_gamma_iso1_0p4 )}, mu_pf_iso2_noPU_0p4 {mu_ch_iso2_0p4 + std::max( 0.0, mu_nh_iso2_0p4 + mu_gamma_iso2_0p4 )}, mu_pf_iso_noPU_0p4 {mu_ch_iso_0p4 + std::max( 0.0, mu_nh_iso_0p4 + mu_gamma_iso_0p4 )};
 	// rel iso for PF (pT + ET sum) - NO PU!
-	const float pf_reliso1_noPU_0p3 { pf_iso1_noPU_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_noPU_0p3 { pf_iso2_noPU_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_noPU_0p3 { pf_iso_noPU_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
-	const float pf_reliso1_noPU_0p4 { pf_iso1_noPU_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_noPU_0p4 { pf_iso2_noPU_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_noPU_0p4 { pf_iso_noPU_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+	const float mu_pf_reliso1_noPU_0p3 { mu_pf_iso1_noPU_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, mu_pf_reliso2_noPU_0p3 { mu_pf_iso2_noPU_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, mu_pf_reliso_noPU_0p3 { mu_pf_iso_noPU_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+	const float mu_pf_reliso1_noPU_0p4 { mu_pf_iso1_noPU_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, mu_pf_reliso2_noPU_0p4 { mu_pf_iso2_noPU_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, mu_pf_reliso_noPU_0p4 { mu_pf_iso_noPU_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
 
 	// iso for PF (pT + ET sum)
-	const float pf_iso1_0p3 { mu_ch_iso1_0p33 + std::max( 0.0, mu_nh_iso1_0p3 + mu_gamma_iso1_0p3 - 0.5*mu_pu_iso1_0p3 )}, pf_iso2_0p3 {mu_ch_iso2_0p33 + std::max( 0.0, mu_nh_iso2_0p3 + mu_gamma_iso2_0p3 - 0.5*mu_pu_iso2_0p3 )}, pf_iso_0p3 {mu_ch_iso_0p3 + std::max( 0.0, mu_nh_iso_0p3 + mu_gamma_iso_0p3 - 0.5*mu_pu_iso_0p3 )};
-	const float pf_iso1_0p4 { mu_ch_iso1_0p34 + std::max( 0.0, mu_nh_iso1_0p4 + mu_gamma_iso1_0p4 - 0.5*mu_pu_iso1_0p4 )}, pf_iso2_0p4 {mu_ch_iso2_0p34 + std::max( 0.0, mu_nh_iso2_0p4 + mu_gamma_iso2_0p4 - 0.5*mu_pu_iso2_0p4 )}, pf_iso_0p4 {mu_ch_iso_0p4 + std::max( 0.0, mu_nh_iso_0p4 + mu_gamma_iso_0p4 - 0.5*mu_pu_iso_0p4 )};
+	const float mu_pf_iso1_0p3 { mu_ch_iso1_0p3 + std::max( 0.0, mu_nh_iso1_0p3 + mu_gamma_iso1_0p3 - 0.5*mu_pu_iso1_0p3 )}, mu_pf_iso2_0p3 {mu_ch_iso2_0p3 + std::max( 0.0, mu_nh_iso2_0p3 + mu_gamma_iso2_0p3 - 0.5*mu_pu_iso2_0p3 )}, mu_pf_iso_0p3 {mu_ch_iso_0p3 + std::max( 0.0, mu_nh_iso_0p3 + mu_gamma_iso_0p3 - 0.5*mu_pu_iso_0p3 )};
+	const float mu_pf_iso1_0p4 { mu_ch_iso1_0p4 + std::max( 0.0, mu_nh_iso1_0p4 + mu_gamma_iso1_0p4 - 0.5*mu_pu_iso1_0p4 )}, mu_pf_iso2_0p4 {mu_ch_iso2_0p4 + std::max( 0.0, mu_nh_iso2_0p4 + mu_gamma_iso2_0p4 - 0.5*mu_pu_iso2_0p4 )}, mu_pf_iso_0p4 {mu_ch_iso_0p4 + std::max( 0.0, mu_nh_iso_0p4 + mu_gamma_iso_0p4 - 0.5*mu_pu_iso_0p4 )};
 	// rel iso for PF (pT + ET sum)
-	const float pf_reliso1_0p3 { pf_iso1_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_0p3 { pf_iso2_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_0p3 { pf_iso_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
-	const float pf_reliso1_0p4 { pf_iso1_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_0p4 { pf_iso2_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_0p4 { pf_iso_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+	const float mu_pf_reliso1_0p3 { mu_pf_iso1_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, mu_pf_reliso2_0p3 { mu_pf_iso2_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, mu_pf_reliso_0p3 { mu_pf_iso_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+	const float mu_pf_reliso1_0p4 { mu_pf_iso1_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, mu_pf_reliso2_0p4 { mu_pf_iso2_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, mu_pf_reliso_0p4 { mu_pf_iso_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
 
 	// iso for PF (pT only sum) - NO PU!
-	const float pf_iso1_pT_noPU_0p3 { mu_ch_iso1_0p33 + mu_nh_iso1_pT_0p3 + mu_gamma_iso1_pT_0p3 }, pf_iso2_pT_noPU_0p3 { mu_ch_iso2_0p33 + mu_nh_iso2_pT_0p4 + mu_gamma_iso2_pT_0p3 }, pf_iso_pT_noPU_0p3 { mu_ch_iso_0p3 + mu_nh_iso_pT_0p3 + mu_gamma_iso_pT_0p3 };
-	const float pf_iso1_pT_noPU_0p4 { mu_ch_iso1_0p34 + mu_nh_iso1_pT_0p4 + mu_gamma_iso1_pT_0p4 }, pf_iso2_pT_noPU_0p4 { mu_ch_iso2_0p34 + mu_nh_iso2_pT_0p4 + mu_gamma_iso2_pT_0p4 }, pf_iso_pT_noPU_0p4 { mu_ch_iso_0p4 + mu_nh_iso_pT_0p4 + mu_gamma_iso_pT_0p4 };
+	const float mu_pf_iso1_pT_noPU_0p3 { mu_ch_iso1_0p3 + mu_nh_iso1_pT_0p3 + mu_gamma_iso1_pT_0p3 }, mu_pf_iso2_pT_noPU_0p3 { mu_ch_iso2_0p3 + mu_nh_iso2_pT_0p4 + mu_gamma_iso2_pT_0p3 }, mu_pf_iso_pT_noPU_0p3 { mu_ch_iso_0p3 + mu_nh_iso_pT_0p3 + mu_gamma_iso_pT_0p3 };
+	const float mu_pf_iso1_pT_noPU_0p4 { mu_ch_iso1_0p4 + mu_nh_iso1_pT_0p4 + mu_gamma_iso1_pT_0p4 }, mu_pf_iso2_pT_noPU_0p4 { mu_ch_iso2_0p4 + mu_nh_iso2_pT_0p4 + mu_gamma_iso2_pT_0p4 }, mu_pf_iso_pT_noPU_0p4 { mu_ch_iso_0p4 + mu_nh_iso_pT_0p4 + mu_gamma_iso_pT_0p4 };
 	// rel iso for PF (pT only sum) - NO PU!
-	const float pf_reliso1_pT_noPU_0p3 { pf_iso1_pT_noPU_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_pT_noPU_0p3 { pf_iso2_pT_noPU_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_pT_noPU_0p3 { pf_iso_pT_noPU_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
-	const float pf_reliso1_pT_noPU_0p4 { pf_iso1_pT_noPU_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_pT_noPU_0p4 { pf_iso2_pT_noPU_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_pT_noPU_0p4 { pf_iso_pT_noPU_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+	const float mu_pf_reliso1_pT_noPU_0p3 { mu_pf_iso1_pT_noPU_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, mu_pf_reliso2_pT_noPU_0p3 { mu_pf_iso2_pT_noPU_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, mu_pf_reliso_pT_noPU_0p3 { mu_pf_iso_pT_noPU_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+	const float mu_pf_reliso1_pT_noPU_0p4 { mu_pf_iso1_pT_noPU_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, mu_pf_reliso2_pT_noPU_0p4 { mu_pf_iso2_pT_noPU_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, mu_pf_reliso_pT_noPU_0p4 { mu_pf_iso_pT_noPU_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
 
 	// iso for PF (pT only sum)
-	const float pf_iso1_pT_0p3 { mu_ch_iso1_0p33 + mu_nh_iso1_pT_0p3 + mu_gamma_iso1_pT_0p3 - 0.5*mu_pu_iso1_0p3 }, pf_iso2_pT_0p3 { mu_ch_iso2_0p33 + mu_nh_iso2_pT_0p4 + mu_gamma_iso2_pT_0p3  - 0.5*mu_pu_iso2_0p3 }, pf_iso_pT_0p3 { mu_ch_iso_0p3 + mu_nh_iso_pT_0p3 + mu_gamma_iso_pT_0p3 - 0.5*mu_pu_iso_0p3};
-	const float pf_iso1_pT_0p4 { mu_ch_iso1_0p34 + mu_nh_iso1_pT_0p4 + mu_gamma_iso1_pT_0p4 - 0.5*mu_pu_iso1_0p4 }, pf_iso2_pT_0p4 { mu_ch_iso2_0p34 + mu_nh_iso2_pT_0p4 + mu_gamma_iso2_pT_0p4  - 0.5*mu_pu_iso2_0p4 }, pf_iso_pT_0p4 { mu_ch_iso_0p4 + mu_nh_iso_pT_0p4 + mu_gamma_iso_pT_0p4 - 0.5*mu_pu_iso_0p4 };
+	const float mu_pf_iso1_pT_0p3 { mu_ch_iso1_0p3 + mu_nh_iso1_pT_0p3 + mu_gamma_iso1_pT_0p3 - 0.5*mu_pu_iso1_0p3 }, mu_pf_iso2_pT_0p3 { mu_ch_iso2_0p3 + mu_nh_iso2_pT_0p4 + mu_gamma_iso2_pT_0p3  - 0.5*mu_pu_iso2_0p3 }, mu_pf_iso_pT_0p3 { mu_ch_iso_0p3 + mu_nh_iso_pT_0p3 + mu_gamma_iso_pT_0p3 - 0.5*mu_pu_iso_0p3};
+	const float mu_pf_iso1_pT_0p4 { mu_ch_iso1_0p4 + mu_nh_iso1_pT_0p4 + mu_gamma_iso1_pT_0p4 - 0.5*mu_pu_iso1_0p4 }, mu_pf_iso2_pT_0p4 { mu_ch_iso2_0p4 + mu_nh_iso2_pT_0p4 + mu_gamma_iso2_pT_0p4  - 0.5*mu_pu_iso2_0p4 }, mu_pf_iso_pT_0p4 { mu_ch_iso_0p4 + mu_nh_iso_pT_0p4 + mu_gamma_iso_pT_0p4 - 0.5*mu_pu_iso_0p4 };
 	// rel iso for PF (pT only sum)
-	const float pf_reliso1_pT_0p3 { pf_iso1_pT_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_pT_0p3 { pf_iso2_pT_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_pT_0p3 { pf_iso_pT_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
-	const float pf_reliso1_pT_0p4 { pf_iso1_pT_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, pf_reliso2_pT_0p4 { pf_iso2_pT_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, pf_reliso_pT_0p4 { pf_iso_pT_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+	const float mu_pf_reliso1_pT_0p3 { mu_pf_iso1_pT_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, mu_pf_reliso2_pT_0p3 { mu_pf_iso2_pT_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, mu_pf_reliso_pT_0p3 { mu_pf_iso_pT_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+	const float mu_pf_reliso1_pT_0p4 { mu_pf_iso1_pT_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, mu_pf_reliso2_pT_0p4 { mu_pf_iso2_pT_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, mu_pf_reliso_pT_0p4 { mu_pf_iso_pT_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
 
 
 	// Fill muon histograms
@@ -627,74 +626,74 @@ int main(int argc, char* argv[]) {
 
             h_leadingMuonTrkIso_0p3->Fill(mu_trkiso1_0p3, eventWeight);
             h_leadingMuonTrkIso_0p4->Fill(mu_trkiso1_0p4, eventWeight);
-            h_leadingMuonPfCandIsoNoPU_0p3->Fill(pf_iso1_noPU_0p3, eventWeight);
-            h_leadingMuonPfCandIsoNoPU_0p4->Fill(pf_iso1_noPU_0p4, eventWeight);
-            h_leadingMuonPfCandPtIsoNoPU_0p3->Fill(pf_iso1_pT_noPU_0p3, eventWeight);
-            h_leadingMuonPfCandPtIsoNoPU_0p4->Fill(pf_iso1_pT_noPU_0p4, eventWeight);
-            h_leadingMuonPfCandIso_0p3->Fill(pf_iso1_0p3, eventWeight);
-            h_leadingMuonPfCandIso_0p4->Fill(pf_iso1_0p4, eventWeight);
-            h_leadingMuonPfCandPtIso_0p3->Fill(pf_iso1_pT_0p3, eventWeight);
-            h_leadingMuonPfCandPtIso_0p4->Fill(pf_iso1_pT_0p4, eventWeight);
+            h_leadingMuonPfCandIsoNoPU_0p3->Fill(mu_pf_iso1_noPU_0p3, eventWeight);
+            h_leadingMuonPfCandIsoNoPU_0p4->Fill(mu_pf_iso1_noPU_0p4, eventWeight);
+            h_leadingMuonPfCandPtIsoNoPU_0p3->Fill(mu_pf_iso1_pT_noPU_0p3, eventWeight);
+            h_leadingMuonPfCandPtIsoNoPU_0p4->Fill(mu_pf_iso1_pT_noPU_0p4, eventWeight);
+            h_leadingMuonPfCandIso_0p3->Fill(mu_pf_iso1_0p3, eventWeight);
+            h_leadingMuonPfCandIso_0p4->Fill(mu_pf_iso1_0p4, eventWeight);
+            h_leadingMuonPfCandPtIso_0p3->Fill(mu_pf_iso1_pT_0p3, eventWeight);
+            h_leadingMuonPfCandPtIso_0p4->Fill(mu_pf_iso1_pT_0p4, eventWeight);
 
             h_subleadingMuonTrkIso_0p3->Fill(mu_trkiso2_0p3, eventWeight);
             h_subleadingMuonTrkIso_0p4->Fill(mu_trkiso2_0p4, eventWeight);
 
-            h_subleadingMuonPfCandIsoNoPU_0p3->Fill(pf_reliso2_noPU_0p3, eventWeight);
-            h_subleadingMuonPfCandIsoNoPU_0p4->Fill(pf_reliso2_noPU_0p4, eventWeight);
-            h_subleadingMuonPfCandPtIsoNoPU_0p3->Fill(pf_reliso2_pT_noPU_0p3, eventWeight);
-            h_subleadingMuonPfCandPtIsoNoPU_0p4->Fill(pf_reliso2_pT_noPU_0p4, eventWeight);
-            h_subleadingMuonPfCandIso_0p3->Fill(pf_reliso2_0p3, eventWeight);
-            h_subleadingMuonPfCandIso_0p4->Fill(pf_reliso2_0p4, eventWeight);
-            h_subleadingMuonPfCandPtIso_0p3->Fill(pf_reliso2_pT_0p3, eventWeight);
-            h_subleadingMuonPfCandPtIso_0p4->Fill(pf_reliso2_pT_0p4, eventWeight);
+            h_subleadingMuonPfCandIsoNoPU_0p3->Fill(mu_pf_reliso2_noPU_0p3, eventWeight);
+            h_subleadingMuonPfCandIsoNoPU_0p4->Fill(mu_pf_reliso2_noPU_0p4, eventWeight);
+            h_subleadingMuonPfCandPtIsoNoPU_0p3->Fill(mu_pf_reliso2_pT_noPU_0p3, eventWeight);
+            h_subleadingMuonPfCandPtIsoNoPU_0p4->Fill(mu_pf_reliso2_pT_noPU_0p4, eventWeight);
+            h_subleadingMuonPfCandIso_0p3->Fill(mu_pf_reliso2_0p3, eventWeight);
+            h_subleadingMuonPfCandIso_0p4->Fill(mu_pf_reliso2_0p4, eventWeight);
+            h_subleadingMuonPfCandPtIso_0p3->Fill(mu_pf_reliso2_pT_0p3, eventWeight);
+            h_subleadingMuonPfCandPtIso_0p4->Fill(mu_pf_reliso2_pT_0p4, eventWeight);
 
-            h_leadingMuonTrkRelIso_0p3->Fill(trkreliso1_0p3, eventWeight);
-            h_leadingMuonTrkRelIso_0p4->Fill(trkreliso1_0p4, eventWeight);
+            h_leadingMuonTrkRelIso_0p3->Fill(mu_trkreliso1_0p3, eventWeight);
+            h_leadingMuonTrkRelIso_0p4->Fill(mu_trkreliso1_0p4, eventWeight);
 
-            h_leadingMuonPfCandRelIsoNoPU_0p3->Fill(pf_reliso1_noPU_0p3, eventWeight);
-            h_leadingMuonPfCandRelIsoNoPU_0p4->Fill(pf_reliso1_noPU_0p4, eventWeight);
-            h_leadingMuonPfCandPtRelIsoNoPU_0p3->Fill(pf_reliso1_pT_noPU_0p3, eventWeight);
-            h_leadingMuonPfCandPtRelIsoNoPU_0p4->Fill(pf_reliso1_pT_noPU_0p4, eventWeight);
-            h_leadingMuonPfCandRelIso_0p3->Fill(pf_reliso1_0p3, eventWeight);
-            h_leadingMuonPfCandRelIso_0p4->Fill(pf_reliso1_0p4, eventWeight);
-            h_leadingMuonPfCandPtRelIso_0p3->Fill(pf_reliso1_pT_0p3, eventWeight);
-            h_leadingMuonPfCandPtRelIso_0p4->Fill(pf_reliso1_pT_0p4, eventWeight);
+            h_leadingMuonPfCandRelIsoNoPU_0p3->Fill(mu_pf_reliso1_noPU_0p3, eventWeight);
+            h_leadingMuonPfCandRelIsoNoPU_0p4->Fill(mu_pf_reliso1_noPU_0p4, eventWeight);
+            h_leadingMuonPfCandPtRelIsoNoPU_0p3->Fill(mu_pf_reliso1_pT_noPU_0p3, eventWeight);
+            h_leadingMuonPfCandPtRelIsoNoPU_0p4->Fill(mu_pf_reliso1_pT_noPU_0p4, eventWeight);
+            h_leadingMuonPfCandRelIso_0p3->Fill(mu_pf_reliso1_0p3, eventWeight);
+            h_leadingMuonPfCandRelIso_0p4->Fill(mu_pf_reliso1_0p4, eventWeight);
+            h_leadingMuonPfCandPtRelIso_0p3->Fill(mu_pf_reliso1_pT_0p3, eventWeight);
+            h_leadingMuonPfCandPtRelIso_0p4->Fill(mu_pf_reliso1_pT_0p4, eventWeight);
 
-            h_subleadingMuonTrkRelIso_0p3->Fill(trkreliso2_0p3, eventWeight);
-            h_subleadingMuonTrkRelIso_0p4->Fill(trkreliso2_0p4, eventWeight);
+            h_subleadingMuonTrkRelIso_0p3->Fill(mu_trkreliso2_0p3, eventWeight);
+            h_subleadingMuonTrkRelIso_0p4->Fill(mu_trkreliso2_0p4, eventWeight);
 
-            h_subleadingMuonPfCandRelIsoNoPU_0p3->Fill(pf_reliso2_noPU_0p3, eventWeight);
-            h_subleadingMuonPfCandRelIsoNoPU_0p4->Fill(pf_reliso2_noPU_0p4, eventWeight);
-            h_subleadingMuonPfCandPtRelIsoNoPU_0p3->Fill(pf_reliso2_pT_noPU_0p3, eventWeight);
-            h_subleadingMuonPfCandPtRelIsoNoPU_0p4->Fill(pf_reliso2_pT_noPU_0p4, eventWeight);
-            h_subleadingMuonPfCandRelIso_0p3->Fill(pf_reliso2_0p3, eventWeight);
-            h_subleadingMuonPfCandRelIso_0p4->Fill(pf_reliso2_0p4, eventWeight);
-            h_subleadingMuonPfCandPtRelIso_0p3->Fill(pf_reliso2_pT_0p3, eventWeight);
-            h_subleadingMuonPfCandPtRelIso_0p4->Fill(pf_reliso2_pT_0p4, eventWeight);
+            h_subleadingMuonPfCandRelIsoNoPU_0p3->Fill(mu_pf_reliso2_noPU_0p3, eventWeight);
+            h_subleadingMuonPfCandRelIsoNoPU_0p4->Fill(mu_pf_reliso2_noPU_0p4, eventWeight);
+            h_subleadingMuonPfCandPtRelIsoNoPU_0p3->Fill(mu_pf_reliso2_pT_noPU_0p3, eventWeight);
+            h_subleadingMuonPfCandPtRelIsoNoPU_0p4->Fill(mu_pf_reliso2_pT_noPU_0p4, eventWeight);
+            h_subleadingMuonPfCandRelIso_0p3->Fill(mu_pf_reliso2_0p3, eventWeight);
+            h_subleadingMuonPfCandRelIso_0p4->Fill(mu_pf_reliso2_0p4, eventWeight);
+            h_subleadingMuonPfCandPtRelIso_0p3->Fill(mu_pf_reliso2_pT_0p3, eventWeight);
+            h_subleadingMuonPfCandPtRelIso_0p4->Fill(mu_pf_reliso2_pT_0p4, eventWeight);
 
             h_dimuonTrkIso_0p3->Fill(mu_trkiso_0p3, eventWeight);
             h_dimuonTrkIso_0p4->Fill(mu_trkiso_0p4, eventWeight);
  
-            h_dimuonPfCandIsoNoPU_0p3->Fill(pf_iso_noPU_0p3, eventWeight);
-            h_dimuonPfCandIsoNoPU_0p4->Fill(pf_iso_noPU_0p4, eventWeight);
-            h_dimuonPfCandPtIsoNoPU_0p3->Fill(pf_iso_pT_noPU_0p3, eventWeight);
-            h_dimuonPfCandPtIsoNoPU_0p4->Fill(pf_iso_pT_noPU_0p4, eventWeight);
-            h_dimuonPfCandIso_0p3->Fill(pf_iso_0p3, eventWeight);
-            h_dimuonPfCandIso_0p4->Fill(pf_iso_0p4, eventWeight);
-            h_dimuonPfCandPtIso_0p3->Fill(pf_iso_pT_0p3, eventWeight);
-            h_dimuonPfCandPtIso_0p4->Fill(pf_iso_pT_0p4, eventWeight);
+            h_dimuonPfCandIsoNoPU_0p3->Fill(mu_pf_iso_noPU_0p3, eventWeight);
+            h_dimuonPfCandIsoNoPU_0p4->Fill(mu_pf_iso_noPU_0p4, eventWeight);
+            h_dimuonPfCandPtIsoNoPU_0p3->Fill(mu_pf_iso_pT_noPU_0p3, eventWeight);
+            h_dimuonPfCandPtIsoNoPU_0p4->Fill(mu_pf_iso_pT_noPU_0p4, eventWeight);
+            h_dimuonPfCandIso_0p3->Fill(mu_pf_iso_0p3, eventWeight);
+            h_dimuonPfCandIso_0p4->Fill(mu_pf_iso_0p4, eventWeight);
+            h_dimuonPfCandPtIso_0p3->Fill(mu_pf_iso_pT_0p3, eventWeight);
+            h_dimuonPfCandPtIso_0p4->Fill(mu_pf_iso_pT_0p4, eventWeight);
 
-            h_dimuonTrkRelIso_0p3->Fill(trkreliso_0p3, eventWeight);
-            h_dimuonTrkRelIso_0p4->Fill(trkreliso_0p4, eventWeight);
+            h_dimuonTrkRelIso_0p3->Fill(mu_trkreliso_0p3, eventWeight);
+            h_dimuonTrkRelIso_0p4->Fill(mu_trkreliso_0p4, eventWeight);
 
-            h_dimuonPfCandRelIsoNoPU_0p3->Fill(pf_reliso_noPU_0p3, eventWeight);
-            h_dimuonPfCandRelIsoNoPU_0p4->Fill(pf_reliso_noPU_0p4, eventWeight);
-            h_dimuonPfCandPtRelIsoNoPU_0p3->Fill(pf_reliso_pT_noPU_0p3, eventWeight);
-            h_dimuonPfCandPtRelIsoNoPU_0p4->Fill(pf_reliso_pT_noPU_0p4, eventWeight);
-            h_dimuonPfCandRelIso_0p3->Fill(pf_reliso_0p3, eventWeight);
-            h_dimuonPfCandRelIso_0p4->Fill(pf_reliso_0p4, eventWeight);
-            h_dimuonPfCandPtRelIso_0p3->Fill(pf_reliso_pT_0p3, eventWeight);
-            h_dimuonPfCandPtRelIso_0p4->Fill(pf_reliso_pT_0p4, eventWeight);
+            h_dimuonPfCandRelIsoNoPU_0p3->Fill(mu_pf_reliso_noPU_0p3, eventWeight);
+            h_dimuonPfCandRelIsoNoPU_0p4->Fill(mu_pf_reliso_noPU_0p4, eventWeight);
+            h_dimuonPfCandPtRelIsoNoPU_0p3->Fill(mu_pf_reliso_pT_noPU_0p3, eventWeight);
+            h_dimuonPfCandPtRelIsoNoPU_0p4->Fill(mu_pf_reliso_pT_noPU_0p4, eventWeight);
+            h_dimuonPfCandRelIso_0p3->Fill(mu_pf_reliso_0p3, eventWeight);
+            h_dimuonPfCandRelIso_0p4->Fill(mu_pf_reliso_0p4, eventWeight);
+            h_dimuonPfCandPtRelIso_0p3->Fill(mu_pf_reliso_pT_0p3, eventWeight);
+            h_dimuonPfCandPtRelIso_0p4->Fill(mu_pf_reliso_pT_0p4, eventWeight);
 
 
       } // end event loop
