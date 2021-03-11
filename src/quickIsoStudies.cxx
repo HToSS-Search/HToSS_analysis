@@ -85,6 +85,7 @@ int main(int argc, char* argv[]) {
     TH1F* h_leadingMuonPfCandIso_0p4                 {new TH1F ("h_leadingMuonPfCandIso_0p4",              "Leading muon pf cand iso (0.4 cone) with PU corrections; iso;", 500, 0., 15.)};
     TH1F* h_leadingMuonPfCandPtIso_0p3               {new TH1F ("h_leadingMuonPfCandPtIso_0p3",            "Leading muon pf cand iso (p_{T} sum) (0.3 cone) with PU corrections; iso;", 500, 0., 15.)};
     TH1F* h_leadingMuonPfCandPtIso_0p4               {new TH1F ("h_leadingMuonPfCandPtIso_0p4",            "Leading muon pf cand iso (p_{T} sum) (0.4 cone) with PU corrections; iso;", 500, 0., 15.)};
+
  
     TH1F* h_subleadingMuonTrkIso_0p3                 {new TH1F ("h_subleadingMuonTrkIso_0p3",              "Subleading muon trk iso (0.3 cone); iso;", 500, 0., 15.)};
     TH1F* h_subleadingMuonTrkIso_0p4                 {new TH1F ("h_subleadingMuonTrkIso_0p4",              "Subleading muon trk iso (0.4 cone); iso;", 500, 0., 15.)};
@@ -107,7 +108,6 @@ int main(int argc, char* argv[]) {
     TH1F* h_leadingMuonPfCandRelIso_0p4              {new TH1F ("h_leadingMuonPfCandRelIso_0p4",           "Leading muon pf cand rel iso (0.4 cone) with PU corrections; rel iso;", 500, 0., 5.)};
     TH1F* h_leadingMuonPfCandPtRelIso_0p3            {new TH1F ("h_leadingMuonPfCandPtRelIso_0p3",         "Leading muon pf cand rel iso (p_{T} sum) (0.3 cone) with PU corrections; rel iso;", 500, 0., 5.)};
     TH1F* h_leadingMuonPfCandPtRelIso_0p4            {new TH1F ("h_leadingMuonPfCandPtRelIso_0p4",         "Leading muon pf cand rel iso (p_{T} sum) (0.4 cone) with PU corrections; rel iso;", 500, 0., 5.)};
-
 
     TH1F* h_subleadingMuonTrkRelIso_0p3              {new TH1F ("h_subleadingMuonTrkRelIso_0p3",           "Subleading muon trk rel iso (0.3 cone); rel iso;", 500, 0., 5.)};
     TH1F* h_subleadingMuonTrkRelIso_0p4              {new TH1F ("h_subleadingMuonTrkRelIso_0p4",           "Subleading muon trk rel iso (0.4 cone); rel iso;", 500, 0., 5.)};
@@ -142,6 +142,13 @@ int main(int argc, char* argv[]) {
     TH1F* h_dimuonPfCandRelIso_0p4                   {new TH1F ("h_dimuonPfCandRelIso_0p4",                "Dimuon pf cand rel iso (0.4 cone) with PU corrections; rel iso;", 500, 0., 5.)};
     TH1F* h_dimuonPfCandPtRelIso_0p3                 {new TH1F ("h_dimuonPfCandPtRelIso_0p3",              "Dimuon pf cand rel iso (p_{T} sum) (0.3 cone) with PU corrections; rel iso;", 500, 0., 5.)};
     TH1F* h_dimuonPfCandPtRelIso_0p4                 {new TH1F ("h_dimuonPfCandPtRelIso_0p4",              "Dimuon pf cand rel iso (p_{T} sum) (0.4 cone) with PU corrections; rel iso;", 500, 0., 5.)};
+
+    TH2F* h_leadingMuonRelIsoVsPt_0p3                {new TH2F ("h_leadingMuonRelIsoVsPt_0p3",             "Leading Muon rel iso/p_{T} (0.3 cone) with PU corrections; p_{T} (GeV); rel iso", 200, 0., 100., 500, 0., 5.)};
+    TH2F* h_leadingMuonRelIsoVsPt_0p4                {new TH2F ("h_leadingMuonRelIsoVsPt_0p4",             "Leading Muon rel iso/p_{T} (0.4 cone) with PU corrections; p_{T} (GeV); rel iso", 200, 0., 100., 500, 0., 5.)};
+    TH2F* h_subleadingMuonRelIsoVsPt_0p3             {new TH2F ("h_subleadingMuonRelIsoVsPt_0p3",          "Subleading Muon rel iso/p_{T} (0.3 cone) with PU corrections; p_{T} (GeV); rel iso", 200, 0., 100., 500, 0., 5.)};
+    TH2F* h_subleadingMuonRelIsoVsPt_0p4             {new TH2F ("h_subleadingMuonRelIsoVsPt_0p4",          "Subleading Muon rel iso/p_{T} (0.4 cone) with PU corrections; p_{T} (GeV); rel iso", 200, 0., 100., 500, 0., 5.)};
+    TH2F* h_dimuonRelIsoVsPt_0p3                     {new TH2F ("h_dimuonRelIsoVsPt_0p3",                  "Dimuon rel iso/p_{T} (0.3 cone) with PU corrections; p_{T} (GeV); rel iso", 200, 0., 100., 500, 0., 5.)};
+    TH2F* h_dimuonRelIsoVsPt_0p4                     {new TH2F ("h_dimuonRelIsoVsPt_0p4",                  "Dimuon rel iso/p_{T} (0.4 cone) with PU corrections; p_{T} (GeV); rel iso", 200, 0., 100., 500, 0., 5.)};
 
     // hadrons
 
@@ -213,6 +220,12 @@ int main(int argc, char* argv[]) {
     TH1F* h_dichsPfCandPtRelIso_0p3                 {new TH1F ("h_dichsPfCandPtRelIso_0p3",               "Dihadron pf cand rel iso (p_{T} sum) (0.3 cone) with PU corrections; rel iso;", 500, 0., 5.)};
     TH1F* h_dichsPfCandPtRelIso_0p4                 {new TH1F ("h_dichsPfCandPtRelIso_0p4",               "Dihadron pf cand rel iso (p_{T} sum) (0.4 cone) with PU corrections; rel iso;", 500, 0., 5.)};
 
+    TH2F* h_leadingChsRelIsoVsPt_0p3                {new TH2F ("h_leadingChsRelIsoVsPt_0p3",              "Leading Charged Hadron rel iso/p_{T} (0.3 cone) with PU corrections; p_{T} (GeV); rel iso", 200, 0., 100., 500, 0., 5.)};
+    TH2F* h_leadingChsRelIsoVsPt_0p4                {new TH2F ("h_leadingChsRelIsoVsPt_0p4",              "Leading Charged hadron rel iso/p_{T} (0.4 cone) with PU corrections; p_{T} (GeV); rel iso", 200, 0., 100., 500, 0., 5.)};
+    TH2F* h_subleadingChsRelIsoVsPt_0p3             {new TH2F ("h_subleadingChsRelIsoVsPt_0p3",           "Subleading Charged Hadron rel iso/p_{T} (0.3 cone) with PU corrections; p_{T} (GeV); rel iso", 200, 0., 100., 500, 0., 5.)};
+    TH2F* h_subleadingChsRelIsoVsPt_0p4             {new TH2F ("h_subleadingChsRelIsoVsPt_0p4",           "Subleading Charged hadron rel iso/p_{T} (0.4 cone) with PU corrections; p_{T} (GeV); rel iso", 200, 0., 100., 500, 0., 5.)};
+    TH2F* h_dichsRelIsoVsPt_0p3                     {new TH2F ("h_dichsRelIsoVsPt_0p3",                   "Dihadron rel iso/p_{T} (0.3 cone) with PU corrections; p_{T} (GeV); rel iso", 200, 0., 100., 500, 0., 5.)};
+    TH2F* h_dichsRelIsoVsPt_0p4                     {new TH2F ("h_dichsRelIsoVsPt_0p4",                   "Dihadron rel iso/p_{T} (0.4 cone) with PU corrections; p_{T} (GeV); rel iso", 200, 0., 100., 500, 0., 5.)};
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
@@ -578,6 +591,13 @@ int main(int argc, char* argv[]) {
         h_dimuonPfCandPtRelIso_0p3->Fill(mu_pf_reliso_pT_0p3, eventWeight);
         h_dimuonPfCandPtRelIso_0p4->Fill(mu_pf_reliso_pT_0p4, eventWeight);
 
+        h_leadingMuonRelIsoVsPt_0p3->Fill(event.zPairLeptons.first.Pt(), mu_pf_reliso1_0p3, eventWeight);
+        h_leadingMuonRelIsoVsPt_0p4->Fill(event.zPairLeptons.first.Pt(), mu_pf_reliso1_0p4, eventWeight);
+        h_subleadingMuonRelIsoVsPt_0p3->Fill(event.zPairLeptons.second.Pt(), mu_pf_reliso2_0p3, eventWeight);
+        h_subleadingMuonRelIsoVsPt_0p4->Fill(event.zPairLeptons.second.Pt(), mu_pf_reliso2_0p4, eventWeight);
+        h_dimuonRelIsoVsPt_0p3->Fill((event.zPairLeptons.first+event.zPairLeptons.second).Pt(), mu_pf_reliso_0p3, eventWeight);
+        h_dimuonRelIsoVsPt_0p4->Fill((event.zPairLeptons.first+event.zPairLeptons.second).Pt(), mu_pf_reliso_0p4, eventWeight);
+
         /////// Charged Hadrons bit
 
         std::vector<int> chsIndex = getChargedHadronTracks(event);
@@ -810,6 +830,12 @@ int main(int argc, char* argv[]) {
         h_dichsPfCandPtRelIso_0p3->Fill(chs_pf_reliso_pT_0p3, eventWeight);
         h_dichsPfCandPtRelIso_0p4->Fill(chs_pf_reliso_pT_0p4, eventWeight);
 
+        h_leadingChsRelIsoVsPt_0p3->Fill(event.chsPairVec.first.Pt(), chs_pf_reliso1_0p3, eventWeight);
+        h_leadingChsRelIsoVsPt_0p4->Fill(event.chsPairVec.first.Pt(), chs_pf_reliso1_0p4, eventWeight);
+        h_subleadingChsRelIsoVsPt_0p3->Fill(event.chsPairVec.second.Pt(), chs_pf_reliso2_0p3, eventWeight);
+        h_subleadingChsRelIsoVsPt_0p4->Fill(event.chsPairVec.second.Pt(), chs_pf_reliso2_0p4, eventWeight);
+        h_dichsRelIsoVsPt_0p3->Fill((event.chsPairVec.first+event.chsPairVec.second).Pt(), chs_pf_reliso_0p3, eventWeight);
+        h_dichsRelIsoVsPt_0p4->Fill((event.chsPairVec.first+event.chsPairVec.second).Pt(), chs_pf_reliso_0p4, eventWeight);
 
       } // end event loop
     } // end dataset loop
@@ -891,6 +917,13 @@ int main(int argc, char* argv[]) {
     h_dimuonPfCandPtRelIso_0p3->Write();
     h_dimuonPfCandPtRelIso_0p4->Write();
 
+    h_leadingMuonRelIsoVsPt_0p3->Write();
+    h_leadingMuonRelIsoVsPt_0p4->Write();
+    h_subleadingMuonRelIsoVsPt_0p3->Write();
+    h_subleadingMuonRelIsoVsPt_0p4->Write();
+    h_dimuonRelIsoVsPt_0p3->Write();
+    h_dimuonRelIsoVsPt_0p4->Write();
+
 // Write hadron histos
 /*
     h_leadingChsTrkIso_0p3->Write();
@@ -957,6 +990,13 @@ int main(int argc, char* argv[]) {
     h_dichsPfCandRelIso_0p4->Write();
     h_dichsPfCandPtRelIso_0p3->Write();
     h_dichsPfCandPtRelIso_0p4->Write();
+
+    h_leadingChsRelIsoVsPt_0p3->Write();
+    h_leadingChsRelIsoVsPt_0p4->Write();
+    h_subleadingChsRelIsoVsPt_0p3->Write();
+    h_subleadingChsRelIsoVsPt_0p4->Write();
+    h_dichsRelIsoVsPt_0p3->Write();
+    h_dichsRelIsoVsPt_0p4->Write();
 
     outFile->Close();
 
