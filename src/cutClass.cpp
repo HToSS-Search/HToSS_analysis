@@ -734,7 +734,6 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                 event.zPairNewIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
                 event.zNewIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
 
-
 //                if ( event.zNewIso > 0.2 ) continue;
 
                 event.mumuTrkIndex = getMuonTrackPairIndex(event);
@@ -785,23 +784,46 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
                 event.chsTrkPairVec.first  = chsTrk1;
                 event.chsTrkPairVec.second = chsTrk2;
 
-                float iso {0.0}, iso1 {0.0}, iso2 {0.0};
+                float neutral_iso {0.0}, neutral_iso1 {0.0}, neutral_iso2 {0.0};
+                float ch_iso {0.0}, ch_iso1 {0.0}, ch_iso2 {0.0};
+                float pu_iso {0.0}, pu_iso1 {0.0}, pu_iso2 {0.0};
 
                 for (int k = 0; k < event.numPackedCands; k++) {
+                    if ( k == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || k == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
+
                     TLorentzVector packedCandVec;
                     packedCandVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
 
-                    if ( k == event.chsPairIndex.first || k == event.chsPairIndex.second ) continue;
-                    if (event.chsPairVec.first.DeltaR(packedCandVec) < 0.3)  iso1 += packedCandVec.Pt();
-                    if (event.chsPairVec.second.DeltaR(packedCandVec) < 0.3) iso2 += packedCandVec.Pt();
-                    if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec) < 0.3 ) iso += packedCandVec.Pt();
+                    if ( event.packedCandsCharge[k] == 0 ) {
+                        if ( packedCandVec.Pt() < 0.5 ) continue;
+                        if ( event.chsTrkPairVec.first.DeltaR(packedCandVec)   < 0.3 )  neutral_iso1 += packedCandVec.Et();
+                        if ( event.chsTrkPairVec.second.DeltaR(packedCandVec)  < 0.3 )  neutral_iso2 += packedCandVec.Et();
+                        if ( (event.chsTrkPairVec.first+event.chsTrkPairVec.second).DeltaR(packedCandVec)  < 0.3 ) neutral_iso += packedCandVec.Et();
+                    }
+                    else {
+                        if ( event.packedCandsFromPV[k] >= 2 ) {
+                            if ( event.chsTrkPairVec.first.DeltaR(packedCandVec)   < 0.3 )  ch_iso1 += packedCandVec.Pt();
+                            if ( event.chsTrkPairVec.second.DeltaR(packedCandVec)  < 0.3 )  ch_iso2 += packedCandVec.Pt();
+                            if ( (event.chsTrkPairVec.first+event.chsTrkPairVec.second).DeltaR(packedCandVec)  < 0.3 ) ch_iso += packedCandVec.Pt();
+                        }
+                        else {
+                            if ( packedCandVec.Pt() < 0.5 ) continue;
+                                if ( event.chsTrkPairVec.first.DeltaR(packedCandVec)   < 0.3 )  pu_iso1 += packedCandVec.Pt();
+                                if ( event.chsTrkPairVec.second.DeltaR(packedCandVec)  < 0.3 )  pu_iso2 += packedCandVec.Pt();
+                                if ( (event.chsTrkPairVec.first+event.chsTrkPairVec.second).DeltaR(packedCandVec)  < 0.3 ) pu_iso += packedCandVec.Pt();
+                        }
+                    }
                 }
+
+                const float iso1 = ch_iso1 + std::max( float(0.0), neutral_iso1 - float(0.5*pu_iso1) );
+                const float iso2 = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
+                const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
 
                 event.chsPairTrkIso.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
                 event.chsPairTrkIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
                 event.chsTrkIso = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
 
-                if ( event.chsTrkIso > 0.4 ) continue;
+//                if ( event.chsTrkIso > 0.4 ) continue;
 
                 event.chsPairTrkIndex = getChsTrackPairIndex(event);
 
