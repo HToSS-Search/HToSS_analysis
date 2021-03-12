@@ -789,7 +789,7 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
                 float pu_iso {0.0}, pu_iso1 {0.0}, pu_iso2 {0.0};
 
                 for (int k = 0; k < event.numPackedCands; k++) {
-                    if ( k == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || k == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
+                    if ( k == event.chsPairIndex.first || k == event.chsPairIndex.second ) continue;
 
                     TLorentzVector packedCandVec;
                     packedCandVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
