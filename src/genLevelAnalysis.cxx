@@ -354,7 +354,7 @@ int main(int argc, char* argv[])
                 const TLorentzVector packedCandsLVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
 
                 const Int_t packedCandsPid                {event.packedCandsPdgId[k]};
-                const Float_t packedCandsPt               {packedCandsLVec.Pt()};
+                const Float_t packedCandsPt               {float (packedCandsLVec.Pt()) };
                 
 //                std::cout << "PID = " << packedCandsPid << " ; pT= " << packedCandsPt << " ; LVec mass = " << packedCandsLVec.M() << std::endl;
 //                std::cout << "Vx = " << event.packedCandsPseudoTrkVx[k] << "; Vy = " << event.packedCandsPseudoTrkVy[k] << "; Vz = " << event.packedCandsPseudoTrkVz[k] << std::endl;

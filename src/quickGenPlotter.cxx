@@ -962,7 +962,7 @@ int main(int argc, char* argv[]) {
             const bool matchedJet1    {validJet1    ? event.genJetPF2PATScalarAncestor[jetIndex1]    : false}, matchedJet2    {validJet2    ? event.genJetPF2PATScalarAncestor[jetIndex2]  	: false};
             const bool matchedPhoton1 {validPhoton1 ? event.genPhoPF2PATScalarAncestor[photonIndex1] : false}, matchedPhoton2 {validPhoton2 ? event.genPhoPF2PATScalarAncestor[photonIndex2] : false};
 
-            const float chsDeltaR {event.chsPairVec.first.DeltaR(event.chsPairVec.second)};
+            const float chsDeltaR { float (event.chsPairVec.first.DeltaR(event.chsPairVec.second)) };
 
             const bool leadingGen    { (matchedEle1 || matchedMuon1 || matchedJet1 || matchedPhoton1) };
             const bool subleadingGen { (matchedEle2 || matchedMuon2 || matchedJet2 || matchedPhoton2) };
@@ -1091,8 +1091,8 @@ int main(int argc, char* argv[]) {
             if ( !subleadingGen ) h_chsTkChi2NdofFake2->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.second]);
 
             const int chsTkPairIndex {event.chsPairTrkIndex};
-            const float refittedChsTk1Chi2Ndof {event.chsTkPairTk1Chi2[chsTkPairIndex]/(event.chsTkPairTk1Ndof[chsTkPairIndex] + 1.0e-06)};
-            const float refittedChsTk2Chi2Ndof {event.chsTkPairTk2Chi2[chsTkPairIndex]/(event.chsTkPairTk2Ndof[chsTkPairIndex] + 1.0e-06)};
+            const float refittedChsTk1Chi2Ndof { float (event.chsTkPairTk1Chi2[chsTkPairIndex]/(event.chsTkPairTk1Ndof[chsTkPairIndex] + 1.0e-06)) };
+            const float refittedChsTk2Chi2Ndof { float (event.chsTkPairTk2Chi2[chsTkPairIndex]/(event.chsTkPairTk2Ndof[chsTkPairIndex] + 1.0e-06)) };
 
             h_chsRefittedTkChi2Ndof1->Fill(refittedChsTk1Chi2Ndof);
             h_chsRefittedTkChi2Ndof2->Fill(refittedChsTk2Chi2Ndof);
@@ -1129,12 +1129,12 @@ int main(int argc, char* argv[]) {
             const float vx {event.chsTkPairTkVx[event.chsPairTrkIndex]}, vy {event.chsTkPairTkVy[event.chsPairTrkIndex]}, vz {event.chsTkPairTkVz[event.chsPairTrkIndex]};
             const float vxy {std::sqrt( vx*vx* + vy*vy )}, vd {std::sqrt( vx*vx* + vy*vy + vz*vz )};
 
-            const float vxSig {vx/(event.chsTkPairTkVtxCov00[event.chsPairTrkIndex] + 1.0e-06)}, vySig {vy/(event.chsTkPairTkVtxCov11[event.chsPairTrkIndex] + 1.0e-06)}, vzSig {vz/(event.chsTkPairTkVtxCov22[event.chsPairTrkIndex] + 1.0e-06)};
-            const float vxySig {vxy/(std::sqrt(event.chsTkPairTkVtxCov00[event.chsPairTrkIndex]*event.chsTkPairTkVtxCov00[event.chsPairTrkIndex]+event.chsTkPairTkVtxCov11[event.chsPairTrkIndex]*event.chsTkPairTkVtxCov11[event.chsPairTrkIndex] - 2*event.chsTkPairTkVtxCov01[event.chsPairTrkIndex]*event.chsTkPairTkVtxCov10[event.chsPairTrkIndex]) + 1.0e-06)};
+            const float vxSig  {vx/( float (event.chsTkPairTkVtxCov00[event.chsPairTrkIndex] + 1.0e-06)) }, vySig {vy/( float (event.chsTkPairTkVtxCov11[event.chsPairTrkIndex] + 1.0e-06)) }, vzSig {vz/( float (event.chsTkPairTkVtxCov22[event.chsPairTrkIndex] + 1.0e-06)) };
+            const float vxySig {vxy/( float (std::sqrt(event.chsTkPairTkVtxCov00[event.chsPairTrkIndex]*event.chsTkPairTkVtxCov00[event.chsPairTrkIndex]+event.chsTkPairTkVtxCov11[event.chsPairTrkIndex]*event.chsTkPairTkVtxCov11[event.chsPairTrkIndex] - 2*event.chsTkPairTkVtxCov01[event.chsPairTrkIndex]*event.chsTkPairTkVtxCov10[event.chsPairTrkIndex]) + 1.0e-06)) };
             const float vdSig {0};
 
-            const float angleXY {event.chsTkPairTkVtxAngleXY[event.chsPairTrkIndex]}, angleXYZ {event.chsTkPairTkVtxDistMagXY[event.chsPairTrkIndex]/(event.chsTkPairTkVtxDistMagXYSigma[event.chsPairTrkIndex]+1.0e-06)};
-            const float distSigXY {event.chsTkPairTkVtxAngleXYZ[event.chsPairTrkIndex]}, distSigXYZ {event.chsTkPairTkVtxDistMagXYZ[event.chsPairTrkIndex]/(event.chsTkPairTkVtxDistMagXYZSigma[event.chsPairTrkIndex]+1.0e-06)};
+            const float angleXY   {event.chsTkPairTkVtxAngleXY[event.chsPairTrkIndex]},  angleXYZ   { float (event.chsTkPairTkVtxDistMagXY[event.chsPairTrkIndex]/(event.chsTkPairTkVtxDistMagXYSigma[event.chsPairTrkIndex]+1.0e-06)) };
+            const float distSigXY {event.chsTkPairTkVtxAngleXYZ[event.chsPairTrkIndex]}, distSigXYZ { float (event.chsTkPairTkVtxDistMagXYZ[event.chsPairTrkIndex]/(event.chsTkPairTkVtxDistMagXYZSigma[event.chsPairTrkIndex]+1.0e-06)) };
 
             h_chsVx->Fill(vx);
             h_chsVy->Fill(vy);

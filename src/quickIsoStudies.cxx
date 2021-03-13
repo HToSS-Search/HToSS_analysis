@@ -481,8 +481,8 @@ int main(int argc, char* argv[]) {
 
         // Calculate Muon iso
 	// rel iso for tracks
-	const float mu_trkreliso1_0p3 { mu_trkiso1_0p3 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, mu_trkreliso2_0p3 { mu_trkiso2_0p3 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, mu_trkreliso_0p3 { mu_trkiso_0p3 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
-	const float mu_trkreliso1_0p4 { mu_trkiso1_0p4 / ( event.zPairLeptons.first.Pt()+1.0e-06) }, mu_trkreliso2_0p4 { mu_trkiso2_0p4 / ( event.zPairLeptons.second.Pt()+1.0e-06) }, mu_trkreliso_0p4 { mu_trkiso_0p4 / ((event.zPairLeptons.first+event.zPairLeptons.second).Pt()+1.0e-06) };
+	const float mu_trkreliso1_0p3 {mu_trkiso1_0p3 / ( float(event.zPairLeptons.first.Pt())+1.0e-06)}, mu_trkreliso2_0p3 {mu_trkiso2_0p3 / ( float(event.zPairLeptons.second.Pt())+1.0e-06) }, mu_trkreliso_0p3 {mu_trkiso_0p3 / (float((event.zPairLeptons.first+event.zPairLeptons.second).Pt())+1.0e-06) };
+	const float mu_trkreliso1_0p4 {mu_trkiso1_0p4 / ( float(event.zPairLeptons.first.Pt())+1.0e-06)}, mu_trkreliso2_0p4 {mu_trkiso2_0p4 / ( float(event.zPairLeptons.second.Pt())+1.0e-06) }, mu_trkreliso_0p4 {mu_trkiso_0p4 / (float((event.zPairLeptons.first+event.zPairLeptons.second).Pt())+1.0e-06) };
 
 	// iso for PF (pT + ET sum) - NO PU!
 	const float mu_pf_iso1_noPU_0p3 { mu_ch_iso1_0p3 + std::max( 0.0, mu_nh_iso1_0p3 + mu_gamma_iso1_0p3 )}, mu_pf_iso2_noPU_0p3 {mu_ch_iso2_0p3 + std::max( 0.0, mu_nh_iso2_0p3 + mu_gamma_iso2_0p3 )}, mu_pf_iso_noPU_0p3 {mu_ch_iso_0p3 + std::max( 0.0, mu_nh_iso_0p3 + mu_gamma_iso_0p3 )};
