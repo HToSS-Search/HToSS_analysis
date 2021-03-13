@@ -642,9 +642,9 @@ int main(int argc, char* argv[]) {
                 const float vtxPx {event.muonTkPairPF2PATTkVtxPx[k]}, vtxPy {event.muonTkPairPF2PATTkVtxPy[k]}, vtxPz {event.muonTkPairPF2PATTkVtxPz[k]}, vtxP2 {std::sqrt(event.muonTkPairPF2PATTkVtxP2[k])};
                 const float vx {event.muonTkPairPF2PATTkVx[k]}, vy {event.muonTkPairPF2PATTkVy[k]}, vz {event.muonTkPairPF2PATTkVz[k]};
                 const float Vabs {std::sqrt( vx*vx + vy*vy + vz*vz )};
-       	       	const float vtxChi2Ndof {event.muonTkPairPF2PATTkVtxChi2[k]/(event.muonTkPairPF2PATTkVtxNdof[k]+1.0e-06)};
-                const float angleXY {event.muonTkPairPF2PATTkVtxAngleXY[k]}, angleXYZ {event.muonTkPairPF2PATTkVtxAngleXYZ[k]};
-                const float sigXY {event.muonTkPairPF2PATTkVtxDistMagXY[k]/(event.muonTkPairPF2PATTkVtxDistMagXYSigma[k]+1.0e-06)}, sigXYZ {event.muonTkPairPF2PATTkVtxDistMagXYZ[k]/(event.muonTkPairPF2PATTkVtxDistMagXYZ[k]+1.0e-06)};
+       	       	const float vtxChi2Ndof { float (event.muonTkPairPF2PATTkVtxChi2[k]/(event.muonTkPairPF2PATTkVtxNdof[k]+1.0e-06)) };
+                const float angleXY     { float (event.muonTkPairPF2PATTkVtxAngleXY[k]}, angleXYZ {event.muonTkPairPF2PATTkVtxAngleXYZ[k]) };
+                const float sigXY       { float (event.muonTkPairPF2PATTkVtxDistMagXY[k]/(event.muonTkPairPF2PATTkVtxDistMagXYSigma[k]+1.0e-06)) }, sigXYZ { float (event.muonTkPairPF2PATTkVtxDistMagXYZ[k]/(event.muonTkPairPF2PATTkVtxDistMagXYZ[k]+1.0e-06)) };
                 const float dca {event.muonTkPairPF2PATTkVtxDcaPreFit[k]};
 
                 // Plot all muon vertex quantities
@@ -719,7 +719,7 @@ int main(int argc, char* argv[]) {
                 const float oldTrkChi2Ndof1 {event.muonPF2PATInnerTkNormChi2[index1]}, oldTrkChi2Ndof2 {event.muonPF2PATInnerTkNormChi2[index2]};
                 const float newTrkPt1 {event.muonTkPairPF2PATTk1Pt[k]}, newTrkPt2 {event.muonTkPairPF2PATTk2Pt[k]};
                 const float newTrkEta1 {event.muonTkPairPF2PATTk1Eta[k]}, newTrkEta2 {event.muonTkPairPF2PATTk2Eta[k]};
-                const float newTrkChi2Ndof1 {event.muonTkPairPF2PATTk1Chi2[k]/(event.muonTkPairPF2PATTk1Ndof[k]+1.0e-06)}, newTrkChi2Ndof2 {event.muonTkPairPF2PATTk2Chi2[k]/(event.muonTkPairPF2PATTk2Ndof[k]+1.0e-06)};
+                const float newTrkChi2Ndof1 { float (event.muonTkPairPF2PATTk1Chi2[k]/(event.muonTkPairPF2PATTk1Ndof[k]+1.0e-06)) }, newTrkChi2Ndof2 { float (event.muonTkPairPF2PATTk2Chi2[k]/(event.muonTkPairPF2PATTk2Ndof[k]+1.0e-06)) };
 
                 // Plot replotted muon track pT, eta, chi2/ndof and dca prefit for genuine and fake muons
                 if ( genMuon1 ) {
