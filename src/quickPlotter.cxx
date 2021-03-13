@@ -643,7 +643,7 @@ int main(int argc, char* argv[]) {
                 const float vx {event.muonTkPairPF2PATTkVx[k]}, vy {event.muonTkPairPF2PATTkVy[k]}, vz {event.muonTkPairPF2PATTkVz[k]};
                 const float Vabs {std::sqrt( vx*vx + vy*vy + vz*vz )};
        	       	const float vtxChi2Ndof { float (event.muonTkPairPF2PATTkVtxChi2[k]/(event.muonTkPairPF2PATTkVtxNdof[k]+1.0e-06)) };
-                const float angleXY     { float (event.muonTkPairPF2PATTkVtxAngleXY[k]}, angleXYZ {event.muonTkPairPF2PATTkVtxAngleXYZ[k]) };
+                const float angleXY     { float (event.muonTkPairPF2PATTkVtxAngleXY[k]) }, angleXYZ { float (event.muonTkPairPF2PATTkVtxAngleXYZ[k]) };
                 const float sigXY       { float (event.muonTkPairPF2PATTkVtxDistMagXY[k]/(event.muonTkPairPF2PATTkVtxDistMagXYSigma[k]+1.0e-06)) }, sigXYZ { float (event.muonTkPairPF2PATTkVtxDistMagXYZ[k]/(event.muonTkPairPF2PATTkVtxDistMagXYZ[k]+1.0e-06)) };
                 const float dca {event.muonTkPairPF2PATTkVtxDcaPreFit[k]};
 
