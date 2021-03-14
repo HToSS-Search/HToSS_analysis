@@ -15,18 +15,26 @@
      TFile inFile0("ggH_MS2_ctau0.root"); 
      TH1F* h_refit12InvMass_ctau0    = (TH1F*)inFile0.Get("h_Rrefit12InvMass");
      TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PscalarInvMass");
-     TH1F* h_PantiscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PantiscalarInvMass");
+     TH1F* h_P20scalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_P20scalarInvMass");
+    // TH1F* h_PantiscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PantiscalarInvMass");
 
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_refit12InvMass_ctau10    = (TH1F*)inFile10.Get("h_Rrefit12InvMass");
      TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PscalarInvMass");
-     TH1F* h_PantiscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PantiscalarInvMass");
+     TH1F* h_P20scalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_P20scalarInvMass");
+   //  TH1F* h_PantiscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PantiscalarInvMass");
 
      TFile inFileQCD("ggH_MC_QCD.root"); 
      TH1F* h_refit12InvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rrefit12InvMass");
      TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PscalarInvMass");
-     TH1F* h_PantiscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PantiscalarInvMass");
-
+     TH1F* h_P20scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
+   //  TH1F* h_PantiscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PantiscalarInvMass");
+     
+     Int_t nentries=h_PscalarInvMass_ctau0->GetEntries();
+     Int_t n20entries=h_P20scalarInvMass_ctau0->GetEntries();
+     Float_t corr=nentries/n20entries;
+   
+     TH1F* h_PrescalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass*corr");
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
@@ -59,7 +67,6 @@
      h_refit12InvMass_QCD->SetLineColor(6);
      h_refit12InvMass_QCD->Draw("HIST same");
      
-     Int_t nentries=h_PscalarInvMass_ctau0->GetEntries();
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0.0, 5.); 
      h_PscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
