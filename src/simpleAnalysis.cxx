@@ -292,7 +292,8 @@ int main(int argc, char* argv[])
         po::value<std::string>(&config)->required(),
         "The configuration file to be used.")(
         "lumi,l",
-        po::value<double>(&usePreLumi)->default_value(4247.682053046),
+        //po::value<double>(&usePreLumi)->default_value(4247.682053046),
+	po::value<double>(&usePreLumi)->default_value(41528.0),
         "Lumi to scale MC plots to.")(
         "outfile,o",
         po::value<std::string>(&outFileString)->default_value(outFileString),
@@ -1115,7 +1116,22 @@ int main(int argc, char* argv[])
     //Pion mass assumption
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){ 
-	 
+	      
+	 for(Int_t k{0}; k<event.numMuonPF2PAT;k++){ 
+           if(event.muonPF2PATInnerTkPt[k]>muonpt1){
+             muonpt2=muonpt1;
+             muonpt1=event.muonPF2PATInnerTkPt[k];
+             muonIndex2=muonIndex1;
+             muonIndex1=k;
+	   }
+           else if(event.muonPF2PATInnerTkPt[k]>muonpt2){
+                  muonpt2=event.muonPF2PATInnerTkPt[k];
+                  muonIndex2=k;
+	   }
+	   h_muoniRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k], datasetWeight);
+	   h_muoniRecPt->Fill(event.muonPF2PATPt[k], datasetWeight);
+	 }  
+	      
 	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsCharge[pionIndex1]==-(event.packedCandsCharge[pionIndex2])){
            
 	   packed3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],event.packedCandsE[pionIndex1]);
@@ -1172,9 +1188,14 @@ int main(int argc, char* argv[])
 	   }//end of for-loop
 	
 	 }
-	      
+	 
+	 if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){
+          
+	
 	 if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
 	   
+	   if(muIndex1==event.muonPF2PATPackedCandIndex[muonIndex1] && muIndex2==event.muonPF2PATPackedCandIndex[muonIndex2]){
+		   
 	   mm3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
            mm4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
             
@@ -1246,8 +1267,6 @@ int main(int argc, char* argv[])
 		     
 	       if(mm3.DeltaR(mm4)<0.2 && packed3.DeltaR(packed4)<0.2){  
 	         if(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1 && PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]<1){
-	           Phiggs=(Pantiscalar+Pscalar).M();
-	           h_PhiggsInvMass->Fill(Phiggs, datasetWeight);
 	           h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(Pscalar), datasetWeight);
 	           h_Pinvmass->Fill(Phadroninv,Pmuoninv, datasetWeight); 
 		 }
@@ -1285,19 +1304,21 @@ int main(int argc, char* argv[])
 	       h_PscalarInvMass->Fill(Pscalar.M(), datasetWeight);
 	     }
 	   }//close Higgs mass window
-	   
-	 
-	    	 
+	   if(std::abs((Pantiscalar+Pscalar).M()-125)<20){//wider higgs mass window \pm20GeV
+	     Phiggs=(Pantiscalar+Pscalar).M();
+	     h_PhiggsInvMass->Fill(Phiggs, datasetWeight);
+	   }
+	  
+	   }
 	 }//close muon!=-1
-	     
+	 }    
 	     
            
 	      
       }//end of for loop packed candidates
   }//end of met filter   
 	      
-	    
-      
+    
 	      
 	      
 	      
@@ -1305,11 +1326,6 @@ int main(int argc, char* argv[])
     Int_t muonIndex1{-1}; Int_t muonIndex2{-1};
     Float_t muonpt1{-1}; Float_t muonpt2{-1};
 	      
-    Int_t p1Index1{-1}; Int_t p1Index2{-1};
-    Float_t p1pt1{-1}; Float_t p1pt2{-1};
-	      
-    Int_t p2Index1{-1}; Int_t p2Index2{-1};
-    Float_t p2pt1{-1}; Float_t p2pt2{-1};
 
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){ 
@@ -1361,6 +1377,14 @@ int main(int argc, char* argv[])
 	   h_muoniRecPt->Fill(event.muonPF2PATPt[k], datasetWeight);
 	}  
 	
+	if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){
+          
+		  
+		  
+	  
+	}     
+	      
+	      
 	/*
 	      
 	//Tracks associated
