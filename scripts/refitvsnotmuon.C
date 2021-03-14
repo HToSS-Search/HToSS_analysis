@@ -59,7 +59,7 @@
      h_refit12InvMass_QCD->SetLineColor(6);
      h_refit12InvMass_QCD->Draw("HIST same");
      
-     Int_t nentries=h_PscalarInvMass_ctau0->GenEntries();
+     Int_t nentries=h_PscalarInvMass_ctau0->GetEntries();
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0.0, 5.); 
      h_PscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
