@@ -228,6 +228,10 @@ int main(int argc, char* argv[])
   TH1F* h_PhiggsDeltaR              {new TH1F("h_PhiggsDeltaR", "Discalar #DeltaR",2500, 0., 15.)}; 	
   TH1F* h_Rrefit12InvMass           {new TH1F("h_Rrefit12InvMass", "Dimuon refitted invariant mass with requirements", 500, 0.,5.)};
   TH1F* h_Rpionre12InvMass          {new TH1F("h_Rpionre12InvMass", "Dihadron (pion) refit invariant mass", 500, 0.,5.)};
+
+  TH1F* h_P20antiscalarInvMass        {new TH1F("h_P20antiscalarInvMass", "Dihadron (pion) invariant mass", 1000, 0.,15.)};
+  TH1F* h_P20scalarInvMass            {new TH1F("h_P20scalarInvMass", "Dimuon invariant mass", 1000, 0.,15.)};
+  TH1F* h_P20higgsInvMass             {new TH1F("h_P20higgsInvMass",  "Higgs invariant mass", 1000, 0., 200.)};   
 	
   TH2F* h_massassump       {new TH2F("h_massassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.)};
   TH2F* h_pmassassump       {new TH2F("h_pmassassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.)};
@@ -870,9 +874,6 @@ int main(int argc, char* argv[])
      
     Float_t pionpt1{-1}; Float_t pionpt2{-1};
     Float_t mupt1{-1}; Float_t mupt2{-1};
-	      
-    Float_t isoPrimP{-1}; Float_t isoSecP{-1};
-    Float_t isoPrimM{-1}; Float_t isoSecM{-1};
        
     if(event.metFilters()){
         
@@ -935,7 +936,7 @@ int main(int argc, char* argv[])
       }
     }
     
-
+/*
     Float_t KIsoSum1=0;  Float_t KIsoSum2=0;
     Float_t KIsoSum3=0;  Float_t KIsoSum4=0;
    
@@ -1091,12 +1092,10 @@ int main(int argc, char* argv[])
     }//end of met filter   
 	      
 	      
-		 
+	*/	 
 	
       
-	      
-	      
-	      
+	     	      
 	      
     Float_t PIsoSum1=0;  Float_t PIsoSum2=0;
     Float_t PIsoSum3=0;  Float_t PIsoSum4=0;
@@ -1307,10 +1306,21 @@ int main(int argc, char* argv[])
 	       h_PscalarInvMass->Fill(Pscalar.M(), datasetWeight);
 	     }
 	   }//close Higgs mass window
+		   
+	   //wider higgs window	   
 	   if(std::abs((Pantiscalar+Pscalar).M()-125)<20){//wider higgs mass window \pm20GeV
-	     Phiggs=(Pantiscalar+Pscalar).M();
-	     h_PhiggsInvMass->Fill(Phiggs, datasetWeight);
-	   }
+	     if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2])){
+               if(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1){	   
+	         h_P20antiscalarInvMass->Fill(Pantiscalar.M(), datasetWeight);
+	       } 
+	       Phiggs=(Pantiscalar+Pscalar).M();
+	       h_P20higgsInvMass->Fill(Phiggs, datasetWeight);     
+	     }
+		   
+	     if(PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]<1){	   
+	       h_P20scalarInvMass->Fill(Pscalar.M(), datasetWeight);
+	     }    
+	   }//close wider window
 	  
 	   }
 	 }//close muon!=-1
@@ -1772,7 +1782,15 @@ int main(int argc, char* argv[])
   h_Rpionre12InvMass->GetYaxis()->SetTitle("Events");
   h_Rpionre12InvMass->Write();
 
-
+  h_P20antiscalarInvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
+  h_P20antiscalarInvMass->GetYaxis()->SetTitle("Events");
+  h_P20antiscalarInvMass->Write();
+  h_P20scalarInvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+  h_P20scalarInvMass->GetYaxis()->SetTitle("Events");
+  h_P20scalarInvMass->Write();
+  h_P20higgsInvMass->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
+  h_P20higgsInvMass->GetYaxis()->SetTitle("Events");
+  h_P20higgsInvMass->Write();
 
   h_massassump->GetXaxis()->SetTitle("Hadron (pion) invariant mass (GeV)");
   h_massassump->GetYaxis()->SetTitle("Hadron (kaon) invariant mass (GeV)");	
