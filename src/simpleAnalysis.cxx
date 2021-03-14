@@ -1112,6 +1112,9 @@ int main(int argc, char* argv[])
     TLorentzVector Pscalar; TLorentzVector Pantiscalar;
 	      
     Float_t Phiggs=0;
+	
+    Int_t muonIndex1{-1}; Int_t muonIndex2{-1};
+    Float_t muonpt1{-1}; Float_t muonpt2{-1};
 	      
     //Pion mass assumption
     if(event.metFilters()){
