@@ -1326,9 +1326,6 @@ int main(int argc, char* argv[])
 	      
 	      
     //Muon momentum comparison    
-    Int_t muonIndex1{-1}; Int_t muonIndex2{-1};
-    Float_t muonpt1{-1}; Float_t muonpt2{-1};
-	      
 
     if(event.metFilters()){
       if(event.muTrig()||event.mumuTrig()){ 
