@@ -670,8 +670,10 @@ std::vector<int> Cuts::getChargedHadronTracks(const AnalysisEvent& event) const 
     for (Int_t k = 0; k < event.numPackedCands; k++) {
         if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
         if (event.packedCandsCharge[k] == 0 ) continue;
-        if ( std::abs(event.packedCandsPdgId[k]) != 211 ) continue;
         if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
+        TLorentzVector lVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
+        if (lVec.Pt() < 1.0) continue;
+
         chs.emplace_back(k);
     }
     return chs;

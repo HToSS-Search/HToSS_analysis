@@ -382,7 +382,7 @@ void AnalysisAlgo::setupPlots()
     stageNames.emplace_back(std::make_pair("lepSel", "Muon Cuts"));
     stageNames.emplace_back(std::make_pair("zMass", "m_{#mu#mu} Cut"));
     stageNames.emplace_back(std::make_pair("trackSel", "Charged Track Cuts"));
-    stageNames.emplace_back(std::make_pair("higgsSel", "m_{aa} Cut"));
+//    stageNames.emplace_back(std::make_pair("higgsSel", "m_{aa} Cut"));
 //    stageNames.emplace_back(std::make_pair("wMass", "W Mass Cuts"));
 }
 

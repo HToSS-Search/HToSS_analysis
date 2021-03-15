@@ -45,8 +45,8 @@ float deltaR(float eta1, float phi1, float eta2, float phi2);
 namespace fs = boost::filesystem;
 
 // Lepton cut variables
-const float looseMuonEta_ {2.4}, looseMuonPt_ {10.}, looseMuonPtLeading_ {30.}, looseMuonRelIso_ {100.};
-const float invZMassCut_ {10.0}, chsMass_{0.13957018};
+const float looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {30.}, looseMuonRelIso_ {100.};
+const float chsMass_{0.13957018};
 
 // Diparticle cuts
 double maxDileptonDeltaR_ {0.2}, maxChsDeltaR_ {0.4};
@@ -295,8 +295,7 @@ int main(int argc, char* argv[]) {
 std::vector<int> getLooseMuons(const AnalysisEvent& event) {
     std::vector<int> muons;
     for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-       if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && event.muonPF2PATPfIsoLoose[i] && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
-//           if ( (event.muonPF2PATPt[i] >= muons.empty() && event.muonPF2PATPfIsoLoose[i]) ? looseMuonPtLeading_ : looseMuonPt_) muons.emplace_back(i);
+       if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
            if ( event.muonPF2PATPt[i] >= muons.empty() ? looseMuonPtLeading_ : looseMuonPt_) muons.emplace_back(i);
         }
     }
@@ -309,6 +308,8 @@ std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) {
         if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
         if (event.packedCandsCharge[k] == 0 ) continue;
         if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
+        TLorentzVector lVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
+        if (lVec.Pt() < 1.0) continue;
 
         chs.emplace_back(k);
     }
@@ -476,8 +477,7 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
                 event.chsPairTrkIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
                 event.chsTrkIso = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
 
-
-//                if ( event.chsTrkIso > 0.4 ) continue;
+//                if ( event.chsTrkIso > 0.2 ) continue;
 
                 event.chsPairTrkIndex = getChsTrackPairIndex(event);
 
