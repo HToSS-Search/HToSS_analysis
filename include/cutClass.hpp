@@ -21,8 +21,7 @@ class Cuts
                         std::map<std::string, std::shared_ptr<Plots>>& plotMap,
                         TH1D& cutFlow,
                         const int& syst);
-    std::pair<std::vector<int>, std::vector<double>>
-        makeJetCuts(const AnalysisEvent& event,
+    std::pair<std::vector<int>, std::vector<double>> makeJetCuts(const AnalysisEvent& event,
                     const int syst,
                     double& eventWeight,
                     const bool isProper = true) const;

@@ -52,8 +52,8 @@ Cuts::Cuts(const bool doPlots,
     , looseMuonEta_{5.0}
     , looseMuonRelIso_{0.25}
 
-    , scalarMassCut_{10.}
-    , maxDileptonDeltaR_{0.4}
+    , scalarMassCut_{4.}
+    , maxDileptonDeltaR_{0.2}
     , chsMass_{0.13957018}
     , maxChsDeltaR_ {999999}
     , higgsMassCut_{20.}
@@ -107,46 +107,36 @@ Cuts::Cuts(const bool doPlots,
     initialiseJECCors();
     std::cout << "Gets past JEC Cors" << std::endl;
 
-    if (!is2016_)
-    {
+    if (!is2016_) {
         std::cout << "\nLoad 2017 electron SFs from root file ... "
                   << std::endl;
 
         // Electron tight cut-based tight ID
-        electronSFsFile = new TFile("scaleFactors/2017/"
-                                    "egammaEffi.txt_EGM2D_runBCDEF_"
-                                    "passingTight94X.root");
+        electronSFsFile = new TFile("scaleFactors/2017/egammaEffi.txt_EGM2D_runBCDEF_passingTight94X.root");
 
         // Electron reco SF
         h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
-        electronRecoFile = new TFile{
-            "scaleFactors/2017/"
-            "egammaEffi.txt_EGM2D_runBCDEF_passingRECO.root"}; // Electron Reco
+        electronRecoFile = new TFile{"scaleFactors/2017/egammaEffi.txt_EGM2D_runBCDEF_passingRECO.root"}; // Electron Reco
 
         h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
         std::cout << "Got 2017 electron SFs!\n" << std::endl;
 
         std::cout << "Load 2017 muon SFs from root file ... " << std::endl;
-        muonHltFile1 = new TFile{
-            "scaleFactors/2017/HLT_Mu24_EfficienciesAndSF_RunBtoF.root"};
+        muonHltFile1 = new TFile{"scaleFactors/2017/EfficienciesAndSF_RunBtoF_Nov17Nov2017.root"};
         muonIDsFile1 = new TFile{"scaleFactors/2017/Muon_RunBCDEF_SF_ID.root"};
         muonIsoFile1 = new TFile{"scaleFactors/2017/Muon_RunBCDEF_SF_ISO.root"};
 
         // Single muon HLT SF
         muonHltFile1->cd("IsoMu27_PtEtaBins");
-        h_muonHlt1 = dynamic_cast<TH2F*>(
-            muonHltFile1->Get("IsoMu27_PtEtaBins/abseta_pt_ratio"));
+        h_muonHlt1 = dynamic_cast<TH2F*>(muonHltFile1->Get("IsoMu27_PtEtaBins/abseta_pt_ratio"));
 
         // Hardcoded in 2017
         // // Tight ID
-        // h_muonIDs1 = dynamic_cast<TH2D*>(
-        //     muonIDsFile1->Get("NUM_TightID_DEN_genTracks_pt_abseta"));
-        // h_muonPFiso1 = dynamic_cast<TH2D*>(
-        //     muonIsoFile1->Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta"));
-        // std::cout << "Got 2017 muon SFs!\n" << std::endl;
+        // h_muonIDs1 = dynamic_cast<TH2D*>(muonIDsFile1->Get("NUM_TightID_DEN_genTracks_pt_abseta"));
+        // h_muonPFiso1 = dynamic_cast<TH2D*>( muonIsoFile1->Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta"));
+        std::cout << "Got 2017 muon SFs!\n" << std::endl;
     }
-    else
-    {
+    else {
         std::cout << "\nLoad 2016 electron SFs from root file ... "
                   << std::endl;
 
@@ -154,72 +144,52 @@ Cuts::Cuts(const bool doPlots,
         std::cout << "lumi set for Runs G-H: " << lumiRunsGH_ << std::endl;
 
         // Single electron HLT SF
-        electronHltFile =
-            new TFile("scaleFactors/2016/"
-                      "HLT_Ele32_eta2p1_WPTight_Gsf_FullRunRange.root");
+        electronHltFile = new TFile("scaleFactors/2016/HLT_Ele32_eta2p1_WPTight_Gsf_FullRunRange.root");
 
         // Electron cut-based ID
         h_eleHlt = dynamic_cast<TH2F*>(electronHltFile->Get("SF"));
-        electronSFsFile =
-            new TFile("scaleFactors/2016/egammaEffi_Tight_80X.txt_EGM2D.root");
+        electronSFsFile = new TFile("scaleFactors/2016/egammaEffi_Tight_80X.txt_EGM2D.root");
         h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
 
         // Electron reco SF
-        electronRecoFile =
-            new TFile{"scaleFactors/2016/egammaRecoEffi.txt_EGM2D.root"};
+        electronRecoFile = new TFile{"scaleFactors/2016/egammaRecoEffi.txt_EGM2D.root"};
         h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
         std::cout << "Got 2016 electron SFs!\n" << std::endl;
 
         std::cout << "Load 2016 muon SFs from root file ... " << std::endl;
 
         // Runs B-F (pre-HIP fix)
-        muonHltFile1 = new TFile{"scaleFactors/2016/"
-                                 "HLT_Mu24_EfficienciesAndSF_RunBtoF.root"};
+        muonHltFile1 = new TFile{"scaleFactors/2016/HLT_Mu24_EfficienciesAndSF_RunBtoF.root"};
         // Runs G-H (post-HIP fix)
-        muonHltFile2 = new TFile{"scaleFactors/2016/"
-                                 "HLT_Mu24_EfficienciesAndSF_RunGtoH.root"};
+        muonHltFile2 = new TFile{"scaleFactors/2016/HLT_Mu24_EfficienciesAndSF_RunGtoH.root"};
 
         // Runs B-F (pre-HIP fix)
-        muonIDsFile1 =
-            new TFile{"scaleFactors/2016/MuonID_EfficienciesAndSF_BCDEF.root"};
+        muonIDsFile1 = new TFile{"scaleFactors/2016/MuonID_EfficienciesAndSF_BCDEF.root"};
         // Runs G-H (post-HIP fix)
-        muonIDsFile2 =
-            new TFile{"scaleFactors/2016/MuonID_EfficienciesAndSF_GH.root"};
+        muonIDsFile2 = new TFile{"scaleFactors/2016/MuonID_EfficienciesAndSF_GH.root"};
 
         // Runs B-F (pre-HIP fix)
-        muonIsoFile1 =
-            new TFile{"scaleFactors/2016/MuonISO_EfficienciesAndSF_BCDEF.root"};
+        muonIsoFile1 = new TFile{"scaleFactors/2016/MuonISO_EfficienciesAndSF_BCDEF.root"};
         // Runs G-H (post-HIP fix)
-        muonIsoFile2 =
-            new TFile{"scaleFactors/2016/MuonISO_EfficienciesAndSF_GH.root"};
+        muonIsoFile2 = new TFile{"scaleFactors/2016/MuonISO_EfficienciesAndSF_GH.root"};
 
         // Single Muon HLT SF
         muonHltFile1->cd("IsoMu24_OR_IsoTkMu24_PtEtaBins");
         muonHltFile2->cd("IsoMu24_OR_IsoTkMu24_PtEtaBins");
-        h_muonHlt1 = dynamic_cast<TH2F*>(muonHltFile1->Get(
-            "IsoMu24_OR_IsoTkMu24_PtEtaBins/abseta_pt_ratio"));
-        h_muonHlt2 = dynamic_cast<TH2F*>(muonHltFile2->Get(
-            "IsoMu24_OR_IsoTkMu24_PtEtaBins/abseta_pt_ratio"));
+        h_muonHlt1 = dynamic_cast<TH2F*>(muonHltFile1->Get("IsoMu24_OR_IsoTkMu24_PtEtaBins/abseta_pt_ratio"));
+        h_muonHlt2 = dynamic_cast<TH2F*>(muonHltFile2->Get("IsoMu24_OR_IsoTkMu24_PtEtaBins/abseta_pt_ratio"));
 
         // Tight ID
         muonIDsFile1->cd("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta"); // Tight ID
         muonIDsFile2->cd("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta"); // Tight ID
-        h_muonIDs1 = dynamic_cast<TH2F*>(
-            muonIDsFile1->Get("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/"
-                              "abseta_pt_ratio")); // Tight
-                                                   // ID
-        h_muonIDs2 = dynamic_cast<TH2F*>(
-            muonIDsFile2->Get("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/"
-                              "abseta_pt_ratio")); // Tight
-                                                   // ID
+        h_muonIDs1 = dynamic_cast<TH2F*>(muonIDsFile1->Get("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/abseta_pt_ratio")); // Tight ID
+        h_muonIDs2 = dynamic_cast<TH2F*>(muonIDsFile2->Get("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/abseta_pt_ratio")); // Tight ID
 
         // Tight Iso
         muonIsoFile1->cd("TightISO_TightID_pt_eta");
         muonIsoFile2->cd("TightISO_TightID_pt_eta"); // Tight Iso
-        h_muonPFiso1 = dynamic_cast<TH2F*>(
-            muonIsoFile1->Get("TightISO_TightID_pt_eta/abseta_pt_ratio"));
-        h_muonPFiso2 = dynamic_cast<TH2F*>(
-            muonIsoFile2->Get("TightISO_TightID_pt_eta/abseta_pt_ratio"));
+        h_muonPFiso1 = dynamic_cast<TH2F*>(muonIsoFile1->Get("TightISO_TightID_pt_eta/abseta_pt_ratio"));
+        h_muonPFiso2 = dynamic_cast<TH2F*>(muonIsoFile2->Get("TightISO_TightID_pt_eta/abseta_pt_ratio"));
         std::cout << "Got 2016 muon SFs!\n" << std::endl;
     }
 }
@@ -231,8 +201,7 @@ Cuts::~Cuts()
     muonIDsFile1->Close();
     muonIsoFile1->Close();
     muonHltFile1->Close();
-    if (is2016_)
-    {
+    if (is2016_) {
         muonHltFile2->Close();
         muonIDsFile2->Close();
         muonIsoFile2->Close();
@@ -244,12 +213,10 @@ void Cuts::parse_config(const std::string confName)
     // Get the configuration file
     const YAML::Node config{YAML::LoadFile(confName)};
 
-    if (config["trigLabel"])
-    {
+    if (config["trigLabel"]) {
         cutConfTrigLabel_ = config["trigLabel"].as<std::string>();
     }
-    if (config["plotPostfix"])
-    {
+    if (config["plotPostfix"]) {
         postfixName_ = config["plotPostfix"].as<std::string>();
     }
 
@@ -306,12 +273,51 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     if (!metFilters(event)) return false;
 
     // Make lepton cuts. If the trigLabel contains d, we are in the ttbar CR so the Z mass cut is skipped
-    if (!makeLeptonCuts(event, eventWeight, plotMap, cutFlow, systToRun)) return false;
+    ////  Do this outside original function because this is simpler for HToSS unlike in tZq
+    ////  if (!makeLeptonCuts(event, eventWeight, plotMap, cutFlow, systToRun)) return false;
+
+    event.muonIndexTight = getLooseMuons(event);
+    if (event.muonIndexTight.size() < numTightMu_) return false;
+
+//    event.muonMomentumSF = getRochesterSFs(event);
+
+    if ( !getDileptonCand(event, event.muonIndexTight) ) return false;
+
+    // This is to make some skims for faster running. Do lepSel and save some files.
+    if (postLepSelTree_ && (event.zPairLeptons.first + event.zPairLeptons.second).M() > scalarMassCut_ && !skipScalarMassCut_) postLepSelTree_->Fill();
+
+    // Get CHS
+    event.chsIndex = getChargedHadronTracks(event);
+    if ( event.chsIndex.size() < 2 ) return false;
+
+    const bool validDihadronCand = getDihadronCand(event, event.chsIndex);
+
+//    eventWeight *= getLeptonWeight(event, systToRun);
+
+    if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, systToRun, eventWeight, false);
+    if (doPlots_) plotMap["lepSel"]->fillAllPlots(event, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(0.5, eventWeight);
+
+    if ( (event.zPairLeptons.first + event.zPairLeptons.second).M() > scalarMassCut_ && !skipScalarMassCut_ ) return false;
+
+    if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, systToRun, eventWeight, false);
+    if (doPlots_) plotMap["zMass"]->fillAllPlots(event, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(1.5, eventWeight);
+
+/////
 
     std::tie(event.jetIndex, event.jetSmearValue) =  makeJetCuts(event, systToRun, eventWeight, true);
     event.bTagIndex = makeBCuts(event, event.jetIndex, systToRun);
 
+    if (!validDihadronCand) return false;
     if ( (event.chsPairVec.first + event.chsPairVec.second).M() > scalarMassCut_ && !skipScalarMassCut_ ) return false;
+
+//// Apply side band cut for data
+    if (!isMC_ && blind_) {
+        float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsTrkPairVec.first + event.chsTrkPairVec.second).M() );
+        if ( muScalarMass  < hadScalarMass*1.05 && muScalarMass  >= hadScalarMass*.95 ) return false;
+        else if ( hadScalarMass < muScalarMass*1.05  && hadScalarMass >= muScalarMass*.95  ) return false;
+    }
 
     if (doPlots_ || fillCutFlow_) cutFlow.Fill(2.5, eventWeight);
     if (doPlots_) plotMap["trackSel"]->fillAllPlots(event, eventWeight);
@@ -424,38 +430,12 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
 
     ////Do lepton selection.
 
-//    event.electronIndexTight = getTightEles(event);
-//    if (event.electronIndexTight.size() != numTightEle_) return false;
-
-//    event.electronIndexLoose = getLooseEles(event);
-//    if (event.electronIndexLoose.size() != numLooseEle_) return false;
-
 //    event.muonIndexTight = getTightMuons(event);
     event.muonIndexTight = getLooseMuons(event);
     if (event.muonIndexTight.size() < numTightMu_) return false;
 
     event.muonIndexLoose = getLooseMuons(event);
     if (event.muonIndexLoose.size() < numLooseMu_) return false;
-
-    // If making NPL shape postLepSkim, MC leptons must BOTH be prompt
-    if (isNPL_ && numTightEle_ == 2 && isMC_) { // if ee channel
-        eventWeight *= -1.0;
-        if (!event.genElePF2PATPromptFinalState[event.zPairIndex.first]) return false;
-        if (!event.genElePF2PATPromptFinalState[event.zPairIndex.second]) return false;
-    }
-
-    if (isNPL_ && numTightMu_ == 2 && isMC_)  { // if mumu channel
-        eventWeight *= -1.0;
-        if (!event.genMuonPF2PATPromptFinalState[event.zPairIndex.first]) return false;
-        if (!event.genMuonPF2PATPromptFinalState[event.zPairIndex.second]) return false;
-    }
-
-    if (isNPL_ && numTightEle_ == 1 && numTightMu_ == 1 && isMC_)
-    { // if emu channel
-        eventWeight *= -1.0;
-        if (!event.genElePF2PATPromptFinalState[event.zPairIndex.first]) return false;
-        if (!event.genMuonPF2PATPromptFinalState[event.zPairIndex.second]) return false;
-    }
 
     // This is to make some skims for faster running. Do lepSel and save some
     // files.
@@ -476,7 +456,7 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
     if (!isMC_ && blind_) {
         float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsTrkPairVec.first + event.chsTrkPairVec.second).M() );
         if ( muScalarMass  < hadScalarMass*1.05 && muScalarMass  >= hadScalarMass*.95 ) return false;
-        if ( hadScalarMass < muScalarMass*1.05  && hadScalarMass >= muScalarMass*.95  ) return false;
+        else if ( hadScalarMass < muScalarMass*1.05  && hadScalarMass >= muScalarMass*.95  ) return false;
     }
 
 //    eventWeight *= getLeptonWeight(event, syst);
@@ -688,7 +668,7 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
 
             TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
             TLorentzVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
-            double delR { lepton1.DeltaR(lepton2) };
+            const double delR { lepton1.DeltaR(lepton2) };
             if ( delR < maxDileptonDeltaR_  ) {
                 event.zPairLeptons.first  = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
                 event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;

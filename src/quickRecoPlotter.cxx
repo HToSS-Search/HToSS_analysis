@@ -50,7 +50,7 @@ const float looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {30.}, l
 const float invZMassCut_ {10.0}, chsMass_{0.13957018};
 
 // Diparticle cuts
-double maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4};
+double maxDileptonDeltaR_ {0.2}, maxChsDeltaR_ {0.4};
 double higgsTolerence_ {10.};
 
 int main(int argc, char* argv[]) {
@@ -540,7 +540,7 @@ int main(int argc, char* argv[]) {
 std::vector<int> getLooseMuons(const AnalysisEvent& event) {
     std::vector<int> muons;
     for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-       if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && event.muonPF2PATPfIsoVeryLoose[i] && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
+       if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
            if (event.muonPF2PATPt[i] >= (muons.empty() ? looseMuonPtLeading_ : looseMuonPt_)) muons.emplace_back(i);
         }
     }

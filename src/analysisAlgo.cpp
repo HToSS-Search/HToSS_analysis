@@ -147,7 +147,7 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         po::value<float>(&metCut)->default_value(0),
         "Apply an MET cut. Dilepton Z+jets CR.")(
         "msCut",
-        po::value<float>(&msCut)->default_value(10.),
+        po::value<float>(&msCut)->default_value(4.),
         "Apply an mScalar cut.")(
         "chsMass",
         po::value<float>(&chsMass)->default_value(139.57018),

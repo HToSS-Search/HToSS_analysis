@@ -45,7 +45,7 @@ namespace fs = boost::filesystem;
 const float looseMuonEta_ {2.8}, looseMuonPt_ {6.}, looseMuonPtLeading_ {15.}, looseMuonRelIso_ {100.};
 const float invZMassCut_ {10.0};
 // Diparticle cuts
-double maxDileptonDeltaR_ {0.4};
+double maxDileptonDeltaR_ {0.2};
 
 int main(int argc, char* argv[])
 {
