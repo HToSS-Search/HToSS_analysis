@@ -123,16 +123,15 @@ Cuts::Cuts(const bool doPlots,
         std::cout << "Load 2017 muon SFs from root file ... " << std::endl;
         muonHltFile1 = new TFile{"scaleFactors/2017/EfficienciesAndSF_RunBtoF_Nov17Nov2017.root"};
         muonIDsFile1 = new TFile{"scaleFactors/2017/RunBC_SF_ID.root"};
-        muonIsoFile1 = new TFile{"scaleFactors/2017/RunBC_SF_ISO.root"};
+//        muonIsoFile1 = new TFile{"scaleFactors/2017/RunBC_SF_ISO.root"};
 
         // Single muon HLT SF
         muonHltFile1->cd("IsoMu27_PtEtaBins");
         h_muonHlt1 = dynamic_cast<TH2F*>(muonHltFile1->Get("IsoMu27_PtEtaBins/abseta_pt_ratio"));
 
-        // Hardcoded in 2017
         // // Tight ID
-        // h_muonIDs1 = dynamic_cast<TH2D*>(muonIDsFile1->Get("NUM_TightID_DEN_genTracks_pt_abseta"));
-        // h_muonPFiso1 = dynamic_cast<TH2D*>( muonIsoFile1->Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta"));
+        h_muonIDs1 = dynamic_cast<TH2F*>(muonIDsFile1->Get("NUM_TightID_DEN_genTracks_pt_abseta"));
+        // h_muonPFiso1 = dynamic_cast<TH2F*>( muonIsoFile1->Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta"));
         std::cout << "Got 2017 muon SFs!\n" << std::endl;
     }
     else {
@@ -1404,21 +1403,21 @@ double Cuts::eleSF(const double& pt, const double& eta, const int& syst) const {
 
 double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const bool& leadingMuon) const {
 
-// Iso commented out currently until 
+// Iso commented out currently until this is sorted out
 
-    double maxIdPt  {h_muonIDs1->GetYaxis()->GetXmax() - 0.1};
+//    double maxIdPt  {h_muonIDs1->GetYaxis()->GetXmax() - 0.1};
 //    double maxIsoPt {h_muonPFiso1->GetYaxis()->GetXmax() - 0.1};
     double maxHltPt {h_muonHlt1->GetYaxis()->GetXmax() - 0.1};
-    double minIdPt    {h_muonIDs1->GetYaxis()->GetXmin() + 0.1};
+//    double minIdPt    {h_muonIDs1->GetYaxis()->GetXmin() + 0.1};
 //    double minIsoPt   {h_muonPFiso1->GetYaxis()->GetXmin() + 0.1};
     double minHltPt {h_muonHlt1->GetYaxis()->GetXmin() +  0.1};
 
     int binId1{0}, binIso1{0}, binHlt1{0};
     double muonIdSF{1.0}, muonPFisoSF{1.0}, muonHltSF {1.0};
 
-    if (pt > maxIdPt) binId1 = h_muonIDs1->FindBin(std::abs(eta), maxIdPt);
-    else if (pt < minIdPt) binId1 = h_muonIDs1->FindBin(std::abs(eta), minIdPt);
-    else  binId1 = h_muonIDs1->FindBin(std::abs(eta), pt);
+//    if (pt > maxIdPt) binId1 = h_muonIDs1->FindBin(std::abs(eta), maxIdPt);
+//    else if (pt < minIdPt) binId1 = h_muonIDs1->FindBin(std::abs(eta), minIdPt);
+//    else binId1 = h_muonIDs1->FindBin(std::abs(eta), pt);
 
 //    if (pt > maxIsoPt) binIso1 = h_muonPFiso1->FindBin(std::abs(eta), maxIsoPt);
 //    else if (pt < minIsoPt) binIso1 = h_muonPFiso1->FindBin(std::abs(eta), minIsoPt);
@@ -1430,18 +1429,18 @@ double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const 
 
     if (!is2016_) {
 
-        muonIdSF    = h_muonIDs1->GetBinContent(binId1);
+//        muonIdSF    = h_muonIDs1->GetBinContent(binId1);
 //        muonPFisoSF = h_muonPFiso1->GetBinContent(binIso1);
         if (leadingMuon) muonHltSF   = h_muonHlt1->GetBinContent(binHlt1);
 
         if (syst == 1) {
-            muonIdSF    += h_muonIDs1->GetBinError(binId1);
+//            muonIdSF    += h_muonIDs1->GetBinError(binId1);
 //            muonPFisoSF += h_muonPFiso1->GetBinError(binIso1);
             if (leadingMuon) muonHltSF   += h_muonHlt1->GetBinError(binHlt1);
             return muonIdSF * muonPFisoSF * muonHltSF;
         }
         else if (syst == 2) {
-            muonIdSF    -= h_muonIDs1->GetBinError(binId1);
+//            muonIdSF    -= h_muonIDs1->GetBinError(binId1);
 //            muonPFisoSF -= h_muonPFiso1->GetBinError(binIso1);
             if (leadingMuon) muonHltSF   -= h_muonHlt1->GetBinError(binHlt1);
             return muonIdSF * muonPFisoSF * muonHltSF;
@@ -1454,9 +1453,9 @@ double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const 
  
         int binId2{0}, binIso2{0}; // Additional 2016 variables
 
-        if (pt > maxIdPt) binId2 = h_muonIDs2->FindBin(std::abs(eta), maxIdPt);
-        else if (pt < minIdPt) binId2 = h_muonIDs2->FindBin(std::abs(eta), minIdPt);
-        else binId2 = h_muonIDs2->FindBin(std::abs(eta), pt);
+//        if (pt > maxIdPt) binId2 = h_muonIDs2->FindBin(std::abs(eta), maxIdPt);
+//        else if (pt < minIdPt) binId2 = h_muonIDs2->FindBin(std::abs(eta), minIdPt);
+//        else binId2 = h_muonIDs2->FindBin(std::abs(eta), pt);
 
 //        if (pt > maxIsoPt) binIso2 = h_muonPFiso2->FindBin(std::abs(eta), maxIsoPt);
 //        else if (pt < minIsoPt) binIso2 = h_muonPFiso2->FindBin(std::abs(eta), minIsoPt);
