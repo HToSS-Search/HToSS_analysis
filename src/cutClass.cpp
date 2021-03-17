@@ -108,23 +108,22 @@ Cuts::Cuts(const bool doPlots,
     std::cout << "Gets past JEC Cors" << std::endl;
 
     if (!is2016_) {
-        std::cout << "\nLoad 2017 electron SFs from root file ... "
-                  << std::endl;
+//        std::cout << "\nLoad 2017 electron SFs from root file ... "  << std::endl;
 
         // Electron tight cut-based tight ID
-        electronSFsFile = new TFile("scaleFactors/2017/egammaEffi.txt_EGM2D_runBCDEF_passingTight94X.root");
+//        electronSFsFile = new TFile("scaleFactors/2017/egammaEffi.txt_EGM2D_runBCDEF_passingTight94X.root");
 
         // Electron reco SF
-        h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
-        electronRecoFile = new TFile{"scaleFactors/2017/egammaEffi.txt_EGM2D_runBCDEF_passingRECO.root"}; // Electron Reco
+//        h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
+//        electronRecoFile = new TFile{"scaleFactors/2017/egammaEffi.txt_EGM2D_runBCDEF_passingRECO.root"}; // Electron Reco
 
-        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
-        std::cout << "Got 2017 electron SFs!\n" << std::endl;
+//        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
+//        std::cout << "Got 2017 electron SFs!\n" << std::endl;
 
         std::cout << "Load 2017 muon SFs from root file ... " << std::endl;
         muonHltFile1 = new TFile{"scaleFactors/2017/EfficienciesAndSF_RunBtoF_Nov17Nov2017.root"};
-        muonIDsFile1 = new TFile{"scaleFactors/2017/Muon_RunBCDEF_SF_ID.root"};
-        muonIsoFile1 = new TFile{"scaleFactors/2017/Muon_RunBCDEF_SF_ISO.root"};
+        muonIDsFile1 = new TFile{"scaleFactors/2017/RunBC_SF_ID.root"};
+        muonIsoFile1 = new TFile{"scaleFactors/2017/RunBC_SF_ISO.root"};
 
         // Single muon HLT SF
         muonHltFile1->cd("IsoMu27_PtEtaBins");
@@ -137,23 +136,23 @@ Cuts::Cuts(const bool doPlots,
         std::cout << "Got 2017 muon SFs!\n" << std::endl;
     }
     else {
-        std::cout << "\nLoad 2016 electron SFs from root file ... " << std::endl;
+//        std::cout << "\nLoad 2016 electron SFs from root file ... " << std::endl;
 
         std::cout << "lumi set for Runs B-F: " << lumiRunsBCDEF_ << std::endl;
         std::cout << "lumi set for Runs G-H: " << lumiRunsGH_ << std::endl;
 
         // Single electron HLT SF
-        electronHltFile = new TFile("scaleFactors/2016/HLT_Ele32_eta2p1_WPTight_Gsf_FullRunRange.root");
+//        electronHltFile = new TFile("scaleFactors/2016/HLT_Ele32_eta2p1_WPTight_Gsf_FullRunRange.root");
 
         // Electron cut-based ID
-        h_eleHlt = dynamic_cast<TH2F*>(electronHltFile->Get("SF"));
-        electronSFsFile = new TFile("scaleFactors/2016/egammaEffi_Tight_80X.txt_EGM2D.root");
-        h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
+//        h_eleHlt = dynamic_cast<TH2F*>(electronHltFile->Get("SF"));
+//        electronSFsFile = new TFile("scaleFactors/2016/egammaEffi_Tight_80X.txt_EGM2D.root");
+//        h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
 
         // Electron reco SF
-        electronRecoFile = new TFile{"scaleFactors/2016/egammaRecoEffi.txt_EGM2D.root"};
-        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
-        std::cout << "Got 2016 electron SFs!\n" << std::endl;
+//        electronRecoFile = new TFile{"scaleFactors/2016/egammaRecoEffi.txt_EGM2D.root"};
+//        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
+//        std::cout << "Got 2016 electron SFs!\n" << std::endl;
 
         std::cout << "Load 2016 muon SFs from root file ... " << std::endl;
 
@@ -285,7 +284,7 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     // This is to make some skims for faster running. Do lepSel and save some files. If flag is true, scalar mass cuts are applied, and dilepton mass <= threshold, fill tree
     if (postLepSelTree_ && dileptonMass <= scalarMassCut_ && !skipScalarMassCut_) postLepSelTree_->Fill();
 
-//    eventWeight *= getLeptonWeight(event, systToRun);
+    eventWeight *= getLeptonWeight(event, systToRun);
 //    event.muonMomentumSF = getRochesterSFs(event);
 
     // Get CHS
@@ -1357,6 +1356,8 @@ double Cuts::getLeptonWeight(const AnalysisEvent& event, const int& syst) const 
 }
 
 double Cuts::eleSF(const double& pt, const double& eta, const int& syst) const {
+    return 1.0;
+/*
     const double maxPt{h_eleSFs->GetYaxis()->GetXmax() - 0.1};
     const double minRecoPt{h_eleReco->GetYaxis()->GetXmin() + 0.1};
     int bin1{0};
@@ -1398,6 +1399,7 @@ double Cuts::eleSF(const double& pt, const double& eta, const int& syst) const {
     }
 
     return eleIdSF * eleRecoSF;
+*/
 }
 
 double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const bool& leadingMuon) const {
