@@ -223,7 +223,7 @@ class Cuts
     TH2D* h_muonPFiso2;
     TH2D* h_muonIDsSyst1;
     TH2D* h_muonIDsSyst2;
-    TH2D* h_muonPFisoSysy1;
+    TH2D* h_muonPFisoSyst1;
     TH2D* h_muonPFisoSyst2;
 
     public:
