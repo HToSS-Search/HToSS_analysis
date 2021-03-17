@@ -211,10 +211,10 @@ class Cuts
     TFile* muonIsoFile2;
     TH2F* h_muonHlt1;
     TH2F* h_muonHlt2;
-    TH2F* h_muonIDs1;
-    TH2F* h_muonIDs2;
-    TH2F* h_muonPFiso1;
-    TH2F* h_muonPFiso2;
+    TH2D* h_muonIDs1;
+    TH2D* h_muonIDs2;
+    TH2D* h_muonPFiso1;
+    TH2D* h_muonPFiso2;
 
     public:
     Cuts(const bool doPlots, const bool fillCutFlows, const bool invertLepCut, const bool is2016, const bool is2018);
