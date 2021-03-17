@@ -282,8 +282,10 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
 
     if ( !getDileptonCand(event, event.muonIndexTight) ) return false;
 
-    // This is to make some skims for faster running. Do lepSel and save some files.
-    if (postLepSelTree_ && (event.zPairLeptons.first + event.zPairLeptons.second).M() > scalarMassCut_ && !skipScalarMassCut_) postLepSelTree_->Fill();
+    const double dileptonMass {(event.zPairLeptons.first + event.zPairLeptons.second).M()};
+
+    // This is to make some skims for faster running. Do lepSel and save some files. If flag is true, scalar mass cuts are applied, and dilepton mass <= threshold, fill tree
+    if (postLepSelTree_ && dileptonMass <= scalarMassCut_ && !skipScalarMassCut_) postLepSelTree_->Fill();
 
     // Get CHS
     event.chsIndex = getChargedHadronTracks(event);
@@ -297,7 +299,8 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     if (doPlots_) plotMap["lepSel"]->fillAllPlots(event, eventWeight);
     if (doPlots_ || fillCutFlow_) cutFlow.Fill(0.5, eventWeight);
 
-    if ( (event.zPairLeptons.first + event.zPairLeptons.second).M() > scalarMassCut_ && !skipScalarMassCut_ ) return false;
+    // If dilepton mass is greater than threshold value, return false
+    if ( dileptonMass > scalarMassCut_ && !skipScalarMassCut_ ) return false;
 
     if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, systToRun, eventWeight, false);
     if (doPlots_) plotMap["zMass"]->fillAllPlots(event, eventWeight);
