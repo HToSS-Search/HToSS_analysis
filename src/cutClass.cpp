@@ -365,17 +365,12 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     return true;
 }
 
-std::vector<double> Cuts::getRochesterSFs(const AnalysisEvent& event) const
-{
+std::vector<double> Cuts::getRochesterSFs(const AnalysisEvent& event) const {
     std::vector<double> SFs{};
 
-    for (auto muonIt = event.muonIndexTight.begin();
-         muonIt != event.muonIndexTight.end();
-         muonIt++)
-    {
+    for (auto muonIt = event.muonIndexTight.begin(); muonIt != event.muonIndexTight.end(); muonIt++) {
         double tempSF{1.0};
-        if (isMC_)
-        {
+        if (isMC_) {
             if (event.genMuonPF2PATPT[*muonIt] > 0) { // matched gen muon
                 tempSF = rc_.kSpreadMC(event.muonPF2PATCharge[*muonIt], event.muonPF2PATPt[*muonIt], event.muonPF2PATEta[*muonIt], event.muonPF2PATPhi[*muonIt], event.genMuonPF2PATPT[*muonIt]);
             }
@@ -814,55 +809,32 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
     return false;
 }
 
-double Cuts::getWbosonQuarksCand(AnalysisEvent& event,
-                                 const std::vector<int>& jets,
-                                 const int& syst) const
-{
+double Cuts::getWbosonQuarksCand(AnalysisEvent& event, const std::vector<int>& jets,  const int& syst) const {
     auto closestWmass{std::numeric_limits<double>::infinity()};
-    if (jets.size() > 2)
-    {
-        for (unsigned k{0}; k < jets.size(); k++)
-        {
-            for (unsigned l{k + 1}; l < jets.size(); l++)
-            {
+    if (jets.size() > 2) {
+        for (unsigned k{0}; k < jets.size(); k++) {
+            for (unsigned l{k + 1}; l < jets.size(); l++) {
                 // Now ensure that the leading b jet isn't one of these!
-                if (event.bTagIndex.size() > 0)
-                {
-                    if (event
-                            .jetPF2PATpfCombinedInclusiveSecondaryVertexV2BJetTags
-                                [jets[k]]
-                        > bDiscCut_)
-                    {
+                if (event.bTagIndex.size() > 0) {
+                    if (event.jetPF2PATpfCombinedInclusiveSecondaryVertexV2BJetTags[jets[k]] > bDiscCut_) {
                         if (event.jetIndex[event.bTagIndex[0]] == jets[k])
                             continue;
                     }
                     else if (
-                        event
-                            .jetPF2PATpfCombinedInclusiveSecondaryVertexV2BJetTags
-                                [jets[l]]
-                        > bDiscCut_)
-                    {
-                        if (event.jetIndex[event.bTagIndex[0]] == jets[l])
-                            continue;
+                        event.jetPF2PATpfCombinedInclusiveSecondaryVertexV2BJetTags[jets[l]] > bDiscCut_) {
+                            if (event.jetIndex[event.bTagIndex[0]] == jets[l]) continue;
                     }
                 }
-                const TLorentzVector jetVec1{
-                    getJetLVec(event, jets[k], syst, false).first};
-                const TLorentzVector jetVec2{
-                    getJetLVec(event, jets[l], syst, false).first};
+                const TLorentzVector jetVec1{getJetLVec(event, jets[k], syst, false).first};
+                const TLorentzVector jetVec2{getJetLVec(event, jets[l], syst, false).first};
 
                 double invWbosonMass{(jetVec1 + jetVec2).M() - 80.385};
 
-                if (std::abs(invWbosonMass) < std::abs(closestWmass))
-                {
-                    event.wPairQuarks.first =
-                        jetVec1.Pt() > jetVec2.Pt() ? jetVec1 : jetVec2;
-                    event.wPairIndex.first =
-                        jetVec1.Pt() > jetVec2.Pt() ? k : l;
-                    event.wPairQuarks.second =
-                        jetVec1.Pt() > jetVec2.Pt() ? jetVec2 : jetVec1;
-                    event.wPairIndex.second =
-                        jetVec1.Pt() > jetVec2.Pt() ? l : k;
+                if (std::abs(invWbosonMass) < std::abs(closestWmass)) {
+                    event.wPairQuarks.first = jetVec1.Pt() > jetVec2.Pt() ? jetVec1 : jetVec2;
+                    event.wPairIndex.first = jetVec1.Pt() > jetVec2.Pt() ? k : l;
+                    event.wPairQuarks.second = jetVec1.Pt() > jetVec2.Pt() ? jetVec2 : jetVec1;
+                    event.wPairIndex.second = jetVec1.Pt() > jetVec2.Pt() ? l : k;
                     closestWmass = invWbosonMass;
                 }
             }
@@ -1360,71 +1332,49 @@ double Cuts::deltaR(const double& eta1,
                      + std::pow(deltaPhi(phi1, phi2), 2));
 }
 
-double Cuts::getLeptonWeight(const AnalysisEvent& event, const int& syst) const
-{
+double Cuts::getLeptonWeight(const AnalysisEvent& event, const int& syst) const {
     // If number of electrons is > 1  then both z pair are electrons, so get
     // their weight
-    if (!isMC_)
-    {
+    if (!isMC_) {
         return 1.;
     }
 
     double leptonWeight{1.};
 
-    if (numTightEle_ == 2)
-    {
-        leptonWeight *= eleSF(event.zPairLeptons.first.Pt(),
-                              event.elePF2PATSCEta[event.zPairIndex.first],
-                              syst);
-        leptonWeight *= eleSF(event.zPairLeptons.second.Pt(),
-                              event.elePF2PATSCEta[event.zPairIndex.second],
-                              syst);
+    if (numTightEle_ == 2) {
+        leptonWeight *= eleSF(event.zPairLeptons.first.Pt(), event.elePF2PATSCEta[event.zPairIndex.first], syst);
+        leptonWeight *= eleSF(event.zPairLeptons.second.Pt(), event.elePF2PATSCEta[event.zPairIndex.second], syst);
     }
 
-    else if (numTightMu_ == 2)
-    {
-        leptonWeight *= muonSF(event.zPairLeptons.first.Pt(),
-                               event.zPairLeptons.first.Eta(),
-                               syst);
-        leptonWeight *= muonSF(event.zPairLeptons.second.Pt(),
-                               event.zPairLeptons.second.Eta(),
-                               syst);
+    else if (numTightMu_ == 2) {
+        leptonWeight *= muonSF(event.zPairLeptons.first.Pt(), event.zPairLeptons.first.Eta(), syst);
+        leptonWeight *= muonSF(event.zPairLeptons.second.Pt(), event.zPairLeptons.second.Eta(), syst);
     }
-    else if (numTightEle_ == 1 && numTightMu_ == 1)
-    {
-        leptonWeight *= eleSF(event.elePF2PATPT[event.electronIndexTight[0]],
-                              event.elePF2PATSCEta[event.electronIndexTight[0]],
-                              syst);
-        leptonWeight *= muonSF(event.muonPF2PATPt[event.muonIndexTight[0]],
-                               event.muonPF2PATEta[event.muonIndexTight[0]],
-                               syst);
+    else if (numTightEle_ == 1 && numTightMu_ == 1) {
+        leptonWeight *= eleSF(event.elePF2PATPT[event.electronIndexTight[0]], event.elePF2PATSCEta[event.electronIndexTight[0]], syst);
+        leptonWeight *= muonSF(event.muonPF2PATPt[event.muonIndexTight[0]], event.muonPF2PATEta[event.muonIndexTight[0]], syst);
     }
     return leptonWeight;
 }
 
-double Cuts::eleSF(const double& pt, const double& eta, const int& syst) const
-{
+double Cuts::eleSF(const double& pt, const double& eta, const int& syst) const {
     const double maxPt{h_eleSFs->GetYaxis()->GetXmax() - 0.1};
     const double minRecoPt{h_eleReco->GetYaxis()->GetXmin() + 0.1};
     int bin1{0};
     int bin2{0};
 
     // If cut-based, std::abs eta, else just eta
-    if (pt <= maxPt)
-    {
+    if (pt <= maxPt) {
         bin1 = h_eleSFs->FindBin(eta, pt);
         // Reco SF has a min to consider
-        if (pt > minRecoPt)
-        {
+        if (pt > minRecoPt) {
             bin2 = h_eleReco->FindBin(eta, pt);
         }
-        else
-        {
+        else {
             bin2 = h_eleReco->FindBin(eta, minRecoPt);
         }
     }
-    else
-    {
+    else {
         bin1 = h_eleSFs->FindBin(eta, maxPt);
         bin2 = h_eleReco->FindBin(eta, maxPt);
     }
@@ -1432,22 +1382,18 @@ double Cuts::eleSF(const double& pt, const double& eta, const int& syst) const
     double eleIdSF{h_eleSFs->GetBinContent(bin1)};
     double eleRecoSF{h_eleReco->GetBinContent(bin2)};
 
-    if (syst == 1)
-    {
+    if (syst == 1) {
         eleIdSF += h_eleSFs->GetBinError(bin1);
         eleRecoSF += h_eleReco->GetBinError(bin2);
-        if (pt > 80.0 || pt <= 20.0)
-        {
+        if (pt > 80.0 || pt <= 20.0) {
             eleRecoSF += 0.01;
         }
     }
 
-    if (syst == 2)
-    {
+    if (syst == 2) {
         eleIdSF -= h_eleSFs->GetBinError(bin1);
         eleRecoSF -= h_eleReco->GetBinError(bin2);
-        if (pt > 80.0 || pt <= 20.0)
-        {
+        if (pt > 80.0 || pt <= 20.0) {
             eleRecoSF -= 0.01;
         }
     }
@@ -1529,14 +1475,10 @@ int Cuts::getChsTrackPairIndex(const AnalysisEvent& event) const {
 void Cuts::initialiseJECCors() {
     std::ifstream jecFile;
     if (!is2016_) {
-        jecFile.open("scaleFactors/2017/"
-                     "Fall17_17Nov2017_V32_MC_Uncertainty_AK4PFchs.txt",
-                     std::ifstream::in);
+        jecFile.open("scaleFactors/2017/Fall17_17Nov2017_V32_MC_Uncertainty_AK4PFchs.txt", std::ifstream::in);
     }
     else {
-        jecFile.open("scaleFactors/2016/"
-                     "Summer16_23Sep2016V4_MC_Uncertainty_AK4PFchs.txt",
-                     std::ifstream::in);
+        jecFile.open("scaleFactors/2016/Summer16_23Sep2016V4_MC_Uncertainty_AK4PFchs.txt", std::ifstream::in);
     }
     std::string line;
     bool first{true};
