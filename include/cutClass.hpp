@@ -50,7 +50,7 @@ class Cuts
     // Function to get lepton SF
     double getLeptonWeight(const AnalysisEvent& event, const int& syst) const;
     double eleSF(const double& pt, const double& eta, const int& syst) const;
-    double muonSF(const double& pt, const double& eta, const int& syst) const;
+    double muonSF(const double& pt, const double& eta, const int& syst, const bool& leadingMuon) const;
 
     // grab the muon track pair index for selected muons
     int getMuonTrackPairIndex(const AnalysisEvent& event) const;

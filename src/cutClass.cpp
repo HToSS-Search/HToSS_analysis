@@ -278,8 +278,6 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     event.muonIndexTight = getLooseMuons(event);
     if (event.muonIndexTight.size() < numTightMu_) return false;
 
-//    event.muonMomentumSF = getRochesterSFs(event);
-
     if ( !getDileptonCand(event, event.muonIndexTight) ) return false;
 
     const double dileptonMass {(event.zPairLeptons.first + event.zPairLeptons.second).M()};
@@ -287,13 +285,14 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     // This is to make some skims for faster running. Do lepSel and save some files. If flag is true, scalar mass cuts are applied, and dilepton mass <= threshold, fill tree
     if (postLepSelTree_ && dileptonMass <= scalarMassCut_ && !skipScalarMassCut_) postLepSelTree_->Fill();
 
+//    eventWeight *= getLeptonWeight(event, systToRun);
+//    event.muonMomentumSF = getRochesterSFs(event);
+
     // Get CHS
     event.chsIndex = getChargedHadronTracks(event);
     if ( event.chsIndex.size() < 2 ) return false;
 
     const bool validDihadronCand = getDihadronCand(event, event.chsIndex);
-
-//    eventWeight *= getLeptonWeight(event, systToRun);
 
     if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, systToRun, eventWeight, false);
     if (doPlots_) plotMap["lepSel"]->fillAllPlots(event, eventWeight);
@@ -1347,12 +1346,12 @@ double Cuts::getLeptonWeight(const AnalysisEvent& event, const int& syst) const 
     }
 
     else if (numTightMu_ == 2) {
-        leptonWeight *= muonSF(event.zPairLeptons.first.Pt(), event.zPairLeptons.first.Eta(), syst);
-        leptonWeight *= muonSF(event.zPairLeptons.second.Pt(), event.zPairLeptons.second.Eta(), syst);
+        leptonWeight *= muonSF(event.zPairLeptons.first.Pt(), event.zPairLeptons.first.Eta(), syst, true);
+        leptonWeight *= muonSF(event.zPairLeptons.second.Pt(), event.zPairLeptons.second.Eta(), syst, false);
     }
     else if (numTightEle_ == 1 && numTightMu_ == 1) {
         leptonWeight *= eleSF(event.elePF2PATPT[event.electronIndexTight[0]], event.elePF2PATSCEta[event.electronIndexTight[0]], syst);
-        leptonWeight *= muonSF(event.muonPF2PATPt[event.muonIndexTight[0]], event.muonPF2PATEta[event.muonIndexTight[0]], syst);
+        leptonWeight *= muonSF(event.muonPF2PATPt[event.muonIndexTight[0]], event.muonPF2PATEta[event.muonIndexTight[0]], syst, false);
     }
     return leptonWeight;
 }
@@ -1401,55 +1400,77 @@ double Cuts::eleSF(const double& pt, const double& eta, const int& syst) const {
     return eleIdSF * eleRecoSF;
 }
 
-double Cuts::muonSF(const double& pt, const double& eta, const int& syst) const {
+double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const bool& leadingMuon) const {
+
+// Iso commented out currently until 
+
+    double maxIdPt  {h_muonIDs1->GetYaxis()->GetXmax() - 0.1};
+//    double maxIsoPt {h_muonPFiso1->GetYaxis()->GetXmax() - 0.1};
+    double maxHltPt {h_muonHlt1->GetYaxis()->GetXmax() - 0.1};
+    double minIdPt    {h_muonIDs1->GetYaxis()->GetXmin() + 0.1};
+//    double minIsoPt   {h_muonPFiso1->GetYaxis()->GetXmin() + 0.1};
+    double minHltPt {h_muonHlt1->GetYaxis()->GetXmin() +  0.1};
+
+    int binId1{0}, binIso1{0}, binHlt1{0};
+    double muonIdSF{1.0}, muonPFisoSF{1.0}, muonHltSF {1.0};
+
+    if (pt > maxIdPt) binId1 = h_muonIDs1->FindBin(std::abs(eta), maxIdPt);
+    else if (pt < minIdPt) binId1 = h_muonIDs1->FindBin(std::abs(eta), minIdPt);
+    else  binId1 = h_muonIDs1->FindBin(std::abs(eta), pt);
+
+//    if (pt > maxIsoPt) binIso1 = h_muonPFiso1->FindBin(std::abs(eta), maxIsoPt);
+//    else if (pt < minIsoPt) binIso1 = h_muonPFiso1->FindBin(std::abs(eta), minIsoPt);
+//    else binIso1 = h_muonPFiso1->FindBin(std::abs(eta), pt);
+
+    if (pt > maxHltPt) binHlt1 = h_muonHlt1->FindBin(std::abs(eta), maxHltPt);
+    else if (pt < minHltPt) binHlt1 = h_muonHlt1->FindBin(std::abs(eta), minHltPt);
+    else binHlt1 = h_muonHlt1->FindBin(std::abs(eta), pt);
+
     if (!is2016_) {
 
-        double maxIdPt{h_muonIDs1->GetYaxis()->GetXmax() - 0.1};
-//        double maxIsoPt{h_muonPFiso1->GetYaxis()->GetXmax() - 0.1};
-        double minIdPt{h_muonIDs1->GetYaxis()->GetXmin() + 0.1};
-//        double minIsoPt{h_muonPFiso1->GetYaxis()->GetXmin() + 0.1};
+        muonIdSF    = h_muonIDs1->GetBinContent(binId1);
+//        muonPFisoSF = h_muonPFiso1->GetBinContent(binIso1);
+        if (leadingMuon) muonHltSF   = h_muonHlt1->GetBinContent(binHlt1);
 
-
-
+        if (syst == 1) {
+            muonIdSF    += h_muonIDs1->GetBinError(binId1);
+//            muonPFisoSF += h_muonPFiso1->GetBinError(binIso1);
+            if (leadingMuon) muonHltSF   += h_muonHlt1->GetBinError(binHlt1);
+            return muonIdSF * muonPFisoSF * muonHltSF;
+        }
+        else if (syst == 2) {
+            muonIdSF    -= h_muonIDs1->GetBinError(binId1);
+//            muonPFisoSF -= h_muonPFiso1->GetBinError(binIso1);
+            if (leadingMuon) muonHltSF   -= h_muonHlt1->GetBinError(binHlt1);
+            return muonIdSF * muonPFisoSF * muonHltSF;
+        }
+        else {
+            return muonIdSF * muonPFisoSF * muonHltSF;
+        }
     }
     else { // Run2016 needs separate treatments in pre and post HIP eras
-
-        double maxIdPt{h_muonIDs1->GetYaxis()->GetXmax() - 0.1};
-        double maxIsoPt{h_muonPFiso1->GetYaxis()->GetXmax() - 0.1};
-        double minIdPt{h_muonIDs1->GetYaxis()->GetXmin() + 0.1};
-        double minIsoPt{h_muonPFiso1->GetYaxis()->GetXmin() + 0.1};
-
-        int binId1{0}, binIso1{0};
-        int binId2{0}, binIso2{0};
-
-        if (pt > maxIdPt) binId1 = h_muonIDs1->FindBin(std::abs(eta), maxIdPt);
-        else if (pt < minIdPt) binId1 = h_muonIDs1->FindBin(std::abs(eta), minIdPt);
-        else  binId1 = h_muonIDs1->FindBin(std::abs(eta), pt);
-
-        if (pt > maxIsoPt) binIso1 = h_muonPFiso1->FindBin(std::abs(eta), maxIsoPt);
-        else if (pt < minIsoPt) binIso1 = h_muonPFiso1->FindBin(std::abs(eta), minIsoPt);
-        else binIso1 = h_muonPFiso1->FindBin(std::abs(eta), pt);
+ 
+        int binId2{0}, binIso2{0}; // Additional 2016 variables
 
         if (pt > maxIdPt) binId2 = h_muonIDs2->FindBin(std::abs(eta), maxIdPt);
         else if (pt < minIdPt) binId2 = h_muonIDs2->FindBin(std::abs(eta), minIdPt);
         else binId2 = h_muonIDs2->FindBin(std::abs(eta), pt);
-        if (pt > maxIsoPt) binIso2 = h_muonPFiso2->FindBin(std::abs(eta), maxIsoPt);
-        else if (pt < minIsoPt) binIso2 = h_muonPFiso2->FindBin(std::abs(eta), minIsoPt);
-        else binIso2 = h_muonPFiso2->FindBin(std::abs(eta), pt);
 
-        double muonIdSF{1.0};
-        double muonPFisoSF{1.0};
+//        if (pt > maxIsoPt) binIso2 = h_muonPFiso2->FindBin(std::abs(eta), maxIsoPt);
+//        else if (pt < minIsoPt) binIso2 = h_muonPFiso2->FindBin(std::abs(eta), minIsoPt);
+//        else binIso2 = h_muonPFiso2->FindBin(std::abs(eta), pt);
+
         muonIdSF = (h_muonIDs1->GetBinContent(binId1) * lumiRunsBCDEF_ + h_muonIDs2->GetBinContent(binId2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
-        muonPFisoSF = (h_muonPFiso1->GetBinContent(binIso1) * lumiRunsBCDEF_ + h_muonPFiso2->GetBinContent(binIso2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
+//        muonPFisoSF = (h_muonPFiso1->GetBinContent(binIso1) * lumiRunsBCDEF_ + h_muonPFiso2->GetBinContent(binIso2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
 
         if (syst == 1) {
             muonIdSF += (h_muonIDs1->GetBinError(binId1) * lumiRunsBCDEF_ + h_muonIDs2->GetBinError(binId2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06) + 0.01; // Additional 1% uncert for ID and 0.5% for iso as recommended
-            muonPFisoSF += (h_muonPFiso1->GetBinError(binIso1) * lumiRunsBCDEF_ + h_muonIDs2->GetBinError(binId2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06) + 0.005;
+//            muonPFisoSF += (h_muonPFiso1->GetBinError(binIso1) * lumiRunsBCDEF_ + h_muonIDs2->GetBinError(binId2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06) + 0.005;
             return muonIdSF * muonPFisoSF;
         }
         else if (syst == 2) {
             muonIdSF -= (h_muonIDs1->GetBinError(binId1) * lumiRunsBCDEF_ + h_muonIDs2->GetBinError(binId2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06) - 0.01; // Additional 1% uncert for ID and 0.5% for iso as recommended
-            muonPFisoSF -= (h_muonPFiso1->GetBinError(binIso1) * lumiRunsBCDEF_ + h_muonIDs2->GetBinError(binId2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06) - 0.005;
+//            muonPFisoSF -= (h_muonPFiso1->GetBinError(binIso1) * lumiRunsBCDEF_ + h_muonIDs2->GetBinError(binId2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06) - 0.005;
             return muonIdSF * muonPFisoSF;
         }
         else {
