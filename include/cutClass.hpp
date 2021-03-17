@@ -217,107 +217,73 @@ class Cuts
     TH2F* h_muonPFiso2;
 
     public:
-    Cuts(const bool doPlots,
-         const bool fillCutFlows,
-         const bool invertLepCut,
-         const bool is2016,
-         const bool is2018);
+    Cuts(const bool doPlots, const bool fillCutFlows, const bool invertLepCut, const bool is2016, const bool is2018);
     ~Cuts();
-    bool makeCuts(AnalysisEvent& event,
-                  double& eventWeight,
-                  std::map<std::string, std::shared_ptr<Plots>>& plotMap,
-                  TH1D& cutFlow,
-                  const int systToRun);
-    void setMC(bool isMC)
-    {
+    bool makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::string, std::shared_ptr<Plots>>& plotMap, TH1D& cutFlow, const int systToRun);
+    void setMC(bool isMC) {
         isMC_ = isMC;
     }
-    void setCloneTree(TTree* tree)
-    {
+    void setCloneTree(TTree* tree) {
         postLepSelTree_ = tree;
     }
-    void setNumLeps(const unsigned tightMu,
-                    const unsigned looseMu,
-                    const unsigned tightEle,
-                    const unsigned looseEle)
-    {
+    void setNumLeps(const unsigned tightMu, const unsigned looseMu, const unsigned tightEle, const unsigned looseEle) {
         numTightEle_ = tightEle;
         numLooseEle_ = looseEle;
         numTightMu_ = tightMu;
         numLooseMu_ = looseMu;
     }
-    void setCutConfTrigLabel(std::string newLabel)
-    {
+    void setCutConfTrigLabel(std::string newLabel) {
         cutConfTrigLabel_ = newLabel;
     }
-    void setInvLepCut(bool invLep)
-    {
+    void setInvLepCut(bool invLep) {
         invertLepCut_ = invLep;
     }
-    void setTriggerFlag(std::string triggerFlag)
-    {
+    void setTriggerFlag(std::string triggerFlag) {
         triggerFlag_ = triggerFlag;
     }
-    void setBTagPlots(std::vector<TH2D*> vec, bool makePlotsOrRead)
-    {
+    void setBTagPlots(std::vector<TH2D*> vec, bool makePlotsOrRead) {
         makeBTagEffPlots_ = makePlotsOrRead;
         bTagEffPlots_ = vec;
         getBTagWeight_ = !makePlotsOrRead;
     }
-    void setSkipTrig(bool skip)
-    {
+    void setSkipTrig(bool skip) {
         skipTrigger_ = skip;
     }
-    void setSkipScalarCut(bool skip)
-    {
+    void setSkipScalarCut(bool skip) {
         skipScalarMassCut_ = skip;
     }
-    void setMetCut(double cut)
-    {
+    void setMetCut(double cut) {
         metDileptonCut_ = cut;
     }
-    void setMWCut(double cut)
-    {
+    void setMWCut(double cut) {
         invWMassCut_ = cut;
     }
-    void setScalarCut(double cut)
-    {
+    void setScalarCut(double cut) {
         scalarMassCut_ = cut;
     }
-    void setHiggsCut(double cut)
-    {
+    void setHiggsCut(double cut) {
         higgsMassCut_ = cut;
     }
-    void setChsCandidateMass(double mass)
-    {
+    void setChsCandidateMass(double mass) {
         chsMass_ = mass/1000.;
     }
-    void setJetRegion(const unsigned nJets,
-                      const unsigned nBets,
-                      const unsigned maxJets,
-                      const unsigned maxBJets)
-    {
+    void setJetRegion(const unsigned nJets, const unsigned nBets, const unsigned maxJets, const unsigned maxBJets) {
         numJets_ = nJets;
         numbJets_ = nBets;
         maxJets_ = maxJets;
         maxbJets_ = maxBJets;
     }
     void parse_config(const std::string confName);
-    void setNplFlag(bool isNPL)
-    {
+    void setNplFlag(bool isNPL) {
         isNPL_ = isNPL;
     }
-    void setZplusControlRegionFlag(bool isZplusCR)
-    {
+    void setZplusControlRegionFlag(bool isZplusCR) {
         isZplusCR_ = isZplusCR;
     }
 
     // Simple deltaR function, because the reco namespace doesn't work or
     // something
-    [[gnu::const]] static double deltaR(const double& eta1,
-                                        const double& phi1,
-                                        const double& eta2,
-                                        const double& phi2);
+    [[gnu::const]] static double deltaR(const double& eta1, const double& phi1, const double& eta2, const double& phi2);
     [[gnu::const]] static double deltaPhi(const double& phi1, const double& phi2);
 
 };
