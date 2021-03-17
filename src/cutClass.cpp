@@ -1429,18 +1429,18 @@ double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const 
 
     if (!is2016_) {
 
-//        muonIdSF    = h_muonIDs1->GetBinContent(binId1);
+        muonIdSF    = h_muonIDs1->GetBinContent(binId1);
 //        muonPFisoSF = h_muonPFiso1->GetBinContent(binIso1);
         if (leadingMuon) muonHltSF   = h_muonHlt1->GetBinContent(binHlt1);
 
         if (syst == 1) {
-//            muonIdSF    += h_muonIDs1->GetBinError(binId1);
+            muonIdSF    += h_muonIDs1->GetBinError(binId1);
 //            muonPFisoSF += h_muonPFiso1->GetBinError(binIso1);
             if (leadingMuon) muonHltSF   += h_muonHlt1->GetBinError(binHlt1);
             return muonIdSF * muonPFisoSF * muonHltSF;
         }
         else if (syst == 2) {
-//            muonIdSF    -= h_muonIDs1->GetBinError(binId1);
+            muonIdSF    -= h_muonIDs1->GetBinError(binId1);
 //            muonPFisoSF -= h_muonPFiso1->GetBinError(binIso1);
             if (leadingMuon) muonHltSF   -= h_muonHlt1->GetBinError(binHlt1);
             return muonIdSF * muonPFisoSF * muonHltSF;
