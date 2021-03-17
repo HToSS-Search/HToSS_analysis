@@ -209,12 +209,22 @@ class Cuts
     TFile* muonIsoFile1;
     TFile* muonIDsFile2;
     TFile* muonIsoFile2;
+
+    TFile* muonIDsSystFile1;
+    TFile* muonIsoSystFile1;
+    TFile* muonIDsSystFile2;
+    TFile* muonIsoSystFile2;
+
     TH2F* h_muonHlt1;
     TH2F* h_muonHlt2;
     TH2D* h_muonIDs1;
     TH2D* h_muonIDs2;
     TH2D* h_muonPFiso1;
     TH2D* h_muonPFiso2;
+    TH2D* h_muonIDsSyst1;
+    TH2D* h_muonIDsSyst2;
+    TH2D* h_muonPFisoSysy1;
+    TH2D* h_muonPFisoSyst2;
 
     public:
     Cuts(const bool doPlots, const bool fillCutFlows, const bool invertLepCut, const bool is2016, const bool is2018);
