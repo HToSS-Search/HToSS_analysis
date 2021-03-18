@@ -1442,16 +1442,25 @@ double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const 
 //        muonPFisoSF = h_muonPFiso1->GetBinContent(binIso1);
         if (leadingMuon) muonHltSF   = h_muonHlt1->GetBinContent(binHlt1);
 
-        if (syst == 1) {
-            muonIdSF    += h_muonIDs1->GetBinError(binId1);
-//            muonPFisoSF += h_muonPFiso1->GetBinError(binIso1);
-            if (leadingMuon) muonHltSF   += h_muonHlt1->GetBinError(binHlt1);
-            return muonIdSF * muonPFisoSF * muonHltSF;
-        }
-        else if (syst == 2) {
-            muonIdSF    -= h_muonIDs1->GetBinError(binId1);
-//            muonPFisoSF -= h_muonPFiso1->GetBinError(binIso1);
-            if (leadingMuon) muonHltSF   -= h_muonHlt1->GetBinError(binHlt1);
+        if (syst == 1 || syst == 2) {
+            double idStatUncert = h_muonIDs1->GetBinError(binId1);
+            double idSystUncert = h_muonIDsSyst1->GetBinError(binId1);
+            double idUncert = std::sqrt(idStatUncert*idStatUncert + idSystUncert*idSystUncert);
+
+            double isoStatUncert = h_muonPFiso1->GetBinError(binId1);
+            double isoSystUncert = h_muonPFisoSyst1->GetBinError(binId1);
+            double isoUncert = std::sqrt(isoStatUncert*isoStatUncert + isoSystUncert*isoSystUncert);
+
+            if (syst == 1) {
+                muonIdSF    += idUncert;
+//                muonPFisoSF += isoUncert;
+                if (leadingMuon) muonHltSF   += h_muonHlt1->GetBinError(binHlt1);
+            }
+            else if (syst == 2) {
+                muonIdSF    -= idUncert;
+//                muonPFisoSF -= isoUncert;
+                if (leadingMuon) muonHltSF   -= h_muonHlt1->GetBinError(binHlt1);
+            }
             return muonIdSF * muonPFisoSF * muonHltSF;
         }
         else {
@@ -1488,18 +1497,33 @@ double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const 
         muonIdSF = (h_muonIDs1->GetBinContent(binId1) * lumiRunsBCDEF_ + h_muonIDs2->GetBinContent(binId2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
 //        muonPFisoSF = (h_muonPFiso1->GetBinContent(binIso1) * lumiRunsBCDEF_ + h_muonPFiso2->GetBinContent(binIso2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
 
-        if (syst == 1) {
-            muonIdSF += (h_muonIDs1->GetBinError(binId1) * lumiRunsBCDEF_ + h_muonIDs2->GetBinError(binId2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06) + 0.01; // Additional 1% uncert for ID and 0.5% for iso as recommended
-//            muonPFisoSF += (h_muonPFiso1->GetBinError(binIso1) * lumiRunsBCDEF_ + h_muonIDs2->GetBinError(binId2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06) + 0.005;
-            return muonIdSF * muonPFisoSF;
+        if (syst == 1 || syst == 2) {
+            double idStatUncert1 = h_muonIDs1->GetBinError(binId1);
+            double idSystUncert1 = h_muonIDsSyst1->GetBinError(binId1);
+            double idUncert1 = std::sqrt(idStatUncert1*idStatUncert1 + idSystUncert1*idSystUncert1);
+            double idStatUncert2 = h_muonIDs2->GetBinError(binId2);
+            double idSystUncert2 = h_muonIDsSyst2->GetBinError(binId2);
+            double idUncert2 = std::sqrt(idStatUncert2*idStatUncert2 + idSystUncert2*idSystUncert2);
+
+            double isoStatUncert1 = h_muonPFiso1->GetBinError(binId1);
+            double isoSystUncert1 = h_muonPFisoSyst1->GetBinError(binId1);
+            double isoUncert1 = std::sqrt(isoStatUncert1*isoStatUncert1 + isoSystUncert1*isoSystUncert1);
+            double isoStatUncert2 = h_muonPFiso2->GetBinError(binId2);
+            double isoSystUncert2 = h_muonPFisoSyst2->GetBinError(binId2);
+            double isoUncert2 = std::sqrt(isoStatUncert2*isoStatUncert2 + isoSystUncert2*isoSystUncert2);
+
+            if (syst == 1) {
+                muonIdSF += (idUncert1 * lumiRunsBCDEF_ + idUncert2 * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
+//                muonPFisoSF += (isoUncert1 * lumiRunsBCDEF_ + isoUncert2 * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
+            }
+            else if (syst == 2) {
+                muonIdSF -= (idUncert1 * lumiRunsBCDEF_ + idUncert2 * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
+//                muonPFisoSF -= (isoUncert1 * lumiRunsBCDEF_ + isoUncert2 * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
+            }
+            return muonIdSF * muonPFisoSF * muonHltSF;
         }
-        else if (syst == 2) {
-            muonIdSF -= (h_muonIDs1->GetBinError(binId1) * lumiRunsBCDEF_ + h_muonIDs2->GetBinError(binId2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06) - 0.01; // Additional 1% uncert for ID and 0.5% for iso as recommended
-//            muonPFisoSF -= (h_muonPFiso1->GetBinError(binIso1) * lumiRunsBCDEF_ + h_muonIDs2->GetBinError(binId2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06) - 0.005;
-            return muonIdSF * muonPFisoSF;
-        }
-        else {
-            return muonIdSF * muonPFisoSF;
+	else {
+            return muonIdSF * muonPFisoSF * muonHltSF;
         }
     }
 }
