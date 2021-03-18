@@ -360,14 +360,14 @@ int main(int argc, char* argv[])
 //                std::cout << "Vx = " << event.packedCandsPseudoTrkVx[k] << "; Vy = " << event.packedCandsPseudoTrkVy[k] << "; Vz = " << event.packedCandsPseudoTrkVz[k] << std::endl;
 //                std::cout << "dz = " << event.packedCandsDz[k] << "; dxy = " << event.packedCandsDz[k] << "; highQuality[k] = " << event.packedCandsHighPurityTrack[k] << std::endl;
 
-                  h_packedCandDxy->Fill(event.packedCandsDxy[k]);
-                  h_packedCandDz->Fill(event.packedCandsDz[k]);
+                  h_packedCandDxy->Fill(event.packedCandsDxy[k], datasetWeight);
+                  h_packedCandDz->Fill(event.packedCandsDz[k], datasetWeight);
                   if ( event.packedCandsHasTrackDetails[k] ) {
-                      h_packedCandVx->Fill(event.packedCandsPseudoTrkVx[k]);
-                      h_packedCandVy->Fill(event.packedCandsPseudoTrkVy[k]);
+                      h_packedCandVx->Fill(event.packedCandsPseudoTrkVx[k], datasetWeight);
+                      h_packedCandVy->Fill(event.packedCandsPseudoTrkVy[k], datasetWeight);
                       float Vxy = std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k] + event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]);
-                      h_packedCandVxy->Fill(Vxy);
-                      h_packedCandVz->Fill(event.packedCandsPseudoTrkVz[k]);
+                      h_packedCandVxy->Fill(Vxy, datasetWeight);
+                      h_packedCandVz->Fill(event.packedCandsPseudoTrkVz[k], datasetWeight);
                   }
             }
 
@@ -475,12 +475,12 @@ int main(int argc, char* argv[])
                     const TLorentzVector recoJetK1 {event.jetPF2PATPx[k1], event.jetPF2PATPy[k1], event.jetPF2PATPz[k1], event.jetPF2PATE[k1]};
                     const TLorentzVector recoJetK2 {event.jetPF2PATPx[k2], event.jetPF2PATPy[k2], event.jetPF2PATPz[k2], event.jetPF2PATE[k2]};
 
-                    h_genJetKaonDR->Fill(genJetK1.DeltaR(genJetK2));
-                    h_genJetKaonDPhi->Fill(genJetK1.DeltaPhi(genJetK2));
-                    h_genJetKaonDrEtaPhi->Fill(genJetK1.DrEtaPhi(genJetK2));
-                    h_recoJetKaonDR->Fill(recoJetK1.DeltaR(recoJetK2));
-                    h_recoJetKaonDPhi->Fill(recoJetK1.DeltaPhi(recoJetK2));
-                    h_recoJetKaonDrEtaPhi->Fill(recoJetK1.DrEtaPhi(recoJetK2));
+                    h_genJetKaonDR->Fill(genJetK1.DeltaR(genJetK2), datasetWeight);
+                    h_genJetKaonDPhi->Fill(genJetK1.DeltaPhi(genJetK2), datasetWeight);
+                    h_genJetKaonDrEtaPhi->Fill(genJetK1.DrEtaPhi(genJetK2), datasetWeight);
+                    h_recoJetKaonDR->Fill(recoJetK1.DeltaR(recoJetK2), datasetWeight);
+                    h_recoJetKaonDPhi->Fill(recoJetK1.DeltaPhi(recoJetK2), datasetWeight);
+                    h_recoJetKaonDrEtaPhi->Fill(recoJetK1.DrEtaPhi(recoJetK2), datasetWeight);
 
                     h_pidsFromScalarDecays->AddBinContent(1);
                     if ( kChargedFlag == 2 ) h_kaonsFromScalarDecays->AddBinContent(1);
@@ -493,12 +493,12 @@ int main(int argc, char* argv[])
                         const TLorentzVector genJetKS2  {event.genJetPF2PATPX[ks2], event.genJetPF2PATPY[ks2], event.genJetPF2PATPZ[ks2], event.genJetPF2PATE[ks2]};
                         const TLorentzVector recoJetKS1 {event.jetPF2PATPx[ks1], event.jetPF2PATPy[ks1], event.jetPF2PATPz[ks1], event.jetPF2PATE[ks1]};
                         const TLorentzVector recoJetKS2 {event.jetPF2PATPx[ks2], event.jetPF2PATPy[ks2], event.jetPF2PATPz[ks2], event.jetPF2PATE[ks2]};
-                        h_genJetKshortDR->Fill(genJetKS1.DeltaR(genJetKS2));
-                        h_genJetKshortDPhi->Fill(genJetKS1.DeltaPhi(genJetKS2));
-                        h_genJetKshortDrEtaPhi->Fill(genJetKS1.DrEtaPhi(genJetKS2));
-                        h_recoJetKshortDR->Fill(recoJetKS1.DeltaR(recoJetKS2));
-                        h_recoJetKshortDPhi->Fill(recoJetKS1.DeltaPhi(recoJetKS2));
-                        h_recoJetKshortDrEtaPhi->Fill(recoJetKS1.DrEtaPhi(recoJetKS2));
+                        h_genJetKshortDR->Fill(genJetKS1.DeltaR(genJetKS2), datasetWeight);
+                        h_genJetKshortDPhi->Fill(genJetKS1.DeltaPhi(genJetKS2), datasetWeight);
+                        h_genJetKshortDrEtaPhi->Fill(genJetKS1.DrEtaPhi(genJetKS2), datasetWeight);
+                        h_recoJetKshortDR->Fill(recoJetKS1.DeltaR(recoJetKS2), datasetWeight);
+                        h_recoJetKshortDPhi->Fill(recoJetKS1.DeltaPhi(recoJetKS2), datasetWeight);
+                        h_recoJetKshortDrEtaPhi->Fill(recoJetKS1.DrEtaPhi(recoJetKS2), datasetWeight);
                     }
                     if ( kShortFlag == 1 && kLongFlag == 1 ) h_kaonsFromScalarDecays->AddBinContent(5);
                     if ( kLongFlag == 2 ) h_kaonsFromScalarDecays->AddBinContent(6);
@@ -511,19 +511,19 @@ int main(int argc, char* argv[])
 //                std::cout << "Scalar jet flags: kaonFlag = " << kaonFlag << "; pionFlag = " << pionFlag << "; photonFlag = " << photonFlag <<std::endl;
 //                if ( pionFlag == 2 ) std::cout << "genJetPt: " << event.genJetPF2PATPT << std::endl;
 
-                h_genJetMass->Fill(genJetMassFromScalar);
-                h_genJet1Mass->Fill(genJet1MassFromScalar);
-                h_genJet2Mass->Fill(genJet2MassFromScalar);
+                h_genJetMass->Fill(genJetMassFromScalar, datasetWeight);
+                h_genJet1Mass->Fill(genJet1MassFromScalar, datasetWeight);
+                h_genJet2Mass->Fill(genJet2MassFromScalar, datasetWeight);
 
                 // All reco  jets
                 TLorentzVector recoJetSumInvMass;
                 for (auto it : recoJetVec ) {
                     recoJetSumInvMass += it.first;
-                    h_recoJetInvMass->Fill(it.first.M());
-                    h_recoJetPt->Fill(it.first.Pt());
-                    h_recoJetEta->Fill(it.first.Eta());
+                    h_recoJetInvMass->Fill(it.first.M(), datasetWeight);
+                    h_recoJetPt->Fill(it.first.Pt(), datasetWeight);
+                    h_recoJetEta->Fill(it.first.Eta(), datasetWeight);
                 }
-                h_recoJetSumInvMass->Fill(recoJetSumInvMass.M());
+                h_recoJetSumInvMass->Fill(recoJetSumInvMass.M(), datasetWeight);
 
                 // All reco jets matched to a gen jet descended from a sclaar
                 TLorentzVector recoJetScalarSumInvMass, reco2JetScalarSumInvMass, reco2JetMinScalarSumInvMass;
@@ -532,29 +532,29 @@ int main(int argc, char* argv[])
                     recoJetScalarSumInvMass += it.first;
                     if ( nJetsFromScalarCounter == 2 ) reco2JetScalarSumInvMass += it.first;
                     if ( nJetsFromScalarCounter > 1 ) reco2JetMinScalarSumInvMass += it.first;
-                    h_recoJetScalarInvMass->Fill(it.first.M());
-                    h_recoJetScalarPt->Fill(it.first.Pt());
-                    h_recoJetScalarEta->Fill(it.first.Eta());
+                    h_recoJetScalarInvMass->Fill(it.first.M(), datasetWeight);
+                    h_recoJetScalarPt->Fill(it.first.Pt(), datasetWeight);
+                    h_recoJetScalarEta->Fill(it.first.Eta(), datasetWeight);
                     const int pid = std::abs(it.second);
                     if (pid == 22) {
                         pionRecoJetScalarSumInvMass += it.first;
-                        h_recoJetPionInvMass->Fill(it.first.M());
-                        h_recoJetPionPt->Fill(it.first.Pt());
-                        h_recoJetPionEta->Fill(it.first.Eta());
+                        h_recoJetPionInvMass->Fill(it.first.M(), datasetWeight);
+                        h_recoJetPionPt->Fill(it.first.Pt(), datasetWeight);
+                        h_recoJetPionEta->Fill(it.first.Eta(), datasetWeight);
                     }
                     if (pid == 321 || pid == 130 || pid == 310 ) { 
                         kaonRecoJetScalarSumInvMass += it.first;
-                        h_recoJetKaonInvMass->Fill(it.first.M());
-                        h_recoJetKaonPt->Fill(it.first.Pt());
-                        h_recoJetKaonEta->Fill(it.first.Eta());
+                        h_recoJetKaonInvMass->Fill(it.first.M(), datasetWeight);
+                        h_recoJetKaonPt->Fill(it.first.Pt(), datasetWeight);
+                        h_recoJetKaonEta->Fill(it.first.Eta(), datasetWeight);
                     }
                 }
-                if ( recoJetScalarSumInvMass.M() > 0.1 ) h_recoJetScalarSumInvMass->Fill(recoJetScalarSumInvMass.M());
-                if ( reco2JetScalarSumInvMass.M() > 0.1 ) h_reco2JetScalarSumInvMass->Fill(reco2JetScalarSumInvMass.M());
-                if ( reco2JetMinScalarSumInvMass.M() > 0.1 ) h_reco2JetMinScalarSumInvMass->Fill(reco2JetMinScalarSumInvMass.M());
+                if ( recoJetScalarSumInvMass.M() > 0.1 ) h_recoJetScalarSumInvMass->Fill(recoJetScalarSumInvMass.M(), datasetWeight);
+                if ( reco2JetScalarSumInvMass.M() > 0.1 ) h_reco2JetScalarSumInvMass->Fill(reco2JetScalarSumInvMass.M(), datasetWeight);
+                if ( reco2JetMinScalarSumInvMass.M() > 0.1 ) h_reco2JetMinScalarSumInvMass->Fill(reco2JetMinScalarSumInvMass.M(), datasetWeight);
 
-                h_recoJetPionScalarInvMass->Fill(pionRecoJetScalarSumInvMass.M());
-                h_recoJetKaonScalarInvMass->Fill(kaonRecoJetScalarSumInvMass.M());
+                h_recoJetPionScalarInvMass->Fill(pionRecoJetScalarSumInvMass.M(), datasetWeight);
+                h_recoJetKaonScalarInvMass->Fill(kaonRecoJetScalarSumInvMass.M(), datasetWeight);
 
 
                 // All gen jets matched to a gen jet descended from a sclaar
@@ -564,41 +564,41 @@ int main(int argc, char* argv[])
                     genJetScalarSumInvMass += it.first;
                     if ( nJetsFromScalarCounter == 2 ) gen2JetScalarSumInvMass += it.first;
                     if ( nJetsFromScalarCounter > 1 ) gen2JetMinScalarSumInvMass += it.first;
-                    h_genJetScalarInvMass->Fill(it.first.M());
-                    h_genJetScalarPt->Fill(it.first.Pt());
-                    h_genJetScalarEta->Fill(it.first.Eta());
+                    h_genJetScalarInvMass->Fill(it.first.M(), datasetWeight);
+                    h_genJetScalarPt->Fill(it.first.Pt(), datasetWeight);
+                    h_genJetScalarEta->Fill(it.first.Eta(), datasetWeight);
                     const int pid = std::abs(it.second);
                     if (pid == 22) {
                         genPionJetScalarSumInvMass += it.first;
-                        h_genJetPionInvMass->Fill(it.first.M());
-                        h_genJetPionPt->Fill(it.first.Pt());
-                        h_genJetPionEta->Fill(it.first.Eta());
+                        h_genJetPionInvMass->Fill(it.first.M(), datasetWeight);
+                        h_genJetPionPt->Fill(it.first.Pt(), datasetWeight);
+                        h_genJetPionEta->Fill(it.first.Eta(), datasetWeight);
                     }
                     if (pid == 321 || pid == 130 || pid == 310 ) { 
                         genKaonJetScalarSumInvMass += it.first;
-                        h_genJetKaonInvMass->Fill(it.first.M());
-                        h_genJetKaonPt->Fill(it.first.Pt());
-                        h_genJetKaonEta->Fill(it.first.Eta());
+                        h_genJetKaonInvMass->Fill(it.first.M(), datasetWeight);
+                        h_genJetKaonPt->Fill(it.first.Pt(), datasetWeight);
+                        h_genJetKaonEta->Fill(it.first.Eta(), datasetWeight);
                     }
                 }
-                if ( genJetScalarSumInvMass.M() ) h_genJetScalarSumInvMass->Fill(genJetScalarSumInvMass.M());
-                if ( gen2JetScalarSumInvMass.M() ) h_gen2JetScalarSumInvMass->Fill(gen2JetScalarSumInvMass.M());
-                if ( gen2JetMinScalarSumInvMass.M() ) h_gen2JetMinScalarSumInvMass->Fill(gen2JetMinScalarSumInvMass.M());
-                h_genJetPionScalarInvMass->Fill(genPionJetScalarSumInvMass.M());
-                h_genJetKaonScalarInvMass->Fill(genKaonJetScalarSumInvMass.M());
+                if ( genJetScalarSumInvMass.M() ) h_genJetScalarSumInvMass->Fill(genJetScalarSumInvMass.M(), datasetWeight);
+                if ( gen2JetScalarSumInvMass.M() ) h_gen2JetScalarSumInvMass->Fill(gen2JetScalarSumInvMass.M(), datasetWeight);
+                if ( gen2JetMinScalarSumInvMass.M() ) h_gen2JetMinScalarSumInvMass->Fill(gen2JetMinScalarSumInvMass.M(), datasetWeight);
+                h_genJetPionScalarInvMass->Fill(genPionJetScalarSumInvMass.M(), datasetWeight);
+                h_genJetKaonScalarInvMass->Fill(genKaonJetScalarSumInvMass.M(), datasetWeight);
 
                 float recoJet1InvMass {0.0}, genJet1InvMass {0.0}, recoJet2InvMass {0.0}, genJet2InvMass {0.0};
                 if ( nJetsFromScalarCounter == 1 ) {
                     for (auto it : recoJetVecFromScalar ) recoJet1InvMass += it.first.M();
                     for (auto it : genJetVecFromScalar )  genJet1InvMass += it.first.M();
-                    h_recoJet1InvMass->Fill(recoJet1InvMass);
-                    h_genJet1InvMass->Fill(genJet1InvMass);
+                    h_recoJet1InvMass->Fill(recoJet1InvMass, datasetWeight);
+                    h_genJet1InvMass->Fill(genJet1InvMass, datasetWeight);
                 }
                 if ( nJetsFromScalarCounter == 2 ) {
                     for (auto it : recoJetVecFromScalar ) recoJet2InvMass += it.first.M();
                     for (auto it : genJetVecFromScalar )  genJet2InvMass += it.first.M();
-                    h_recoJet2InvMass->Fill(recoJet2InvMass);
-                    h_genJet2InvMass->Fill(genJet2InvMass);
+                    h_recoJet2InvMass->Fill(recoJet2InvMass, datasetWeight);
+                    h_genJet2InvMass->Fill(genJet2InvMass, datasetWeight);
                 }
             }
 
@@ -693,57 +693,57 @@ int main(int argc, char* argv[])
 
                     // kaon and pion distributions in pT, eta, phi
                     if ( (pdgId == 130 || pdgId == 310 || pdgId == 311 || pdgId == 321) ) {
-                        h_genParKaonPt->Fill(genParPt);
-                        h_genParKaonEta->Fill(genParEta);
-                        h_genParKaonPhi->Fill(genParPhi);
-                        h_genParKaonE->Fill(genParE);
+                        h_genParKaonPt->Fill(genParPt, datasetWeight);
+                        h_genParKaonEta->Fill(genParEta, datasetWeight);
+                        h_genParKaonPhi->Fill(genParPhi, datasetWeight);
+                        h_genParKaonE->Fill(genParE, datasetWeight);
                         // If charged kaon
                         if ( pdgId == 321 ) {
-                            h_genParChargedKaonPt->Fill(genParPt);
-                            h_genParChargedKaonEta->Fill(genParEta);
-                            h_genParChargedKaonPhi->Fill(genParPhi);
-                            h_genParChargedKaonE->Fill(genParE);
+                            h_genParChargedKaonPt->Fill(genParPt, datasetWeight);
+                            h_genParChargedKaonEta->Fill(genParEta, datasetWeight);
+                            h_genParChargedKaonPhi->Fill(genParPhi, datasetWeight);
+                            h_genParChargedKaonE->Fill(genParE, datasetWeight);
                         }
                         // If neutral kaon
                         if ( pdgId == 311 ) {
-                            h_genParNeutralKaonPt->Fill(genParPt);
-                            h_genParNeutralKaonEta->Fill(genParEta);
-                            h_genParNeutralKaonPhi->Fill(genParPhi);
-                            h_genParNeutralKaonE->Fill(genParE);
+                            h_genParNeutralKaonPt->Fill(genParPt, datasetWeight);
+                            h_genParNeutralKaonEta->Fill(genParEta, datasetWeight);
+                            h_genParNeutralKaonPhi->Fill(genParPhi, datasetWeight);
+                            h_genParNeutralKaonE->Fill(genParE, datasetWeight);
                         }
                         // If kShort
                         if ( pdgId == 310 ) {
-                            h_genParKshortPt->Fill(genParPt);
-                            h_genParKshortEta->Fill(genParEta);
-                            h_genParKshortPhi->Fill(genParPhi);
-                            h_genParKshortE->Fill(genParE);
+                            h_genParKshortPt->Fill(genParPt, datasetWeight);
+                            h_genParKshortEta->Fill(genParEta, datasetWeight);
+                            h_genParKshortPhi->Fill(genParPhi, datasetWeight);
+                            h_genParKshortE->Fill(genParE, datasetWeight);
                         }
                         // If kLong
                         if ( pdgId == 130 ) {
-                            h_genParKlongPt->Fill(genParPt);
-                            h_genParKlongEta->Fill(genParEta);
-                            h_genParKlongPhi->Fill(genParPhi);
-                            h_genParKlongE->Fill(genParE);
+                            h_genParKlongPt->Fill(genParPt, datasetWeight);
+                            h_genParKlongEta->Fill(genParEta, datasetWeight);
+                            h_genParKlongPhi->Fill(genParPhi, datasetWeight);
+                            h_genParKlongE->Fill(genParE, datasetWeight);
                         }
                     }
                     if ( pdgId == 111 || pdgId == 211 ) {
-                        h_genParPionPt->Fill(genParPt);
-                        h_genParPionEta->Fill(genParEta);
-                        h_genParPionPhi->Fill(genParPhi);
-                        h_genParPionE->Fill(genParE);
+                        h_genParPionPt->Fill(genParPt, datasetWeight);
+                        h_genParPionEta->Fill(genParEta, datasetWeight);
+                        h_genParPionPhi->Fill(genParPhi, datasetWeight);
+                        h_genParPionE->Fill(genParE, datasetWeight);
                         // If charged pion
                         if ( pdgId == 211 ) {
-                            h_genParChargedPionPt->Fill(genParPt);
-                            h_genParChargedPionEta->Fill(genParEta);
-                            h_genParChargedPionPhi->Fill(genParPhi);
-                            h_genParChargedPionE->Fill(genParE);
+                            h_genParChargedPionPt->Fill(genParPt, datasetWeight);
+                            h_genParChargedPionEta->Fill(genParEta, datasetWeight);
+                            h_genParChargedPionPhi->Fill(genParPhi, datasetWeight);
+                            h_genParChargedPionE->Fill(genParE, datasetWeight);
                         }
                         // If neutral pion
                         if ( pdgId == 111 ) {
-                            h_genParNeutralPionPt->Fill(genParPt);
-                            h_genParNeutralPionEta->Fill(genParEta);
-                            h_genParNeutralPionPhi->Fill(genParPhi);
-                            h_genParNeutralPionE->Fill(genParE);                        
+                            h_genParNeutralPionPt->Fill(genParPt, datasetWeight);
+                            h_genParNeutralPionEta->Fill(genParEta, datasetWeight);
+                            h_genParNeutralPionPhi->Fill(genParPhi, datasetWeight);
+                            h_genParNeutralPionE->Fill(genParE, datasetWeight);
                         }
                     }
                  }
@@ -760,9 +760,9 @@ int main(int argc, char* argv[])
                 TLorentzVector scalar1, scalar2;
                 scalar1.SetPtEtaPhiE(event.genParPt[index1], event.genParEta[index1], event.genParPhi[index1], event.genParE[index1]);
                 scalar2.SetPtEtaPhiE(event.genParPt[index2], event.genParEta[index2], event.genParPhi[index2], event.genParE[index2]);
-                h_scalarDR->Fill(scalar1.DeltaR(scalar2));
-                h_scalarDPhi->Fill(scalar1.DeltaPhi(scalar2));
-                h_scalarDrEtaPhi->Fill(scalar1.DrEtaPhi(scalar2));
+                h_scalarDR->Fill(scalar1.DeltaR(scalar2), datasetWeight);
+                h_scalarDPhi->Fill(scalar1.DeltaPhi(scalar2), datasetWeight);
+                h_scalarDrEtaPhi->Fill(scalar1.DrEtaPhi(scalar2), datasetWeight);
             }
 
             if ( kaonIndex.size() == 2 ) {
@@ -770,9 +770,9 @@ int main(int argc, char* argv[])
                 TLorentzVector scalar1, scalar2;
                 scalar1.SetPtEtaPhiE(event.genParPt[index1], event.genParEta[index1], event.genParPhi[index1], event.genParE[index1]);
                 scalar2.SetPtEtaPhiE(event.genParPt[index2], event.genParEta[index2], event.genParPhi[index2], event.genParE[index2]);
-                h_genParKaonDR->Fill(scalar1.DeltaR(scalar2));
-                h_genParKaonDPhi->Fill(scalar1.DeltaPhi(scalar2));
-                h_genParKaonDrEtaPhi->Fill(scalar1.DrEtaPhi(scalar2));
+                h_genParKaonDR->Fill(scalar1.DeltaR(scalar2), datasetWeight);
+                h_genParKaonDPhi->Fill(scalar1.DeltaPhi(scalar2), datasetWeight);
+                h_genParKaonDrEtaPhi->Fill(scalar1.DrEtaPhi(scalar2), datasetWeight);
             }
 
             if ( kShortIndex.size() == 2 ) {
@@ -780,9 +780,9 @@ int main(int argc, char* argv[])
                 TLorentzVector scalar1, scalar2;
                 scalar1.SetPtEtaPhiE(event.genParPt[index1], event.genParEta[index1], event.genParPhi[index1], event.genParE[index1]);
                 scalar2.SetPtEtaPhiE(event.genParPt[index2], event.genParEta[index2], event.genParPhi[index2], event.genParE[index2]);
-                h_genParKshortDR->Fill(scalar1.DeltaR(scalar2));
-                h_genParKshortDPhi->Fill(scalar1.DeltaPhi(scalar2));
-                h_genParKshortDrEtaPhi->Fill(scalar1.DrEtaPhi(scalar2));
+                h_genParKshortDR->Fill(scalar1.DeltaR(scalar2), datasetWeight);
+                h_genParKshortDPhi->Fill(scalar1.DeltaPhi(scalar2), datasetWeight);
+                h_genParKshortDrEtaPhi->Fill(scalar1.DrEtaPhi(scalar2), datasetWeight);
             }
 
             nOutgoingStatus.emplace_back(nOutgoingStatusCounter);
