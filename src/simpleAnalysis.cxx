@@ -1210,26 +1210,26 @@ int main(int argc, char* argv[])
 	     }
 	   }
 		 
-	   if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
+	   if(muonIndex1!=-1 && muonIndex2!=-1 && event.packedCandsPseudoTrkPt[muonIndex1]!=0 && event.packedCandsPseudoTrkPt[muonIndex2]!=0 && event.packedCandsPseudoTrkCharge[muonIndex1]==-(event.packedCandsPseudoTrkCharge[muonIndex2])){
 		   
-	     mm3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
-             mm4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
+	     mm3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muonIndex1],event.packedCandsPseudoTrkEta[muonIndex1],event.packedCandsPseudoTrkPhi[muonIndex1],event.packedCandsE[muonIndex1]);
+             mm4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muonIndex2],event.packedCandsPseudoTrkEta[muonIndex2],event.packedCandsPseudoTrkPhi[muonIndex2],event.packedCandsE[muonIndex2]);
             
              h_PmuonsDeltaR->Fill(mm3.DeltaR(mm4), datasetWeight);
             
              if(mm3.DeltaR(mm4)<0.2){
 		   
-	       TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[muIndex1], event.packedCandsPseudoTrkPy[muIndex1], event.packedCandsPseudoTrkPz[muIndex1], event.packedCandsE[muIndex1]};
-               TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[muIndex2], event.packedCandsPseudoTrkPy[muIndex2], event.packedCandsPseudoTrkPz[muIndex2], event.packedCandsE[muIndex2]};
+	       TLorentzVector lmuon1  {event.packedCandsPseudoTrkPx[muonIndex1], event.packedCandsPseudoTrkPy[muonIndex1], event.packedCandsPseudoTrkPz[muonIndex1], event.packedCandsE[muonIndex1]};
+               TLorentzVector lmuon2  {event.packedCandsPseudoTrkPx[muonIndex2], event.packedCandsPseudoTrkPy[muonIndex2], event.packedCandsPseudoTrkPz[muonIndex2], event.packedCandsE[muonIndex2]};
                         
                Pmuoninv=(lmuon1+lmuon2).M();
                h_PmuonsInvMass->Fill((lmuon1+lmuon2).M(), datasetWeight);
 	       //h_PmuonsInvMass->Fit(Gaussian2);
 		   
-	       PMpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
-               PMpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
-               PMpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
-	       PME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
+	       PMpx=event.packedCandsPseudoTrkPx[muonIndex1]+event.packedCandsPseudoTrkPx[muonIndex2];
+               PMpy=event.packedCandsPseudoTrkPy[muonIndex1]+event.packedCandsPseudoTrkPy[muonIndex2];
+               PMpz=event.packedCandsPseudoTrkPz[muonIndex1]+event.packedCandsPseudoTrkPz[muonIndex2];
+	       PME=event.packedCandsE[muonIndex1]+event.packedCandsE[muonIndex2];
 	      
 	       Pscalar.SetPxPyPzE(PMpx,PMpy,PMpz,PME);
 	     
