@@ -1120,7 +1120,8 @@ int main(int argc, char* argv[])
 	
        Int_t muonIndex1{-1}; Int_t muonIndex2{-1};
        Float_t muonpt1{-1}; Float_t muonpt2{-1};
-	      
+	
+	/*     
        for(Int_t k{0}; k<event.numMuonPF2PAT;k++){ 
           if(event.muonPF2PATInnerTkPt[k]>muonpt1){
             muonpt2=muonpt1;
@@ -1135,7 +1136,7 @@ int main(int argc, char* argv[])
 	   //h_muoniRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k], datasetWeight);
 	   //h_muoniRecPt->Fill(event.muonPF2PATPt[k], datasetWeight);
        }
-	     
+	 */    
 	     
 	      
        //Pion mass assumption
@@ -1199,7 +1200,7 @@ int main(int argc, char* argv[])
 	
 	   }//end pion!=-1
 	 
-           for(Int_t k{0};k<event.numPackedCands;k++) {
+           for(Int_t k{0};k<event.numMuonPF2PAT;k++) {
               
        	      if(k==event.muonPF2PATPackedCandIndex[muonIndex1]){
 	         muIndex1=k;  
