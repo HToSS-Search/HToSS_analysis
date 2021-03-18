@@ -1319,6 +1319,11 @@ int main(int argc, char* argv[])
 		   
 		 
 		 }
+		       
+		 if(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1 && PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]<1){
+	           h_PhiggsInvMass->Fill((Pantiscalar+Pscalar).M(), datasetWeight);         
+		 }      
+		       
 	       } //close pion!=-1 
 		
 	     
@@ -1346,7 +1351,7 @@ int main(int argc, char* argv[])
 	       }    
 	
 	       if(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1 && PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]<1){
-	         h_P20higgsInvMass->Fill(Pantiscalar+Pscalar).M(), datasetWeight);         
+	         h_P20higgsInvMass->Fill((Pantiscalar+Pscalar).M(), datasetWeight);         
 	       }
 	     }//close wider window
 	  
