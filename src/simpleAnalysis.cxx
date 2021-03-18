@@ -1367,14 +1367,14 @@ int main(int argc, char* argv[])
 	      
     
 	      
-	      
+	/*      
 	      
        //Muon momentum comparison    
 
        if(event.metFilters()){
          if(event.muTrig()||event.mumuTrig()){ 
 	      
-	    /*  
+	      
 	   //Packed candidates     
 	   if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsCharge[muIndex1]==-(event.packedCandsCharge[muIndex2])){
     
@@ -1402,7 +1402,7 @@ int main(int argc, char* argv[])
               h_muonipackedPt->Fill(muonpackedPti.Pt(), datasetWeight);  
               h_muonipackedInvMass->Fill(muonpackedPti.M(), datasetWeight); 
 	   }
-	 */
+	 
 	      
 	      
 	   //PAT muons      
@@ -1427,9 +1427,9 @@ int main(int argc, char* argv[])
 		  
 	  
 	   }    
+	     
 	      
-	      
-	/*
+	
 	      
 	   //Tracks associated
 	   if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){
@@ -1447,8 +1447,8 @@ int main(int argc, char* argv[])
 	   h_muon2RecInvMass->Fill(VecMu2.M(), datasetWeight);
            h_muon12RecInvMass->Fill((VecMu1+VecMu2).M(), datasetWeight);
 	     
-	 */
-	      
+	 
+	     
 	   //Refitted tracks muons   
 	   for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
 	   
@@ -1502,7 +1502,7 @@ int main(int argc, char* argv[])
 	      
 	 }//end of single/double muon trigger
        }//end of met filter
-	      
+	      */
 	  
 	      
 	      
