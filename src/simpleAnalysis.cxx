@@ -1199,15 +1199,15 @@ int main(int argc, char* argv[])
 	     }//end of for-loop
 	
 	   }//end pion!=-1
-	 
-           for(Int_t k{0};k<event.numPackedCands;k++) {
-              
-       	      if(k==event.muonPF2PATPackedCandIndex[muonIndex1]){
-	         muIndex1=k;  
-	      }	
-              else if(k==event.muonPF2PATPackedCandIndex[muonIndex2]){
-		      muIndex2=k;
-	      }
+	   if(muonIndex1!=-1 && muonIndex2!=-1 && event.packedCandsPseudoTrkPt[muonIndex1]!=0 && event.packedCandsPseudoTrkPt[muonIndex2]!=0 && event.packedCandsPseudoTrkCharge[muonIndex1]==-(event.packedCandsPseudoTrkCharge[muonIndex2])){
+             for(Int_t k{0};k<event.numPackedCands;k++) {
+       	        if(k==event.muonPF2PATPackedCandIndex[muonIndex1]){
+	          muIndex1=k;  
+		}	
+                else if(k==event.muonPF2PATPackedCandIndex[muonIndex2]){
+		       muIndex2=k;
+		}
+	     }
 	   }
 		 
 	   if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
