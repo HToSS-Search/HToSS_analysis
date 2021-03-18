@@ -1115,11 +1115,7 @@ int main(int argc, char* argv[])
     Int_t muonIndex1{-1}; Int_t muonIndex2{-1};
     Float_t muonpt1{-1}; Float_t muonpt2{-1};
 	      
-    //Pion mass assumption
-    if(event.metFilters()){
-      if(event.muTrig()||event.mumuTrig()){ 
-	      
-	 for(Int_t k{0}; k<event.numMuonPF2PAT;k++){ 
+    for(Int_t k{0}; k<event.numMuonPF2PAT;k++){ 
            if(event.muonPF2PATInnerTkPt[k]>muonpt1){
              muonpt2=muonpt1;
              muonpt1=event.muonPF2PATInnerTkPt[k];
@@ -1130,10 +1126,25 @@ int main(int argc, char* argv[])
                   muonpt2=event.muonPF2PATInnerTkPt[k];
                   muonIndex2=k;
 	   }
-	   h_muoniRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k], datasetWeight);
-	   h_muoniRecPt->Fill(event.muonPF2PATPt[k], datasetWeight);
-	 }  
+	   //h_muoniRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k], datasetWeight);
+	   //h_muoniRecPt->Fill(event.muonPF2PATPt[k], datasetWeight);
+    }      
+    if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){
+    
+      for(Int_t k{0};k<event.numPackedCands;k++) {
+       	 if(k==event.muonPF2PATPackedCandIndex[muonIndex1] || k==event.muonPF2PATPackedCandIndex[muonIndex2]){
+		 
+		 
+	 }
+      }    
+    }
 	      
+	      
+	      
+    //Pion mass assumption
+    if(event.metFilters()){
+      if(event.muTrig()||event.mumuTrig()){ 
+	         
 	 if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsCharge[pionIndex1]==-(event.packedCandsCharge[pionIndex2])){
            
 	   packed3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[pionIndex1],event.packedCandsPseudoTrkEta[pionIndex1],event.packedCandsPseudoTrkPhi[pionIndex1],event.packedCandsE[pionIndex1]);
@@ -1191,12 +1202,8 @@ int main(int argc, char* argv[])
 	
 	 }
 	 
-	 if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){
-          
-	
+         	
 	 if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
-	   
-	   if(muIndex1==event.muonPF2PATPackedCandIndex[muonIndex1] && muIndex2==event.muonPF2PATPackedCandIndex[muonIndex2]){
 		   
 	   mm3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
            mm4.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
@@ -1322,9 +1329,9 @@ int main(int argc, char* argv[])
 	     }    
 	   }//close wider window
 	  
-	   }
+	   
 	 }//close muon!=-1
-	 }    
+	     
 	     
            
 	      
