@@ -412,7 +412,7 @@ int main(int argc, char* argv[])
 
      
           
-          
+       /*   
           
           
        //GENERATOR PARTICLE STUFF
@@ -432,7 +432,7 @@ int main(int argc, char* argv[])
           //Print out event record
 
           //Invariant mass
-          /*TLorentzVector m;
+          TLorentzVector m;
           m.SetPtEtaPhiE(event.genParPt[k],event.genParEta[k],event.genParPhi[k],event.genParE[k]);
           TLorentzVector mass {m.Px(),m.Py(),m.Pz(),event.genParE[k]};
 
@@ -445,7 +445,7 @@ int main(int argc, char* argv[])
           << event.genParPt[k] << "\t "
           << event.genParEta[k] << "\t "
           << event.genParPhi[k] << "\t "
-          << mass.M() << std::endl;*/
+          << mass.M() << std::endl;
 
 
 
@@ -751,11 +751,11 @@ int main(int argc, char* argv[])
         
        /// END GENERATOR PARTICLE STUFF
 
-    
+    */
           
           
    
-          
+    /*      
           
        /// BEGIN Muon Reconstruction
        std::vector<Int_t> passedMuons;
@@ -867,7 +867,7 @@ int main(int argc, char* argv[])
 
        //END Muon Reconstruction
           
-    
+    */
           
           
        //BEGIN Packed candidates
@@ -1137,19 +1137,6 @@ int main(int argc, char* argv[])
        }
 	     
 	     
-	     
-	     
-       if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){
-    
-         for(Int_t k{0};k<event.numPackedCands;k++) {
-       	    if(k==event.muonPF2PATPackedCandIndex[muonIndex1] || k==event.muonPF2PATPackedCandIndex[muonIndex2]){
-		 
-		 
-	    }
-	 }    
-       }
-	      
-	      
 	      
        //Pion mass assumption
        if(event.metFilters()){
@@ -1212,7 +1199,16 @@ int main(int argc, char* argv[])
 	
 	   }//end pion!=-1
 	 
-         	
+           for(Int_t k{0};k<event.numPackedCands;k++) {
+              
+       	      if(k==event.muonPF2PATPackedCandIndex[muonIndex1]){
+	         muIndex1=k;  
+	      }	
+              else if(k==event.muonPF2PATPackedCandIndex[muonIndex2]){
+		      muIndex2=k;
+	      }
+	   }
+		 
 	   if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
 		   
 	     mm3.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
@@ -1242,6 +1238,16 @@ int main(int argc, char* argv[])
 		 
 	     for(Int_t k{0};k<event.numPackedCands;k++) {
                 const Int_t packedId {event.packedCandsPdgId[k]};
+		/*     
+    		 
+       	        if(k==event.muonPF2PATPackedCandIndex[muonIndex1]){
+	          muIndex1=k;  
+		}
+                else if(k==event.muonPF2PATPackedCandIndex[muonIndex2]){
+		       muIndex2=k;
+		}
+		 */
+	         
                 if(k!=muIndex1 && k!=muIndex2){
                   
                   TLorentzVector cone1;//The muon
@@ -1266,6 +1272,7 @@ int main(int argc, char* argv[])
 		}
 		
 	     }//end of for-loop
+		   
 	     if(std::abs((Pantiscalar+Pscalar).M()-125)<3){
 	       if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2])){
 	         h_PIsoSum1->Fill(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1], datasetWeight);    
@@ -1324,19 +1331,23 @@ int main(int argc, char* argv[])
 	       }
 	     }//close Higgs mass window
 		   
-	     //wider higgs window	   
+		   
+		   
+	     //Wider higgs window	   
 	     if(std::abs((Pantiscalar+Pscalar).M()-125)<20){//wider higgs mass window \pm20GeV
 	       if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsPseudoTrkCharge[pionIndex1]==-(event.packedCandsPseudoTrkCharge[pionIndex2])){
                  if(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1){	   
 	           h_P20antiscalarInvMass->Fill(Pantiscalar.M(), datasetWeight);
-		 }
-	         Phiggs=(Pantiscalar+Pscalar).M();
-	         h_P20higgsInvMass->Fill(Phiggs, datasetWeight);     
+		 }    
 	       }
-		   
+		     
 	       if(PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]<1){	   
 	         h_P20scalarInvMass->Fill(Pscalar.M(), datasetWeight);
 	       }    
+	
+	       if(PIsoSum1/event.packedCandsPseudoTrkPt[pionIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[pionIndex2]<1 && PIsoSum3/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && PIsoSum4/event.packedCandsPseudoTrkPt[muIndex2]<1){
+	         h_P20higgsInvMass->Fill(Pantiscalar+Pscalar).M(), datasetWeight);         
+	       }
 	     }//close wider window
 	  
 	   
@@ -1412,7 +1423,7 @@ int main(int argc, char* argv[])
 	   }    
 	      
 	      
-	
+	/*
 	      
 	   //Tracks associated
 	   if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){
@@ -1430,7 +1441,7 @@ int main(int argc, char* argv[])
 	   h_muon2RecInvMass->Fill(VecMu2.M(), datasetWeight);
            h_muon12RecInvMass->Fill((VecMu1+VecMu2).M(), datasetWeight);
 	     
-	 
+	 */
 	      
 	   //Refitted tracks muons   
 	   for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
