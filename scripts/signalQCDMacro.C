@@ -23,6 +23,8 @@
      TH1F* h_PantiscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PantiscalarInvMass");
      TH1F* h_PhiggsInvMass_ctau0    = (TH1F*)inFile0.Get("h_PhiggsInvMass");
      TH1F* h_PhiggsDeltaR_ctau0    = (TH1F*)inFile0.Get("h_PhiggsDeltaR");
+     TFile inFile1("ggH_MS2_ctau1.root"); 
+     TH1F* h_PhiggsInvMass_ctau1    = (TH1F*)inFile1.Get("h_PhiggsInvMass");
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_PIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum1");
      TH1F* h_PIsoSum2_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum2");
@@ -32,6 +34,8 @@
      TH1F* h_PantiscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PantiscalarInvMass");
      TH1F* h_PhiggsInvMass_ctau10    = (TH1F*)inFile10.Get("h_PhiggsInvMass");
      TH1F* h_PhiggsDeltaR_ctau10    = (TH1F*)inFile10.Get("h_PhiggsDeltaR");
+     TFile inFile1("ggH_MS2_ctau1000.root"); 
+     TH1F* h_PhiggsInvMass_ctau1000    = (TH1F*)inFile1000.Get("h_PhiggsInvMass");
      TFile inFileQCD("ggH_MC_QCD.root"); 
      TH1F* h_PIsoSum1_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum1");
      TH1F* h_PIsoSum2_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum2");
@@ -374,18 +378,32 @@
      h_PhiggsInvMass_ctau0->SetLineColor(2);
      h_PhiggsInvMass_ctau0->Draw("HIST");
  
+     h_PhiggsInvMass_ctau1->GetYaxis()->SetTitle("Events");
+     h_PhiggsInvMass_ctau1->GetXaxis()->SetRangeUser(115., 135.); 
+     h_PhiggsInvMass_ctau1->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
+     h_PhiggsInvMass_ctau1->SetMarkerColor(4);
+     h_PhiggsInvMass_ctau1->SetLineColor(4);
+     h_PhiggsInvMass_ctau1->Draw("HIST same");
+   
      h_PhiggsInvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_PhiggsInvMass_ctau10->GetXaxis()->SetRangeUser(115., 135.); 
      h_PhiggsInvMass_ctau10->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
-     h_PhiggsInvMass_ctau10->SetMarkerColor(4);
-     h_PhiggsInvMass_ctau10->SetLineColor(4);
+     h_PhiggsInvMass_ctau10->SetMarkerColor(6);
+     h_PhiggsInvMass_ctau10->SetLineColor(6);
      h_PhiggsInvMass_ctau10->Draw("HIST same");
+   
+     h_PhiggsInvMass_ctau1000->GetYaxis()->SetTitle("Events");
+     h_PhiggsInvMass_ctau1000->GetXaxis()->SetRangeUser(115., 135.); 
+     h_PhiggsInvMass_ctau1000->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
+     h_PhiggsInvMass_ctau1000->SetMarkerColor(3);
+     h_PhiggsInvMass_ctau1000->SetLineColor(3);
+     h_PhiggsInvMass_ctau1000->Draw("HIST same");
    
      h_PhiggsInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PhiggsInvMass_QCD->GetXaxis()->SetRangeUser(115., 135.); 
      h_PhiggsInvMass_QCD->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
-     h_PhiggsInvMass_QCD->SetMarkerColor(6);
-     h_PhiggsInvMass_QCD->SetLineColor(6);
+     h_PhiggsInvMass_QCD->SetMarkerColor(94);
+     h_PhiggsInvMass_QCD->SetLineColor(94);
      h_PhiggsInvMass_QCD->Draw("HIST same");
    
      TLegend *legendh = new TLegend(0.7,0.7,0.9,0.9);
@@ -394,13 +412,21 @@
      legendxx->SetLineColor(2);
      legendxx->SetMarkerColor(2);
      legendxx->SetMarkerSize(2);
-     legendxx=legendh->AddEntry("h_PhiggsInvMass_ctau10","c_{#tau}=10mm","L");
+     legendxx=legendh->AddEntry("h_PhiggsInvMass_ctau1","c_{#tau}=1mm","L");
      legendxx->SetLineColor(4);
      legendxx->SetMarkerColor(4);
      legendxx->SetMarkerSize(2);
-     legendxx=legendh->AddEntry("h_PhiggsInvMass_QCD","QCD","L");
+     legendxx=legendh->AddEntry("h_PhiggsInvMass_ctau10","c_{#tau}=10mm","L");
      legendxx->SetLineColor(6);
      legendxx->SetMarkerColor(6);
+     legendxx->SetMarkerSize(2);
+     legendxx=legendh->AddEntry("h_PhiggsInvMass_ctau1000","c_{#tau}=1000mm","L");
+     legendxx->SetLineColor(3);
+     legendxx->SetMarkerColor(3);
+     legendxx->SetMarkerSize(2);
+     legendxx=legendh->AddEntry("h_PhiggsInvMass_QCD","QCD","L");
+     legendxx->SetLineColor(94);
+     legendxx->SetMarkerColor(94);
      legendxx->SetMarkerSize(2);
      legendh->Draw();
    
