@@ -34,7 +34,7 @@
      TH1F* h_PantiscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PantiscalarInvMass");
      TH1F* h_PhiggsInvMass_ctau10    = (TH1F*)inFile10.Get("h_PhiggsInvMass");
      TH1F* h_PhiggsDeltaR_ctau10    = (TH1F*)inFile10.Get("h_PhiggsDeltaR");
-     TFile inFile1("ggH_MS2_ctau1000.root"); 
+     TFile inFile1000("ggH_MS2_ctau1000.root"); 
      TH1F* h_PhiggsInvMass_ctau1000    = (TH1F*)inFile1000.Get("h_PhiggsInvMass");
      TFile inFileQCD("ggH_MC_QCD.root"); 
      TH1F* h_PIsoSum1_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum1");
