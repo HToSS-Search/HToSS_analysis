@@ -13,23 +13,23 @@
   void muonctau() {  
   
      TFile inFile0("ggH_MS2_ctau0.root"); 
-     TH1F* h_refit12InvMass_ctau0    = (TH1F*)inFile0.Get("h_Rrefit12InvMass");
+     TH1F* h_refit12InvMass_ctau0    = (TH1F*)inFile0.Get("h_Rpionre12InvMass");
      TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PantiscalarInvMass");
     
      TFile inFile1("ggH_MS2_ctau1.root"); 
-     TH1F* h_refit12InvMass_ctau1    = (TH1F*)inFile1.Get("h_Rrefit12InvMass");
+     TH1F* h_refit12InvMass_ctau1    = (TH1F*)inFile1.Get("h_Rpionre12InvMass");
      TH1F* h_PscalarInvMass_ctau1    = (TH1F*)inFile1.Get("h_PantiscalarInvMass");
      
      TFile inFile10("ggH_MS2_ctau10.root"); 
-     TH1F* h_refit12InvMass_ctau10    = (TH1F*)inFile10.Get("h_Rrefit12InvMass");
+     TH1F* h_refit12InvMass_ctau10    = (TH1F*)inFile10.Get("h_Rpionre12InvMass");
      TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PantiscalarInvMass");
     
      TFile inFile1000("ggH_MS2_ctau1000.root"); 
-     TH1F* h_refit12InvMass_ctau1000    = (TH1F*)inFile1000.Get("h_Rrefit12InvMass");
+     TH1F* h_refit12InvMass_ctau1000    = (TH1F*)inFile1000.Get("h_Rpionre12InvMass");
      TH1F* h_PscalarInvMass_ctau1000    = (TH1F*)inFile1000.Get("h_PantiscalarInvMass");
     
      TFile inFileQCD("ggH_MC_QCD.root"); 
-     TH1F* h_refit12InvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rrefit12InvMass");
+     TH1F* h_refit12InvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rpionre12InvMass");
      TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PantiscalarInvMass");
   
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
@@ -38,7 +38,7 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     h_PscalarInvMass_ctau0->SetTitle("Dihadron (pion) invariant mass");
+     h_PscalarInvMass_ctau0->SetTitle("Refitted dihadron (pion) invariant mass");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 10000.); 
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(1,3); 
