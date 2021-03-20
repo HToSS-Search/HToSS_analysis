@@ -24,7 +24,7 @@
      TH1F* h_refit12InvMass_ctau10    = (TH1F*)inFile10.Get("h_Rpionre12InvMass");
      TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_Rpionre12InvMass");
    
-     TFile inFile10("ggH_MS2_ctau100.root"); 
+     TFile inFile100("ggH_MS2_ctau100.root"); 
      TH1F* h_refit12InvMass_ctau100    = (TH1F*)inFile100.Get("h_Rpionre12InvMass");
      TH1F* h_PscalarInvMass_ctau100    = (TH1F*)inFile100.Get("h_Rpionre12InvMass");
     
