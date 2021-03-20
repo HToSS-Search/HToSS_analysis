@@ -14,27 +14,27 @@
   
      TFile inFile0("ggH_MS2_ctau0.root"); 
      TH1F* h_refit12InvMass_ctau0    = (TH1F*)inFile0.Get("h_Rpionre12InvMass");
-     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_Rpionre12InvMass");
+     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_Rrefit12InvMass");
     
      TFile inFile1("ggH_MS2_ctau1.root"); 
      TH1F* h_refit12InvMass_ctau1    = (TH1F*)inFile1.Get("h_Rpionre12InvMass");
-     TH1F* h_PscalarInvMass_ctau1    = (TH1F*)inFile1.Get("h_Rpionre12InvMass");
+     TH1F* h_PscalarInvMass_ctau1    = (TH1F*)inFile1.Get("h_Rrefit12InvMass");
      
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_refit12InvMass_ctau10    = (TH1F*)inFile10.Get("h_Rpionre12InvMass");
-     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_Rpionre12InvMass");
+     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_Rrefit12InvMass");
    
      TFile inFile100("ggH_MS2_ctau100.root"); 
      TH1F* h_refit12InvMass_ctau100    = (TH1F*)inFile100.Get("h_Rpionre12InvMass");
-     TH1F* h_PscalarInvMass_ctau100    = (TH1F*)inFile100.Get("h_Rpionre12InvMass");
+     TH1F* h_PscalarInvMass_ctau100    = (TH1F*)inFile100.Get("h_Rrefit12InvMass");
     
      TFile inFile1000("ggH_MS2_ctau1000.root"); 
      TH1F* h_refit12InvMass_ctau1000    = (TH1F*)inFile1000.Get("h_Rpionre12InvMass");
-     TH1F* h_PscalarInvMass_ctau1000    = (TH1F*)inFile1000.Get("h_Rpionre12InvMass");
+     TH1F* h_PscalarInvMass_ctau1000    = (TH1F*)inFile1000.Get("h_Rrefit12InvMass");
     
      TFile inFileQCD("ggH_MC_QCD.root"); 
      TH1F* h_refit12InvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rpionre12InvMass");
-     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rpionre12InvMass");
+     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rrefit12InvMass");
   
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
@@ -46,7 +46,7 @@
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 10000.); 
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(1,3); 
-     h_PscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
+     h_PscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_PscalarInvMass_ctau0->SetMarkerColor(2);
      h_PscalarInvMass_ctau0->SetLineColor(2);
      h_PscalarInvMass_ctau0->Draw("HIST");
@@ -54,7 +54,7 @@
      h_PscalarInvMass_ctau1->GetYaxis()->SetTitle("Events");
     // h_refit12InvMass_ctau1->GetYaxis()->SetRangeUser(1.0, 10000.); 
      h_PscalarInvMass_ctau1->GetXaxis()->SetRangeUser(1,3); 
-     h_PscalarInvMass_ctau1->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
+     h_PscalarInvMass_ctau1->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_PscalarInvMass_ctau1->SetMarkerColor(4);
      h_PscalarInvMass_ctau1->SetLineColor(4);
      h_PscalarInvMass_ctau1->Draw("HIST same");
@@ -62,7 +62,7 @@
      h_PscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
     // h_refit12InvMass_ctau10->GetYaxis()->SetRangeUser(1.0, 10000.); 
      h_PscalarInvMass_ctau10->GetXaxis()->SetRangeUser(1,3); 
-     h_PscalarInvMass_ctau10->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
+     h_PscalarInvMass_ctau10->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_PscalarInvMass_ctau10->SetMarkerColor(6);
      h_PscalarInvMass_ctau10->SetLineColor(6);
      h_PscalarInvMass_ctau10->Draw("HIST same");
@@ -70,7 +70,7 @@
      h_PscalarInvMass_ctau100->GetYaxis()->SetTitle("Events");
     // h_refit12InvMass_ctau10->GetYaxis()->SetRangeUser(1.0, 10000.); 
      h_PscalarInvMass_ctau100->GetXaxis()->SetRangeUser(1,3); 
-     h_PscalarInvMass_ctau100->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
+     h_PscalarInvMass_ctau100->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_PscalarInvMass_ctau100->SetMarkerColor(1);
      h_PscalarInvMass_ctau100->SetLineColor(1);
      h_PscalarInvMass_ctau100->Draw("HIST same");
@@ -86,7 +86,7 @@
      h_PscalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_QCD->GetXaxis()->SetRangeUser(1,3); 
     // h_refit12InvMass_QCD->GetYaxis()->SetRangeUser(1.0, 10000.); 
-     h_PscalarInvMass_QCD->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
+     h_PscalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_PscalarInvMass_QCD->SetMarkerColor(84);
      h_PscalarInvMass_QCD->SetLineColor(84);
      h_PscalarInvMass_QCD->Draw("HIST same");
