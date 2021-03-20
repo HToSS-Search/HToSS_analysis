@@ -87,8 +87,8 @@
      h_PscalarInvMass_QCD->GetXaxis()->SetRangeUser(1,3); 
     // h_refit12InvMass_QCD->GetYaxis()->SetRangeUser(1.0, 10000.); 
      h_PscalarInvMass_QCD->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
-     h_PscalarInvMass_QCD->SetMarkerColor(144);
-     h_PscalarInvMass_QCD->SetLineColor(144);
+     h_PscalarInvMass_QCD->SetMarkerColor(28);
+     h_PscalarInvMass_QCD->SetLineColor(28);
      h_PscalarInvMass_QCD->Draw("HIST same");
      
     /*
@@ -137,8 +137,8 @@
      legenda->SetMarkerColor(209);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_PscalarInvMass_QCD","QCD","L");
-     legenda->SetLineColor(144);
-     legenda->SetMarkerColor(144);
+     legenda->SetLineColor(28);
+     legenda->SetMarkerColor(28);
      legenda->SetMarkerSize(2);
     
     /* legenda=legend1->AddEntry("h_PscalarInvMass_ctau0","c_{#tau}=0mm","L");
