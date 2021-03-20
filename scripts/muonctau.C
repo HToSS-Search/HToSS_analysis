@@ -42,7 +42,7 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     h_PscalarInvMass_ctau0->SetTitle("Refitted dihadron (pion) invariant mass");
+     h_PscalarInvMass_ctau0->SetTitle("Refitted dimuon invariant mass");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 10000.); 
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(1,3); 
