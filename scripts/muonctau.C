@@ -128,6 +128,10 @@
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
      legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("h_PscalarInvMass_ctau100","c_{#tau}=100mm","L");
+     legenda->SetLineColor(52);
+     legenda->SetMarkerColor(52);
+     legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_PscalarInvMass_ctau1000","c_{#tau}=1000mm","L");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
