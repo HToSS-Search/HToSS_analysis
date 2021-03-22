@@ -134,18 +134,18 @@
      canv2->SetLineColor(0);
      canv2->SetFillColor(0);
    
-     h_PrescalescalarInvMass_QCD->SetTitle("Dimuon invariant mass corrected");
+     h_scalescalarInvMass_QCD->SetTitle("Dimuon invariant mass corrected");
     // h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
-     h_PrescalescalarInvMass_QCD->GetYaxis()->SetTitle("Events");
-     h_PrescalescalarInvMass_QCD->GetXaxis()->SetRangeUser(0.5, 4.); 
-     h_PrescalescalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
-     h_PrescalescalarInvMass_QCD->SetMarkerColor(2);
-     h_PrescalescalarInvMass_QCD->SetLineColor(2);
-     h_PrescalescalarInvMass_QCD->Draw("HIST");
+     h_scalescalarInvMass_QCD->GetYaxis()->SetTitle("Events");
+     h_scalescalarInvMass_QCD->GetXaxis()->SetRangeUser(0.5, 4.); 
+     h_scalescalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_scalescalarInvMass_QCD->SetMarkerColor(2);
+     h_scalescalarInvMass_QCD->SetLineColor(2);
+     h_scalescalarInvMass_QCD->Draw("HIST");
     
      TLegend *legend2 = new TLegend(0.7,0.7,0.9,0.9);
      legend2->SetBorderSize(1);
-     TLegendEntry *legendb = legend2->AddEntry("h_PrescalescalarInvMass_QCD","euh","L");
+     TLegendEntry *legendb = legend2->AddEntry("h_scalescalarInvMass_QCD","euh","L");
      legendb->SetLineColor(2);
      legendb->SetMarkerColor(2);
      legendb->SetMarkerSize(2);
