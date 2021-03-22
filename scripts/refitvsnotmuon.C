@@ -36,8 +36,12 @@
      Double_t corr=nentries/n20entries;
    
      TH1F* h_scalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
-     TH1D* h_PrescalescalarInvMass_QCD = new TH1D(h_scalescalarInvMass_QCD->Scale((Double_t) corr));
+     //TH1D* h_PrescalescalarInvMass_QCD = new TH1D(h_scalescalarInvMass_QCD->Scale((Double_t) corr));
    
+     h_PrescalescalarInvMass_QCD = (TH1F*)h_scalescalarInvMass_QCD->Scale((Double_t) corr));
+   
+  // h_genParScalarMuonDivPtSL=(TH1F*)h_genParScalarMuonCutPtSL->Clone(
+    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
      canv1->SetLogy();
