@@ -144,11 +144,11 @@
      h_PrescalescalarInvMass_QCD->Draw("HIST");
     
      TLegend *legend2 = new TLegend(0.7,0.7,0.9,0.9);
-     legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend2->AddEntry("h_PrescalescalarInvMass_QCD","euh","L");
-     legenda->SetLineColor(2);
-     legenda->SetMarkerColor(2);
-     legenda->SetMarkerSize(2);
+     legend2->SetBorderSize(1);
+     TLegendEntry *legendb = legend2->AddEntry("h_PrescalescalarInvMass_QCD","euh","L");
+     legendb->SetLineColor(2);
+     legendb->SetMarkerColor(2);
+     legendb->SetMarkerSize(2);
      legend2->Draw();
    
      canv2->Modified();
