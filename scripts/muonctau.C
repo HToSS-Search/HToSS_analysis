@@ -42,7 +42,7 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     h_PscalarInvMass_ctau0->SetTitle("Dihadron (pion) invariant mass");
+     h_PscalarInvMass_ctau0->SetTitle("Dihadron (kaon) invariant mass");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 10000.); 
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(1,3); 
@@ -51,13 +51,13 @@
      h_PscalarInvMass_ctau0->SetLineColor(2);
      h_PscalarInvMass_ctau0->Draw("HIST");
  
-     h_PscalarInvMass_ctau1->GetYaxis()->SetTitle("Events");
+    /* h_PscalarInvMass_ctau1->GetYaxis()->SetTitle("Events");
     // h_refit12InvMass_ctau1->GetYaxis()->SetRangeUser(1.0, 10000.); 
      h_PscalarInvMass_ctau1->GetXaxis()->SetRangeUser(1,3); 
      h_PscalarInvMass_ctau1->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_PscalarInvMass_ctau1->SetMarkerColor(4);
      h_PscalarInvMass_ctau1->SetLineColor(4);
-     h_PscalarInvMass_ctau1->Draw("HIST same");
+     h_PscalarInvMass_ctau1->Draw("HIST same");*/
     
      h_PscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
     // h_refit12InvMass_ctau10->GetYaxis()->SetRangeUser(1.0, 10000.); 
@@ -67,13 +67,13 @@
      h_PscalarInvMass_ctau10->SetLineColor(6);
      h_PscalarInvMass_ctau10->Draw("HIST same");
    
-     h_PscalarInvMass_ctau100->GetYaxis()->SetTitle("Events");
+    /* h_PscalarInvMass_ctau100->GetYaxis()->SetTitle("Events");
     // h_refit12InvMass_ctau10->GetYaxis()->SetRangeUser(1.0, 10000.); 
      h_PscalarInvMass_ctau100->GetXaxis()->SetRangeUser(1,3); 
      h_PscalarInvMass_ctau100->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_PscalarInvMass_ctau100->SetMarkerColor(1);
      h_PscalarInvMass_ctau100->SetLineColor(1);
-     h_PscalarInvMass_ctau100->Draw("HIST same");
+     h_PscalarInvMass_ctau100->Draw("HIST same");*/
     
     /* h_PscalarInvMass_ctau1000->GetYaxis()->SetTitle("Events");
    //  h_refit12InvMass_ctau1000->GetYaxis()->SetRangeUser(1.0, 10000.); 
@@ -120,18 +120,18 @@
      legenda->SetLineColor(2);
      legenda->SetMarkerColor(2);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_PscalarInvMass_ctau1","c_{#tau}=1mm","L");
+     /*legenda=legend1->AddEntry("h_PscalarInvMass_ctau1","c_{#tau}=1mm","L");
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
-     legenda->SetMarkerSize(2);
+     legenda->SetMarkerSize(2);*/
      legenda=legend1->AddEntry("h_PscalarInvMass_ctau10","c_{#tau}=10mm","L");
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_PscalarInvMass_ctau100","c_{#tau}=100mm","L");
+     /*legenda=legend1->AddEntry("h_PscalarInvMass_ctau100","c_{#tau}=100mm","L");
      legenda->SetLineColor(1);
      legenda->SetMarkerColor(1);
-     legenda->SetMarkerSize(2);
+     legenda->SetMarkerSize(2);*/
      /*legenda=legend1->AddEntry("h_PscalarInvMass_ctau1000","c_{#tau}=1000mm","L");
      legenda->SetLineColor(209);
      legenda->SetMarkerColor(209);
