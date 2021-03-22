@@ -34,7 +34,7 @@
      Int_t n20entries=h_P20scalarInvMass_ctau0->GetEntries();
      Float_t corr=nentries/n20entries;
    
-     TH1F* h_PrescalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass*corr");
+     TH1F* h_PrescalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass"*corr);
      TH1F* h_scalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
      
    
