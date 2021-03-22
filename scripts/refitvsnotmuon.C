@@ -36,7 +36,7 @@
      Double_t corr=nentries/n20entries;
    
      TH1F* h_scalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
-     TH1D* h_PrescalescalarInvMass_QCD = (TH1F*)h_scalescalarInvMass_QCD->Scale((Double_t*) corr);
+     TH1D* h_PrescalescalarInvMass_QCD = (TH1F*)h_scalescalarInvMass_QCD->Scale((Double_t) corr);
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
