@@ -36,6 +36,7 @@
    
      TH1F* h_PrescalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass*corr");
      TH1F* h_scalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
+     
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
@@ -134,20 +135,42 @@
      canv2->SetLineColor(0);
      canv2->SetFillColor(0);
    
-     h_scalescalarInvMass_QCD->SetTitle("Dimuon invariant mass corrected");
+     h_scalescalarInvMass_QCD->SetTitle("Dimuon invariant mass, wider Higgs window");
     // h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_scalescalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_scalescalarInvMass_QCD->GetXaxis()->SetRangeUser(0.5, 4.); 
      h_scalescalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
-     h_scalescalarInvMass_QCD->SetMarkerColor(2);
-     h_scalescalarInvMass_QCD->SetLineColor(2);
+     h_scalescalarInvMass_QCD->SetMarkerColor(6);
+     h_scalescalarInvMass_QCD->SetLineColor(6);
      h_scalescalarInvMass_QCD->Draw("HIST");
     
+     h_P20scalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
+     h_P20scalarInvMass_ctau0->GetXaxis()->SetRangeUser(0.5, 4.); 
+     h_P20scalarInvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_P20scalarInvMass_ctau0->SetMarkerColor(2);
+     h_P20scalarInvMass_ctau0->SetLineColor(2);
+     h_P20scalarInvMass_ctau0->Draw("HIST same");
+ 
+     h_P20scalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
+     h_P20scalarInvMass_ctau10->GetXaxis()->SetRangeUser(0.5, 4.); 
+     h_P20scalarInvMass_ctau10->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_P20scalarInvMass_ctau10->SetMarkerColor(4);
+     h_P20scalarInvMass_ctau10->SetLineColor(4);
+     h_P20scalarInvMass_ctau10->Draw("HIST same");
+   
      TLegend *legend2 = new TLegend(0.7,0.7,0.9,0.9);
      legend2->SetBorderSize(1);
-     TLegendEntry *legendb = legend2->AddEntry("h_scalescalarInvMass_QCD","euh","L");
+     TLegendEntry *legendb = legend2->AddEntry("h_scalescalarInvMass_QCD","QCD","L");
+     legendb->SetLineColor(6);
+     legendb->SetMarkerColor(6);
+     legendb->SetMarkerSize(2);
+     legendb=legend2->AddEntry("h_P20scalarInvMass_ctau0","c_{#tau}=0mm","L");
      legendb->SetLineColor(2);
      legendb->SetMarkerColor(2);
+     legendb->SetMarkerSize(2);
+     legendb=legend2->AddEntry("h_P20scalarInvMass_ctau10","c_{#tau}=10mm","L");
+     legendb->SetLineColor(4);
+     legendb->SetMarkerColor(4);
      legendb->SetMarkerSize(2);
      legend2->Draw();
    
