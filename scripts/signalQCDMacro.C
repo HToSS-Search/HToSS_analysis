@@ -420,7 +420,7 @@
      legendxx->SetLineColor(6);
      legendxx->SetMarkerColor(6);
      legendxx->SetMarkerSize(2);
-     legendxx=legendh->AddEntry("h_PhiggsInvMass_ctau1000","c_{#tau}=1000mm","L");
+     legendxx=legendh->AddEntry("h_PhiggsInvMass_ctau1000","c_{#tau}=100mm","L");
      legendxx->SetLineColor(1);
      legendxx->SetMarkerColor(1);
      legendxx->SetMarkerSize(2);
