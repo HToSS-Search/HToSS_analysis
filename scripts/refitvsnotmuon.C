@@ -144,7 +144,7 @@
      canv2->SetFillColor(0);
    
      h_scalescalarInvMass_QCD->SetTitle("Dimuon invariant mass, wider Higgs window");
-     h_scalescalarInvMass_QCD->GetYaxis()->SetRangeUser(1.0, 65000.); 
+     h_scalescalarInvMass_QCD->GetYaxis()->SetRangeUser(1.0, 40000.); 
      h_scalescalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_scalescalarInvMass_QCD->GetXaxis()->SetRangeUser(0.5, 4.); 
      h_scalescalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
