@@ -25,6 +25,7 @@
      TH1F* h_PhiggsDeltaR_ctau0    = (TH1F*)inFile0.Get("h_PhiggsDeltaR");
      TFile inFile1("ggH_MS2_ctau1.root"); 
      TH1F* h_PhiggsInvMass_ctau1    = (TH1F*)inFile1.Get("h_PhiggsInvMass");
+     TH1F* h_PhiggsDeltaR_ctau1    = (TH1F*)inFile1.Get("h_PhiggsDeltaR");
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_PIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum1");
      TH1F* h_PIsoSum2_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum2");
@@ -452,18 +453,25 @@
      h_PhiggsDeltaR_ctau0->SetLineColor(2);
      h_PhiggsDeltaR_ctau0->Draw("HIST");
  
+     h_PhiggsDeltaR_ctau1->GetYaxis()->SetTitle("Events");
+     h_PhiggsDeltaR_ctau1->GetXaxis()->SetRangeUser(0.0, 5.); 
+     h_PhiggsDeltaR_ctau1->GetXaxis()->SetTitle("Radians");
+     h_PhiggsDeltaR_ctau1->SetMarkerColor(4);
+     h_PhiggsDeltaR_ctau1->SetLineColor(4);
+     h_PhiggsDeltaR_ctau1->Draw("HIST same");
+   
      h_PhiggsDeltaR_ctau10->GetYaxis()->SetTitle("Events");
      h_PhiggsDeltaR_ctau10->GetXaxis()->SetRangeUser(0.0, 5.); 
      h_PhiggsDeltaR_ctau10->GetXaxis()->SetTitle("Radians");
-     h_PhiggsDeltaR_ctau10->SetMarkerColor(4);
-     h_PhiggsDeltaR_ctau10->SetLineColor(4);
+     h_PhiggsDeltaR_ctau10->SetMarkerColor(6);
+     h_PhiggsDeltaR_ctau10->SetLineColor(6);
      h_PhiggsDeltaR_ctau10->Draw("HIST same");
    
      h_PhiggsDeltaR_QCD->GetYaxis()->SetTitle("Events");
      h_PhiggsDeltaR_QCD->GetXaxis()->SetRangeUser(0.0, 5.); 
      h_PhiggsDeltaR_QCD->GetXaxis()->SetTitle("Radians");
-     h_PhiggsDeltaR_QCD->SetMarkerColor(6);
-     h_PhiggsDeltaR_QCD->SetLineColor(6);
+     h_PhiggsDeltaR_QCD->SetMarkerColor(84);
+     h_PhiggsDeltaR_QCD->SetLineColor(84);
      h_PhiggsDeltaR_QCD->Draw("HIST same");
    
      TLegend *legendhr = new TLegend(0.7,0.7,0.9,0.9);
@@ -472,13 +480,17 @@
      legendr->SetLineColor(2);
      legendr->SetMarkerColor(2);
      legendr->SetMarkerSize(2);
-     legendr=legendhr->AddEntry("h_PhiggsDeltaR_ctau10","c_{#tau}=10mm","L");
+     legendr=legendhr->AddEntry("h_PhiggsDeltaR_ctau1","c_{#tau}=1mm","L");
      legendr->SetLineColor(4);
      legendr->SetMarkerColor(4);
      legendr->SetMarkerSize(2);
-     legendr=legendhr->AddEntry("h_PhiggsDeltaR_QCD","QCD","L");
+     legendr=legendhr->AddEntry("h_PhiggsDeltaR_ctau10","c_{#tau}=10mm","L");
      legendr->SetLineColor(6);
      legendr->SetMarkerColor(6);
+     legendr->SetMarkerSize(2);
+     legendr=legendhr->AddEntry("h_PhiggsDeltaR_QCD","QCD","L");
+     legendr->SetLineColor(84);
+     legendr->SetMarkerColor(84);
      legendr->SetMarkerSize(2);
      legendhr->Draw();
    
