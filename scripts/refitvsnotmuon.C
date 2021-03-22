@@ -31,8 +31,8 @@
    //  TH1F* h_P20scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
    //  TH1F* h_PantiscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PantiscalarInvMass");
      
-     nentries=h_PscalarInvMass_ctau0->GetEntries();
-     n20entries=h_P20scalarInvMass_ctau0->GetEntries();
+     Int_t nentries=h_PscalarInvMass_ctau0->GetEntries();
+     Int_t n20entries=h_P20scalarInvMass_ctau0->GetEntries();
      Double_t corr=nentries/n20entries;
    
      TH1F* h_scalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
