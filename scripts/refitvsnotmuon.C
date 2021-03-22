@@ -35,6 +35,7 @@
      Float_t corr=nentries/n20entries;
    
      TH1F* h_PrescalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass*corr");
+     TH1F* h_scalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
@@ -124,5 +125,38 @@
 
      // save canvas with drawn histogram
      canv1->SaveAs("h_comparerefitmuon.gif"); // .pdf and other formats work too! 
+   
+   
+   
+     TCanvas* canv2 = new TCanvas ("canv2", "canv2", 50, 50, 800, 600); // Canvas to draw histogram on
+     gStyle->SetOptStat(0);
+     canv2->SetLogy();
+     canv2->SetLineColor(0);
+     canv2->SetFillColor(0);
+   
+     h_PrescalescalarInvMass_QCD->SetTitle("Dimuon invariant mass corrected");
+    // h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
+     h_PrescalescalarInvMass_QCD->GetYaxis()->SetTitle("Events");
+     h_PrescalescalarInvMass_QCD->GetXaxis()->SetRangeUser(0.5, 4.); 
+     h_PrescalescalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_PrescalescalarInvMass_QCD->SetMarkerColor(2);
+     h_PrescalescalarInvMass_QCD->SetLineColor(2);
+     h_PrescalescalarInvMass_QCD->Draw("HIST");
+    
+     TLegend *legend2 = new TLegend(0.7,0.7,0.9,0.9);
+     legend1->SetBorderSize(1);
+     TLegendEntry *legenda = legend2->AddEntry("h_PrescalescalarInvMass_QCD","euh","L");
+     legenda->SetLineColor(2);
+     legenda->SetMarkerColor(2);
+     legenda->SetMarkerSize(2);
+     legend2->Draw();
+   
+     canv2->Modified();
+     canv2->cd();
+     canv2->SetSelected(canv2);
+     canv2->Draw(); // draw canvas!
+
+     // save canvas with drawn histogram
+     canv2->SaveAs("h_scaling.gif"); 
    
   }
