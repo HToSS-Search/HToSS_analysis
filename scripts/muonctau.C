@@ -14,7 +14,7 @@
   
      TFile inFile0("ggH_MS2_ctau0_kaon.root"); 
      TH1F* h_refit12InvMass_ctau0    = (TH1F*)inFile0.Get("h_Rpionre12InvMass");
-     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PantiscalarInvMass");
+     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_Rpionre12InvMass");
     
      TFile inFile1("ggH_MS2_ctau1.root"); 
      TH1F* h_refit12InvMass_ctau1    = (TH1F*)inFile1.Get("h_Rpionre12InvMass");
@@ -22,7 +22,7 @@
      
      TFile inFile10("ggH_MS2_ctau10_kaon.root"); 
      TH1F* h_refit12InvMass_ctau10    = (TH1F*)inFile10.Get("h_Rpionre12InvMass");
-     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PantiscalarInvMass");
+     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_Rpionre12InvMass");
    
      TFile inFile100("ggH_MS2_ctau100.root"); 
      TH1F* h_refit12InvMass_ctau100    = (TH1F*)inFile100.Get("h_Rpionre12InvMass");
@@ -34,7 +34,7 @@
     
      TFile inFileQCD("ggH_MC_QCD_kaon.root"); 
      TH1F* h_refit12InvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rpionre12InvMass");
-     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PantiscalarInvMass");
+     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rpionre12InvMass");
   
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
@@ -42,7 +42,7 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     h_PscalarInvMass_ctau0->SetTitle("Dihadron (kaon) invariant mass");
+     h_PscalarInvMass_ctau0->SetTitle("Refitted dihadron (kaon) invariant mass");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 10000.); 
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(1,3); 
