@@ -157,7 +157,7 @@
      h_P20scalarInvMass_ctau10->SetLineColor(4);
      h_P20scalarInvMass_ctau10->Draw("HIST same");
    
-     h_PrescalescalarInvMass_QCD->Scale(2);
+     h_PrescalescalarInvMass_QCD->Scale(1);
     // h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_PrescalescalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PrescalescalarInvMass_QCD->GetXaxis()->SetRangeUser(0.5, 4.); 
