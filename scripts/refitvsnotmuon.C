@@ -35,7 +35,7 @@
      Float_t corr=nentries/n20entries;
    
      TH1F* h_scalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
-     TH1F* h_PrescalescalarInvMass_QCD = (TH1F*)h_scalescalarInvMass_QCD->Scale(1);
+    // TH1F* h_PrescalescalarInvMass_QCD = (TH1F*)h_scalescalarInvMass_QCD->Scale(1);
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
@@ -157,7 +157,7 @@
      h_P20scalarInvMass_ctau10->SetLineColor(4);
      h_P20scalarInvMass_ctau10->Draw("HIST same");
    
-     h_PrescalescalarInvMass_QCD->Scale(corr);
+     h_PrescalescalarInvMass_QCD->Scale(2);
     // h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_PrescalescalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PrescalescalarInvMass_QCD->GetXaxis()->SetRangeUser(0.5, 4.); 
