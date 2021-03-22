@@ -31,12 +31,12 @@
    //  TH1F* h_P20scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
    //  TH1F* h_PantiscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PantiscalarInvMass");
      
-     Int_t nentries=h_PscalarInvMass_ctau0->GetEntries();
-     Int_t n20entries=h_P20scalarInvMass_ctau0->GetEntries();
-     Int_t* corr=(Int_t*)nentries/n20entries;
+     Double_t nentries=h_PscalarInvMass_ctau0->GetEntries();
+     Double_t n20entries=h_P20scalarInvMass_ctau0->GetEntries();
+     Double_t* corr=(Double_t*)nentries/n20entries;
    
      TH1F* h_scalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
-     TH1D* h_PrescalescalarInvMass_QCD = (TH1F*)h_scalescalarInvMass_QCD->Scale((Int_t*) corr);
+     TH1D* h_PrescalescalarInvMass_QCD = (TH1F*)h_scalescalarInvMass_QCD->Scale((Double_t*) corr);
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
