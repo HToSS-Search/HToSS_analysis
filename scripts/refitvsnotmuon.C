@@ -144,7 +144,7 @@
      canv2->SetFillColor(0);
    
      h_scalescalarInvMass_QCD->SetTitle("Dimuon invariant mass, wider Higgs window");
-     h_scalescalarInvMass_QCD->GetYaxis()->SetRangeUser(1.0, 40000.); 
+     h_scalescalarInvMass_QCD->GetYaxis()->SetRangeUser(1.0, 8000.); 
      h_scalescalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_scalescalarInvMass_QCD->GetXaxis()->SetRangeUser(0.5, 4.); 
      h_scalescalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
@@ -188,10 +188,10 @@
      legendb->SetLineColor(4);
      legendb->SetMarkerColor(4);
      legendb->SetMarkerSize(2);
-     legendb=legend2->AddEntry("h_PrescalescalarInvMass_QCD","Normalised QCD","L");
+     /*legendb=legend2->AddEntry("h_PrescalescalarInvMass_QCD","Normalised QCD","L");
      legendb->SetLineColor(52);
      legendb->SetMarkerColor(52);
-     legendb->SetMarkerSize(2);
+     legendb->SetMarkerSize(2);*/
      legend2->Draw();
    
      canv2->Modified();
