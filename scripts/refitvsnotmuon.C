@@ -41,7 +41,7 @@
    
      TH1F* h_PrescalescalarInvMass_QCD {new TH1F("h_PrescalescalarInvMass_QCD", "Dimuon invariant mass, wider Higgs window", 1000, 0.,15.)};
      h_PrescalescalarInvMass_QCD = (TH1F*)h_scalescalarInvMass_QCD->Clone();
-     h_PrescalescalarInvMass_QCD->Scale((Double_t) corr));
+     h_PrescalescalarInvMass_QCD->Scale(corr);
    
   // h_genParScalarMuonDivPtSL=(TH1F*)h_genParScalarMuonCutPtSL->Clone(
     
