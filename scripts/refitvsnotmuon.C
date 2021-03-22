@@ -32,7 +32,7 @@
      
      Int_t nentries=h_PscalarInvMass_ctau0->GetEntries();
      Int_t n20entries=h_P20scalarInvMass_ctau0->GetEntries();
-     Float_t corr=nentries/n20entries;
+     Double_t corr=nentries/n20entries;
    
      TH1F* h_scalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
      TH1F* h_PrescalescalarInvMass_QCD = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
@@ -157,15 +157,14 @@
      h_P20scalarInvMass_ctau10->SetLineColor(4);
      h_P20scalarInvMass_ctau10->Draw("HIST same");
    
-     
+     h_PrescalescalarInvMass_QCD->Scale(corr);
     // h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_PrescalescalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PrescalescalarInvMass_QCD->GetXaxis()->SetRangeUser(0.5, 4.); 
      h_PrescalescalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_PrescalescalarInvMass_QCD->SetMarkerColor(52);
      h_PrescalescalarInvMass_QCD->SetLineColor(52);
-     h_PrescalescalarInvMass_QCD->Scale(1)->Draw("HIST");
-     //h_PrescalescalarInvMass_QCD->Draw("HIST");
+     h_PrescalescalarInvMass_QCD->Draw("HIST");
    
      TLegend *legend2 = new TLegend(0.7,0.7,0.9,0.9);
      legend2->SetBorderSize(1);
