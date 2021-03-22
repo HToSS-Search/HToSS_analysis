@@ -42,6 +42,7 @@
      TH1F* h_PrescalescalarInvMass_QCD {new TH1F("h_PrescalescalarInvMass_QCD", "Dimuon invariant mass, wider Higgs window", 1000, 0.,15.)};
      h_PrescalescalarInvMass_QCD = (TH1F*)h_scalescalarInvMass_QCD->Clone();
      h_PrescalescalarInvMass_QCD->Scale(corr);
+     h_PrescalescalarInvMass_QCD->Draw();
    
   // h_genParScalarMuonDivPtSL=(TH1F*)h_genParScalarMuonCutPtSL->Clone(
     
@@ -188,10 +189,10 @@
      legendb->SetLineColor(4);
      legendb->SetMarkerColor(4);
      legendb->SetMarkerSize(2);
-     /*legendb=legend2->AddEntry("h_PrescalescalarInvMass_QCD","Normalised QCD","L");
+     legendb=legend2->AddEntry("h_PrescalescalarInvMass_QCD","Normalised QCD","L");
      legendb->SetLineColor(52);
      legendb->SetMarkerColor(52);
-     legendb->SetMarkerSize(2);*/
+     legendb->SetMarkerSize(2);
      legend2->Draw();
    
      canv2->Modified();
