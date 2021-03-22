@@ -16,13 +16,13 @@
      TFile inFile0("ggH_MS2_ctau0.root"); 
      TH1F* h_refit12InvMass_ctau0    = (TH1F*)inFile0.Get("h_Rrefit12InvMass");
      TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PscalarInvMass");
-     TH1F* h_P20scalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_P20scalarInvMass");
+     TH1F* h_P20scalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_P20antiscalarInvMass");
     // TH1F* h_PantiscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PantiscalarInvMass");
 
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_refit12InvMass_ctau10    = (TH1F*)inFile10.Get("h_Rrefit12InvMass");
      TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PscalarInvMass");
-     TH1F* h_P20scalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_P20scalarInvMass");
+     TH1F* h_P20scalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_P20antiscalarInvMass");
    //  TH1F* h_PantiscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PantiscalarInvMass");
 
      TFile inFileQCD("ggH_MC_QCD.root"); 
@@ -36,7 +36,7 @@
      Double_t corr=nentries/n20entries;
    
      
-     TH1F* h_scalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
+     TH1F* h_scalescalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20antiscalarInvMass");
      //TH1D* h_PrescalescalarInvMass_QCD = new TH1D(h_scalescalarInvMass_QCD->Scale((Double_t) corr));
    
      TH1F* h_PrescalescalarInvMass_QCD {new TH1F("h_PrescalescalarInvMass_QCD", "Dimuon invariant mass, wider Higgs window", 1000, 0.,15.)};
@@ -143,25 +143,25 @@
      canv2->SetLineColor(0);
      canv2->SetFillColor(0);
    
-     h_scalescalarInvMass_QCD->SetTitle("Dimuon invariant mass, wider Higgs window");
+     h_scalescalarInvMass_QCD->SetTitle("Dihadron (pion) invariant mass, wider Higgs window");
      h_scalescalarInvMass_QCD->GetYaxis()->SetRangeUser(1.0, 8000.); 
      h_scalescalarInvMass_QCD->GetYaxis()->SetTitle("Events");
-     h_scalescalarInvMass_QCD->GetXaxis()->SetRangeUser(0.5, 4.); 
-     h_scalescalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_scalescalarInvMass_QCD->GetXaxis()->SetRangeUser(1, 3.); 
+     h_scalescalarInvMass_QCD->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_scalescalarInvMass_QCD->SetMarkerColor(84);
      h_scalescalarInvMass_QCD->SetLineColor(84);
      h_scalescalarInvMass_QCD->Draw("HIST");
     
      h_P20scalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
-     h_P20scalarInvMass_ctau0->GetXaxis()->SetRangeUser(0.5, 4.); 
-     h_P20scalarInvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_P20scalarInvMass_ctau0->GetXaxis()->SetRangeUser(1, 3.); 
+     h_P20scalarInvMass_ctau0->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_P20scalarInvMass_ctau0->SetMarkerColor(2);
      h_P20scalarInvMass_ctau0->SetLineColor(2);
      h_P20scalarInvMass_ctau0->Draw("HIST same");
  
      h_P20scalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
-     h_P20scalarInvMass_ctau10->GetXaxis()->SetRangeUser(0.5, 4.); 
-     h_P20scalarInvMass_ctau10->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_P20scalarInvMass_ctau10->GetXaxis()->SetRangeUser(1, 3.); 
+     h_P20scalarInvMass_ctau10->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_P20scalarInvMass_ctau10->SetMarkerColor(6);
      h_P20scalarInvMass_ctau10->SetLineColor(6);
      h_P20scalarInvMass_ctau10->Draw("HIST same");
