@@ -14,7 +14,7 @@
 
   void signalQCDMacro() {  
   
-     TFile inFile0("ggH_MS2_ctau0.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
+     TFile inFile0("ggH_MS2_ctau0_kaon.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
      TH1F* h_PIsoSum1_ctau0    = (TH1F*)inFile0.Get("h_PIsoSum1");
      TH1F* h_PIsoSum2_ctau0    = (TH1F*)inFile0.Get("h_PIsoSum2");
      TH1F* h_PIsoSum3_ctau0    = (TH1F*)inFile0.Get("h_PIsoSum3");
@@ -26,7 +26,7 @@
      TFile inFile1("ggH_MS2_ctau1.root"); 
      TH1F* h_PhiggsInvMass_ctau1    = (TH1F*)inFile1.Get("h_PhiggsInvMass");
      TH1F* h_PhiggsDeltaR_ctau1    = (TH1F*)inFile1.Get("h_PhiggsDeltaR");
-     TFile inFile10("ggH_MS2_ctau10.root"); 
+     TFile inFile10("ggH_MS2_ctau10_kaon.root"); 
      TH1F* h_PIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum1");
      TH1F* h_PIsoSum2_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum2");
      TH1F* h_PIsoSum3_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum3");
@@ -37,7 +37,7 @@
      TH1F* h_PhiggsDeltaR_ctau10    = (TH1F*)inFile10.Get("h_PhiggsDeltaR");
      TFile inFile1000("ggH_MS2_ctau100.root"); 
      TH1F* h_PhiggsInvMass_ctau1000    = (TH1F*)inFile1000.Get("h_PhiggsInvMass");
-     TFile inFileQCD("ggH_MC_QCD.root"); 
+     TFile inFileQCD("ggH_MC_QCD_kaon.root"); 
      TH1F* h_PIsoSum1_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum1");
      TH1F* h_PIsoSum2_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum2");
      TH1F* h_PIsoSum3_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum3");
