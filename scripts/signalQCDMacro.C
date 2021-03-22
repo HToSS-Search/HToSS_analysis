@@ -34,7 +34,7 @@
      TH1F* h_PantiscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PantiscalarInvMass");
      TH1F* h_PhiggsInvMass_ctau10    = (TH1F*)inFile10.Get("h_PhiggsInvMass");
      TH1F* h_PhiggsDeltaR_ctau10    = (TH1F*)inFile10.Get("h_PhiggsDeltaR");
-     TFile inFile1000("ggH_MS2_ctau1000.root"); 
+     TFile inFile1000("ggH_MS2_ctau100.root"); 
      TH1F* h_PhiggsInvMass_ctau1000    = (TH1F*)inFile1000.Get("h_PhiggsInvMass");
      TFile inFileQCD("ggH_MC_QCD.root"); 
      TH1F* h_PIsoSum1_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum1");
@@ -395,15 +395,15 @@
      h_PhiggsInvMass_ctau1000->GetYaxis()->SetTitle("Events");
      h_PhiggsInvMass_ctau1000->GetXaxis()->SetRangeUser(115., 135.); 
      h_PhiggsInvMass_ctau1000->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
-     h_PhiggsInvMass_ctau1000->SetMarkerColor(3);
-     h_PhiggsInvMass_ctau1000->SetLineColor(3);
+     h_PhiggsInvMass_ctau1000->SetMarkerColor(1);
+     h_PhiggsInvMass_ctau1000->SetLineColor(1);
      h_PhiggsInvMass_ctau1000->Draw("HIST same");
    
      h_PhiggsInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PhiggsInvMass_QCD->GetXaxis()->SetRangeUser(115., 135.); 
      h_PhiggsInvMass_QCD->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
-     h_PhiggsInvMass_QCD->SetMarkerColor(94);
-     h_PhiggsInvMass_QCD->SetLineColor(94);
+     h_PhiggsInvMass_QCD->SetMarkerColor(84);
+     h_PhiggsInvMass_QCD->SetLineColor(84);
      h_PhiggsInvMass_QCD->Draw("HIST same");
    
      TLegend *legendh = new TLegend(0.7,0.7,0.9,0.9);
@@ -421,12 +421,12 @@
      legendxx->SetMarkerColor(6);
      legendxx->SetMarkerSize(2);
      legendxx=legendh->AddEntry("h_PhiggsInvMass_ctau1000","c_{#tau}=1000mm","L");
-     legendxx->SetLineColor(3);
-     legendxx->SetMarkerColor(3);
+     legendxx->SetLineColor(1);
+     legendxx->SetMarkerColor(1);
      legendxx->SetMarkerSize(2);
      legendxx=legendh->AddEntry("h_PhiggsInvMass_QCD","QCD","L");
-     legendxx->SetLineColor(94);
-     legendxx->SetMarkerColor(94);
+     legendxx->SetLineColor(84);
+     legendxx->SetMarkerColor(84);
      legendxx->SetMarkerSize(2);
      legendh->Draw();
    
