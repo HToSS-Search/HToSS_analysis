@@ -157,14 +157,14 @@
      h_P20scalarInvMass_ctau10->SetLineColor(4);
      h_P20scalarInvMass_ctau10->Draw("HIST same");
    
-     h_PrescalescalarInvMass_QCD->Scale(1);
+    /* h_PrescalescalarInvMass_QCD->Scale(1);
     // h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_PrescalescalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PrescalescalarInvMass_QCD->GetXaxis()->SetRangeUser(0.5, 4.); 
      h_PrescalescalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_PrescalescalarInvMass_QCD->SetMarkerColor(52);
      h_PrescalescalarInvMass_QCD->SetLineColor(52);
-     h_PrescalescalarInvMass_QCD->Draw("HIST");
+     h_PrescalescalarInvMass_QCD->Draw("HIST");*/
    
      TLegend *legend2 = new TLegend(0.7,0.7,0.9,0.9);
      legend2->SetBorderSize(1);
@@ -180,10 +180,10 @@
      legendb->SetLineColor(4);
      legendb->SetMarkerColor(4);
      legendb->SetMarkerSize(2);
-     legendb=legend2->AddEntry("h_PrescalescalarInvMass_QCD","Normalised QCD","L");
+     /*legendb=legend2->AddEntry("h_PrescalescalarInvMass_QCD","Normalised QCD","L");
      legendb->SetLineColor(52);
      legendb->SetMarkerColor(52);
-     legendb->SetMarkerSize(2);
+     legendb->SetMarkerSize(2);*/
      legend2->Draw();
    
      canv2->Modified();
