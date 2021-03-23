@@ -190,8 +190,8 @@ class Cuts
     // met and mtw cut values
     double metDileptonCut_;
 
-    // blinding flag
-    bool blind_;
+    // unblinding flag
+    bool unblind_;
 
     // Sets trigger from config file
     std::string cutConfTrigLabel_;
@@ -276,6 +276,9 @@ class Cuts
     }
     void setChsCandidateMass(double mass) {
         chsMass_ = mass/1000.;
+    }
+    void setBlindingFlag(bool unblind) {
+        unblind_ = unblind;
     }
     void setJetRegion(const unsigned nJets, const unsigned nBets, const unsigned maxJets, const unsigned maxBJets) {
         numJets_ = nJets;

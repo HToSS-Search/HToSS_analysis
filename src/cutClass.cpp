@@ -59,6 +59,7 @@ Cuts::Cuts(const bool doPlots,
     , higgsMassCut_{20.}
     , higgsTolerence_ {10.}
     , invWMassCut_{999999.}
+    , unblind_{false}
 
     , numJets_{0}
     , maxJets_{20}
@@ -99,9 +100,6 @@ Cuts::Cuts(const bool doPlots,
     // MET and mTW cuts go here.
     , metDileptonCut_{50.0}
 
-    // blinding
-    , blind_{true}
-
 {
     std::cout << "\nInitialises fine" << std::endl;
     initialiseJECCors();
@@ -122,8 +120,8 @@ Cuts::Cuts(const bool doPlots,
 
         std::cout << "Load 2017 muon SFs from root file ... " << std::endl;
         muonHltFile1 = new TFile{"scaleFactors/2017/EfficienciesAndSF_RunBtoF_Nov17Nov2017.root"};
-        muonIDsFile1 = new TFile{"scaleFactors/2017/RunBC_SF_ID.root"};
-        muonIsoFile1 = new TFile{"scaleFactors/2017/RunBC_SF_ISO.root"};
+        muonIDsFile1 = new TFile{"scaleFactors/2017/RunDE_SF_ID.root"};
+        muonIsoFile1 = new TFile{"scaleFactors/2017/RunDE_SF_ISO.root"};
         muonIDsSystFile1 = new TFile{"scaleFactors/2017/RunBCDEF_SF_ID_syst.root"};
         muonIsoSystFile1 = new TFile{"scaleFactors/2017/RunBCDEF_SF_ISO_syst.root"};
 
@@ -323,7 +321,7 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     if ( (event.chsPairVec.first + event.chsPairVec.second).M() > scalarMassCut_ && !skipScalarMassCut_ ) return false;
 
 //// Apply side band cut for data
-    if (!isMC_ && blind_) {
+    if (!isMC_ && !unblind_) {
         float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsTrkPairVec.first + event.chsTrkPairVec.second).M() );
         if ( muScalarMass  < hadScalarMass*1.05 && muScalarMass  >= hadScalarMass*0.95 ) return false;
         else if ( hadScalarMass < muScalarMass*1.05  && hadScalarMass >= muScalarMass*0.83  ) return false;
@@ -441,7 +439,7 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
 //    if ( !getDihadronCand(event) ) return false;
 
 //// Apply side band cut for data
-    if (!isMC_ && blind_) {
+    if (!isMC_ && !unblind_) {
         float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsTrkPairVec.first + event.chsTrkPairVec.second).M() );
         if ( muScalarMass  < hadScalarMass*1.05 && muScalarMass  >= hadScalarMass*.95 ) return false;
         else if ( hadScalarMass < muScalarMass*1.05  && hadScalarMass >= muScalarMass*.95  ) return false;
@@ -1362,6 +1360,7 @@ double Cuts::getLeptonWeight(const AnalysisEvent& event, const int& syst) const 
         leptonWeight *= eleSF(event.elePF2PATPT[event.electronIndexTight[0]], event.elePF2PATSCEta[event.electronIndexTight[0]], syst);
         leptonWeight *= muonSF(event.muonPF2PATPt[event.muonIndexTight[0]], event.muonPF2PATEta[event.muonIndexTight[0]], syst, false);
     }
+
     return leptonWeight;
 }
 
@@ -1418,10 +1417,10 @@ double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const 
 
         double maxIdPt  {h_muonIDs1->GetXaxis()->GetXmax() - 0.1};
 //        double maxIsoPt {h_muonPFiso1->GetXaxis()->GetXmax() - 0.1};
-        double maxHltPt {h_muonHlt1->GetXaxis()->GetXmax() - 0.1};
+//        double maxHltPt {h_muonHlt1->GetYaxis()->GetXmax() - 0.1};
         double minIdPt    {h_muonIDs1->GetXaxis()->GetXmin() + 0.1};
 //         double minIsoPt   {h_muonPFiso1->GetXaxis()->GetXmin() + 0.1};
-        double minHltPt {h_muonHlt1->GetXaxis()->GetXmin() +  0.1};
+//        double minHltPt {h_muonHlt1->GetYaxis()->GetXmin() +  0.1};
 
         int binId1{0}, binIso1{0}, binHlt1{0};
         double muonIdSF{1.0}, muonPFisoSF{1.0}, muonHltSF {1.0};
@@ -1434,13 +1433,13 @@ double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const 
 //        else if (pt < minIsoPt) binIso1 = h_muonPFiso1->FindBin(miniIsoPt, std::abs(eta));
 //        else binIso1 = h_muonPFiso1->FindBin(pt, std::abs(eta));
 
-        if (pt > maxHltPt) binHlt1 = h_muonHlt1->FindBin(std::abs(eta), maxHltPt);
-        else if (pt < minHltPt) binHlt1 = h_muonHlt1->FindBin(std::abs(eta), minHltPt);
-        else binHlt1 = h_muonHlt1->FindBin(std::abs(eta), pt);
+//        if (pt > maxHltPt) binHlt1 = h_muonHlt1->FindBin(std::abs(eta), maxHltPt);
+//        else if (pt < minHltPt) binHlt1 = h_muonHlt1->FindBin(std::abs(eta), minHltPt);
+//        else binHlt1 = h_muonHlt1->FindBin(std::abs(eta), pt);
 
         muonIdSF    = h_muonIDs1->GetBinContent(binId1);
 //        muonPFisoSF = h_muonPFiso1->GetBinContent(binIso1);
-        if (leadingMuon) muonHltSF   = h_muonHlt1->GetBinContent(binHlt1);
+//        if (leadingMuon) muonHltSF   = h_muonHlt1->GetBinContent(binHlt1);
 
         if (syst == 1 || syst == 2) {
             double idStatUncert = h_muonIDs1->GetBinError(binId1);

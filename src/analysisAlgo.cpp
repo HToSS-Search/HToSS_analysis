@@ -38,6 +38,7 @@ AnalysisAlgo::AnalysisAlgo()
     , doNPLs_{false}
     , doZplusCR_{false}
     , noData_ {true}
+    , unblind_ {false}
 {}
 
 AnalysisAlgo::~AnalysisAlgo() {}
@@ -155,6 +156,9 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         "mhCut",
         po::value<float>(&mhCut)->default_value(20.),
         "Apply an mHiggs cut.")(
+        "unblind",
+        po::bool_switch(&unblind_),
+        "Remove blinding criteria! DO NOT USE UNLESS EXPRESS PERMISSION GRANTED")(
         "mwCut",
         po::value<float>(&mwCut)->default_value(20.),
         "Apply an mW cut. Dilepton only.");
@@ -369,6 +373,7 @@ void AnalysisAlgo::setupCuts()
     cutObj->setScalarCut(msCut);
     cutObj->setHiggsCut(mhCut);
     cutObj->setChsCandidateMass(chsMass);
+    cutObj->setBlindingFlag(unblind_);
     if (doZplusCR_)
     {
         cutObj->setZplusControlRegionFlag(true);

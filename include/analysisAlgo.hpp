@@ -69,6 +69,7 @@ class AnalysisAlgo
     bool doNPLs_;
     bool doZplusCR_;
     bool noData_;
+    bool unblind_;
 
     std::vector<Dataset> datasets;
     double totalLumi;
