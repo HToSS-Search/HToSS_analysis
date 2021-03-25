@@ -53,9 +53,9 @@ Cuts::Cuts(const bool doPlots,
     , looseMuonRelIso_{0.25}
 
     , scalarMassCut_{4.}
-    , maxDileptonDeltaR_{0.2}
+    , maxDileptonDeltaR_{99999999.}
     , chsMass_{0.13957018}
-    , maxChsDeltaR_ {999999}
+    , maxChsDeltaR_ {99999999.}
     , higgsMassCut_{20.}
     , higgsTolerence_ {10.}
     , invWMassCut_{999999.}
@@ -290,7 +290,7 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
         if (!triggerCuts(event, eventWeight, systToRun))  return false; // Do trigger cuts
     }
 
-    if (!metFilters(event)) return false;
+    if ( !event.metFilters() ) return false;
 
     // Make lepton cuts. If the trigLabel contains d, we are in the ttbar CR so the Z mass cut is skipped
     ////  Do this outside original function because this is simpler for HToSS unlike in tZq
@@ -299,12 +299,15 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     event.muonIndexTight = getLooseMuons(event);
     if (event.muonIndexTight.size() < numTightMu_) return false;
 
-    if ( !getDileptonCand(event, event.muonIndexTight) ) return false;
+    if (postLepSelTree_) postLepSelTree_->Fill();
+
+    const bool validDileptonCand = getDileptonCand(event, event.muonIndexTight);
+    if ( !validDileptonCand ) return false;
 
     const double dileptonMass {(event.zPairLeptons.first + event.zPairLeptons.second).M()};
 
     // This is to make some skims for faster running. Do lepSel and save some files. If flag is true, scalar mass cuts are applied, and dilepton mass <= threshold, fill tree
-    if (postLepSelTree_ && dileptonMass <= scalarMassCut_ && !skipScalarMassCut_) postLepSelTree_->Fill();
+//    if (postLepSelTree_ && dileptonMass <= scalarMassCut_ && !skipScalarMassCut_) postLepSelTree_->Fill();
 
     eventWeight *= getLeptonWeight(event, systToRun);
 //    event.muonMomentumSF = getRochesterSFs(event);
@@ -1149,38 +1152,23 @@ std::pair<std::vector<int>, std::vector<double>>
     return {jets, smears};
 }
 
-std::vector<int> Cuts::makeBCuts(const AnalysisEvent& event,
-                                 const std::vector<int> jets,
-                                 const int syst) const
-{
+std::vector<int> Cuts::makeBCuts(const AnalysisEvent& event, const std::vector<int> jets, const int syst) const {
     std::vector<int> bJets;
-    for (unsigned int i = 0; i < jets.size(); i++)
-    {
-        const TLorentzVector jetVec{
-            getJetLVec(event, jets[i], syst, false).first};
-        const float bDisc{
-            event.jetPF2PATpfCombinedInclusiveSecondaryVertexV2BJetTags
-                [jets[i]]};
+    for (unsigned int i = 0; i < jets.size(); i++) {
+        const TLorentzVector jetVec{getJetLVec(event, jets[i], syst, false).first};
+        const float bDisc{event.jetPF2PATpfCombinedInclusiveSecondaryVertexV2BJetTags[jets[i]]};
 
         if (bDisc <= bDiscCut_)
-        {
             continue;
-        }
         if (jetVec.Eta() >= maxbJetEta_)
-        {
             continue;
-        }
         bJets.emplace_back(i);
     }
     return bJets;
 }
 
-bool Cuts::triggerCuts(const AnalysisEvent& event,
-                       double& eventWeight,
-                       const int& syst) const
-{
-    if (skipTrigger_)
-    {
+bool Cuts::triggerCuts(const AnalysisEvent& event, double& eventWeight, const int& syst) const {
+    if (skipTrigger_) {
         return true;
     }
 
@@ -1196,9 +1184,9 @@ bool Cuts::triggerCuts(const AnalysisEvent& event,
 //    const bool eeTrig{event.eeTrig()};
 
     // double muon triggers
-    const bool mumuTrig{event.mumuTrig()};
-    const bool mumuL2Trig{event.mumuL2Trig()};
-    const bool mumuNoVtxTrig{event.mumuNoVtxTrig()};
+//    const bool mumuTrig{event.mumuTrig()};
+//    const bool mumuL2Trig{event.mumuL2Trig()};
+//    const bool mumuNoVtxTrig{event.mumuNoVtxTrig()};
 
     // single electron triggers
 //    const bool eTrig{event.eTrig()};
@@ -1210,44 +1198,38 @@ bool Cuts::triggerCuts(const AnalysisEvent& event,
     std::string channel = "";
 
     // Dilepton channels
-    if (cutConfTrigLabel_.find("e") != std::string::npos)
-    {
+    if (cutConfTrigLabel_.find("e") != std::string::npos) {
         channel = "ee";
     }
-    if (cutConfTrigLabel_.find("d") != std::string::npos)
-    {
+    if (cutConfTrigLabel_.find("d") != std::string::npos) {
         channel = "emu";
     }
-    if (cutConfTrigLabel_.find("m") != std::string::npos)
-    {
+    if (cutConfTrigLabel_.find("m") != std::string::npos){
         channel = "mumu";
     }
 
     double twgt{1.0};
 
 
-    if (!is2016_ && isMC_)
-    {
+    if (!is2016_ && isMC_) { // Apply to 2017
         // Lepton SFs obtained from triggerScaleFactorsAlgo
+
+        if (channel == "mumu") {
+            if (muTrig) {
+                twgt = 1.0;
+//                twgt = 0.97170;
+//                if (syst == 1) twgt += 0.01;
+//                else if (syst == 2) twgt -= 0.01;
+            }
+        }
 /*
-        if (channel == "ee") {
+        else if (channel == "ee") {
             if (eTrig || eeTrig) {
                 twgt = 0.93106;
                 if (syst == 1) twgt += 0.01;
                 else if (syst == 2) twgt -= 0.01;
             }
         }
-*/
-        if (channel == "mumu")
-//        else if (channel == "mumu")
-        {
-            if (muTrig) {
-                twgt = 0.97170;
-                if (syst == 1) twgt += 0.01;
-                else if (syst == 2) twgt -= 0.01;
-            }
-        }
-/*
         else if (channel == "emu") {
             if (muEGTrig) {
                 twgt = 0.95350;
@@ -1261,17 +1243,8 @@ bool Cuts::triggerCuts(const AnalysisEvent& event,
 
     else if (is2016_ && isMC_) { // Apply SFs to MC if 2016
         // Dilepton channels
-/*        if (channel == "ee") {
-            if (eTrig || eeTrig) { // If singleElectron or doubleEG trigger fires ...
-                twgt = 0.96917; // 0.97554 for data eff; 0.98715 for SF
-                if (syst == 1) twgt += 0.01; // +-/ 0.00138 for eff; 0.00063 for SF
-                if (syst == 2) twgt -= 0.01;
-            }
-        }
-*/
-        if (channel == "mumu")
-//        else if (channel == "mumu")
-        {
+
+        if (channel == "mumu") {
             if (muTrig) { // If doubleMuon or singleMuon trigger fires ...
 
                 // eff pre-HIP fix: 0.98069  +/- -0.00070/0.00073; eff post-HIP
@@ -1286,7 +1259,16 @@ bool Cuts::triggerCuts(const AnalysisEvent& event,
                 if (syst == 2) twgt -= 0.01;
             }
         }
-/*        else if (channel == "emu") { // If MuonEG trigger fires, regardless of singleElectron/singleMuon
+
+/*        if (channel == "ee") {
+            if (eTrig || eeTrig) { // If singleElectron or doubleEG trigger fires ...
+                twgt = 0.96917; // 0.97554 for data eff; 0.98715 for SF
+                if (syst == 1) twgt += 0.01; // +-/ 0.00138 for eff; 0.00063 for SF
+                if (syst == 2) twgt -= 0.01;
+            }
+        }
+
+        else if (channel == "emu") { // If MuonEG trigger fires, regardless of singleElectron/singleMuon
           // triggers
             if (muEGTrig) {
                 twgt = 0.98710;
@@ -1301,26 +1283,7 @@ bool Cuts::triggerCuts(const AnalysisEvent& event,
         }
     }
 
-    // Check which trigger fired and if it correctly corresponds to the
-    // channel being scanned over.
-
-/*
-    if (channel == "emu") {
-        if (muEGTrig) {
-            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
-            return true;
-        }
-    }
-*/
-/*
-    if (channel == "ee") {
-        //    if ( eeTrig && !(muEGTrig || mumuTrig) ) { // Original trigger logic, for double triggers only
-        if ((eeTrig || eTrig) && !(muEGTrig || mumuTrig || muTrig)) {
-            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
-            return true;
-        }
-    }
-*/
+    // Check which trigger fired and if it correctly corresponds to the channel being scanned over.
     if (channel == "mumu") {
         // Trigger logic for double + single triggers
 ////        if ( (mumuTrig || muTrig) && !(eeTrig || muEGTrig || eTrig)) { // Old tZq logic
@@ -1329,27 +1292,31 @@ bool Cuts::triggerCuts(const AnalysisEvent& event,
             return true;
         }
     }
+
+/*
+    else if (channel == "emu") {
+        if (muEGTrig) {
+            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
+            return true;
+        }
+    }
+    else if (channel == "ee") {
+        //    if ( eeTrig && !(muEGTrig || mumuTrig) ) { // Original trigger logic, for double triggers only
+        if ((eeTrig || eTrig) && !(muEGTrig || mumuTrig || muTrig)) {
+            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
+            return true;
+        }
+    }
+*/
     return false;
 }
 
-// Does event pass MET Filter
-bool Cuts::metFilters(const AnalysisEvent& event) const
-{
-    return event.metFilters();
-}
-
-double Cuts::deltaPhi(const double& phi1, const double& phi2)
-{
+double Cuts::deltaPhi(const double& phi1, const double& phi2) {
     return std::atan2(std::sin(phi1 - phi2), std::cos(phi1 - phi2));
 }
 
-double Cuts::deltaR(const double& eta1,
-                    const double& phi1,
-                    const double& eta2,
-                    const double& phi2)
-{
-    return std::sqrt(std::pow(eta1 - eta2, 2)
-                     + std::pow(deltaPhi(phi1, phi2), 2));
+double Cuts::deltaR(const double& eta1, const double& phi1, const double& eta2, const double& phi2) {
+    return std::sqrt(std::pow(eta1 - eta2, 2) + std::pow(deltaPhi(phi1, phi2), 2));
 }
 
 double Cuts::getLeptonWeight(const AnalysisEvent& event, const int& syst) const {
@@ -1427,7 +1394,7 @@ double Cuts::eleSF(const double& pt, const double& eta, const int& syst) const {
 
 double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const bool& leadingMuon) const {
 
-    if (!is2016_) {
+    if (!is2016_ && !is2018_) { // Is 2017
 
         double maxIdPt  {h_muonIDs1->GetXaxis()->GetXmax() - 0.1};
 //        double maxIsoPt {h_muonPFiso1->GetXaxis()->GetXmax() - 0.1};
@@ -1481,7 +1448,7 @@ double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const 
         }
     }
 
-    else { // Run2016 needs separate treatments in pre and post HIP eras
+    else if (!is2016_)  { // Run2016 needs separate treatments in pre and post HIP eras
 
         double maxIdPt  {h_muonIDs1->GetYaxis()->GetXmax() - 0.1};
 //        double maxIsoPt {h_muonPFiso1->GetYaxis()->GetXmax() - 0.1};
@@ -1539,6 +1506,11 @@ double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const 
             return muonIdSF * muonPFisoSF * muonHltSF;
         }
     }
+
+    else if (!is2018_)  { // is 2018
+        return {1.0};
+    }
+    else throw std::runtime_error("Unknown channel");
 }
 
 int Cuts::getMuonTrackPairIndex(const AnalysisEvent& event) const { 

@@ -45,13 +45,15 @@ float deltaR(float eta1, float phi1, float eta2, float phi2);
 namespace fs = boost::filesystem;
 
 // Lepton cut variables
-const float looseMuonEta_ {2.4}, looseMuonPt_ {10.}, looseMuonPtLeading_ {30.}, looseMuonRelIso_ {100.};
-const float invZMassCut_ {10.0}, chsMass_{0.13957018};
+const float looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {30.}, looseMuonRelIso_ {100.};
+const float invZMassCut_ {4.0}, chsMass_{0.13957018};
 
 // Diparticle cuts
-double maxDileptonDeltaR_ {0.2}, maxChsDeltaR_ {0.4};
-double higgsTolerence_ {10.};
+const double maxDileptonDeltaR_ {99999999.}, maxChsDeltaR_ {99999999.};
+const double higgsTolerence_ {10.};
 
+// debug flag
+const bool useMCTruth_{false};
 
 int main(int argc, char* argv[]) {
     auto timerStart = std::chrono::high_resolution_clock::now(); 
@@ -125,7 +127,9 @@ int main(int argc, char* argv[]) {
 
     // Reco plots
 
-    TH1F* h_numLooseMuons           {new TH1F("h_numLooseMuons",         "Number of loose muons IDed", 10, -0.5, 9.5)};
+    TH1F* h_numLooseMuons             {new TH1F("h_numLooseMuons",            "Number of loose muons IDed", 10, -0.5, 9.5)};
+    TH1F* h_numRecoScalarMuons        {new TH1F("h_numRecoScalarMuons",       "Number of loose muons from scalar decay", 10, -0.5, 9.5)};
+    TH1F* h_numRecoDirectScalarMuons  {new TH1F("h_numRecoDirectScalarMuons", "Number of loose muons directly from scalar decay", 10, -0.5, 9.5)};
 
     TH1F* h_recoDimuonDeltaR        {new TH1F("h_recoDimuonDeltaR",      "Dimuon reco deltaR", 50, 0., 1.)};
     TH1F* h_recoDimuonMass          {new TH1F("h_recoDimuonMass",        "Dimuon reco mass", 30, 0., 11.)};
@@ -695,12 +699,12 @@ int main(int argc, char* argv[]) {
             }
 
             if ( genMuonSortedIndex.size() == 2 ) {
-                h_genDimuonDeltaR->Fill( genMuon1.DeltaR(genMuon2) );
-                h_genDimuonMass->Fill( (genMuon1+genMuon2).M() );
-                h_genDimuonPt->Fill( (genMuon1+genMuon2).Pt() );
-                h_genDimuonEta->Fill( (genMuon1+genMuon2).Eta() );
-                h_genLeadingMuonPt->Fill( genMuon1.Pt() );
-                h_genSubleadingMuonPt->Fill( genMuon2.Pt() );
+                h_genDimuonDeltaR->Fill( genMuon1.DeltaR(genMuon2), eventWeight);
+                h_genDimuonMass->Fill( (genMuon1+genMuon2).M(), eventWeight);
+                h_genDimuonPt->Fill( (genMuon1+genMuon2).Pt(), eventWeight);
+                h_genDimuonEta->Fill( (genMuon1+genMuon2).Eta(), eventWeight);
+                h_genLeadingMuonPt->Fill( genMuon1.Pt(), eventWeight);
+                h_genSubleadingMuonPt->Fill( genMuon2.Pt(), eventWeight);
             }
 
             if ( genPionIndex.size() == 2 ) {
@@ -817,7 +821,16 @@ int main(int argc, char* argv[]) {
 
             if ( event.muonIndexLoose.size() < 2 ) continue;
 
-            if ( !getDileptonCand( event, event.muonIndexLoose, false ) ) continue;
+            int nScalarMuons {0}, nDirectScalarMuons {0};
+            for ( int i = 0; i < event.muonIndexLoose.size(); i++ ) {
+                if (event.genMuonPF2PATScalarAncestor[event.muonIndexLoose[i]]) nScalarMuons++; 
+                if (event.genMuonPF2PATDirectScalarAncestor[event.muonIndexLoose[i]]) nDirectScalarMuons++; 
+            }
+
+            h_numRecoScalarMuons->Fill(nScalarMuons);
+            h_numRecoDirectScalarMuons->Fill(nDirectScalarMuons);
+
+            if ( !getDileptonCand( event, event.muonIndexLoose, useMCTruth_ ) ) continue;
 
             h_recoDimuonDeltaR->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second));
             h_recoDimuonMass->Fill( (event.zPairLeptons.first + event.zPairLeptons.second).M() );
@@ -874,10 +887,10 @@ int main(int argc, char* argv[]) {
             p_subleadingMuonIso->Fill( 7.0, event.muonPF2PATTkIsoLoose[event.zPairIndex.second] );
             p_subleadingMuonIso->Fill( 8.0, event.muonPF2PATTkIsoTight[event.zPairIndex.second] );
 
-            h_recoGenDimuonDeltaR->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second));
-            h_recoGenDimuonMass->Fill( (event.zPairLeptons.first + event.zPairLeptons.second).M() );
-            h_recoGenDimuonPt->Fill( (event.zPairLeptons.first + event.zPairLeptons.second).Pt() );
-            h_recoGenDimuonEta->Fill((event.zPairLeptons.first + event.zPairLeptons.second).Eta() );
+            h_recoGenDimuonDeltaR->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second), eventWeight);
+            h_recoGenDimuonMass->Fill( (event.zPairLeptons.first + event.zPairLeptons.second).M(), eventWeight);
+            h_recoGenDimuonPt->Fill( (event.zPairLeptons.first + event.zPairLeptons.second).Pt(), eventWeight);
+            h_recoGenDimuonEta->Fill((event.zPairLeptons.first + event.zPairLeptons.second).Eta(), eventWeight);
             h_recoGenLeadingMuonPt->Fill( (event.zPairLeptons.first).Pt() );
             h_recoGenSubleadingMuonPt->Fill( (event.zPairLeptons.second).Pt() );
 
@@ -937,7 +950,7 @@ int main(int argc, char* argv[]) {
 
 
             if ( chsIndex.size() < 2 ) continue;
-            if (!getDihadronCand(event, chsIndex, false)) continue;
+            if (!getDihadronCand(event, chsIndex, useMCTruth_)) continue;
 
             // CHS bit
             const int idx1 {event.chsPairIndex.first}, idx2 {event.chsPairIndex.second};
@@ -1363,6 +1376,8 @@ int main(int argc, char* argv[]) {
     h_genDiscalarDeltaR_mumu_kaonkaon->Write();
 
     h_numLooseMuons->Write();
+    h_numRecoScalarMuons->Write();
+    h_numRecoDirectScalarMuons->Write();
 
     h_recoDimuonDeltaR->Write();
     h_recoDimuonMass->Write();
@@ -1615,8 +1630,7 @@ int main(int argc, char* argv[]) {
 std::vector<int> getLooseMuons(const AnalysisEvent& event) {
     std::vector<int> muons;
     for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-       if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && event.muonPF2PATPfIsoLoose[i] && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
-//           if ( (event.muonPF2PATPt[i] >= muons.empty() && event.muonPF2PATPfIsoLoose[i]) ? looseMuonPtLeading_ : looseMuonPt_) muons.emplace_back(i);
+       if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
            if ( event.muonPF2PATPt[i] >= muons.empty() ? looseMuonPtLeading_ : looseMuonPt_) muons.emplace_back(i);
         }
     }
@@ -1630,7 +1644,7 @@ std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) {
         if (event.packedCandsCharge[k] == 0 ) continue;
         if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
         TLorentzVector lVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
-        if (lVec.Pt() < 1.0) continue;
+//        if (lVec.Pt() < 5.0) continue;
 
         chs.emplace_back(k);
     }
@@ -1642,8 +1656,8 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
 
-            if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
             if ( mcTruth && (!event.genMuonPF2PATDirectScalarAncestor[muons[i]] || !event.genMuonPF2PATDirectScalarAncestor[muons[j]]) ) continue;
+              if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
 
             TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
             TLorentzVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
