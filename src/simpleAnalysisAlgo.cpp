@@ -41,15 +41,16 @@
 SimpleAnalysis::SimpleAnalysis()
     : is2016_{false}
     , is2018_{false}
-    , pdgIdMap {}
+    , muonPtLeading_{30.0}
+    , muonPt_{5.0}
+    , muonEta_{2.40}
+    , debug_{false}
 {}
-
 SimpleAnalysis::~SimpleAnalysis() {}
 
 void SimpleAnalysis::parseCommandLineArguements(int argc, char* argv[]){
 
   namespace po = boost::program_options;
-
 
   // command line configuration parsing magic!
   po::options_description desc("Options");
@@ -109,214 +110,6 @@ void SimpleAnalysis::parseCommandLineArguements(int argc, char* argv[]){
 }
 
 namespace fs = boost::filesystem;
-
-void SimpleAnalysis::setupPlots() {
-
-  h_genParPt   = new TH1F("h_genParPt",  "genPar p_{T}", 1000, 0., 1000.);
-  h_genParEta  = new TH1F("h_genParEta", "genPar #eta",  200, -7., 7.);
-  h_genParPhi  = new TH1F("h_genParPhi", "genPar #phi",  100, -3.5, 3.5);
-  h_genParE    = new TH1F("h_genParE",   "genPar energy",     1000, 0., 1000.);
-  h_VertexPosR = new TH1F("h_VertexPosR", "Vertex position R",100,0.,250.);
-    
-  //Higgs boson
-  h_genParHiggsPt  = new TH1F("h_genParHiggsPt",  "genPar h_0 p_{T}", 1000, 0., 1000.);
-  h_genParHiggsEta = new TH1F("h_genParHiggsEta", "genPar h_0 #eta",  200, -7., 7.);
-  h_genParHiggsPhi = new TH1F("h_genParHiggsPhi", "genPar h_0 #phi",  100, -3.5, 3.5);
-  h_genParHiggsE   = new TH1F("h_genParHiggsE",   "genPar h_0 energy",     1000, 0., 1000.);
-  h_HiggsInvMass   = new TH1F("h_HiggsInvMass",  "h_0 Invariant mass", 1000, 0., 1000.);
-    
-  //Scalar decay
-  h_genParScalarPt    = new TH1F("h_genParScalarPt",  "Scalar p_{T}", 1000, 0., 1000.);
-  h_genParScalarEta   = new TH1F("h_genParScalarEta", "Scalar #eta",  200, -7., 7.);
-  h_genParScalarPhi   = new TH1F("h_genParScalarPhi", "Scalar #phi",  100, -3.5, 3.5);
-  h_genParScalarE     = new TH1F("h_genParScalarE",   "Scalar energy",     1000, 0., 1000.);
-  h_ScalarDeltaR      = new TH1F("h_ScalarDeltaR", "Scalar #DeltaR",1500,-10., 10.);
-  h_ScalarDeltaPhi    = new TH1F("h_ScalarDeltaPhi", "Scalar #Delta#phi",1500, -3.5, 3.5);
-  h_ScalarInvMass     = new TH1F("h_ScalarInvMass", "Scalar Invariant mass",1000, 0., 7.);
-  h_Scalar3DAngle     = new TH1F("h_Scalar3DAngle", "Scalar 3D Angle",1000,-10., 10.);
-    
-  //Muon from scalar decay
-  h_genParScalarMuonPtL        = new TH1F("h_genParScalarMuonPtL",  "#mu^{#pm} from scalar decay p_{T}, leading", 1000, 0., 1000.);
-  h_genParScalarMuonPtS        = new TH1F("h_genParScalarMuonPtS",  "#mu^{#pm} from scalar decay p_{T}, subleading", 1000, 0., 1000.);
-  h_genParScalarMuonCutPtSL    = new TH1F("h_genParScalarMuonCutPtSL",  "Single #mu^{#pm} trigger leading p_{T}", 1000, 0., 1000.);
-  h_genParScalarMuonDivPtSL    = new TH1F("h_genParScalarMuonDivPtSL",  "Turn-on Single #mu^{#pm} trigger leading p_{T}", 300, 0., 1000.);
-  h_genParScalarMuonCutPtDL    = new TH1F("h_genParScalarMuonCutPtDL",  "Double #mu^{#pm} trigger leading p_{T}", 1000, 0., 1000.);
-  h_genParScalarMuonDivPtDL    = new TH1F("h_genParScalarMuonDivPtDL",  "Turn-on Double #mu^{#pm} trigger leading p_{T}", 300, 0., 1000.);
-  h_genParScalarMuonCutPtDS    = new TH1F("h_genParScalarMuonCutPtDS",  "Double #mu^{#pm} trigger subleading p_{T}", 1000, 0., 1000.);
-  h_genParScalarMuonDivPtDS    = new TH1F("h_genParScalarMuonDivPtDS",  "Turn-on Double #mu^{#pm} trigger subleading p_{T}", 300, 0., 1000.);
-    
-  h_genParScalarMuonEta     = new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.);
-  h_genParScalarMuonPhi     = new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5);
-  h_genParScalarMuonE       = new TH1F("h_genParScalarMuonE",   "#mu^{#pm} from scalar decay energy",     1000, 0., 1000.);
-  h_MuonDeltaR              = new TH1F("h_MuonDeltaR", "Muon #DeltaR",2500, -10., 10.);
-  h_MuonDeltaPhi            = new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",2500, -3.5, 3.5);
-  h_MuonInvMass             = new TH1F("h_MuonInvMass", "Muon Invariant mass",1000, 0., 7.);
-  h_Muon3DAngle             = new TH1F("h_Muon3DAngle", "Muon 3D Angle",1000,-10., 10.);
-		
-  //Kaon from scalar decay
-  h_genParScalarCKaonPt      = new TH1F("h_genParScalarCKaonPt",  "K^{#pm} from scalar decay p_{T}", 1000, 0., 1000.);
-  h_genParScalarCKaonEta     = new TH1F("h_genParScalarCKaonEta", "K^{#pm} from scalar decay #eta",  200, -7., 7.);
-  h_genParScalarCKaonPhi     = new TH1F("h_genParScalarCKaonPhi", "K^{#pm} from scalar decay #phi",  100, -3.5, 3.5);
-  h_genParScalarCKaonE       = new TH1F("h_genParScalarCKaonE",   "K^{#pm} from scalar decay energy",     1000, 0., 1000.);
-  h_KaonDeltaR               = new TH1F("h_KaonDeltaR", "Kaon #DeltaR",2500, -10., 10.);
-  h_KaonDeltaPhi             = new TH1F("h_KaonDeltaPhi", "Kaon #Delta#phi",2500, -3.5, 3.5);
-  h_KaonInvMass              = new TH1F("h_KaonInvMass", "Kaon Invariant mass",1000, 0., 7.);
-  h_Kaon3DAngle              = new TH1F("h_Kaon3DAngle", "Kaon 3D Angle",1000,-10., 10.);
-    
-  //K short from scalar decay
-  h_genParScalarKShortPt     = new TH1F("h_genParScalarKShortPt",  "K^{0}_S from scalar decay p_{T}", 1000, 0., 1000.);
-  h_genParScalarKShortEta    = new TH1F("h_genParScalarKShortEta", "K^{0}_S from scalar decay #eta",  200, -7., 7.);
-  h_genParScalarKShortPhi    = new TH1F("h_genParScalarKShortPhi", "K^{0}_S from scalar decay #phi",  100, -3.5, 3.5);
-  h_genParScalarKShortE      = new TH1F("h_genParScalarKShortE",   "K^{0}_S from scalar decay energy",     1000, 0., 1000.);
-  h_KShortDeltaR             = new TH1F("h_KShortDeltaR", "K^{0}_S #DeltaR",2500, -10., 10.);
-  h_KShortDeltaPhi           = new TH1F("h_KShortDeltaPhi", "K^{0}_S #Delta#phi",2500, -3.5, 3.5);
-  h_KShortInvMass            = new TH1F("h_KShortInvMass", "K^{0}_S Invariant mass",1000, 0., 7.);
-  h_KShort3DAngle            = new TH1F("h_KShort3DAngle", "K^{0}_S 3D Angle",1000,-10., 10.);
-    
-  //Pion from scalar decay
-  h_genParScalarCPionPt      = new TH1F("h_genParScalarCPionPt",  "#pi^{#pm} from scalar decay p_{T}", 1000, 0., 1000.);
-  h_genParScalarCPionEta     = new TH1F("h_genParScalarCPionEta", "#pi^{#pm} from scalar decay #eta",  200, -7., 7.);
-  h_genParScalarCPionPhi     = new TH1F("h_genParScalarCPionPhi", "#pi^{#pm} from scalar decay #phi",  100, -3.5, 3.5);
-  h_genParScalarCPionE       = new TH1F("h_genParScalarCPionE",   "#pi^{#pm} from scalar decay energy",     1000, 0., 1000.);
-  h_genParScalarNPionPt      = new TH1F("h_genParScalarNPionPt",  "#pi^{0} from scalar decay p_{T}", 1000, 0., 1000.);
-  h_genParScalarNPionEta     = new TH1F("h_genParScalarNPionEta", "#pi^{0} from scalar decay #eta",  200, -7., 7.);
-  h_genParScalarNPionPhi     = new TH1F("h_genParScalarNPionPhi", "#pi^{0} from scalar decay #phi",  100, -3.5, 3.5);
-  h_genParScalarNPionE       = new TH1F("h_genParScalarNPionE",   "#pi^{0} from scalar decay energy",     1000, 0., 1000.);
-  h_PionDeltaR               = new TH1F("h_PionDeltaR", "Pion #DeltaR",2500, -10., 10.);
-  h_PionDeltaPhi             = new TH1F("h_PionDeltaPhi", "Pion #Delta#phi",2500, -3.5, 3.5);
-  h_PionInvMass              = new TH1F("h_PionInvMass", "Pion Invariant mass",1000, 0., 7.);
-  h_Pion3DAngle               =new TH1F("h_Pion3DAngle", "Pion 3D Angle",1000,-10., 10.);
-  
-    
-  //Vertex position: muons, kaons, kshort, pions
-  h_VertexPosXY   = new TH2F("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150);
-  h_VertexPosRZ   = new TH2F("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250);
-    
-  
-	
-  //PAT Muon reconstruction
-  h_muonRecPt           = new TH1F("h_muonRecPt",  "#mu^{#pm} reconstruction p_{T}", 1000, 0., 200.);
-  h_muonRecPtL          = new TH1F("h_muonRecPtL",  "#mu^{#pm} reconstruction p_{T}, leading", 1000, 0., 200.);
-  h_muonRecPtS          = new TH1F("h_muonRecPtS",  "#mu^{#pm} reconstruction p_{T}, subleading", 1000, 0., 200.);
-  h_muonRecEta          = new TH1F("h_muonRecEta", "#mu^{#pm} reconstruction #eta",  200, -7., 7.);
-  h_muonRecPhi          = new TH1F("h_muonRecPhi", "#mu^{#pm} reconstruction #phi",  100, -3.5, 3.5);
-  h_muonRecE            = new TH1F("h_muonRecE",   "#mu^{#pm} reconstruction energy",     1000, 0., 1000.);
-  h_muonRecDeltaR       = new TH1F("h_muonRecDeltaR", "Muon reconstruction #DeltaR",2500, -10., 10.);
-  h_muonRecDeltaPhi     = new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5);
-  h_muonRecInvMass      = new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",500, 0, 5);
-  Gaussian1             = new TF1("Gaussian1","gaus",1.,3.);
-  h_muonCutSingleL      = new TH1F("h_muonCutSingleL",  "Single #mu^{#pm} trigger leading p_{T}", 1000, 0., 200.);
-  h_muonCutDoubleL      = new TH1F("h_muonCutDoubleL",  "Double #mu^{#pm} trigger leading p_{T}", 1000, 0., 200.);
-  h_muonDivSingleL      = new TH1F("h_muonDivSingleL",  "Turn-on Single #mu^{#pm} trigger leading p_{T}", 300, 0., 200.);
-  h_muonDivDoubleL      = new TH1F("h_muonDivDoubleL",  "Turn-on Double #mu^{#pm} trigger leading p_{T}", 300, 0., 200.);
-  h_muonCutDoubleS      = new TH1F("h_muonCutDoubleS",  "Double #mu^{#pm} trigger subleading p_{T}", 1000, 0., 200.);
-  h_muonDivDoubleS      = new TH1F("h_muonDivDoubleS",  "Turn-on Double #mu^{#pm} trigger subleading p_{T}", 300, 0., 200.);
-   	
-	
-  //Packed candidates
-  h_packedCDxy    = new TH1F("h_packedCDxy", "Packed Candidate Dxy", 500,  -200., 200.);
-  h_packedCDz     = new TH1F("h_packedCDz",  "Packed Candidate Dz", 1500, -500., 500.);
-  h_packedCVx     = new TH1F("h_packedCVx",  "Packed Candidate track vx", 500,  -150., 150.);
-  h_packedCVy     = new TH1F("h_packedCVy",  "Packed Candidate track vy", 500,  -150., 150.);
-  h_packedCVz     = new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.);
-  h_displacedXY   = new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150);
-  h_displacedRZ   = new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250);
-	
-  h_HVertexPosXY         = new TH2F("h_HVertexPosXY", "Pion track vertex XY", 500, -50,50,500,-50,50);
-  h_HVertexPosRZ         = new TH2F("h_HVertexPosRZ", "Pion track vertex RZ", 500, -50,50,500,-50,50);	
-	
-  //Kaon mass assumption	
-  h_KhadronDeltaR   = new TH1F("h_KhadronDeltaR", "Two hadrons (kaons) #DeltaR",2500, -10., 10.);
-  h_KmuonsDeltaR    = new TH1F("h_KmuonsDeltaR", "Two muons #DeltaR",2500, -10., 10.);
-  h_KIsoSum1        = new TH1F("h_KIsoSum1",  "0.3 p_{T} Cone construction kaon 1", 1000, 0., 50.);
-  h_KIsoSum2        = new TH1F("h_KIsoSum2",  "0.3 p_{T} Cone construction kaon 2", 1000, 0., 50.);
-  h_KIso2           = new TH2F("h_KIso2", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.);
-  h_KIsoSum3        = new TH1F("h_KIsoSum3",  "0.3 p_{T} Cone construction muon 1", 1000, 0., 50.);
-  h_KIsoSum4        = new TH1F("h_KIsoSum4",  "0.3 p_{T} Cone construction muon 2", 1000, 0., 50.);
-  h_KhadronInvMass  = new TH1F("h_KhadronInvMass", "Two hadrons (kaons) - Invariant mass",1000, 0., 7.);
-  h_KhadronInvMass2 = new TH1F("h_KhadronInvMass2", "Two hadrons (kaons) - Invariant mass, smaller binning",500, 0., 7.);
-  h_KmuonsInvMass   = new TH1F("h_KmuonsInvMass", "Two muons - Invariant mass",1000, 0., 7.);
-  h_Kinvmass        = new TH2F("h_Kinvmass", "Invariant mass: charged hadrons (kaons) vs muons", 1000, 0.,7.,1000,0.,7.);
-  
-  h_KantiscalarInvMass        = new TH1F("h_KantiscalarInvMass", "(Kaon) Antiscalar Invariant mass", 1000, 0.,15.);
-  h_KscalarInvMass            = new TH1F("h_KscalarInvMass", "Scalar Invariant mass", 1000, 0.,15.);
-  h_KhiggsInvMass             = new TH1F("h_KhiggsInvMass",  "h_0 Invariant mass", 1000, 0., 200.);   
-  h_KhiggsDeltaR              = new TH1F("h_KhiggsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.);  
-
-	
-	
-  //Pion mass assumption
-  h_PhadronDeltaR   = new TH1F("h_PhadronDeltaR", "Two hadrons (pions) #DeltaR",2500, -10., 10.);
-  h_PmuonsDeltaR    = new TH1F("h_PmuonsDeltaR", "Two muons #DeltaR",2500, -10., 10.);
-  h_PIsoSum1        = new TH1F("h_PIsoSum1",  "Leading pion relative isolation", 1000, 0., 50.);
-  h_PIsoSum2        = new TH1F("h_PIsoSum2",  "Subleading pion relative isolation", 1000, 0., 50.);
-  h_PIso2           = new TH2F("h_PIso2", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.);
-  h_PIsoSum3        = new TH1F("h_PIsoSum3",  "Leading muon relative isolation", 1000, 0., 50.);
-  h_PIsoSum4        = new TH1F("h_PIsoSum4",  "Subleading muon relative isolation", 1000, 0., 50.);
-  h_PIso4           = new TH2F("h_PIso4", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.);
-  h_PhadronInvMass  = new TH1F("h_PhadronInvMass", "Dihadron (pion) invariant mass",1000, 0., 7.);
-  h_PhadronInvMass2 = new TH1F("h_PhadronInvMass2", "Two hadrons (pions) - Invariant mass, smaller binning",500, 0., 7.);
-  h_PmuonsInvMass   = new TH1F("h_PmuonsInvMass", "Dimuon invariant mass",1000, 0., 7.);
-  Gaussian2    = new TF1("Gaussian2","gaus",1.,3.);
-  h_Pinvmass        = new TH2F("h_Pinvmass", "Invariant mass: charged hadrons (pions) vs muons", 1000, 0.,7.,1000,0.,7.);
-  
-  h_PantiscalarInvMass        = new TH1F("h_PantiscalarInvMass", "Dihadron (pion) invariant mass", 1000, 0.,15.);
-  h_PscalarInvMass            = new TH1F("h_PscalarInvMass", "Dimuon invariant mass", 1000, 0.,15.);
-  Gaussian3   	      = new TF1("Gaussian3","gaus",1.,3.);
-  h_PhiggsInvMass             = new TH1F("h_PhiggsInvMass",  "Higgs invariant mass", 1000, 0., 200.);   
-  h_PhiggsDeltaR              = new TH1F("h_PhiggsDeltaR", "Discalar #DeltaR",2500, 0., 15.); 	
-  h_Rrefit12InvMass           = new TH1F("h_Rrefit12InvMass", "Dimuon refitted invariant mass with requirements", 500, 0.,5.);
-  h_Rpionre12InvMass          = new TH1F("h_Rpionre12InvMass", "Dihadron (pion) refit invariant mass", 500, 0.,5.);
-
-  h_P20antiscalarInvMass        = new TH1F("h_P20antiscalarInvMass", "Dihadron (pion) invariant mass", 1000, 0.,15.);
-  h_P20scalarInvMass            = new TH1F("h_P20scalarInvMass", "Dimuon invariant mass", 1000, 0.,15.);
-  h_P20higgsInvMass             = new TH1F("h_P20higgsInvMass",  "Higgs invariant mass", 1000, 0., 200.);   
-	
-  h_massassump       = new TH2F("h_massassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.);
-  h_pmassassump      = new TH2F("h_pmassassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.);
-  h_higgsassump      = new TH2F("h_higgsassump", "Invariant mass: h_0 (pions-muons) vs h_0 (kaons-muons)", 1000, 0.,200.,1000,0.,200.);
-	
-	
-  //Comparison muon momenta
-	
-  //PAT muons
-  h_muoniRecPtTrk                = new TH1F("h_muoniRecPtTrk",  "#mu^{#pm} reconstruction p_{T} track", 1000, 0., 200.);
-  h_muon1RecPtTrk                = new TH1F("h_muon1RecPtTrk",  "Leading #mu^{#pm} reconstruction p_{T} track", 1000, 0., 200.);
-  h_muon2RecPtTrk                = new TH1F("h_muon2RecPtTrk",  "Subleading #mu^{#pm} reconstruction p_{T} track", 1000, 0., 200.);
-  h_muoniRecPt                   = new TH1F("h_muoniRecPt",  "#mu^{#pm} reconstruction p_{T}", 1000, 0., 200.);
-  h_muon1RecPt                   = new TH1F("h_muon1RecPt",  "Leading #mu^{#pm} reconstruction p_{T}", 1000, 0., 200.);
-  h_muon2RecPt                   = new TH1F("h_muon2RecPt",  "Subleading #mu^{#pm} reconstruction p_{T}", 1000, 0., 200.);
-  h_muon1RecInvMass              = new TH1F("h_muon1RecInvMass", "Leading reconstruction invariant mass",500, 0, 100);
-  h_muon2RecInvMass              = new TH1F("h_muon2RecInvMass", "Subleading reconstruction invariant mass",500, 0, 100);
-  h_muon12RecInvMass             = new TH1F("h_muon12RecInvMass", "Scalar reconstruction invariant mass",500, 0, 100);
-	
-  //Packed muons
-  h_muonipackedPt                = new TH1F("h_muonipackedPt",  "#mu^{#pm} Packed candidate p_{T}", 1000, 0., 1000.);
-  h_muonipackedInvMass           = new TH1F("h_muonipackedInvMass", "#mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.);
-  h_muonipackedPtTrk             = new TH1F("h_muonipackedPtTrk",  "#mu^{#pm} Packed candidate p_{T} track", 1000, 0., 1000.);
-  h_muon1packedPt                = new TH1F("h_muon1packedPt",  "Leading #mu^{#pm} Packed candidate p_{T}", 1000, 0., 1000.);
-  h_muon1packedInvMass           = new TH1F("h_muon1packedInvMass", "Leading #mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.);
-  h_muon1packedPtTrk             = new TH1F("h_muon1packedPtTrk",  "Leading #mu^{#pm} Packed candidate p_{T} track", 1000, 0., 1000.);
-  h_muon2packedPt                = new TH1F("h_muon2packedPt",  "Subleading #mu^{#pm} Packed candidate p_{T}", 1000, 0., 1000.);
-  h_muon2packedInvMass           = new TH1F("h_muon2packedInvMass", "Subleading #mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.);
-  h_muon2packedPtTrk             = new TH1F("h_muon2packedPtTrk",  "Subleading #mu^{#pm} Packed candidate p_{T} track", 1000, 0., 1000.);	
-  h_muon12packedInvMass          = new TH1F("h_muon12packedInvMass", "Scalar #mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.);
-	
-  //Refitted tracks muons
-  h_muon1PairsPt		= new TH1F("h_muon1PairsPt",  "#mu^{#pm} 1 Refitted tracks p_{T} m", 1000, 0., 1000.);
-  h_muon2PairsPt 		= new TH1F("h_muon2PairsPt",  "#mu^{#pm} 2 Refitted tracks p_{T}", 1000, 0., 1000.);
-  h_muon1refitInvMass           = new TH1F("h_muon1refitInvMass", "Leading #mu^{#pm} Refit Invariant mass", 500, 0.,5.);
-  h_muon2refitInvMass           = new TH1F("h_muon2refitInvMass", "Subleading #mu^{#pm} Refit Invariant mass", 500, 0.,5.);
-  h_muon12refitInvMass          = new TH1F("h_muon12refitInvMass", "Scalar Refit Invariant mass", 500, 0.,5.);
-  h_refit1InvMass               = new TH1F("h_refit1InvMass", "Leading #mu^{#pm} Refit Invariant mass", 500, 0.,5.);
-  h_refit2InvMass               = new TH1F("h_refit2InvMass", "Subleading #mu^{#pm} Refit Invariant mass", 500, 0.,5.);
-  h_refit12InvMass              = new TH1F("h_refit12InvMass", "Dimuon refitted invariant mass", 500, 0.,5.);
-  
-  //Refitted tracks pions
-  h_pionre12InvMass             = new TH1F("h_pionre12InvMass", "Dihadron (pion) refit invariant mass", 500, 0.,5.);
-  h_muonPairsXY                 = new TH2F("h_muonPairsXY", "Refitted tracks vertex XY", 100, -150,150,100,-150,150);
-  h_muonPairsRZ                 = new TH2F("h_muonPairsRZ", "Refitted tracks vertex RZ", 100, 0,20,100,0,250);		
-}
 
 void SimpleAnalysis::runMainAnalysis() {
 
@@ -383,339 +176,7 @@ void SimpleAnalysis::runMainAnalysis() {
         //
         event.GetEntry(i);
 
-
-/*          
-       //GENERATOR PARTICLE STUFF
-       std::vector<int> nrofHiggs;
-       std::vector<int> nrofScalar; //Number of scalars
-       std::vector<int> nrofMuon;
-       std::vector<int> nrofKaon;
-       std::vector<int> nrofKShort;
-       std::vector<int> nrofPion;
-    
-       Float_t genpt1=0; Float_t genpt2=0;
-       Float_t gen1=0; Float_t gen2=0;
-       //std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
-         
-       for(Int_t k{0}; k < event.nGenPar; k++) {
-     
-          //Print out event record
-
-          //Invariant mass
-          TLorentzVector m;
-          m.SetPtEtaPhiE(event.genParPt[k],event.genParEta[k],event.genParPhi[k],event.genParE[k]);
-          TLorentzVector mass {m.Px(),m.Py(),m.Pz(),event.genParE[k]};
-
-          std::cout << k << "\t | "
-          << event.genParId[k] << "\t "
-          << event.genParStatus[k] << "\t | "
-          << event.genParMotherIndex[k] << "\t "
-          << event.genParDaughter1Index[k] << "\t "
-          << event.genParDaughter2Index[k] << "\t | "
-          << event.genParPt[k] << "\t "
-          << event.genParEta[k] << "\t "
-          << event.genParPhi[k] << "\t "
-          << mass.M() << std::endl;
-
-          // get variables for this event that have been stored in ROOT nTuple tree
-         const Int_t pdgId        { std::abs(event.genParId[k]) };
-         const Int_t motherId     { std::abs(event.genParMotherId[k]) };
-         const Int_t motherIndex  { std::abs(event.genParMotherIndex[k]) };
-         const Float_t genParVx     {event.genParVx[k]};
-         const Float_t genParVy     {event.genParVy[k]};
-         const Float_t genParVz     {event.genParVz[k]};
-            
-         const Float_t genParEta  { event.genParEta[k] };
-         const Float_t genParPhi  { event.genParPhi[k] };
-         const Float_t genParE    { event.genParE[k] };
-     
-         const bool ownParent {pdgId == motherId ? true : false};
-
-         h_genParPt->Fill(event.genParPt[k]);
-         h_genParEta->Fill(genParEta);
-         h_genParPhi->Fill(genParPhi);
-         h_genParE->Fill(genParE);
-        
-         //Higgs boson
-         if(pdgId==25 && !ownParent){ //First entry Higgs - to obtain mass correctly
-           nrofHiggs.emplace_back(k);
-           h_genParHiggsPt->Fill(event.genParPt[k]);
-           h_genParHiggsEta->Fill(genParEta);
-           h_genParHiggsPhi->Fill(genParPhi);
-           h_genParHiggsE->Fill(genParE);
-	 }
-            
-         //Scalar decay
-         if(pdgId==9000006){
-           nrofScalar.emplace_back(k); //Store the scalar index k in nrofScalar
-           h_genParScalarPt->Fill(event.genParPt[k]);
-           h_genParScalarEta->Fill(genParEta);
-           h_genParScalarPhi->Fill(genParPhi);
-           h_genParScalarE->Fill(genParE);
-	 }
-            
-         //Particles from scalar decay
-         const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)};
-         std::vector<Int_t> mu; std::vector<Int_t> mumu;
-         
-         if(isScalarGrandparent==true){
-          
-           //Muon from scalar decay
-           if(pdgId==13 && !ownParent){
-             
-             nrofMuon.emplace_back(k);
-            
-             h_genParScalarMuonEta->Fill(genParEta);
-             h_genParScalarMuonPhi->Fill(genParPhi);
-             h_genParScalarMuonE->Fill(genParE);
-             h_VertexPosXY->Fill(genParVx,genParVy);
-             h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
-             h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
-       
-             if(event.genParPt[k]>gen1){
-               gen2=gen1;
-               gen1=event.genParPt[k];
-	     }
-             else if(event.genParPt[k]>gen2){
-                    gen2=event.genParPt[k];
-	     }
-           
-            if(event.muTrig() || event.mumuTrig()){
-              if(event.genParPt[k]>genpt1){
-                genpt2=genpt1;
-                genpt1=event.genParPt[k];
-              }
-              else if(event.genParPt[k]>genpt2){
-                     genpt2=event.genParPt[k];
-	      }
-	    }
-	   }
-           //Charged kaon from scalar decay
-           if(pdgId==321){
-             nrofKaon.emplace_back(k);
-             h_genParScalarCKaonPt->Fill(event.genParPt[k]);
-             h_genParScalarCKaonEta->Fill(genParEta);
-             h_genParScalarCKaonPhi->Fill(genParPhi);
-             h_genParScalarCKaonE->Fill(genParE);
-             h_VertexPosXY->Fill(genParVx,genParVy);
-             h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
-             h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
-	   }
-           //K short from scalar decay
-           if(pdgId==310){
-             nrofKShort.emplace_back(k); //Together with kaon in angular differences
-             h_genParScalarKShortPt->Fill(event.genParPt[k]);
-             h_genParScalarKShortEta->Fill(genParEta);
-             h_genParScalarKShortPhi->Fill(genParPhi);
-             h_genParScalarKShortE->Fill(genParE);
-             h_VertexPosXY->Fill(genParVx,genParVy);
-             h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
-             h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
-	   }
-           //Charged pion from scalar decay
-           if(pdgId==211){
-             nrofPion.emplace_back(k);
-             h_genParScalarCPionPt->Fill(event.genParPt[k]);
-             h_genParScalarCPionEta->Fill(genParEta);
-             h_genParScalarCPionPhi->Fill(genParPhi);
-             h_genParScalarCPionE->Fill(genParE);
-             h_VertexPosXY->Fill(genParVx,genParVy);
-             h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
-             h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
-	   }
-           //Neutral pion from scalar decay
-           if(pdgId==111){
-             nrofPion.emplace_back(k);
-             h_genParScalarNPionPt->Fill(event.genParPt[k]);
-             h_genParScalarNPionEta->Fill(genParEta);
-             h_genParScalarNPionPhi->Fill(genParPhi);
-             h_genParScalarNPionE->Fill(genParE);
-             h_VertexPosXY->Fill(genParVx,genParVy);
-             h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
-             h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
-	   }
-	 }
-
-         // Increment counter for pdgId found
-         pdgIdMap[pdgId]++;
-            
-       }//end for-loop
-        
-       if(genpt1!=0 && genpt2!=0){         
-         if(event.muTrig()){
-           h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event
-	 }
-         if(event.mumuTrig()){
-           h_genParScalarMuonCutPtDL->Fill(genpt1);
-           h_genParScalarMuonCutPtDS->Fill(genpt2);
-	 }
-       }
-       if(gen1!=0 && gen2!=0){
-         h_genParScalarMuonPtL->Fill(gen1); 
-         h_genParScalarMuonPtS->Fill(gen2);
-       } 
- 
-    
-       h_genParScalarMuonDivPtSL=(TH1F*)h_genParScalarMuonCutPtSL->Clone();
-       h_genParScalarMuonDivPtSL->Divide(h_genParScalarMuonPtL);
-       h_genParScalarMuonDivPtSL->SetTitle("Turn-on Single trigger leading");
-    
-       h_genParScalarMuonDivPtDL=(TH1F*)h_genParScalarMuonCutPtDL->Clone();
-       h_genParScalarMuonDivPtDL->Divide(h_genParScalarMuonPtL);
-       h_genParScalarMuonDivPtDL->SetTitle("Turn-on Double trigger leading");
-    
-       h_genParScalarMuonDivPtDS=(TH1F*)h_genParScalarMuonCutPtDS->Clone();
-       h_genParScalarMuonDivPtDS->Divide(h_genParScalarMuonPtS);
-       h_genParScalarMuonDivPtDS->SetTitle("Turn-on Double trigger subleading");
-          
-          
-       if(nrofScalar.size()==2){ //Two-particle (scalar) correlations
-         const Int_t Nr1 {nrofScalar[0]}; //Give the scalar index value k
-         const Int_t Nr2 {nrofScalar[1]};
-            
-         //DeltaR, DeltaPhi
-         TLorentzVector nr1;
-         TLorentzVector nr2;
-            
-         nr1.SetPtEtaPhiE(event.genParPt[Nr1],event.genParEta[Nr1],event.genParPhi[Nr1],event.genParE[Nr1]);
-         nr2.SetPtEtaPhiE(event.genParPt[Nr2],event.genParEta[Nr2],event.genParPhi[Nr2],event.genParE[Nr2]);
-            
-         h_ScalarDeltaR->Fill(nr1.DeltaR(nr2));//Get DeltaR between nr1scalar and nr2scalar
-         h_ScalarDeltaPhi->Fill(nr1.DeltaPhi(nr2));
-        
-         //Invariant mass
-         TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
-         TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
-      
-         h_ScalarInvMass->Fill((mass1+mass2).M());
-            
-         //3D angle
-         TVector3 angle1 (event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]); //No actual angle
-         TVector3 angle2 (event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-        
-         h_Scalar3DAngle->Fill(angle1.Angle(angle2));
-       }
-        
-        
-       //Now same procedure for kaons,pions,muons,Kshort
-        
-       if(nrofMuon.size()==2){
-         const Int_t Nr1 {nrofMuon[0]};
-         const Int_t Nr2 {nrofMuon[1]};
-            
-         TLorentzVector nr1;
-         TLorentzVector nr2;
-            
-         nr1.SetPtEtaPhiE(event.genParPt[Nr1],event.genParEta[Nr1],event.genParPhi[Nr1],event.genParE[Nr1]);
-         nr2.SetPtEtaPhiE(event.genParPt[Nr2],event.genParEta[Nr2],event.genParPhi[Nr2],event.genParE[Nr2]);
-            
-         h_MuonDeltaR->Fill(nr1.DeltaR(nr2));
-         h_MuonDeltaPhi->Fill(nr1.DeltaPhi(nr2));
-      
-         //Invariant mass
-         TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
-         TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
-      
-         h_MuonInvMass->Fill((mass1+mass2).M());
-      
-         //3D angle
-         TVector3 angle1 (event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
-         TVector3 angle2 (event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-
-         h_Muon3DAngle->Fill(angle1.Angle(angle2));
-       }
-        
-       if(nrofKaon.size()==2){
-         const Int_t Nr1 {nrofKaon[0]};
-         const Int_t Nr2 {nrofKaon[1]};
-    
-         TLorentzVector nr1;
-         TLorentzVector nr2;
-            
-         nr1.SetPtEtaPhiE(event.genParPt[Nr1],event.genParEta[Nr1],event.genParPhi[Nr1],event.genParE[Nr1]);
-         nr2.SetPtEtaPhiE(event.genParPt[Nr2],event.genParEta[Nr2],event.genParPhi[Nr2],event.genParE[Nr2]);
-            
-         h_KaonDeltaR->Fill(nr1.DeltaR(nr2));
-         h_KaonDeltaPhi->Fill(nr1.DeltaPhi(nr2));
-        
-         //Invariant mass
-         TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
-         TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
-      
-         h_KaonInvMass->Fill((mass1+mass2).M());
-        
-         //3D angle
-         TVector3 angle1;
-         TVector3 angle2;
-        
-         angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
-         angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-          
-         h_Kaon3DAngle->Fill(angle1.Angle(angle2));
-        
-       }
-        
-       if(nrofKShort.size()==2){
-         const Int_t Nr1 {nrofKShort[0]};
-         const Int_t Nr2 {nrofKShort[1]};
-            
-         TLorentzVector nr1;
-         TLorentzVector nr2;
-            
-         nr1.SetPtEtaPhiE(event.genParPt[Nr1],event.genParEta[Nr1],event.genParPhi[Nr1],event.genParE[Nr1]);
-         nr2.SetPtEtaPhiE(event.genParPt[Nr2],event.genParEta[Nr2],event.genParPhi[Nr2],event.genParE[Nr2]);
-            
-         h_KShortDeltaR->Fill(nr1.DeltaR(nr2));
-         h_KShortDeltaPhi->Fill(nr1.DeltaPhi(nr2));
-        
-         //Invariant mass
-         TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
-         TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
-      
-         h_KShortInvMass->Fill((mass1+mass2).M());
-          
-         //3D angle
-         TVector3 angle1;
-         TVector3 angle2;
-        
-         angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
-         angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-    
-         h_KShort3DAngle->Fill(angle1.Angle(angle2));
-       }
-        
-        
-       if(nrofPion.size()==2){
-         const Int_t Nr1 {nrofPion[0]};
-         const Int_t Nr2 {nrofPion[1]};
-    
-         TLorentzVector nr1;
-         TLorentzVector nr2;
-            
-         nr1.SetPtEtaPhiE(event.genParPt[Nr1],event.genParEta[Nr1],event.genParPhi[Nr1],event.genParE[Nr1]);
-         nr2.SetPtEtaPhiE(event.genParPt[Nr2],event.genParEta[Nr2],event.genParPhi[Nr2],event.genParE[Nr2]);
-            
-         h_PionDeltaR->Fill(nr1.DeltaR(nr2));
-         h_PionDeltaPhi->Fill(nr1.DeltaPhi(nr2));
-        
-         //Invariant mass
-         TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
-         TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
-      
-         h_PionInvMass->Fill((mass1+mass2).M());
-           
-         //3D angle
-         TVector3 angle1;
-         TVector3 angle2;
-        
-         angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
-         angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
-      
-         h_Pion3DAngle->Fill(angle1.Angle(angle2));
-       }
-        
-       /// END GENERATOR PARTICLE STUFF
-*/
+        fillGeneratorPlots(event);
 
 /*
        /// BEGIN Muon Reconstruction
@@ -1454,26 +915,593 @@ void SimpleAnalysis::runMainAnalysis() {
   } //Loop over all datatsets
 
 }    
+
+std::vector<int> SimpleAnalysis::getMuons(const AnalysisEvent& event) const {
+    std::vector<int> muons;
+
+    for (int i{0}; i < event.numMuonPF2PAT; i++)  {
+        if (event.muonPF2PATIsPFMuon[i] && std::abs(event.muonPF2PATEta[i]) < muonEta_) {
+            if (event.muonPF2PATPt[i] >= (muons.empty() ? muonPtLeading_ : muonPt_)) muons.emplace_back(i);
+        }
+    }
+    return muons;
+}
+
+std::vector<int> SimpleAnalysis::getChargedHadronTracks(const AnalysisEvent& event) const	{
+    std::vector<int> chs;
+    for (Int_t k = 0; k < event.numPackedCands; k++) {
+        if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
+        if (event.packedCandsCharge[k] == 0 ) continue;
+        if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
+        TLorentzVector lVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
+        if (lVec.Pt() < 1.0) continue;
+
+        chs.emplace_back(k);
+    }
+    return chs;
+}
+
+void SimpleAnalysis::getMuonCand(AnalysisEvent& event, const std::vector<int>& muons) const {
+}
+
+void SimpleAnalysis::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) const {
+}
+
+int SimpleAnalysis::getMuonTrackPairIndex(const AnalysisEvent& event) const { 
+    for (int i{0}; i < event.numMuonTrackPairsPF2PAT; i++) {
+        if (event.muonTkPairPF2PATIndex1[i] == event.zPairIndex.first && event.muonTkPairPF2PATIndex2[i] == event.zPairIndex.second) return i;
+    }
+    return -1;
+}
+
+int SimpleAnalysis::getChsTrackPairIndex(const AnalysisEvent& event) const { 
+    for (int i{0}; i < event.numChsTrackPairs; i++) {
+        if (event.chsTkPairIndex1[i] == event.chsPairIndex.first && event.chsTkPairIndex2[i] == event.chsPairIndex.second) return i;
+    }
+    return -1;
+}
+
+void SimpleAnalysis::fillGeneratorPlots(AnalysisEvent& event) const {
+ 
+       //GENERATOR PARTICLE STUFF
+       std::vector<int> nrofHiggs;
+       std::vector<int> nrofScalar; //Number of scalars
+       std::vector<int> nrofMuon;
+       std::vector<int> nrofKaon;
+       std::vector<int> nrofKShort;
+       std::vector<int> nrofPion;
+    
+       Float_t genpt1=0; Float_t genpt2=0;
+       Float_t gen1=0; Float_t gen2=0;
+       //std::cout << "idx\t | ID\t stat\t | Mo\t Da1\t Da2\t | pt\t eta\t phi\t m" << std::endl;
+         
+       for(Int_t k{0}; k < event.nGenPar; k++) {
+     
+          //Print out event record
+
+          //Invariant mass
+          TLorentzVector m;
+          m.SetPtEtaPhiE(event.genParPt[k],event.genParEta[k],event.genParPhi[k],event.genParE[k]);
+          TLorentzVector mass {m.Px(),m.Py(),m.Pz(),event.genParE[k]};
+          if (debug_) {
+          std::cout << k << "\t | "
+              << event.genParId[k] << "\t "
+              << event.genParStatus[k] << "\t | "
+              << event.genParMotherIndex[k] << "\t "
+              << event.genParDaughter1Index[k] << "\t "
+              << event.genParDaughter2Index[k] << "\t | "
+              << event.genParPt[k] << "\t "
+              << event.genParEta[k] << "\t "
+              << event.genParPhi[k] << "\t "
+              << mass.M() << std::endl;
+          }
+
+          // get variables for this event that have been stored in ROOT nTuple tree
+         int pdgId                { std::abs(event.genParId[k]) };
+         const Int_t motherId     { std::abs(event.genParMotherId[k]) };
+         const Int_t motherIndex  { std::abs(event.genParMotherIndex[k]) };
+         const Float_t genParVx     {event.genParVx[k]};
+         const Float_t genParVy     {event.genParVy[k]};
+         const Float_t genParVz     {event.genParVz[k]};
+            
+         const Float_t genParEta  { event.genParEta[k] };
+         const Float_t genParPhi  { event.genParPhi[k] };
+         const Float_t genParE    { event.genParE[k] };
+     
+         const bool ownParent {pdgId == motherId ? true : false};
+
+         h_genParPt->Fill(event.genParPt[k]);
+         h_genParEta->Fill(genParEta);
+         h_genParPhi->Fill(genParPhi);
+         h_genParE->Fill(genParE);
+        
+         //Higgs boson
+         if(pdgId==25 && !ownParent){ //First entry Higgs - to obtain mass correctly
+           nrofHiggs.emplace_back(k);
+           h_genParHiggsPt->Fill(event.genParPt[k]);
+           h_genParHiggsEta->Fill(genParEta);
+           h_genParHiggsPhi->Fill(genParPhi);
+           h_genParHiggsE->Fill(genParE);
+	 }
+            
+         //Scalar decay
+         if(pdgId==9000006){
+           nrofScalar.emplace_back(k); //Store the scalar index k in nrofScalar
+           h_genParScalarPt->Fill(event.genParPt[k]);
+           h_genParScalarEta->Fill(genParEta);
+           h_genParScalarPhi->Fill(genParPhi);
+           h_genParScalarE->Fill(genParE);
+	 }
+            
+         //Particles from scalar decay
+         const bool isScalarGrandparent{scalarGrandparent(event,k,9000006)};
+         std::vector<Int_t> mu; std::vector<Int_t> mumu;
+         
+         if(isScalarGrandparent==true){
+          
+           //Muon from scalar decay
+           if(pdgId==13 && !ownParent){
+             
+             nrofMuon.emplace_back(k);
+            
+             h_genParScalarMuonEta->Fill(genParEta);
+             h_genParScalarMuonPhi->Fill(genParPhi);
+             h_genParScalarMuonE->Fill(genParE);
+             h_VertexPosXY->Fill(genParVx,genParVy);
+             h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
+             h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
+       
+             if(event.genParPt[k]>gen1){
+               gen2=gen1;
+               gen1=event.genParPt[k];
+	     }
+             else if(event.genParPt[k]>gen2){
+                    gen2=event.genParPt[k];
+	     }
+           
+            if(event.muTrig() || event.mumuTrig()){
+              if(event.genParPt[k]>genpt1){
+                genpt2=genpt1;
+                genpt1=event.genParPt[k];
+              }
+              else if(event.genParPt[k]>genpt2){
+                     genpt2=event.genParPt[k];
+	      }
+	    }
+	   }
+           //Charged kaon from scalar decay
+           if(pdgId==321){
+             nrofKaon.emplace_back(k);
+             h_genParScalarCKaonPt->Fill(event.genParPt[k]);
+             h_genParScalarCKaonEta->Fill(genParEta);
+             h_genParScalarCKaonPhi->Fill(genParPhi);
+             h_genParScalarCKaonE->Fill(genParE);
+             h_VertexPosXY->Fill(genParVx,genParVy);
+             h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
+             h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
+	   }
+           //K short from scalar decay
+           if(pdgId==310){
+             nrofKShort.emplace_back(k); //Together with kaon in angular differences
+             h_genParScalarKShortPt->Fill(event.genParPt[k]);
+             h_genParScalarKShortEta->Fill(genParEta);
+             h_genParScalarKShortPhi->Fill(genParPhi);
+             h_genParScalarKShortE->Fill(genParE);
+             h_VertexPosXY->Fill(genParVx,genParVy);
+             h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
+             h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
+	   }
+           //Charged pion from scalar decay
+           if(pdgId==211){
+             nrofPion.emplace_back(k);
+             h_genParScalarCPionPt->Fill(event.genParPt[k]);
+             h_genParScalarCPionEta->Fill(genParEta);
+             h_genParScalarCPionPhi->Fill(genParPhi);
+             h_genParScalarCPionE->Fill(genParE);
+             h_VertexPosXY->Fill(genParVx,genParVy);
+             h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
+             h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
+	   }
+           //Neutral pion from scalar decay
+           if(pdgId==111){
+             nrofPion.emplace_back(k);
+             h_genParScalarNPionPt->Fill(event.genParPt[k]);
+             h_genParScalarNPionEta->Fill(genParEta);
+             h_genParScalarNPionPhi->Fill(genParPhi);
+             h_genParScalarNPionE->Fill(genParE);
+             h_VertexPosXY->Fill(genParVx,genParVy);
+             h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
+             h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
+	   }
+	 }
+            
+       }//end for-loop
+        
+       if(genpt1!=0 && genpt2!=0){         
+         if(event.muTrig()){
+           h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event
+	 }
+         if(event.mumuTrig()){
+           h_genParScalarMuonCutPtDL->Fill(genpt1);
+           h_genParScalarMuonCutPtDS->Fill(genpt2);
+	 }
+       }
+       if(gen1!=0 && gen2!=0){
+         h_genParScalarMuonPtL->Fill(gen1); 
+         h_genParScalarMuonPtS->Fill(gen2);
+       } 
+           
+          
+       if(nrofScalar.size()==2){ //Two-particle (scalar) correlations
+         const Int_t Nr1 {nrofScalar[0]}; //Give the scalar index value k
+         const Int_t Nr2 {nrofScalar[1]};
+            
+         //DeltaR, DeltaPhi
+         TLorentzVector nr1;
+         TLorentzVector nr2;
+            
+         nr1.SetPtEtaPhiE(event.genParPt[Nr1],event.genParEta[Nr1],event.genParPhi[Nr1],event.genParE[Nr1]);
+         nr2.SetPtEtaPhiE(event.genParPt[Nr2],event.genParEta[Nr2],event.genParPhi[Nr2],event.genParE[Nr2]);
+            
+         h_ScalarDeltaR->Fill(nr1.DeltaR(nr2));//Get DeltaR between nr1scalar and nr2scalar
+         h_ScalarDeltaPhi->Fill(nr1.DeltaPhi(nr2));
+        
+         //Invariant mass
+         TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
+         TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
+      
+         h_ScalarInvMass->Fill((mass1+mass2).M());
+            
+         //3D angle
+         TVector3 angle1 (event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]); //No actual angle
+         TVector3 angle2 (event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
+        
+         h_Scalar3DAngle->Fill(angle1.Angle(angle2));
+       }
+        
+        
+       //Now same procedure for kaons,pions,muons,Kshort
+        
+       if(nrofMuon.size()==2){
+         const Int_t Nr1 {nrofMuon[0]};
+         const Int_t Nr2 {nrofMuon[1]};
+            
+         TLorentzVector nr1;
+         TLorentzVector nr2;
+            
+         nr1.SetPtEtaPhiE(event.genParPt[Nr1],event.genParEta[Nr1],event.genParPhi[Nr1],event.genParE[Nr1]);
+         nr2.SetPtEtaPhiE(event.genParPt[Nr2],event.genParEta[Nr2],event.genParPhi[Nr2],event.genParE[Nr2]);
+            
+         h_MuonDeltaR->Fill(nr1.DeltaR(nr2));
+         h_MuonDeltaPhi->Fill(nr1.DeltaPhi(nr2));
+      
+         //Invariant mass
+         TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
+         TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
+      
+         h_MuonInvMass->Fill((mass1+mass2).M());
+      
+         //3D angle
+         TVector3 angle1 (event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
+         TVector3 angle2 (event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
+
+         h_Muon3DAngle->Fill(angle1.Angle(angle2));
+       }
+        
+       if(nrofKaon.size()==2){
+         const Int_t Nr1 {nrofKaon[0]};
+         const Int_t Nr2 {nrofKaon[1]};
+    
+         TLorentzVector nr1;
+         TLorentzVector nr2;
+            
+         nr1.SetPtEtaPhiE(event.genParPt[Nr1],event.genParEta[Nr1],event.genParPhi[Nr1],event.genParE[Nr1]);
+         nr2.SetPtEtaPhiE(event.genParPt[Nr2],event.genParEta[Nr2],event.genParPhi[Nr2],event.genParE[Nr2]);
+            
+         h_KaonDeltaR->Fill(nr1.DeltaR(nr2));
+         h_KaonDeltaPhi->Fill(nr1.DeltaPhi(nr2));
+        
+         //Invariant mass
+         TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
+         TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
+      
+         h_KaonInvMass->Fill((mass1+mass2).M());
+        
+         //3D angle
+         TVector3 angle1;
+         TVector3 angle2;
+        
+         angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
+         angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
+          
+         h_Kaon3DAngle->Fill(angle1.Angle(angle2));
+        
+       }
+        
+       if(nrofKShort.size()==2){
+         const Int_t Nr1 {nrofKShort[0]};
+         const Int_t Nr2 {nrofKShort[1]};
+            
+         TLorentzVector nr1;
+         TLorentzVector nr2;
+            
+         nr1.SetPtEtaPhiE(event.genParPt[Nr1],event.genParEta[Nr1],event.genParPhi[Nr1],event.genParE[Nr1]);
+         nr2.SetPtEtaPhiE(event.genParPt[Nr2],event.genParEta[Nr2],event.genParPhi[Nr2],event.genParE[Nr2]);
+            
+         h_KShortDeltaR->Fill(nr1.DeltaR(nr2));
+         h_KShortDeltaPhi->Fill(nr1.DeltaPhi(nr2));
+        
+         //Invariant mass
+         TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
+         TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
+      
+         h_KShortInvMass->Fill((mass1+mass2).M());
+          
+         //3D angle
+         TVector3 angle1;
+         TVector3 angle2;
+        
+         angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
+         angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
+    
+         h_KShort3DAngle->Fill(angle1.Angle(angle2));
+       }
+        
+        
+       if(nrofPion.size()==2){
+         const Int_t Nr1 {nrofPion[0]};
+         const Int_t Nr2 {nrofPion[1]};
+    
+         TLorentzVector nr1;
+         TLorentzVector nr2;
+            
+         nr1.SetPtEtaPhiE(event.genParPt[Nr1],event.genParEta[Nr1],event.genParPhi[Nr1],event.genParE[Nr1]);
+         nr2.SetPtEtaPhiE(event.genParPt[Nr2],event.genParEta[Nr2],event.genParPhi[Nr2],event.genParE[Nr2]);
+            
+         h_PionDeltaR->Fill(nr1.DeltaR(nr2));
+         h_PionDeltaPhi->Fill(nr1.DeltaPhi(nr2));
+        
+         //Invariant mass
+         TLorentzVector mass1 {nr1.Px(),nr1.Py(),nr1.Pz(),event.genParE[Nr1]};
+         TLorentzVector mass2 {nr2.Px(),nr2.Py(),nr2.Pz(),event.genParE[Nr2]};
+      
+         h_PionInvMass->Fill((mass1+mass2).M());
+           
+         //3D angle
+         TVector3 angle1;
+         TVector3 angle2;
+        
+         angle1.SetXYZ(event.genParVx[Nr1],event.genParVy[Nr1],event.genParVz[Nr1]);
+         angle2.SetXYZ(event.genParVx[Nr2],event.genParVy[Nr2],event.genParVz[Nr2]);
+      
+         h_Pion3DAngle->Fill(angle1.Angle(angle2));
+       }
+        
+       /// END GENERATOR PARTICLE STUFF
+}
+
+void SimpleAnalysis::setupPlots() {
+
+  std::cout << "START PLOTS SETUP" << std::endl;
+
+  h_genParPt   = new TH1F("h_genParPt",  "genPar p_{T}", 1000, 0., 1000.);
+  h_genParEta  = new TH1F("h_genParEta", "genPar #eta",  200, -7., 7.);
+  h_genParPhi  = new TH1F("h_genParPhi", "genPar #phi",  100, -3.5, 3.5);
+  h_genParE    = new TH1F("h_genParE",   "genPar energy",     1000, 0., 1000.);
+  h_VertexPosR = new TH1F("h_VertexPosR", "Vertex position R",100,0.,250.);
+    
+  //Higgs boson
+  h_genParHiggsPt  = new TH1F("h_genParHiggsPt",  "genPar h_0 p_{T}", 1000, 0., 1000.);
+  h_genParHiggsEta = new TH1F("h_genParHiggsEta", "genPar h_0 #eta",  200, -7., 7.);
+  h_genParHiggsPhi = new TH1F("h_genParHiggsPhi", "genPar h_0 #phi",  100, -3.5, 3.5);
+  h_genParHiggsE   = new TH1F("h_genParHiggsE",   "genPar h_0 energy",     1000, 0., 1000.);
+  h_HiggsInvMass   = new TH1F("h_HiggsInvMass",  "h_0 Invariant mass", 1000, 0., 1000.);
+    
+  //Scalar decay
+  h_genParScalarPt    = new TH1F("h_genParScalarPt",  "Scalar p_{T}", 1000, 0., 1000.);
+  h_genParScalarEta   = new TH1F("h_genParScalarEta", "Scalar #eta",  200, -7., 7.);
+  h_genParScalarPhi   = new TH1F("h_genParScalarPhi", "Scalar #phi",  100, -3.5, 3.5);
+  h_genParScalarE     = new TH1F("h_genParScalarE",   "Scalar energy",     1000, 0., 1000.);
+  h_ScalarDeltaR      = new TH1F("h_ScalarDeltaR", "Scalar #DeltaR",1500,-10., 10.);
+  h_ScalarDeltaPhi    = new TH1F("h_ScalarDeltaPhi", "Scalar #Delta#phi",1500, -3.5, 3.5);
+  h_ScalarInvMass     = new TH1F("h_ScalarInvMass", "Scalar Invariant mass",1000, 0., 7.);
+  h_Scalar3DAngle     = new TH1F("h_Scalar3DAngle", "Scalar 3D Angle",1000,-10., 10.);
+    
+  //Muon from scalar decay
+  h_genParScalarMuonPtL        = new TH1F("h_genParScalarMuonPtL",  "#mu^{#pm} from scalar decay p_{T}, leading", 1000, 0., 1000.);
+  h_genParScalarMuonPtS        = new TH1F("h_genParScalarMuonPtS",  "#mu^{#pm} from scalar decay p_{T}, subleading", 1000, 0., 1000.);
+  h_genParScalarMuonCutPtSL    = new TH1F("h_genParScalarMuonCutPtSL",  "Single #mu^{#pm} trigger leading p_{T}", 1000, 0., 1000.);
+  h_genParScalarMuonDivPtSL    = new TH1F("h_genParScalarMuonDivPtSL",  "Turn-on Single #mu^{#pm} trigger leading p_{T}", 300, 0., 1000.);
+  h_genParScalarMuonCutPtDL    = new TH1F("h_genParScalarMuonCutPtDL",  "Double #mu^{#pm} trigger leading p_{T}", 1000, 0., 1000.);
+  h_genParScalarMuonDivPtDL    = new TH1F("h_genParScalarMuonDivPtDL",  "Turn-on Double #mu^{#pm} trigger leading p_{T}", 300, 0., 1000.);
+  h_genParScalarMuonCutPtDS    = new TH1F("h_genParScalarMuonCutPtDS",  "Double #mu^{#pm} trigger subleading p_{T}", 1000, 0., 1000.);
+  h_genParScalarMuonDivPtDS    = new TH1F("h_genParScalarMuonDivPtDS",  "Turn-on Double #mu^{#pm} trigger subleading p_{T}", 300, 0., 1000.);
+    
+  h_genParScalarMuonEta     = new TH1F("h_genParScalarMuonEta", "#mu^{#pm} from scalar decay #eta",  200, -7., 7.);
+  h_genParScalarMuonPhi     = new TH1F("h_genParScalarMuonPhi", "#mu^{#pm} from scalar decay #phi",  100, -3.5, 3.5);
+  h_genParScalarMuonE       = new TH1F("h_genParScalarMuonE",   "#mu^{#pm} from scalar decay energy",     1000, 0., 1000.);
+  h_MuonDeltaR              = new TH1F("h_MuonDeltaR", "Muon #DeltaR",2500, -10., 10.);
+  h_MuonDeltaPhi            = new TH1F("h_MuonDeltaPhi", "Muon #Delta#phi",2500, -3.5, 3.5);
+  h_MuonInvMass             = new TH1F("h_MuonInvMass", "Muon Invariant mass",1000, 0., 7.);
+  h_Muon3DAngle             = new TH1F("h_Muon3DAngle", "Muon 3D Angle",1000,-10., 10.);
+		
+  //Kaon from scalar decay
+  h_genParScalarCKaonPt      = new TH1F("h_genParScalarCKaonPt",  "K^{#pm} from scalar decay p_{T}", 1000, 0., 1000.);
+  h_genParScalarCKaonEta     = new TH1F("h_genParScalarCKaonEta", "K^{#pm} from scalar decay #eta",  200, -7., 7.);
+  h_genParScalarCKaonPhi     = new TH1F("h_genParScalarCKaonPhi", "K^{#pm} from scalar decay #phi",  100, -3.5, 3.5);
+  h_genParScalarCKaonE       = new TH1F("h_genParScalarCKaonE",   "K^{#pm} from scalar decay energy",     1000, 0., 1000.);
+  h_KaonDeltaR               = new TH1F("h_KaonDeltaR", "Kaon #DeltaR",2500, -10., 10.);
+  h_KaonDeltaPhi             = new TH1F("h_KaonDeltaPhi", "Kaon #Delta#phi",2500, -3.5, 3.5);
+  h_KaonInvMass              = new TH1F("h_KaonInvMass", "Kaon Invariant mass",1000, 0., 7.);
+  h_Kaon3DAngle              = new TH1F("h_Kaon3DAngle", "Kaon 3D Angle",1000,-10., 10.);
+    
+  //K short from scalar decay
+  h_genParScalarKShortPt     = new TH1F("h_genParScalarKShortPt",  "K^{0}_S from scalar decay p_{T}", 1000, 0., 1000.);
+  h_genParScalarKShortEta    = new TH1F("h_genParScalarKShortEta", "K^{0}_S from scalar decay #eta",  200, -7., 7.);
+  h_genParScalarKShortPhi    = new TH1F("h_genParScalarKShortPhi", "K^{0}_S from scalar decay #phi",  100, -3.5, 3.5);
+  h_genParScalarKShortE      = new TH1F("h_genParScalarKShortE",   "K^{0}_S from scalar decay energy",     1000, 0., 1000.);
+  h_KShortDeltaR             = new TH1F("h_KShortDeltaR", "K^{0}_S #DeltaR",2500, -10., 10.);
+  h_KShortDeltaPhi           = new TH1F("h_KShortDeltaPhi", "K^{0}_S #Delta#phi",2500, -3.5, 3.5);
+  h_KShortInvMass            = new TH1F("h_KShortInvMass", "K^{0}_S Invariant mass",1000, 0., 7.);
+  h_KShort3DAngle            = new TH1F("h_KShort3DAngle", "K^{0}_S 3D Angle",1000,-10., 10.);
+    
+  //Pion from scalar decay
+  h_genParScalarCPionPt      = new TH1F("h_genParScalarCPionPt",  "#pi^{#pm} from scalar decay p_{T}", 1000, 0., 1000.);
+  h_genParScalarCPionEta     = new TH1F("h_genParScalarCPionEta", "#pi^{#pm} from scalar decay #eta",  200, -7., 7.);
+  h_genParScalarCPionPhi     = new TH1F("h_genParScalarCPionPhi", "#pi^{#pm} from scalar decay #phi",  100, -3.5, 3.5);
+  h_genParScalarCPionE       = new TH1F("h_genParScalarCPionE",   "#pi^{#pm} from scalar decay energy",     1000, 0., 1000.);
+  h_genParScalarNPionPt      = new TH1F("h_genParScalarNPionPt",  "#pi^{0} from scalar decay p_{T}", 1000, 0., 1000.);
+  h_genParScalarNPionEta     = new TH1F("h_genParScalarNPionEta", "#pi^{0} from scalar decay #eta",  200, -7., 7.);
+  h_genParScalarNPionPhi     = new TH1F("h_genParScalarNPionPhi", "#pi^{0} from scalar decay #phi",  100, -3.5, 3.5);
+  h_genParScalarNPionE       = new TH1F("h_genParScalarNPionE",   "#pi^{0} from scalar decay energy",     1000, 0., 1000.);
+  h_PionDeltaR               = new TH1F("h_PionDeltaR", "Pion #DeltaR",2500, -10., 10.);
+  h_PionDeltaPhi             = new TH1F("h_PionDeltaPhi", "Pion #Delta#phi",2500, -3.5, 3.5);
+  h_PionInvMass              = new TH1F("h_PionInvMass", "Pion Invariant mass",1000, 0., 7.);
+  h_Pion3DAngle               =new TH1F("h_Pion3DAngle", "Pion 3D Angle",1000,-10., 10.);
+  
+   
+  //Vertex position: muons, kaons, kshort, pions
+  h_VertexPosXY   = new TH2F("h_VertexPosXY", "Vertex Position XY", 100, -150,150,100,-150,150);
+  h_VertexPosRZ   = new TH2F("h_VertexPosRZ", "Vertex Position RZ", 100, 0,20,100,0,250);
+
+  //PAT Muon reconstruction
+  h_muonRecPt           = new TH1F("h_muonRecPt",  "#mu^{#pm} reconstruction p_{T}", 1000, 0., 200.);
+  h_muonRecPtL          = new TH1F("h_muonRecPtL",  "#mu^{#pm} reconstruction p_{T}, leading", 1000, 0., 200.);
+  h_muonRecPtS          = new TH1F("h_muonRecPtS",  "#mu^{#pm} reconstruction p_{T}, subleading", 1000, 0., 200.);
+  h_muonRecEta          = new TH1F("h_muonRecEta", "#mu^{#pm} reconstruction #eta",  200, -7., 7.);
+  h_muonRecPhi          = new TH1F("h_muonRecPhi", "#mu^{#pm} reconstruction #phi",  100, -3.5, 3.5);
+  h_muonRecE            = new TH1F("h_muonRecE",   "#mu^{#pm} reconstruction energy",     1000, 0., 1000.);
+  h_muonRecDeltaR       = new TH1F("h_muonRecDeltaR", "Muon reconstruction #DeltaR",2500, -10., 10.);
+  h_muonRecDeltaPhi     = new TH1F("h_muonRecDeltaPhi", "Muon reconstruction #Delta#phi",2500, -3.5, 3.5);
+  h_muonRecInvMass      = new TH1F("h_muonRecInvMass", "Muon reconstruction invariant mass",500, 0, 5);
+  Gaussian1             = new TF1("Gaussian1","gaus",1.,3.);
+  h_muonCutSingleL      = new TH1F("h_muonCutSingleL",  "Single #mu^{#pm} trigger leading p_{T}", 1000, 0., 200.);
+  h_muonCutDoubleL      = new TH1F("h_muonCutDoubleL",  "Double #mu^{#pm} trigger leading p_{T}", 1000, 0., 200.);
+  h_muonDivSingleL      = new TH1F("h_muonDivSingleL",  "Turn-on Single #mu^{#pm} trigger leading p_{T}", 300, 0., 200.);
+  h_muonDivDoubleL      = new TH1F("h_muonDivDoubleL",  "Turn-on Double #mu^{#pm} trigger leading p_{T}", 300, 0., 200.);
+  h_muonCutDoubleS      = new TH1F("h_muonCutDoubleS",  "Double #mu^{#pm} trigger subleading p_{T}", 1000, 0., 200.);
+  h_muonDivDoubleS      = new TH1F("h_muonDivDoubleS",  "Turn-on Double #mu^{#pm} trigger subleading p_{T}", 300, 0., 200.);
+   	
+	
+  //Packed candidates
+  h_packedCDxy    = new TH1F("h_packedCDxy", "Packed Candidate Dxy", 500,  -200., 200.);
+  h_packedCDz     = new TH1F("h_packedCDz",  "Packed Candidate Dz", 1500, -500., 500.);
+  h_packedCVx     = new TH1F("h_packedCVx",  "Packed Candidate track vx", 500,  -150., 150.);
+  h_packedCVy     = new TH1F("h_packedCVy",  "Packed Candidate track vy", 500,  -150., 150.);
+  h_packedCVz     = new TH1F("h_packedCVz",  "Packed Candidate track vz", 1500, -500., 500.);
+  h_displacedXY   = new TH2I("h_displacedXY", "Displacement XY", 100, -150,150,100,-150,150);
+  h_displacedRZ   = new TH2I("h_displacedRZ", "Displacement RZ", 100, 0,20,100,0,250);
+	
+  h_HVertexPosXY         = new TH2F("h_HVertexPosXY", "Pion track vertex XY", 500, -50,50,500,-50,50);
+  h_HVertexPosRZ         = new TH2F("h_HVertexPosRZ", "Pion track vertex RZ", 500, -50,50,500,-50,50);	
+	
+  //Kaon mass assumption	
+  h_KhadronDeltaR   = new TH1F("h_KhadronDeltaR", "Two hadrons (kaons) #DeltaR",2500, -10., 10.);
+  h_KmuonsDeltaR    = new TH1F("h_KmuonsDeltaR", "Two muons #DeltaR",2500, -10., 10.);
+  h_KIsoSum1        = new TH1F("h_KIsoSum1",  "0.3 p_{T} Cone construction kaon 1", 1000, 0., 50.);
+  h_KIsoSum2        = new TH1F("h_KIsoSum2",  "0.3 p_{T} Cone construction kaon 2", 1000, 0., 50.);
+  h_KIso2           = new TH2F("h_KIso2", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.);
+  h_KIsoSum3        = new TH1F("h_KIsoSum3",  "0.3 p_{T} Cone construction muon 1", 1000, 0., 50.);
+  h_KIsoSum4        = new TH1F("h_KIsoSum4",  "0.3 p_{T} Cone construction muon 2", 1000, 0., 50.);
+  h_KhadronInvMass  = new TH1F("h_KhadronInvMass", "Two hadrons (kaons) - Invariant mass",1000, 0., 7.);
+  h_KhadronInvMass2 = new TH1F("h_KhadronInvMass2", "Two hadrons (kaons) - Invariant mass, smaller binning",500, 0., 7.);
+  h_KmuonsInvMass   = new TH1F("h_KmuonsInvMass", "Two muons - Invariant mass",1000, 0., 7.);
+  h_Kinvmass        = new TH2F("h_Kinvmass", "Invariant mass: charged hadrons (kaons) vs muons", 1000, 0.,7.,1000,0.,7.);
+  
+  h_KantiscalarInvMass        = new TH1F("h_KantiscalarInvMass", "(Kaon) Antiscalar Invariant mass", 1000, 0.,15.);
+  h_KscalarInvMass            = new TH1F("h_KscalarInvMass", "Scalar Invariant mass", 1000, 0.,15.);
+  h_KhiggsInvMass             = new TH1F("h_KhiggsInvMass",  "h_0 Invariant mass", 1000, 0., 200.);   
+  h_KhiggsDeltaR              = new TH1F("h_KhiggsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.);  
+
+	
+	
+  //Pion mass assumption
+  h_PhadronDeltaR   = new TH1F("h_PhadronDeltaR", "Two hadrons (pions) #DeltaR",2500, -10., 10.);
+  h_PmuonsDeltaR    = new TH1F("h_PmuonsDeltaR", "Two muons #DeltaR",2500, -10., 10.);
+  h_PIsoSum1        = new TH1F("h_PIsoSum1",  "Leading pion relative isolation", 1000, 0., 50.);
+  h_PIsoSum2        = new TH1F("h_PIsoSum2",  "Subleading pion relative isolation", 1000, 0., 50.);
+  h_PIso2           = new TH2F("h_PIso2", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.);
+  h_PIsoSum3        = new TH1F("h_PIsoSum3",  "Leading muon relative isolation", 1000, 0., 50.);
+  h_PIsoSum4        = new TH1F("h_PIsoSum4",  "Subleading muon relative isolation", 1000, 0., 50.);
+  h_PIso4           = new TH2F("h_PIso4", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.);
+  h_PhadronInvMass  = new TH1F("h_PhadronInvMass", "Dihadron (pion) invariant mass",1000, 0., 7.);
+  h_PhadronInvMass2 = new TH1F("h_PhadronInvMass2", "Two hadrons (pions) - Invariant mass, smaller binning",500, 0., 7.);
+  h_PmuonsInvMass   = new TH1F("h_PmuonsInvMass", "Dimuon invariant mass",1000, 0., 7.);
+  Gaussian2    = new TF1("Gaussian2","gaus",1.,3.);
+  h_Pinvmass        = new TH2F("h_Pinvmass", "Invariant mass: charged hadrons (pions) vs muons", 1000, 0.,7.,1000,0.,7.);
+  
+  h_PantiscalarInvMass        = new TH1F("h_PantiscalarInvMass", "Dihadron (pion) invariant mass", 1000, 0.,15.);
+  h_PscalarInvMass            = new TH1F("h_PscalarInvMass", "Dimuon invariant mass", 1000, 0.,15.);
+  Gaussian3   	      = new TF1("Gaussian3","gaus",1.,3.);
+  h_PhiggsInvMass             = new TH1F("h_PhiggsInvMass",  "Higgs invariant mass", 1000, 0., 200.);   
+  h_PhiggsDeltaR              = new TH1F("h_PhiggsDeltaR", "Discalar #DeltaR",2500, 0., 15.); 	
+  h_Rrefit12InvMass           = new TH1F("h_Rrefit12InvMass", "Dimuon refitted invariant mass with requirements", 500, 0.,5.);
+  h_Rpionre12InvMass          = new TH1F("h_Rpionre12InvMass", "Dihadron (pion) refit invariant mass", 500, 0.,5.);
+
+  h_P20antiscalarInvMass        = new TH1F("h_P20antiscalarInvMass", "Dihadron (pion) invariant mass", 1000, 0.,15.);
+  h_P20scalarInvMass            = new TH1F("h_P20scalarInvMass", "Dimuon invariant mass", 1000, 0.,15.);
+  h_P20higgsInvMass             = new TH1F("h_P20higgsInvMass",  "Higgs invariant mass", 1000, 0., 200.);   
+	
+  h_massassump       = new TH2F("h_massassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.);
+  h_pmassassump      = new TH2F("h_pmassassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.);
+  h_higgsassump      = new TH2F("h_higgsassump", "Invariant mass: h_0 (pions-muons) vs h_0 (kaons-muons)", 1000, 0.,200.,1000,0.,200.);
+	
+	
+  //Comparison muon momenta
+	
+  //PAT muons
+  h_muoniRecPtTrk                = new TH1F("h_muoniRecPtTrk",  "#mu^{#pm} reconstruction p_{T} track", 1000, 0., 200.);
+  h_muon1RecPtTrk                = new TH1F("h_muon1RecPtTrk",  "Leading #mu^{#pm} reconstruction p_{T} track", 1000, 0., 200.);
+  h_muon2RecPtTrk                = new TH1F("h_muon2RecPtTrk",  "Subleading #mu^{#pm} reconstruction p_{T} track", 1000, 0., 200.);
+  h_muoniRecPt                   = new TH1F("h_muoniRecPt",  "#mu^{#pm} reconstruction p_{T}", 1000, 0., 200.);
+  h_muon1RecPt                   = new TH1F("h_muon1RecPt",  "Leading #mu^{#pm} reconstruction p_{T}", 1000, 0., 200.);
+  h_muon2RecPt                   = new TH1F("h_muon2RecPt",  "Subleading #mu^{#pm} reconstruction p_{T}", 1000, 0., 200.);
+  h_muon1RecInvMass              = new TH1F("h_muon1RecInvMass", "Leading reconstruction invariant mass",500, 0, 100);
+  h_muon2RecInvMass              = new TH1F("h_muon2RecInvMass", "Subleading reconstruction invariant mass",500, 0, 100);
+  h_muon12RecInvMass             = new TH1F("h_muon12RecInvMass", "Scalar reconstruction invariant mass",500, 0, 100);
+	
+  //Packed muons
+  h_muonipackedPt                = new TH1F("h_muonipackedPt",  "#mu^{#pm} Packed candidate p_{T}", 1000, 0., 1000.);
+  h_muonipackedInvMass           = new TH1F("h_muonipackedInvMass", "#mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.);
+  h_muonipackedPtTrk             = new TH1F("h_muonipackedPtTrk",  "#mu^{#pm} Packed candidate p_{T} track", 1000, 0., 1000.);
+  h_muon1packedPt                = new TH1F("h_muon1packedPt",  "Leading #mu^{#pm} Packed candidate p_{T}", 1000, 0., 1000.);
+  h_muon1packedInvMass           = new TH1F("h_muon1packedInvMass", "Leading #mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.);
+  h_muon1packedPtTrk             = new TH1F("h_muon1packedPtTrk",  "Leading #mu^{#pm} Packed candidate p_{T} track", 1000, 0., 1000.);
+  h_muon2packedPt                = new TH1F("h_muon2packedPt",  "Subleading #mu^{#pm} Packed candidate p_{T}", 1000, 0., 1000.);
+  h_muon2packedInvMass           = new TH1F("h_muon2packedInvMass", "Subleading #mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.);
+  h_muon2packedPtTrk             = new TH1F("h_muon2packedPtTrk",  "Subleading #mu^{#pm} Packed candidate p_{T} track", 1000, 0., 1000.);	
+  h_muon12packedInvMass          = new TH1F("h_muon12packedInvMass", "Scalar #mu^{#pm} Packed candidate Invariant mass", 500, 0.,5.);
+	
+  //Refitted tracks muons
+  h_muon1PairsPt		= new TH1F("h_muon1PairsPt",  "#mu^{#pm} 1 Refitted tracks p_{T} m", 1000, 0., 1000.);
+  h_muon2PairsPt 		= new TH1F("h_muon2PairsPt",  "#mu^{#pm} 2 Refitted tracks p_{T}", 1000, 0., 1000.);
+  h_muon1refitInvMass           = new TH1F("h_muon1refitInvMass", "Leading #mu^{#pm} Refit Invariant mass", 500, 0.,5.);
+  h_muon2refitInvMass           = new TH1F("h_muon2refitInvMass", "Subleading #mu^{#pm} Refit Invariant mass", 500, 0.,5.);
+  h_muon12refitInvMass          = new TH1F("h_muon12refitInvMass", "Scalar Refit Invariant mass", 500, 0.,5.);
+  h_refit1InvMass               = new TH1F("h_refit1InvMass", "Leading #mu^{#pm} Refit Invariant mass", 500, 0.,5.);
+  h_refit2InvMass               = new TH1F("h_refit2InvMass", "Subleading #mu^{#pm} Refit Invariant mass", 500, 0.,5.);
+  h_refit12InvMass              = new TH1F("h_refit12InvMass", "Dimuon refitted invariant mass", 500, 0.,5.);
+  
+  //Refitted tracks pions
+  h_pionre12InvMass             = new TH1F("h_pionre12InvMass", "Dihadron (pion) refit invariant mass", 500, 0.,5.);
+  h_muonPairsXY                 = new TH2F("h_muonPairsXY", "Refitted tracks vertex XY", 100, -150,150,100,-150,150);
+  h_muonPairsRZ                 = new TH2F("h_muonPairsRZ", "Refitted tracks vertex RZ", 100, 0,20,100,0,250);		
+
+  std::cout << "END PLOTS SETUP" << std::endl;
+}
     
 void SimpleAnalysis::savePlots() {
+
+  std::cout << "START SAVING PLOTS" << std::endl;
+
+  std::cout << "Open output file: " << outFileString.c_str() << std::endl;
 
   // Create output ROOT file
   TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
   // change current ROOT directory to that of outFile
   outFile->cd();
-   // Do scalable histograms that plot only pdgIds found
-  int nPdgIds                   = pdgIdMap.size();                   // number of different final state pdgIds
-  // Declare histogram with scalable axes
-  h_pdgId  = new TH1I("h_pdgId", "number of particles in Generator Partice collections", nPdgIds, 0, Double_t(nPdgIds));
 
-  // Fill entries for scalable histograms
-  uint binCounter {1};
-  for(auto it = pdgIdMap.begin(); it != pdgIdMap.end(); ++it) {
-     h_pdgId->SetBinContent(binCounter, it->second);
-     const char *label = ( pdgIdCode(it->first, false) ).c_str();
-     h_pdgId->GetXaxis()->SetBinLabel(binCounter, label);
-     binCounter++;
-  }
+  std::cout << "WRITING PLOTS TO OUTPUT FILE" << std::endl;
 
   // Write histograms to file
   h_genParPt->GetXaxis()->SetTitle("GeV");
@@ -1481,7 +1509,6 @@ void SimpleAnalysis::savePlots() {
   h_genParEta->Write();
   h_genParPhi->Write();
   h_genParE->Write();
-  h_pdgId->Write();
   h_VertexPosR->Write();
 
   h_genParHiggsPt->GetXaxis()->SetTitle("GeV");
@@ -1506,6 +1533,18 @@ void SimpleAnalysis::savePlots() {
   h_ScalarInvMass->Write();
   h_Scalar3DAngle->Write();
  
+
+  h_genParScalarMuonDivPtSL=(TH1F*)h_genParScalarMuonCutPtSL->Clone();
+  h_genParScalarMuonDivPtSL->Divide(h_genParScalarMuonPtL);
+  h_genParScalarMuonDivPtSL->SetTitle("Turn-on Single trigger leading");
+    
+  h_genParScalarMuonDivPtDL=(TH1F*)h_genParScalarMuonCutPtDL->Clone();
+  h_genParScalarMuonDivPtDL->Divide(h_genParScalarMuonPtL);
+  h_genParScalarMuonDivPtDL->SetTitle("Turn-on Double trigger leading");
+   
+  h_genParScalarMuonDivPtDS=(TH1F*)h_genParScalarMuonCutPtDS->Clone();
+  h_genParScalarMuonDivPtDS->Divide(h_genParScalarMuonPtS);
+  h_genParScalarMuonDivPtDS->SetTitle("Turn-on Double trigger subleading");
  
   h_genParScalarMuonPtL->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonPtL->Write();
@@ -1830,15 +1869,18 @@ void SimpleAnalysis::savePlots() {
   h_muonPairsRZ->SetTitle("Vertex position R");
   h_muonPairsRZ->Write();
 	
+  std::cout << "FINISHED WRITING PLOTS TO OUTPUT FILE" << std::endl;
 	
   // Safely close file
   outFile->Close();
+
+  std::cout << "CLOSE OUTPUT FILE" << std::endl;
 
 }
 
 
 // Function to convert pdgId numerical code into a Latex or unicode string!
-std::string SimpleAnalysis::pdgIdCode (const Int_t parId, const bool unicode) {
+std::string SimpleAnalysis::pdgIdCode (const Int_t parId, const bool unicode) const {
 
   std::string particle;
   int id = std::abs(parId);
@@ -1962,7 +2004,7 @@ std::string SimpleAnalysis::pdgIdCode (const Int_t parId, const bool unicode) {
 }
 
 
-bool SimpleAnalysis::scalarGrandparent (const AnalysisEvent& event, const Int_t& k, const Int_t& grandparentId) {
+bool SimpleAnalysis::scalarGrandparent (const AnalysisEvent& event, const Int_t& k, const Int_t& grandparentId) const {
 
   const Int_t pdgId        { std::abs(event.genParId[k]) };
   const Int_t numDaughters { event.genParNumDaughters[k] };
