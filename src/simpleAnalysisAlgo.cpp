@@ -182,11 +182,18 @@ void SimpleAnalysis::runMainAnalysis() {
       // Do functions that do not require met filters or triggers
       fillGeneratorPlots(event);
 
-      // Do functions that have met filters/triggers applied
-
+      // Do functions that have met filters applied
       if( !event.metFilters() ) continue;
 
-      fillMuonReconstructionPlots(event, eventWeight);
+      fillMuonReconstructionPlots(event, eventWeight); // look at different triggers within this, so no blanket trigger application
+
+
+      // Get physics objects
+      event.muonIndexLoose = getMuons(event); // Set event's public member variable to contain (loose) muons with selected muons
+      getMuonCand(event, event.muonIndexLoose); // Setup dimuon candidate
+      event.chsIndex = getChargedHadronTracks(event);
+      getDihadronCand(event, event.chsIndex); // Setup dihadron candidate
+
       fillPackedCandidatePlots(event, eventWeight);	     
       fillMuonMomentumComparisonPlots(event, eventWeight);
 
@@ -200,7 +207,7 @@ std::vector<int> SimpleAnalysis::getMuons(const AnalysisEvent& event) const {
   std::vector<int> muons;
 
   for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-    if (event.muonPF2PATIsPFMuon[i] && std::abs(event.muonPF2PATEta[i]) < muonEta_) {
+    if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && std::abs(event.muonPF2PATEta[i]) < muonEta_) {
       if (event.muonPF2PATPt[i] >= (muons.empty() ? muonPtLeading_ : muonPt_)) muons.emplace_back(i);
     }
   }
@@ -213,8 +220,9 @@ std::vector<int> SimpleAnalysis::getChargedHadronTracks(const AnalysisEvent& eve
     if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
     if (event.packedCandsCharge[k] == 0 ) continue;
     if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
-    TLorentzVector lVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
-    if (lVec.Pt() < 1.0) continue;
+    // CB does not apply a pT cut on charged hadrons?
+//    TLorentzVector lVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
+//    if (lVec.Pt() < 1.0) continue;
 
     chs.emplace_back(k);
   }
@@ -222,9 +230,11 @@ std::vector<int> SimpleAnalysis::getChargedHadronTracks(const AnalysisEvent& eve
 }
 
 void SimpleAnalysis::getMuonCand(AnalysisEvent& event, const std::vector<int>& muons) const {
+    return;
 }
 
 void SimpleAnalysis::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) const {
+    return;
 }
 
 int SimpleAnalysis::getMuonTrackPairIndex(const AnalysisEvent& event) const { 
