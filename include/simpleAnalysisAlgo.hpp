@@ -1,3 +1,4 @@
+
 #ifndef _SimpleAnalysis_hpp_
 #define _SimpleAnalysis_hpp_
 
@@ -24,10 +25,32 @@ class SimpleAnalysis
 
     private:
     // functions
-    std::string pdgIdCode (const Int_t pdgId, const bool unicode = false); // declaring function called below main(); pdgIdCode translate stored numerical pdgId code into a string: unicode for output to string, or latex style for ROOT plotting
-    bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_);
+    std::string pdgIdCode (const Int_t pdgId, const bool unicode = false) const; // declaring function called below main(); pdgIdCode translate stored numerical pdgId code into a string: unicode for output to string, or latex style for ROOT plotting
+    bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_) const ;
 
-    // variables?
+    std::vector<int> getMuons(const AnalysisEvent& event) const;
+    std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) const;
+    void getMuonCand(AnalysisEvent& event, const std::vector<int>& muons) const;
+    void getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) const;
+
+    // grab the muon track pair index for selected muons
+    int getMuonTrackPairIndex(const AnalysisEvent& event) const;
+    // grab the chs track pair index for selected muons
+    int getChsTrackPairIndex(const AnalysisEvent& event) const;
+
+    void fillGeneratorPlots(AnalysisEvent& event) const;
+    void fillMuonReconstructionPlots(AnalysisEvent& event, double& eventWeight) const;
+    void fillPackedCandidatePlots(AnalysisEvent& event, double& eventWeight) const;
+    void fillMuonMomentumComparisonPlots(AnalysisEvent& event, double& eventWeight) const;
+
+    // variables
+
+     const bool debug_;
+
+    double muonPtLeading_;
+    double muonPt_;
+    double muonEta_;
+
     std::string config;
     std::vector<Dataset> datasets;
 
@@ -35,14 +58,12 @@ class SimpleAnalysis
     double usePreLumi;
     bool usePostLepTree;
 
-    std::map<int, int> pdgIdMap; // declare map of int, int - first int corresponds to pdgId, second will note how many times a particle with that pdgId has been found
     std::string outFileString;
     bool is2016_; // analysis framework is setup to run over multiple years - as we are considering 2017 conditions currently, this is set to false for safety.
     bool is2018_; // analysis framework is setup to run over multiple years - as we are considering 2017 conditions currently, this is set to false for safety.
     Long64_t nEvents; // Max number of events to consider per dataset. Default is set in config file, but can be overriden with command line arguements
 
       // Histos
-    TH1I* h_pdgId;
     TH1F* h_genParPt;
     TH1F* h_genParEta;
     TH1F* h_genParPhi;
