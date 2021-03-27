@@ -179,7 +179,13 @@ void SimpleAnalysis::runMainAnalysis() {
         double eventWeight {1.};
         eventWeight *= datasetWeight;
 
+        // Do functions that do not require met filters or triggers
         fillGeneratorPlots(event);
+
+        // Do functions that have met filters/triggers applied
+
+        if( !event.metFilters() ) continue;
+
         fillMuonReconstructionPlots(event, eventWeight);
         fillPackedCandidatePlots(event, eventWeight);	     
         fillMuonMomentumComparisonPlots(event, eventWeight);
@@ -562,9 +568,7 @@ void SimpleAnalysis::fillMuonReconstructionPlots(AnalysisEvent& event, double& e
        std::vector<Int_t> singleIndex{}; std::vector<Int_t> doubleIndex{};
           
        uint leadingFlag{0}; std::vector<Int_t> leadingIndex{}; 
-      
-       if(event.metFilters()){
-      
+     
          for(Int_t k{0}; k < event.numMuonPF2PAT; k++) {
              
             const Float_t muonRecPt   { event.muonPF2PATPt[k] };
@@ -648,8 +652,6 @@ void SimpleAnalysis::fillMuonReconstructionPlots(AnalysisEvent& event, double& e
            h_muonCutDoubleL->Fill(event.muonPF2PATPt[doubleIndex[0]], eventWeight);
            h_muonCutDoubleS->Fill(event.muonPF2PATPt[doubleIndex[1]], eventWeight);
 	 }
-           
-       }//MET filter
     
        //END Muon Reconstruction
 }
@@ -661,9 +663,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(AnalysisEvent& event, double& even
      
        Float_t pionpt1{-1}; Float_t pionpt2{-1};
        Float_t mupt1{-1}; Float_t mupt2{-1};
-       
-       if(event.metFilters()){
-        
+               
          for(Int_t k{0};k<event.numPackedCands;k++) {
           
             if(event.muTrig() || event.mumuTrig()){
@@ -722,7 +722,6 @@ void SimpleAnalysis::fillPackedCandidatePlots(AnalysisEvent& event, double& even
         
 	      
 	 }//end of for-loop
-       }//end of met filter
     
 /*	     
        Float_t KIsoSum1=0;  Float_t KIsoSum2=0;
@@ -741,7 +740,6 @@ void SimpleAnalysis::fillPackedCandidatePlots(AnalysisEvent& event, double& even
        Float_t Khiggs=0;
 	
        //Kaon mass assumption
-       if(event.metFilters()){
          if(event.muTrig()){ 
 	 
 	   if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsCharge[pionIndex1]==-(event.packedCandsCharge[pionIndex2])){
@@ -878,7 +876,6 @@ void SimpleAnalysis::fillPackedCandidatePlots(AnalysisEvent& event, double& even
 	       
 	      
 	 }
-       }//end of met filter   
 
 */	      
 	      
@@ -919,7 +916,6 @@ void SimpleAnalysis::fillPackedCandidatePlots(AnalysisEvent& event, double& even
 	     
 	      
        //Pion mass assumption
-       if(event.metFilters()){
          if(event.muTrig()){ 
 	         
 	   if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsCharge[pionIndex1]==-(event.packedCandsCharge[pionIndex2])){
@@ -1139,15 +1135,12 @@ void SimpleAnalysis::fillPackedCandidatePlots(AnalysisEvent& event, double& even
            
 	      
 	 }//end of for loop packed candidates
-       }//end of met filter   
 }
 
 void SimpleAnalysis::fillMuonMomentumComparisonPlots(AnalysisEvent& event, double& eventWeight) const {
        //Muon momentum comparison    
-
-       if(event.metFilters()){
-         if(event.muTrig()){ 
-	      
+/*
+         if(event.muTrig()){ 	      
 	      
 	   //Packed candidates     
 	   if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsCharge[muIndex1]==-(event.packedCandsCharge[muIndex2])){
@@ -1195,10 +1188,7 @@ void SimpleAnalysis::fillMuonMomentumComparisonPlots(AnalysisEvent& event, doubl
 	      h_muoniRecPt->Fill(event.muonPF2PATPt[k], eventWeight);
 	   }  
 	
-	   if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){
-          
-		  
-		  
+	   if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){		  
 	  
 	   }    
 	     
@@ -1270,12 +1260,9 @@ void SimpleAnalysis::fillMuonMomentumComparisonPlots(AnalysisEvent& event, doubl
 		}
 	      }
 	   }
-	   
-	 
-	
-	      
+	  	      
 	 }//end of single/double muon trigger
-       }//end of met filter
+*/
 }
 
 void SimpleAnalysis::setupPlots() {
