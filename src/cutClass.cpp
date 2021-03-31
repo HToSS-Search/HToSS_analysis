@@ -53,10 +53,10 @@ Cuts::Cuts(const bool doPlots,
     , looseMuonRelIso_{0.25}
 
     , scalarMassCut_{4.}
-    , maxDileptonDeltaR_{99999999.}
+    , maxDileptonDeltaR_{0.4}
     , chsMass_{0.13957018}
-    , maxChsDeltaR_ {99999999.}
-    , higgsMassCut_{20.}
+    , maxChsDeltaR_ {0.4}
+    , higgsMassCut_{999.}
     , higgsTolerence_ {10.}
     , invWMassCut_{999999.}
     , unblind_{false}
@@ -299,15 +299,13 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     event.muonIndexTight = getLooseMuons(event);
     if (event.muonIndexTight.size() < numTightMu_) return false;
 
-    if (postLepSelTree_) postLepSelTree_->Fill();
-
     const bool validDileptonCand = getDileptonCand(event, event.muonIndexTight);
     if ( !validDileptonCand ) return false;
 
     const double dileptonMass {(event.zPairLeptons.first + event.zPairLeptons.second).M()};
 
     // This is to make some skims for faster running. Do lepSel and save some files. If flag is true, scalar mass cuts are applied, and dilepton mass <= threshold, fill tree
-//    if (postLepSelTree_ && dileptonMass <= scalarMassCut_ && !skipScalarMassCut_) postLepSelTree_->Fill();
+    if (postLepSelTree_ && dileptonMass <= scalarMassCut_ && !skipScalarMassCut_) postLepSelTree_->Fill();
 
     eventWeight *= getLeptonWeight(event, systToRun);
 //    event.muonMomentumSF = getRochesterSFs(event);
@@ -337,7 +335,7 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     if (!validDihadronCand) return false;
     if ( (event.chsPairVec.first + event.chsPairVec.second).M() > scalarMassCut_ && !skipScalarMassCut_ ) return false;
 
-//// Apply side band cut for data
+    //// Apply side band cut for data
     if (!isMC_ && !unblind_) {
         float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsTrkPairVec.first + event.chsTrkPairVec.second).M() );
         if ( muScalarMass  < hadScalarMass*1.05 && muScalarMass  >= hadScalarMass*0.95 ) return false;
@@ -352,38 +350,13 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
 //    if (event.bTagIndex.size() < numbJets_) return false;
 //    if (event.bTagIndex.size() > maxbJets_) return false;
 
-    if ( event.zPairLeptons.first.DeltaR(event.zPairLeptons.second) < 0.3 ) return false;
-    if ( event.chsPairVec.first.DeltaR(event.chsPairVec.second) < 0.3 ) return false;
-    if ( ((event.zPairLeptons.first + event.zPairLeptons.second + event.chsPairVec.first + event.chsPairVec.second).M() - 125.2) > higgsMassCut_ && !skipScalarMassCut_ ) return false;
+//    if ( event.zPairLeptons.first.DeltaR(event.zPairLeptons.second) < 0.3 ) return false;
+//    if ( event.chsPairVec.first.DeltaR(event.chsPairVec.second) < 0.3 ) return false;
 
-    if (doPlots_) plotMap["higgsSel"]->fillAllPlots(event, eventWeight);
-    if (doPlots_ || fillCutFlow_) cutFlow.Fill(3.5, eventWeight);
+//    if ( ((event.zPairLeptons.first + event.zPairLeptons.second + event.chsPairVec.first + event.chsPairVec.second).M() - 125.2) > higgsMassCut_ && !skipScalarMassCut_ ) return false;
 
-    // Do wMass stuff
-//    double invWmass{0.};
-//    invWmass = getWbosonQuarksCand(event, event.jetIndex, systToRun);
-
-    // Debug chi2 cut
-    //   double topMass = getTopMass(event);
-    //   double topTerm = ( topMass-173.21 )/30.0;
-    //   double wTerm = ( (event.wPairQuarks.first +
-    //   event.wPairQuarks.second).M() - 80.3585 )/8.0;
-
-    //   double chi2 = topTerm*topTerm + wTerm*wTerm;
-    //   if ( chi2 < 2.0 && chi2 > 7.0 ) return false; // control region
-    //   if ( chi2 >= 2.0 ) return false; //signal region
-
-    // Signal Region W mass cut
-//    if (!isZplusCR_) if (std::abs(invWmass) > invWMassCut_) return false;
-
-    // Z+jets Control Region
-/*    else {
-        if (std::abs(invWmass) <= invWMassCut_) return false;
-        if (event.metPF2PATEt >= metDileptonCut_) return false;
-    }
-*/
-//    if (doPlots_) plotMap["wMass"]->fillAllPlots(event, eventWeight);
-//    if (doPlots_ || fillCutFlow_) cutFlow.Fill(4.5, eventWeight);
+//    if (doPlots_) plotMap["higgsSel"]->fillAllPlots(event, eventWeight);
+//    if (doPlots_ || fillCutFlow_) cutFlow.Fill(3.5, eventWeight);
 
     return true;
 }
@@ -680,6 +653,9 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                 event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
                 event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
 
+//                if (!event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
+//                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] > 1.0) continue;
+
                 float neutral_iso {0.0}, neutral_iso1 {0.0}, neutral_iso2 {0.0};
                 float ch_iso {0.0}, ch_iso1 {0.0}, ch_iso2 {0.0};
                 float pu_iso {0.0}, pu_iso1 {0.0}, pu_iso2 {0.0};
@@ -756,7 +732,7 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
             double delR { chs1.DeltaR(chs2) };
             double higgsMass { (chs1+chs2+event.zPairLeptons.first+event.zPairLeptons.second).M() };
 
-            if ( delR < maxChsDeltaR_ && (higgsMass - 125.) < higgsTolerence_ ) {
+            if ( delR < maxChsDeltaR_ ) {
                 event.chsPairVec.first  = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
                 event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
                 event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chs[i] : chs[j];
@@ -778,6 +754,7 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
 
                     TLorentzVector packedCandVec;
                     packedCandVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
+                      
 
                     if ( event.packedCandsCharge[k] == 0 ) {
                         if ( packedCandVec.Pt() < 0.5 ) continue;

@@ -353,9 +353,9 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
     std::string canvasName = plotName + subLabel + postfix_;
     int pos = 0;
     if (writeExtraText) canvasName += "-prelim";
-    if (is2016_) canvasName += "-2016";
-    else if (is2018_) canvasName += "-2018";
-    else canvasName += "-2017";
+    if (is2016_) canvasName += "_2016";
+    else if (is2018_) canvasName += "_2018";
+    else canvasName += "_2017";
 
     TCanvas* canvy = new TCanvas((canvasName).c_str(), (canvasName).c_str(), 50, 50, W, H);
     canvy->cd();
@@ -586,7 +586,7 @@ void HistogramPlotter::CMS_lumi(TPad* pad, int posX)
     // in unit of the top margin size
     float lumiTextSize = 0.6;
     float lumiTextOffset = 0.2;
-    float cmsTextSize = 0.75;
+    float cmsTextSize = 0.5;
     float cmsTextOffset = 0.1; // only used in outOfFrame version
 
     float relPosX = 0.045;
@@ -597,7 +597,8 @@ void HistogramPlotter::CMS_lumi(TPad* pad, int posX)
     float extraOverCmsTextSize = 0.76;
 
     TString lumi_2016 = "35.86 fb^{-1}";
-    TString lumi_2017 = "41.86 fb^{-1}";
+//    TString lumi_2017 = "41.86 fb^{-1}";
+    TString lumi_2017 = "13.56 fb^{-1}";
     TString lumi_2018 = "59.74 fb^{-1}";
 
     bool drawLogo = false;

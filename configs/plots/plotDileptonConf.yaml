@@ -157,7 +157,7 @@ plots:
     xMin: 0.0
     nBins: 200
     fillExp: "chs1TrkIso"
-    xAxisLabel: "Track iso"
+    xAxisLabel: "Rel iso"
     cutStage: 0
   - title: "Subleading charged hadron track p_{T}"
     name: "chs2TrkPt"
@@ -189,7 +189,7 @@ plots:
     xMin: 0.0
     nBins: 200
     fillExp: "chs2TrkIso"
-    xAxisLabel: "Track iso"
+    xAxisLabel: "Rel iso"
     cutStage: 0
   - title: "E_{T}^{miss}"
     name: "met"
@@ -463,26 +463,26 @@ plots:
     fillExp: "zLepton2RelIso"
     xAxisLabel: "Relative isolation"
     cutStage: 0
-  - title: "Leading lepton track isolation (recalculated)"
+  - title: "Leading lepton relative isolation (recalculated)"
     name: "zLepton1NewIso"
     xMax: 1.0
     xMin: 0.
     nBins: 500
     fillExp: "zLepton1NewIso"
-    xAxisLabel: "Track isolation (recalculated)"
+    xAxisLabel: "Relative isolation (recalculated)"
     cutStage: 0
-  - title: "Subleading lepton track isolation (recalculated)"
+  - title: "Subleading lepton relative isolation (recalculated)"
     name: "zLepton2NewIso"
     xMax: 1.0
     xMin: 0.
     nBins: 500
     fillExp: "zLepton2NewIso"
-    xAxisLabel: "Track isolation (recalculated)"
+    xAxisLabel: "Relative isolation (recalculated)"
     cutStage: 0
   - title: "Dilepton Invariant Mass"
     name: "zPairMass"
     xMin: 0.
-    xMax: 5.
+    xMax: 4.
     nBins: 400
     fillExp: "zPairMass"
     xAxisLabel: "m_{ll} (GeV/c^{2})"
@@ -522,7 +522,7 @@ plots:
   - title: "Dilepton Invariant Mass (Refitted)"
     name: "zPairMassRefit"
     xMin: 0.
-    xMax: 5.
+    xMax: 4.
     nBins: 400
     fillExp: "zPairMassRefit"
     xAxisLabel: "m_{ll} (GeV/c^{2})"
@@ -594,8 +594,8 @@ plots:
   - title: "#DeltaR between charged hadron tracks"
     name: "chsPairDeltaR"
     xMin: 0.
-    xMax: 5.
-    nBins: 500
+    xMax: 0.4
+    nBins: 40
     fillExp: "chsPairDeltaR"
     xAxisLabel: "#Deltar"
     cutStage: 0
@@ -650,8 +650,8 @@ plots:
   - title: "#DeltaR between refitted charged hadron tracks"
     name: "chsPairDeltaRRefit"
     xMin: 0.
-    xMax: 5.
-    nBins: 500
+    xMax: 0.4
+    nBins: 40
     fillExp: "chsPairDeltaRRefit"
     xAxisLabel: "#Deltar"
     cutStage: 0
@@ -858,10 +858,10 @@ plots:
   - title: "#Delta(R) between the leptons"
     name: "zLepDelR"
     xMin: 0.
-    xMax: 5.
-    nBins: 500
+    xMax: 0.4
+    nBins: 40
     fillExp: "zLepDelR"
-    xAxisLabel: "#Deltar"
+    xAxisLabel: "#Delta(R) (cm)"
     cutStage: 0
   - title: "#Delta(#phi) between the leptons"
     name: "zLepDelPhi"
@@ -882,10 +882,10 @@ plots:
   - title: "#Delta(R) between the refitted leptons"
     name: "zLepDelRRefit"
     xMin: 0.
-    xMax: 5.
-    nBins: 500
+    xMax: 0.4
+    nBins: 40
     fillExp: "zLepDelRRefit"
-    xAxisLabel: "#Delta(r) (cm)"
+    xAxisLabel: "#Delta(R) (cm)"
     cutStage: 0
   - title: "#Delta(#phi) between the refitted leptons"
     name: "zLepDelPhiRefit"

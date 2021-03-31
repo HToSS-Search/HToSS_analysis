@@ -5,8 +5,12 @@ outputPostfix: "mumu"
 channelName: "mumu"
 datasets:
 # Z+jets
-  - "configs/2017/datasets/DYJetsToLL_M-10to50.yaml"
-  - "configs/2017/datasets/DYJetsToLL_M-50.yaml"
+  - "configs/2017/datasets/DYJetsToLL_Pt/DYJetsToLL_Pt-0To50.yaml"
+  - "configs/2017/datasets/DYJetsToLL_Pt/DYJetsToLL_Pt-50To100.yaml"
+  - "configs/2017/datasets/DYJetsToLL_Pt/DYJetsToLL_Pt-100To250.yaml"
+  - "configs/2017/datasets/DYJetsToLL_Pt/DYJetsToLL_Pt-250To400.yaml"
+  - "configs/2017/datasets/DYJetsToLL_Pt/DYJetsToLL_Pt-400To650.yaml"
+  - "configs/2017/datasets/DYJetsToLL_Pt/DYJetsToLL_Pt-650ToInf.yaml"
 # ttbar
   - "configs/2017/datasets/ttbar/ttbar_2l2nu.yaml"
   - "configs/2017/datasets/ttbar/ttbar_hadronic.yaml"

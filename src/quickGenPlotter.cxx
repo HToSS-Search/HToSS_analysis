@@ -50,7 +50,7 @@ const float invZMassCut_ {4.0}, chsMass_{0.13957018};
 
 // Diparticle cuts
 const double maxDileptonDeltaR_ {99999999.}, maxChsDeltaR_ {99999999.};
-const double higgsTolerence_ {10.};
+const double scalarMassCut_{4.0}, higgsTolerence_ {10.};
 
 // debug flag
 const bool useMCTruth_{false};
@@ -820,7 +820,22 @@ int main(int argc, char* argv[]) {
             h_numLooseMuons->Fill(event.muonIndexLoose.size());
 
             if ( event.muonIndexLoose.size() < 2 ) continue;
+/*
+            std::cout << "event.muonIndexLoose.size(): " << event.muonIndexLoose.size() << std::endl;
+            if (event.muonIndexLoose.size() == 2) {
+                std::cout << "deltaR: " << event.zPairLeptons.first.DeltaR(event.zPairLeptons.second) << std::endl;
+            }
+            else if (event.muonIndexLoose.size() == 3) {
+                TLorentzVector lepton1{event.muonPF2PATPX[event.muonIndexLoose[0]], event.muonPF2PATPY[event.muonIndexLoose[0]], event.muonPF2PATPZ[event.muonIndexLoose[0]], event.muonPF2PATE[event.muonIndexLoose[0]]};
+                TLorentzVector lepton2{event.muonPF2PATPX[event.muonIndexLoose[1]], event.muonPF2PATPY[event.muonIndexLoose[1]], event.muonPF2PATPZ[event.muonIndexLoose[1]], event.muonPF2PATE[event.muonIndexLoose[1]]};
+                TLorentzVector lepton3{event.muonPF2PATPX[event.muonIndexLoose[2]], event.muonPF2PATPY[event.muonIndexLoose[2]], event.muonPF2PATPZ[event.muonIndexLoose[2]], event.muonPF2PATE[event.muonIndexLoose[2]]};
 
+       	       	std::cout << "lep1+lep2 deltaR: " << lepton1.DeltaR(lepton2) << std::endl;
+       	       	std::cout << "lep1+lep3 deltaR: " << lepton1.DeltaR(lepton3) << std::endl;
+       	       	std::cout << "lep2+lep3 deltaR: " << lepton2.DeltaR(lepton3) << std::endl;
+
+       	    }
+*/
             int nScalarMuons {0}, nDirectScalarMuons {0};
             for ( int i = 0; i < event.muonIndexLoose.size(); i++ ) {
                 if (event.genMuonPF2PATScalarAncestor[event.muonIndexLoose[i]]) nScalarMuons++; 
@@ -831,6 +846,8 @@ int main(int argc, char* argv[]) {
             h_numRecoDirectScalarMuons->Fill(nDirectScalarMuons);
 
             if ( !getDileptonCand( event, event.muonIndexLoose, useMCTruth_ ) ) continue;
+            const double dileptonMass {(event.zPairLeptons.first + event.zPairLeptons.second).M()};
+            if (dileptonMass > scalarMassCut_) continue;
 
             h_recoDimuonDeltaR->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second));
             h_recoDimuonMass->Fill( (event.zPairLeptons.first + event.zPairLeptons.second).M() );

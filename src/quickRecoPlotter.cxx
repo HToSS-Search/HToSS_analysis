@@ -50,8 +50,8 @@ const float looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {30.}, l
 const float invZMassCut_ {10.0}, chsMass_{0.13957018};
 
 // Diparticle cuts
-double maxDileptonDeltaR_ {0.2}, maxChsDeltaR_ {0.4};
-double higgsTolerence_ {10.};
+double maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4};
+double higgsTolerence_ {999.};
 
 int main(int argc, char* argv[]) {
     auto timerStart = std::chrono::high_resolution_clock::now(); 
