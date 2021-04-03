@@ -2432,14 +2432,8 @@ class AnalysisEvent
     std::vector<double> muonMomentumSF;
     std::vector<double> jetSmearValue;
 
-    std::vector<int> electronIndexTight;
-    std::vector<int> electronIndexLoose;
-    std::vector<int> muonIndexTight;
-    std::vector<int> muonIndexLoose;
-    std::vector<int> photonIndexTight;
-    std::vector<int> photonIndexLoose;
-    std::vector<int> jetIndex;
-    std::vector<int> displacedJetIndex;
+    std::vector<int> patMuonIndex;
+    std::vector<int> packedCandMuonIndex;
     std::vector<int> chsIndex;
     double totalJetHt;
     double selectedJetIncHt;
@@ -3793,14 +3787,8 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
   muonMomentumSF = {};
   jetSmearValue = {};
 
-  electronIndexTight = {};
-  electronIndexLoose = {};
-  muonIndexTight = {};
-  muonIndexLoose = {};
-  photonIndexTight = {};
-  photonIndexLoose = {};
-  jetIndex = {};
-  displacedJetIndex = {};
+  patMuonIndex = {};
+  packedCandMuonIndex = {};
   chsIndex = {};
   totalJetHt = -1.0;
   selectedJetIncHt = -1.0;

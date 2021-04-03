@@ -39,12 +39,12 @@
 
 
 SimpleAnalysis::SimpleAnalysis()
-  : is2016_{false}
-  , is2018_{false}
-  , muonPtLeading_{30.0}
-  , muonPt_{5.0}
-  , muonEta_{2.40}
-  , debug_{false}
+  : is2016_{false}        // Flag not to be changed by user
+  , is2018_{false}        // Flag not to be changed by user
+  , muonPtLeading_{30.0}  // As only single muon trigger should be used normally, this is set to 30., if double muon trigger is used, this needs changing.
+  , muonPt_{5.0}          // As above
+  , muonEta_{2.40}        // Max muon eta, should not be changed by user
+  , debug_{false}         // Set to true to enable debug couts
 {}
 SimpleAnalysis::~SimpleAnalysis() {}
 
@@ -180,19 +180,24 @@ void SimpleAnalysis::runMainAnalysis() {
       eventWeight *= datasetWeight;
 
       // Do functions that do not require met filters or triggers
-      fillGeneratorPlots(event);
+//      fillGeneratorPlots(event);
 
       // Do functions that have met filters applied
       if( !event.metFilters() ) continue;
 
       fillMuonReconstructionPlots(event, eventWeight); // look at different triggers within this, so no blanket trigger application
 
+      if ( !event.muTrig() ) continue; // If single muon trigger does not fire
+
 
       // Get physics objects
-      event.muonIndexLoose = getMuons(event); // Set event's public member variable to contain (loose) muons with selected muons
-      getMuonCand(event, event.muonIndexLoose); // Setup dimuon candidate
-      event.chsIndex = getChargedHadronTracks(event);
-      getDihadronCand(event, event.chsIndex); // Setup dihadron candidate
+      std::pair<int, int> patMuons = getPatMuonPair(event); // Get PAT muons inidices
+      if (patMuons.first == -1 || patMuons.second == -1) continue; // If there is no valid muon pair in this event (i.e. no muon index returned), skip event
+
+      std::pair<int, int> packedCandMuons = getPackedCandMuonPair(event, patMuons.first, patMuons.second); // Get packedCands associated with PAT muons
+
+
+//      = getDihadronPair(event, event.chsIndex); // Setup dihadron candidate
 
       fillPackedCandidatePlots(event, eventWeight);	     
       fillMuonMomentumComparisonPlots(event, eventWeight);
@@ -203,50 +208,125 @@ void SimpleAnalysis::runMainAnalysis() {
 
 }    
 
-std::vector<int> SimpleAnalysis::getMuons(const AnalysisEvent& event) const {
-  std::vector<int> muons;
+std::pair<int, int> SimpleAnalysis::getPatMuonPair(const AnalysisEvent& event) const {
 
-  for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-    if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && std::abs(event.muonPF2PATEta[i]) < muonEta_) {
-      if (event.muonPF2PATPt[i] >= (muons.empty() ? muonPtLeading_ : muonPt_)) muons.emplace_back(i);
+    // ADM - as CB's muon selection code is embedded in plot making bits in SimpleAnalysis::fillMuonReconstructionPlots,
+    // I have rewritten it in a simpler standalone form for now
+
+    int muon1 {-1}, muon2{-1}; // Selected muon indices
+
+    // First identify muons that pass baseline criteria
+    std::vector<int> muons {}; // empty vector of muon indices
+    
+    for (int i{0}; i < event.numMuonPF2PAT; i++)  { // loop over all PAT muons
+        // If the PAT muon passes Loose ID and is a PF muon and has an absolute eta greater than the maximum, check pT
+        if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && std::abs(event.muonPF2PATEta[i]) < muonEta_) {
+            // If the muon index vector is empty, check leading pT cut first, otherwise, lower pT cut
+            if (event.muonPF2PATPt[i] >= (muons.empty() ? muonPtLeading_ : muonPt_)) muons.emplace_back(i);
+        }
     }
+
+    // Now construct our dimuon candidate
+    // Loop over all possible pairs of muons. As PAT muons are pT ordered, the highest pT pairings will be considered first
+    for ( unsigned int i{0}; i < muons.size(); i++ ) {
+        for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
+            if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue; // Check opposite charges
+
+            // Connstruct TLorentzVectors to make accessing quantities easier
+            TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
+            TLorentzVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
+//            const double delR { lepton1.DeltaR(lepton2) }; // Define deltaR if used when constructing pair
+//            if ( delR < maxDileptonDeltaR_  ) { // optional delR requirement. CB does not use, so commented out
+              // While muon[i] should be the leading muon, check explicitly, and set leading muon's indice == muon1, and vice versa for subleading muon
+              muon1 = lepton1.Pt() > lepton2.Pt() ? muons[i] : muons[j];
+              muon2 = lepton1.Pt() > lepton2.Pt() ? muons[j] : muons[i];
+//            } // End delR requirement
+
+        }
+    }
+
+    return std::make_pair(muon1, muon2); // Return indices
+
+}
+
+std::pair<int, int> SimpleAnalysis::getPackedCandMuonPair(const AnalysisEvent& event, const int& patMuon1, const int& patMuon2) const {
+
+    int muon1 {-1}, muon2 {-2};
+
+    // This should NEVER happen as all selected muon pairs should be built from PF muons, but in case something has gone horribly wrong ...
+    // ... and there is not PF cand building block associated with the PAT muons, return a failsafe value that will be caught
+   if (event.muonPF2PATNumSourceCandidates[patMuon1] < 1 || event.muonPF2PATNumSourceCandidates[patMuon2] < 1 ) return std::make_pair(muon1, muon2);
+    // Otherwise 
+    else return std::make_pair(event.muonPF2PATPackedCandIndex[patMuon1], event.muonPF2PATPackedCandIndex[patMuon2]);
+}
+
+std::pair<int, int> SimpleAnalysis::getDihadronPair(const AnalysisEvent& event, const int& patMuon1, const int& patMuon2) const {
+
+  Int_t pionIndex1{-1}; Int_t pionIndex2{-1};
+//  Int_t muIndex1{-1}; Int_t muIndex2{-1}; // ADM - commented out as no longer required
+
+  Float_t pionpt1{-1}; Float_t pionpt2{-1};
+//  Float_t mupt1{-1}; Float_t mupt2{-1}; // ADM - commented out as no longer required
+
+  for(Int_t k{0};k<event.numPackedCands;k++) {
+      // ADM - add check to not consider any packed cand that was associated with our selected muons
+      if ( k == event.muonPF2PATPackedCandIndex[patMuon1] || k == event.muonPF2PATPackedCandIndex[patMuon2] ) continue;
+
+      // ADM - add charge and track details check - we only want muons of hadrons with charges/tracks
+      if (event.packedCandsCharge[k] == 0 ) continue;
+      if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
+
+       // ADM - rest is CB's code but copied and pasted into this new struture
+       const int packedId {event.packedCandsPdgId[k]};
+
+      //Find the hadrons (pions)
+
+      if(std::abs(packedId)==211 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons) 
+          if(event.packedCandsPseudoTrkPt[k]>pionpt1){
+	      pionpt2=pionpt1;
+	      pionpt1=event.packedCandsPseudoTrkPt[k];
+	      pionIndex2=pionIndex1;
+	      pionIndex1=k;
+	    }
+	    else if(event.packedCandsPseudoTrkPt[k]>pionpt2){
+	      pionpt2=event.packedCandsPseudoTrkPt[k];
+	      pionIndex2=k;
+	    }
+	  }
+
+// Remove this bit - get packed Cand muons associated from PAT muons
+/*
+	  if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
+	    if(event.packedCandsPseudoTrkPt[k]>mupt1){
+	      mupt2=mupt1;
+	      mupt1=event.packedCandsPseudoTrkPt[k];
+	      muIndex2=muIndex1;
+	      muIndex1=k;
+		    }
+	    else if(event.packedCandsPseudoTrkPt[k]>mupt2){
+	      mupt2=event.packedCandsPseudoTrkPt[k];
+	      muIndex2=k;
+	    }
+      }
+*/
   }
-  return muons;
+  return std::make_pair(pionIndex1, pionIndex2); // ADM - return the indices of the selected two pions
 }
 
-std::vector<int> SimpleAnalysis::getChargedHadronTracks(const AnalysisEvent& event) const	{
-  std::vector<int> chs;
-  for (Int_t k = 0; k < event.numPackedCands; k++) {
-    if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
-    if (event.packedCandsCharge[k] == 0 ) continue;
-    if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
-    // CB does not apply a pT cut on charged hadrons?
-//    TLorentzVector lVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
-//    if (lVec.Pt() < 1.0) continue;
-
-    chs.emplace_back(k);
-  }
-  return chs;
-}
-
-void SimpleAnalysis::getMuonCand(AnalysisEvent& event, const std::vector<int>& muons) const {
-    return;
-}
-
-void SimpleAnalysis::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) const {
-    return;
-}
-
-int SimpleAnalysis::getMuonTrackPairIndex(const AnalysisEvent& event) const { 
+int SimpleAnalysis::getMuonTrackPairIndex(const AnalysisEvent& event, const int& muon1, const int& muon2) const { 
+  // Loop over all possible refitted muon track pairs
   for (int i{0}; i < event.numMuonTrackPairsPF2PAT; i++) {
-    if (event.muonTkPairPF2PATIndex1[i] == event.zPairIndex.first && event.muonTkPairPF2PATIndex2[i] == event.zPairIndex.second) return i;
+    // If the two tracks used to make the refitted track pair are the same as the selected PAT muons ...
+    if (event.muonTkPairPF2PATIndex1[i] == muon1 && event.muonTkPairPF2PATIndex2[i] == muon2) return i;
   }
   return -1;
 }
 
-int SimpleAnalysis::getChsTrackPairIndex(const AnalysisEvent& event) const { 
+int SimpleAnalysis::getChsTrackPairIndex(const AnalysisEvent& event, const int& chs1, const int& chs2) const { 
+  // Loop over all possible refitted chatged hadron track pairs
   for (int i{0}; i < event.numChsTrackPairs; i++) {
-    if (event.chsTkPairIndex1[i] == event.chsPairIndex.first && event.chsTkPairIndex2[i] == event.chsPairIndex.second) return i;
+    // If the two tracks used to make the refitted track pair are the same as the selected charged hadrons ...
+    if (event.chsTkPairIndex1[i] == chs1 && event.chsTkPairIndex2[i] == chs2) return i;
   }
   return -1;
 }
@@ -572,13 +652,14 @@ void SimpleAnalysis::fillGeneratorPlots(AnalysisEvent& event) const {
 
 void SimpleAnalysis::fillMuonReconstructionPlots(AnalysisEvent& event, double& eventWeight) const {
   /// BEGIN Muon Reconstruction
-  std::vector<Int_t> passedMuons;
+
+  std::vector<Int_t> passedMuons; // vector of PF+PAT muons that pass selection criteria
  
-  uint singleFlag{0}; uint doubleFlag{0};
+  uint singleFlag{0}; uint doubleFlag{0}; // trigger pass flags
   std::vector<Int_t> singleIndex{}; std::vector<Int_t> doubleIndex{};
-          
   uint leadingFlag{0}; std::vector<Int_t> leadingIndex{}; 
-     
+
+  // ADM - Start loop over PAT muons     
   for(Int_t k{0}; k < event.numMuonPF2PAT; k++) {
              
     const Float_t muonRecPt   { event.muonPF2PATPt[k] };
@@ -627,6 +708,7 @@ void SimpleAnalysis::fillMuonReconstructionPlots(AnalysisEvent& event, double& e
 	}
       }
     }
+    // Finish loop over PAT muons
         
         
     //To show seperate turn-on curve for single or double muon trigger
@@ -634,9 +716,7 @@ void SimpleAnalysis::fillMuonReconstructionPlots(AnalysisEvent& event, double& e
       if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){ //Loose ID cut, |eta| < 2.4 
 	singleFlag++; singleIndex.emplace_back(k);
       }
-    }
-           
-	   
+    }   
 	       
     if(event.mumuTrig()){
       if(event.muonPF2PATLooseCutId[k]==1 && std::abs(muonRecEta)<2.4){//Loose ID cut, |eta| < 2.4 
@@ -649,11 +729,11 @@ void SimpleAnalysis::fillMuonReconstructionPlots(AnalysisEvent& event, double& e
   }//end of for-loop
 	       
   if(leadingFlag>0){
-    h_muonRecPtL->Fill(event.muonPF2PATPt[leadingIndex[0]], eventWeight);      
+    h_muonRecPtL->Fill(event.muonPF2PATPt[leadingIndex[0]], eventWeight); // If muon[0] is the leading muon, plot pT of muon[0]
   }
 	       
   if(leadingFlag>1){ 
-    h_muonRecPtS->Fill(event.muonPF2PATPt[leadingIndex[1]], eventWeight); 
+    h_muonRecPtS->Fill(event.muonPF2PATPt[leadingIndex[1]], eventWeight); // If muon[1+] (or greater) is the leading muon, plot pT of muon[1]
   }
   if(singleFlag>0){
     h_muonCutSingleL->Fill(event.muonPF2PATPt[singleIndex[0]], eventWeight); 
@@ -676,8 +756,6 @@ void SimpleAnalysis::fillPackedCandidatePlots(AnalysisEvent& event, double& even
                
   for(Int_t k{0};k<event.numPackedCands;k++) {
           
-    if(event.muTrig() || event.mumuTrig()){
-            
       const Int_t packedId {event.packedCandsPdgId[k]};
         
       h_packedCDxy->Fill(event.packedCandsDxy[k], eventWeight);
@@ -697,39 +775,10 @@ void SimpleAnalysis::fillPackedCandidatePlots(AnalysisEvent& event, double& even
 	  //Displacement from interaction point
 	  //                  h_displacedXY->Fill(event.packedCandsPseudoTrkVx[k],event.packedCandsPseudoTrkVy[k], eventWeight);
 	  //                  h_displacedRZ->Fill(std::abs(event.packedCandsPseudoTrkVz[k]),std::sqrt(event.packedCandsPseudoTrkVx[k]*event.packedCandsPseudoTrkVx[k]+event.packedCandsPseudoTrkVy[k]*event.packedCandsPseudoTrkVy[k]), eventWeight);
-              
-		      
-	  //Find the hadrons (pions)
-	  if(std::abs(packedId)==211 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons) 
-	    if(event.packedCandsPseudoTrkPt[k]>pionpt1){
-	      pionpt2=pionpt1;
-	      pionpt1=event.packedCandsPseudoTrkPt[k];
-	      pionIndex2=pionIndex1;
-	      pionIndex1=k;
-	    }
-	    else if(event.packedCandsPseudoTrkPt[k]>pionpt2){
-	      pionpt2=event.packedCandsPseudoTrkPt[k];
-	      pionIndex2=k;
-	    }
-	  }
-     
-	  if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
-	    if(event.packedCandsPseudoTrkPt[k]>mupt1){
-	      mupt2=mupt1;
-	      mupt1=event.packedCandsPseudoTrkPt[k];
-	      muIndex2=muIndex1;
-	      muIndex1=k;
-	    }
-	    else if(event.packedCandsPseudoTrkPt[k]>mupt2){
-	      mupt2=event.packedCandsPseudoTrkPt[k];
-	      muIndex2=k;
-	    }
-	  }
 			
 	}
       }
-    }
-        
+       
 	      
   }//end of for-loop
     
@@ -1139,76 +1188,76 @@ void SimpleAnalysis::fillPackedCandidatePlots(AnalysisEvent& event, double& even
       }//close wider window
 	  
 	   
-    }//close muon!=-1
-	     
-	     
+    }//close muon!=-1	     
            
 	      
   }//end of for loop packed candidates
 }
 
 void SimpleAnalysis::fillMuonMomentumComparisonPlots(AnalysisEvent& event, double& eventWeight) const {
-  //Muon momentum comparison    
-  /*
-    if(event.muTrig()){ 	      
-	      
+  //Muon momentum comparison
+/*
+    // muIndex et al were defined in a different function
+    // here: use selected PF muons indices to access their matched packed PF cand
+    const int muIndex1 {event.muonPF2PATPackedCandIndex[event.zPairIndex.first]}, muIndex2 {event.muonPF2PATPackedCandIndex[event.zPairIndex.second]};
+
+
     //Packed candidates     
     if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsCharge[muIndex1]==-(event.packedCandsCharge[muIndex2])){
     
-    if(event.packedCandsHasTrackDetails[muIndex1]==1){
-    h_muon1packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex1], eventWeight);
-    }
-    if(event.packedCandsHasTrackDetails[muIndex2]==1){
-    h_muon2packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex2], eventWeight);
-    }
+        if(event.packedCandsHasTrackDetails[muIndex1]==1){
+            h_muon1packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex1], eventWeight);
+        }
+        if(event.packedCandsHasTrackDetails[muIndex2]==1){
+            h_muon2packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex2], eventWeight);
+        }
 	   
-    TLorentzVector muonpackedPt1 {event.packedCandsPx[muIndex1],event.packedCandsPy[muIndex1],event.packedCandsPz[muIndex1],event.packedCandsE[muIndex1]}; 
-    TLorentzVector muonpackedPt2 {event.packedCandsPx[muIndex2],event.packedCandsPy[muIndex2],event.packedCandsPz[muIndex2],event.packedCandsE[muIndex2]}; 
-    h_muon1packedPt->Fill(muonpackedPt1.Pt(), eventWeight); 
-    h_muon2packedPt->Fill(muonpackedPt2.Pt(), eventWeight); 
+        TLorentzVector muonpackedPt1 {event.packedCandsPx[muIndex1],event.packedCandsPy[muIndex1],event.packedCandsPz[muIndex1],event.packedCandsE[muIndex1]}; 
+        TLorentzVector muonpackedPt2 {event.packedCandsPx[muIndex2],event.packedCandsPy[muIndex2],event.packedCandsPz[muIndex2],event.packedCandsE[muIndex2]}; 
+        h_muon1packedPt->Fill(muonpackedPt1.Pt(), eventWeight); 
+        h_muon2packedPt->Fill(muonpackedPt2.Pt(), eventWeight); 
 		
-    h_muon1packedInvMass->Fill(muonpackedPt1.M(), eventWeight); 
-    h_muon2packedInvMass->Fill(muonpackedPt2.M(), eventWeight);
-    h_muon12packedInvMass->Fill((muonpackedPt1+muonpackedPt2).M(), eventWeight); 
+        h_muon1packedInvMass->Fill(muonpackedPt1.M(), eventWeight); 
+        h_muon2packedInvMass->Fill(muonpackedPt2.M(), eventWeight);
+        h_muon12packedInvMass->Fill((muonpackedPt1+muonpackedPt2).M(), eventWeight); 
     }
+
     for(Int_t k{0}; k<event.numPackedCands;k++){
-    if(event.packedCandsHasTrackDetails[k]==1){
-    h_muonipackedPtTrk->Fill(event.packedCandsPseudoTrkPt[k], eventWeight);
-    }	
-    TLorentzVector muonpackedPti {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]}; 
-    h_muonipackedPt->Fill(muonpackedPti.Pt(), eventWeight);  
-    h_muonipackedInvMass->Fill(muonpackedPti.M(), eventWeight); 
+        if(event.packedCandsHasTrackDetails[k]==1){
+            h_muonipackedPtTrk->Fill(event.packedCandsPseudoTrkPt[k], eventWeight);
+        }
+        TLorentzVector muonpackedPti {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]}; 
+        h_muonipackedPt->Fill(muonpackedPti.Pt(), eventWeight);  
+        h_muonipackedInvMass->Fill(muonpackedPti.M(), eventWeight); 
     }
-	 
-	      
+ 
 	      
     //PAT muons      
     for(Int_t k{0}; k<event.numMuonPF2PAT;k++){ 
-    if(event.muonPF2PATInnerTkPt[k]>muonpt1){
-    muonpt2=muonpt1;
-    muonpt1=event.muonPF2PATInnerTkPt[k];
-    muonIndex2=muonIndex1;
-    muonIndex1=k;
-    }
-    else if(event.muonPF2PATInnerTkPt[k]>muonpt2){
-    muonpt2=event.muonPF2PATInnerTkPt[k];
-    muonIndex2=k;
-    }
-    h_muoniRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k], eventWeight);
-    h_muoniRecPt->Fill(event.muonPF2PATPt[k], eventWeight);
+        if(event.muonPF2PATInnerTkPt[k]>muonpt1){
+            muonpt2=muonpt1;
+            muonpt1=event.muonPF2PATInnerTkPt[k];
+            muonIndex2=muonIndex1;
+            muonIndex1=k;
+        }
+        else if(event.muonPF2PATInnerTkPt[k]>muonpt2){
+            muonpt2=event.muonPF2PATInnerTkPt[k];
+            muonIndex2=k;
+        }
+        h_muoniRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k], eventWeight);
+        h_muoniRecPt->Fill(event.muonPF2PATPt[k], eventWeight);
     }  
 	
-    if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){		  
-	  
-    }    
+//    if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){		  
+//    }    
 	     
 	      
 	
 	      
     //Tracks associated
     if(muonIndex1!=-1 && muonIndex2!=-1 && event.muonPF2PATInnerTkPt[muonIndex1]!=0 && event.muonPF2PATInnerTkPt[muonIndex2]!=0 && event.muonPF2PATCharge[muonIndex1]==-(event.muonPF2PATCharge[muonIndex2])){
-    h_muon1RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex1], eventWeight);
-    h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex2], eventWeight);  
+        h_muon1RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex1], eventWeight);
+        h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muonIndex2], eventWeight);  
     } 
     //No tracks associated      
     h_muon1RecPt->Fill(event.muonPF2PATPt[0], eventWeight);
@@ -1226,33 +1275,32 @@ void SimpleAnalysis::fillMuonMomentumComparisonPlots(AnalysisEvent& event, doubl
     //Refitted tracks muons   
     for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
 	   
-    if(event.muonTkPairPF2PATIndex1[k]==muonIndex1 && event.muonTkPairPF2PATIndex2[k]==muonIndex2){	
+        if(event.muonTkPairPF2PATIndex1[k]==muonIndex1 && event.muonTkPairPF2PATIndex2[k]==muonIndex2){	
 	   
-    h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k], eventWeight);
-    h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k], eventWeight); 
+            h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k], eventWeight);
+            h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k], eventWeight); 
 		   
-    if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsCharge[muIndex1]==-(event.packedCandsCharge[muIndex2])){
+            if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsCharge[muIndex1]==-(event.packedCandsCharge[muIndex2])){
 
-    TLorentzVector VecMu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], event.packedCandsE[muIndex1]};
-    TLorentzVector VecMu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], event.packedCandsE[muIndex2]};
+                TLorentzVector VecMu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], event.packedCandsE[muIndex1]};
+                TLorentzVector VecMu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], event.packedCandsE[muIndex2]};
 	 
-    h_muon1refitInvMass->Fill(VecMu1.M(), eventWeight);
-    h_muon2refitInvMass->Fill(VecMu2.M(), eventWeight);
-    h_muon12refitInvMass->Fill((VecMu1+VecMu2).M(), eventWeight);
-    }
+                h_muon1refitInvMass->Fill(VecMu1.M(), eventWeight);
+                h_muon2refitInvMass->Fill(VecMu2.M(), eventWeight);
+                h_muon12refitInvMass->Fill((VecMu1+VecMu2).M(), eventWeight);
+            }
 		  
-    TLorentzVector Mu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2))};
-    TLorentzVector Mu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], std::sqrt(event.muonTkPairPF2PATTk2P2[k]+std::pow(0.106,2))};
+            TLorentzVector Mu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2))};
+            TLorentzVector Mu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], std::sqrt(event.muonTkPairPF2PATTk2P2[k]+std::pow(0.106,2))};
 	 
-    h_refit1InvMass->Fill(Mu1.M(), eventWeight);
-    h_refit2InvMass->Fill(Mu2.M(), eventWeight);
-    h_refit12InvMass->Fill((Mu1+Mu2).M(), eventWeight);
+            h_refit1InvMass->Fill(Mu1.M(), eventWeight);
+            h_refit2InvMass->Fill(Mu2.M(), eventWeight);
+            h_refit12InvMass->Fill((Mu1+Mu2).M(), eventWeight);
 	
 		   
-    //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k], eventWeight);
-    //h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]), );
-             
-    }
+            //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k], eventWeight);
+            //h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]), );     
+        }
 	     
     } 
 	
@@ -1261,18 +1309,15 @@ void SimpleAnalysis::fillMuonMomentumComparisonPlots(AnalysisEvent& event, doubl
     for(Int_t k{0}; k<event.numChsTrackPairs;k++){
     if(pionIndex1!=-1 && pionIndex2!=-1 && event.packedCandsPseudoTrkPt[pionIndex1]!=0 && event.packedCandsPseudoTrkPt[pionIndex2]!=0 && event.packedCandsCharge[pionIndex1]==-(event.packedCandsCharge[pionIndex2])){
  
-    if(event.chsTkPairIndex1[k]==pionIndex1 && event.chsTkPairIndex2[k]==pionIndex2){	
+        if(event.chsTkPairIndex1[k]==pionIndex1 && event.chsTkPairIndex2[k]==pionIndex2){	
 		   
-    TLorentzVector pi1  {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
-    TLorentzVector pi2  {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
+            TLorentzVector pi1  {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
+            TLorentzVector pi2  {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
 	 
-    h_pionre12InvMass->Fill((pi1+pi2).M(), eventWeight);
+            h_pionre12InvMass->Fill((pi1+pi2).M(), eventWeight);
+        }
     }
-    }
-    }
-	  	      
-    }//end of single/double muon trigger
-  */
+*/
 }
 
 void SimpleAnalysis::setupPlots() {

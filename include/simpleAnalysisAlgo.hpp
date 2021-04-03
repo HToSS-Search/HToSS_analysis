@@ -28,15 +28,14 @@ class SimpleAnalysis
     std::string pdgIdCode (const Int_t pdgId, const bool unicode = false) const; // declaring function called below main(); pdgIdCode translate stored numerical pdgId code into a string: unicode for output to string, or latex style for ROOT plotting
     bool scalarGrandparent(const AnalysisEvent& event, const Int_t& k, const Int_t& pdgId_) const ;
 
-    std::vector<int> getMuons(const AnalysisEvent& event) const;
-    std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) const;
-    void getMuonCand(AnalysisEvent& event, const std::vector<int>& muons) const;
-    void getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) const;
+    std::pair<int, int> getPatMuonPair (const AnalysisEvent& event) const;
+    std::pair<int, int> getPackedCandMuonPair(const AnalysisEvent& event, const int& muon1, const int& muon2) const;
+    std::pair<int, int> getDihadronPair(const AnalysisEvent& event, const int& muon1, const int& muon2) const;
 
     // grab the muon track pair index for selected muons
-    int getMuonTrackPairIndex(const AnalysisEvent& event) const;
+    int getMuonTrackPairIndex(const AnalysisEvent& event, const int& muon1, const int& muon2) const;
     // grab the chs track pair index for selected muons
-    int getChsTrackPairIndex(const AnalysisEvent& event) const;
+    int getChsTrackPairIndex(const AnalysisEvent& event, const int& chs1, const int& chs2) const;
 
     void fillGeneratorPlots(AnalysisEvent& event) const;
     void fillMuonReconstructionPlots(AnalysisEvent& event, double& eventWeight) const;
