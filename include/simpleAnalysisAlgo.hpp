@@ -37,10 +37,10 @@ class SimpleAnalysis
     // grab the chs track pair index for selected muons
     int getChsTrackPairIndex(const AnalysisEvent& event, const int& chs1, const int& chs2) const;
 
-    void fillGeneratorPlots(AnalysisEvent& event) const;
-    void fillMuonReconstructionPlots(AnalysisEvent& event, double& eventWeight) const;
-    void fillPackedCandidatePlots(AnalysisEvent& event, double& eventWeight) const;
-    void fillMuonMomentumComparisonPlots(AnalysisEvent& event, double& eventWeight) const;
+    void fillGeneratorPlots(const AnalysisEvent& event) const;
+    void fillMuonReconstructionPlots(const AnalysisEvent& event, double& eventWeight, const int& muIndex1, const int& muIndex2) const;
+    void fillPackedCandidatePlots(const AnalysisEvent& event, double& eventWeight, const int& muIndex1, const int& muIndex2, const int& pionIndex1, const int& pionIndex2) const;
+    void fillMuonMomentumComparisonPlots(const AnalysisEvent& event, double& eventWeight) const;
 
     // variables
 
@@ -49,6 +49,13 @@ class SimpleAnalysis
     double muonPtLeading_;
     double muonPt_;
     double muonEta_;
+    double packedCandMuonDeltaR_;
+    double packedCandPionDeltaR_;
+    double packedCandKaonDeltaR_;
+    double isoConeSize_;
+    double higgsMass_;
+    double higgsMassWindow_;
+    double higgsMassWideWindow_;
 
     std::string config;
     std::vector<Dataset> datasets;
