@@ -216,8 +216,9 @@ void SimpleAnalysis::runMainAnalysis() {
       if (packedCandMuons.first == -1 || packedCandMuons.second == -1 || packedCandHadrons.first == -1 || packedCandHadrons.second == -1) continue;
 
       // Fill other plots now!
-      fillPackedCandidatePlots(event, eventWeight, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);	     
-      fillMuonMomentumComparisonPlots(event, eventWeight);
+      // All of	these plots use	packed PF muons, so the ones corresponding to the PAT muons are provided
+      fillPackedCandidatePlots(event, eventWeight, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second); 
+      fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
 
     } // End loop over all events
 
@@ -1132,130 +1133,90 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }//end of for loop packed candidates
 }
 
-void SimpleAnalysis::fillMuonMomentumComparisonPlots(const AnalysisEvent& event, double& eventWeight) const {
+void SimpleAnalysis::fillMuonMomentumComparisonPlots(const AnalysisEvent& event, double& eventWeight, const int& patMuIndex1, const int& patMuIndex2, const int& packedMuIndex1, const int& packedMuIndex2, const int& chsIndex1, const int& chsIndex2) const {
   //Muon momentum comparison
-  /*
-  // muIndex et al were defined in a different function
-  // here: use selected PF muons indices to access their matched packed PF cand
-  const int muIndex1 {event.muonPF2PATPackedCandIndex[event.zPairIndex.first]}, muIndex2 {event.muonPF2PATPackedCandIndex[event.zPairIndex.second]};
-
 
   //Packed candidates     
-  if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsCharge[muIndex1]==-(event.packedCandsCharge[muIndex2])){
+  if (packedMuIndex1!=-1 && packedMuIndex2!=-1 && event.packedCandsPseudoTrkPt[packedMuIndex1]!=0 && event.packedCandsPseudoTrkPt[packedMuIndex2]!=0) {
     
-  if(event.packedCandsHasTrackDetails[muIndex1]==1){
-  h_muon1packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex1], eventWeight);
-  }
-  if(event.packedCandsHasTrackDetails[muIndex2]==1){
-  h_muon2packedPtTrk->Fill(event.packedCandsPseudoTrkPt[muIndex2], eventWeight);
-  }
+    if (event.packedCandsHasTrackDetails[packedMuIndex1]==1) h_muon1packedPtTrk->Fill(event.packedCandsPseudoTrkPt[packedMuIndex1], eventWeight);
+    if (event.packedCandsHasTrackDetails[packedMuIndex2]==1) h_muon2packedPtTrk->Fill(event.packedCandsPseudoTrkPt[packedMuIndex2], eventWeight);
 	   
-  TLorentzVector muonpackedPt1 {event.packedCandsPx[muIndex1],event.packedCandsPy[muIndex1],event.packedCandsPz[muIndex1],event.packedCandsE[muIndex1]}; 
-  TLorentzVector muonpackedPt2 {event.packedCandsPx[muIndex2],event.packedCandsPy[muIndex2],event.packedCandsPz[muIndex2],event.packedCandsE[muIndex2]}; 
-  h_muon1packedPt->Fill(muonpackedPt1.Pt(), eventWeight); 
-  h_muon2packedPt->Fill(muonpackedPt2.Pt(), eventWeight); 
+    TLorentzVector muonpackedPt1 {event.packedCandsPx[packedMuIndex1],event.packedCandsPy[packedMuIndex1],event.packedCandsPz[packedMuIndex1],event.packedCandsE[packedMuIndex1]}; 
+    TLorentzVector muonpackedPt2 {event.packedCandsPx[packedMuIndex2],event.packedCandsPy[packedMuIndex2],event.packedCandsPz[packedMuIndex2],event.packedCandsE[packedMuIndex2]}; 
+    h_muon1packedPt->Fill(muonpackedPt1.Pt(), eventWeight); 
+    h_muon2packedPt->Fill(muonpackedPt2.Pt(), eventWeight); 
 		
-  h_muon1packedInvMass->Fill(muonpackedPt1.M(), eventWeight); 
-  h_muon2packedInvMass->Fill(muonpackedPt2.M(), eventWeight);
-  h_muon12packedInvMass->Fill((muonpackedPt1+muonpackedPt2).M(), eventWeight); 
+    h_muon1packedInvMass->Fill(muonpackedPt1.M(), eventWeight); 
+    h_muon2packedInvMass->Fill(muonpackedPt2.M(), eventWeight);
+    h_muon12packedInvMass->Fill((muonpackedPt1+muonpackedPt2).M(), eventWeight); 
   }
 
   for(Int_t k{0}; k<event.numPackedCands;k++){
-  if(event.packedCandsHasTrackDetails[k]==1){
-  h_muonipackedPtTrk->Fill(event.packedCandsPseudoTrkPt[k], eventWeight);
-  }
-  TLorentzVector muonpackedPti {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]}; 
-  h_muonipackedPt->Fill(muonpackedPti.Pt(), eventWeight);  
-  h_muonipackedInvMass->Fill(muonpackedPti.M(), eventWeight); 
+    if(event.packedCandsHasTrackDetails[k]==1){
+      h_muonipackedPtTrk->Fill(event.packedCandsPseudoTrkPt[k], eventWeight);
+    }
+    TLorentzVector muonpackedPti {event.packedCandsPx[k],event.packedCandsPy[k],event.packedCandsPz[k],event.packedCandsE[k]}; 
+    h_muonipackedPt->Fill(muonpackedPti.Pt(), eventWeight);  
+    h_muonipackedInvMass->Fill(muonpackedPti.M(), eventWeight); 
   }
  
 	      
   //PAT muons      
   for(Int_t k{0}; k<event.numMuonPF2PAT;k++){ 
-  if(event.muonPF2PATInnerTkPt[k]>muonpt1){
-  muonpt2=muonpt1;
-  muonpt1=event.muonPF2PATInnerTkPt[k];
-  muIndex2=muIndex1;
-  muIndex1=k;
-  }
-  else if(event.muonPF2PATInnerTkPt[k]>muonpt2){
-  muonpt2=event.muonPF2PATInnerTkPt[k];
-  muIndex2=k;
-  }
-  h_muoniRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k], eventWeight);
-  h_muoniRecPt->Fill(event.muonPF2PATPt[k], eventWeight);
+    h_muoniRecPtTrk->Fill(event.muonPF2PATInnerTkPt[k], eventWeight);
+    h_muoniRecPt->Fill(event.muonPF2PATPt[k], eventWeight);
   }  
-	
-  //    if(muIndex1!=-1 && muIndex2!=-1 && event.muonPF2PATInnerTkPt[muIndex1]!=0 && event.muonPF2PATInnerTkPt[muIndex2]!=0 && event.muonPF2PATCharge[muIndex1]==-(event.muonPF2PATCharge[muIndex2])){		  
-  //    }    
-	     
-	      
 	
 	      
   //Tracks associated
-  if(muIndex1!=-1 && muIndex2!=-1 && event.muonPF2PATInnerTkPt[muIndex1]!=0 && event.muonPF2PATInnerTkPt[muIndex2]!=0 && event.muonPF2PATCharge[muIndex1]==-(event.muonPF2PATCharge[muIndex2])){
-  h_muon1RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muIndex1], eventWeight);
-  h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[muIndex2], eventWeight);  
+  if (event.muonPF2PATInnerTkPt[patMuIndex1]!=0 && event.muonPF2PATInnerTkPt[patMuIndex2]!=0) {
+    h_muon1RecPtTrk->Fill(event.muonPF2PATInnerTkPt[patMuIndex1], eventWeight);
+    h_muon2RecPtTrk->Fill(event.muonPF2PATInnerTkPt[patMuIndex2], eventWeight);  
   } 
   //No tracks associated      
-  h_muon1RecPt->Fill(event.muonPF2PATPt[0], eventWeight);
-  h_muon2RecPt->Fill(event.muonPF2PATPt[1], eventWeight);
+  h_muon1RecPt->Fill(event.muonPF2PATPt[patMuIndex1], eventWeight);
+  h_muon2RecPt->Fill(event.muonPF2PATPt[patMuIndex2], eventWeight);
 	      
-  TLorentzVector VecMu1  {event.muonPF2PATPX[0], event.muonPF2PATPY[0], event.muonPF2PATPZ[0], event.muonPF2PATE[0]};
-  TLorentzVector VecMu2  {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]};
-	 
+  TLorentzVector VecMu1  {event.muonPF2PATPX[patMuIndex1], event.muonPF2PATPY[patMuIndex1], event.muonPF2PATPZ[patMuIndex1], event.muonPF2PATE[patMuIndex1]};
+  TLorentzVector VecMu2  {event.muonPF2PATPX[patMuIndex2], event.muonPF2PATPY[patMuIndex2], event.muonPF2PATPZ[patMuIndex2], event.muonPF2PATE[patMuIndex2]};
+
   h_muon1RecInvMass->Fill(VecMu1.M(), eventWeight);
   h_muon2RecInvMass->Fill(VecMu2.M(), eventWeight);
   h_muon12RecInvMass->Fill((VecMu1+VecMu2).M(), eventWeight);
 	     
-	 
+ 
 	     
   //Refitted tracks muons   
-  for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
-	   
-  if(event.muonTkPairPF2PATIndex1[k]==muIndex1 && event.muonTkPairPF2PATIndex2[k]==muIndex2){	
-	   
-  h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[k], eventWeight);
-  h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[k], eventWeight); 
+  int muonTrkPairIndex = getMuonTrackPairIndex(event, patMuIndex1, patMuIndex2);
+  h_muon1PairsPt->Fill(event.muonTkPairPF2PATTk1Pt[muonTrkPairIndex], eventWeight);
+  h_muon2PairsPt->Fill(event.muonTkPairPF2PATTk2Pt[muonTrkPairIndex], eventWeight);
 		   
-  if(muIndex1!=-1 && muIndex2!=-1 && event.packedCandsPseudoTrkPt[muIndex1]!=0 && event.packedCandsPseudoTrkPt[muIndex2]!=0 && event.packedCandsCharge[muIndex1]==-(event.packedCandsCharge[muIndex2])){
-
-  TLorentzVector VecMu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], event.packedCandsE[muIndex1]};
-  TLorentzVector VecMu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], event.packedCandsE[muIndex2]};
+  TLorentzVector VecRefitMu1  {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], event.muonPF2PATE[patMuIndex1]};
+  TLorentzVector VecRefitMu2  {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], event.muonPF2PATE[patMuIndex2]};
 	 
-  h_muon1refitInvMass->Fill(VecMu1.M(), eventWeight);
-  h_muon2refitInvMass->Fill(VecMu2.M(), eventWeight);
-  h_muon12refitInvMass->Fill((VecMu1+VecMu2).M(), eventWeight);
-  }
+  h_muon1refitInvMass->Fill(VecRefitMu1.M(), eventWeight);
+  h_muon2refitInvMass->Fill(VecRefitMu2.M(), eventWeight);
+  h_muon12refitInvMass->Fill((VecRefitMu1+VecRefitMu2).M(), eventWeight);
 		  
-  TLorentzVector Mu1  {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2))};
-  TLorentzVector Mu2  {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], std::sqrt(event.muonTkPairPF2PATTk2P2[k]+std::pow(0.106,2))};
+  TLorentzVector MuAlt1  {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
+  TLorentzVector MuAlt2  {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
 	 
-  h_refit1InvMass->Fill(Mu1.M(), eventWeight);
-  h_refit2InvMass->Fill(Mu2.M(), eventWeight);
-  h_refit12InvMass->Fill((Mu1+Mu2).M(), eventWeight);
-	
-		   
-  //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[k],event.muonTkPairPF2PATTkVy[k], eventWeight);
-  //h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[k]),std::sqrt(event.muonTkPairPF2PATTkVx[k]*event.muonTkPairPF2PATTkVx[k]+event.muonTkPairPF2PATTkVy[k]*event.muonTkPairPF2PATTkVy[k]), );     
-  }
-	     
-  } 
+  h_refit1InvMass->Fill(MuAlt1.M(), eventWeight);
+  h_refit2InvMass->Fill(MuAlt2.M(), eventWeight);
+  h_refit12InvMass->Fill((MuAlt1+MuAlt2).M(), eventWeight);
+			   
+  //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[muonTrkPairIndex],event.muonTkPairPF2PATTkVy[muonTrkPairIndex], eventWeight);
+  //h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[muonTrkPairIndex]),std::sqrt(event.muonTkPairPF2PATTkVx[muonTrkPairIndex]*event.muonTkPairPF2PATTkVx[muonTrkPairIndex]+event.muonTkPairPF2PATTkVy[muonTrkPairIndex]*event.muonTkPairPF2PATTkVy[muonTrkPairIndex]), );
 	
       
   //Refitted tracks pions   
-  for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-  if(chsIndex1!=-1 && chsIndex2!=-1 && event.packedCandsPseudoTrkPt[chsIndex1]!=0 && event.packedCandsPseudoTrkPt[chsIndex2]!=0 && event.packedCandsCharge[chsIndex1]==-(event.packedCandsCharge[chsIndex2])){
- 
-  if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){	
+  int chargedHadronTrkPairIndex = getChsTrackPairIndex(event, chsIndex1, chsIndex2);
 		   
-  TLorentzVector pi1  {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
-  TLorentzVector pi2  {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
+  TLorentzVector pi1  {event.chsTkPairTk1Px[chargedHadronTrkPairIndex], event.chsTkPairTk1Py[chargedHadronTrkPairIndex], event.chsTkPairTk1Pz[chargedHadronTrkPairIndex], std::sqrt(event.chsTkPairTk1P2[chargedHadronTrkPairIndex]+std::pow(0.1396,2))};
+  TLorentzVector pi2  {event.chsTkPairTk2Px[chargedHadronTrkPairIndex], event.chsTkPairTk2Py[chargedHadronTrkPairIndex], event.chsTkPairTk2Pz[chargedHadronTrkPairIndex], std::sqrt(event.chsTkPairTk2P2[chargedHadronTrkPairIndex]+std::pow(0.1396,2))};
 	 
   h_pionre12InvMass->Fill((pi1+pi2).M(), eventWeight);
-  }
-  }
-  */
 }
 
 void SimpleAnalysis::setupPlots() {

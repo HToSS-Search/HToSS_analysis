@@ -40,7 +40,7 @@ class SimpleAnalysis
     void fillGeneratorPlots(const AnalysisEvent& event) const;
     void fillMuonReconstructionPlots(const AnalysisEvent& event, double& eventWeight, const int& muIndex1, const int& muIndex2) const;
     void fillPackedCandidatePlots(const AnalysisEvent& event, double& eventWeight, const int& muIndex1, const int& muIndex2, const int& pionIndex1, const int& pionIndex2) const;
-    void fillMuonMomentumComparisonPlots(const AnalysisEvent& event, double& eventWeight) const;
+    void fillMuonMomentumComparisonPlots(const AnalysisEvent& event, double& eventWeight, const int& patMuonIndex1, const int& patMuonIndex2, const int& packedMuonIndex1, const int& packedMuonIndex2, const int& pionIndex1, const int& pionIndex2) const;
 
     // variables
 
