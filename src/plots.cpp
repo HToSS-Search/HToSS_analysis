@@ -656,11 +656,11 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
          }},
         {"zLepton1NewIso",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.zPairNewIso.first};
+             return {event.zPairRelIso.first};
          }},
         {"zLepton2NewIso",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.zPairNewIso.second};
+             return {event.zPairRelIso.second};
          }},
         {"zLepton1Phi",
          [](const AnalysisEvent& event) -> std::vector<float> {

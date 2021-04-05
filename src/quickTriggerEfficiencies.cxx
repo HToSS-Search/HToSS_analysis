@@ -713,8 +713,8 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
                 const float iso2 = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
                 const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
 
-                event.zPairNewIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
-                event.zPairNewIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                event.zPairRelIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                event.zPairRelIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
                 event.zNewIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
 
 //                if ( event.zNewIso > 0.2 ) continue;

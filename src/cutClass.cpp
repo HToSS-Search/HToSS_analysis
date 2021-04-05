@@ -691,8 +691,8 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                 const float iso2 = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
                 const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
 
-                event.zPairNewIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
-                event.zPairNewIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                event.zPairRelIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                event.zPairRelIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
                 event.zNewIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
 
 //                if ( event.zNewIso > 0.2 ) continue;
@@ -752,27 +752,28 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
                 for (int k = 0; k < event.numPackedCands; k++) {
                     if ( k == event.chsPairIndex.first || k == event.chsPairIndex.second ) continue;
 
-                    TLorentzVector packedCandVec;
-                    packedCandVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
+//                    TLorentzVector packedCandVec;
+//                    packedCandVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
+                    TLorentzVector packedCandVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
                       
 
                     if ( event.packedCandsCharge[k] == 0 ) {
                         if ( packedCandVec.Pt() < 0.5 ) continue;
-                        if ( event.chsTrkPairVec.first.DeltaR(packedCandVec)   < 0.3 )  neutral_iso1 += packedCandVec.Et();
-                        if ( event.chsTrkPairVec.second.DeltaR(packedCandVec)  < 0.3 )  neutral_iso2 += packedCandVec.Et();
-                        if ( (event.chsTrkPairVec.first+event.chsTrkPairVec.second).DeltaR(packedCandVec)  < 0.3 ) neutral_iso += packedCandVec.Et();
+                        if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.3 )  neutral_iso1 += packedCandVec.Et();
+                        if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.3 )  neutral_iso2 += packedCandVec.Et();
+                        if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.3 ) neutral_iso += packedCandVec.Et();
                     }
                     else {
                         if ( event.packedCandsFromPV[k] >= 2 ) {
-                            if ( event.chsTrkPairVec.first.DeltaR(packedCandVec)   < 0.3 )  ch_iso1 += packedCandVec.Pt();
-                            if ( event.chsTrkPairVec.second.DeltaR(packedCandVec)  < 0.3 )  ch_iso2 += packedCandVec.Pt();
-                            if ( (event.chsTrkPairVec.first+event.chsTrkPairVec.second).DeltaR(packedCandVec)  < 0.3 ) ch_iso += packedCandVec.Pt();
+                            if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.3 )  ch_iso1 += packedCandVec.Pt();
+                            if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.3 )  ch_iso2 += packedCandVec.Pt();
+                            if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.3 ) ch_iso += packedCandVec.Pt();
                         }
                         else {
                             if ( packedCandVec.Pt() < 0.5 ) continue;
-                                if ( event.chsTrkPairVec.first.DeltaR(packedCandVec)   < 0.3 )  pu_iso1 += packedCandVec.Pt();
-                                if ( event.chsTrkPairVec.second.DeltaR(packedCandVec)  < 0.3 )  pu_iso2 += packedCandVec.Pt();
-                                if ( (event.chsTrkPairVec.first+event.chsTrkPairVec.second).DeltaR(packedCandVec)  < 0.3 ) pu_iso += packedCandVec.Pt();
+                                if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.3 )  pu_iso1 += packedCandVec.Pt();
+                                if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.3 )  pu_iso2 += packedCandVec.Pt();
+                                if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.3 ) pu_iso += packedCandVec.Pt();
                         }
                     }
                 }

@@ -49,8 +49,8 @@ const float looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {30.}, l
 const float chsMass_{0.13957018};
 
 // Diparticle cuts
-double maxDileptonDeltaR_ {0.2}, maxChsDeltaR_ {0.4};
-double higgsTolerence_ {10.};
+const double maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4};
+const double scalarMassCut_{4.0}, higgsTolerence_ {10.};
 
 
 int main(int argc, char* argv[]) {
@@ -223,6 +223,8 @@ int main(int argc, char* argv[]) {
             if ( event.muonIndexLoose.size() < 2 ) continue;
 
             if ( !getDileptonCand( event, event.muonIndexLoose, false ) ) continue;
+            const double dileptonMass {(event.zPairLeptons.first + event.zPairLeptons.second).M()};
+            if (dileptonMass > scalarMassCut_) continue;
 
             // Add comparison between leptonic and hadronic scalar decayed muons
 
@@ -335,6 +337,10 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
                 event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
                 event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
 
+                if (!event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
+//                if (!event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.second]) continue;
+                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] > 1.0) continue;
+
                 float neutral_iso {0.0}, neutral_iso1 {0.0}, neutral_iso2 {0.0};
                 float ch_iso {0.0}, ch_iso1 {0.0}, ch_iso2 {0.0};
                 float pu_iso {0.0}, pu_iso1 {0.0}, pu_iso2 {0.0};
@@ -370,8 +376,8 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
                 const float iso2 = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
                 const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
 
-                event.zPairNewIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
-                event.zPairNewIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                event.zPairRelIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                event.zPairRelIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
                 event.zNewIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
 
 //                if ( event.zNewIso > 0.2 ) continue;
@@ -423,9 +429,10 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
 
             double pT { (chs1+chs2).Pt() };
             double delR { chs1.DeltaR(chs2) };
-            double higgsMass { (chs1+chs2+event.zPairLeptons.first+event.zPairLeptons.second).M() };
+//            double higgsMass { (chs1+chs2+event.zPairLeptons.first+event.zPairLeptons.second).M() };
 
-            if ( delR < maxChsDeltaR_ && (higgsMass - 125.) < higgsTolerence_ && pT >= 0. ) {
+//            if ( delR < maxChsDeltaR_ && (higgsMass - 125.) < higgsTolerence_ && pT >= 0. ) {
+            if ( delR < maxChsDeltaR_ && pT >= 0. ) {
                 event.chsPairVec.first  = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
                 event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
                 event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chs[i] : chs[j];
@@ -477,7 +484,10 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
                 event.chsPairTrkIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
                 event.chsTrkIso = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
 
-//                if ( event.chsTrkIso > 0.2 ) continue;
+                if ( event.chsPairTrkIso.first > 0.75  ) continue;
+                if ( event.chsPairTrkIso.second > 10.  ) continue;
+
+//                if ( event.chsTrkIso > 0.8 ) continue;
 
                 event.chsPairTrkIndex = getChsTrackPairIndex(event);
 

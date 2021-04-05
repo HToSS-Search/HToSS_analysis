@@ -2449,7 +2449,8 @@ class AnalysisEvent
     std::pair<TLorentzVector, TLorentzVector> zPairLeptons;
     std::pair<TLorentzVector, TLorentzVector> zPairLeptonsRefitted;
     std::pair<float, float> zPairRelIso;
-    std::pair<float, float> zPairNewIso;
+    std::pair<float, float> zPairNewRelIso;
+    std::pair<float, float> zPairNewTrkIso;
     std::pair<int, int> zPairIndex;
     int mumuTrkIndex;
     float zNewIso;
@@ -2457,6 +2458,7 @@ class AnalysisEvent
     std::pair<TLorentzVector, TLorentzVector> chsPairVec;
     std::pair<TLorentzVector, TLorentzVector> chsTrkPairVec;
     std::pair<TLorentzVector, TLorentzVector> chsTrkPairVecRefitted;
+    std::pair<float, float> chsPairRelIso;
     std::pair<float, float> chsPairTrkIso;
     std::pair<int, int> chsPairIndex;
     int chsPairTrkIndex;
@@ -3810,13 +3812,15 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
   std::pair<TLorentzVector, TLorentzVector> zPairLeptons = {};
   std::pair<TLorentzVector, TLorentzVector> zPairLeptonsRefitted = {};
   std::pair<float, float> zPairRelIso = {};
-  std::pair<float, float> zPairNewIso = {};
+  std::pair<float, float> zPairNewRelIso = {};
+  std::pair<float, float> zPairNewTrkIso = {};
   std::pair<int, int> zPairIndex = {};
   mumuTrkIndex = -1;
   zNewIso = -1.;
 
   std::pair<TLorentzVector, TLorentzVector> chsPairVec = {};
   std::pair<TLorentzVector, TLorentzVector> chsPairVecRefitted = {};
+  std::pair<float, float> chsPairRelIso = {};
   std::pair<float, float> chsPairTrkIso = {};
   std::pair<int, int> chsPairIndex = {};
   chsPairTrkIndex = -1;
