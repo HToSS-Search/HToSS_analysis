@@ -186,8 +186,8 @@ class SimpleAnalysis
     TH1F* h_KIsoSum1;
     TH1F* h_KIsoSum2;
     TH2F* h_KIso2;
-    TH1F* h_KIsoSum3;
-    TH1F* h_KIsoSum4;
+    TH1F* h_MuonIsoSum1;
+    TH1F* h_MuonIsoSum2;
     TH1F* h_KhadronInvMass;
     TH1F* h_KhadronInvMass2;
     TH1F* h_KmuonsInvMass;
