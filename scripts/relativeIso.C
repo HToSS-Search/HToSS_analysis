@@ -303,7 +303,7 @@
    
      canv5->Modified();
      canv5->cd();
-     canv5->SetSelected(canv1);
+     canv5->SetSelected(canv5);
      canv5->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
@@ -356,7 +356,7 @@
   
      canv6->Modified();
      canv6->cd();
-     canv6->SetSelected(canv1);
+     canv6->SetSelected(canv6);
      canv6->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
