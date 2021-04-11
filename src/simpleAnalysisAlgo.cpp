@@ -857,7 +857,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     KME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
 	      
     scalarLVec.SetPxPyPzE(KMpx,KMpy,KMpz,KME);
-    h_KscalarInvMass->Fill(scalarLVec.M(), eventWeight);
+    //h_KscalarInvMass->Fill(scalarLVec.M(), eventWeight);
 		   
   }
 
