@@ -912,7 +912,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     }
   }
 
-  if(mm1.DeltaR(mm2)<0.2 && kaonLVec1.DeltaR(kaonLVec2)<0.2)
+  if(mm1.DeltaR(mm2)<0.2 && kaonLVec1.DeltaR(kaonLVec2)<0.2){
     if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
       Khiggs=(Kantiscalar+scalarLVec).M();
       h_KhiggsInvMass->Fill(Khiggs, eventWeight);
