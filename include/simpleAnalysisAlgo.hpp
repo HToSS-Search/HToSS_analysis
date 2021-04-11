@@ -220,6 +220,7 @@ class SimpleAnalysis
     TH1F* h_PhiggsDeltaR;
     TH1F* h_Rrefit12InvMass;
     TH1F* h_Rpionre12InvMass;
+    TH1F* h_Rkaonre12InvMass;
 
     TH1F* h_P20antiscalarInvMass;
     TH1F* h_P20scalarInvMass;
