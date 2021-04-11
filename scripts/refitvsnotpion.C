@@ -49,8 +49,8 @@
      h_Rpionre12InvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_Rpionre12InvMass_ctau10->GetXaxis()->SetRangeUser(0,3); 
      h_Rpionre12InvMass_ctau10->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
-     h_Rpionre12InvMass_ctau10->SetMarkerColor(4);
-     h_Rpionre12InvMass_ctau10->SetLineColor(4);
+     h_Rpionre12InvMass_ctau10->SetMarkerColor(1);
+     h_Rpionre12InvMass_ctau10->SetLineColor(1);
      h_Rpionre12InvMass_ctau10->Draw("HIST same");
    
      h_Rpionre12InvMass_QCD->GetYaxis()->SetTitle("Events");
@@ -80,8 +80,8 @@
      h_PantiscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PantiscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0,3); 
      h_PantiscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
-     h_PantiscalarInvMass_ctau0->SetMarkerColor(1);
-     h_PantiscalarInvMass_ctau0->SetLineColor(1);
+     h_PantiscalarInvMass_ctau0->SetMarkerColor(4);
+     h_PantiscalarInvMass_ctau0->SetLineColor(4);
      h_PantiscalarInvMass_ctau0->Draw("HIST same");
  
      h_PantiscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
@@ -106,16 +106,16 @@
      legenda->SetMarkerColor(2);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_Rpionre12InvMass_ctau10","Refit c_{#tau}=10mm","L");
-     legenda->SetLineColor(4);
-     legenda->SetMarkerColor(4);
+     legenda->SetLineColor(1);
+     legenda->SetMarkerColor(1);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_Rpionre12InvMass_QCD","Refit QCD","L");
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_PantiscalarInvMass_ctau0","c_{#tau}=0mm","L");
-     legenda->SetLineColor(1);
-     legenda->SetMarkerColor(1);
+     legenda->SetLineColor(4);
+     legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_PantiscalarInvMass_ctau10","c_{#tau}=10mm","L");
      legenda->SetLineColor(3);
