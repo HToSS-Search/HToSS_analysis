@@ -58,7 +58,7 @@ Dataset::Dataset(std::string name, float lumi, bool isMC, float crossSection, st
         }
     }
 
-    totalEvents_ = generatorWeightPlot_->GetBinContent(1)+generatorWeightPlot_->GetBinContent(2);
+    if (isMC_) totalEvents_ = generatorWeightPlot_->GetBinContent(1)+generatorWeightPlot_->GetBinContent(2);
 }
 
 // Method that fills a TChain with the files that will be used for the analysis.
