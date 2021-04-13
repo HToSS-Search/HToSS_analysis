@@ -266,7 +266,7 @@
      h_MuonIsoSum1_ctau0->SetTitle("Leading muon, relative isolation");
      h_MuonIsoSum1_ctau0->GetYaxis()->SetTitle("Events");
      h_MuonIsoSum1_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
-     h_MuonIsoSum1_ctau0->GetYaxis()->SetRangeUser(0.0, 1000000.); 
+     h_MuonIsoSum1_ctau0->GetYaxis()->SetRangeUser(1.0, 1000000.); 
      h_MuonIsoSum1_ctau0->GetXaxis()->SetTitle("Rel. iso");
      h_MuonIsoSum1_ctau0->SetMarkerColor(2);
      h_MuonIsoSum1_ctau0->SetLineColor(2);
@@ -274,7 +274,7 @@
  
      h_MuonIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
      h_MuonIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.);
-     h_MuonIsoSum1_ctau10->GetYaxis()->SetRangeUser(0.0, 1000000.); 
+     h_MuonIsoSum1_ctau10->GetYaxis()->SetRangeUser(1.0, 1000000.); 
      h_MuonIsoSum1_ctau10->GetXaxis()->SetTitle("Rel. iso");
      h_MuonIsoSum1_ctau10->SetMarkerColor(4);
      h_MuonIsoSum1_ctau10->SetLineColor(4);
@@ -282,7 +282,7 @@
    
      h_MuonIsoSum1_QCD->GetYaxis()->SetTitle("Events");
      h_MuonIsoSum1_QCD->GetXaxis()->SetRangeUser(0.0, 2.);
-     h_MuonIsoSum1_QCD->GetYaxis()->SetRangeUser(0.0, 1000000.); 
+     h_MuonIsoSum1_QCD->GetYaxis()->SetRangeUser(1.0, 1000000.); 
      h_MuonIsoSum1_QCD->GetXaxis()->SetTitle("Rel. iso");
      h_MuonIsoSum1_QCD->SetMarkerColor(6);
      h_MuonIsoSum1_QCD->SetLineColor(6);
@@ -322,7 +322,7 @@
      h_MuonIsoSum2_ctau0->SetTitle("Subleading muon, relative isolation");
      h_MuonIsoSum2_ctau0->GetYaxis()->SetTitle("Events");
      h_MuonIsoSum2_ctau0->GetXaxis()->SetRangeUser(0.0, 2.);
-     h_MuonIsoSum2_ctau0->GetYaxis()->SetRangeUser(0.0, 1000000.); 
+     h_MuonIsoSum2_ctau0->GetYaxis()->SetRangeUser(1.0, 1000000.); 
      h_MuonIsoSum2_ctau0->GetXaxis()->SetTitle("Rel. iso");
      h_MuonIsoSum2_ctau0->SetMarkerColor(2);
      h_MuonIsoSum2_ctau0->SetLineColor(2);
@@ -330,7 +330,7 @@
  
      h_MuonIsoSum2_ctau10->GetYaxis()->SetTitle("Events");
      h_MuonIsoSum2_ctau10->GetXaxis()->SetRangeUser(0.0, 2.);
-     h_MuonIsoSum2_ctau10->GetYaxis()->SetRangeUser(0.0, 1000000.); 
+     h_MuonIsoSum2_ctau10->GetYaxis()->SetRangeUser(1.0, 1000000.); 
      h_MuonIsoSum2_ctau10->GetXaxis()->SetTitle("Rel. iso");
      h_MuonIsoSum2_ctau10->SetMarkerColor(4);
      h_MuonIsoSum2_ctau10->SetLineColor(4);
@@ -338,7 +338,7 @@
    
      h_MuonIsoSum2_QCD->GetYaxis()->SetTitle("Events");
      h_MuonIsoSum2_QCD->GetXaxis()->SetRangeUser(0.0, 2.); 
-     h_MuonIsoSum2_QCD->GetYaxis()->SetRangeUser(0.0, 1000000.); 
+     h_MuonIsoSum2_QCD->GetYaxis()->SetRangeUser(1.0, 1000000.); 
      h_MuonIsoSum2_QCD->GetXaxis()->SetTitle("Rel. iso");
      h_MuonIsoSum2_QCD->SetMarkerColor(6);
      h_MuonIsoSum2_QCD->SetLineColor(6);
