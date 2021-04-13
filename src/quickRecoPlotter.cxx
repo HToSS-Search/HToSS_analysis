@@ -378,8 +378,8 @@ int main(int argc, char* argv[]) {
             h_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
             h_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M(),datasetWeight );
             h_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
-            h_scalarRelIso->Fill(event.zNewIso, event.chsTrkIso, datasetWeight);
-            h_scalarIso->Fill(event.zNewIso*(muon1Vec+muon2Vec).Pt(), event.chsTrkIso*(chs1Vec+chs2Vec).Pt(), datasetWeight);
+            h_scalarRelIso->Fill(event.zRelIso, event.chsTrkIso, datasetWeight);
+            h_scalarIso->Fill(event.zRelIso*(muon1Vec+muon2Vec).Pt(), event.chsTrkIso*(chs1Vec+chs2Vec).Pt(), datasetWeight);
 
             h_leadingChsJetPt->Fill( jet1Vec.Pt(),datasetWeight );
             h_subleadingChsJetPt->Fill( jet2Vec.Pt(),datasetWeight );
@@ -417,8 +417,8 @@ int main(int argc, char* argv[]) {
                 ht_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
                 ht_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M(),datasetWeight );
                 ht_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
-                ht_scalarRelIso->Fill(event.zNewIso, event.chsTrkIso, datasetWeight);
-                ht_scalarIso->Fill(event.zNewIso*(muon1Vec+muon2Vec).Pt(), event.chsTrkIso*(chs1Vec+chs2Vec).Pt(), datasetWeight);
+                ht_scalarRelIso->Fill(event.zRelIso, event.chsTrkIso, datasetWeight);
+                ht_scalarIso->Fill(event.zRelIso*(muon1Vec+muon2Vec).Pt(), event.chsTrkIso*(chs1Vec+chs2Vec).Pt(), datasetWeight);
 
 
                 h_leadingChsJetPt->Fill( jet1Vec.Pt(),datasetWeight );
@@ -624,9 +624,9 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
 
                 event.zPairRelIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
                 event.zPairRelIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
-                event.zNewIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+                event.zRelIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
 
-//                if ( event.zNewIso > 0.2 ) continue;
+//                if ( event.zRelIso > 0.2 ) continue;
 
                 event.mumuTrkIndex = getMuonTrackPairIndex(event);
 

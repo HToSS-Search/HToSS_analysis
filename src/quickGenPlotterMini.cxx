@@ -378,9 +378,9 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
 
                 event.zPairRelIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
                 event.zPairRelIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
-                event.zNewIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+                event.zRelIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
 
-//                if ( event.zNewIso > 0.2 ) continue;
+//                if ( event.zRelIso > 0.2 ) continue;
 
                 event.mumuTrkIndex = getMuonTrackPairIndex(event);
 

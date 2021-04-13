@@ -688,7 +688,7 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
          }},
         {"zPairIso",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.zNewIso};
+             return {event.zRelIso};
          }},        
         {"zPairMassRefit",
          [](const AnalysisEvent& event) -> std::vector<float> {
