@@ -429,10 +429,10 @@
      legendamm->SetLineColor(6);
      legendamm->SetMarkerColor(6);
      legendamm->SetMarkerSize(2);
-     legendam=legend1m->AddEntry("h_MuonIsoSum2_data","Data","L");
-     legendam->SetLineColor(84);
-     legendam->SetMarkerColor(84);
-     legendam->SetMarkerSize(2);
+     legendamm=legend1mm->AddEntry("h_MuonIsoSum2_data","Data","L");
+     legendamm->SetLineColor(84);
+     legendamm->SetMarkerColor(84);
+     legendamm->SetMarkerSize(2);
      legend1mm->Draw();
   
      canv6->Modified();
