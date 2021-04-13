@@ -29,6 +29,12 @@
      TH1F* h_refit12InvMass_QCD    = (TH1F*)inFileQCD.Get("h_refit12InvMass");
      TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PscalarInvMass");
      TH1F* h_PantiscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PantiscalarInvMass");
+   
+     TFile inFileData("dataRunD.root"); 
+     TH1F* h_Rpionre12InvMass_data    = (TH1F*)inFileData.Get("h_Rpionre12InvMass");
+     TH1F* h_refit12InvMass_data   = (TH1F*)inFileData.Get("h_refit12InvMass");
+     TH1F* h_PscalarInvMass_data   = (TH1F*)inFileData.Get("h_PscalarInvMass");
+     TH1F* h_PantiscalarInvMass_data    = (TH1F*)inFileData.Get("h_PantiscalarInvMass");
 
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
@@ -60,6 +66,13 @@
      h_PantiscalarInvMass_QCD->SetLineColor(94);
      h_PantiscalarInvMass_QCD->Draw("HIST same");
    
+     h_PantiscalarInvMass_data->GetYaxis()->SetTitle("Events");
+     h_PantiscalarInvMass_data->GetXaxis()->SetRangeUser(0,3); 
+     h_PantiscalarInvMass_data->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
+     h_PantiscalarInvMass_data->SetMarkerColor(30);
+     h_PantiscalarInvMass_data->SetLineColor(30);
+     h_PantiscalarInvMass_data->Draw("HIST same");
+   
      
      h_Rpionre12InvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_Rpionre12InvMass_ctau0->GetXaxis()->SetRangeUser(0,3); 
@@ -81,6 +94,13 @@
      h_Rpionre12InvMass_QCD->SetMarkerColor(6);
      h_Rpionre12InvMass_QCD->SetLineColor(6);
      h_Rpionre12InvMass_QCD->Draw("HIST same");
+   
+     h_Rpionre12InvMass_data->GetYaxis()->SetTitle("Events");
+     h_Rpionre12InvMass_data->GetXaxis()->SetRangeUser(0,3); 
+     h_Rpionre12InvMass_data->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
+     h_Rpionre12InvMass_data->SetMarkerColor(20);
+     h_Rpionre12InvMass_data->SetLineColor(20);
+     h_Rpionre12InvMass_data->Draw("HIST same");
  
      /*h_refit12InvMass_ctau10->GetYaxis()->SetTitle("Events");
      //h_refit12InvMass_ctau10->GetYaxis()->SetRangeUser(1.0, 65000.); 
@@ -115,6 +135,10 @@
      legenda->SetLineColor(94);
      legenda->SetMarkerColor(94);
      legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("h_PantiscalarInvMass_data","Data","L");
+     legenda->SetLineColor(30);
+     legenda->SetMarkerColor(30);
+     legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_Rpionre12InvMass_ctau0","Refit c_{#tau}=0mm","L");
      legenda->SetLineColor(2);
      legenda->SetMarkerColor(2);
@@ -126,6 +150,10 @@
      legenda=legend1->AddEntry("h_Rpionre12InvMass_QCD","Refit QCD","L");
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
+     legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("h_Rpionre12InvMass_data","Refit data","L");
+     legenda->SetLineColor(20);
+     legenda->SetMarkerColor(20);
      legenda->SetMarkerSize(2);
      
      legend1->Draw();
