@@ -34,7 +34,7 @@
    
     
     
-     TFile inFileQCD("ggH_MC_QCD_kaon.root"); 
+     TFile inFileQCD("ggH_MC_QCD.root"); 
      TH1F* h_PIsoSum1_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum1");
      TH1F* h_PIsoSum2_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum2");
      TH1F* h_KIsoSum1_QCD    = (TH1F*)inFileQCD.Get("h_KIsoSum1");
