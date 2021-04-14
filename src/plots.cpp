@@ -1624,87 +1624,87 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
              return { float ((event.muonTkPairPF2PATTk2Chi2[event.mumuTrkIndex])/(event.muonTkPairPF2PATTk2Ndof[event.mumuTrkIndex]+1.0e-06)) };
          }},
         {"dichsVtxPx", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonTkPairPF2PATTkVtxPx[event.mumuTrkIndex]};
+             return {event.chsTkPairTkVtxPx[event.chsPairTrkIndex]};
          }},
         {"dichsVtxPy", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonTkPairPF2PATTkVtxPy[event.mumuTrkIndex]};
+             return {event.chsTkPairTkVtxPy[event.chsPairTrkIndex]};
          }},
         {"dichsVtxPz", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonTkPairPF2PATTkVtxPz[event.mumuTrkIndex]};
+             return {event.chsTkPairTkVtxPz[event.chsPairTrkIndex]};
          }},
         {"dichsVtxP", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {std::sqrt( event.muonTkPairPF2PATTkVtxP2[event.mumuTrkIndex] )};
+             return {std::sqrt( event.chsTkPairTkVtxP2[event.chsPairTrkIndex] )};
          }},
 	{"dichsVx", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonTkPairPF2PATTkVx[event.mumuTrkIndex]};
+             return {event.chsTkPairTkVx[event.chsPairTrkIndex]};
          }},
 	{"dichsVy", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonTkPairPF2PATTkVy[event.mumuTrkIndex]};
+             return {event.chsTkPairTkVy[event.chsPairTrkIndex]};
          }},
 	{"dichsVz", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonTkPairPF2PATTkVz[event.mumuTrkIndex]};
+             return {event.chsTkPairTkVz[event.chsPairTrkIndex]};
          }},
 	{"dichsVxy", [](const AnalysisEvent& event) -> std::vector<float> {
-             float vx {event.muonTkPairPF2PATTkVx[event.mumuTrkIndex]}, vy {event.muonTkPairPF2PATTkVy[event.mumuTrkIndex]};
+             float vx {event.chsTkPairTkVx[event.chsPairTrkIndex]}, vy {event.chsTkPairTkVy[event.chsPairTrkIndex]};
              return { std::sqrt(vx*vx + vy*vy) };
          }},
 	{"dichsVabs", [](const AnalysisEvent& event) -> std::vector<float> {
-             float vx {event.muonTkPairPF2PATTkVx[event.mumuTrkIndex]}, vy {event.muonTkPairPF2PATTkVy[event.mumuTrkIndex]}, vz {event.muonTkPairPF2PATTkVz[event.mumuTrkIndex]};
+             float vx {event.chsTkPairTkVx[event.chsPairTrkIndex]}, vy {event.chsTkPairTkVy[event.chsPairTrkIndex]}, vz {event.chsTkPairTkVz[event.chsPairTrkIndex]};
              return { std::sqrt(vx*vx + vy*vy + vz*vz) };
          }},
 	{"dichsVtxChi2Ndof", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.muonTkPairPF2PATTkVtxChi2[event.mumuTrkIndex])/(event.muonTkPairPF2PATTkVtxNdof[event.mumuTrkIndex]+1.0e-06)) };
+             return { float ((event.chsTkPairTkVtxChi2[event.chsPairTrkIndex])/(event.chsTkPairTkVtxNdof[event.chsPairTrkIndex]+1.0e-06)) };
          }},
 	{"dichsVtxAngleXY", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {(event.muonTkPairPF2PATTkVtxAngleXY[event.mumuTrkIndex])};
+             return {(event.chsTkPairTkVtxAngleXY[event.chsPairTrkIndex])};
          }},
         {"dichsVtxAngleXYZ", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {(event.muonTkPairPF2PATTkVtxAngleXYZ[event.mumuTrkIndex])};         
+             return {(event.chsTkPairTkVtxAngleXYZ[event.chsPairTrkIndex])};         
          }},
         {"dichsVtxSigXY", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.muonTkPairPF2PATTkVtxDistMagXY[event.mumuTrkIndex])/(event.muonTkPairPF2PATTkVtxDistMagXYSigma[event.mumuTrkIndex]+1.0e-06)) };
+             return { float ((event.chsTkPairTkVtxDistMagXY[event.chsPairTrkIndex])/(event.chsTkPairTkVtxDistMagXYSigma[event.chsPairTrkIndex]+1.0e-06)) };
          }},
 	{"dichsVtxSigXYZ", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.muonTkPairPF2PATTkVtxDistMagXYZ[event.mumuTrkIndex])/(event.muonTkPairPF2PATTkVtxDistMagXYZSigma[event.mumuTrkIndex]+1.0e-06)) };
+             return { float ((event.chsTkPairTkVtxDistMagXYZ[event.chsPairTrkIndex])/(event.chsTkPairTkVtxDistMagXYZSigma[event.chsPairTrkIndex]+1.0e-06)) };
          }},
 	{"dichsVtxDca", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {(event.muonTkPairPF2PATTkVtxDcaPreFit[event.mumuTrkIndex])};
+             return {(event.chsTkPairTkVtxDcaPreFit[event.chsPairTrkIndex])};
          }},
         {"dichsTrkInnerPtOld1", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonPF2PATInnerTkPt[event.zPairIndex.first]};
+             return {float(event.chsPairTrkVec.first.Pt())};
          }},
         {"dichsTrkInnerEtaOld1", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonPF2PATInnerTkEta[event.zPairIndex.first]};
+             return {float(event.chsPairTrkVec.first.Eta())};
          }},
         {"dichsTrkInnerChi2NdofOld1", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonPF2PATInnerTkNormChi2[event.zPairIndex.first]};
+             return {event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.first]};
          }},
         {"dichsTrkInnerPtOld2", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonPF2PATInnerTkPt[event.zPairIndex.second]};
+             return {float(event.chsPairTrkVec.second.Pt())};
          }},
         {"dichsTrkInnerEtaOld2", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonPF2PATInnerTkEta[event.zPairIndex.second]};
+             return {float(event.chsPairTrkVec.second.Eta())};
          }},
         {"dichsTrkInnerChi2NdofOld2", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonPF2PATInnerTkNormChi2[event.zPairIndex.second]};
+             return {event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.second]};
          }},
 	{"dichsTrkInnerPtNew1", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonTkPairPF2PATTk1Pt[event.mumuTrkIndex]};
+             return {event.chsTkPairTk1Pt[event.chsPairTrkIndex]};
          }},
 	{"dichsTrkInnerEtaNew1", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonTkPairPF2PATTk2Eta[event.mumuTrkIndex]};
+             return {event.chsTkPairTk2Eta[event.chsPairTrkIndex]};
          }},
 	{"dichsTrkInnerChi2NdofNew1", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.muonTkPairPF2PATTk1Chi2[event.mumuTrkIndex])/(event.muonTkPairPF2PATTk1Ndof[event.mumuTrkIndex]+1.0e-06)) };
+             return { float ((event.chsTkPairTk1Chi2[event.chsPairTrkIndex])/(event.chsTkPairTk1Ndof[event.chsPairTrkIndex]+1.0e-06)) };
          }},
 	{"dichsTrkInnerPtNew2", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonTkPairPF2PATTk2Pt[event.mumuTrkIndex]};
+             return {event.chsTkPairTk2Pt[event.chsPairTrkIndex]};
          }},
 	{"dichsTrkInnerEtaNew2", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.muonTkPairPF2PATTk2Eta[event.mumuTrkIndex]};
+             return {event.chsTkPairTk2Eta[event.chsPairTrkIndex]};
          }},
 	{"dichsTrkInnerChi2NdofNew2", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.muonTkPairPF2PATTk2Chi2[event.mumuTrkIndex])/(event.muonTkPairPF2PATTk2Ndof[event.mumuTrkIndex]+1.0e-06)) };
+             return { float ((event.chsTkPairTk2Chi2[event.chsPairTrkIndex])/(event.chsTkPairTk2Ndof[event.chsPairTrkIndex]+1.0e-06)) };
          }}
     };
 }
