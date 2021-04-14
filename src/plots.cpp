@@ -174,26 +174,50 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
          [](const AnalysisEvent& event) -> std::vector<float> {
              return { float (event.wPairQuarks.second.Phi()) };
          }},
-        {"chs1TrkPt", [](const AnalysisEvent& event) -> std::vector<float> {
+        {"chs1Pt", [](const AnalysisEvent& event) -> std::vector<float> {
              return { float (event.chsPairVec.first.Pt()) };
          }},
-        {"chs1TrkEta", [](const AnalysisEvent& event) -> std::vector<float> {
+        {"chs1Eta", [](const AnalysisEvent& event) -> std::vector<float> {
              return { float (std::abs(event.chsPairVec.first.Eta())) };
          }},
-        {"chs1TrkPhi", [](const AnalysisEvent& event) -> std::vector<float> {
+        {"chs1Phi", [](const AnalysisEvent& event) -> std::vector<float> {
              return { float (event.chsPairVec.first.Phi()) };
+         }},
+        {"chs1RelIso", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.chsPairRelIso.first};
+         }},
+        {"chs2Pt", [](const AnalysisEvent& event) -> std::vector<float> {
+             return { float (event.chsPairVec.second.Pt()) };
+         }},
+        {"chs2Eta", [](const AnalysisEvent& event) -> std::vector<float> {
+             return { float (std::abs(event.chsPairVec.second.Eta())) };
+         }},
+        {"chs2Phi", [](const AnalysisEvent& event) -> std::vector<float> {
+             return {float (event.chsPairVec.second.Phi()) };
+         }},
+        {"chs2RelIso", [](const AnalysisEvent&event) -> std::vector<float> {
+             return {event.chsPairRelIso.second};
+         }},
+        {"chs1TrkPt", [](const AnalysisEvent& event) -> std::vector<float> {
+             return { float (event.chsPairTrkVec.first.Pt()) };
+         }},
+        {"chs1TrkEta", [](const AnalysisEvent& event) -> std::vector<float> {
+             return { float (std::abs(event.chsPairTrkVec.first.Eta())) };
+         }},
+        {"chs1TrkPhi", [](const AnalysisEvent& event) -> std::vector<float> {
+             return { float (event.chsPairTrkVec.first.Phi()) };
          }},
         {"chs1TrkIso", [](const AnalysisEvent& event) -> std::vector<float> {
              return {event.chsPairTrkIso.first};
          }},
         {"chs2TrkPt", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float (event.chsPairVec.second.Pt()) };
+             return { float (event.chsPairTrkVec.second.Pt()) };
          }},
         {"chs2TrkEta", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float (std::abs(event.chsPairVec.second.Eta())) };
+             return { float (std::abs(event.chsPairTrkVec.second.Eta())) };
          }},
         {"chs2TrkPhi", [](const AnalysisEvent& event) -> std::vector<float> {
-             return {float (event.chsPairVec.second.Phi()) };
+             return {float (event.chsPairTrkVec.second.Phi()) };
          }},
         {"chs2TrkIso", [](const AnalysisEvent&event) -> std::vector<float> {
              return {event.chsPairTrkIso.second};
@@ -654,13 +678,21 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
          [](const AnalysisEvent& event) -> std::vector<float> {
              return {event.zPairRelIso.second};
          }},
-        {"zLepton1NewIso",
+        {"zLepton1NewRelIso",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.zPairRelIso.first};
+             return {event.zPairNewRelIso.first};
          }},
-        {"zLepton2NewIso",
+        {"zLepton2NewRelIso",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.zPairRelIso.second};
+             return {event.zPairNewRelIso.second};
+         }},
+        {"zLepton1NewTrkIso",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.zPairNewTrkIso.first};
+         }},
+        {"zLepton2NewTrkIso",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.zPairNewTrkIso.second};
          }},
         {"zLepton1Phi",
          [](const AnalysisEvent& event) -> std::vector<float> {
@@ -686,9 +718,13 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
          [](const AnalysisEvent& event) -> std::vector<float> {
              return { float ((event.zPairLeptons.first + event.zPairLeptons.second).Phi()) };
          }},
-        {"zPairIso",
+        {"zPairRelIso",
          [](const AnalysisEvent& event) -> std::vector<float> {
              return {event.zRelIso};
+         }},        
+        {"zPairTrkIso",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.zTrkIso};
          }},        
         {"zPairMassRefit",
          [](const AnalysisEvent& event) -> std::vector<float> {
@@ -722,9 +758,9 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
          [](const AnalysisEvent& event) -> std::vector<float> {
              return { float ((event.chsPairVec.first + event.chsPairVec.second).Phi()) };
          }},
-        {"chsPairIso",
+        {"chsPairRelIso",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             return {event.chsTrkIso};
+             return {event.chsRelIso};
          }},        
         {"chsPairDeltaR", [](const AnalysisEvent& event) -> std::vector<float> {
              return { float (event.chsPairVec.first.DeltaR(event.chsPairVec.second)) };
@@ -735,29 +771,58 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
         {"chsPairDeltaZ", [](const AnalysisEvent& event) -> std::vector<float> {
              return { float (event.chsPairVec.first.Z() - event.chsPairVec.second.Z()) };
          }},
-	{"chsPairMassRefit",
+	{"chsTrkPairMass",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             return { float ((event.chsPairTrkVec.first + event.chsPairTrkVec.second).M()) };
+         }},
+	{"chsTrkPairPt",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             return { float ((event.chsPairTrkVec.first + event.chsPairTrkVec.second).Pt()) };
+         }},
+	{"chsTrkPairEta",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             return { float (std::abs((event.chsPairTrkVec.first + event.chsPairTrkVec.second).Eta())) };
+         }},
+	{"chsTrkPairPhi",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             return { float ((event.chsPairTrkVec.first + event.chsPairTrkVec.second).Phi()) };
+         }},
+        {"chsTrkPairTrkIso",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             return {event.chsTrkIso};
+         }},        
+        {"chsTrkPairDeltaR", [](const AnalysisEvent& event) -> std::vector<float> {
+             return { float (event.chsPairTrkVec.first.DeltaR(event.chsPairTrkVec.second)) };
+         }},
+        {"chsTrkPairDeltaPhi", [](const AnalysisEvent& event) -> std::vector<float> {
+             return { float (event.chsPairTrkVec.first.DeltaPhi(event.chsPairTrkVec.second)) };
+         }},
+        {"chsTrkPairDeltaZ", [](const AnalysisEvent& event) -> std::vector<float> {
+             return { float (event.chsPairTrkVec.first.Z() - event.chsPairTrkVec.second.Z()) };
+         }},
+	{"chsTrkPairMassRefit",
          [](const AnalysisEvent& event) -> std::vector<float> {
              return { float ((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).M()) };
          }},
-	{"chsPairPtRefit",
+	{"chsTrkPairPtRefit",
          [](const AnalysisEvent& event) -> std::vector<float> {
              return { float ((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).Pt()) };
          }},
-	{"chsPairEtaRefit",
+	{"chsTrkPairEtaRefit",
          [](const AnalysisEvent& event) -> std::vector<float> {
              return { float (std::abs((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).Eta()))};
          }},
-	{"chsPairPhiRefit",
+	{"chsTrkPairPhiRefit",
          [](const AnalysisEvent& event) -> std::vector<float> {
              return { float ((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).Phi())};
          }},
-        {"chsPairDeltaRRefit", [](const AnalysisEvent& event) -> std::vector<float> {
+        {"chsTrkPairDeltaRRefit", [](const AnalysisEvent& event) -> std::vector<float> {
              return { float (event.chsPairTrkVecRefitted.first.DeltaR(event.chsPairTrkVecRefitted.second))};
          }},
-        {"chsPairDeltaPhiRefit", [](const AnalysisEvent& event) -> std::vector<float> {
+        {"chsTrkPairDeltaPhiRefit", [](const AnalysisEvent& event) -> std::vector<float> {
              return { float (event.chsPairTrkVecRefitted.first.DeltaPhi(event.chsPairTrkVecRefitted.second))};
          }},
-        {"chsPairDeltaZRefit", [](const AnalysisEvent& event) -> std::vector<float> {
+        {"chsTrkPairDeltaZRefit", [](const AnalysisEvent& event) -> std::vector<float> {
              return { float (event.chsPairTrkVecRefitted.first.Z() - event.chsPairTrkVecRefitted.second.Z())};
          }},
         {"wPairMass", [](const AnalysisEvent& event) -> std::vector<float> {

@@ -127,6 +127,70 @@ plots:
     fillExp: "lep2DZSig"
     xAxisLabel: "lepton 2 d_{Z} significance"
     cutStage: 0
+  - title: "Leading charged hadron pf cand p_{T}"
+    name: "chs1Pt"
+    xMax: 200.
+    xMin: 0.
+    nBins: 200
+    fillExp: "chs1Pt"
+    xAxisLabel: "p_{T} (GeV/c)"
+    cutStage: 0
+  - title: "Leading charged hadron pf cand #eta"
+    name: "chs1Eta"
+    xMax: 3.
+    xMin: 0.
+    nBins: 120
+    fillExp: "chs1Eta"
+    xAxisLabel: "#eta"
+    cutStage: 0
+  - title: "Leading charged hadron pf cand #phi"
+    name: "chs1Phi"
+    xMax: 3.2
+    xMin: -3.2
+    nBins: 300
+    fillExp: "chs1Phi"
+    xAxisLabel: "#phi"
+    cutStage: 0
+  - title: "Leading charged hadron pf isolation"
+    name: "chs1RelIso"
+    xMax: 10.0
+    xMin: 0.0
+    nBins: 200
+    fillExp: "chs1RelIso"
+    xAxisLabel: "Rel iso"
+    cutStage: 0
+  - title: "Subleading charged hadron pf cand p_{T}"
+    name: "chs2Pt"
+    xMax: 200.
+    xMin: 0.
+    nBins: 200
+    fillExp: "chs2Pt"
+    xAxisLabel: "p_{T} (GeV/c)"
+    cutStage: 0
+  - title: "Subleading charged hadron pf cand #eta"
+    name: "chs2Eta"
+    xMax: 3.
+    xMin: 0.
+    nBins: 120
+    fillExp: "chs2Eta"
+    xAxisLabel: "#eta"
+    cutStage: 0
+  - title: "Leading charged hadron pf cand #phi"
+    name: "chs2Phi"
+    xMax: 3.2
+    xMin: -3.2
+    nBins: 300
+    fillExp: "chs2Phi"
+    xAxisLabel: "#phi"
+    cutStage: 0
+  - title: "Subleading charged hadron pf isolation"
+    name: "chs2RelIso"
+    xMax: 10.0
+    xMin: 0.0
+    nBins: 200
+    fillExp: "chs2RelIso"
+    xAxisLabel: "Rel iso"
+    cutStage: 0
   - title: "Leading charged hadron track p_{T}"
     name: "chs1TrkPt"
     xMax: 200.
@@ -151,13 +215,13 @@ plots:
     fillExp: "chs1TrkPhi"
     xAxisLabel: "track #phi"
     cutStage: 0
-  - title: "Leading charged hadron isolation"
+  - title: "Leading charged hadron track rel isolation"
     name: "chs1TrkIso"
     xMax: 10.0
     xMin: 0.0
     nBins: 200
     fillExp: "chs1TrkIso"
-    xAxisLabel: "Rel iso"
+    xAxisLabel: "Trk rel iso"
     cutStage: 0
   - title: "Subleading charged hadron track p_{T}"
     name: "chs2TrkPt"
@@ -183,13 +247,13 @@ plots:
     fillExp: "chs2TrkPhi"
     xAxisLabel: "track #phi"
     cutStage: 0
-  - title: "Subleading charged hadron isolation"
+  - title: "Subleading charged hadron track rel isolation"
     name: "chs2TrkIso"
     xMax: 10.0
     xMin: 0.0
     nBins: 200
     fillExp: "chs2TrkIso"
-    xAxisLabel: "Rel iso"
+    xAxisLabel: "Trk rel iso"
     cutStage: 0
   - title: "E_{T}^{miss}"
     name: "met"
@@ -464,20 +528,36 @@ plots:
     xAxisLabel: "Relative isolation"
     cutStage: 0
   - title: "Leading lepton relative isolation (recalculated)"
-    name: "zLepton1NewIso"
+    name: "zLepton1NewRelIso"
     xMax: 1.0
     xMin: 0.
     nBins: 500
-    fillExp: "zLepton1NewIso"
+    fillExp: "zLepton1NewRelIso"
     xAxisLabel: "Relative isolation (recalculated)"
     cutStage: 0
   - title: "Subleading lepton relative isolation (recalculated)"
-    name: "zLepton2NewIso"
+    name: "zLepton2NewRelIso"
     xMax: 1.0
     xMin: 0.
     nBins: 500
-    fillExp: "zLepton2NewIso"
+    fillExp: "zLepton2NewRelIso"
     xAxisLabel: "Relative isolation (recalculated)"
+    cutStage: 0
+  - title: "Leading lepton track relative isolation (recalculated)"
+    name: "zLepton1NewTrkIso"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton1NewTrkIso"
+    xAxisLabel: "Track relative isolation (recalculated)"
+    cutStage: 0
+  - title: "Subleading lepton track relative isolation (recalculated)"
+    name: "zLepton2NewTrkIso"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton2NewTrkIso"
+    xAxisLabel: "Track relative isolation (recalculated)"
     cutStage: 0
   - title: "Dilepton Invariant Mass"
     name: "zPairMass"
@@ -511,13 +591,21 @@ plots:
     fillExp: "zPairPhi"
     xAxisLabel: "#phi dilepton"
     cutStage: 0
-  - title: "Dilepton isolation"
-    name: "zPairIso"
+  - title: "Dilepton relative isolation"
+    name: "zPairRelIso"
     xMin: 0.0
     xMax: 1.0
     nBins: 500
-    fillExp: "zPairIso"
-    xAxisLabel: "dilepton isolation"
+    fillExp: "zPairRelIso"
+    xAxisLabel: "dilepton relative isolation"
+    cutStage: 0
+  - title: "Dilepton track relative isolation"
+    name: "zPairTrkIso"
+    xMin: 0.0
+    xMax: 1.0
+    nBins: 500
+    fillExp: "zPairTrkIso"
+    xAxisLabel: "dilepton track relative isolation"
     cutStage: 0
   - title: "Dilepton Invariant Mass (Refitted)"
     name: "zPairMassRefit"
@@ -583,15 +671,15 @@ plots:
     fillExp: "chsPairPhi"
     xAxisLabel: "#phi dihadron"
     cutStage: 0
-  - title: "Dihadron isolation"
-    name: "chsPairIso"
+  - title: "Dihadron relative isolation"
+    name: "chsPairRelIso"
     xMin: 0.0
     xMax: 1.0
     nBins: 500
-    fillExp: "chsPairIso"
-    xAxisLabel: "isolation dihadron"
+    fillExp: "chsPairRelIso"
+    xAxisLabel: "dihadron relative isolation"
     cutStage: 0
-  - title: "#DeltaR between charged hadron tracks"
+  - title: "#DeltaR between charged hadron pf cands"
     name: "chsPairDeltaR"
     xMin: 0.
     xMax: 0.4
@@ -599,7 +687,7 @@ plots:
     fillExp: "chsPairDeltaR"
     xAxisLabel: "#Deltar"
     cutStage: 0
-  - title: "#Delta#phi between charged hadron tracks"
+  - title: "#Delta#phi between charged hadron pf cands"
     name: "chsPairDeltaPhi"
     xMin: 0.
     xMax: 3.2
@@ -607,7 +695,7 @@ plots:
     fillExp: "chsPairDeltaPhi"
     xAxisLabel: "#Delta#phi"
     cutStage: 0
-  - title: "#Deltaz between charged hadron tracks"
+  - title: "#Deltaz between charged hadron pf cands"
     name: "chsPairDeltaZ"
     xMin: 0.
     xMax: 20.
@@ -615,60 +703,124 @@ plots:
     fillExp: "chsPairDeltaZ"
     xAxisLabel: "#Deltaz (cm)"
     cutStage: 0
-  - title: "Refitted dihadrons Invariant Mass"
-    name: "chsPairMassRefit"
+  - title: "Dihadron (tracks) Invariant Mass"
+    name: "chsTrkPairMass"
     xMin: 0.
     xMax: 10.
     nBins: 500
-    fillExp: "chsPairMassRefit"
-    xAxisLabel: "m_{dihadron} (GeV/c^{2})"
+    fillExp: "chsTrkPairMass"
+    xAxisLabel: "m_{dihadron tracks} (GeV/c^{2})"
     cutStage: 0
-  - title: "Refitted dihadron p_{T}"
-    name: "chsPairPtRefit"
+  - title: "Dihadron (tracks) p_{T}"
+    name: "chsTrkPairPt"
     xMin: 0.
     xMax: 400.
     nBins: 40
-    fillExp: "chsPairPtRefit"
-    xAxisLabel: "p_{T} dihadron (GeV/c)"
+    fillExp: "chsTrkPairPt"
+    xAxisLabel: "dihadron tracks p_{T} (GeV/c)"
     cutStage: 0
-  - title: "Refitted dihadron #eta"
-    name: "chsPairEtaRefit"
+  - title: "Dihadron (tracks) #eta"
+    name: "chsTrkPairEta"
     xMin: 0.
     xMax: 5.
     nBins: 60
-    fillExp: "chsPairEtaRefit"
-    xAxisLabel: "#eta dihadron"
+    fillExp: "chsTrkPairEta"
+    xAxisLabel: "dihadron tracks #eta"
     cutStage: 0
-  - title: "Refitted dihadron #phi"
-    name: "chsPairPhiRefit"
+  - title: "Dihadron (tracks) #phi"
+    name: "chsTrkPairPhi"
     xMin: -3.2
     xMax: 3.2
     nBins: 80
-    fillExp: "chsPairPhiRefit"
-    xAxisLabel: "#phi dihadron"
+    fillExp: "chsTrkPairPhi"
+    xAxisLabel: "dihadron track #phi"
     cutStage: 0
-  - title: "#DeltaR between refitted charged hadron tracks"
-    name: "chsPairDeltaRRefit"
+  - title: "Dihadron track relative isolation"
+    name: "chsTrkPairTrkIso"
+    xMin: 0.0
+    xMax: 1.0
+    nBins: 500
+    fillExp: "chsTrkPairTrkIso"
+    xAxisLabel: "dihadron track relative isolation"
+    cutStage: 0
+  - title: "#DeltaR between charged hadron tracks"
+    name: "chsTrkPairDeltaR"
     xMin: 0.
     xMax: 0.4
     nBins: 40
-    fillExp: "chsPairDeltaRRefit"
+    fillExp: "chsTrkPairDeltaR"
     xAxisLabel: "#Deltar"
     cutStage: 0
-  - title: "#Delta#phi between refitted charged hadron tracks"
-    name: "chsPairDeltaPhiRefit"
+  - title: "#Delta#phi between charged hadron tracks"
+    name: "chsTrkPairDeltaPhi"
     xMin: 0.
     xMax: 3.2
     nBins: 100
-    fillExp: "chsPairDeltaPhiRefit"
+    fillExp: "chsTrkPairDeltaPhi"
     xAxisLabel: "#Delta#phi"
     cutStage: 0
-  - title: "#Deltaz between refitted charged hadron tracks"
-    name: "chsPairDeltaZRefit"
+  - title: "#Deltaz between charged hadron tracks"
+    name: "chsTrkPairDeltaZ"
     xMin: 0.
     xMax: 20.
     nBins: 600
-    fillExp: "chsPairDeltaZRefit"
+    fillExp: "chsTrkPairDeltaZ"
+    xAxisLabel: "#Deltaz (cm)"
+    cutStage: 0
+  - title: "Refitted dihadron tracks Invariant Mass"
+    name: "chsTrkPairMassRefit"
+    xMin: 0.
+    xMax: 10.
+    nBins: 500
+    fillExp: "chsTrkPairMassRefit"
+    xAxisLabel: "m_{dihadron} (GeV/c^{2})"
+    cutStage: 0
+  - title: "Refitted dihadron tracks p_{T}"
+    name: "chsTrkPairPtRefit"
+    xMin: 0.
+    xMax: 400.
+    nBins: 40
+    fillExp: "chsTrkPairPtRefit"
+    xAxisLabel: "dihadron p_{T} (GeV/c)"
+    cutStage: 0
+  - title: "Refitted dihadron tracks #eta"
+    name: "chsTrkPairEtaRefit"
+    xMin: 0.
+    xMax: 5.
+    nBins: 60
+    fillExp: "chsTrkPairEtaRefit"
+    xAxisLabel: "dihadron #eta"
+    cutStage: 0
+  - title: "Refitted dihadron tracks #phi"
+    name: "chsTrkPairPhiRefit"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 80
+    fillExp: "chsTrkPairPhiRefit"
+    xAxisLabel: "dihadron #phi"
+    cutStage: 0
+  - title: "#DeltaR between refitted charged hadron tracks"
+    name: "chsTrkPairDeltaRRefit"
+    xMin: 0.
+    xMax: 0.4
+    nBins: 40
+    fillExp: "chsTrkPairDeltaRRefit"
+    xAxisLabel: "#Deltar"
+    cutStage: 0
+  - title: "#Delta#phi between refitted charged hadron tracks"
+    name: "chsTrkPairDeltaPhiRefit"
+    xMin: 0.
+    xMax: 3.2
+    nBins: 100
+    fillExp: "chsTrkPairDeltaPhiRefit"
+    xAxisLabel: "#Delta#phi"
+    cutStage: 0
+  - title: "#Deltaz between refitted charged hadron tracks"
+    name: "chsTrkPairDeltaZRefit"
+    xMin: 0.
+    xMax: 20.
+    nBins: 600
+    fillExp: "chsTrkPairDeltaZRefit"
     xAxisLabel: "#Deltaz (cm)"
     cutStage: 0
   - title: "Higgs candidiate mass"
