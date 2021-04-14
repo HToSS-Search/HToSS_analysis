@@ -737,28 +737,28 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
          }},
 	{"chsPairMassRefit",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second).M()) };
+             return { float ((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).M()) };
          }},
 	{"chsPairPtRefit",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second).Pt()) };
+             return { float ((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).Pt()) };
          }},
 	{"chsPairEtaRefit",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float (std::abs((event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second).Eta()))};
+             return { float (std::abs((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).Eta()))};
          }},
 	{"chsPairPhiRefit",
          [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second).Phi())};
+             return { float ((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).Phi())};
          }},
         {"chsPairDeltaRRefit", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float (event.chsTrkPairVecRefitted.first.DeltaR(event.chsTrkPairVecRefitted.second))};
+             return { float (event.chsPairTrkVecRefitted.first.DeltaR(event.chsPairTrkVecRefitted.second))};
          }},
         {"chsPairDeltaPhiRefit", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float (event.chsTrkPairVecRefitted.first.DeltaPhi(event.chsTrkPairVecRefitted.second))};
+             return { float (event.chsPairTrkVecRefitted.first.DeltaPhi(event.chsPairTrkVecRefitted.second))};
          }},
         {"chsPairDeltaZRefit", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float (event.chsTrkPairVecRefitted.first.Z() - event.chsTrkPairVecRefitted.second.Z())};
+             return { float (event.chsPairTrkVecRefitted.first.Z() - event.chsPairTrkVecRefitted.second.Z())};
          }},
         {"wPairMass", [](const AnalysisEvent& event) -> std::vector<float> {
              return { float ((event.wPairQuarks.first + event.wPairQuarks.second).M()) };
@@ -813,7 +813,7 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
              return { float ((event.zPairLeptons.first + event.zPairLeptons.second).Z() - (event.chsPairVec.first + event.chsPairVec.second).Z()) };
          }},
         {"discalarMassRefit", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.zPairLeptons.first + event.zPairLeptons.second + event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second).M()) };
+             return { float ((event.zPairLeptons.first + event.zPairLeptons.second + event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).M()) };
          }},
         {"discalarMassRefitNew", [](const AnalysisEvent& event) -> std::vector<float> {
              TLorentzVector mu1, mu2;
@@ -821,10 +821,10 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
              int idx2 {event.muonPF2PATPackedCandIndex[event.zPairIndex.second]};
              mu1.SetPxPyPzE(event.packedCandsPseudoTrkPx[idx1], event.packedCandsPseudoTrkPy[idx1], event.packedCandsPseudoTrkPz[idx1], event.packedCandsE[idx1]);
              mu2.SetPxPyPzE(event.packedCandsPseudoTrkPx[idx2], event.packedCandsPseudoTrkPy[idx2], event.packedCandsPseudoTrkPz[idx2], event.packedCandsE[idx2]);
-             return { float ((mu1+mu2 + event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second).M()) };
+             return { float ((mu1+mu2 + event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).M()) };
          }},
         {"discalarDeltaMassRefit", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.zPairLeptons.first + event.zPairLeptons.second).M() - (event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second).M()) };
+             return { float ((event.zPairLeptons.first + event.zPairLeptons.second).M() - (event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).M()) };
          }},
         {"discalarDeltaMassRefitNew", [](const AnalysisEvent& event) -> std::vector<float> {
              TLorentzVector mu1, mu2;
@@ -832,19 +832,19 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
              int idx2 {event.muonPF2PATPackedCandIndex[event.zPairIndex.second]};
              mu1.SetPxPyPzE(event.packedCandsPseudoTrkPx[idx1], event.packedCandsPseudoTrkPy[idx1], event.packedCandsPseudoTrkPz[idx1], event.packedCandsE[idx1]);
              mu2.SetPxPyPzE(event.packedCandsPseudoTrkPx[idx2], event.packedCandsPseudoTrkPy[idx2], event.packedCandsPseudoTrkPz[idx2], event.packedCandsE[idx2]);
-             return { float ((mu1+mu2).M() - (event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second).M()) };
+             return { float ((mu1+mu2).M() - (event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).M()) };
          }},
         {"discalarPtRefit", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.zPairLeptons.first + event.zPairLeptons.second + event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second).Pt()) };
+             return { float ((event.zPairLeptons.first + event.zPairLeptons.second + event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).Pt()) };
          }},
         {"discalarEtaRefit", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.zPairLeptons.first + event.zPairLeptons.second + event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second).Eta()) };
+             return { float ((event.zPairLeptons.first + event.zPairLeptons.second + event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).Eta()) };
          }},
         {"discalarPhiRefit", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.zPairLeptons.first + event.zPairLeptons.second + event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second).Phi()) };
+             return { float ((event.zPairLeptons.first + event.zPairLeptons.second + event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).Phi()) };
          }},
         {"discalarDeltaRRefit", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.zPairLeptons.first + event.zPairLeptons.second).DeltaR((event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second))) };
+             return { float ((event.zPairLeptons.first + event.zPairLeptons.second).DeltaR((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second))) };
          }},
         {"discalarDeltaRRefitNew", [](const AnalysisEvent& event) -> std::vector<float> {
              TLorentzVector mu1, mu2;
@@ -852,13 +852,13 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
              int idx2 {event.muonPF2PATPackedCandIndex[event.zPairIndex.second]};
              mu1.SetPxPyPzE(event.packedCandsPseudoTrkPx[idx1], event.packedCandsPseudoTrkPy[idx1], event.packedCandsPseudoTrkPz[idx1], event.packedCandsE[idx1]);
              mu2.SetPxPyPzE(event.packedCandsPseudoTrkPx[idx2], event.packedCandsPseudoTrkPy[idx2], event.packedCandsPseudoTrkPz[idx2], event.packedCandsE[idx2]);
-             return { float ((mu1+mu2).DeltaR((event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second))) };
+             return { float ((mu1+mu2).DeltaR((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second))) };
          }},
         {"discalarDeltaPhiRefit", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.zPairLeptons.first + event.zPairLeptons.second).DeltaPhi((event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second))) };
+             return { float ((event.zPairLeptons.first + event.zPairLeptons.second).DeltaPhi((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second))) };
          }},
         {"discalarDeltaZRefit", [](const AnalysisEvent& event) -> std::vector<float> {
-             return { float ((event.zPairLeptons.first + event.zPairLeptons.second).Z() - (event.chsTrkPairVecRefitted.first + event.chsTrkPairVecRefitted.second).Z()) };
+             return { float ((event.zPairLeptons.first + event.zPairLeptons.second).Z() - (event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).Z()) };
          }},
 
         {"topMass",

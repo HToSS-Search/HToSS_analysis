@@ -337,7 +337,7 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
 
     //// Apply side band cut for data
     if (!isMC_ && !unblind_) {
-        float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsTrkPairVec.first + event.chsTrkPairVec.second).M() );
+        float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsPairTrkVec.first + event.chsPairTrkVec.second).M() );
         if ( muScalarMass  < hadScalarMass*1.05 && muScalarMass  >= hadScalarMass*0.95 ) return false;
         else if ( hadScalarMass < muScalarMass*1.05  && hadScalarMass >= muScalarMass*0.83  ) return false;
     }
@@ -430,7 +430,7 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
 
 //// Apply side band cut for data
     if (!isMC_ && !unblind_) {
-        float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsTrkPairVec.first + event.chsTrkPairVec.second).M() );
+        float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsPairTrkVec.first + event.chsPairTrkVec.second).M() );
         if ( muScalarMass  < hadScalarMass*1.05 && muScalarMass  >= hadScalarMass*.95 ) return false;
         else if ( hadScalarMass < muScalarMass*1.05  && hadScalarMass >= muScalarMass*.95  ) return false;
     }
@@ -774,38 +774,57 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
                 chsTrk1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[event.chsPairIndex.first], event.packedCandsPseudoTrkEta[event.chsPairIndex.first], event.packedCandsPseudoTrkPhi[event.chsPairIndex.first], event.packedCandsE[event.chsPairIndex.first]);
                 chsTrk2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[event.chsPairIndex.second], event.packedCandsPseudoTrkEta[event.chsPairIndex.second], event.packedCandsPseudoTrkPhi[event.chsPairIndex.second], event.packedCandsE[event.chsPairIndex.second]);
 
-                event.chsTrkPairVec.first  = chsTrk1;
-                event.chsTrkPairVec.second = chsTrk2;
+                event.chsPairTrkVec.first  = chsTrk1;
+                event.chsPairTrkVec.second = chsTrk2;
 
                 float neutral_iso {0.0}, neutral_iso1 {0.0}, neutral_iso2 {0.0};
                 float ch_iso {0.0}, ch_iso1 {0.0}, ch_iso2 {0.0};
                 float pu_iso {0.0}, pu_iso1 {0.0}, pu_iso2 {0.0};
 
+                float neutral_trkiso {0.0}, neutral_trkiso1 {0.0}, neutral_trkiso2 {0.0};
+                float ch_trkiso {0.0}, ch_trkiso1 {0.0}, ch_trkiso2 {0.0};
+                float pu_trkiso {0.0}, pu_trkiso1 {0.0}, pu_trkiso2 {0.0};
+
                 for (int k = 0; k < event.numPackedCands; k++) {
                     if ( k == event.chsPairIndex.first || k == event.chsPairIndex.second ) continue;
 
-//                    TLorentzVector packedCandVec;
-//                    packedCandVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
                     TLorentzVector packedCandVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
-                      
+                    TLorentzVector packedCandTrkVec;
+                    packedCandTrkVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
 
                     if ( event.packedCandsCharge[k] == 0 ) {
-                        if ( packedCandVec.Pt() < 0.5 ) continue;
-                        if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.3 )  neutral_iso1 += packedCandVec.Et();
-                        if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.3 )  neutral_iso2 += packedCandVec.Et();
-                        if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.3 ) neutral_iso += packedCandVec.Et();
+                        if ( packedCandVec.Pt() >= 0.5 ) {
+                            if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.3 )  neutral_iso1 += packedCandVec.Et();
+                            if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.3 )  neutral_iso2 += packedCandVec.Et();
+                            if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.3 ) neutral_iso += packedCandVec.Et();
+                        }
+                        if ( packedCandTrkVec.Pt() >= 0.5 ) {
+                            if ( event.chsPairTrkVec.first.DeltaR(packedCandTrkVec)  < 0.3 ) neutral_trkiso1 += packedCandTrkVec.Et();
+                            if ( event.chsPairTrkVec.second.DeltaR(packedCandTrkVec) < 0.3 ) neutral_trkiso2 += packedCandTrkVec.Et();
+                            if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandTrkVec) ) neutral_trkiso += packedCandVec.Et();
+                        }
                     }
                     else {
                         if ( event.packedCandsFromPV[k] >= 2 ) {
                             if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.3 )  ch_iso1 += packedCandVec.Pt();
                             if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.3 )  ch_iso2 += packedCandVec.Pt();
                             if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.3 ) ch_iso += packedCandVec.Pt();
+
+                            if ( event.chsPairTrkVec.first.DeltaR(packedCandTrkVec)   < 0.3 )  ch_trkiso1 += packedCandTrkVec.Pt();
+                            if ( event.chsPairTrkVec.second.DeltaR(packedCandTrkVec)  < 0.3 )  ch_trkiso2 += packedCandTrkVec.Pt();
+                            if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandTrkVec)  < 0.3 ) ch_trkiso += packedCandTrkVec.Pt();
                         }
                         else {
-                            if ( packedCandVec.Pt() < 0.5 ) continue;
+                            if ( packedCandVec.Pt() >= 0.5 ) {
                                 if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.3 )  pu_iso1 += packedCandVec.Pt();
                                 if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.3 )  pu_iso2 += packedCandVec.Pt();
                                 if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.3 ) pu_iso += packedCandVec.Pt();
+                            }
+                            if ( packedCandTrkVec.Pt() >= 0.5 ) {
+                                if ( event.chsPairTrkVec.first.DeltaR(packedCandTrkVec)   < 0.3 )  pu_trkiso1 += packedCandTrkVec.Pt();
+                                if ( event.chsPairTrkVec.second.DeltaR(packedCandTrkVec)  < 0.3 )  pu_trkiso2 += packedCandTrkVec.Pt();
+                                if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandTrkVec)  < 0.3 ) pu_trkiso += packedCandTrkVec.Pt();
+                            }
                         }
                     }
                 }
@@ -814,9 +833,17 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
                 const float iso2 = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
                 const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
 
-                event.chsPairTrkIso.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
-                event.chsPairTrkIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
-                event.chsTrkIso = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
+                const float trkiso1 = ch_trkiso1 + std::max( float(0.0), neutral_trkiso1 - float(0.5*pu_trkiso1) );
+                const float trkiso2 = ch_trkiso2 + std::max( float(0.0), neutral_trkiso2 - float(0.5*pu_trkiso2) );
+                const float trkiso  = ch_trkiso  + std::max( float(0.0), neutral_trkiso  - float(0.5*pu_trkiso)  );
+
+                event.chsPairRelIso.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
+                event.chsPairRelIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
+                event.chsRelIso = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
+
+                event.chsPairTrkIso.first = trkiso1/(event.chsPairTrkVec.first.Pt() + 1.0e-06);
+                event.chsPairTrkIso.second = trkiso2/(event.chsPairTrkVec.second.Pt() + 1.0e-06);
+                event.chsTrkIso = trkiso/((event.chsPairTrkVec.first+event.chsPairTrkVec.second).Pt() + 1.0e-06);
 
 //                if ( event.chsTrkIso > 0.4 ) continue;
 
@@ -831,8 +858,8 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
                 chsTrk1Refitted.SetPtEtaPhiE(event.chsTkPairTk1Pt[event.chsPairTrkIndex], event.chsTkPairTk1Eta[event.chsPairTrkIndex], event.chsTkPairTk1Phi[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2)));
                 chsTrk2Refitted.SetPtEtaPhiE(event.chsTkPairTk2Pt[event.chsPairTrkIndex], event.chsTkPairTk2Eta[event.chsPairTrkIndex], event.chsTkPairTk2Phi[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2)));	
 
-                event.chsTrkPairVecRefitted.first  = chsTrk1Refitted;
-                event.chsTrkPairVecRefitted.second = chsTrk2Refitted;
+                event.chsPairTrkVecRefitted.first  = chsTrk1Refitted;
+                event.chsPairTrkVecRefitted.second = chsTrk2Refitted;
 
                 return true;
             }

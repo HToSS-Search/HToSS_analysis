@@ -341,7 +341,7 @@ int main(int argc, char* argv[]) {
             if ( chsIndex.size() < 2 ) continue;
             if (!getDihadronCand(event, chsIndex)) continue;
 
-//            float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsTrkPairVec.first + event.chsTrkPairVec.second).M() );
+//            float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsPairTrkVec.first + event.chsPairTrkVec.second).M() );
 //            if ( muScalarMass  < hadScalarMass*1.25 && muScalarMass  >= hadScalarMass*.75 ) return false;
  //           if ( hadScalarMass < muScalarMass*1.25  && hadScalarMass >= muScalarMass*.75  ) return false;
 
@@ -368,16 +368,16 @@ int main(int argc, char* argv[]) {
       	    h_diChsPtOverDeltaR->Fill( ((chs1Vec+chs2Vec).Pt())/ (chs1Vec.DeltaR(chs2Vec) + 1.0e-06),datasetWeight );
       	    h_diChsPtOverDeltaR2D->Fill( (chs1Vec+chs2Vec).Pt(), chs1Vec.DeltaR(chs2Vec),datasetWeight );
             h_diChsMass->Fill( (chs1Vec+chs2Vec).M(),datasetWeight );
-            h_diChsRefittedMass->Fill( (event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
+            h_diChsRefittedMass->Fill( (event.chsPairTrkVecRefitted.first+event.chsPairTrkVecRefitted.second).M(),datasetWeight );
 
 ///
 
             h_scalarDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR( (chs1Vec+chs2Vec) ), datasetWeight );
             h_scalarMasses->Fill( (muon1Vec+muon2Vec).M(), (chs1Vec+chs2Vec).M(), datasetWeight );
             h_scalarMassesNew->Fill( (muon1VecNew+muon2VecNew).M(), (chs1Vec+chs2Vec).M(),datasetWeight );
-            h_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
+            h_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsPairTrkVecRefitted.first+event.chsPairTrkVecRefitted.second).M(),datasetWeight );
             h_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M(),datasetWeight );
-            h_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
+            h_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsPairTrkVecRefitted.first+event.chsPairTrkVecRefitted.second).M(),datasetWeight );
             h_scalarRelIso->Fill(event.zRelIso, event.chsTrkIso, datasetWeight);
             h_scalarIso->Fill(event.zRelIso*(muon1Vec+muon2Vec).Pt(), event.chsTrkIso*(chs1Vec+chs2Vec).Pt(), datasetWeight);
 
@@ -410,13 +410,13 @@ int main(int argc, char* argv[]) {
       	        ht_diChsPtOverDeltaR->Fill( ((chs1Vec+chs2Vec).Pt())/ (chs1Vec.DeltaR(chs2Vec) + 1.0e-06),datasetWeight );
                 ht_diChsPtOverDeltaR2D->Fill( (chs1Vec+chs2Vec).Pt(), chs1Vec.DeltaR(chs2Vec),datasetWeight );
                 ht_diChsMass->Fill( (chs1Vec+chs2Vec).M(),datasetWeight );
-                ht_diChsRefittedMass->Fill( (event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
+                ht_diChsRefittedMass->Fill( (event.chsPairTrkVecRefitted.first+event.chsPairTrkVecRefitted.second).M(),datasetWeight );
 
                 ht_scalarDeltaR->Fill( (muon1Vec+muon2Vec).DeltaR( (chs1Vec+chs2Vec) ),datasetWeight );
                 ht_scalarMasses->Fill( (muon1Vec+muon2Vec).M(), (chs1Vec+chs2Vec).M(),datasetWeight );
-                ht_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
+                ht_scalarRefittedMasses->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(), (event.chsPairTrkVecRefitted.first+event.chsPairTrkVecRefitted.second).M(),datasetWeight );
                 ht_scalarMass->Fill( (muon1Vec+muon2Vec+chs1Vec+chs2Vec).M(),datasetWeight );
-                ht_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsTrkPairVecRefitted.first+event.chsTrkPairVecRefitted.second).M(),datasetWeight );
+                ht_scalarRefittedMass->Fill( (event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second+event.chsPairTrkVecRefitted.first+event.chsPairTrkVecRefitted.second).M(),datasetWeight );
                 ht_scalarRelIso->Fill(event.zRelIso, event.chsTrkIso, datasetWeight);
                 ht_scalarIso->Fill(event.zRelIso*(muon1Vec+muon2Vec).Pt(), event.chsTrkIso*(chs1Vec+chs2Vec).Pt(), datasetWeight);
 
@@ -719,8 +719,8 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
                 chsTrk1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[event.chsPairIndex.first], event.packedCandsPseudoTrkEta[event.chsPairIndex.first], event.packedCandsPseudoTrkPhi[event.chsPairIndex.first], event.packedCandsE[event.chsPairIndex.first]);
                 chsTrk2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[event.chsPairIndex.second], event.packedCandsPseudoTrkEta[event.chsPairIndex.second], event.packedCandsPseudoTrkPhi[event.chsPairIndex.second], event.packedCandsE[event.chsPairIndex.second]);
 
-                event.chsTrkPairVec.first  = chsTrk1;
-                event.chsTrkPairVec.second = chsTrk2;
+                event.chsPairTrkVec.first  = chsTrk1;
+                event.chsPairTrkVec.second = chsTrk2;
 
                 float neutral_iso {0.0}, neutral_iso1 {0.0}, neutral_iso2 {0.0};
                 float ch_iso {0.0}, ch_iso1 {0.0}, ch_iso2 {0.0};
@@ -734,21 +734,21 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
 
                     if ( event.packedCandsCharge[k] == 0 ) {
                         if ( packedCandVec.Pt() < 0.5 ) continue;
-                        if ( event.chsTrkPairVec.first.DeltaR(packedCandVec)   < 0.3 )  neutral_iso1 += packedCandVec.Et();
-                        if ( event.chsTrkPairVec.second.DeltaR(packedCandVec)  < 0.3 )  neutral_iso2 += packedCandVec.Et();
-                        if ( (event.chsTrkPairVec.first+event.chsTrkPairVec.second).DeltaR(packedCandVec)  < 0.3 ) neutral_iso += packedCandVec.Et();
+                        if ( event.chsPairTrkVec.first.DeltaR(packedCandVec)   < 0.3 )  neutral_iso1 += packedCandVec.Et();
+                        if ( event.chsPairTrkVec.second.DeltaR(packedCandVec)  < 0.3 )  neutral_iso2 += packedCandVec.Et();
+                        if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandVec)  < 0.3 ) neutral_iso += packedCandVec.Et();
                     }
                     else {
                         if ( event.packedCandsFromPV[k] >= 2 ) {
-                            if ( event.chsTrkPairVec.first.DeltaR(packedCandVec)   < 0.3 )  ch_iso1 += packedCandVec.Pt();
-                            if ( event.chsTrkPairVec.second.DeltaR(packedCandVec)  < 0.3 )  ch_iso2 += packedCandVec.Pt();
-                            if ( (event.chsTrkPairVec.first+event.chsTrkPairVec.second).DeltaR(packedCandVec)  < 0.3 ) ch_iso += packedCandVec.Pt();
+                            if ( event.chsPairTrkVec.first.DeltaR(packedCandVec)   < 0.3 )  ch_iso1 += packedCandVec.Pt();
+                            if ( event.chsPairTrkVec.second.DeltaR(packedCandVec)  < 0.3 )  ch_iso2 += packedCandVec.Pt();
+                            if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandVec)  < 0.3 ) ch_iso += packedCandVec.Pt();
                         }
                         else {
                             if ( packedCandVec.Pt() < 0.5 ) continue;
-                                if ( event.chsTrkPairVec.first.DeltaR(packedCandVec)   < 0.3 )  pu_iso1 += packedCandVec.Pt();
-                                if ( event.chsTrkPairVec.second.DeltaR(packedCandVec)  < 0.3 )  pu_iso2 += packedCandVec.Pt();
-                                if ( (event.chsTrkPairVec.first+event.chsTrkPairVec.second).DeltaR(packedCandVec)  < 0.3 ) pu_iso += packedCandVec.Pt();
+                                if ( event.chsPairTrkVec.first.DeltaR(packedCandVec)   < 0.3 )  pu_iso1 += packedCandVec.Pt();
+                                if ( event.chsPairTrkVec.second.DeltaR(packedCandVec)  < 0.3 )  pu_iso2 += packedCandVec.Pt();
+                                if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandVec)  < 0.3 ) pu_iso += packedCandVec.Pt();
                         }
                     }
                 }
@@ -767,8 +767,8 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
                 TLorentzVector chsTrk1Refitted, chsTrk2Refitted;
                 chsTrk1Refitted.SetPtEtaPhiE(event.chsTkPairTk1Pt[event.chsPairTrkIndex], event.chsTkPairTk1Eta[event.chsPairTrkIndex], event.chsTkPairTk1Phi[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2)));
                 chsTrk2Refitted.SetPtEtaPhiE(event.chsTkPairTk2Pt[event.chsPairTrkIndex], event.chsTkPairTk2Eta[event.chsPairTrkIndex], event.chsTkPairTk2Phi[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2)));
-                event.chsTrkPairVecRefitted.first  = chsTrk1Refitted;
-                event.chsTrkPairVecRefitted.second = chsTrk2Refitted;
+                event.chsPairTrkVecRefitted.first  = chsTrk1Refitted;
+                event.chsPairTrkVecRefitted.second = chsTrk2Refitted;
 
                 return true;
             }

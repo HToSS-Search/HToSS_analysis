@@ -1094,8 +1094,8 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs) {
                 chsTrk1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[event.chsPairIndex.first], event.packedCandsPseudoTrkEta[event.chsPairIndex.first], event.packedCandsPseudoTrkPhi[event.chsPairIndex.first], event.packedCandsE[event.chsPairIndex.first]);
                 chsTrk2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[event.chsPairIndex.second], event.packedCandsPseudoTrkEta[event.chsPairIndex.second], event.packedCandsPseudoTrkPhi[event.chsPairIndex.second], event.packedCandsE[event.chsPairIndex.second]);
 
-                event.chsTrkPairVec.first  = chsTrk1;
-                event.chsTrkPairVec.second = chsTrk2;
+                event.chsPairTrkVec.first  = chsTrk1;
+                event.chsPairTrkVec.second = chsTrk2;
 
                 event.chsPairTrkIndex = getChsTrackPairIndex(event);
 
@@ -1109,8 +1109,8 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs) {
                 TLorentzVector chsTrk1Refitted, chsTrk2Refitted;
                 chsTrk1Refitted.SetPtEtaPhiE(event.chsTkPairTk1Pt[event.chsPairTrkIndex], event.chsTkPairTk1Eta[event.chsPairTrkIndex], event.chsTkPairTk1Phi[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2)));
                 chsTrk2Refitted.SetPtEtaPhiE(event.chsTkPairTk2Pt[event.chsPairTrkIndex], event.chsTkPairTk2Eta[event.chsPairTrkIndex], event.chsTkPairTk2Phi[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2)));
-                event.chsTrkPairVecRefitted.first  = chsTrk1Refitted;
-                event.chsTrkPairVecRefitted.second = chsTrk2Refitted;
+                event.chsPairTrkVecRefitted.first  = chsTrk1Refitted;
+                event.chsPairTrkVecRefitted.second = chsTrk2Refitted;
 
                 return true;
             }

@@ -2457,8 +2457,8 @@ class AnalysisEvent
     float zTrkIso;
 
     std::pair<TLorentzVector, TLorentzVector> chsPairVec;
-    std::pair<TLorentzVector, TLorentzVector> chsTrkPairVec;
-    std::pair<TLorentzVector, TLorentzVector> chsTrkPairVecRefitted;
+    std::pair<TLorentzVector, TLorentzVector> chsPairTrkVec;
+    std::pair<TLorentzVector, TLorentzVector> chsPairTrkVecRefitted;
     std::pair<float, float> chsPairRelIso;
     std::pair<float, float> chsPairTrkIso;
     std::pair<int, int> chsPairIndex;
