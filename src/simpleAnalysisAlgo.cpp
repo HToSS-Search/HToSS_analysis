@@ -1215,18 +1215,18 @@ void SimpleAnalysis::setupPlots() {
   //Kaon mass assumption
   h_KhadronDeltaR = new TH1F("h_KhadronDeltaR", "Two hadrons (kaons) #DeltaR",2500, -10., 10.);
   h_KmuonsDeltaR = new TH1F("h_KmuonsDeltaR", "Two muons #DeltaR",2500, -10., 10.);
-  h_KIsoSum1 = new TH1F("h_KIsoSum1", "0.3 p_{T} Cone construction kaon 1", 1000, 0., 50.);
-  h_KIsoSum2 = new TH1F("h_KIsoSum2", "0.3 p_{T} Cone construction kaon 2", 1000, 0., 50.);
+  h_KIsoSum1 = new TH1F("h_KIsoSum1", "0.3 p_{T} Cone construction kaon 1", 1000, 0., 5.);
+  h_KIsoSum2 = new TH1F("h_KIsoSum2", "0.3 p_{T} Cone construction kaon 2", 1000, 0., 5.);
   h_KIso2 = new TH2F("h_KIso2", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.);
-  h_MuonIsoSum1 = new TH1F("h_MuonIsoSum1", "0.3 p_{T} Cone construction muon 1", 1000, 0., 50.);
-  h_MuonIsoSum2 = new TH1F("h_MuonIsoSum2", "0.3 p_{T} Cone construction muon 2", 1000, 0., 50.);
+  h_MuonIsoSum1 = new TH1F("h_MuonIsoSum1", "0.3 p_{T} Cone construction muon 1", 1000, 0., 5.);
+  h_MuonIsoSum2 = new TH1F("h_MuonIsoSum2", "0.3 p_{T} Cone construction muon 2", 1000, 0., 5.);
   h_KhadronInvMass = new TH1F("h_KhadronInvMass", "Two hadrons (kaons) - Invariant mass",1000, 0., 7.);
   h_KhadronInvMass2 = new TH1F("h_KhadronInvMass2", "Two hadrons (kaons) - Invariant mass, smaller binning",500, 0., 7.);
   h_KmuonsInvMass = new TH1F("h_KmuonsInvMass", "Two muons - Invariant mass",1000, 0., 7.);
   h_Kinvmass = new TH2F("h_Kinvmass", "Invariant mass: charged hadrons (kaons) vs muons", 1000, 0.,7.,1000,0.,7.);
   
-  h_KantiscalarInvMass = new TH1F("h_KantiscalarInvMass", "(Kaon) Antiscalar Invariant mass", 1000, 0.,15.);
-  h_KscalarInvMass = new TH1F("h_KscalarInvMass", "Scalar Invariant mass", 1000, 0.,15.);
+  h_KantiscalarInvMass = new TH1F("h_KantiscalarInvMass", "(Kaon) Antiscalar Invariant mass", 500, 0.,5.);
+  h_KscalarInvMass = new TH1F("h_KscalarInvMass", "Scalar Invariant mass", 500, 0.,5.);
   h_KhiggsInvMass = new TH1F("h_KhiggsInvMass", "h_0 Invariant mass", 1000, 0., 200.);
   h_KhiggsDeltaR = new TH1F("h_KhiggsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.);
 
@@ -1235,8 +1235,8 @@ void SimpleAnalysis::setupPlots() {
   //Pion mass assumption
   h_PhadronDeltaR = new TH1F("h_PhadronDeltaR", "Two hadrons (pions) #DeltaR",2500, -10., 10.);
   h_PmuonsDeltaR = new TH1F("h_PmuonsDeltaR", "Two muons #DeltaR",2500, -10., 10.);
-  h_PIsoSum1 = new TH1F("h_PIsoSum1", "Leading pion relative isolation", 1000, 0., 50.);
-  h_PIsoSum2 = new TH1F("h_PIsoSum2", "Subleading pion relative isolation", 1000, 0., 50.);
+  h_PIsoSum1 = new TH1F("h_PIsoSum1", "Leading pion relative isolation", 1000, 0., 5.);
+  h_PIsoSum2 = new TH1F("h_PIsoSum2", "Subleading pion relative isolation", 1000, 0., 5.);
   h_PIso2 = new TH2F("h_PIso2", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.);
   h_PIsoSum3 = new TH1F("h_PIsoSum3", "Leading muon relative isolation", 1000, 0., 50.);
   h_PIsoSum4 = new TH1F("h_PIsoSum4", "Subleading muon relative isolation", 1000, 0., 50.);
@@ -1247,8 +1247,8 @@ void SimpleAnalysis::setupPlots() {
   Gaussian2 = new TF1("Gaussian2","gaus",1.,3.);
   h_Pinvmass = new TH2F("h_Pinvmass", "Invariant mass: charged hadrons (pions) vs muons", 1000, 0.,7.,1000,0.,7.);
   
-  h_PantiscalarInvMass = new TH1F("h_PantiscalarInvMass", "Dihadron (pion) invariant mass", 1000, 0.,15.);
-  h_PscalarInvMass = new TH1F("h_PscalarInvMass", "Dimuon invariant mass", 1000, 0.,15.);
+  h_PantiscalarInvMass = new TH1F("h_PantiscalarInvMass", "Dihadron (pion) invariant mass", 500, 0.,5.);
+  h_PscalarInvMass = new TH1F("h_PscalarInvMass", "Dimuon invariant mass", 500, 0.,5.);
   Gaussian3 = new TF1("Gaussian3","gaus",1.,3.);
   h_PhiggsInvMass = new TH1F("h_PhiggsInvMass", "Higgs invariant mass", 1000, 0., 200.);
   h_PhiggsDeltaR = new TH1F("h_PhiggsDeltaR", "Discalar #DeltaR",2500, 0., 15.);
@@ -1256,8 +1256,8 @@ void SimpleAnalysis::setupPlots() {
   h_Rpionre12InvMass = new TH1F("h_Rpionre12InvMass", "Dihadron (pion) refit invariant mass", 500, 0.,5.);
   h_Rkaonre12InvMass = new TH1F("h_Rkaonre12InvMass", "Dihadron (kaon) refit invariant mass", 500, 0.,5.);
 
-  h_P20antiscalarInvMass = new TH1F("h_P20antiscalarInvMass", "Dihadron (pion) invariant mass", 1000, 0.,15.);
-  h_P20scalarInvMass = new TH1F("h_P20scalarInvMass", "Dimuon invariant mass", 1000, 0.,15.);
+  h_P20antiscalarInvMass = new TH1F("h_P20antiscalarInvMass", "Dihadron (pion) invariant mass", 500, 0.,5.);
+  h_P20scalarInvMass = new TH1F("h_P20scalarInvMass", "Dimuon invariant mass", 500, 0.,5.);
   h_P20higgsInvMass = new TH1F("h_P20higgsInvMass", "Higgs invariant mass", 1000, 0., 200.);
 	
   h_massassump = new TH2F("h_massassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.);
