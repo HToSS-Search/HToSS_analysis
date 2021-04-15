@@ -51,6 +51,7 @@
      h_PantiscalarInvMass_ctau0->SetMarkerColor(4);
      h_PantiscalarInvMass_ctau0->SetLineColor(4);
      h_PantiscalarInvMass_ctau0->Draw("HIST");
+     h_PantiscalarInvMass_ctau0->Integral(0,1000);
  
      h_PantiscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_PantiscalarInvMass_ctau10->GetXaxis()->SetRangeUser(0,3); 
