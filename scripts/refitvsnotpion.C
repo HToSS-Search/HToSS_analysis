@@ -52,7 +52,8 @@
      h_PantiscalarInvMass_ctau0->SetLineColor(4);
      h_PantiscalarInvMass_ctau0->Draw("HIST");
      h_PantiscalarInvMass_ctau0->Integral(0,1000);
- 
+     std::cout<<h_PantiscalarInvMass_ctau0->Integral(0,1000)<<std::endl;
+      
      h_PantiscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_PantiscalarInvMass_ctau10->GetXaxis()->SetRangeUser(0,3); 
      h_PantiscalarInvMass_ctau10->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
