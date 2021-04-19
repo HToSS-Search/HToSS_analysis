@@ -43,7 +43,6 @@
      h_PscalarInvMass_ctau0->SetMarkerColor(4);
      h_PscalarInvMass_ctau0->SetLineColor(4);
      h_PscalarInvMass_ctau0->Draw("HIST");
-    std:cout<<h_PscalarInvMass_ctau0->Integral(0,500)<<std::endl;
  
      h_PscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau10->GetXaxis()->SetRangeUser(0,4); 
@@ -51,6 +50,7 @@
      h_PscalarInvMass_ctau10->SetMarkerColor(3);
      h_PscalarInvMass_ctau10->SetLineColor(3);
      h_PscalarInvMass_ctau10->Draw("HIST same");
+   std:cout<<h_PscalarInvMass_ctau10->Integral(0,500)<<std::endl;
    
      h_PscalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_QCD->GetXaxis()->SetRangeUser(0,4); 
@@ -73,7 +73,6 @@
      h_refit12InvMass_ctau0->SetMarkerColor(4);
      h_refit12InvMass_ctau0->SetLineColor(4);
      h_refit12InvMass_ctau0->Draw("HIST same");
-     std::cout<<h_refit12InvMass_ctau0->Integral(0,500)<<std::endl;
      
      h_refit12InvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_ctau10->GetXaxis()->SetRangeUser(0,4); 
@@ -81,7 +80,8 @@
      h_refit12InvMass_ctau10->SetMarkerColor(3);
      h_refit12InvMass_ctau10->SetLineColor(3);
      h_refit12InvMass_ctau10->Draw("HIST same");
-   
+     std::cout<<h_refit12InvMass_ctau10->Integral(0,500)<<std::endl;
+
      h_refit12InvMass_QCD->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_QCD->GetXaxis()->SetRangeUser(0,4); 
      h_refit12InvMass_QCD->GetXaxis()->SetTitle("m_{dimuon} (GeV/c^{2})");
