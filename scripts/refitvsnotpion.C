@@ -105,7 +105,7 @@
      h_Rpionre12InvMass_data->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_Rpionre12InvMass_data->SetMarkerColor(20);
      h_Rpionre12InvMass_data->SetLineColor(20);
-     h_Rpionre12InvMass_data->Draw("P same");
+     h_Rpionre12InvMass_data->Draw("P* same");
     
    
      /*h_refit12InvMass_ctau10->GetYaxis()->SetTitle("Events");
