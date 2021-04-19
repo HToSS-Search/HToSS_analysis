@@ -38,28 +38,28 @@
      h_KantiscalarInvMass_ctau0->SetTitle("Dihadron (kaon) invariant mass with(out) refit");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_KantiscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
-     h_KantiscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0,3); 
+     h_KantiscalarInvMass_ctau0->GetXaxis()->SetRangeUser(1,3); 
      h_KantiscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_KantiscalarInvMass_ctau0->SetMarkerColor(4);
      h_KantiscalarInvMass_ctau0->SetLineColor(4);
      h_KantiscalarInvMass_ctau0->Draw("HIST");
  
      h_KantiscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
-     h_KantiscalarInvMass_ctau10->GetXaxis()->SetRangeUser(0,3); 
+     h_KantiscalarInvMass_ctau10->GetXaxis()->SetRangeUser(1,3); 
      h_KantiscalarInvMass_ctau10->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_KantiscalarInvMass_ctau10->SetMarkerColor(3);
      h_KantiscalarInvMass_ctau10->SetLineColor(3);
      h_KantiscalarInvMass_ctau10->Draw("HIST same");
    
      h_KantiscalarInvMass_QCD->GetYaxis()->SetTitle("Events");
-     h_KantiscalarInvMass_QCD->GetXaxis()->SetRangeUser(0,3); 
+     h_KantiscalarInvMass_QCD->GetXaxis()->SetRangeUser(1,3); 
      h_KantiscalarInvMass_QCD->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_KantiscalarInvMass_QCD->SetMarkerColor(6);
      h_KantiscalarInvMass_QCD->SetLineColor(6);
      h_KantiscalarInvMass_QCD->Draw("HIST same");
    
      h_KantiscalarInvMass_data->GetYaxis()->SetTitle("Events");
-     h_KantiscalarInvMass_data->GetXaxis()->SetRangeUser(0,3); 
+     h_KantiscalarInvMass_data->GetXaxis()->SetRangeUser(1,3); 
      h_KantiscalarInvMass_data->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_KantiscalarInvMass_data->SetMarkerColor(94);
      h_KantiscalarInvMass_data->SetLineColor(94);
@@ -67,28 +67,28 @@
    
      /*
      h_Rkaonre12InvMass_ctau0->GetYaxis()->SetTitle("Events");
-     h_Rkaonre12InvMass_ctau0->GetXaxis()->SetRangeUser(0,3); 
+     h_Rkaonre12InvMass_ctau0->GetXaxis()->SetRangeUser(1,3); 
      h_Rkaonre12InvMass_ctau0->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_Rkaonre12InvMass_ctau0->SetMarkerColor(2);
      h_Rkaonre12InvMass_ctau0->SetLineColor(2);
      h_Rkaonre12InvMass_ctau0->Draw("HIST same");
    
      h_Rkaonre12InvMass_ctau10->GetYaxis()->SetTitle("Events");
-     h_Rkaonre12InvMass_ctau10->GetXaxis()->SetRangeUser(0,3); 
+     h_Rkaonre12InvMass_ctau10->GetXaxis()->SetRangeUser(1,3); 
      h_Rkaonre12InvMass_ctau10->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_Rkaonre12InvMass_ctau10->SetMarkerColor(1);
      h_Rkaonre12InvMass_ctau10->SetLineColor(1);
      h_Rkaonre12InvMass_ctau10->Draw("HIST same");
    
      h_Rkaonre12InvMass_QCD->GetYaxis()->SetTitle("Events");
-     h_Rkaonre12InvMass_QCD->GetXaxis()->SetRangeUser(0,3); 
+     h_Rkaonre12InvMass_QCD->GetXaxis()->SetRangeUser(1,3); 
      h_Rkaonre12InvMass_QCD->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_Rkaonre12InvMass_QCD->SetMarkerColor(6);
      h_Rkaonre12InvMass_QCD->SetLineColor(6);
      h_Rkaonre12InvMass_QCD->Draw("HIST same");
 
      h_Rkaonre12InvMass_data->GetYaxis()->SetTitle("Events");
-     h_Rkaonre12InvMass_data->GetXaxis()->SetRangeUser(0,3); 
+     h_Rkaonre12InvMass_data->GetXaxis()->SetRangeUser(1,3); 
      h_Rkaonre12InvMass_data->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_Rkaonre12InvMass_data->SetMarkerColor(20);
      h_Rkaonre12InvMass_data->SetLineColor(20);
