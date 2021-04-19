@@ -54,18 +54,18 @@
      h_PscalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_QCD->GetXaxis()->SetRangeUser(0,5); 
      h_PscalarInvMass_QCD->GetXaxis()->SetTitle("m_{dimuon} (GeV/c^{2})");
-     h_PscalarInvMass_QCD->SetMarkerColor(94);
-     h_PscalarInvMass_QCD->SetLineColor(94);
+     h_PscalarInvMass_QCD->SetMarkerColor(6);
+     h_PscalarInvMass_QCD->SetLineColor(6);
      h_PscalarInvMass_QCD->Draw("HIST same");
    
      h_PscalarInvMass_data->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_data->GetXaxis()->SetRangeUser(0,5); 
      h_PscalarInvMass_data->GetXaxis()->SetTitle("m_{dimuon} (GeV/c^{2})");
-     h_PscalarInvMass_data->SetMarkerColor(30);
-     h_PscalarInvMass_data->SetLineColor(30);
-     h_PscalarInvMass_data->Draw("HIST same");
+     h_PscalarInvMass_data->SetMarkerColor(94);
+     h_PscalarInvMass_data->SetLineColor(94);
+     h_PscalarInvMass_data->Draw("P* same");
    
-     
+     /*
      h_refit12InvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_ctau0->GetXaxis()->SetRangeUser(0,5); 
      h_refit12InvMass_ctau0->GetXaxis()->SetTitle("m_{dimuon} (GeV/c^{2})");
@@ -92,7 +92,7 @@
      h_refit12InvMass_data->GetXaxis()->SetTitle("m_{dimuon} (GeV/c^{2})");
      h_refit12InvMass_data->SetMarkerColor(20);
      h_refit12InvMass_data->SetLineColor(20);
-     h_refit12InvMass_data->Draw("HIST same");
+     h_refit12InvMass_data->Draw("P* same");*/
  
 
     
@@ -107,14 +107,14 @@
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_PscalarInvMass_QCD","QCD","L");
+     legenda->SetLineColor(6);
+     legenda->SetMarkerColor(6);
+     legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("h_PscalarInvMass_data","Data","L");
      legenda->SetLineColor(94);
      legenda->SetMarkerColor(94);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_PscalarInvMass_data","Data","L");
-     legenda->SetLineColor(30);
-     legenda->SetMarkerColor(30);
-     legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_refit12InvMass_ctau0","Refit c_{#tau}=0mm","L");
+     /*legenda=legend1->AddEntry("h_refit12InvMass_ctau0","Refit c_{#tau}=0mm","L");
      legenda->SetLineColor(2);
      legenda->SetMarkerColor(2);
      legenda->SetMarkerSize(2);
@@ -129,7 +129,7 @@
      legenda=legend1->AddEntry("h_refit12InvMass_data","Refit data","L");
      legenda->SetLineColor(20);
      legenda->SetMarkerColor(20);
-     legenda->SetMarkerSize(2);
+     legenda->SetMarkerSize(2);*/
      
      legend1->Draw();
    
