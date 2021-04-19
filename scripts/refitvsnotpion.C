@@ -43,7 +43,7 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     h_PantiscalarInvMass_ctau0->SetTitle("Dihadron (pion) invariant mass with(out) refit");
+    /* h_PantiscalarInvMass_ctau0->SetTitle("Dihadron (pion) invariant mass with(out) refit");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_PantiscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PantiscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0,3); 
@@ -74,22 +74,22 @@
      h_PantiscalarInvMass_data->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_PantiscalarInvMass_data->SetMarkerColor(94);
      h_PantiscalarInvMass_data->SetLineColor(94);
-     h_PantiscalarInvMass_data->Draw("P* same");
+     h_PantiscalarInvMass_data->Draw("P* same");*/
     
-    /* 
+     
      h_Rpionre12InvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_Rpionre12InvMass_ctau0->GetXaxis()->SetRangeUser(0,3); 
      h_Rpionre12InvMass_ctau0->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
-     h_Rpionre12InvMass_ctau0->SetMarkerColor(2);
-     h_Rpionre12InvMass_ctau0->SetLineColor(2);
+     h_Rpionre12InvMass_ctau0->SetMarkerColor(4);
+     h_Rpionre12InvMass_ctau0->SetLineColor(4);
      h_Rpionre12InvMass_ctau0->Draw("HIST same");
      std::cout<<"Refit ctau0: "<<h_Rpionre12InvMass_ctau0->Integral(0,500)<<std::endl;
  
      h_Rpionre12InvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_Rpionre12InvMass_ctau10->GetXaxis()->SetRangeUser(0,3); 
      h_Rpionre12InvMass_ctau10->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
-     h_Rpionre12InvMass_ctau10->SetMarkerColor(1);
-     h_Rpionre12InvMass_ctau10->SetLineColor(1);
+     h_Rpionre12InvMass_ctau10->SetMarkerColor(3);
+     h_Rpionre12InvMass_ctau10->SetLineColor(3);
      h_Rpionre12InvMass_ctau10->Draw("HIST same");
      std::cout<<"Refit ctau10: "<<h_Rpionre12InvMass_ctau10->Integral(0,500)<<std::endl;
 
@@ -103,10 +103,10 @@
      h_Rpionre12InvMass_data->GetYaxis()->SetTitle("Events");
      h_Rpionre12InvMass_data->GetXaxis()->SetRangeUser(0,3); 
      h_Rpionre12InvMass_data->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
-     h_Rpionre12InvMass_data->SetMarkerColor(20);
-     h_Rpionre12InvMass_data->SetLineColor(20);
+     h_Rpionre12InvMass_data->SetMarkerColor(94);
+     h_Rpionre12InvMass_data->SetLineColor(94);
      h_Rpionre12InvMass_data->Draw("P* same");
-    */
+    
    
      /*h_refit12InvMass_ctau10->GetYaxis()->SetTitle("Events");
      //h_refit12InvMass_ctau10->GetYaxis()->SetRangeUser(1.0, 65000.); 
@@ -129,7 +129,7 @@
     
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_PantiscalarInvMass_ctau0","c_{#tau}=0mm","L");
+    /* TLegendEntry *legenda = legend1->AddEntry("h_PantiscalarInvMass_ctau0","c_{#tau}=0mm","L");
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
@@ -144,23 +144,24 @@
      legenda=legend1->AddEntry("h_PantiscalarInvMass_data","Data","L");
      legenda->SetLineColor(94);
      legenda->SetMarkerColor(94);
-     legenda->SetMarkerSize(2);
-    /* legenda=legend1->AddEntry("h_Rpionre12InvMass_ctau0","Refit c_{#tau}=0mm","L");
-     legenda->SetLineColor(2);
-     legenda->SetMarkerColor(2);
+     legenda->SetMarkerSize(2);*/
+     TLegendEntry *legenda = legend1->AddEntry("h_Rpionre12InvMass_ctau0","Refit c_{#tau}=0mm","L");
+    // legenda=legend1->AddEntry("h_Rpionre12InvMass_ctau0","Refit c_{#tau}=0mm","L");
+     legenda->SetLineColor(4);
+     legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_Rpionre12InvMass_ctau10","Refit c_{#tau}=10mm","L");
-     legenda->SetLineColor(1);
-     legenda->SetMarkerColor(1);
+     legenda->SetLineColor(3);
+     legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_Rpionre12InvMass_QCD","Refit QCD","L");
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_Rpionre12InvMass_data","Refit data","L");
-     legenda->SetLineColor(20);
-     legenda->SetMarkerColor(20);
-     legenda->SetMarkerSize(2);*/
+     legenda->SetLineColor(94);
+     legenda->SetMarkerColor(94);
+     legenda->SetMarkerSize(2);
      
      legend1->Draw();
    
