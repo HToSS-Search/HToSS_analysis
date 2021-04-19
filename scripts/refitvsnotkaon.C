@@ -54,18 +54,18 @@
      h_KantiscalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_KantiscalarInvMass_QCD->GetXaxis()->SetRangeUser(0,3); 
      h_KantiscalarInvMass_QCD->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
-     h_KantiscalarInvMass_QCD->SetMarkerColor(94);
-     h_KantiscalarInvMass_QCD->SetLineColor(94);
+     h_KantiscalarInvMass_QCD->SetMarkerColor(6);
+     h_KantiscalarInvMass_QCD->SetLineColor(6);
      h_KantiscalarInvMass_QCD->Draw("HIST same");
    
      h_KantiscalarInvMass_data->GetYaxis()->SetTitle("Events");
      h_KantiscalarInvMass_data->GetXaxis()->SetRangeUser(0,3); 
      h_KantiscalarInvMass_data->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
-     h_KantiscalarInvMass_data->SetMarkerColor(30);
-     h_KantiscalarInvMass_data->SetLineColor(30);
-     h_KantiscalarInvMass_data->Draw("HIST same");
+     h_KantiscalarInvMass_data->SetMarkerColor(94);
+     h_KantiscalarInvMass_data->SetLineColor(94);
+     h_KantiscalarInvMass_data->Draw("P* same");
    
-     
+     /*
      h_Rkaonre12InvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_Rkaonre12InvMass_ctau0->GetXaxis()->SetRangeUser(0,3); 
      h_Rkaonre12InvMass_ctau0->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
@@ -92,7 +92,7 @@
      h_Rkaonre12InvMass_data->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_Rkaonre12InvMass_data->SetMarkerColor(20);
      h_Rkaonre12InvMass_data->SetLineColor(20);
-     h_Rkaonre12InvMass_data->Draw("HIST same");
+     h_Rkaonre12InvMass_data->Draw("P* same");*/
 
     
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
@@ -106,14 +106,14 @@
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_KantiscalarInvMass_QCD","QCD","L");
+     legenda->SetLineColor(6);
+     legenda->SetMarkerColor(6);
+     legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("h_KantiscalarInvMass_data","Data","L");
      legenda->SetLineColor(94);
      legenda->SetMarkerColor(94);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_KantiscalarInvMass_data","Data","L");
-     legenda->SetLineColor(30);
-     legenda->SetMarkerColor(30);
-     legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_Rkaonre12InvMass_ctau0","Refit c_{#tau}=0mm","L");
+     /*legenda=legend1->AddEntry("h_Rkaonre12InvMass_ctau0","Refit c_{#tau}=0mm","L");
      legenda->SetLineColor(2);
      legenda->SetMarkerColor(2);
      legenda->SetMarkerSize(2);
@@ -128,7 +128,7 @@
      legenda=legend1->AddEntry("h_Rkaonre12InvMass_data","Refit data","L");
      legenda->SetLineColor(20);
      legenda->SetMarkerColor(20);
-     legenda->SetMarkerSize(2);
+     legenda->SetMarkerSize(2);*/
      
      legend1->Draw();
    
