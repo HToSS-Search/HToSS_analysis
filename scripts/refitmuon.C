@@ -43,7 +43,7 @@
      h_PscalarInvMass_ctau0->SetMarkerColor(4);
      h_PscalarInvMass_ctau0->SetLineColor(4);
      h_PscalarInvMass_ctau0->Draw("HIST");
-    h_PscalarInvMass_ctau0->Integral(0,500);
+    std:cout<<h_PscalarInvMass_ctau0->Integral(0,500)<<std::endl;
  
      h_PscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau10->GetXaxis()->SetRangeUser(0,4); 
@@ -73,7 +73,7 @@
      h_refit12InvMass_ctau0->SetMarkerColor(4);
      h_refit12InvMass_ctau0->SetLineColor(4);
      h_refit12InvMass_ctau0->Draw("HIST same");
-     h_refit12InvMass_ctau0->Integral(0,500);
+     std::cout<<h_refit12InvMass_ctau0->Integral(0,500)<<std::endl;
      
      h_refit12InvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_ctau10->GetXaxis()->SetRangeUser(0,4); 
