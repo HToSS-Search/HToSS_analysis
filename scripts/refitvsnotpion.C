@@ -52,7 +52,7 @@
      h_PantiscalarInvMass_ctau0->SetLineColor(4);
      h_PantiscalarInvMass_ctau0->Draw("HIST");
      h_PantiscalarInvMass_ctau0->Integral(0,1000);
-     std::cout<<"Antiscalar ctau0"<<h_PantiscalarInvMass_ctau0->Integral(0,500)<<std::endl;
+     std::cout<<"Antiscalar ctau0: "<<h_PantiscalarInvMass_ctau0->Integral(0,500)<<std::endl;
       
      h_PantiscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_PantiscalarInvMass_ctau10->GetXaxis()->SetRangeUser(0,3); 
@@ -60,7 +60,7 @@
      h_PantiscalarInvMass_ctau10->SetMarkerColor(3);
      h_PantiscalarInvMass_ctau10->SetLineColor(3);
      h_PantiscalarInvMass_ctau10->Draw("HIST same");
-     std::cout<<"Antiscalar ctau10"<<h_PantiscalarInvMass_ctau10->Integral(0,500)<<std::endl;
+     std::cout<<"Antiscalar ctau10: "<<h_PantiscalarInvMass_ctau10->Integral(0,500)<<std::endl;
  
      h_PantiscalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PantiscalarInvMass_QCD->GetXaxis()->SetRangeUser(0,3); 
@@ -83,7 +83,7 @@
      h_Rpionre12InvMass_ctau0->SetMarkerColor(2);
      h_Rpionre12InvMass_ctau0->SetLineColor(2);
      h_Rpionre12InvMass_ctau0->Draw("HIST same");
-     std::cout<<"Refit ctau0"<<h_Rpionre12InvMass_ctau0->Integral(0,500)<<std::endl;
+     std::cout<<"Refit ctau0: "<<h_Rpionre12InvMass_ctau0->Integral(0,500)<<std::endl;
  
      h_Rpionre12InvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_Rpionre12InvMass_ctau10->GetXaxis()->SetRangeUser(0,3); 
@@ -91,7 +91,7 @@
      h_Rpionre12InvMass_ctau10->SetMarkerColor(1);
      h_Rpionre12InvMass_ctau10->SetLineColor(1);
      h_Rpionre12InvMass_ctau10->Draw("HIST same");
-     std::cout<<"Refit ctau10"<<h_Rpionre12InvMass_ctau10->Integral(0,500)<<std::endl;
+     std::cout<<"Refit ctau10: "<<h_Rpionre12InvMass_ctau10->Integral(0,500)<<std::endl;
 
      h_Rpionre12InvMass_QCD->GetYaxis()->SetTitle("Events");
      h_Rpionre12InvMass_QCD->GetXaxis()->SetRangeUser(0,3); 
