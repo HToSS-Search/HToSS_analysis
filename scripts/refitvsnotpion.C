@@ -75,7 +75,7 @@
      h_PantiscalarInvMass_data->SetMarkerColor(30);
      h_PantiscalarInvMass_data->SetLineColor(30);
      h_PantiscalarInvMass_data->Draw("HIST same");
-     h_PantiscalarInvMass_data->Draw("P");
+     h_PantiscalarInvMass_data->Draw("*H");
      
      h_Rpionre12InvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_Rpionre12InvMass_ctau0->GetXaxis()->SetRangeUser(0,3); 
@@ -106,7 +106,7 @@
      h_Rpionre12InvMass_data->SetMarkerColor(20);
      h_Rpionre12InvMass_data->SetLineColor(20);
      h_Rpionre12InvMass_data->Draw("HIST same");
-     h_Rpionre12InvMass_data->Draw("P");
+     h_Rpionre12InvMass_data->Draw("*H");
    
      /*h_refit12InvMass_ctau10->GetYaxis()->SetTitle("Events");
      //h_refit12InvMass_ctau10->GetYaxis()->SetRangeUser(1.0, 65000.); 
