@@ -918,15 +918,17 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       h_Kinvmass->Fill(Khadroninv,muoninv, eventWeight);
     }
   }
-
-  if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
-    for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-       if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
-	 TLorentzVector ka1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2))};
-         TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
+	
+  if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+    if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
+      for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+         if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
+	   TLorentzVector ka1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2))};
+           TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
 	 
-	 h_Rkaonre12InvMass->Fill((ka1+ka2).M(), eventWeight);
-       }
+	   h_Rkaonre12InvMass->Fill((ka1+ka2).M(), eventWeight);
+	 }
+      }
     }
   }
 
@@ -952,39 +954,45 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       h_PscalarInvMass->Fill(scalarLVec.M(), eventWeight);
     } 
   }
-
-  if(mm1.DeltaR(mm2)<0.2 && pionLVec1.DeltaR(pionLVec2)<0.2){
-    if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
-      h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(scalarLVec), eventWeight);
-      h_Pinvmass->Fill(Phadroninv,muoninv, eventWeight);
+	
+  if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+    if(mm1.DeltaR(mm2)<0.2 && pionLVec1.DeltaR(pionLVec2)<0.2){
+      if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
+        h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(scalarLVec), eventWeight);
+        h_Pinvmass->Fill(Phadroninv,muoninv, eventWeight);
+      }
     }
   }
 
-  if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
-    for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-       if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
-	 TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
-         TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
+  if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+    if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
+      for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+         if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
+	   TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
+           TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
 	 
-	 h_Rpionre12InvMass->Fill((pi1+pi2).M(), eventWeight);
-       }
+	   h_Rpionre12InvMass->Fill((pi1+pi2).M(), eventWeight);
+	 }
+      }
     }
   }
-
   
-
-  if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
-    for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
-       if(event.muonTkPairPF2PATIndex1[k]==muIndex1 && event.muonTkPairPF2PATIndex2[k]==muIndex2){
-	 TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2))};
-	 TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], std::sqrt(event.muonTkPairPF2PATTk2P2[k]+std::pow(0.106,2))};
-	 h_Rrefit12InvMass->Fill((Mu1+Mu2).M(), eventWeight);
-       }  
+  if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+    if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
+      for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
+         if(event.muonTkPairPF2PATIndex1[k]==muIndex1 && event.muonTkPairPF2PATIndex2[k]==muIndex2){
+	   TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[k], event.muonTkPairPF2PATTk1Py[k], event.muonTkPairPF2PATTk1Pz[k], std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2))};
+	   TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[k], event.muonTkPairPF2PATTk2Py[k], event.muonTkPairPF2PATTk2Pz[k], std::sqrt(event.muonTkPairPF2PATTk2P2[k]+std::pow(0.106,2))};
+	   h_Rrefit12InvMass->Fill((Mu1+Mu2).M(), eventWeight);
+	 } 
+      }
     }
   }
-		       
-  if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
-    h_PhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
+
+  if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+    if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
+      h_PhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
+    }
   }
     
   //h_PIsoSum3->Fill(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1], eventWeight);
