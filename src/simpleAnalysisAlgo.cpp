@@ -770,8 +770,9 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   Float_t PMpx {0}, PMpy {0}, PMpz {0}, PME{0};
 	      
   TLorentzVector mm1, mm2; // muon LVecs
-  TLorentzVector kaonLVec1,kaonLVec2;
+  TLorentzVector kaonLVec1, TLorentzVector kaonLVec2;
   TLorentzVector pionLVec1; TLorentzVector pionLVec2;
+  TLorentzVector muonLVec1; TLorentzVector muonLVec2;
 	      
   TLorentzVector scalarLVec, Kantiscalar, Pantiscalar;
 
@@ -868,9 +869,9 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
  
     if(k!=chsIndex1 && k!=chsIndex2){ // Skip packed cand if either is either charged hadron selected
 
-      TLorentzVector kaonLVec1, kaonLVec2; //The hadron - ADM: CB listed this as cones 1+3
-      TLorentzVector pionLVec1, pionLVec2; //The hadron - ADM: CB listed this as cones 1+3
-      TLorentzVector muonLVec1, muonLVec2; //The leading muon and the subleading muon
+      //TLorentzVector kaonLVec1, kaonLVec2; //The hadron - ADM: CB listed this as cones 1+3
+      //TLorentzVector pionLVec1, pionLVec2; //The hadron - ADM: CB listed this as cones 1+3
+      
       TLorentzVector packedCandLVec; //Packed candidate - ADM: CB listed this as cones 2 and 4, as both are identical, only define once
                 
       kaonLVec1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[chsIndex1],event.packedCandsPseudoTrkEta[chsIndex1],event.packedCandsPseudoTrkPhi[chsIndex1],std::sqrt(event.packedCandsE[chsIndex1]*event.packedCandsE[chsIndex1]-std::pow(0.1396,2)+std::pow(0.494,2)));
@@ -887,16 +888,24 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       if(pionLVec1.DeltaR(packedCandLVec)<isoConeSize_) PIsoSum1+=event.packedCandsPseudoTrkPt[k];
       if(pionLVec2.DeltaR(packedCandLVec)<isoConeSize_) PIsoSum2+=event.packedCandsPseudoTrkPt[k];
 
-      if(muonLVec1.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum1+=event.packedCandsPseudoTrkPt[k];
-      if(muonLVec2.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum2+=event.packedCandsPseudoTrkPt[k];
+      //if(muonLVec1.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum1+=event.packedCandsPseudoTrkPt[k];
+      //if(muonLVec2.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum2+=event.packedCandsPseudoTrkPt[k];
     }
-		   
+  
+    if(k!=muIndex1 && k!=muIndex2){
+	    
+      //TLorentzVector muonLVec1, muonLVec2; //The leading muon and the subleading muon
+	    
+      muonLVec1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
+      muonLVec2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
+
+      if(muonLVec1.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum1+=event.packedCandsPseudoTrkPt[k];
+      if(muonLVec2.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum2+=event.packedCandsPseudoTrkPt[k];   
+    }
+	  
   }//end of for-loop
 	   
-  	
-  h_MuonIsoSum1->Fill(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1], eventWeight);
-  h_MuonIsoSum2->Fill(MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2], eventWeight);
-
+  
  
 	
   //kaon
@@ -945,7 +954,10 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     h_PIsoSum1->Fill(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1], eventWeight);
     h_PIsoSum2->Fill(PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
     h_PIso2->Fill(PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2],event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
-		     
+
+    h_MuonIsoSum1->Fill(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1], eventWeight);
+    h_MuonIsoSum2->Fill(MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2], eventWeight);
+	  
     if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
       h_PantiscalarInvMass->Fill(Pantiscalar.M(), eventWeight);
 		       
