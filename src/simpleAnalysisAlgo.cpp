@@ -770,7 +770,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   Float_t PMpx {0}, PMpy {0}, PMpz {0}, PME{0};
 	      
   TLorentzVector mm1, mm2; // muon LVecs
-  TLorentzVector kaonLVec1, TLorentzVector kaonLVec2;
+  TLorentzVector kaonLVec1; TLorentzVector kaonLVec2;
   TLorentzVector pionLVec1; TLorentzVector pionLVec2;
   TLorentzVector muonLVec1; TLorentzVector muonLVec2;
 	      
