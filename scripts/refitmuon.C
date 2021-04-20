@@ -35,7 +35,7 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     /*h_PscalarInvMass_ctau0->SetTitle("Dimuon invariant mass with(out) refit");
+     h_PscalarInvMass_ctau0->SetTitle("Dimuon invariant mass with(out) refit");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0,4); 
@@ -50,7 +50,7 @@
      h_PscalarInvMass_ctau10->SetMarkerColor(3);
      h_PscalarInvMass_ctau10->SetLineColor(3);
      h_PscalarInvMass_ctau10->Draw("HIST same");
-   std:cout<<h_PscalarInvMass_ctau10->Integral(0,500)<<std::endl;
+   std:cout<<"Not refit "<<h_PscalarInvMass_ctau10->Integral(0,500)<<std::endl;
    
      h_PscalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_QCD->GetXaxis()->SetRangeUser(0,4); 
@@ -65,7 +65,7 @@
      h_PscalarInvMass_data->SetMarkerColor(94);
      h_PscalarInvMass_data->SetLineColor(94);
      h_PscalarInvMass_data->Draw("P* same");
-   */
+   
      
      h_refit12InvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_ctau0->GetXaxis()->SetRangeUser(0,20); 
@@ -80,7 +80,7 @@
      h_refit12InvMass_ctau10->SetMarkerColor(3);
      h_refit12InvMass_ctau10->SetLineColor(3);
      h_refit12InvMass_ctau10->Draw("HIST same");
-     std::cout<<h_refit12InvMass_ctau10->Integral(0,500)<<std::endl;
+     std::cout<<"Refit "<<h_refit12InvMass_ctau10->Integral(0,500)<<std::endl;
 
      h_refit12InvMass_QCD->GetYaxis()->SetTitle("Events");
      h_refit12InvMass_QCD->GetXaxis()->SetRangeUser(0,20); 
