@@ -281,10 +281,10 @@ std::pair<int, int> SimpleAnalysis::getPackedCandMuonPair(const AnalysisEvent& e
 std::pair<int, int> SimpleAnalysis::getDihadronPair(const AnalysisEvent& event, const int& patMuon1, const int& patMuon2) const {
 
   Int_t chsIndex1{-1}; Int_t chsIndex2{-1};
-  Int_t muIndex1{-1}; Int_t muIndex2{-1}; // ADM - commented out as no longer required
+ // Int_t muIndex1{-1}; Int_t muIndex2{-1}; // ADM - commented out as no longer required
 
   Float_t chspt1{-1}; Float_t chspt2{-1};
-  Float_t mupt1{-1}; Float_t mupt2{-1}; // ADM - commented out as no longer required
+ // Float_t mupt1{-1}; Float_t mupt2{-1}; // ADM - commented out as no longer required
 
   for(Int_t k{0};k<event.numPackedCands;k++) {
     // ADM - add check to not consider any packed cand that was associated with our selected muons
@@ -314,7 +314,7 @@ std::pair<int, int> SimpleAnalysis::getDihadronPair(const AnalysisEvent& event, 
 
     // Remove this bit - get packed Cand muons associated from PAT muons
     
-    if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
+    /*if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
       if(event.packedCandsPseudoTrkPt[k]>mupt1){
         mupt2=mupt1;
         mupt1=event.packedCandsPseudoTrkPt[k];
@@ -325,7 +325,7 @@ std::pair<int, int> SimpleAnalysis::getDihadronPair(const AnalysisEvent& event, 
              mupt2=event.packedCandsPseudoTrkPt[k];
              muIndex2=k;
       }
-    }
+    }*/
     
   }
   return std::make_pair(chsIndex1, chsIndex2); // ADM - return the indices of the selected two pions
