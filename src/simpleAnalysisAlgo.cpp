@@ -952,7 +952,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
 
   //pion
-  //if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+  if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
     h_PIsoSum1->Fill(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1], eventWeight);
     h_PIsoSum2->Fill(PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
     h_PIso2->Fill(PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2],event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
@@ -975,7 +975,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
       h_PscalarInvMass->Fill(scalarLVec.M(), eventWeight);
     } 
- // }
+  }
 	
   if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
     if(mm1.DeltaR(mm2)<0.2 && pionLVec1.DeltaR(pionLVec2)<0.2){
@@ -999,7 +999,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     }
   }
   
- // if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+  if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
     if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
       for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
          if(event.muonTkPairPF2PATIndex1[k]==muIndex1 && event.muonTkPairPF2PATIndex2[k]==muIndex2){
@@ -1009,7 +1009,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	 } 
       }
     }
-//  }
+  }
 
   if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
     if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
