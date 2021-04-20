@@ -1263,14 +1263,14 @@ void SimpleAnalysis::setupPlots() {
   Gaussian2 = new TF1("Gaussian2","gaus",1.,3.);
   h_Pinvmass = new TH2F("h_Pinvmass", "Invariant mass: charged hadrons (pions) vs muons", 1000, 0.,7.,1000,0.,7.);
   
-  h_PantiscalarInvMass = new TH1F("h_PantiscalarInvMass", "Dihadron (pion) invariant mass", 500, 0.,5.);
-  h_PscalarInvMass = new TH1F("h_PscalarInvMass", "Dimuon invariant mass", 500, 0.,5.);
+  h_PantiscalarInvMass = new TH1F("h_PantiscalarInvMass", "Dihadron (pion) invariant mass", 500, 0.,20.);
+  h_PscalarInvMass = new TH1F("h_PscalarInvMass", "Dimuon invariant mass", 500, 0.,20.);
   Gaussian3 = new TF1("Gaussian3","gaus",1.,3.);
   h_PhiggsInvMass = new TH1F("h_PhiggsInvMass", "Higgs invariant mass", 1000, 0., 200.);
   h_PhiggsDeltaR = new TH1F("h_PhiggsDeltaR", "Discalar #DeltaR",2500, 0., 15.);
-  h_Rrefit12InvMass = new TH1F("h_Rrefit12InvMass", "Dimuon refitted invariant mass with requirements", 500, 0.,5.);
-  h_Rpionre12InvMass = new TH1F("h_Rpionre12InvMass", "Dihadron (pion) refit invariant mass", 500, 0.,5.);
-  h_Rkaonre12InvMass = new TH1F("h_Rkaonre12InvMass", "Dihadron (kaon) refit invariant mass", 500, 0.,5.);
+  h_Rrefit12InvMass = new TH1F("h_Rrefit12InvMass", "Dimuon refitted invariant mass with requirements", 500, 0.,20.);
+  h_Rpionre12InvMass = new TH1F("h_Rpionre12InvMass", "Dihadron (pion) refit invariant mass", 500, 0.,20.);
+  h_Rkaonre12InvMass = new TH1F("h_Rkaonre12InvMass", "Dihadron (kaon) refit invariant mass", 500, 0.,20.);
 
   h_P20antiscalarInvMass = new TH1F("h_P20antiscalarInvMass", "Dihadron (pion) invariant mass", 500, 0.,5.);
   h_P20scalarInvMass = new TH1F("h_P20scalarInvMass", "Dimuon invariant mass", 500, 0.,5.);
