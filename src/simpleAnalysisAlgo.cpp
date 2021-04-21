@@ -1004,11 +1004,11 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     if(MuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2]<1){
      // for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
 	      
-	 //int muonTrkPairIndex = getMuonTrackPairIndex(event, patMuIndex1, patMuIndex2);
+	 int muonTrkPairIndex = getMuonTrackPairIndex(event, patMuIndex1, patMuIndex2);
 
          //if(event.muonTkPairPF2PATIndex1[k]==muIndex1 && event.muonTkPairPF2PATIndex2[k]==muIndex2){
-	   TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[patMuIndex1], event.muonTkPairPF2PATTk1Py[patMuIndex1], event.muonTkPairPF2PATTk1Pz[patMuIndex1], std::sqrt(event.muonTkPairPF2PATTk1P2[patMuIndex1]+std::pow(0.106,2))};
-	   TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[patMuIndex2], event.muonTkPairPF2PATTk2Py[patMuIndex2], event.muonTkPairPF2PATTk2Pz[patMuIndex2], std::sqrt(event.muonTkPairPF2PATTk2P2[patMuIndex2]+std::pow(0.106,2))};
+	   TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
+	   TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
 	   h_Rrefit12InvMass->Fill((Mu1+Mu2).M(), eventWeight);
 	// } 
      // }
