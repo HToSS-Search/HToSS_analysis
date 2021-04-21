@@ -718,7 +718,7 @@ void SimpleAnalysis::fillMuonReconstructionPlots(const AnalysisEvent& event, dou
   //END Muon Reconstruction function
 }
 
-void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double& eventWeight, const int& muIndex1, const int& muIndex2, const int& chsIndex1, const int& chsIndex2) const {
+void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double& eventWeight, const int& patMuIndex1, const int& patMuIndex2, const int& muIndex1, const int& muIndex2, const int& chsIndex1, const int& chsIndex2) const {
 
   //BEGIN Packed candidates
 
