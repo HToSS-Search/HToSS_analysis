@@ -1112,7 +1112,12 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	 
   h_refit1InvMass->Fill(MuAlt1.M(), eventWeight);
   h_refit2InvMass->Fill(MuAlt2.M(), eventWeight);
-  h_refit12InvMass->Fill((MuAlt1+MuAlt2).M(), eventWeight);
+	  
+  if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+    if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){	  
+      h_refit12InvMass->Fill((MuAlt1+MuAlt2).M(), eventWeight);
+    }
+  }
 			   
   //h_muonPairsXY->Fill(event.muonTkPairPF2PATTkVx[muonTrkPairIndex],event.muonTkPairPF2PATTkVy[muonTrkPairIndex], eventWeight);
   //h_muonPairsRZ->Fill(std::abs(event.muonTkPairPF2PATTkVz[muonTrkPairIndex]),std::sqrt(event.muonTkPairPF2PATTkVx[muonTrkPairIndex]*event.muonTkPairPF2PATTkVx[muonTrkPairIndex]+event.muonTkPairPF2PATTkVy[muonTrkPairIndex]*event.muonTkPairPF2PATTkVy[muonTrkPairIndex]), )
