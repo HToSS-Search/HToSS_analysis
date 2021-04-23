@@ -1203,6 +1203,31 @@ class AnalysisEvent
     Int_t HLT_PFHT800_PFMET85_PFMHT85_IDTight_v8;
     Int_t HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9;
 */
+    // 2017 Data scouting triggers
+    Int_t DST_HT250_CaloScouting_v6;
+    Int_t DST_HT250_CaloScouting_v7;
+    Int_t DST_HT250_CaloScouting_v8;
+    Int_t DST_HT250_CaloScouting_v9;
+    Int_t DST_HT250_CaloBTagScouting_v5;
+    Int_t DST_HT250_CaloBTagScouting_v6;
+    Int_t DST_HT250_CaloBTagScouting_v7;
+    Int_t DST_HT250_CaloBTagScouting_v8;
+    Int_t DST_HT410_PFScouting_v9;
+    Int_t DST_HT410_PFScouting_v10;
+    Int_t DST_HT410_PFScouting_v11;
+    Int_t DST_HT410_PFScouting_v12;
+    Int_t DST_HT410_PFScouting_v13;
+    Int_t DST_HT410_PFScouting_v14;
+    Int_t DST_HT410_BTagScouting_v10;
+    Int_t DST_HT410_BTagScouting_v11;
+    Int_t DST_HT410_BTagScouting_v12;
+    Int_t DST_HT410_BTagScouting_v13;
+    Int_t DST_HT410_BTagScouting_v14;
+    Int_t DST_DoubleMu3_noVtx_CaloScouting_v2;
+    Int_t DST_DoubleMu3_noVtx_CaloScouting_v3;
+    Int_t DST_DoubleMu3_noVtx_CaloScouting_v4;
+    Int_t DST_DoubleMu3_noVtx_CaloScouting_v5;
+
     // MET Filters
     // 2016
     Int_t Flag_ecalLaserCorrFilter;
@@ -2387,6 +2412,30 @@ class AnalysisEvent
     TBranch* b_HLT_PFHT800_PFMET85_PFMHT85_IDTight_v8;
     TBranch* b_HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9;
 */
+    TBranch* b_DST_HT250_CaloScouting_v6;
+    TBranch* b_DST_HT250_CaloScouting_v7;
+    TBranch* b_DST_HT250_CaloScouting_v8;
+    TBranch* b_DST_HT250_CaloScouting_v9;
+    TBranch* b_DST_HT250_CaloBTagScouting_v5;
+    TBranch* b_DST_HT250_CaloBTagScouting_v6;
+    TBranch* b_DST_HT250_CaloBTagScouting_v7;
+    TBranch* b_DST_HT250_CaloBTagScouting_v8;
+    TBranch* b_DST_HT410_PFScouting_v9;
+    TBranch* b_DST_HT410_PFScouting_v10;
+    TBranch* b_DST_HT410_PFScouting_v11;
+    TBranch* b_DST_HT410_PFScouting_v12;
+    TBranch* b_DST_HT410_PFScouting_v13;
+    TBranch* b_DST_HT410_PFScouting_v14;
+    TBranch* b_DST_HT410_BTagScouting_v10;
+    TBranch* b_DST_HT410_BTagScouting_v11;
+    TBranch* b_DST_HT410_BTagScouting_v12;
+    TBranch* b_DST_HT410_BTagScouting_v13;
+    TBranch* b_DST_HT410_BTagScouting_v14;
+    TBranch* b_DST_DoubleMu3_noVtx_CaloScouting_v2;
+    TBranch* b_DST_DoubleMu3_noVtx_CaloScouting_v3;
+    TBranch* b_DST_DoubleMu3_noVtx_CaloScouting_v4;
+    TBranch* b_DST_DoubleMu3_noVtx_CaloScouting_v5;
+
     TBranch* b_Flag_HBHENoiseFilter;
     TBranch* b_Flag_HBHENoiseIsoFilter;
     TBranch* b_Flag_globalTightHalo2016Filter;
@@ -2491,6 +2540,7 @@ class AnalysisEvent
     bool mumuTrig_massCut() const;
     bool mumuL2Trig() const;
     bool mumuNoVtxTrig() const;
+    bool dataScoutingTrig() const;
 
     bool metFilters() const;
 
@@ -3506,8 +3556,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
    }
 
    //MET trigger branches
-   if (is2016)
-   {
+   if (is2016) {
 /*
        fChain->SetBranchAddress("HLT_MET200_v1", &HLT_MET200_v1, &b_HLT_MET200_v1);
        fChain->SetBranchAddress("HLT_MET200_v2", &HLT_MET200_v2, &b_HLT_MET200_v2);
@@ -3557,8 +3606,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
        fChain->SetBranchAddress("HLT_PFHT300_PFMET110_v6", &HLT_PFHT300_PFMET110_v6, &b_HLT_PFHT300_PFMET110_v6);
 */
    }
-   else
-   { // 2017
+   else { // 2017
 /*
        fChain->SetBranchAddress("HLT_MET105_IsoTrk50_v1", &HLT_MET105_IsoTrk50_v1, &b_HLT_MET105_IsoTrk50_v1);
        fChain->SetBranchAddress("HLT_MET105_IsoTrk50_v3", &HLT_MET105_IsoTrk50_v3, &b_HLT_MET105_IsoTrk50_v3);
@@ -3746,9 +3794,35 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
        fChain->SetBranchAddress("HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9", &HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9, &b_HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9);
 */
    }
+   // DST branches
+   if ( !is2016 ) {
+       fChain->SetBranchAddress("DST_HT250_CaloScouting_v6", &DST_HT250_CaloScouting_v6, &b_DST_HT250_CaloScouting_v6);
+       fChain->SetBranchAddress("DST_HT250_CaloScouting_v7", &DST_HT250_CaloScouting_v7, &b_DST_HT250_CaloScouting_v7);
+       fChain->SetBranchAddress("DST_HT250_CaloScouting_v8", &DST_HT250_CaloScouting_v8, &b_DST_HT250_CaloScouting_v8);
+       fChain->SetBranchAddress("DST_HT250_CaloScouting_v9", &DST_HT250_CaloScouting_v9, &b_DST_HT250_CaloScouting_v9);
+       fChain->SetBranchAddress("DST_HT250_CaloBTagScouting_v5", &DST_HT250_CaloBTagScouting_v5, &b_DST_HT250_CaloBTagScouting_v5);
+       fChain->SetBranchAddress("DST_HT250_CaloBTagScouting_v6", &DST_HT250_CaloBTagScouting_v6, &b_DST_HT250_CaloBTagScouting_v6);
+       fChain->SetBranchAddress("DST_HT250_CaloBTagScouting_v7", &DST_HT250_CaloBTagScouting_v7, &b_DST_HT250_CaloBTagScouting_v7);
+       fChain->SetBranchAddress("DST_HT250_CaloBTagScouting_v8", &DST_HT250_CaloBTagScouting_v8, &b_DST_HT250_CaloBTagScouting_v8);
+       fChain->SetBranchAddress("DST_HT410_PFScouting_v9", &DST_HT410_PFScouting_v9, &b_DST_HT410_PFScouting_v9);
+       fChain->SetBranchAddress("DST_HT410_PFScouting_v10", &DST_HT410_PFScouting_v10, &b_DST_HT410_PFScouting_v10);
+       fChain->SetBranchAddress("DST_HT410_PFScouting_v11", &DST_HT410_PFScouting_v11, &b_DST_HT410_PFScouting_v11);
+       fChain->SetBranchAddress("DST_HT410_PFScouting_v12", &DST_HT410_PFScouting_v12, &b_DST_HT410_PFScouting_v12);
+       fChain->SetBranchAddress("DST_HT410_PFScouting_v13", &DST_HT410_PFScouting_v13, &b_DST_HT410_PFScouting_v13);
+       fChain->SetBranchAddress("DST_HT410_PFScouting_v14", &DST_HT410_PFScouting_v14, &b_DST_HT410_PFScouting_v14);
+       fChain->SetBranchAddress("DST_HT410_BTagScouting_v10", &DST_HT410_BTagScouting_v10, &b_DST_HT410_BTagScouting_v10);
+       fChain->SetBranchAddress("DST_HT410_BTagScouting_v11", &DST_HT410_BTagScouting_v11, &b_DST_HT410_BTagScouting_v11);
+       fChain->SetBranchAddress("DST_HT410_BTagScouting_v12", &DST_HT410_BTagScouting_v12, &b_DST_HT410_BTagScouting_v12);
+       fChain->SetBranchAddress("DST_HT410_BTagScouting_v13", &DST_HT410_BTagScouting_v13, &b_DST_HT410_BTagScouting_v13);
+       fChain->SetBranchAddress("DST_HT410_BTagScouting_v14", &DST_HT410_BTagScouting_v14, &b_DST_HT410_BTagScouting_v14);
+       fChain->SetBranchAddress("DST_DoubleMu3_noVtx_CaloScouting_v2", &DST_DoubleMu3_noVtx_CaloScouting_v2, &b_DST_DoubleMu3_noVtx_CaloScouting_v2);
+       fChain->SetBranchAddress("DST_DoubleMu3_noVtx_CaloScouting_v3", &DST_DoubleMu3_noVtx_CaloScouting_v3, &b_DST_DoubleMu3_noVtx_CaloScouting_v3);
+       fChain->SetBranchAddress("DST_DoubleMu3_noVtx_CaloScouting_v4", &DST_DoubleMu3_noVtx_CaloScouting_v4, &b_DST_DoubleMu3_noVtx_CaloScouting_v4);
+       fChain->SetBranchAddress("DST_DoubleMu3_noVtx_CaloScouting_v5", &DST_DoubleMu3_noVtx_CaloScouting_v5, &b_DST_DoubleMu3_noVtx_CaloScouting_v5);
+   }
+
    //MET filter branches
-   if (is2016)
-   {
+   if (is2016) {
        fChain->SetBranchAddress("Flag_ecalLaserCorrFilter", &Flag_ecalLaserCorrFilter, &b_Flag_ecalLaserCorrFilter);
        fChain->SetBranchAddress("Flag_chargedHadronTrackResolutionFilter", &Flag_chargedHadronTrackResolutionFilter, &b_Flag_chargedHadronTrackResolutionFilter);
        fChain->SetBranchAddress("Flag_muonBadTrackFilter", &Flag_muonBadTrackFilter, &b_Flag_muonBadTrackFilter);
@@ -3756,8 +3830,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
        fChain->SetBranchAddress("Flag_duplicateMuons", &Flag_duplicateMuons, &b_Flag_duplicateMuons);
        fChain->SetBranchAddress("Flag_noBadMuons", &Flag_noBadMuons, &b_Flag_noBadMuons);
    }
-   else
-   {
+   else {
        fChain->SetBranchAddress("Flag_BadPFMuonFilter", &Flag_BadPFMuonFilter, &b_Flag_BadPFMuonFilter);
        fChain->SetBranchAddress("Flag_BadChargedCandidateFilter", &Flag_BadChargedCandidateFilter, &b_Flag_BadChargedCandidateFilter);
        fChain->SetBranchAddress("Flag_ecalBadCalibFilter", &Flag_ecalBadCalibFilter, &b_Flag_ecalBadCalibFilter);
@@ -3768,8 +3841,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
    fChain->SetBranchAddress("Flag_HBHENoiseIsoFilter", &Flag_HBHENoiseIsoFilter, &b_Flag_HBHENoiseIsoFilter);
    fChain->SetBranchAddress("Flag_EcalDeadCellTriggerPrimitiveFilter", &Flag_EcalDeadCellTriggerPrimitiveFilter, &b_Flag_EcalDeadCellTriggerPrimitiveFilter);
    fChain->SetBranchAddress("Flag_eeBadScFilter", &Flag_eeBadScFilter, &b_Flag_eeBadScFilter);
-   if (isMC)
-   {
+   if (isMC) {
        fChain->SetBranchAddress("nGenPar", &nGenPar, &b_nGenPar);
        fChain->SetBranchAddress("genParEta", genParEta, &b_genParEta);
        fChain->SetBranchAddress("genParPhi", genParPhi, &b_genParPhi);
@@ -3840,16 +3912,14 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
 }
 // clang-format on
 
-inline AnalysisEvent::~AnalysisEvent()
-{
+inline AnalysisEvent::~AnalysisEvent() {
     if (!fChain) {
         return;
     }
     delete fChain->GetCurrentFile();
 }
 
-inline Int_t AnalysisEvent::GetEntry(const Long64_t entry)
-{
+inline Int_t AnalysisEvent::GetEntry(const Long64_t entry) {
     // Read contents of entry.
     if (!fChain) {
         return 0;
@@ -3857,8 +3927,7 @@ inline Int_t AnalysisEvent::GetEntry(const Long64_t entry)
     return fChain->GetEntry(entry);
 }
 
-inline Long64_t AnalysisEvent::LoadTree(const Long64_t entry)
-{
+inline Long64_t AnalysisEvent::LoadTree(const Long64_t entry) {
     // Set the environment to read one entry
     if (!fChain) {
         return -5;
@@ -3873,19 +3942,16 @@ inline Long64_t AnalysisEvent::LoadTree(const Long64_t entry)
     return centry;
 }
 
-inline void AnalysisEvent::Show(const Long64_t entry) const
-{
+inline void AnalysisEvent::Show(const Long64_t entry) const {
     // Print contents of entry.
     // If entry is not specified, print current entry
-    if (!fChain)
-    {
+    if (!fChain) {
         return;
     }
     fChain->Show(entry);
 }
 
-inline void AnalysisEvent::Loop()
-{
+inline void AnalysisEvent::Loop() {
     if (fChain == nullptr)
     {
         return;
@@ -3907,8 +3973,7 @@ inline void AnalysisEvent::Loop()
     }
 }
 /*
-inline bool AnalysisEvent::eTrig() const
-{
+inline bool AnalysisEvent::eTrig() const {
     return is2016_ ? HLT_Ele32_eta2p1_WPTight_Gsf_v2 > 0
                          || HLT_Ele32_eta2p1_WPTight_Gsf_v3 > 0
                          || HLT_Ele32_eta2p1_WPTight_Gsf_v4 > 0
@@ -3932,8 +3997,7 @@ inline bool AnalysisEvent::eTrig() const
                          || HLT_Ele35_WPTight_Gsf_v7 > 0;
 }
 */
-inline bool AnalysisEvent::muTrig() const
-{
+inline bool AnalysisEvent::muTrig() const {
     return is2016_
                ? HLT_IsoMu24_v1 > 0 || HLT_IsoMu24_v2 > 0 || HLT_IsoMu24_v3 > 0
                      || HLT_IsoMu24_v4 > 0 || HLT_IsoTkMu24_v1 > 0
@@ -3944,8 +4008,7 @@ inline bool AnalysisEvent::muTrig() const
                      || HLT_IsoMu27_v13 > 0 || HLT_IsoMu27_v14 > 0;
 }
 /*
-inline bool AnalysisEvent::eeTrig() const
-{
+inline bool AnalysisEvent::eeTrig() const {
     return is2016_ ? HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v3 > 0
                          || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v4 > 0
                          || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v5 > 0
@@ -3972,8 +4035,7 @@ inline bool AnalysisEvent::eeTrig() const
 }
 */
 /*
-inline bool AnalysisEvent::muEGTrig() const
-{
+inline bool AnalysisEvent::muEGTrig() const {
     // clang-format off
     return
       is2016_ ? eventRun < 280919 // different triggers for run H
@@ -4030,8 +4092,7 @@ inline bool AnalysisEvent::muEGTrig() const
     // clang-format on
 }
 */
-inline bool AnalysisEvent::mumuTrig() const
-{
+inline bool AnalysisEvent::mumuTrig() const {
     return is2016_ ? (eventRun < 280919
 // 2016 triggers
                       && (HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v2 > 0
@@ -4096,8 +4157,7 @@ inline bool AnalysisEvent::mumuTrig_noMassCut() const
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v14 > 0;
 }
 
-inline bool AnalysisEvent::mumuTrig_massCut() const
-{
+inline bool AnalysisEvent::mumuTrig_massCut() const {
     return is2016_ ? false
 // 2016 triggers
 //2017 triggers
@@ -4113,8 +4173,7 @@ inline bool AnalysisEvent::mumuTrig_massCut() const
                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4 > 0;
 }
 
-inline bool AnalysisEvent::mumuL2Trig() const 
-{
+inline bool AnalysisEvent::mumuL2Trig() const {
     return is2016_ ?
 // 2016 triggers
                    0
@@ -4122,8 +4181,7 @@ inline bool AnalysisEvent::mumuL2Trig() const
                    : HLT_DoubleL2Mu50_v2 > 0 ;
 }
 
-inline bool AnalysisEvent::mumuNoVtxTrig() const
-{
+inline bool AnalysisEvent::mumuNoVtxTrig() const {
     return is2016_ ?
 // 2016 triggers
                    0
@@ -4132,8 +4190,37 @@ inline bool AnalysisEvent::mumuNoVtxTrig() const
                          || HLT_DoubleMu48NoFiltersNoVtx_v3 > 0;
 }
 
-inline bool AnalysisEvent::metFilters() const
-{
+inline bool AnalysisEvent::dataScoutingTrig() const {
+    return is2016_ ?
+// 2016 triggers
+                   0
+//2017 triggers
+                   : DST_HT250_CaloScouting_v6 > 0
+                         || DST_HT250_CaloScouting_v7 > 0
+                         || DST_HT250_CaloScouting_v8 > 0
+                         || DST_HT250_CaloScouting_v9 > 0
+                         || DST_HT250_CaloBTagScouting_v5 > 0
+                         || DST_HT250_CaloBTagScouting_v6 > 0
+                         || DST_HT250_CaloBTagScouting_v7 > 0
+                         || DST_HT250_CaloBTagScouting_v8 > 0
+                         || DST_HT410_PFScouting_v9 > 0
+                         || DST_HT410_PFScouting_v10 > 0
+                         || DST_HT410_PFScouting_v11 > 0
+                         || DST_HT410_PFScouting_v12 > 0
+                         || DST_HT410_PFScouting_v13 > 0
+                         || DST_HT410_PFScouting_v14 > 0
+                         || DST_HT410_BTagScouting_v10 > 0
+                         || DST_HT410_BTagScouting_v11 > 0
+                         || DST_HT410_BTagScouting_v12 > 0
+                         || DST_HT410_BTagScouting_v13 > 0
+                         || DST_HT410_BTagScouting_v14 > 0
+                         || DST_DoubleMu3_noVtx_CaloScouting_v2 > 0
+                         || DST_DoubleMu3_noVtx_CaloScouting_v3 > 0
+                         || DST_DoubleMu3_noVtx_CaloScouting_v4 > 0
+                         || DST_DoubleMu3_noVtx_CaloScouting_v5 > 0;
+}
+
+inline bool AnalysisEvent::metFilters() const {
     return is2016_
                ? Flag_ecalLaserCorrFilter > 0
                      && Flag_chargedHadronTrackResolutionFilter > 0
