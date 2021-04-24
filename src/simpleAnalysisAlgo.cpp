@@ -998,10 +998,14 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       }
     }
   }
-  
+	
+ 	//make histogram of refitted Higgs inv mass
+	//check for tegengestelde lading van het dihadron, dimuon pair
+	//gevolgen van verandering indexering op lijn 1008 in histogrammen?
+	//check voor index =-1?
 	
   if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
-    if(MuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2]<1){
+    if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
      // for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
 	      
 	 int muonTrkPairIndex = getMuonTrackPairIndex(event, patMuIndex1, patMuIndex2);
