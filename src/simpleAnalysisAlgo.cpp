@@ -1075,6 +1075,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     } //close wider window
   }
 
+}
   void SimpleAnalysis::fillMuonMomentumComparisonPlots(const AnalysisEvent& event, double& eventWeight, const int& patMuIndex1, const int& patMuIndex2, const int& packedMuIndex1, const int& packedMuIndex2, const int& chsIndex1, const int& chsIndex2) const {
     //Muon momentum comparison
 
