@@ -995,13 +995,17 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	
   if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
     if(mm1.DeltaR(mm2)<0.2 && pionLVec1.DeltaR(pionLVec2)<0.2){
-      if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
-        h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(scalarLVec), eventWeight);
-        h_Pinvmass->Fill(Phadroninv,muoninv, eventWeight);
+      if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2]) && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
+        if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
+          h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(scalarLVec), eventWeight);
+          h_Pinvmass->Fill(Phadroninv,muoninv, eventWeight);
+	  h_PhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
+	}
       }
     }
   }
 
+  
   if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
     if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2])){
       if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
@@ -1018,8 +1022,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
 	
  	//make histogram of refitted Higgs inv mass
-	//check for tegengestelde lading van het dihadron, dimuon pair
-	//gevolgen van verandering indexering op lijn 1008 in histogrammen?
+	
+	
 	//check voor index =-1?
   int muonTrkPairIndex = getMuonTrackPairIndex(event, patMuIndex1, patMuIndex2);
 	
@@ -1027,9 +1031,6 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     if(event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
       if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
      // for(Int_t k{0}; k<event.numMuonTrackPairsPF2PAT;k++){
-	      
-	
-
          //if(event.muonTkPairPF2PATIndex1[k]==muIndex1 && event.muonTkPairPF2PATIndex2[k]==muIndex2){
 	   TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
 	   TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
@@ -1044,13 +1045,13 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	
 	
 
-  if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+  /*if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
     if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2]) && event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
       if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
       h_PhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
       }
     }
-  }
+  }*/
     
   //h_PIsoSum3->Fill(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1], eventWeight);
   //h_PIsoSum4->Fill(MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2], eventWeight);
@@ -1294,7 +1295,8 @@ void SimpleAnalysis::setupPlots() {
   
   h_KantiscalarInvMass = new TH1F("h_KantiscalarInvMass", "(Kaon) Antiscalar Invariant mass", 500, 0.,5.);
   h_KscalarInvMass = new TH1F("h_KscalarInvMass", "Scalar Invariant mass", 500, 0.,5.);
-  h_KhiggsInvMass = new TH1F("h_KhiggsInvMass", "h_0 Invariant mass", 1000, 0., 200.);
+  h_KhiggsInvMass = new TH1F("h_KhiggsInvMass", "Higgs invariant mass", 1000, 0., 200.);
+  h_KhiggsRInvMass = new TH1F("h_KhiggsRInvMass", "Higgs invariant mass", 1000, 0., 200.);
   h_KhiggsDeltaR = new TH1F("h_KhiggsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.);
 
 	
@@ -1318,6 +1320,7 @@ void SimpleAnalysis::setupPlots() {
   h_PscalarInvMass = new TH1F("h_PscalarInvMass", "Dimuon invariant mass", 500, 0.,5.);
   Gaussian3 = new TF1("Gaussian3","gaus",1.,3.);
   h_PhiggsInvMass = new TH1F("h_PhiggsInvMass", "Higgs invariant mass", 1000, 0., 200.);
+  h_PhiggsRInvMass = new TH1F("h_PhiggsRInvMass", "Higgs invariant mass", 1000, 0., 200.);
   h_PhiggsDeltaR = new TH1F("h_PhiggsDeltaR", "Discalar #DeltaR",2500, 0., 15.);
   h_Rrefit12InvMass = new TH1F("h_Rrefit12InvMass", "Dimuon refitted invariant mass with requirements", 500, 0.,5.);
   h_Rpionre12InvMass = new TH1F("h_Rpionre12InvMass", "Dihadron (pion) refit invariant mass", 500, 0.,5.);
@@ -1606,9 +1609,14 @@ void SimpleAnalysis::savePlots() {
   h_KscalarInvMass->GetXaxis()->SetTitle("GeV");
   h_KscalarInvMass->Write();
   h_KhiggsInvMass->GetXaxis()->SetTitle("GeV");
+  h_KhiggsInvMass->GetYaxis()->SetTitle("Events");
   h_KhiggsInvMass->Write();
   h_KhiggsDeltaR->GetXaxis()->SetTitle("Radians");
   h_KhiggsDeltaR->Write();
+  h_KhiggsRInvMass->GetXaxis()->SetTitle("GeV");
+  h_KhiggsRInvMass->GetYaxis()->SetTitle("Events");
+  h_KhiggsRInvMass->Write();
+	
 	
 	
   //Pion mass assumption
@@ -1661,6 +1669,8 @@ void SimpleAnalysis::savePlots() {
   h_PhiggsInvMass->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
   h_PhiggsInvMass->GetYaxis()->SetTitle("Events");
   h_PhiggsInvMass->Write();
+  h_PhiggsRInvMass->GetYaxis()->SetTitle("Events");
+  h_PhiggsRInvMass->Write();
   h_PhiggsDeltaR->GetYaxis()->SetTitle("Events");
   h_PhiggsDeltaR->GetXaxis()->SetTitle("Radians");
   h_PhiggsDeltaR->Write();
