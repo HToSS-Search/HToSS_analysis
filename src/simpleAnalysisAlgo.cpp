@@ -1005,7 +1005,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
    // }
   }
 
-  
+  Float_t refitpion; Float_t refpion;
   if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
     if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2])){
       if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
@@ -1015,6 +1015,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
              TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
 	 
 	     h_Rpionre12InvMass->Fill((pi1+pi2).M(), eventWeight);
+	     refitpion=(pi1+pi2).M();
+	     refpion=pi1+pi2;
 	   }
 	}
       }
@@ -1023,10 +1025,10 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	
  	//make histogram of refitted Higgs inv mass, ook isosum dan aanpassen? -> checken
 	//check voor index =-1?
+  
 	
-	
-  int muonTrkPairIndex = getMuonTrackPairIndex(event, patMuIndex1, patMuIndex2);
-	
+  Int_t muonTrkPairIndex = getMuonTrackPairIndex(event, patMuIndex1, patMuIndex2);
+  Float_t refitmuon; Float_t refmuon;	
   if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){	  
     if(event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
       if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
@@ -1035,28 +1037,18 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	   TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
 	   TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
 	   h_Rrefit12InvMass->Fill((Mu1+Mu2).M(), eventWeight);
+	   refitmuon=(Mu1+Mu2).M();
+	   refmuon=Mu1+Mu2;
+	     
 	// } 
      // }
       }
     }
   }
 
-  
-	
-	
-
-  /*if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
-    if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2]) && event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
-      if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
-      h_PhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
-      }
-    }
-  }*/
-    
-  //h_PIsoSum3->Fill(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1], eventWeight);
-  //h_PIsoSum4->Fill(MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2], eventWeight);
-    
-	     
+  if(std::abs((refpion+refmuon).M()-higgsMass_)<higgsMassWindow_){
+    h_PhiggsRInvMass->Fill((refpion+refmuon).M(), eventWeight);
+  }	     
   
   //Wider higgs window
   if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_) { //wider higgs mass window \pm20GeV
@@ -1072,6 +1064,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
         h_P20higgsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
       }
+	    
     } //close wider window
   }
 
