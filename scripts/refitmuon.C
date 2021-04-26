@@ -37,11 +37,11 @@
      canv1->SetFillColor(0);
    
      Double_t nentries=h_PscalarInvMass_QCD->GetEntries();
-   std::cout<<"entries QCD "<<std::endl;
+   std::cout<<"entries QCD "<<nentries<<std::endl;
      Double_t n20entries=h_P20scalarInvMass_QCD->GetEntries();
-    std::cout<<"entries QCD 20 "<<std::endl;
+    std::cout<<"entries QCD 20 "<<n20entries<<std::endl;
      Double_t corr=nentries/n20entries;
-    std::cout<<"correction factor "<<std::endl;
+    std::cout<<"correction factor "<<corr<<std::endl;
    
    
     // h_PscalarInvMass_ctau0->SetTitle("Dimuon invariant mass");
