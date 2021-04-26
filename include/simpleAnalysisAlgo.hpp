@@ -219,6 +219,7 @@ class SimpleAnalysis
     TF1* Gaussian3;
     TH1F* h_PhiggsInvMass;
     TH1F* h_PhiggsRInvMass;
+    TH1F* h_PhiggsR20InvMass;
     TH1F* h_PhiggsDeltaR;
     TH1F* h_Rrefit12InvMass;
     TH1F* h_Rpionre12InvMass;
