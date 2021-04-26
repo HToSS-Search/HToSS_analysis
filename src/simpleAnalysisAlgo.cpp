@@ -1048,7 +1048,10 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 
   if(std::abs((refpion+refmuon).M()-higgsMass_)<higgsMassWindow_){
     h_PhiggsRInvMass->Fill((refpion+refmuon).M(), eventWeight);
-  }	     
+  }
+  if(std::abs((refpion+refmuon).M()-higgsMass_)<higgsMassWideWindow_){
+    h_PhiggsR20InvMass->Fill((refpion+refmuon).M(), eventWeight);
+  }
   
   //Wider higgs window
   if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_) { //wider higgs mass window \pm20GeV
@@ -1663,6 +1666,8 @@ void SimpleAnalysis::savePlots() {
   h_PhiggsInvMass->Write();
   h_PhiggsRInvMass->GetYaxis()->SetTitle("Events");
   h_PhiggsRInvMass->Write();
+  h_PhiggsR20InvMass->GetYaxis()->SetTitle("Events");
+  h_PhiggsR20InvMass->Write();
   h_PhiggsDeltaR->GetYaxis()->SetTitle("Events");
   h_PhiggsDeltaR->GetXaxis()->SetTitle("Radians");
   h_PhiggsDeltaR->Write();
