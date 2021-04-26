@@ -61,6 +61,7 @@
      h_PscalarInvMass_ctau10->Draw("HIST same");
    std:cout<<"Not refit "<<h_PscalarInvMass_ctau0->Integral(0,501)<<std::endl;
    
+     h_PscalarInvMass_QCD->Scale(corr);
      h_PscalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_QCD->GetXaxis()->SetRangeUser(100,150); 
      h_PscalarInvMass_QCD->GetXaxis()->SetTitle("m_{dimuon} (GeV/c^{2})");
