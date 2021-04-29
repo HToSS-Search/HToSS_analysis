@@ -1385,7 +1385,7 @@ void SimpleAnalysis::savePlots() {
   outFile->cd();
 
   std::cout << "WRITING PLOTS TO OUTPUT FILE" << std::endl;
-
+std::cout << _LINE_ << " : " << _FILE_ << std::endl;
   // Write histograms to file
   h_genParPt->GetXaxis()->SetTitle("GeV");
   h_genParPt->Write();
@@ -1393,7 +1393,7 @@ void SimpleAnalysis::savePlots() {
   h_genParPhi->Write();
   h_genParE->Write();
   h_VertexPosR->Write();
-
+std::cout << _LINE_ << " : " << _FILE_ << std::endl;
   h_genParHiggsPt->GetXaxis()->SetTitle("p_{T} (GeV)");
   h_genParHiggsPt->GetYaxis()->SetTitle("Events");
   h_genParHiggsPt->Write();
@@ -1404,7 +1404,7 @@ void SimpleAnalysis::savePlots() {
   h_HiggsInvMass->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^2)");
   h_HiggsInvMass->GetYaxis()->SetTitle("Events");
   h_HiggsInvMass->Write();
-
+std::cout << _LINE_ << " : " << _FILE_ << std::endl;
   h_genParScalarPt->GetXaxis()->SetTitle("p_{T} (GeV)");
   h_genParScalarPt->GetYaxis()->SetTitle("Events");
   h_genParScalarPt->Write();
@@ -1420,7 +1420,7 @@ void SimpleAnalysis::savePlots() {
   h_ScalarInvMass->GetYaxis()->SetTitle("Events");
   h_ScalarInvMass->Write();
   h_Scalar3DAngle->Write();
- 
+ std::cout << _LINE_ << " : " << _FILE_ << std::endl;
 
   h_genParScalarMuonDivPtSL=(TH1F*)h_genParScalarMuonCutPtSL->Clone();
   h_genParScalarMuonDivPtSL->Divide(h_genParScalarMuonPtL);
@@ -1433,7 +1433,7 @@ void SimpleAnalysis::savePlots() {
   h_genParScalarMuonDivPtDS=(TH1F*)h_genParScalarMuonCutPtDS->Clone();
   h_genParScalarMuonDivPtDS->Divide(h_genParScalarMuonPtS);
   //h_genParScalarMuonDivPtDS->SetTitle("Turn-on Double trigger subleading");
- 
+ std::cout << _LINE_ << " : " << _FILE_ << std::endl;
   h_genParScalarMuonPtL->GetXaxis()->SetTitle("Leading muon p_{T} (GeV)");
   h_genParScalarMuonPtL->GetYaxis()->SetTitle("Events");
   h_genParScalarMuonPtL->Write();
@@ -1456,7 +1456,7 @@ void SimpleAnalysis::savePlots() {
   h_genParScalarMuonDivPtDS->GetXaxis()->SetTitle("Subleading muon p_{T} (GeV)");
   h_genParScalarMuonDivPtDS->GetYaxis()->SetTitle("Trigger efficiency");
   h_genParScalarMuonDivPtDS->Write();
-    
+   std::cout << _LINE_ << " : " << _FILE_ << std::endl; 
   h_genParScalarMuonEta->Write();
   h_genParScalarMuonPhi->Write();
   h_genParScalarMuonE->GetXaxis()->SetTitle("GeV");
@@ -1469,7 +1469,7 @@ void SimpleAnalysis::savePlots() {
   h_MuonInvMass->GetYaxis()->SetTitle("Events");
   h_MuonInvMass->Write();
   h_Muon3DAngle->Write();
-    
+   std::cout << _LINE_ << " : " << _FILE_ << std::endl; 
   h_genParScalarCKaonPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarCKaonPt->Write();
   h_genParScalarCKaonEta->Write();
@@ -1484,7 +1484,7 @@ void SimpleAnalysis::savePlots() {
   h_KaonInvMass->GetYaxis()->SetTitle("Events");
   h_KaonInvMass->Write();
   h_Kaon3DAngle->Write();
-
+std::cout << _LINE_ << " : " << _FILE_ << std::endl;
   h_genParScalarKShortPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarKShortPt->Write();
   h_genParScalarKShortEta->Write();
@@ -1497,7 +1497,7 @@ void SimpleAnalysis::savePlots() {
   h_KShortInvMass->GetXaxis()->SetTitle("GeV");
   h_KShortInvMass->Write();
   h_KShort3DAngle->Write();
-   
+   std::cout << _LINE_ << " : " << _FILE_ << std::endl;
   h_genParScalarCPionPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarCPionPt->Write();
   h_genParScalarCPionEta->Write();
@@ -1518,7 +1518,7 @@ void SimpleAnalysis::savePlots() {
   h_PionInvMass->GetYaxis()->SetTitle("Events");
   h_PionInvMass->Write();
   h_Pion3DAngle->Write();
-    
+  std::cout << _LINE_ << " : " << _FILE_ << std::endl;  
   h_VertexPosXY->GetXaxis()->SetTitle("Vertex position x (mm)"); // set a title for the x-axis
   h_VertexPosXY->GetXaxis()->SetRangeUser(-150., 150.);
   h_VertexPosXY->GetYaxis()->SetTitle("Vertex position y (mm)"); // set a title for the y-axis
@@ -1528,7 +1528,7 @@ void SimpleAnalysis::savePlots() {
   h_VertexPosRZ->GetYaxis()->SetTitle("R");
   h_VertexPosRZ->Write();
     
-	
+std::cout << _LINE_ << " : " << _FILE_ << std::endl;	
 	
   //Reconstruction
   h_muonRecPt->GetXaxis()->SetTitle("p_{T} (GeV)");
