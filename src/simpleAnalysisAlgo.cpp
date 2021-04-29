@@ -196,7 +196,7 @@ void SimpleAnalysis::runMainAnalysis() {
       eventWeight *= datasetWeight;
 
       // Do functions that do not require met filters or triggers
-      // fillGeneratorPlots(event); // Commented out currently by CB in main branch
+       fillGeneratorPlots(event); // Commented out currently by CB in main branch
 
       // Do functions that have met filters applied
       if( !event.metFilters() ) continue;
@@ -217,8 +217,8 @@ void SimpleAnalysis::runMainAnalysis() {
 
       // Fill other plots now!
       // All of	these plots use	packed PF muons, so the ones corresponding to the PAT muons are provided
-      fillPackedCandidatePlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
-      fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
+     // fillPackedCandidatePlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
+     // fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
 
     } // End loop over all events
 
