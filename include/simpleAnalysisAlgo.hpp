@@ -224,11 +224,11 @@ class SimpleAnalysis
     TH1F* h_Rrefit12InvMass;
     TH1F* h_Rpionre12InvMass;
     TH1F* h_Rkaonre12InvMass;
-
+   
     TH1F* h_P20antiscalarInvMass;
     TH1F* h_P20scalarInvMass;
     TH1F* h_P20higgsInvMass;
-
+    TH1F* h_PhiggsR20InvMass;
     TH2F* h_massassump;
     TH2F* h_pmassassump;
     TH2F* h_higgsassump;
