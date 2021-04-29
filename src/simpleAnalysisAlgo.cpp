@@ -1316,6 +1316,7 @@ void SimpleAnalysis::setupPlots() {
   Gaussian3 = new TF1("Gaussian3","gaus",1.,3.);
   h_PhiggsInvMass = new TH1F("h_PhiggsInvMass", "Higgs invariant mass", 1000, 0., 200.);
   h_PhiggsRInvMass = new TH1F("h_PhiggsRInvMass", "Higgs invariant mass", 1000, 0., 200.);
+  h_PhiggsR20InvMass = new TH1F("h_PhiggsR20InvMass", "Higgs invariant mass", 1000, 0., 200.);
   h_PhiggsDeltaR = new TH1F("h_PhiggsDeltaR", "Discalar #DeltaR",2500, 0., 15.);
   h_Rrefit12InvMass = new TH1F("h_Rrefit12InvMass", "Dimuon refitted invariant mass with requirements", 500, 0.,5.);
   h_Rpionre12InvMass = new TH1F("h_Rpionre12InvMass", "Dihadron (pion) refit invariant mass", 500, 0.,5.);
