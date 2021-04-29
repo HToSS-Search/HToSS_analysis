@@ -196,7 +196,7 @@ void SimpleAnalysis::runMainAnalysis() {
       eventWeight *= datasetWeight;
 
       // Do functions that do not require met filters or triggers
-       fillGeneratorPlots(event); // Commented out currently by CB in main branch
+       //fillGeneratorPlots(event); // Commented out currently by CB in main branch
 
       // Do functions that have met filters applied
       if( !event.metFilters() ) continue;
