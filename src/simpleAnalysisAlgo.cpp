@@ -1394,56 +1394,67 @@ void SimpleAnalysis::savePlots() {
   h_genParE->Write();
   h_VertexPosR->Write();
 
-  h_genParHiggsPt->GetXaxis()->SetTitle("GeV");
+  h_genParHiggsPt->GetXaxis()->SetTitle("p_{T} (GeV)");
+  h_genParHiggsPt->GetYaxis()->SetTitle("Events");
   h_genParHiggsPt->Write();
   h_genParHiggsEta->Write();
   h_genParHiggsPhi->Write();
   h_genParHiggsE->GetXaxis()->SetTitle("GeV");
   h_genParHiggsE->Write();
-  h_HiggsInvMass->GetXaxis()->SetTitle("GeV");
+  h_HiggsInvMass->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^2)");
+  h_HiggsInvMass->GetYaxis()->SetTitle("Events");
   h_HiggsInvMass->Write();
 
-  h_genParScalarPt->GetXaxis()->SetTitle("GeV");
+  h_genParScalarPt->GetXaxis()->SetTitle("p_{T} (GeV)");
+  h_genParScalarPt->GetYaxis()->SetTitle("Events");
   h_genParScalarPt->Write();
   h_genParScalarEta->Write();
   h_genParScalarPhi->Write();
   h_genParScalarE->GetXaxis()->SetTitle("GeV");
   h_genParScalarE->Write();
   h_ScalarDeltaR->GetXaxis()->SetTitle("Radians");
+  h_ScalarDeltaR->GetYaxis()->SetTitle("Events");
   h_ScalarDeltaR->Write();
   h_ScalarDeltaPhi->Write();
-  h_ScalarInvMass->GetXaxis()->SetTitle("GeV");
+  h_ScalarInvMass->GetXaxis()->SetTitle("m_{scalar} (GeV/c^{2})");
+  h_ScalarInvMass->GetYaxis()->SetTitle("Events");
   h_ScalarInvMass->Write();
   h_Scalar3DAngle->Write();
  
 
   h_genParScalarMuonDivPtSL=(TH1F*)h_genParScalarMuonCutPtSL->Clone();
   h_genParScalarMuonDivPtSL->Divide(h_genParScalarMuonPtL);
-  h_genParScalarMuonDivPtSL->SetTitle("Turn-on Single trigger leading");
+  //h_genParScalarMuonDivPtSL->SetTitle("Turn-on Single trigger leading");
     
   h_genParScalarMuonDivPtDL=(TH1F*)h_genParScalarMuonCutPtDL->Clone();
   h_genParScalarMuonDivPtDL->Divide(h_genParScalarMuonPtL);
-  h_genParScalarMuonDivPtDL->SetTitle("Turn-on Double trigger leading");
+  //h_genParScalarMuonDivPtDL->SetTitle("Turn-on Double trigger leading");
    
   h_genParScalarMuonDivPtDS=(TH1F*)h_genParScalarMuonCutPtDS->Clone();
   h_genParScalarMuonDivPtDS->Divide(h_genParScalarMuonPtS);
-  h_genParScalarMuonDivPtDS->SetTitle("Turn-on Double trigger subleading");
+  //h_genParScalarMuonDivPtDS->SetTitle("Turn-on Double trigger subleading");
  
-  h_genParScalarMuonPtL->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonPtL->GetXaxis()->SetTitle("Leading muon p_{T} (GeV)");
+  h_genParScalarMuonPtL->GetYaxis()->SetTitle("Events");
   h_genParScalarMuonPtL->Write();
-  h_genParScalarMuonPtS->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonPtS->GetXaxis()->SetTitle("Subleading muon p_{T} (GeV)");
+  h_genParScalarMuonPtS->GetYaxis()->SetTitle("Events");
   h_genParScalarMuonPtS->Write();
-  h_genParScalarMuonCutPtSL->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonCutPtSL->GetXaxis()->SetTitle("Leading muon p_{T} (GeV)");
+  h_genParScalarMuonCutPtSL->GetYaxis()->SetTitle("Events");
   h_genParScalarMuonCutPtSL->Write();
-  h_genParScalarMuonDivPtSL->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonDivPtSL->GetXaxis()->SetTitle("Leading muon p_{T} (GeV)");
+  h_genParScalarMuonDivPtSL->GetYaxis()->SetTitle("Trigger efficiency");
   h_genParScalarMuonDivPtSL->Write();
-  h_genParScalarMuonCutPtDL->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonCutPtDL->GetXaxis()->SetTitle("Leading muon p_{T} (GeV)");
   h_genParScalarMuonCutPtDL->Write();
-  h_genParScalarMuonDivPtDL->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonDivPtDL->GetXaxis()->SetTitle("Leading muon p_{T} (GeV)");
+  h_genParScalarMuonDivPtDL->GetYaxis()->SetTitle("Trigger efficiency");
   h_genParScalarMuonDivPtDL->Write();
-  h_genParScalarMuonCutPtDS->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonCutPtDS->GetXaxis()->SetTitle("Subleading muon p_{T} (GeV)");
   h_genParScalarMuonCutPtDS->Write();
-  h_genParScalarMuonDivPtDS->GetXaxis()->SetTitle("GeV");
+  h_genParScalarMuonDivPtDS->GetXaxis()->SetTitle("Subleading muon p_{T} (GeV)");
+  h_genParScalarMuonDivPtDS->GetYaxis()->SetTitle("Trigger efficiency");
   h_genParScalarMuonDivPtDS->Write();
     
   h_genParScalarMuonEta->Write();
@@ -1451,9 +1462,11 @@ void SimpleAnalysis::savePlots() {
   h_genParScalarMuonE->GetXaxis()->SetTitle("GeV");
   h_genParScalarMuonE->Write();
   h_MuonDeltaR->GetXaxis()->SetTitle("Radians");
+  h_MuonDeltaR->GetYaxis()->SetTitle("Events");
   h_MuonDeltaR->Write();
   h_MuonDeltaPhi->Write();
-  h_MuonInvMass->GetXaxis()->SetTitle("GeV");
+  h_MuonInvMass->GetXaxis()->SetTitle("m_{dimuon} (GeV/c^{2})");
+  h_MuonInvMass->GetYaxis()->SetTitle("Events");
   h_MuonInvMass->Write();
   h_Muon3DAngle->Write();
     
@@ -1464,9 +1477,11 @@ void SimpleAnalysis::savePlots() {
   h_genParScalarCKaonE->GetXaxis()->SetTitle("GeV");
   h_genParScalarCKaonE->Write();
   h_KaonDeltaR->GetXaxis()->SetTitle("Radians");
+  h_KaonDeltaR->GetYaxis()->SetTitle("Events");
   h_KaonDeltaR->Write();
   h_KaonDeltaPhi->Write();
-  h_KaonInvMass->GetXaxis()->SetTitle("GeV");
+  h_KaonInvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
+  h_KaonInvMass->GetYaxis()->SetTitle("Events");
   h_KaonInvMass->Write();
   h_Kaon3DAngle->Write();
 
@@ -1496,61 +1511,73 @@ void SimpleAnalysis::savePlots() {
   h_genParScalarNPionE->GetXaxis()->SetTitle("GeV");
   h_genParScalarNPionE->Write();
   h_PionDeltaR->GetXaxis()->SetTitle("Radians");
+  h_PionDeltaR->GetYaxis()->SetTitle("Events");
   h_PionDeltaR->Write();
   h_PionDeltaPhi->Write();
-  h_PionInvMass->GetXaxis()->SetTitle("GeV");
+  h_PionInvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
+  h_PionInvMass->GetYaxis()->SetTitle("Events");
   h_PionInvMass->Write();
   h_Pion3DAngle->Write();
     
-  h_VertexPosXY->GetXaxis()->SetTitle("Vertex position x"); // set a title for the x-axis
+  h_VertexPosXY->GetXaxis()->SetTitle("Vertex position x (mm)"); // set a title for the x-axis
   h_VertexPosXY->GetXaxis()->SetRangeUser(-150., 150.);
-  h_VertexPosXY->GetYaxis()->SetTitle("Vertex position y"); // set a title for the y-axis
+  h_VertexPosXY->GetYaxis()->SetTitle("Vertex position y (mm)"); // set a title for the y-axis
   h_VertexPosXY->GetYaxis()->SetRangeUser(-150., 150.);
   h_VertexPosXY->Write();
-  h_VertexPosRZ->GetXaxis()->SetTitle("Vertex position z");
+  h_VertexPosRZ->GetXaxis()->SetTitle("Vertex position z (mm)");
   h_VertexPosRZ->GetYaxis()->SetTitle("R");
   h_VertexPosRZ->Write();
     
+	
+	
   //Reconstruction
-  h_muonRecPt->GetXaxis()->SetTitle("GeV");
+  h_muonRecPt->GetXaxis()->SetTitle("p_{T} (GeV)");
+  h_muonRecPt->GetYaxis()->SetTitle("Events");
   h_muonRecPt->Write();
-  h_muonRecPtL->GetXaxis()->SetTitle("GeV");
+  h_muonRecPtL->GetXaxis()->SetTitle("Leading p_{T} (GeV)");
+  h_muonRecPtL->GetYaxis()->SetTitle("Events");
   h_muonRecPtL->Write();
-  h_muonRecPtS->GetXaxis()->SetTitle("GeV");
+  h_muonRecPtS->GetXaxis()->SetTitle("Subleading p_{T} (GeV)");
+  h_muonRecPtS->GetYaxis()->SetTitle("Events");
   h_muonRecPtS->Write();
   h_muonRecEta->Write();
   h_muonRecPhi->Write();
   h_muonRecE->GetXaxis()->SetTitle("GeV");
   h_muonRecE->Write();
   h_muonRecDeltaR->GetXaxis()->SetTitle("Radians");
+  h_muonRecDeltaR->GetYaxis()->SetTitle("Events");
   h_muonRecDeltaR->Write();
   h_muonRecDeltaPhi->Write();
-  h_muonRecInvMass->GetXaxis()->SetTitle("GeV");
+  h_muonRecInvMass->GetXaxis()->SetTitle("m_{dimuon} (GeV/c^{2})");
+  h_muonRecInvMass->GetYaxis()->SetTitle("Events");
   h_muonRecInvMass->Write();
   h_muonCutSingleL->GetXaxis()->SetTitle("GeV");
   h_muonCutSingleL->Write();
 
   h_muonDivSingleL=(TH1F*)h_muonCutSingleL->Clone();
   h_muonDivSingleL->Divide(h_muonRecPtL);
-  h_muonDivSingleL->SetTitle("Turn-on Single trigger, leading");
+ // h_muonDivSingleL->SetTitle("Turn-on Single trigger, leading");
           
   h_muonDivDoubleL=(TH1F*)h_muonCutDoubleL->Clone();
   h_muonDivDoubleL->Divide(h_muonRecPtL);
-  h_muonDivDoubleL->SetTitle("Turn-on Double trigger, leading");
+//  h_muonDivDoubleL->SetTitle("Turn-on Double trigger, leading");
     
   h_muonDivDoubleS=(TH1F*)h_muonCutDoubleS->Clone();
   h_muonDivDoubleS->Divide(h_muonRecPtS);
-  h_muonDivDoubleS->SetTitle("Turn-on Double trigger, subleading");
+//  h_muonDivDoubleS->SetTitle("Turn-on Double trigger, subleading");
 
-  h_muonDivSingleL->GetXaxis()->SetTitle("GeV");
+  h_muonDivSingleL->GetXaxis()->SetTitle("Leading muon p_{T} (GeV)");
+  h_muonDivSingleL->GetYaxis()->SetTitle("Trigger efficiency");
   h_muonDivSingleL->Write();
   h_muonCutDoubleL->GetXaxis()->SetTitle("GeV");
   h_muonCutDoubleL->Write();
-  h_muonDivDoubleL->GetXaxis()->SetTitle("GeV");
+  h_muonDivDoubleL->GetXaxis()->SetTitle("Leading muon p_{T} (GeV)");
+  h_muonDivDoubleL->GetYaxis()->SetTitle("Trigger efficiency");
   h_muonDivDoubleL->Write();
   h_muonCutDoubleS->GetXaxis()->SetTitle("GeV");
   h_muonCutDoubleS->Write();
-  h_muonDivDoubleS->GetXaxis()->SetTitle("GeV");
+  h_muonDivDoubleS->GetXaxis()->SetTitle("Subleading muon p_{T} (GeV)");
+  h_muonDivDoubleS->GetYaxis()->SetTitle("Trigger efficiency");
   h_muonDivDoubleS->Write();
 	
   /*
@@ -1578,6 +1605,7 @@ void SimpleAnalysis::savePlots() {
 
   //Kaon mass assumption
   h_KhadronDeltaR->GetXaxis()->SetTitle("Radians");
+  h_KhadronDeltaR->GetYaxis()->SetTitle("Events");
   h_KhadronDeltaR->Write();
   h_KmuonsDeltaR->GetXaxis()->SetTitle("Radians");
   h_KmuonsDeltaR->Write();
