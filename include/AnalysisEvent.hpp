@@ -1203,6 +1203,7 @@ class AnalysisEvent
     Int_t HLT_PFHT800_PFMET85_PFMHT85_IDTight_v8;
     Int_t HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9;
 */
+/*
     // 2017 Data scouting triggers
     Int_t DST_HT250_CaloScouting_v6;
     Int_t DST_HT250_CaloScouting_v7;
@@ -1227,7 +1228,7 @@ class AnalysisEvent
     Int_t DST_DoubleMu3_noVtx_CaloScouting_v3;
     Int_t DST_DoubleMu3_noVtx_CaloScouting_v4;
     Int_t DST_DoubleMu3_noVtx_CaloScouting_v5;
-
+*/
     // MET Filters
     // 2016
     Int_t Flag_ecalLaserCorrFilter;
@@ -2412,6 +2413,7 @@ class AnalysisEvent
     TBranch* b_HLT_PFHT800_PFMET85_PFMHT85_IDTight_v8;
     TBranch* b_HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9;
 */
+/*
     TBranch* b_DST_HT250_CaloScouting_v6;
     TBranch* b_DST_HT250_CaloScouting_v7;
     TBranch* b_DST_HT250_CaloScouting_v8;
@@ -2435,7 +2437,7 @@ class AnalysisEvent
     TBranch* b_DST_DoubleMu3_noVtx_CaloScouting_v3;
     TBranch* b_DST_DoubleMu3_noVtx_CaloScouting_v4;
     TBranch* b_DST_DoubleMu3_noVtx_CaloScouting_v5;
-
+*/
     TBranch* b_Flag_HBHENoiseFilter;
     TBranch* b_Flag_HBHENoiseIsoFilter;
     TBranch* b_Flag_globalTightHalo2016Filter;
@@ -3794,6 +3796,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
        fChain->SetBranchAddress("HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9", &HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9, &b_HLT_PFHT800_PFMET85_PFMHT85_IDTight_v9);
 */
    }
+/*
    // DST branches
    if ( !is2016 ) {
        fChain->SetBranchAddress("DST_HT250_CaloScouting_v6", &DST_HT250_CaloScouting_v6, &b_DST_HT250_CaloScouting_v6);
@@ -3820,7 +3823,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
        fChain->SetBranchAddress("DST_DoubleMu3_noVtx_CaloScouting_v4", &DST_DoubleMu3_noVtx_CaloScouting_v4, &b_DST_DoubleMu3_noVtx_CaloScouting_v4);
        fChain->SetBranchAddress("DST_DoubleMu3_noVtx_CaloScouting_v5", &DST_DoubleMu3_noVtx_CaloScouting_v5, &b_DST_DoubleMu3_noVtx_CaloScouting_v5);
    }
-
+*/
    //MET filter branches
    if (is2016) {
        fChain->SetBranchAddress("Flag_ecalLaserCorrFilter", &Flag_ecalLaserCorrFilter, &b_Flag_ecalLaserCorrFilter);
@@ -4189,7 +4192,7 @@ inline bool AnalysisEvent::mumuNoVtxTrig() const {
                    : HLT_DoubleMu43NoFiltersNoVtx_v3 > 0
                          || HLT_DoubleMu48NoFiltersNoVtx_v3 > 0;
 }
-
+/*
 inline bool AnalysisEvent::dataScoutingTrig() const {
     return is2016_ ?
 // 2016 triggers
@@ -4219,7 +4222,7 @@ inline bool AnalysisEvent::dataScoutingTrig() const {
                          || DST_DoubleMu3_noVtx_CaloScouting_v4 > 0
                          || DST_DoubleMu3_noVtx_CaloScouting_v5 > 0;
 }
-
+*/
 inline bool AnalysisEvent::metFilters() const {
     return is2016_
                ? Flag_ecalLaserCorrFilter > 0
