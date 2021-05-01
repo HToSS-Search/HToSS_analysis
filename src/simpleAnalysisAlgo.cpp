@@ -44,9 +44,9 @@ SimpleAnalysis::SimpleAnalysis()
 , muonPtLeading_{30.0}       // As only single muon trigger should be used normally, this is set to 30., if double muon trigger is used, this needs changing.
 , muonPt_{5.0}               // As above
 , muonEta_{2.40}             // Max muon eta, should not be changed by user
-, packedCandMuonDeltaR_{0.2} // DeltaR window used for muons
-, packedCandPionDeltaR_{0.2} // DeltaR window used for pions
-, packedCandKaonDeltaR_{0.2} // DeltaR window used for kaons
+, packedCandMuonDeltaR_{0.4} // DeltaR window used for muons
+, packedCandPionDeltaR_{0.4} // DeltaR window used for pions
+, packedCandKaonDeltaR_{0.4} // DeltaR window used for kaons
 , isoConeSize_{0.3}          // Isolation cone size of 0.3 is used repeatedly. Define once here for efficiency.
 , higgsMass_{125.35}         // Standard Higgs mass - define here rather than multiple locations
 , higgsMassWindow_{3.0}      // Define Standard Higgs mass +/ window here rather than in multiple locations
