@@ -204,7 +204,7 @@ void SimpleAnalysis::runMainAnalysis() {
       // Get physics objects
       std::pair<int, int> patMuons = getPatMuonPair(event); // Get PAT muons inidices
       // This function needs a pair of selected muons, but also looks at all muons and different triggers within this, so no blanket trigger application and no skip event if no incompatible muon pair is found
-      fillMuonReconstructionPlots(event, eventWeight, patMuons.first, patMuons.second);
+     // fillMuonReconstructionPlots(event, eventWeight, patMuons.first, patMuons.second);
 
       if ( !event.muTrig() ) continue; // If single muon trigger does not fire
       if (patMuons.first == -1 || patMuons.second == -1) continue; // If there is no valid muon pair in this event (i.e. no muon index returned), skip event as all following code requires this
@@ -217,8 +217,8 @@ void SimpleAnalysis::runMainAnalysis() {
 
       // Fill other plots now!
       // All of	these plots use	packed PF muons, so the ones corresponding to the PAT muons are provided
-      fillPackedCandidatePlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
-      fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
+      //fillPackedCandidatePlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
+      //fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
 
     } // End loop over all events
 
