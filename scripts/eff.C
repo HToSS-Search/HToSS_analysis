@@ -49,8 +49,8 @@
      h_ptdiv_ctau100->GetYaxis()->SetTitle("Efficiency");
      h_ptdiv_ctau100->GetXaxis()->SetRangeUser(0.0,100); 
      h_ptdiv_ctau100->GetXaxis()->SetTitle("p_{T} (GeV)");
-     h_ptdiv_ctau100->SetMarkerColor(2);
-     h_ptdiv_ctau100->SetLineColor(2);
+     h_ptdiv_ctau100->SetMarkerColor(3);
+     h_ptdiv_ctau100->SetLineColor(3);
      h_ptdiv_ctau100->Draw("HIST same");
     
     /* h_ptdiv_ctau1000->GetYaxis()->SetTitle("Efficiency");
@@ -63,15 +63,15 @@
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_ptdiv_ctau0","c_{#tau}=0mm","L");
+     TLegendEntry *legenda = legend1->AddEntry("h_ptdiv_ctau0","c_{#tau}=0mm","PE");
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_ptdiv_ctau10","c_{#tau}=10mm","L");
+     legenda=legend1->AddEntry("h_ptdiv_ctau10","c_{#tau}=10mm","PE");
      legenda->SetLineColor(2);
      legenda->SetMarkerColor(2);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_ptdiv_ctau100","c_{#tau}=100mm","L");
+     legenda=legend1->AddEntry("h_ptdiv_ctau100","c_{#tau}=100mm","PE");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
