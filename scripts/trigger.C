@@ -14,7 +14,7 @@
   
      TFile inFile0("ggH_MS2_ctau0.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
      TH1F* h_pt_ctau0    = (TH1F*)inFile0.Get("h_genParScalarMuonPtL");
-     TH1F* h_ptcut_ctau0    = (TH1F*)inFile0.Get("h_genParScalarMuonCutPtSL");
+     TH1F* h_ptcut_ctau0    = (TH1F*)inFile0.Get("h_genParScalarMuonCutPtSL;1");
     // TH1F* h_KIsoSum1_ctau0    = (TH1F*)inFile0.Get("h_KIsoSum1");
     // TH1F* h_KIsoSum2_ctau0    = (TH1F*)inFile0.Get("h_KIsoSum2");
     // TH1F* h_MuonIsoSum1_ctau0    = (TH1F*)inFile0.Get("h_MuonIsoSum1");
@@ -22,7 +22,7 @@
      
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_pt_ctau10    = (TH1F*)inFile10.Get("h_genParScalarMuonPtL");
-     TH1F* h_ptcut_ctau10    = (TH1F*)inFile10.Get("h_genParScalarMuonCutPtSL");
+     TH1F* h_ptcut_ctau10    = (TH1F*)inFile10.Get("h_genParScalarMuonCutPtSL;1");
     // TH1F* h_KIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_KIsoSum1");
     // TH1F* h_KIsoSum2_ctau10    = (TH1F*)inFile10.Get("h_KIsoSum2");
 //TH1F* h_MuonIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_MuonIsoSum1");
