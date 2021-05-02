@@ -43,12 +43,12 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     h_muon_ctau10->GetYaxis()->SetTitle("Events");
-     h_muon_ctau10->GetXaxis()->SetRangeUser(0.0,0.3); 
-     h_muon_ctau10->GetXaxis()->SetTitle("#Delta R (Radians)");
-     h_muon_ctau10->SetMarkerColor(4);
-     h_muon_ctau10->SetLineColor(4);
-     h_muon_ctau10->Draw("HIST");
+     h_pion_ctau10->GetYaxis()->SetTitle("Events");
+     h_pion_ctau10->GetXaxis()->SetRangeUser(0.0,0.3); 
+     h_pion_ctau10->GetXaxis()->SetTitle("#Delta R (Radians)");
+     h_pion_ctau10->SetMarkerColor(4);
+     h_pion_ctau10->SetLineColor(4);
+     h_pion_ctau10->Draw("HIST");
     
     /* h_kaon_ctau0->GetYaxis()->SetTitle("Events");
      h_kaon_ctau0->GetXaxis()->SetRangeUser(0.0,100); 
