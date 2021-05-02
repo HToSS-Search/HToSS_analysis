@@ -53,7 +53,7 @@
    
     
    
-     TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
+     /*TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
      TLegendEntry *legenda = legend1->AddEntry("h_pt_ctau10","c_{#tau}=10mm, no trigger","L");
      legenda->SetLineColor(4);
@@ -63,7 +63,7 @@
      legenda->SetLineColor(2);
      legenda->SetMarkerColor(2);
      legenda->SetMarkerSize(2);
-     legend1->Draw();
+     legend1->Draw();*/
    
      canv1->Modified();
      canv1->cd();
