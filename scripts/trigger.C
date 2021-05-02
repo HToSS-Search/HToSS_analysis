@@ -28,9 +28,9 @@
 //TH1F* h_MuonIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_MuonIsoSum1");
    //  TH1F* h_MuonIsoSum2_ctau10    = (TH1F*)inFile10.Get("h_MuonIsoSum2");
    
-     TFile inFile10("ggH_MS2_ctau100.root"); 
-     TH1F* h_pt_ctau100    = (TH1F*)inFile10.Get("h_genParScalarMuonPtL");
-     TH1F* h_ptcut_ctau100    = (TH1F*)inFile10.Get("h_genParScalarMuonCutPtSL");
+     TFile inFile100("ggH_MS2_ctau100.root"); 
+     TH1F* h_pt_ctau100    = (TH1F*)inFile100.Get("h_genParScalarMuonPtL");
+     TH1F* h_ptcut_ctau100    = (TH1F*)inFile100.Get("h_genParScalarMuonCutPtSL");
    //  TH1F* h_KIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_KIsoSum1");
    //  TH1F* h_KIsoSum2_ctau10    = (TH1F*)inFile10.Get("h_KIsoSum2");
    //  TH1F* h_MuonIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_MuonIsoSum1");
