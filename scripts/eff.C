@@ -63,15 +63,15 @@
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_ptdiv_ctau0","c_{#tau}=0mm","PE");
+     TLegendEntry *legenda = legend1->AddEntry("h_ptdiv_ctau0","c_{#tau}=0mm","P*");
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_ptdiv_ctau10","c_{#tau}=10mm","PE");
+     legenda=legend1->AddEntry("h_ptdiv_ctau10","c_{#tau}=10mm","P*");
      legenda->SetLineColor(2);
      legenda->SetMarkerColor(2);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_ptdiv_ctau100","c_{#tau}=100mm","PE");
+     legenda=legend1->AddEntry("h_ptdiv_ctau100","c_{#tau}=100mm","P*");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
