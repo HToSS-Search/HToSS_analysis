@@ -44,7 +44,7 @@
      canv1->SetFillColor(0);
    
      h_muon_ctau0->GetYaxis()->SetTitle("Events");
-     h_muon_ctau0->GetXaxis()->SetRangeUser(0.0,100); 
+     h_muon_ctau0->GetXaxis()->SetRangeUser(0.0,0.2); 
      h_muon_ctau0->GetXaxis()->SetTitle("#Delta R (Radians)");
      h_muon_ctau0->SetMarkerColor(4);
      h_muon_ctau0->SetLineColor(4);
