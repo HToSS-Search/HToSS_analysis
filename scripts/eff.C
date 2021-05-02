@@ -74,7 +74,7 @@
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_ptdiv_ctau1","c_{#tau}=1mm","L");
+     legenda=legend1->AddEntry("h_ptdiv_ctau1","c_{#tau}=1mm","P*");
      legenda->SetLineColor(2);
      legenda->SetMarkerColor(2);
      legenda->SetMarkerSize(2);
@@ -86,7 +86,7 @@
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_ptdiv_ctau1000","c_{#tau}=1000mm","L");
+     legenda=legend1->AddEntry("h_ptdiv_ctau1000","c_{#tau}=1000mm","P*");
      legenda->SetLineColor(94);
      legenda->SetMarkerColor(94);
      legenda->SetMarkerSize(2);
