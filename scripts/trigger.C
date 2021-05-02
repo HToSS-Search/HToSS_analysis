@@ -14,7 +14,7 @@
   
      TFile inFile0("ggH_MS2_ctau0.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
      TH1F* h_pt_ctau0    = (TH1F*)inFile0.Get("h_genParScalarMuonPtL");
-     TH1F* h_ptcut_ctau0    = (TH1F*)inFile0.Get("h_genParScalarMuonCutPtSL;1");
+     TH1F* h_ptcut_ctau0    = (TH1F*)inFile0.Get("h_genParScalarMuonCutPtSL;2");
     // TH1F* h_ptdiv_ctau0    = (TH1F*)inFile0.Get("h_genParScalarMuonCutPtSL;2");
     // TH1F* h_KIsoSum1_ctau0    = (TH1F*)inFile0.Get("h_KIsoSum1");
     // TH1F* h_KIsoSum2_ctau0    = (TH1F*)inFile0.Get("h_KIsoSum2");
@@ -23,7 +23,7 @@
      
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_pt_ctau10    = (TH1F*)inFile10.Get("h_genParScalarMuonPtL");
-     TH1F* h_ptcut_ctau10    = (TH1F*)inFile10.Get("h_genParScalarMuonCutPtSL;1");
+     TH1F* h_ptcut_ctau10    = (TH1F*)inFile10.Get("h_genParScalarMuonCutPtSL;2");
    //  TH1F* h_ptdiv_ctau10    = (TH1F*)inFile10.Get("h_genParScalarMuonCutPtSL;2");
     // TH1F* h_KIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_KIsoSum1");
     // TH1F* h_KIsoSum2_ctau10    = (TH1F*)inFile10.Get("h_KIsoSum2");
@@ -32,7 +32,7 @@
    
      TFile inFile100("ggH_MS2_ctau100.root"); 
      TH1F* h_pt_ctau100    = (TH1F*)inFile100.Get("h_genParScalarMuonPtL");
-     TH1F* h_ptcut_ctau100    = (TH1F*)inFile100.Get("h_genParScalarMuonCutPtSL;1");
+     TH1F* h_ptcut_ctau100    = (TH1F*)inFile100.Get("h_genParScalarMuonCutPtSL;2");
     // TH1F* h_ptdiv_ctau100    = (TH1F*)inFile100.Get("h_genParScalarMuonCutPtSL;2");
    //  TH1F* h_KIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_KIsoSum1");
    //  TH1F* h_KIsoSum2_ctau10    = (TH1F*)inFile10.Get("h_KIsoSum2");
@@ -49,19 +49,19 @@
      canv1->SetFillColor(0);
    
      //h_pt_ctau0->SetTitle("Leading pion, relative isolation");
-     h_pt_ctau10->GetYaxis()->SetTitle("Events");
+    /* h_pt_ctau10->GetYaxis()->SetTitle("Events");
      h_pt_ctau10->GetXaxis()->SetRangeUser(0.0,100); 
      h_pt_ctau10->GetXaxis()->SetTitle("p_{T} (GeV)");
      h_pt_ctau10->SetMarkerColor(4);
      h_pt_ctau10->SetLineColor(4);
-     h_pt_ctau10->Draw("HIST");
+     h_pt_ctau10->Draw("HIST");*/
  
      h_ptcut_ctau10->GetYaxis()->SetTitle("Events");
      h_ptcut_ctau10->GetXaxis()->SetRangeUser(0.0,100); 
      h_ptcut_ctau10->GetXaxis()->SetTitle("p_{T} (GeV)");
-     h_ptcut_ctau10->SetMarkerColor(2);
-     h_ptcut_ctau10->SetLineColor(2);
-     h_ptcut_ctau10->Draw("HIST same");
+     h_ptcut_ctau10->SetMarkerColor(4);
+     h_ptcut_ctau10->SetLineColor(4);
+     h_ptcut_ctau10->Draw("HIST ");
    
     /* h_PIsoSum1_QCD->GetYaxis()->SetTitle("Events");
      h_PIsoSum1_QCD->GetXaxis()->SetRangeUser(0.0, 2.); 
