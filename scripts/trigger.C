@@ -102,3 +102,4 @@
      // save canvas with drawn histogram
      canv1->SaveAs("trigger.gif"); // .pdf and other formats work too! 
    
+  }
