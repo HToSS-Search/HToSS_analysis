@@ -61,7 +61,7 @@
      h_ptdiv_ctau1000->Draw("HIST same");*/
     
    
-     TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
+     TLegend *legend1 = new TLegend(0.2,0.2,0.4,0.4);
      legend1->SetBorderSize(1);
      TLegendEntry *legenda = legend1->AddEntry("h_ptdiv_ctau0","c_{#tau}=0mm","P*");
      legenda->SetLineColor(4);
