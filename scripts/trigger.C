@@ -56,8 +56,8 @@
      h_ptcut_ctau0->GetYaxis()->SetTitle("Events");
      h_ptcut_ctau0->GetXaxis()->SetRangeUser(0.0,100); 
      h_ptcut_ctau0->GetXaxis()->SetTitle("p_{T} (GeV)");
-     h_ptcut_ctau0->SetMarkerColor(3);
-     h_ptcut_ctau0->SetLineColor(3);
+     h_ptcut_ctau0->SetMarkerColor(2);
+     h_ptcut_ctau0->SetLineColor(2);
      h_ptcut_ctau0->Draw("HIST same");
    
     /* h_PIsoSum1_QCD->GetYaxis()->SetTitle("Events");
