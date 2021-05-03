@@ -225,6 +225,11 @@ class SimpleAnalysis
     TH1F* h_Rpionre12InvMass;
     TH1F* h_Rkaonre12InvMass;
    
+    TH1F* h_widemuonRInvMass;
+    TH1F* h_widekaonRInvMass;
+    TH1F* h_widepionRInvMass;
+    
+    TH1F* h_K20antiscalarInvMass;
     TH1F* h_P20antiscalarInvMass;
     TH1F* h_P20scalarInvMass;
     TH1F* h_P20higgsInvMass;
