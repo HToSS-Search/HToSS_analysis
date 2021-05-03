@@ -871,7 +871,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   
  
 	
-  //Kaon and the higgs
+  //Kaon 
   if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
     h_KIsoSum1->Fill(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1], eventWeight);
     h_KIsoSum2->Fill(KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
@@ -884,6 +884,19 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       }
     }
   }
+
+  //kaon wider
+	
+  if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+    if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2])){
+      if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
+        h_K20antiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
+      }
+    }
+  }
+	
+	
+  //kaon higgs
 
   if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){	
       if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2]) && event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
@@ -918,7 +931,25 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     }
   }
 
-  //Pion, muon and the higgs
+  //Kaon refitted wider
+  if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+    if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2])){
+
+      if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
+        for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+           if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
+	     TLorentzVector ka1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2))};
+             TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
+	 
+	     refkaon=ka1+ka2;
+	     h_widekaonRInvMass->Fill((ka1+ka2).M(), eventWeight);
+	   }
+	 }
+      }
+    }
+  }
+
+  //Pion, muon not refit
   if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
     h_PIsoSum1->Fill(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1], eventWeight);
     h_PIsoSum2->Fill(PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
@@ -947,6 +978,21 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       }
     }
 	  
+  }
+
+  //Muon,pion wider and not refit
+  if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
+    if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2])){
+      if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
+        h_P20antiscalarInvMass->Fill(Pantiscalar.M(), eventWeight);
+      }
+    }	
+	  
+    if(event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
+      if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
+        h_P20scalarInvMass->Fill(scalarLVec.M(), eventWeight);
+      }
+    }	  
   }
 	
   if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){ 
@@ -988,7 +1034,26 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	}
     }
   }
+  
+  //Wide pion refitted
+  TLorentzVector refpionWide;
+  if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
+    if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
+        for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+	   if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
+             if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
+	       TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
+               TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
+	       h_widepionRInvMass->Fill((pi1+pi2).M(), eventWeight); 
+	       refpionWide=pi1+pi2;     
+	
+	     }
+	   }
+	}
+    }
+  }
 
+  
 	
   //Muon refitted
   Int_t muonTrkPairIndex = getMuonTrackPairIndex(event, patMuIndex1, patMuIndex2);
@@ -1005,6 +1070,19 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       }
     }
   }
+  
+  //Wide muon refitted
+  TLorentzVector refmuonWide;
+  if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){	  
+    if(event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
+      if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
+	TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
+	TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
+	h_widemuonRInvMass->Fill((Mu1+Mu2).M(), eventWeight);
+	refmuonWide=Mu1+Mu2;  
+      }
+    }
+  }
 	
  //Higgs refitted	
   if(std::abs((refpion+refmuon).M()-higgsMass_)<higgsMassWindow_){	  
@@ -1016,7 +1094,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
  	
 //Higgs refitted wider
-  if(std::abs((refpion+refmuon).M()-higgsMass_)<higgsMassWideWindow_){
+  if(std::abs((refpionWide+refmuonWide).M()-higgsMass_)<higgsMassWideWindow_){
     if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2]) && event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
       if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
         h_PhiggsR20InvMass->Fill((refpion+refmuon).M(), eventWeight);
@@ -1276,13 +1354,19 @@ void SimpleAnalysis::setupPlots() {
   h_PhiggsRInvMass = new TH1F("h_PhiggsRInvMass", "Higgs invariant mass", 1000, 0., 200.);
   h_PhiggsR20InvMass = new TH1F("h_PhiggsR20InvMass", "Higgs invariant mass", 1000, 0., 200.);
   h_PhiggsDeltaR = new TH1F("h_PhiggsDeltaR", "Discalar #DeltaR",2500, 0., 15.);
+	
   h_Rrefit12InvMass = new TH1F("h_Rrefit12InvMass", "Dimuon refitted invariant mass with requirements", 500, 0.,5.);
   h_Rpionre12InvMass = new TH1F("h_Rpionre12InvMass", "Dihadron (pion) refit invariant mass", 500, 0.,5.);
   h_Rkaonre12InvMass = new TH1F("h_Rkaonre12InvMass", "Dihadron (kaon) refit invariant mass", 500, 0.,5.);
 
+  h_widemuonRInvMass = new TH1F("h_widemuonRInvMass", "Dimuon refitted invariant mass with requirements", 500, 0.,5.);
+  h_widekaonRInvMass = new TH1F("h_widekaonRInvMass", "Dihadron (kaon) refitted invariant mass with requirements", 500, 0.,5.);
+  h_widepionRInvMass = new TH1F("h_widepionRInvMass", "Dihadron (pion) refitted invariant mass with requirements", 500, 0.,5.);
+	
   h_P20antiscalarInvMass = new TH1F("h_P20antiscalarInvMass", "Dihadron (pion) invariant mass", 500, 0.,5.);
   h_P20scalarInvMass = new TH1F("h_P20scalarInvMass", "Dimuon invariant mass", 500, 0.,5.);
   h_P20higgsInvMass = new TH1F("h_P20higgsInvMass", "Higgs invariant mass", 1000, 0., 200.);
+  h_K20antiscalarInvMass = new TH1F("h_K20antiscalarInvMass", "Dihadron (kaon) invariant mass", 500, 0.,5.);	
 	
   h_massassump = new TH2F("h_massassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.);
   h_pmassassump = new TH2F("h_pmassassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 1000, 0.,7.,1000,0.,7.);
@@ -1667,12 +1751,17 @@ void SimpleAnalysis::savePlots() {
   h_Rkaonre12InvMass->GetYaxis()->SetTitle("Events");
   h_Rkaonre12InvMass->Write();
 
+  h_widemuonRInvMass->Write();
+  h_widekaonRInvMass->Write();
+  h_widepionRInvMass->Write();
+	  
   h_P20antiscalarInvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
   h_P20antiscalarInvMass->GetYaxis()->SetTitle("Events");
   h_P20antiscalarInvMass->Write();
   h_P20scalarInvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
   h_P20scalarInvMass->GetYaxis()->SetTitle("Events");
   h_P20scalarInvMass->Write();
+  h_K20antiscalarInvMass->Write();
   h_P20higgsInvMass->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
   h_P20higgsInvMass->GetYaxis()->SetTitle("Events");
   h_P20higgsInvMass->Write();
