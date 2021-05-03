@@ -14,20 +14,20 @@
   
      TFile inFile0("ggH_MS2_ctau0.root"); 
      TH1F* h_refit12InvMass_ctau0    = (TH1F*)inFile0.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_Rrefit12InvMass");
+     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PhiggsR20InvMass");
 
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_refit12InvMass_ctau10    = (TH1F*)inFile10.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_Rrefit12InvMass");
+     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PhiggsR20InvMass");
 
      TFile inFileQCD("ggH_MC_QCD.root"); 
      TH1F* h_refit12InvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_widemuonRInvMass");
+     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PhiggsR20InvMass");
      TH1F* h_P20scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rrefit12InvMass");
    
      TFile inFileData("dataRunD.root"); 
      TH1F* h_refit12InvMass_data    = (TH1F*)inFileData.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_data    = (TH1F*)inFileData.Get("h_Rrefit12InvMass");
+     TH1F* h_PscalarInvMass_data    = (TH1F*)inFileData.Get("h_PhiggsR20InvMass");
 
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
@@ -44,35 +44,35 @@
     std::cout<<"correction factor "<<corr<<std::endl;
    
    
-     h_PscalarInvMass_ctau0->SetTitle("Dimuon invariant mass");
+     h_PscalarInvMass_ctau0->SetTitle("Higgs invariant mass");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
-     h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0,4); 
+     h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(100,150); 
     // h_PscalarInvMass_ctau0->GetYaxis()->SetRangeUser(0.1,1100); 
-     h_PscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{dimuon} (GeV/c^{2})");
+     h_PscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
      h_PscalarInvMass_ctau0->SetMarkerColor(4);
      h_PscalarInvMass_ctau0->SetLineColor(4);
      h_PscalarInvMass_ctau0->Draw("HIST");
  
      h_PscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
-     h_PscalarInvMass_ctau10->GetXaxis()->SetRangeUser(0,4); 
-     h_PscalarInvMass_ctau10->GetXaxis()->SetTitle("m_{dimuon} (GeV/c^{2})");
+     h_PscalarInvMass_ctau10->GetXaxis()->SetRangeUser(100,150); 
+     h_PscalarInvMass_ctau10->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
      h_PscalarInvMass_ctau10->SetMarkerColor(3);
      h_PscalarInvMass_ctau10->SetLineColor(3);
      h_PscalarInvMass_ctau10->Draw("HIST same");
    std:cout<<"Not refit "<<h_PscalarInvMass_ctau0->Integral(0,501)<<std::endl;
    
-     h_PscalarInvMass_QCD->Scale(corr);
+     //h_PscalarInvMass_QCD->Scale(corr);
      h_PscalarInvMass_QCD->GetYaxis()->SetTitle("Events");
-     h_PscalarInvMass_QCD->GetXaxis()->SetRangeUser(0,4); 
-     h_PscalarInvMass_QCD->GetXaxis()->SetTitle("m_{dimuon} (GeV/c^{2})");
+     h_PscalarInvMass_QCD->GetXaxis()->SetRangeUser(100,150); 
+     h_PscalarInvMass_QCD->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
      h_PscalarInvMass_QCD->SetMarkerColor(6);
      h_PscalarInvMass_QCD->SetLineColor(6);
      h_PscalarInvMass_QCD->Draw("HIST same");
    
      h_PscalarInvMass_data->GetYaxis()->SetTitle("Events");
-     h_PscalarInvMass_data->GetXaxis()->SetRangeUser(0,4); 
-     h_PscalarInvMass_data->GetXaxis()->SetTitle("m_{dimuon} (GeV/c^{2})");
+     h_PscalarInvMass_data->GetXaxis()->SetRangeUser(100,150); 
+     h_PscalarInvMass_data->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
      h_PscalarInvMass_data->SetMarkerColor(94);
      h_PscalarInvMass_data->SetLineColor(94);
      h_PscalarInvMass_data->Draw("P* same");
