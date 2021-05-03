@@ -14,20 +14,20 @@
   
      TFile inFile0("ggH_MS2_ctau0.root"); 
      TH1F* h_refit12InvMass_ctau0    = (TH1F*)inFile0.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_P20antiscalarInvMass");
+     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PantiscalarInvMass");
 
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_refit12InvMass_ctau10    = (TH1F*)inFile10.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_P20antiscalarInvMass");
+     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PantiscalarInvMass");
 
      TFile inFileQCD("ggH_MC_QCD.root"); 
      TH1F* h_refit12InvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20antiscalarInvMass");
-     TH1F* h_P20scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PantiscalarInvMass");
+     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PantiscalarInvMass");
+     TH1F* h_P20scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20antiscalarInvMass");
    
      TFile inFileData("dataRunD.root"); 
      TH1F* h_refit12InvMass_data    = (TH1F*)inFileData.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_data    = (TH1F*)inFileData.Get("h_P20antiscalarInvMass");
+     TH1F* h_PscalarInvMass_data    = (TH1F*)inFileData.Get("h_PantiscalarInvMass");
 
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
@@ -36,9 +36,9 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     Double_t nentries=h_P20scalarInvMass_QCD->GetEntries();
+     Double_t nentries=h_PscalarInvMass_QCD->GetEntries();
    std::cout<<"entries QCD "<<nentries<<std::endl;
-     Double_t n20entries=h_PscalarInvMass_QCD->GetEntries();
+     Double_t n20entries=h_P20scalarInvMass_QCD->GetEntries();
     std::cout<<"entries QCD 20 "<<n20entries<<std::endl;
      Double_t corr=nentries/n20entries;
     std::cout<<"correction factor "<<corr<<std::endl;
