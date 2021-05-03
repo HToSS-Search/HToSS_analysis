@@ -44,7 +44,7 @@
     std::cout<<"correction factor "<<corr<<std::endl;
    
    
-     h_PscalarInvMass_ctau0->SetTitle("Dihadron (kaon) invariant mass");
+     h_PscalarInvMass_ctau0->SetTitle("Dihadron (pion) invariant mass");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0.5,4); 
