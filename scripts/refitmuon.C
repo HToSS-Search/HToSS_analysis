@@ -14,20 +14,20 @@
   
      TFile inFile0("ggH_MS2_ctau0.root"); 
      TH1F* h_refit12InvMass_ctau0    = (TH1F*)inFile0.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PscalarInvMass");
+     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_Rrefit12InvMass");
 
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_refit12InvMass_ctau10    = (TH1F*)inFile10.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PscalarInvMass");
+     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_Rrefit12InvMass");
 
      TFile inFileQCD("ggH_MC_QCD.root"); 
      TH1F* h_refit12InvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20scalarInvMass");
-     TH1F* h_P20scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PscalarInvMass");
+     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_widemuonRInvMass");
+     TH1F* h_P20scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rrefit12InvMass");
    
      TFile inFileData("dataRunD.root"); 
      TH1F* h_refit12InvMass_data    = (TH1F*)inFileData.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_data    = (TH1F*)inFileData.Get("h_PscalarInvMass");
+     TH1F* h_PscalarInvMass_data    = (TH1F*)inFileData.Get("h_Rrefit12InvMass");
 
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
