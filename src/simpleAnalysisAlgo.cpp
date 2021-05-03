@@ -69,8 +69,8 @@ void SimpleAnalysis::parseCommandLineArguements(int argc, char* argv[]){
   po::bool_switch(&is2016_),
   "Use 2016 conditions (SFs, et al.). NOT TO BE USED IN NORMAL CIRCUMSTANCES")(
   "lumi,l",
-  po::value<double>(&usePreLumi)->default_value(4247.682053046),
-  //po::value<double>(&usePreLumi)->default_value(41528.0),
+  //po::value<double>(&usePreLumi)->default_value(4247.682053046),
+  po::value<double>(&usePreLumi)->default_value(41528.0),
   "Lumi to scale MC plots to.")(
   "outfile,o",
   po::value<std::string>(&outFileString)->default_value("plots/distributions/output.root"),
@@ -196,7 +196,7 @@ void SimpleAnalysis::runMainAnalysis() {
       eventWeight *= datasetWeight;
 
       // Do functions that do not require met filters or triggers
-      // fillGeneratorPlots(event); // Commented out currently by CB in main branch
+       fillGeneratorPlots(event); // Commented out currently by CB in main branch
 
       // Do functions that have met filters applied
       if( !event.metFilters() ) continue;
@@ -217,7 +217,7 @@ void SimpleAnalysis::runMainAnalysis() {
 
       // Fill other plots now!
       // All of	these plots use	packed PF muons, so the ones corresponding to the PAT muons are provided
-      fillPackedCandidatePlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
+      //fillPackedCandidatePlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
       //fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
 
     } // End loop over all events
