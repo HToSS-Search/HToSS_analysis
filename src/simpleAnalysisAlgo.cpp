@@ -887,7 +887,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 
   //kaon wider
 	
-  if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+  if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
     if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2])){
       if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
         h_K20antiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
@@ -932,7 +932,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
 
   //Kaon refitted wider
-  if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+  if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
     if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2])){
 
       if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
@@ -1097,7 +1097,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   if(std::abs((refpionWide+refmuonWide).M()-higgsMass_)<higgsMassWideWindow_){
     if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2]) && event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
       if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
-        h_PhiggsR20InvMass->Fill((refpion+refmuon).M(), eventWeight);
+        h_PhiggsR20InvMass->Fill((refpionWide+refmuonWide).M(), eventWeight);
       }
     }
   } 
