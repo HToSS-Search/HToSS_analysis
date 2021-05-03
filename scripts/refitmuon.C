@@ -47,7 +47,7 @@
      h_PscalarInvMass_ctau0->SetTitle("Dihadron (kaon) invariant mass");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
-     h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0,4); 
+     h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(1,4); 
     // h_PscalarInvMass_ctau0->GetYaxis()->SetRangeUser(0.1,1100); 
      h_PscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_PscalarInvMass_ctau0->SetMarkerColor(4);
@@ -55,7 +55,7 @@
      h_PscalarInvMass_ctau0->Draw("HIST");
  
      h_PscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
-     h_PscalarInvMass_ctau10->GetXaxis()->SetRangeUser(0,4); 
+     h_PscalarInvMass_ctau10->GetXaxis()->SetRangeUser(1,4); 
      h_PscalarInvMass_ctau10->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_PscalarInvMass_ctau10->SetMarkerColor(3);
      h_PscalarInvMass_ctau10->SetLineColor(3);
@@ -64,18 +64,18 @@
    
      //h_PscalarInvMass_QCD->Scale(corr);
      h_PscalarInvMass_QCD->GetYaxis()->SetTitle("Events");
-     h_PscalarInvMass_QCD->GetXaxis()->SetRangeUser(0,4); 
+     h_PscalarInvMass_QCD->GetXaxis()->SetRangeUser(1,4); 
      h_PscalarInvMass_QCD->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_PscalarInvMass_QCD->SetMarkerColor(6);
      h_PscalarInvMass_QCD->SetLineColor(6);
      h_PscalarInvMass_QCD->Draw("HIST same");
    
      h_PscalarInvMass_data->GetYaxis()->SetTitle("Events");
-     h_PscalarInvMass_data->GetXaxis()->SetRangeUser(0,4); 
+     h_PscalarInvMass_data->GetXaxis()->SetRangeUser(1,4); 
      h_PscalarInvMass_data->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_PscalarInvMass_data->SetMarkerColor(94);
      h_PscalarInvMass_data->SetLineColor(94);
-     h_PscalarInvMass_data->Draw("PE same");
+     h_PscalarInvMass_data->Draw("P* same");
    
     /* h_refit12InvMass_ctau0->SetTitle("Dimuon invariant mass without refit");
     h_refit12InvMass_ctau0->GetYaxis()->SetTitle("Events");
