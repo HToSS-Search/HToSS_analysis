@@ -71,7 +71,7 @@
      h_PscalarInvMass_QCD->Draw("HIST same");
    
      h_PscalarInvMass_data->GetYaxis()->SetTitle("Events");
-     h_PscalarInvMass_data->GetXaxis()->SetRangeUser(120,130); 
+     h_PscalarInvMass_data->GetXaxis()->SetRangeUser(100,150); 
      h_PscalarInvMass_data->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
      h_PscalarInvMass_data->SetMarkerColor(94);
      h_PscalarInvMass_data->SetLineColor(94);
