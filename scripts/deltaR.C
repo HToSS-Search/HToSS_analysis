@@ -43,21 +43,21 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     h_pion_ctau10->GetYaxis()->SetTitle("Events");
+    /* h_pion_ctau10->GetYaxis()->SetTitle("Events");
      h_pion_ctau10->GetXaxis()->SetRangeUser(0.0,0.3); 
      h_pion_ctau10->GetXaxis()->SetTitle("#Delta R (Radians)");
      h_pion_ctau10->SetMarkerColor(4);
      h_pion_ctau10->SetLineColor(4);
-     h_pion_ctau10->Draw("HIST");
+     h_pion_ctau10->Draw("HIST");*/
     
-    /* h_kaon_ctau0->GetYaxis()->SetTitle("Events");
-     h_kaon_ctau0->GetXaxis()->SetRangeUser(0.0,100); 
-     h_kaon_ctau0->GetXaxis()->SetTitle("#Delta R (Radians)");
-     h_kaon_ctau0->SetMarkerColor(4);
-     h_kaon_ctau0->SetLineColor(4);
-     h_kaon_ctau0->Draw("HIST");
+     h_muon_ctau0->GetYaxis()->SetTitle("Events");
+     h_muon_ctau0->GetXaxis()->SetRangeUser(0.0,0.2); 
+     h_muon_ctau0->GetXaxis()->SetTitle("#Delta R (Radians)");
+     h_muon_ctau0->SetMarkerColor(4);
+     h_muon_ctau0->SetLineColor(4);
+     h_muon_ctau0->Draw("HIST");
    
-     h_ptdiv_ctau1->GetYaxis()->SetTitle("Efficiency");
+    /* h_ptdiv_ctau1->GetYaxis()->SetTitle("Efficiency");
      h_ptdiv_ctau1->GetXaxis()->SetRangeUser(0.0,100); 
      h_ptdiv_ctau1->GetXaxis()->SetTitle("p_{T} (GeV)");
      h_ptdiv_ctau1->SetMarkerColor(2);
