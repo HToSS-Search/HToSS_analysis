@@ -741,44 +741,43 @@ class AnalysisEvent
     Double_t fsrConLo{};
     //   Int_t           numVert;
 
-    // 2016 lepton Triggers
+    // 2016 single muon triggers
     Int_t HLT_IsoMu24_v1;
     Int_t HLT_IsoMu24_v2;
-    Int_t HLT_IsoMu24_v3;
     Int_t HLT_IsoMu24_v4;
     Int_t HLT_IsoTkMu24_v1;
     Int_t HLT_IsoTkMu24_v2;
     Int_t HLT_IsoTkMu24_v3;
     Int_t HLT_IsoTkMu24_v4;
+    Int_t HLT_IsoMu27_v3;
+    Int_t HLT_IsoMu27_v4;
+    Int_t HLT_IsoMu27_v5;
+    Int_t HLT_IsoMu27_v7;
+    Int_t HLT_IsoTkMu27_v3;
+    Int_t HLT_IsoTkMu27_v4;
+    Int_t HLT_IsoTkMu27_v5;
+    Int_t HLT_IsoTkMu27_v6;
+    Int_t HLT_IsoTkMu27_v7;
 
-    Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v2;
-    Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v3;
-    Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v4;
-    Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v6;
-    Int_t HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v2;
-    Int_t HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v3;
-    Int_t HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v5;
-
+    // 2016 double muon triggers
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v2;
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v3;
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v4;
-    // Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v5;
-    // Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v6;
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v7;
     Int_t HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2;
     Int_t HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v3;
-    // Int_t HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v4;
-    // Int_t HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v5;
     Int_t HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v6;
 
-    // 2017 lepton triggers
+    // 2017 single muon triggers
     Int_t HLT_IsoMu27_v8;
     Int_t HLT_IsoMu27_v9;
     Int_t HLT_IsoMu27_v10;
     Int_t HLT_IsoMu27_v11;
     Int_t HLT_IsoMu27_v12;
     Int_t HLT_IsoMu27_v13;
-    Int_t HLT_IsoMu27_v14;
+    Int_t HLT_IsoMu27_v14; // Also 2018
+
+    // 2017 double muon triggers
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v8;
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v9;
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v10;
@@ -789,32 +788,103 @@ class AnalysisEvent
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v1;
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v2;
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v3;
-    Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4;
+    Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4; // 2018
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v7;
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v8;
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v1;
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v2;
     Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3;
-    Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4;
+    Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4; // also 2018
 
+    // 2018 single muon triggers
+    Int_t HLT_IsoMu24_v11;
+    Int_t HLT_IsoMu24_v12;
+    Int_t HLT_IsoMu24_v13;
+    Int_t HLT_IsoMu27_v15;
+    Int_t HLT_IsoMu27_v16;
+
+    // 2018 double muon triggers
+    Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v5;
+    Int_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v5;
+
+    // Displaced muon triggers
+
+    // 2016
+    Int_t HLT_DoubleMu33NoFiltersNoVtx_v2;
+    Int_t HLT_DoubleMu33NoFiltersNoVtx_v3;
+    Int_t HLT_DoubleMu33NoFiltersNoVtx_v5;
+    Int_t HLT_DoubleMu23NoFiltersNoVtxDisplaced_v2;
+    Int_t HLT_DoubleMu23NoFiltersNoVtxDisplaced_v3;
+    Int_t HLT_DoubleMu23NoFiltersNoVtxDisplaced_v5;
+    Int_t HLT_L2DoubleMu23_NoVertex_v2;
+    Int_t HLT_L2DoubleMu23_NoVertex_v3;
+    Int_t HLT_L2DoubleMu23_NoVertex_v4;
+    Int_t HLT_L2DoubleMu23_NoVertex_v6;
+
+    // 2017
+    Int_t HLT_DoubleMu43NoFiltersNoVtx_v2;
+    Int_t HLT_DoubleMu43NoFiltersNoVtx_v3; // also 2018
+    Int_t HLT_DoubleMu48NoFiltersNoVtx_v2;
+    Int_t HLT_DoubleMu48NoFiltersNoVtx_v3; // also 2018
+    Int_t HLT_DoubleL2Mu50_v1;
     Int_t HLT_DoubleL2Mu50_v2;
-    Int_t HLT_DoubleMu43NoFiltersNoVtx_v3;
-    Int_t HLT_DoubleMu48NoFiltersNoVtx_v3;
 
-    // 2016 + 2017 triggers
+    // 2018
+    Int_t HLT_DoubleL2Mu23NoVtx_2Cha_v1;
+    Int_t HLT_DoubleL2Mu23NoVtx_2Cha_v2;
+    Int_t HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v1;
+    Int_t HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v2;
+    Int_t HLT_DoubleL2Mu25NoVtx_2Cha_v1;
+    Int_t HLT_DoubleL2Mu25NoVtx_2Cha_v2;
+    Int_t HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v1;
+    Int_t HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v2;
+    Int_t HLT_DoubleMu33NoFiltersNoVtxDisplaced_v1;
+    Int_t HLT_DoubleMu40NoFiltersNoVtxDisplaced_v1;
+    Int_t HLT_DoubleMu43NoFiltersNoVtx_v4; 
+    Int_t HLT_DoubleMu48NoFiltersNoVtx_v4;
 
-    // 2017 Displaced Jet Triggers
-//    Int_t HLT_HT430_DisplacedDijet40_DisplacedTrack_v10; // Already in MET trigger list
-//    Int_t HLT_HT430_DisplacedDijet60_DisplacedTrack_v10; // Already in MET trigger list
-//    Int_t HLT_HT430_DisplacedDijet80_DisplacedTrack_v10; // Already in MET trigger list
-    Int_t HLT_HT400_DisplacedDijet40_DisplacedTrack_v10;
-
-//    Int_t HLT_HT650_DisplacedDijet60_Inclusive_v10; // Already in MET trigger list
-    Int_t HLT_HT550_DisplacedDijet80_Inclusive_v8;
-    Int_t HLT_HT550_DisplacedDijet60_Inclusive_v10;
-//    Int_t HLT_HT650_DisplacedDijet80_Inclusive_v11; // Already in MET trigger list
-//    Int_t HLT_HT750_DisplacedDijet80_Inclusive_v11; // Already in MET trigger list
-
+    // 2018 b parking triggers
+    Int_t HLT_Mu12_IP6_part0_v2;
+    Int_t HLT_Mu12_IP6_part1_v2;
+    Int_t HLT_Mu12_IP6_part2_v2;
+    Int_t HLT_Mu12_IP6_part3_v2;
+    Int_t HLT_Mu12_IP6_part4_v2;
+    Int_t HLT_Mu9_IP5_part0_v2;
+    Int_t HLT_Mu9_IP5_part1_v2;
+    Int_t HLT_Mu9_IP5_part2_v2;
+    Int_t HLT_Mu9_IP5_part3_v2;
+    Int_t HLT_Mu9_IP5_part4_v2;
+    Int_t HLT_Mu7_IP4_part0_v2;
+    Int_t HLT_Mu7_IP4_part1_v2;
+    Int_t HLT_Mu7_IP4_part2_v2;
+    Int_t HLT_Mu7_IP4_part3_v2;
+    Int_t HLT_Mu7_IP4_part4_v2;
+    Int_t HLT_Mu9_IP4_part0_v2;
+    Int_t HLT_Mu9_IP4_part1_v2;
+    Int_t HLT_Mu9_IP4_part2_v2;
+    Int_t HLT_Mu9_IP4_part3_v2;
+    Int_t HLT_Mu9_IP4_part4_v2;
+    Int_t HLT_Mu8_IP5_part0_v2;
+    Int_t HLT_Mu8_IP5_part1_v2;
+    Int_t HLT_Mu8_IP5_part2_v2;
+    Int_t HLT_Mu8_IP5_part3_v2;
+    Int_t HLT_Mu8_IP5_part4_v2;
+    Int_t HLT_Mu8_IP6_part0_v2;
+    Int_t HLT_Mu8_IP6_part1_v2;
+    Int_t HLT_Mu8_IP6_part2_v2;
+    Int_t HLT_Mu8_IP6_part3_v2;
+    Int_t HLT_Mu8_IP6_part4_v2;
+    Int_t HLT_Mu9_IP6_part0_v3;
+    Int_t HLT_Mu9_IP6_part1_v3;
+    Int_t HLT_Mu9_IP6_part2_v3;
+    Int_t HLT_Mu9_IP6_part3_v3;
+    Int_t HLT_Mu9_IP6_part4_v3;
+    Int_t HLT_Mu8_IP3_part0_v3;
+    Int_t HLT_Mu8_IP3_part1_v3;
+    Int_t HLT_Mu8_IP3_part2_v3;
+    Int_t HLT_Mu8_IP3_part3_v3;
+    Int_t HLT_Mu8_IP3_part4_v3;
+	
 /*
     // 2017 Data scouting triggers
     Int_t DST_HT250_CaloScouting_v6;
@@ -1570,31 +1640,28 @@ class AnalysisEvent
 
     TBranch* b_HLT_IsoMu24_v1;
     TBranch* b_HLT_IsoMu24_v2;
-    TBranch* b_HLT_IsoMu24_v3;
     TBranch* b_HLT_IsoMu24_v4;
     TBranch* b_HLT_IsoTkMu24_v1;
     TBranch* b_HLT_IsoTkMu24_v2;
     TBranch* b_HLT_IsoTkMu24_v3;
     TBranch* b_HLT_IsoTkMu24_v4;
+    TBranch* b_HLT_IsoMu27_v3;
+    TBranch* b_HLT_IsoMu27_v4;
+    TBranch* b_HLT_IsoMu27_v5;
+    TBranch* b_HLT_IsoMu27_v7;
+    TBranch* b_HLT_IsoTkMu27_v3;
+    TBranch* b_HLT_IsoTkMu27_v4;
+    TBranch* b_HLT_IsoTkMu27_v5;
+    TBranch* b_HLT_IsoTkMu27_v6;
+    TBranch* b_HLT_IsoTkMu27_v7;
 
-    TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v2;
     TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v2;
     TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v3;
     TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v4;
-    // TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v5;
-    // TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v6;
     TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v7;
-    TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v3;
-    TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v4;
-    TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v6;
     TBranch* b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2;
     TBranch* b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v3;
-    // TBranch* b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v4;
-    // TBranch* b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v5;
     TBranch* b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v6;
-    TBranch* b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v2;
-    TBranch* b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v3;
-    TBranch* b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v5;
 
     TBranch* b_HLT_IsoMu27_v8;
     TBranch* b_HLT_IsoMu27_v9;
@@ -1603,6 +1670,14 @@ class AnalysisEvent
     TBranch* b_HLT_IsoMu27_v12;
     TBranch* b_HLT_IsoMu27_v13;
     TBranch* b_HLT_IsoMu27_v14;
+    TBranch* b_HLT_IsoMu24_v11; 
+    TBranch* b_HLT_IsoMu24_v12; 
+    TBranch* b_HLT_IsoMu24_v13;
+    TBranch* b_HLT_IsoMu27_v15;
+    TBranch* b_HLT_IsoMu27_v16;
+
+    TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v5;
+    TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v5;
 
     TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v8;
     TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v9;
@@ -1622,9 +1697,77 @@ class AnalysisEvent
     TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3;
     TBranch* b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4;
 
-    TBranch* b_HLT_DoubleL2Mu50_v2;
+    TBranch* b_HLT_DoubleMu33NoFiltersNoVtx_v2;
+    TBranch* b_HLT_DoubleMu33NoFiltersNoVtx_v3;
+    TBranch* b_HLT_DoubleMu33NoFiltersNoVtx_v5;
+    TBranch* b_HLT_DoubleMu23NoFiltersNoVtxDisplaced_v2;
+    TBranch* b_HLT_DoubleMu23NoFiltersNoVtxDisplaced_v3;
+    TBranch* b_HLT_DoubleMu23NoFiltersNoVtxDisplaced_v5;
+    TBranch* b_HLT_L2DoubleMu23_NoVertex_v2;
+    TBranch* b_HLT_L2DoubleMu23_NoVertex_v3;
+    TBranch* b_HLT_L2DoubleMu23_NoVertex_v4;
+    TBranch* b_HLT_L2DoubleMu23_NoVertex_v6;
+
+    TBranch* b_HLT_DoubleMu43NoFiltersNoVtx_v2;
     TBranch* b_HLT_DoubleMu43NoFiltersNoVtx_v3;
+    TBranch* b_HLT_DoubleMu48NoFiltersNoVtx_v2;
     TBranch* b_HLT_DoubleMu48NoFiltersNoVtx_v3;
+    TBranch* b_HLT_DoubleL2Mu50_v1;
+    TBranch* b_HLT_DoubleL2Mu50_v2;
+
+    TBranch* b_HLT_DoubleL2Mu23NoVtx_2Cha_v1;
+    TBranch* b_HLT_DoubleL2Mu23NoVtx_2Cha_v2;
+    TBranch* b_HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v1;
+    TBranch* b_HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v2;
+    TBranch* b_HLT_DoubleL2Mu25NoVtx_2Cha_v1;
+    TBranch* b_HLT_DoubleL2Mu25NoVtx_2Cha_v2;
+    TBranch* b_HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v1;
+    TBranch* b_HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v2;
+    TBranch* b_HLT_DoubleMu33NoFiltersNoVtxDisplaced_v1;
+    TBranch* b_HLT_DoubleMu40NoFiltersNoVtxDisplaced_v1;
+    TBranch* b_HLT_DoubleMu43NoFiltersNoVtx_v4; 
+    TBranch* b_HLT_DoubleMu48NoFiltersNoVtx_v4;
+
+    TBranch* b_HLT_Mu12_IP6_part0_v2;
+    TBranch* b_HLT_Mu12_IP6_part1_v2;
+    TBranch* b_HLT_Mu12_IP6_part2_v2;
+    TBranch* b_HLT_Mu12_IP6_part3_v2;
+    TBranch* b_HLT_Mu12_IP6_part4_v2;
+    TBranch* b_HLT_Mu9_IP5_part0_v2;
+    TBranch* b_HLT_Mu9_IP5_part1_v2;
+    TBranch* b_HLT_Mu9_IP5_part2_v2;
+    TBranch* b_HLT_Mu9_IP5_part3_v2;
+    TBranch* b_HLT_Mu9_IP5_part4_v2;
+    TBranch* b_HLT_Mu7_IP4_part0_v2;
+    TBranch* b_HLT_Mu7_IP4_part1_v2;
+    TBranch* b_HLT_Mu7_IP4_part2_v2;
+    TBranch* b_HLT_Mu7_IP4_part3_v2;
+    TBranch* b_HLT_Mu7_IP4_part4_v2;
+    TBranch* b_HLT_Mu9_IP4_part0_v2;
+    TBranch* b_HLT_Mu9_IP4_part1_v2;
+    TBranch* b_HLT_Mu9_IP4_part2_v2;
+    TBranch* b_HLT_Mu9_IP4_part3_v2;
+    TBranch* b_HLT_Mu9_IP4_part4_v2;
+    TBranch* b_HLT_Mu8_IP5_part0_v2;
+    TBranch* b_HLT_Mu8_IP5_part1_v2;
+    TBranch* b_HLT_Mu8_IP5_part2_v2;
+    TBranch* b_HLT_Mu8_IP5_part3_v2;
+    TBranch* b_HLT_Mu8_IP5_part4_v2;
+    TBranch* b_HLT_Mu8_IP6_part0_v2;
+    TBranch* b_HLT_Mu8_IP6_part1_v2;
+    TBranch* b_HLT_Mu8_IP6_part2_v2;
+    TBranch* b_HLT_Mu8_IP6_part3_v2;
+    TBranch* b_HLT_Mu8_IP6_part4_v2;
+    TBranch* b_HLT_Mu9_IP6_part0_v3;
+    TBranch* b_HLT_Mu9_IP6_part1_v3;
+    TBranch* b_HLT_Mu9_IP6_part2_v3;
+    TBranch* b_HLT_Mu9_IP6_part3_v3;
+    TBranch* b_HLT_Mu9_IP6_part4_v3;
+    TBranch* b_HLT_Mu8_IP3_part0_v3;
+    TBranch* b_HLT_Mu8_IP3_part1_v3;
+    TBranch* b_HLT_Mu8_IP3_part2_v3;
+    TBranch* b_HLT_Mu8_IP3_part3_v3;
+    TBranch* b_HLT_Mu8_IP3_part4_v3;
 
 /*
     TBranch* b_DST_HT250_CaloScouting_v6;
@@ -1740,29 +1883,16 @@ class AnalysisEvent
     Long64_t LoadTree(const Long64_t entry);
     void Loop();
     void Show(const Long64_t entry = -1) const;
-//    bool eTrig() const;
     bool muTrig() const;
-//    bool eeTrig() const;
-//    bool muEGTrig() const;
     bool mumuTrig() const;
     bool mumuTrig_noMassCut() const;
     bool mumuTrig_massCut() const;
     bool mumuL2Trig() const;
     bool mumuNoVtxTrig() const;
-    bool dataScoutingTrig() const;
+    bool bParkingTrig() const;
+//    bool dataScoutingTrig() const;
 
     bool metFilters() const;
-
-//    bool displacedJetTrig() const;
-//    bool photonTrig() const;
-//    bool diphotonTrig() const;
-//    bool triphotonTrig() const;
-//    bool photonHETrig() const;
-//    bool diphotonHETrig() const;
-//    bool diphotonHEpixelVetoTrig() const;
-//    bool diphotonHEnoPixelVetoTrig() const;
-//    bool photonDisplacedIdTrig() const;
-//    bool photonHoverETrig() const;
 
 };
 
@@ -2530,33 +2660,68 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
    if (is2016) {
        fChain->SetBranchAddress("HLT_IsoMu24_v1", &HLT_IsoMu24_v1, &b_HLT_IsoMu24_v1);
        fChain->SetBranchAddress("HLT_IsoMu24_v2", &HLT_IsoMu24_v2, &b_HLT_IsoMu24_v2);
-       fChain->SetBranchAddress("HLT_IsoMu24_v3", &HLT_IsoMu24_v3, &b_HLT_IsoMu24_v3);
        fChain->SetBranchAddress("HLT_IsoMu24_v4", &HLT_IsoMu24_v4, &b_HLT_IsoMu24_v4);
        fChain->SetBranchAddress("HLT_IsoTkMu24_v1", &HLT_IsoTkMu24_v1, &b_HLT_IsoTkMu24_v1);
        fChain->SetBranchAddress("HLT_IsoTkMu24_v2", &HLT_IsoTkMu24_v2, &b_HLT_IsoTkMu24_v2);
        fChain->SetBranchAddress("HLT_IsoTkMu24_v3", &HLT_IsoTkMu24_v3, &b_HLT_IsoTkMu24_v3);
        fChain->SetBranchAddress("HLT_IsoTkMu24_v4", &HLT_IsoTkMu24_v4, &b_HLT_IsoTkMu24_v4);
+       fChain->SetBranchAddress("HLT_IsoMu27_v3", &HLT_IsoMu27_v3, &b_HLT_IsoMu27_v3);
+       fChain->SetBranchAddress("HLT_IsoMu27_v4", &HLT_IsoMu27_v4, &b_HLT_IsoMu27_v4);
+       fChain->SetBranchAddress("HLT_IsoMu27_v5", &HLT_IsoMu27_v5, &b_HLT_IsoMu27_v5);
+       fChain->SetBranchAddress("HLT_IsoMu27_v7", &HLT_IsoMu27_v7, &b_HLT_IsoMu27_v7);
+       fChain->SetBranchAddress("HLT_IsoTkMu27_v3", &HLT_IsoTkMu27_v3, &b_HLT_IsoTkMu27_v3);
+       fChain->SetBranchAddress("HLT_IsoTkMu27_v4", &HLT_IsoTkMu27_v4, &b_HLT_IsoTkMu27_v4);
+       fChain->SetBranchAddress("HLT_IsoTkMu27_v5", &HLT_IsoTkMu27_v5, &b_HLT_IsoTkMu27_v5);
+       fChain->SetBranchAddress("HLT_IsoTkMu27_v6", &HLT_IsoTkMu27_v6, &b_HLT_IsoTkMu27_v6);
+       fChain->SetBranchAddress("HLT_IsoTkMu27_v7", &HLT_IsoTkMu27_v7, &b_HLT_IsoTkMu27_v7);
 
-       fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v2", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v2, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v2);
-       fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v3", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v3, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v3);
-       fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v4", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v4, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v4);
-       fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v6", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v6, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v6);
-       fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v2", &HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v2, &b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v2);
-       fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v3", &HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v3, &b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v3);
-       fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v5", &HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v5, &b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v5);
-       fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v2", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v2, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v2);
        fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v2", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v2, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v2);
        fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v3", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v3, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v3);
        fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v4", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v4, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v4);
-       // fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v5", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v5, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v5);
-       // fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v6", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v6, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v6);
        fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v7", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v7, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v7);
        fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2", &HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2, &b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2);
        fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2", &HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2, &b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2);
        fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v3", &HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v3, &b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v3);
-       // fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v4", &HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v4, &b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v4);
-       // fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v5", &HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v5, &b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v5);
        fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v6", &HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v6, &b_HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v6);
+
+       fChain->SetBranchAddress("HLT_DoubleMu33NoFiltersNoVtx_v2", &HLT_DoubleMu33NoFiltersNoVtx_v2, &b_HLT_DoubleMu33NoFiltersNoVtx_v2);
+       fChain->SetBranchAddress("HLT_DoubleMu33NoFiltersNoVtx_v3", &HLT_DoubleMu33NoFiltersNoVtx_v3, &b_HLT_DoubleMu33NoFiltersNoVtx_v3);
+       fChain->SetBranchAddress("HLT_DoubleMu33NoFiltersNoVtx_v5", &HLT_DoubleMu33NoFiltersNoVtx_v5, &b_HLT_DoubleMu33NoFiltersNoVtx_v5);
+       fChain->SetBranchAddress("HLT_DoubleMu23NoFiltersNoVtxDisplaced_v2", &HLT_DoubleMu23NoFiltersNoVtxDisplaced_v2, &b_HLT_DoubleMu23NoFiltersNoVtxDisplaced_v2);
+       fChain->SetBranchAddress("HLT_DoubleMu23NoFiltersNoVtxDisplaced_v3", &HLT_DoubleMu23NoFiltersNoVtxDisplaced_v3, &b_HLT_DoubleMu23NoFiltersNoVtxDisplaced_v3);
+       fChain->SetBranchAddress("HLT_DoubleMu23NoFiltersNoVtxDisplaced_v5", &HLT_DoubleMu23NoFiltersNoVtxDisplaced_v5, &b_HLT_DoubleMu23NoFiltersNoVtxDisplaced_v5);
+       fChain->SetBranchAddress("HLT_L2DoubleMu23_NoVertex_v2", &HLT_L2DoubleMu23_NoVertex_v2, &b_HLT_L2DoubleMu23_NoVertex_v2);
+       fChain->SetBranchAddress("HLT_L2DoubleMu23_NoVertex_v3", &HLT_L2DoubleMu23_NoVertex_v3, &b_HLT_L2DoubleMu23_NoVertex_v3);
+       fChain->SetBranchAddress("HLT_L2DoubleMu23_NoVertex_v4", &HLT_L2DoubleMu23_NoVertex_v4, &b_HLT_L2DoubleMu23_NoVertex_v4);
+       fChain->SetBranchAddress("HLT_L2DoubleMu23_NoVertex_v6", &HLT_L2DoubleMu23_NoVertex_v6, &b_HLT_L2DoubleMu23_NoVertex_v6);
+   }
+   else if (is2018) {
+       fChain->SetBranchAddress("HLT_IsoMu24_v11", &HLT_IsoMu24_v11, &b_HLT_IsoMu24_v13);
+       fChain->SetBranchAddress("HLT_IsoMu24_v12", &HLT_IsoMu24_v12, &b_HLT_IsoMu24_v13);
+       fChain->SetBranchAddress("HLT_IsoMu24_v13", &HLT_IsoMu24_v13, &b_HLT_IsoMu24_v13);
+       fChain->SetBranchAddress("HLT_IsoMu27_v14", &HLT_IsoMu27_v14, &b_HLT_IsoMu27_v14);
+       fChain->SetBranchAddress("HLT_IsoMu27_v15", &HLT_IsoMu27_v15, &b_HLT_IsoMu27_v15);
+       fChain->SetBranchAddress("HLT_IsoMu27_v16", &HLT_IsoMu27_v16, &b_HLT_IsoMu27_v16);
+       fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4);
+       fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v5", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v5, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v5);
+       fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4);
+       fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v5", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v5, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v5);
+
+       fChain->SetBranchAddress("HLT_DoubleL2Mu50_v2", &HLT_DoubleL2Mu50_v2, &b_HLT_DoubleL2Mu50_v2);
+       fChain->SetBranchAddress("HLT_DoubleL2Mu23NoVtx_2Cha_v1", &HLT_DoubleL2Mu23NoVtx_2Cha_v1, &b_HLT_DoubleL2Mu23NoVtx_2Cha_v1);
+       fChain->SetBranchAddress("HLT_DoubleL2Mu23NoVtx_2Cha_v2", &HLT_DoubleL2Mu23NoVtx_2Cha_v2, &b_HLT_DoubleL2Mu23NoVtx_2Cha_v2);
+       fChain->SetBranchAddress("HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v1", &HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v1, &b_HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v1);
+       fChain->SetBranchAddress("HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v2", &HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v2, &b_HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v2);
+       fChain->SetBranchAddress("HLT_DoubleL2Mu25NoVtx_2Cha_v1", &HLT_DoubleL2Mu25NoVtx_2Cha_v1, &b_HLT_DoubleL2Mu25NoVtx_2Cha_v1);
+       fChain->SetBranchAddress("HLT_DoubleL2Mu25NoVtx_2Cha_v2", &HLT_DoubleL2Mu25NoVtx_2Cha_v2, &b_HLT_DoubleL2Mu25NoVtx_2Cha_v2);
+       fChain->SetBranchAddress("HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v1", &HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v1, &b_HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v1);
+       fChain->SetBranchAddress("HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v2", &HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v2, &b_HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v2);
+       fChain->SetBranchAddress("HLT_DoubleMu33NoFiltersNoVtxDisplaced_v1", &HLT_DoubleMu33NoFiltersNoVtxDisplaced_v1, &b_HLT_DoubleMu33NoFiltersNoVtxDisplaced_v1);
+       fChain->SetBranchAddress("HLT_DoubleMu40NoFiltersNoVtxDisplaced_v1", &HLT_DoubleMu40NoFiltersNoVtxDisplaced_v1, &b_HLT_DoubleMu40NoFiltersNoVtxDisplaced_v1);
+       fChain->SetBranchAddress("HLT_DoubleMu43NoFiltersNoVtx_v3", &HLT_DoubleMu43NoFiltersNoVtx_v3, &b_HLT_DoubleMu43NoFiltersNoVtx_v3);
+       fChain->SetBranchAddress("HLT_DoubleMu43NoFiltersNoVtx_v4", &HLT_DoubleMu43NoFiltersNoVtx_v4, &b_HLT_DoubleMu43NoFiltersNoVtx_v4);
+       fChain->SetBranchAddress("HLT_DoubleMu48NoFiltersNoVtx_v3", &HLT_DoubleMu48NoFiltersNoVtx_v3, &b_HLT_DoubleMu48NoFiltersNoVtx_v3);
+       fChain->SetBranchAddress("HLT_DoubleMu48NoFiltersNoVtx_v4", &HLT_DoubleMu48NoFiltersNoVtx_v4, &b_HLT_DoubleMu48NoFiltersNoVtx_v4);
    }
    else {
        fChain->SetBranchAddress("HLT_IsoMu27_v8", &HLT_IsoMu27_v8, &b_HLT_IsoMu27_v8);
@@ -2585,11 +2750,58 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
        fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3);
        fChain->SetBranchAddress("HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4", &HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4, &b_HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4);
 
-       fChain->SetBranchAddress("HLT_DoubleL2Mu50_v2", &HLT_DoubleL2Mu50_v2, &b_HLT_DoubleL2Mu50_v2);
+       fChain->SetBranchAddress("HLT_DoubleMu43NoFiltersNoVtx_v2", &HLT_DoubleMu43NoFiltersNoVtx_v2, &b_HLT_DoubleMu43NoFiltersNoVtx_v2);
        fChain->SetBranchAddress("HLT_DoubleMu43NoFiltersNoVtx_v3", &HLT_DoubleMu43NoFiltersNoVtx_v3, &b_HLT_DoubleMu43NoFiltersNoVtx_v3);
+       fChain->SetBranchAddress("HLT_DoubleMu48NoFiltersNoVtx_v2", &HLT_DoubleMu48NoFiltersNoVtx_v2, &b_HLT_DoubleMu48NoFiltersNoVtx_v2);
        fChain->SetBranchAddress("HLT_DoubleMu48NoFiltersNoVtx_v3", &HLT_DoubleMu48NoFiltersNoVtx_v3, &b_HLT_DoubleMu48NoFiltersNoVtx_v3);
+       fChain->SetBranchAddress("HLT_DoubleL2Mu50_v1", &HLT_DoubleL2Mu50_v1, &b_HLT_DoubleL2Mu50_v1);
+       fChain->SetBranchAddress("HLT_DoubleL2Mu50_v2", &HLT_DoubleL2Mu50_v2, &b_HLT_DoubleL2Mu50_v2);
    }
 
+
+   // bParking branches
+   if (is2018) {
+       fChain->SetBranchAddress("HLT_Mu12_IP6_part0_v2", &HLT_Mu12_IP6_part0_v2, &b_HLT_Mu12_IP6_part0_v2);
+       fChain->SetBranchAddress("HLT_Mu12_IP6_part1_v2", &HLT_Mu12_IP6_part1_v2, &b_HLT_Mu12_IP6_part1_v2);
+       fChain->SetBranchAddress("HLT_Mu12_IP6_part2_v2", &HLT_Mu12_IP6_part2_v2, &b_HLT_Mu12_IP6_part2_v2);
+       fChain->SetBranchAddress("HLT_Mu12_IP6_part3_v2", &HLT_Mu12_IP6_part3_v2, &b_HLT_Mu12_IP6_part3_v2);
+       fChain->SetBranchAddress("HLT_Mu12_IP6_part4_v2", &HLT_Mu12_IP6_part4_v2, &b_HLT_Mu12_IP6_part4_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP5_part0_v2", &HLT_Mu9_IP5_part0_v2, &b_HLT_Mu9_IP5_part0_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP5_part1_v2", &HLT_Mu9_IP5_part1_v2, &b_HLT_Mu9_IP5_part1_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP5_part2_v2", &HLT_Mu9_IP5_part2_v2, &b_HLT_Mu9_IP5_part2_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP5_part3_v2", &HLT_Mu9_IP5_part3_v2, &b_HLT_Mu9_IP5_part3_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP5_part4_v2", &HLT_Mu9_IP5_part4_v2, &b_HLT_Mu9_IP5_part4_v2);
+       fChain->SetBranchAddress("HLT_Mu7_IP4_part0_v2", &HLT_Mu7_IP4_part0_v2, &b_HLT_Mu7_IP4_part0_v2);
+       fChain->SetBranchAddress("HLT_Mu7_IP4_part1_v2", &HLT_Mu7_IP4_part1_v2, &b_HLT_Mu7_IP4_part1_v2);
+       fChain->SetBranchAddress("HLT_Mu7_IP4_part2_v2", &HLT_Mu7_IP4_part2_v2, &b_HLT_Mu7_IP4_part2_v2);
+       fChain->SetBranchAddress("HLT_Mu7_IP4_part3_v2", &HLT_Mu7_IP4_part3_v2, &b_HLT_Mu7_IP4_part3_v2);
+       fChain->SetBranchAddress("HLT_Mu7_IP4_part4_v2", &HLT_Mu7_IP4_part4_v2, &b_HLT_Mu7_IP4_part4_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP4_part0_v2", &HLT_Mu9_IP4_part0_v2, &b_HLT_Mu9_IP4_part0_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP4_part1_v2", &HLT_Mu9_IP4_part1_v2, &b_HLT_Mu9_IP4_part1_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP4_part2_v2", &HLT_Mu9_IP4_part2_v2, &b_HLT_Mu9_IP4_part2_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP4_part3_v2", &HLT_Mu9_IP4_part3_v2, &b_HLT_Mu9_IP4_part3_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP4_part4_v2", &HLT_Mu9_IP4_part4_v2, &b_HLT_Mu9_IP4_part4_v2);
+       fChain->SetBranchAddress("HLT_Mu8_IP5_part0_v2", &HLT_Mu8_IP5_part0_v2, &b_HLT_Mu8_IP5_part0_v2);
+       fChain->SetBranchAddress("HLT_Mu8_IP5_part1_v2", &HLT_Mu8_IP5_part1_v2, &b_HLT_Mu8_IP5_part1_v2);
+       fChain->SetBranchAddress("HLT_Mu8_IP5_part2_v2", &HLT_Mu8_IP5_part2_v2, &b_HLT_Mu8_IP5_part2_v2);
+       fChain->SetBranchAddress("HLT_Mu8_IP5_part3_v2", &HLT_Mu8_IP5_part3_v2, &b_HLT_Mu8_IP5_part3_v2);
+       fChain->SetBranchAddress("HLT_Mu8_IP5_part4_v2", &HLT_Mu8_IP5_part4_v2, &b_HLT_Mu8_IP5_part4_v2);
+       fChain->SetBranchAddress("HLT_Mu8_IP6_part0_v2", &HLT_Mu8_IP6_part0_v2, &b_HLT_Mu8_IP6_part0_v2);
+       fChain->SetBranchAddress("HLT_Mu8_IP6_part1_v2", &HLT_Mu8_IP6_part1_v2, &b_HLT_Mu8_IP6_part1_v2);
+       fChain->SetBranchAddress("HLT_Mu8_IP6_part2_v2", &HLT_Mu8_IP6_part2_v2, &b_HLT_Mu8_IP6_part2_v2);
+       fChain->SetBranchAddress("HLT_Mu8_IP6_part3_v2", &HLT_Mu8_IP6_part3_v2, &b_HLT_Mu8_IP6_part3_v2);
+       fChain->SetBranchAddress("HLT_Mu8_IP6_part4_v2", &HLT_Mu8_IP6_part4_v2, &b_HLT_Mu8_IP6_part4_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part0_v3", &HLT_Mu9_IP6_part0_v3, &b_HLT_Mu9_IP6_part0_v3);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part1_v3", &HLT_Mu9_IP6_part1_v3, &b_HLT_Mu9_IP6_part1_v3);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part2_v3", &HLT_Mu9_IP6_part2_v3, &b_HLT_Mu9_IP6_part2_v3);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part3_v3", &HLT_Mu9_IP6_part3_v3, &b_HLT_Mu9_IP6_part3_v3);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part4_v3", &HLT_Mu9_IP6_part4_v3, &b_HLT_Mu9_IP6_part4_v3);
+       fChain->SetBranchAddress("HLT_Mu8_IP3_part0_v3", &HLT_Mu8_IP3_part0_v3, &b_HLT_Mu8_IP3_part0_v3);
+       fChain->SetBranchAddress("HLT_Mu8_IP3_part1_v3", &HLT_Mu8_IP3_part1_v3, &b_HLT_Mu8_IP3_part1_v3);
+       fChain->SetBranchAddress("HLT_Mu8_IP3_part2_v3", &HLT_Mu8_IP3_part2_v3, &b_HLT_Mu8_IP3_part2_v3);
+       fChain->SetBranchAddress("HLT_Mu8_IP3_part3_v3", &HLT_Mu8_IP3_part3_v3, &b_HLT_Mu8_IP3_part3_v3);
+       fChain->SetBranchAddress("HLT_Mu8_IP3_part4_v3", &HLT_Mu8_IP3_part4_v3, &b_HLT_Mu8_IP3_part4_v3);
+   }
 /*
    // DST branches
    if ( !is2016 ) {
@@ -2760,223 +2972,125 @@ inline void AnalysisEvent::Loop() {
         nbytes += nb;
     }
 }
-/*
-inline bool AnalysisEvent::eTrig() const {
-    return is2016_ ? HLT_Ele32_eta2p1_WPTight_Gsf_v2 > 0
-                         || HLT_Ele32_eta2p1_WPTight_Gsf_v3 > 0
-                         || HLT_Ele32_eta2p1_WPTight_Gsf_v4 > 0
-                         || HLT_Ele32_eta2p1_WPTight_Gsf_v5 > 0
-                         || HLT_Ele32_eta2p1_WPTight_Gsf_v6 > 0
-                         || HLT_Ele32_eta2p1_WPTight_Gsf_v7 > 0
-                         || HLT_Ele32_eta2p1_WPTight_Gsf_v8 > 0
-                   : HLT_Ele32_WPTight_Gsf_L1DoubleEG_v1 > 0
-                         || HLT_Ele32_WPTight_Gsf_L1DoubleEG_v2 > 0
-                         || HLT_Ele32_WPTight_Gsf_L1DoubleEG_v3 > 0
-                         || HLT_Ele32_WPTight_Gsf_L1DoubleEG_v4 > 0
-                         || HLT_Ele32_WPTight_Gsf_L1DoubleEG_v5 > 0
-                         || HLT_Ele32_WPTight_Gsf_L1DoubleEG_v6 > 0
-                         || HLT_Ele32_WPTight_Gsf_L1DoubleEG_v7 > 0
-                         || HLT_Ele35_WPTight_Gsf_v1 > 0
-                         || HLT_Ele35_WPTight_Gsf_v2 > 0
-                         || HLT_Ele35_WPTight_Gsf_v3 > 0
-                         || HLT_Ele35_WPTight_Gsf_v4 > 0
-                         || HLT_Ele35_WPTight_Gsf_v5 > 0
-                         || HLT_Ele35_WPTight_Gsf_v6 > 0
-                         || HLT_Ele35_WPTight_Gsf_v7 > 0;
-}
-*/
+
 inline bool AnalysisEvent::muTrig() const {
-    return is2016_
-               ? HLT_IsoMu24_v1 > 0 || HLT_IsoMu24_v2 > 0 || HLT_IsoMu24_v3 > 0
-                     || HLT_IsoMu24_v4 > 0 || HLT_IsoTkMu24_v1 > 0
-                     || HLT_IsoTkMu24_v2 > 0 || HLT_IsoTkMu24_v3 > 0
-                     || HLT_IsoTkMu24_v4 > 0
-               : HLT_IsoMu27_v8 > 0 || HLT_IsoMu27_v9 > 0 || HLT_IsoMu27_v10 > 0
-                     || HLT_IsoMu27_v11 > 0 || HLT_IsoMu27_v12 > 0
-                     || HLT_IsoMu27_v13 > 0 || HLT_IsoMu27_v14 > 0;
-}
-/*
-inline bool AnalysisEvent::eeTrig() const {
-    return is2016_ ? HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v3 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v4 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v5 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v6 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v7 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v8 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v9 > 0
-                   : HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_v10 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_v11 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_v12 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_v13 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_v14 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_v15 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_v16 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_v17 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v10 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v11 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v12 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v13 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v14 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v15 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v16 > 0
-                         || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v17 > 0;
-}
-*/
-/*
-inline bool AnalysisEvent::muEGTrig() const {
-    // clang-format off
-    return
-      is2016_ ? eventRun < 280919 // different triggers for run H
-                    ? HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v3 > 0
-                          || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v4 > 0
-                          || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v5 > 0
-                          || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v6 > 0
-                          || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v7 > 0
-                          || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v8 > 0
-                          || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v9 > 0
-                          || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v3 > 0
-                          || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v4 > 0
-                          || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v5 > 0
-                          || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v6 > 0
-                          || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v7 > 0
-                          || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v8 > 0
-                          || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v9 > 0
-                    : HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v1 > 0
-                          || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v2 > 0
-                          || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v3 > 0
-                          || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v4 > 0
-                          || HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v1 > 0
-                          || HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v2 > 0
-                          || HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v3 > 0
-                          || HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v4 > 0
-              : HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v1 > 0
-                    || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v2 > 0
-                    || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v5 > 0
-                    || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v6 > 0
-                    || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v8 > 0
-                    || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v9 > 0
-                    || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v10 > 0
-                    || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v11 > 0
-                    || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v12 > 0
-                    || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v13 > 0
-                    || HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v5 > 0
-                    || HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v6 > 0
-                    || HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v8 > 0
-                    || HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v9 > 0
-                    || HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v10 > 0
-                    || HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v11 > 0
-                    || HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v12 > 0
-                    || HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v13 > 0
-                    || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v4 > 0
-                    || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v6 > 0
-                    || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v7 > 0
-                    || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v8 > 0
-                    || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v9 > 0
-                    || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v10 > 0
-                    || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v11 > 0
-                    || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v3 > 0
-                    || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v4 > 0
-                    || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v5 > 0;
-    // clang-format on
-}
-*/
-inline bool AnalysisEvent::mumuTrig() const {
-    return is2016_ ? (eventRun < 280919
-// 2016 triggers
-                      && (HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v2 > 0
-                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v3 > 0
-                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v4 > 0
-                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v6 > 0
-                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v2 > 0
-                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v3 > 0
-                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v5 > 0))
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v2 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v3 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v4 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v7 > 0
-                         || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2 > 0
-                         || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v3 > 0
-                         || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v6 > 0
-//2017 triggers
-                   : HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v8 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v9 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v10 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v11 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v12 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v13 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v14 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v1 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v2 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v3 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v7 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v8 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v1 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v2 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4 > 0;
+    if (is2016_) { // 2016
+        if ( HLT_IsoMu24_v1 > 0 || HLT_IsoMu24_v2 > 0 || HLT_IsoMu24_v4 > 0 || HLT_IsoTkMu24_v1 > 0 || HLT_IsoTkMu24_v2 > 0 || HLT_IsoTkMu24_v3 > 0 || HLT_IsoTkMu24_v4 > 0 
+          || HLT_IsoMu27_v3 > 0 || HLT_IsoMu27_v4 > 0 || HLT_IsoMu27_v5 > 0 || HLT_IsoMu27_v7 > 0 
+          || HLT_IsoTkMu27_v3 > 0 || HLT_IsoTkMu27_v4 > 0 || HLT_IsoTkMu27_v5 > 0 || HLT_IsoTkMu27_v6 > 0 || HLT_IsoTkMu27_v7 > 0 ) return true;
+        else return false;
+    }
+    else if (is2018_) { // 2018 
+       if ( HLT_IsoMu24_v11 > 0 || HLT_IsoMu24_v12 > 0 || HLT_IsoMu24_v13  
+         || HLT_IsoMu27_v14 > 0 || HLT_IsoMu27_v15 > 0 || HLT_IsoMu27_v16 > 0 ) return true;
+        else return false;
+    }
+    else { // 2017
+        if ( HLT_IsoMu27_v8 > 0 || HLT_IsoMu27_v9 > 0 || HLT_IsoMu27_v10 > 0 || HLT_IsoMu27_v11 > 0 || HLT_IsoMu27_v12 > 0 || HLT_IsoMu27_v13 > 0 || HLT_IsoMu27_v14 > 0 ) return true;
+        else return false;
+    }
 }
 
-inline bool AnalysisEvent::mumuTrig_noMassCut() const
-{
-    return is2016_ ? (eventRun < 280919
-// 2016 triggers
-                      && (HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v2 > 0
-                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v3 > 0
-                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v4 > 0
-                          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_v6 > 0
-                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v2 > 0
-                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v3 > 0
-                          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_v5 > 0))
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v2 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v3 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v4 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v7 > 0
-                         || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2 > 0
-                         || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v3 > 0
-                         || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v6 > 0
-//2017 triggers
-                   : HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v8 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v9 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v10 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v11 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v12 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v13 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v14 > 0;
+inline bool AnalysisEvent::mumuTrig() const {
+
+    if (is2016_) { // 2016
+        if ( HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v2 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v3 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v4 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v7 > 0
+          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2 > 0 || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v3 > 0 || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v6 > 0 ) return true;
+        else return false;
+    }
+    else if (is2018_) { // 2018
+        if ( HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v5 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v5 > 0 ) return true;
+        else return false;
+    }
+    else { // 2017
+        if ( HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v8 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v9 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v10 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v11 > 0
+          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v12 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v13 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v14 > 0 
+          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v1 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v2 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v3 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4 > 0
+          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v7 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v8 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v1 > 0 
+          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v2 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4 > 0 ) return true;
+        else return false;
+   }
+}
+
+inline bool AnalysisEvent::mumuTrig_noMassCut() const {
+    if (is2016_) { // 2016
+        if ( HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v2 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v3 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v4 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v7 > 0
+          || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v2 > 0 || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v3 > 0 || HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ_v6 > 0 ) return true;
+        else return false;
+    }
+    else if (is2018_) { // 2018
+        return false;
+    }
+    else { // 2017
+        if ( HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v8 > 0	|| HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v9 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v10 > 0 ||	HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v11 > 0   
+      	   || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v12 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v13 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_v14 > 0 ) return true;
+        else return false;
+   }
 }
 
 inline bool AnalysisEvent::mumuTrig_massCut() const {
-    return is2016_ ? false
-// 2016 triggers
-//2017 triggers
-                   : HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v1 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v2 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v3 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v7 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v8 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v1 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v2 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3 > 0
-                         || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4 > 0;
+    if (is2016_) return false; // 2016
+    else if (is2018_) { // 2018
+        if ( HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v5 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v5 > 0 ) return true;
+        return false;
+    }
+    else { // 2017
+        if ( HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v1 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v2 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v3 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v4 > 0
+       	  || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v7 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8_v8 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v1 > 0	
+          || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v2 > 0	|| HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4 > 0 ) return true;
+        else return false;
+   }
 }
 
 inline bool AnalysisEvent::mumuL2Trig() const {
-    return is2016_ ?
-// 2016 triggers
-                   0
-//2017 triggers
-                   : HLT_DoubleL2Mu50_v2 > 0 ;
+    if (is2016_) { // 2016
+        if ( HLT_L2DoubleMu23_NoVertex_v2 > 0 || HLT_L2DoubleMu23_NoVertex_v3 > 0 || HLT_L2DoubleMu23_NoVertex_v4 > 0 || HLT_L2DoubleMu23_NoVertex_v6 > 0 ) return true;
+        else return false;
+    }
+    else if (is2018_) { // 2018
+        if ( HLT_DoubleL2Mu50_v2 > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v1 > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v2 > 0 || HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v1 > 0 || HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v2 > 0
+          || HLT_DoubleL2Mu25NoVtx_2Cha_v1 > 0 || HLT_DoubleL2Mu25NoVtx_2Cha_v2 > 0 || HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v1 > 0 || HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v2 > 0 ) return true;
+        else return false;
+    }
+    else { // 2017
+        if ( HLT_DoubleL2Mu50_v1 > 0 || HLT_DoubleL2Mu50_v2 > 0 ) return true;
+        else return false;
+    }
 }
 
 inline bool AnalysisEvent::mumuNoVtxTrig() const {
-    return is2016_ ?
-// 2016 triggers
-                   0
-//2017 triggers   
-                   : HLT_DoubleMu43NoFiltersNoVtx_v3 > 0
-                         || HLT_DoubleMu48NoFiltersNoVtx_v3 > 0;
+    if (is2016_) { // 2016
+        if ( HLT_DoubleMu33NoFiltersNoVtx_v2 > 0 || HLT_DoubleMu33NoFiltersNoVtx_v3 > 0 || HLT_DoubleMu33NoFiltersNoVtx_v5 > 0 
+          || HLT_DoubleMu23NoFiltersNoVtxDisplaced_v2 > 0 || HLT_DoubleMu23NoFiltersNoVtxDisplaced_v3 > 0 || HLT_DoubleMu23NoFiltersNoVtxDisplaced_v5 ) return true;
+       	else return false;
+    }
+    else if (is2018_) { // 2018
+        if ( HLT_DoubleMu33NoFiltersNoVtxDisplaced_v1 > 0 || HLT_DoubleMu40NoFiltersNoVtxDisplaced_v1 > 0 || HLT_DoubleMu43NoFiltersNoVtx_v3 > 0 
+          || HLT_DoubleMu43NoFiltersNoVtx_v4 > 0 || HLT_DoubleMu48NoFiltersNoVtx_v3 > 0 || HLT_DoubleMu48NoFiltersNoVtx_v4 > 0 ) return true;
+       	else return false;
+    }
+    else { // 2017
+        if ( HLT_DoubleMu43NoFiltersNoVtx_v2 > 0 || HLT_DoubleMu43NoFiltersNoVtx_v3 > 0 || HLT_DoubleMu48NoFiltersNoVtx_v2 > 0 || HLT_DoubleMu48NoFiltersNoVtx_v3 > 0 ) return true;
+        else return false;
+    }
 }
+
+
+inline bool AnalysisEvent::bParkingTrig() const {
+    if ( !is2018_ ) return false;
+    else {
+        if ( HLT_Mu12_IP6_part0_v2 > 0 || HLT_Mu12_IP6_part1_v2 > 0 || HLT_Mu12_IP6_part2_v2 > 0 || HLT_Mu12_IP6_part3_v2 > 0 || HLT_Mu12_IP6_part4_v2 > 0
+          || HLT_Mu9_IP5_part0_v2 > 0 || HLT_Mu9_IP5_part1_v2 > 0 || HLT_Mu9_IP5_part2_v2 > 0 || HLT_Mu9_IP5_part3_v2 > 0 || HLT_Mu9_IP5_part4_v2 > 0
+          || HLT_Mu7_IP4_part0_v2 > 0 || HLT_Mu7_IP4_part1_v2 > 0 || HLT_Mu7_IP4_part2_v2 > 0 || HLT_Mu7_IP4_part3_v2 > 0 || HLT_Mu7_IP4_part4_v2 > 0
+          || HLT_Mu9_IP4_part0_v2 > 0 || HLT_Mu9_IP4_part1_v2 > 0 || HLT_Mu9_IP4_part2_v2 > 0 || HLT_Mu9_IP4_part3_v2 > 0 || HLT_Mu9_IP4_part4_v2 > 0
+          || HLT_Mu8_IP5_part0_v2 > 0 || HLT_Mu8_IP5_part1_v2 > 0 || HLT_Mu8_IP5_part2_v2 > 0 || HLT_Mu8_IP5_part3_v2 > 0 || HLT_Mu8_IP5_part4_v2 > 0
+          || HLT_Mu8_IP6_part0_v2 > 0 || HLT_Mu8_IP6_part1_v2 > 0 || HLT_Mu8_IP6_part2_v2 > 0 || HLT_Mu8_IP6_part3_v2 > 0 || HLT_Mu8_IP6_part4_v2 > 0
+          || HLT_Mu9_IP6_part0_v3 > 0 || HLT_Mu9_IP6_part1_v3 > 0 || HLT_Mu9_IP6_part2_v3 > 0 || HLT_Mu9_IP6_part3_v3 > 0 || HLT_Mu9_IP6_part4_v3 > 0
+          || HLT_Mu8_IP3_part0_v3 > 0 || HLT_Mu8_IP3_part1_v3 > 0 || HLT_Mu8_IP3_part2_v3 > 0 || HLT_Mu8_IP3_part3_v3 > 0 || HLT_Mu8_IP3_part4_v3 > 0 ) return true;
+        else return false;
+    }
+}
+
 /*
 inline bool AnalysisEvent::dataScoutingTrig() const {
     return is2016_ ?
