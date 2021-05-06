@@ -46,8 +46,6 @@ int main(int argc, char* argv[]) {
     bool usePostLepTree {false};
    
     std::string outFileString{"plots/distributions/output.root"};
-    bool is2016_;
-    bool is2018_;
     Long64_t nEvents;
     Long64_t totalEvents {0};
     const std::regex mask{".*\\.root"};
@@ -98,9 +96,7 @@ int main(int argc, char* argv[]) {
         "The number of events to be run over. All if set to 0.")(
         ",u",
         po::bool_switch(&usePostLepTree),
-        "Use post lepton selection trees.")(
-        "2016", po::bool_switch(&is2016_), "Use 2016 conditions (SFs, et al.).")(
-        "2018", po::bool_switch(&is2018_), "Use 2018 conditions (SFs, et al.).");
+        "Use post lepton selection trees.");
     po::variables_map vm;
 
     try
@@ -114,12 +110,6 @@ int main(int argc, char* argv[]) {
         }
 
         po::notify(vm);
-        if ( is2016_ && is2018_ ) {
-            throw std::logic_error(
-                "Default condition is to use 2017. One cannot set "
-                "condition to be BOTH 2016 AND 2018! Chose only "
-                " one or none!");
-        }
     }
     catch (po::error& e)
     {
@@ -153,10 +143,7 @@ int main(int argc, char* argv[]) {
     std::cout << "Using lumi: " << totalLumi << std::endl;
 
     bool datasetFilled{false};
-    std::string era {""};
-    if (is2016_) era = "2016";
-    else if (is2018_) era = "2018";
-    else era = "2017";
+    const std::string era {"2018"};
     const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "/"};
 //    const std::string postLepSelSkimInputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "/"};
 
@@ -190,7 +177,7 @@ int main(int argc, char* argv[]) {
             continue;
         }
 
-        AnalysisEvent event{dataset->isMC(), datasetChain, is2016_, is2018_};
+        AnalysisEvent event{dataset->isMC(), datasetChain, false, true};
 
         Long64_t numberOfEvents{datasetChain->GetEntries()};
         if (nEvents && nEvents < numberOfEvents) numberOfEvents = nEvents;
