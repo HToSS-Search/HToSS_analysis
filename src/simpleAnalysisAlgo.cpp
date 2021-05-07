@@ -1760,7 +1760,7 @@ void SimpleAnalysis::savePlots() {
   h_KhiggsRInvMass->Write();
   
   h_kNentries1->Write(); h_kNentries2->Write(); h_kNentries3->Write(); h_kNentries4->Write();
-  h_kNentries->SetBinLabel(1,"Number of dihadrons"); h_kNentries->SetBinLabel(2,"Small Higgs mass window"); h_kNentries->SetBinLabel(3,"Statistical window"); h_kNentries->SetBinLabel(4,"Relative isolation");
+  h_kNentries->GetXaxis()->SetBinLabel(1,"Number of dihadrons"); h_kNentries->GetXaxis()->SetBinLabel(2,"Small Higgs mass window"); h_kNentries->GetXaxis()->SetBinLabel(3,"Statistical window"); h_kNentries->GetXaxis()->SetBinLabel(4,"Relative isolation");
   h_kNentries->Write();	
 	
   //Pion mass assumption
