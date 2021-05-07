@@ -199,6 +199,7 @@ class SimpleAnalysis
     TH1F* h_KhiggsInvMass;
     TH1F* h_KhiggsRInvMass;
     TH1F* h_KhiggsDeltaR;
+    TH1F* h_kNentries1; TH1F* h_kNentries2; TH1F* h_kNentries3; TH1F* h_kNentries4;
     TH1F* h_kNentries;
     
     //Pion mass assumption
