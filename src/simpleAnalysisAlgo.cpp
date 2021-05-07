@@ -773,8 +773,10 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   TLorentzVector kaonLVec1; TLorentzVector kaonLVec2;
   TLorentzVector pionLVec1; TLorentzVector pionLVec2;
   TLorentzVector muonLVec1; TLorentzVector muonLVec2;
+  TLorentzVector packedCandLVec;
 	      
   TLorentzVector scalarLVec, Kantiscalar, Pantiscalar;
+
 
   Float_t Khiggs{0}, Phiggs{0};     	
 
@@ -801,6 +803,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   h_PmuonsDeltaR->Fill(mm1.DeltaR(mm2), eventWeight); // Identical, but preserved
 
   for(Int_t k{0};k<event.numPackedCands;k++){
+     packedCandLVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
+  
      if(k!=chsIndex1 && k!=chsIndex2){      
        if(kaonLVec1.DeltaR(packedCandLVec)<isoConeSize_) KIsoSum1+=event.packedCandsPseudoTrkPt[k];
        if(kaonLVec2.DeltaR(packedCandLVec)<isoConeSize_) KIsoSum2+=event.packedCandsPseudoTrkPt[k];
