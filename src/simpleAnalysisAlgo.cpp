@@ -727,7 +727,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 
   // Loop over all packed cands to plot displacement info
   for(Int_t k{0};k<event.numPackedCands;k++) {
-
+     
     // plot Dxy and Dz of all packed cands
     h_packedCDxy->Fill(event.packedCandsDxy[k], eventWeight);
     h_packedCDz->Fill(event.packedCandsDz[k], eventWeight);
@@ -800,6 +800,20 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   h_KmuonsDeltaR->Fill(mm1.DeltaR(mm2), eventWeight);
   h_PmuonsDeltaR->Fill(mm1.DeltaR(mm2), eventWeight); // Identical, but preserved
 
+  for(Int_t k{0};k<event.numPackedCands;k++){
+     if(k!=chsIndex1 && k!=chsIndex2){      
+       if(kaonLVec1.DeltaR(packedCandLVec)<isoConeSize_) KIsoSum1+=event.packedCandsPseudoTrkPt[k];
+       if(kaonLVec2.DeltaR(packedCandLVec)<isoConeSize_) KIsoSum2+=event.packedCandsPseudoTrkPt[k];
+
+       if(pionLVec1.DeltaR(packedCandLVec)<isoConeSize_) PIsoSum1+=event.packedCandsPseudoTrkPt[k];
+       if(pionLVec2.DeltaR(packedCandLVec)<isoConeSize_) PIsoSum2+=event.packedCandsPseudoTrkPt[k];
+     }  
+     if(k!=muIndex1 && k!=muIndex2){      
+       if(mm1.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum1+=event.packedCandsPseudoTrkPt[k];
+       if(mm2.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum2+=event.packedCandsPseudoTrkPt[k];  
+     }
+  }
+	
   // Kaon bit
   if(kaonLVec1.DeltaR(kaonLVec2)<packedCandKaonDeltaR_){
     // Repeat LVecs for the charged hadrons for delR plotting - why?
