@@ -1401,7 +1401,12 @@ void SimpleAnalysis::setupPlots() {
   h_KhiggsInvMass = new TH1F("h_KhiggsInvMass", "Higgs invariant mass", 500, 0., 200.);
   h_KhiggsRInvMass = new TH1F("h_KhiggsRInvMass", "Higgs invariant mass", 500, 0., 200.);
   h_KhiggsDeltaR = new TH1F("h_KhiggsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.);
+	
   h_kNentries = new TH1F("h_kNentries", "Number of kaon events", 5, 0.,5.);
+  h_kNentries1 = new TH1F("h_kNentries1", "Number of kaon events", 1, 0.,1.);
+  h_kNentries2 = new TH1F("h_kNentries2", "Number of kaon events", 1, 0.,1.);
+  h_kNentries3 = new TH1F("h_kNentries3", "Number of kaon events", 1, 0.,1.);
+  h_kNentries4 = new TH1F("h_kNentries4", "Number of kaon events", 1, 0.,1.);
 	
 	
   //Pion mass assumption
