@@ -778,7 +778,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	      
   TLorentzVector scalarLVec, Kantiscalar, Pantiscalar;
 
-  Double_t nentries;
+  Double_t knentries;
 
   Float_t Khiggs{0}, Phiggs{0};     	
 
