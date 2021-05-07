@@ -778,7 +778,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	      
   TLorentzVector scalarLVec, Kantiscalar, Pantiscalar;
 
-  Double_t knentries;
+  Double_t knentries1; Double_t knentries2; Double_t knentries3; Double_t knentries4;
 
   Float_t Khiggs{0}, Phiggs{0};     	
 
@@ -897,9 +897,9 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   
 
   //Kaon 
-  h_kNentries->Fill(Kantiscalar.M(), eventWeight);
-  knentries=h_kNentries->GetEntries();
-  h_kNentries->SetBinContent(1,knentries);   
+  h_kNentries1->Fill(Kantiscalar.M(), eventWeight);
+  knentries1=h_kNentries1->GetEntries();
+  h_kNentries->SetBinContent(1,knentries1);   
 	
   h_KIsoSum1->Fill(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1], eventWeight);
   h_KIsoSum2->Fill(KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
@@ -907,21 +907,21 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   
   if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
        	    
-     h_kNentries->Fill(Kantiscalar.M(), eventWeight);
-     knentries=h_kNentries->GetEntries();
-     h_kNentries->SetBinContent(2,knentries);
+     h_kNentries2->Fill(Kantiscalar.M(), eventWeight);
+     knentries2=h_kNentries2->GetEntries();
+     h_kNentries->SetBinContent(2,knentries2);
 	    
      if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
-       h_kNentries->Fill(Kantiscalar.M(), eventWeight);
-       knentries=h_kNentries->GetEntries();
-       h_kNentries->SetBinContent(3,knentries);
+       h_kNentries3->Fill(Kantiscalar.M(), eventWeight);
+       knentries3=h_kNentries3->GetEntries();
+       h_kNentries->SetBinContent(3,knentries3);
 	     
        if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
          h_KantiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
 	      
-	 h_kNentries->Fill(Kantiscalar.M(), eventWeight);
-         knentries=h_kNentries->GetEntries();
-         h_kNentries->SetBinContent(4,knentries);
+	 h_kNentries4->Fill(Kantiscalar.M(), eventWeight);
+         knentries4=h_kNentries4->GetEntries();
+         h_kNentries->SetBinContent(4,knentries4);
        }
      }
   } 
@@ -1753,7 +1753,8 @@ void SimpleAnalysis::savePlots() {
   h_KhiggsRInvMass->GetXaxis()->SetTitle("GeV");
   h_KhiggsRInvMass->GetYaxis()->SetTitle("Events");
   h_KhiggsRInvMass->Write();
-	
+  
+  h_kNentries1->Write(); h_kNentries2->Write(); h_kNentries3->Write(); h_kNentries4->Write();		
   h_kNentries->Write();	
 	
   //Pion mass assumption
