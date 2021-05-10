@@ -75,7 +75,7 @@
      h_PscalarInvMass_data->GetXaxis()->SetTitle("m_{dimuon} (GeV/c^{2})");
      h_PscalarInvMass_data->SetMarkerColor(94);
      h_PscalarInvMass_data->SetLineColor(94);
-     h_PscalarInvMass_data->Draw("P*");
+     h_PscalarInvMass_data->Draw("P* same");
    
     /* h_refit12InvMass_ctau0->SetTitle("Dimuon invariant mass without refit");
     h_refit12InvMass_ctau0->GetYaxis()->SetTitle("Events");
