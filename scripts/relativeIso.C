@@ -73,7 +73,7 @@
      h_PIsoSum1_ctau10->SetLineColor(3);
      h_PIsoSum1_ctau10->Draw("HIST same");
    
-     /*h_PIsoSum1_QCD->GetYaxis()->SetTitle("Events");
+     h_PIsoSum1_QCD->GetYaxis()->SetTitle("Events");
      h_PIsoSum1_QCD->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_QCD->GetXaxis()->SetTitle("Rel. iso");
      h_PIsoSum1_QCD->SetMarkerColor(6);
@@ -85,7 +85,7 @@
      h_PIsoSum1_data->GetXaxis()->SetTitle("Rel. iso");
      h_PIsoSum1_data->SetMarkerColor(84);
      h_PIsoSum1_data->SetLineColor(84);
-     h_PIsoSum1_data->Draw("HIST same");*/
+     h_PIsoSum1_data->Draw("HIST same");
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
