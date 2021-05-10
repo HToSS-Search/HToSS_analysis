@@ -663,13 +663,13 @@ int main(int argc, char* argv[]) {
                 if ( pid == 13 && motherId == 9000006) {
                     genMuonIndex.emplace_back(k);
                 }
-                else if ( pid == 211 && (motherId < 6 || motherId == 21) && motherId > 0 ) {
+                else if ( pid == 211 && (motherId < 6 || motherId == 21 || motherId == 9000006 ) && motherId > 0 ) {
                     if ( hasScalarGrandparent ) genPionIndex.emplace_back(k);
                 }
-                else if ( pid == 321 && (motherId < 6 || motherId == 21) && motherId > 0 ) {
+                else if ( pid == 321 && (motherId < 6 || motherId == 21 || motherId == 9000006 ) && motherId > 0 ) {
                     if ( hasScalarGrandparent ) genKaonIndex.emplace_back(k);
                 }
-                else if ( pid == 310 && (motherId < 6 || motherId == 21 || motherId == 311 || motherId == 130) && motherId > 0 ) {
+                else if ( pid == 310 && (motherId < 6 || motherId == 21 || motherId == 311 || motherId == 130 || motherId == 9000006) && motherId > 0 ) {
                     if ( hasScalarGrandparent ) genKshortIndex.emplace_back(k);
                 }
             }
@@ -727,8 +727,8 @@ int main(int argc, char* argv[]) {
                     h_genLeadingVxyPion->Fill( std::sqrt(event.genParVx[genPionIndex[0]]*event.genParVx[genPionIndex[0]] + event.genParVy[genPionIndex[0]]*event.genParVy[genPionIndex[0]]) );
                     h_genLeadingVdPion->Fill(  std::sqrt(event.genParVx[genPionIndex[0]]*event.genParVx[genPionIndex[0]] + event.genParVy[genPionIndex[0]]*event.genParVy[genPionIndex[0]] + event.genParVz[genPionIndex[0]]*event.genParVz[genPionIndex[0]]) );
                     h_genSubleadingVxPion->Fill( event.genParVx[genPionIndex[1]] );
-                    h_genSubleadingVyPion->Fill( event.genParVx[genPionIndex[1]] );
-                    h_genSubleadingVzPion->Fill( event.genParVx[genPionIndex[1]] );
+                    h_genSubleadingVyPion->Fill( event.genParVy[genPionIndex[1]] );
+                    h_genSubleadingVzPion->Fill( event.genParVz[genPionIndex[1]] );
                     h_genSubleadingVxyPion->Fill( std::sqrt(event.genParVx[genPionIndex[1]]*event.genParVx[genPionIndex[1]] + event.genParVy[genPionIndex[1]]*event.genParVy[genPionIndex[1]]) );
                     h_genSubleadingVdPion->Fill( std::sqrt(event.genParVx[genPionIndex[1]]*event.genParVx[genPionIndex[1]] + event.genParVy[genPionIndex[1]]*event.genParVy[genPionIndex[1]] + event.genParVz[genPionIndex[1]]*event.genParVz[genPionIndex[1]]) );
                     if ( genMuonSortedIndex.size() == 2 ) h_genDiscalarDeltaR_mumu_pipi->Fill( (genMuon1+genMuon2).DeltaR( (genPion1+genPion2) ) );
@@ -749,8 +749,8 @@ int main(int argc, char* argv[]) {
                     h_genLeadingVxyPion->Fill( std::sqrt(event.genParVx[genPionIndex[1]]*event.genParVx[genPionIndex[1]] + event.genParVy[genPionIndex[1]]*event.genParVy[genPionIndex[1]]) );
                     h_genLeadingVdPion->Fill( std::sqrt(event.genParVx[genPionIndex[1]]*event.genParVx[genPionIndex[1]] + event.genParVy[genPionIndex[1]]*event.genParVy[genPionIndex[1]] + event.genParVz[genPionIndex[1]]*event.genParVz[genPionIndex[1]]) );
                     h_genSubleadingVxPion->Fill( event.genParVx[genPionIndex[0]] );
-                    h_genSubleadingVyPion->Fill( event.genParVx[genPionIndex[0]] );
-                    h_genSubleadingVzPion->Fill( event.genParVx[genPionIndex[0]] );
+                    h_genSubleadingVyPion->Fill( event.genParVy[genPionIndex[0]] );
+                    h_genSubleadingVzPion->Fill( event.genParVz[genPionIndex[0]] );
                     h_genSubleadingVxyPion->Fill( std::sqrt(event.genParVx[genPionIndex[0]]*event.genParVx[genPionIndex[0]] + event.genParVy[genPionIndex[0]]*event.genParVy[genPionIndex[0]]) );
                     h_genSubleadingVdPion->Fill( std::sqrt(event.genParVx[genPionIndex[0]]*event.genParVx[genPionIndex[0]] + event.genParVy[genPionIndex[0]]*event.genParVy[genPionIndex[0]] + event.genParVz[genPionIndex[0]]*event.genParVz[genPionIndex[0]]) );
                     if ( genMuonSortedIndex.size() == 2 ) h_genDiscalarDeltaR_mumu_pipi->Fill( (genMuon1+genMuon2).DeltaR( (genPion1+genPion2) ) );
