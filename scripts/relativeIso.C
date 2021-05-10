@@ -14,7 +14,7 @@
 
   void relativeIso() {  
   
-     TFile inFile0("ggH_MS1_ctau0.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
+     TFile inFile0("ggH_MS2_ctau0.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
      TH1F* h_PIsoSum1_ctau0    = (TH1F*)inFile0.Get("h_PIsoSum1");
      TH1F* h_PIsoSum2_ctau0    = (TH1F*)inFile0.Get("h_PIsoSum2");
      TH1F* h_KIsoSum1_ctau0    = (TH1F*)inFile0.Get("h_KIsoSum1");
@@ -24,7 +24,7 @@
   
    
      
-     TFile inFile10("ggH_MS1_ctau10.root"); 
+     TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_PIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum1");
      TH1F* h_PIsoSum2_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum2");
      TH1F* h_KIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_KIsoSum1");
@@ -85,15 +85,15 @@
      h_PIsoSum1_data->GetXaxis()->SetTitle("Rel. iso");
      h_PIsoSum1_data->SetMarkerColor(94);
      h_PIsoSum1_data->SetLineColor(94);
-     h_PIsoSum1_data->Draw("HIST same");
+     h_PIsoSum1_data->Draw("P* same");
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_PIsoSum1_ctau0","c_{#tau}=0mm","P*");
+     TLegendEntry *legenda = legend1->AddEntry("h_PIsoSum1_ctau0","c_{#tau}=0mm","L");
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_PIsoSum1_ctau10","c_{#tau}=10mm","P*");
+     legenda=legend1->AddEntry("h_PIsoSum1_ctau10","c_{#tau}=10mm","L");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
@@ -101,7 +101,7 @@
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_PIsoSum1_data","Data","L");
+     legenda=legend1->AddEntry("h_PIsoSum1_data","Data","P*");
      legenda->SetLineColor(94);
      legenda->SetMarkerColor(94);
      legenda->SetMarkerSize(2);
@@ -149,7 +149,7 @@
      h_PIsoSum2_data->GetXaxis()->SetTitle("Rel. iso");
      h_PIsoSum2_data->SetMarkerColor(94);
      h_PIsoSum2_data->SetLineColor(94);
-     h_PIsoSum2_data->Draw("HIST same");
+     h_PIsoSum2_data->Draw("P* same");
    
      TLegend *legend2 = new TLegend(0.7,0.7,0.9,0.9);
      legend2->SetBorderSize(1);
@@ -165,7 +165,7 @@
      legendb->SetLineColor(6);
      legendb->SetMarkerColor(6);
      legendb->SetMarkerSize(2);
-     legendb=legend2->AddEntry("h_PIsoSum2_data","Data","L");
+     legendb=legend2->AddEntry("h_PIsoSum2_data","Data","P*");
      legendb->SetLineColor(94);
      legendb->SetMarkerColor(94);
      legendb->SetMarkerSize(2);
@@ -213,7 +213,7 @@
      h_KIsoSum1_data->GetXaxis()->SetTitle("Rel. iso");
      h_KIsoSum1_data->SetMarkerColor(94);
      h_KIsoSum1_data->SetLineColor(94);
-     h_KIsoSum1_data->Draw("HIST same");
+     h_KIsoSum1_data->Draw("P* same");
    
      TLegend *legend3 = new TLegend(0.7,0.7,0.9,0.9);
      legend3->SetBorderSize(1);
@@ -229,7 +229,7 @@
      legendc->SetLineColor(6);
      legendc->SetMarkerColor(6);
      legendc->SetMarkerSize(2);
-     legendc=legend3->AddEntry("h_KIsoSum1_data","Data","L");
+     legendc=legend3->AddEntry("h_KIsoSum1_data","Data","P*");
      legendc->SetLineColor(94);
      legendc->SetMarkerColor(94);
      legendc->SetMarkerSize(2);
@@ -277,7 +277,7 @@
      h_KIsoSum2_data->GetXaxis()->SetTitle("Rel. iso");
      h_KIsoSum2_data->SetMarkerColor(94);
      h_KIsoSum2_data->SetLineColor(94);
-     h_KIsoSum2_data->Draw("HIST same");
+     h_KIsoSum2_data->Draw("P* same");
    
      TLegend *legend4 = new TLegend(0.7,0.7,0.9,0.9);
      legend4->SetBorderSize(1);
@@ -293,7 +293,7 @@
      legendd->SetLineColor(6);
      legendd->SetMarkerColor(6);
      legendd->SetMarkerSize(2);
-     legendd=legend4->AddEntry("h_KIsoSum2_data","Data","L");
+     legendd=legend4->AddEntry("h_KIsoSum2_data","Data","P*");
      legendd->SetLineColor(94);
      legendd->SetMarkerColor(94);
      legendd->SetMarkerSize(2);
@@ -345,7 +345,7 @@
      h_MuonIsoSum1_data->GetXaxis()->SetTitle("Rel. iso");
      h_MuonIsoSum1_data->SetMarkerColor(94);
      h_MuonIsoSum1_data->SetLineColor(94);
-     h_MuonIsoSum1_data->Draw("HIST same");
+     h_MuonIsoSum1_data->Draw("P* same");
    
      TLegend *legend1m = new TLegend(0.7,0.7,0.9,0.9);
      legend1m->SetBorderSize(1);
@@ -361,7 +361,7 @@
      legendam->SetLineColor(6);
      legendam->SetMarkerColor(6);
      legendam->SetMarkerSize(2);
-     legendam=legend1m->AddEntry("h_MuonIsoSum1_data","Data","L");
+     legendam=legend1m->AddEntry("h_MuonIsoSum1_data","Data","P*");
      legendam->SetLineColor(94);
      legendam->SetMarkerColor(94);
      legendam->SetMarkerSize(2);
@@ -413,7 +413,7 @@
      h_MuonIsoSum2_data->GetXaxis()->SetTitle("Rel. iso");
      h_MuonIsoSum2_data->SetMarkerColor(94);
      h_MuonIsoSum2_data->SetLineColor(94);
-     h_MuonIsoSum2_data->Draw("HIST same");
+     h_MuonIsoSum2_data->Draw("P* same");
    
      TLegend *legend1mm = new TLegend(0.7,0.7,0.9,0.9);
      legend1mm->SetBorderSize(1);
@@ -429,7 +429,7 @@
      legendamm->SetLineColor(6);
      legendamm->SetMarkerColor(6);
      legendamm->SetMarkerSize(2);
-     legendamm=legend1mm->AddEntry("h_MuonIsoSum2_data","Data","L");
+     legendamm=legend1mm->AddEntry("h_MuonIsoSum2_data","Data","P*");
      legendamm->SetLineColor(94);
      legendamm->SetMarkerColor(94);
      legendamm->SetMarkerSize(2);
