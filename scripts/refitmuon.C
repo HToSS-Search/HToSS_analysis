@@ -70,12 +70,12 @@
      h_PscalarInvMass_QCD->SetLineColor(6);
      h_PscalarInvMass_QCD->Draw("HIST same");
    
-    // h_PscalarInvMass_data->GetYaxis()->SetTitle("Events");
+   /* // h_PscalarInvMass_data->GetYaxis()->SetTitle("Events");
     // h_PscalarInvMass_data->GetXaxis()->SetRangeUser(1,4); 
     // h_PscalarInvMass_data->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_PscalarInvMass_data->SetMarkerColor(94);
      h_PscalarInvMass_data->SetLineColor(94);
-     h_PscalarInvMass_data->Draw("HIST same");
+     h_PscalarInvMass_data->Draw("HIST same");*/
    
     /* h_refit12InvMass_ctau0->SetTitle("Dimuon invariant mass without refit");
     h_refit12InvMass_ctau0->GetYaxis()->SetTitle("Events");
@@ -123,10 +123,10 @@
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_PscalarInvMass_data","Data","L");
+    /* legenda=legend1->AddEntry("h_PscalarInvMass_data","Data","L");
      legenda->SetLineColor(94);
      legenda->SetMarkerColor(94);
-     legenda->SetMarkerSize(2);
+     legenda->SetMarkerSize(2);*/
     /* TLegendEntry *legenda = legend1->AddEntry("h_refit12InvMass_ctau0","Refit c_{#tau}=0mm","L");
      //legenda=legend1->AddEntry("h_refit12InvMass_ctau0","Refit c_{#tau}=0mm","L");
      legenda->SetLineColor(4);
