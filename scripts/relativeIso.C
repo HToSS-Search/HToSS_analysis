@@ -97,14 +97,14 @@
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
-     /*legenda=legend1->AddEntry("h_PIsoSum1_QCD","QCD","L");
+     legenda=legend1->AddEntry("h_PIsoSum1_QCD","QCD","L");
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_PIsoSum1_data","Data","L");
      legenda->SetLineColor(84);
      legenda->SetMarkerColor(84);
-     legenda->SetMarkerSize(2);*/
+     legenda->SetMarkerSize(2);
      legend1->Draw();
    
      canv1->Modified();
