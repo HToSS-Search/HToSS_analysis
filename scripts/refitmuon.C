@@ -14,20 +14,20 @@
   
      TFile inFile0("ggH_MS1_ctau0.root"); 
      TH1F* h_refit12InvMass_ctau0    = (TH1F*)inFile0.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_Rkaonre12InvMass");
+     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_KantiscalarInvMass");
 
      TFile inFile10("ggH_MS1_ctau10.root"); 
      TH1F* h_refit12InvMass_ctau10    = (TH1F*)inFile10.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_Rkaonre12InvMass");
+     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_KantiscalarInvMass");
 
      TFile inFileQCD("ggH_MC_QCD.root"); 
      TH1F* h_refit12InvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rkaonre12InvMass");
-     TH1F* h_P20scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_widekaonRInvMass");
+     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_KantiscalarInvMass");
+     TH1F* h_P20scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_K20antiscalarInvMass");
    
      TFile inFileData("dataRunD.root"); 
      TH1F* h_refit12InvMass_data    = (TH1F*)inFileData.Get("h_Rrefit12InvMass");
-     TH1F* h_PscalarInvMass_data    = (TH1F*)inFileData.Get("h_Rkaonre12InvMass");
+     TH1F* h_PscalarInvMass_data    = (TH1F*)inFileData.Get("h_KantiscalarInvMass");
 
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
@@ -44,7 +44,7 @@
      std::cout<<"correction factor "<<corr<<std::endl;
    
    
-     h_PscalarInvMass_ctau0->SetTitle("Refitted dihadron (kaons) invariant mass");
+     h_PscalarInvMass_ctau0->SetTitle("Dihadron (kaons) invariant mass");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0.5,4); 
