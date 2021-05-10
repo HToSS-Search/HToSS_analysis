@@ -83,8 +83,8 @@
      h_PIsoSum1_data->GetYaxis()->SetTitle("Events");
      h_PIsoSum1_data->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_data->GetXaxis()->SetTitle("Rel. iso");
-     h_PIsoSum1_data->SetMarkerColor(84);
-     h_PIsoSum1_data->SetLineColor(84);
+     h_PIsoSum1_data->SetMarkerColor(94);
+     h_PIsoSum1_data->SetLineColor(94);
      h_PIsoSum1_data->Draw("HIST same");
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
@@ -102,8 +102,8 @@
      legenda->SetMarkerColor(6);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_PIsoSum1_data","Data","L");
-     legenda->SetLineColor(84);
-     legenda->SetMarkerColor(84);
+     legenda->SetLineColor(94);
+     legenda->SetMarkerColor(94);
      legenda->SetMarkerSize(2);
      legend1->Draw();
    
@@ -126,15 +126,15 @@
      h_PIsoSum2_ctau0->GetYaxis()->SetTitle("Events");
      h_PIsoSum2_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum2_ctau0->GetXaxis()->SetTitle("Rel. iso");
-     h_PIsoSum2_ctau0->SetMarkerColor(2);
-     h_PIsoSum2_ctau0->SetLineColor(2);
+     h_PIsoSum2_ctau0->SetMarkerColor(4);
+     h_PIsoSum2_ctau0->SetLineColor(4);
      h_PIsoSum2_ctau0->Draw("HIST");
  
      h_PIsoSum2_ctau10->GetYaxis()->SetTitle("Events");
      h_PIsoSum2_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum2_ctau10->GetXaxis()->SetTitle("Rel. iso");
-     h_PIsoSum2_ctau10->SetMarkerColor(4);
-     h_PIsoSum2_ctau10->SetLineColor(4);
+     h_PIsoSum2_ctau10->SetMarkerColor(3);
+     h_PIsoSum2_ctau10->SetLineColor(3);
      h_PIsoSum2_ctau10->Draw("HIST same");
    
      h_PIsoSum2_QCD->GetYaxis()->SetTitle("Events");
@@ -147,27 +147,27 @@
      h_PIsoSum2_data->GetYaxis()->SetTitle("Events");
      h_PIsoSum2_data->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum2_data->GetXaxis()->SetTitle("Rel. iso");
-     h_PIsoSum2_data->SetMarkerColor(84);
-     h_PIsoSum2_data->SetLineColor(84);
+     h_PIsoSum2_data->SetMarkerColor(94);
+     h_PIsoSum2_data->SetLineColor(94);
      h_PIsoSum2_data->Draw("HIST same");
    
      TLegend *legend2 = new TLegend(0.7,0.7,0.9,0.9);
      legend2->SetBorderSize(1);
      TLegendEntry *legendb = legend2->AddEntry("h_PIsoSum2_ctau0","c_{#tau}=0mm","L");
-     legendb->SetLineColor(2);
-     legendb->SetMarkerColor(2);
-     legendb->SetMarkerSize(2);
-     legendb=legend2->AddEntry("h_PIsoSum2_ctau10","c_{#tau}=10mm","L");
      legendb->SetLineColor(4);
      legendb->SetMarkerColor(4);
+     legendb->SetMarkerSize(2);
+     legendb=legend2->AddEntry("h_PIsoSum2_ctau10","c_{#tau}=10mm","L");
+     legendb->SetLineColor(3);
+     legendb->SetMarkerColor(3);
      legendb->SetMarkerSize(2);
      legendb=legend2->AddEntry("h_PIsoSum2_QCD","QCD","L");
      legendb->SetLineColor(6);
      legendb->SetMarkerColor(6);
      legendb->SetMarkerSize(2);
      legendb=legend2->AddEntry("h_PIsoSum2_data","Data","L");
-     legendb->SetLineColor(84);
-     legendb->SetMarkerColor(84);
+     legendb->SetLineColor(94);
+     legendb->SetMarkerColor(94);
      legendb->SetMarkerSize(2);
      legend2->Draw();
    
@@ -190,15 +190,15 @@
      h_KIsoSum1_ctau0->GetYaxis()->SetTitle("Events");
      h_KIsoSum1_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_KIsoSum1_ctau0->GetXaxis()->SetTitle("Rel. iso");
-     h_KIsoSum1_ctau0->SetMarkerColor(2);
-     h_KIsoSum1_ctau0->SetLineColor(2);
+     h_KIsoSum1_ctau0->SetMarkerColor(4);
+     h_KIsoSum1_ctau0->SetLineColor(4);
      h_KIsoSum1_ctau0->Draw("HIST");
  
      h_KIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
      h_KIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_KIsoSum1_ctau10->GetXaxis()->SetTitle("Rel. iso");
-     h_KIsoSum1_ctau10->SetMarkerColor(4);
-     h_KIsoSum1_ctau10->SetLineColor(4);
+     h_KIsoSum1_ctau10->SetMarkerColor(3);
+     h_KIsoSum1_ctau10->SetLineColor(3);
      h_KIsoSum1_ctau10->Draw("HIST same");
    
      h_KIsoSum1_QCD->GetYaxis()->SetTitle("Events");
@@ -211,27 +211,27 @@
      h_KIsoSum1_data->GetYaxis()->SetTitle("Events");
      h_KIsoSum1_data->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_KIsoSum1_data->GetXaxis()->SetTitle("Rel. iso");
-     h_KIsoSum1_data->SetMarkerColor(84);
-     h_KIsoSum1_data->SetLineColor(84);
+     h_KIsoSum1_data->SetMarkerColor(94);
+     h_KIsoSum1_data->SetLineColor(94);
      h_KIsoSum1_data->Draw("HIST same");
    
      TLegend *legend3 = new TLegend(0.7,0.7,0.9,0.9);
      legend3->SetBorderSize(1);
      TLegendEntry *legendc = legend3->AddEntry("h_KIsoSum1_ctau0","c_{#tau}=0mm","L");
-     legendc->SetLineColor(2);
-     legendc->SetMarkerColor(2);
-     legendc->SetMarkerSize(2);
-     legendc=legend3->AddEntry("h_KIsoSum1_ctau10","c_{#tau}=10mm","L");
      legendc->SetLineColor(4);
      legendc->SetMarkerColor(4);
+     legendc->SetMarkerSize(2);
+     legendc=legend3->AddEntry("h_KIsoSum1_ctau10","c_{#tau}=10mm","L");
+     legendc->SetLineColor(3);
+     legendc->SetMarkerColor(3);
      legendc->SetMarkerSize(2);
      legendc=legend3->AddEntry("h_KIsoSum1_QCD","QCD","L");
      legendc->SetLineColor(6);
      legendc->SetMarkerColor(6);
      legendc->SetMarkerSize(2);
      legendc=legend3->AddEntry("h_KIsoSum1_data","Data","L");
-     legendc->SetLineColor(84);
-     legendc->SetMarkerColor(84);
+     legendc->SetLineColor(94);
+     legendc->SetMarkerColor(94);
      legendc->SetMarkerSize(2);
      legend2->Draw();
    
@@ -254,15 +254,15 @@
      h_KIsoSum2_ctau0->GetYaxis()->SetTitle("Events");
      h_KIsoSum2_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_KIsoSum2_ctau0->GetXaxis()->SetTitle("Rel. iso");
-     h_KIsoSum2_ctau0->SetMarkerColor(2);
-     h_KIsoSum2_ctau0->SetLineColor(2);
+     h_KIsoSum2_ctau0->SetMarkerColor(4);
+     h_KIsoSum2_ctau0->SetLineColor(4);
      h_KIsoSum2_ctau0->Draw("HIST");
  
      h_KIsoSum2_ctau10->GetYaxis()->SetTitle("Events");
      h_KIsoSum2_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_KIsoSum2_ctau10->GetXaxis()->SetTitle("Rel. iso");
-     h_KIsoSum2_ctau10->SetMarkerColor(4);
-     h_KIsoSum2_ctau10->SetLineColor(4);
+     h_KIsoSum2_ctau10->SetMarkerColor(3);
+     h_KIsoSum2_ctau10->SetLineColor(3);
      h_KIsoSum2_ctau10->Draw("HIST same");
    
      h_KIsoSum2_QCD->GetYaxis()->SetTitle("Events");
@@ -275,27 +275,27 @@
      h_KIsoSum2_data->GetYaxis()->SetTitle("Events");
      h_KIsoSum2_data->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_KIsoSum2_data->GetXaxis()->SetTitle("Rel. iso");
-     h_KIsoSum2_data->SetMarkerColor(84);
-     h_KIsoSum2_data->SetLineColor(84);
+     h_KIsoSum2_data->SetMarkerColor(94);
+     h_KIsoSum2_data->SetLineColor(94);
      h_KIsoSum2_data->Draw("HIST same");
    
      TLegend *legend4 = new TLegend(0.7,0.7,0.9,0.9);
      legend4->SetBorderSize(1);
      TLegendEntry *legendd = legend4->AddEntry("h_KIsoSum2_ctau0","c_{#tau}=0mm","L");
-     legendd->SetLineColor(2);
-     legendd->SetMarkerColor(2);
-     legendd->SetMarkerSize(2);
-     legendd=legend4->AddEntry("h_KIsoSum2_ctau10","c_{#tau}=10mm","L");
      legendd->SetLineColor(4);
      legendd->SetMarkerColor(4);
+     legendd->SetMarkerSize(2);
+     legendd=legend4->AddEntry("h_KIsoSum2_ctau10","c_{#tau}=10mm","L");
+     legendd->SetLineColor(3);
+     legendd->SetMarkerColor(3);
      legendd->SetMarkerSize(2);
      legendd=legend4->AddEntry("h_KIsoSum2_QCD","QCD","L");
      legendd->SetLineColor(6);
      legendd->SetMarkerColor(6);
      legendd->SetMarkerSize(2);
      legendd=legend4->AddEntry("h_KIsoSum2_data","Data","L");
-     legendd->SetLineColor(84);
-     legendd->SetMarkerColor(84);
+     legendd->SetLineColor(94);
+     legendd->SetMarkerColor(94);
      legendd->SetMarkerSize(2);
      legend4->Draw();
    
@@ -319,16 +319,16 @@
      h_MuonIsoSum1_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
     // h_MuonIsoSum1_ctau0->GetYaxis()->SetRangeUser(1.0, 1000000.); 
      h_MuonIsoSum1_ctau0->GetXaxis()->SetTitle("Rel. iso");
-     h_MuonIsoSum1_ctau0->SetMarkerColor(2);
-     h_MuonIsoSum1_ctau0->SetLineColor(2);
+     h_MuonIsoSum1_ctau0->SetMarkerColor(4);
+     h_MuonIsoSum1_ctau0->SetLineColor(4);
      h_MuonIsoSum1_ctau0->Draw("HIST");
  
      h_MuonIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
      h_MuonIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.);
      //h_MuonIsoSum1_ctau10->GetYaxis()->SetRangeUser(1.0, 1000000.); 
      h_MuonIsoSum1_ctau10->GetXaxis()->SetTitle("Rel. iso");
-     h_MuonIsoSum1_ctau10->SetMarkerColor(4);
-     h_MuonIsoSum1_ctau10->SetLineColor(4);
+     h_MuonIsoSum1_ctau10->SetMarkerColor(3);
+     h_MuonIsoSum1_ctau10->SetLineColor(3);
      h_MuonIsoSum1_ctau10->Draw("HIST same");
    
      h_MuonIsoSum1_QCD->GetYaxis()->SetTitle("Events");
@@ -343,27 +343,27 @@
      h_MuonIsoSum1_data->GetXaxis()->SetRangeUser(0.0, 2.);
     // h_MuonIsoSum1_data->GetYaxis()->SetRangeUser(1.0, 1000000.); 
      h_MuonIsoSum1_data->GetXaxis()->SetTitle("Rel. iso");
-     h_MuonIsoSum1_data->SetMarkerColor(84);
-     h_MuonIsoSum1_data->SetLineColor(84);
+     h_MuonIsoSum1_data->SetMarkerColor(94);
+     h_MuonIsoSum1_data->SetLineColor(94);
      h_MuonIsoSum1_data->Draw("HIST same");
    
      TLegend *legend1m = new TLegend(0.7,0.7,0.9,0.9);
      legend1m->SetBorderSize(1);
      TLegendEntry *legendam = legend1m->AddEntry("h_MuonIsoSum1_ctau0","c_{#tau}=0mm","L");
-     legendam->SetLineColor(2);
-     legendam->SetMarkerColor(2);
-     legendam->SetMarkerSize(2);
-     legendam=legend1m->AddEntry("h_MuonIsoSum1_ctau10","c_{#tau}=10mm","L");
      legendam->SetLineColor(4);
      legendam->SetMarkerColor(4);
+     legendam->SetMarkerSize(2);
+     legendam=legend1m->AddEntry("h_MuonIsoSum1_ctau10","c_{#tau}=10mm","L");
+     legendam->SetLineColor(3);
+     legendam->SetMarkerColor(3);
      legendam->SetMarkerSize(2);
      legendam=legend1m->AddEntry("h_MuonIsoSum1_QCD","QCD","L");
      legendam->SetLineColor(6);
      legendam->SetMarkerColor(6);
      legendam->SetMarkerSize(2);
      legendam=legend1m->AddEntry("h_MuonIsoSum1_data","Data","L");
-     legendam->SetLineColor(84);
-     legendam->SetMarkerColor(84);
+     legendam->SetLineColor(94);
+     legendam->SetMarkerColor(94);
      legendam->SetMarkerSize(2);
      legend1m->Draw();
    
@@ -387,16 +387,16 @@
      h_MuonIsoSum2_ctau0->GetXaxis()->SetRangeUser(0.0, 2.);
     // h_MuonIsoSum2_ctau0->GetYaxis()->SetRangeUser(1.0, 1000000.); 
      h_MuonIsoSum2_ctau0->GetXaxis()->SetTitle("Rel. iso");
-     h_MuonIsoSum2_ctau0->SetMarkerColor(2);
-     h_MuonIsoSum2_ctau0->SetLineColor(2);
+     h_MuonIsoSum2_ctau0->SetMarkerColor(4);
+     h_MuonIsoSum2_ctau0->SetLineColor(4);
      h_MuonIsoSum2_ctau0->Draw("HIST");
  
      h_MuonIsoSum2_ctau10->GetYaxis()->SetTitle("Events");
      h_MuonIsoSum2_ctau10->GetXaxis()->SetRangeUser(0.0, 2.);
     // h_MuonIsoSum2_ctau10->GetYaxis()->SetRangeUser(1.0, 1000000.); 
      h_MuonIsoSum2_ctau10->GetXaxis()->SetTitle("Rel. iso");
-     h_MuonIsoSum2_ctau10->SetMarkerColor(4);
-     h_MuonIsoSum2_ctau10->SetLineColor(4);
+     h_MuonIsoSum2_ctau10->SetMarkerColor(3);
+     h_MuonIsoSum2_ctau10->SetLineColor(3);
      h_MuonIsoSum2_ctau10->Draw("HIST same");
    
      h_MuonIsoSum2_QCD->GetYaxis()->SetTitle("Events");
@@ -411,27 +411,27 @@
      h_MuonIsoSum2_data->GetXaxis()->SetRangeUser(0.0, 2.);
    //  h_MuonIsoSum2_data->GetYaxis()->SetRangeUser(1.0, 1000000.); 
      h_MuonIsoSum2_data->GetXaxis()->SetTitle("Rel. iso");
-     h_MuonIsoSum2_data->SetMarkerColor(84);
-     h_MuonIsoSum2_data->SetLineColor(84);
+     h_MuonIsoSum2_data->SetMarkerColor(94);
+     h_MuonIsoSum2_data->SetLineColor(94);
      h_MuonIsoSum2_data->Draw("HIST same");
    
      TLegend *legend1mm = new TLegend(0.7,0.7,0.9,0.9);
      legend1mm->SetBorderSize(1);
      TLegendEntry *legendamm = legend1mm->AddEntry("h_MuonIsoSum2_ctau0","c_{#tau}=0mm","L");
-     legendamm->SetLineColor(2);
-     legendamm->SetMarkerColor(2);
-     legendamm->SetMarkerSize(2);
-     legendamm=legend1mm->AddEntry("h_MuonIsoSum2_ctau10","c_{#tau}=10mm","L");
      legendamm->SetLineColor(4);
      legendamm->SetMarkerColor(4);
+     legendamm->SetMarkerSize(2);
+     legendamm=legend1mm->AddEntry("h_MuonIsoSum2_ctau10","c_{#tau}=10mm","L");
+     legendamm->SetLineColor(3);
+     legendamm->SetMarkerColor(3);
      legendamm->SetMarkerSize(2);
      legendamm=legend1mm->AddEntry("h_MuonIsoSum2_QCD","QCD","L");
      legendamm->SetLineColor(6);
      legendamm->SetMarkerColor(6);
      legendamm->SetMarkerSize(2);
      legendamm=legend1mm->AddEntry("h_MuonIsoSum2_data","Data","L");
-     legendamm->SetLineColor(84);
-     legendamm->SetMarkerColor(84);
+     legendamm->SetLineColor(94);
+     legendamm->SetMarkerColor(94);
      legendamm->SetMarkerSize(2);
      legend1mm->Draw();
   
