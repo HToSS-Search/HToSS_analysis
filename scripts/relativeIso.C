@@ -101,7 +101,7 @@
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_PIsoSum1_data","Data","P*");
+     legenda=legend1->AddEntry("h_PIsoSum1_data","Data","*");
      legenda->SetLineColor(94);
      legenda->SetMarkerColor(94);
      legenda->SetMarkerSize(2);
@@ -165,7 +165,7 @@
      legendb->SetLineColor(6);
      legendb->SetMarkerColor(6);
      legendb->SetMarkerSize(2);
-     legendb=legend2->AddEntry("h_PIsoSum2_data","Data","P*");
+     legendb=legend2->AddEntry("h_PIsoSum2_data","Data","*");
      legendb->SetLineColor(94);
      legendb->SetMarkerColor(94);
      legendb->SetMarkerSize(2);
@@ -229,7 +229,7 @@
      legendc->SetLineColor(6);
      legendc->SetMarkerColor(6);
      legendc->SetMarkerSize(2);
-     legendc=legend3->AddEntry("h_KIsoSum1_data","Data","P*");
+     legendc=legend3->AddEntry("h_KIsoSum1_data","Data","*");
      legendc->SetLineColor(94);
      legendc->SetMarkerColor(94);
      legendc->SetMarkerSize(2);
@@ -293,7 +293,7 @@
      legendd->SetLineColor(6);
      legendd->SetMarkerColor(6);
      legendd->SetMarkerSize(2);
-     legendd=legend4->AddEntry("h_KIsoSum2_data","Data","P*");
+     legendd=legend4->AddEntry("h_KIsoSum2_data","Data","*");
      legendd->SetLineColor(94);
      legendd->SetMarkerColor(94);
      legendd->SetMarkerSize(2);
@@ -361,7 +361,7 @@
      legendam->SetLineColor(6);
      legendam->SetMarkerColor(6);
      legendam->SetMarkerSize(2);
-     legendam=legend1m->AddEntry("h_MuonIsoSum1_data","Data","P*");
+     legendam=legend1m->AddEntry("h_MuonIsoSum1_data","Data","*");
      legendam->SetLineColor(94);
      legendam->SetMarkerColor(94);
      legendam->SetMarkerSize(2);
@@ -429,7 +429,7 @@
      legendamm->SetLineColor(6);
      legendamm->SetMarkerColor(6);
      legendamm->SetMarkerSize(2);
-     legendamm=legend1mm->AddEntry("h_MuonIsoSum2_data","Data","P*");
+     legendamm=legend1mm->AddEntry("h_MuonIsoSum2_data","Data","*");
      legendamm->SetLineColor(94);
      legendamm->SetMarkerColor(94);
      legendamm->SetMarkerSize(2);
