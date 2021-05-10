@@ -12,11 +12,11 @@
 
   void refitmuon() {  
   
-     TFile inFile0("ggH_MS2_ctau0.root"); 
+     TFile inFile0("ggH_MS1_ctau0.root"); 
      TH1F* h_refit12InvMass_ctau0    = (TH1F*)inFile0.Get("h_Rrefit12InvMass");
      TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PhiggsR20InvMass");
 
-     TFile inFile10("ggH_MS2_ctau10.root"); 
+     TFile inFile10("ggH_MS1_ctau10.root"); 
      TH1F* h_refit12InvMass_ctau10    = (TH1F*)inFile10.Get("h_Rrefit12InvMass");
      TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PhiggsR20InvMass");
 
