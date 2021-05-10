@@ -1,0 +1,86 @@
+# Combine Tools for CB's Masters work
+
+This code WILL NOT run within the analysis code framework and requires the use of CMSSW. The instructions below will detail how to install CMSSW and the Combine Tool.
+You do not need to understand how or why the CMS SoftWare works the way it does - these instructions should be able to setup everything and provide the instructions
+on how to use the tool.
+
+Due to environmental conditions, you MUST use m2.iihe.ac.be to do this.
+
+***
+
+## CMSSW Setup info:
+
+Add the following to your .bashrc file in your home directy on the m-2 machine.
+
+```
+alias InitCmsEnv='. /cvmfs/cms.cern.ch/cmsset_default.sh'
+```
+
+Either re-log into the machine or execute the following:
+
+```
+source ~/.bashrc 
+```
+
+This creates a new command 'InitCmsEnv' that sources and sets up the general CMS software environment.
+
+To install the version of CMSSW you need for Combine, execute the following:
+
+```
+export SCRAM_ARCH=slc7_amd64_gcc700
+cmsrel CMSSW_10_2_13
+cd CMSSW_10_2_13/src
+cmsenv
+git clone https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
+cd HiggsAnalysis/CombinedLimit
+git fetch origin
+git checkout v8.2.0
+scramv1 b clean
+scramv1 b
+```
+
+These commands install CMSSW version 10_2_13, setup this version's environment, download the Higgs Analysis Combined Limit (Combine) tool, checks out the recommend tag/version, and compiles everything.
+
+Once this has been done, all you have to do in future is ...
+
+```
+cd .../yourPathToCMSSW/CMSSW_10_2_13/src/
+cmsenv
+```
+
+... and Combine will be ready to use.
+
+***
+
+## Using Combine:
+
+In the same directory as this README.md is a sample datacard named 'datacard.txt'. Currently not all the systematics are setup within it, but to run it, you will need to execute the following commands.
+These six commands cover the observed limit, expected limit, and the upper and lower 1 and 2 sigma bands.
+
+```
+combine datacard.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+```
+```
+combine datacard.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.5 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+```
+```
+combine datacard.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.84 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+```
+```
+combine datacard.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.16 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+```
+```
+combine datacard.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.975 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+```
+```
+combine datacard.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.025 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+```
+
+ADD BIT HERE - NEED TO DEBUG -H ProfileLikelihood argument
+
+## Updating the datacard.
+
+The only bits you will need to modify are the number of events in the datacard -> as this is a simple counting experiment, all you need to do is provide a number of the number of events after your full selection.
+
+My recommendation for this is for you, in your code, to have a counter that increments every time an event passes your full event selection (weighted for luminosity/number of simulated events & cross section), and
+prints the final sum (for each sample) to the console. These numbers will then be used to update the datacard before you rerun combine.
