@@ -15,7 +15,8 @@
      TH2I* h_VertexPosXY = (TH2I*)inFile.Get("h_VertexPosXY"); // Load in histogram
    
      TCanvas* canv2 = new TCanvas ("canv2", "canv2", 50, 50, 800, 600); // Canvas to draw histogram on
-  
+   
+     gStyle->SetOptStat(0);
      gPad->SetLogz(); // set log scale for y-axis on for objects drawn on the canvas from this point on
 
      h_VertexPosXY->GetXaxis()->SetTitle("Vertex position x (mm)"); // set a title for the x-axis
