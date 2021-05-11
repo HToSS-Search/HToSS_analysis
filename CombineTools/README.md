@@ -105,5 +105,13 @@ On line 14, the number of expected signal events (simulation) is given in the 2n
 These values will need replacing/updating with the number of events you find after your full event selection is applied to your signal/background samples.
 
 #Systematics
+These have been predetermined except for the statistical uncertainty uncerts. These depends on the number of signal and QCD events you have and is calculated as:
+
+```
+stat uncert = \frac{\sqrt{n}}{n}
+```
+
+The stat uncert needs entering onto lines 25 and 26 of the datacard for the signal and QCD samples, respectively.
+
 
 #TO BE DONE

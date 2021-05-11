@@ -14,14 +14,14 @@ process               0                                       1
 rate                  11.0082                                 1.27067                                                               
 ----------------------------------------
 lumi           lnN    1.025                                   -             
-trigger_sig    lnN    1.02                                    -             
-trigger_QCD    lnN    -                                       1.02         
-muon_ID_sig    lnN    1.0                                     -
-muon_ID_bkg    lnN    -                                       1.0
-muon_mom_sig   lnN    1.0                                     -
-muon_mom_bkg   lnN    -                                       1.0
-rate_sig       lnN    1.0      	       	       	       	      -
-rate_bkg       lnN    -                                       1.0
+trigger_sig    lnN    1.025                                   -             
+trigger_QCD    lnN    -                                       1.025         
+muon_ID_sig    lnN    1.01                                    -
+muon_ID_bkg    lnN    -                                       1.01
+muon_mom_sig   lnN    1.06                                    -
+muon_mom_bkg   lnN    -                                       1.06
+rate_sig       lnN    1.0838         	       	       	      -
+rate_bkg       lnN    -                                       1.046
 stat_unc_sig   lnN    1.04850712501                           -            
 stat_unc_bkg   lnN    -                                       1.17 
 
