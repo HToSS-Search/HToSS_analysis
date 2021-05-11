@@ -60,21 +60,32 @@ Currently not all the systematics are setup within it, but to run it, you will n
 
 These six commands cover the observed limit, expected limit, and the upper and lower 1 and 2 sigma bands.
 
+Observed limit:
 ```
 combine datacard.txt -M HybridNew -H AsymptoticLimits --frequentist --testStat LHC --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
+
+Expected (median) limit:
 ```
 combine datacard.txt -M HybridNew -H AsymptoticLimits --frequentist --testStat LHC --expectedFromGrid=0.5 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
+
+Upper 1 sigma band
 ```
 combine datacard.txt -M HybridNew -H AsymptoticLimits --frequentist --testStat LHC --expectedFromGrid=0.84 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
+
+Lower 1 sigma band
 ```
 combine datacard.txt -M HybridNew -H AsymptoticLimits --frequentist --testStat LHC --expectedFromGrid=0.16 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
+
+Upper 2 sigma band
 ```
 combine datacard.txt -M HybridNew -H AsymptoticLimits --frequentist --testStat LHC --expectedFromGrid=0.975 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
+
+Lower 2 sigma band
 ```
 combine datacard.txt -M HybridNew -H AsymptoticLimits --frequentist --testStat LHC --expectedFromGrid=0.025 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
