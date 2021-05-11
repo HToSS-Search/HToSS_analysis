@@ -85,3 +85,14 @@ The only bits you will need to modify are the number of events in the datacard -
 
 My recommendation for this is for you, in your code, to have a counter that increments every time an event passes your full event selection (weighted for luminosity/number of simulated events & cross section), and
 prints the final sum (for each sample) to the console. These numbers will then be used to update the datacard before you rerun combine.
+
+# Updating number of data events
+On line 8, the number of observed events (in data) is given. This value will need replacing/updating with the number of events you find after your full event selection is applied to data.
+
+# Updating number of simulated signal and background events.
+On line 14, the number of expected signal events (simulation) is given in the 2nd column (1st being the definition of the row) and the number of expected background events (simulation) is given in the 3rd column.
+These values will need replacing/updating with the number of events you find after your full event selection is applied to your signal/background samples.
+
+#Systematics
+
+#TO BE DONE
