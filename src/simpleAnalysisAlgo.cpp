@@ -127,6 +127,8 @@ void SimpleAnalysis::runMainAnalysis() {
   std::cout << "Using lumi: " << totalLumi << std::endl;
 
   bool datasetFilled{false};
+  Float_t Nbg1=0; //sideband 105-122
+  Float_t Nbg2=0; //sideband 128-145
 	
   std::string era {""};
   if (is2016_) era = {"2016"};
@@ -136,10 +138,7 @@ void SimpleAnalysis::runMainAnalysis() {
   const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "/"};
 
   // Begin to loop over all datasets
-  for(auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset){
-    Float_t Nbg1=0; //sideband 105-122
-    Float_t Nbg2=0; //sideband 128-145
-	  
+  for(auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset){ 
     datasetFilled = false;
 
     // Initialise TChain containing all files/events in dataset
@@ -221,7 +220,7 @@ void SimpleAnalysis::runMainAnalysis() {
 
       // Fill other plots now!
       // All of	these plots use	packed PF muons, so the ones corresponding to the PAT muons are provided
-      fillPackedCandidatePlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
+      fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
       //fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
 
     } // End loop over all events
@@ -710,7 +709,7 @@ void SimpleAnalysis::fillMuonReconstructionPlots(const AnalysisEvent& event, dou
   //END Muon Reconstruction function
 }
 
-void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double& eventWeight, const int& patMuIndex1, const int& patMuIndex2, const int& muIndex1, const int& muIndex2, const int& chsIndex1, const int& chsIndex2) const {
+void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double& eventWeight, Float_t& Nbg1, Float_t& Nbg2, const int& patMuIndex1, const int& patMuIndex2, const int& muIndex1, const int& muIndex2, const int& chsIndex1, const int& chsIndex2) const {
 
   //BEGIN Packed candidates
 
