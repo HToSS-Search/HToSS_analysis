@@ -127,7 +127,9 @@ void SimpleAnalysis::runMainAnalysis() {
   std::cout << "Using lumi: " << totalLumi << std::endl;
 
   bool datasetFilled{false};
-
+  Float_t Nbg1=0; //sideband 105-122
+  Float_t Nbg2=0; //sideband 128-145
+	
   std::string era {""};
   if (is2016_) era = {"2016"};
   else if (is2018_) era = {"2018"};
@@ -197,7 +199,7 @@ void SimpleAnalysis::runMainAnalysis() {
       eventWeight *= datasetWeight;
 
       // Do functions that do not require met filters or triggers
-      fillGeneratorPlots(event); // Commented out currently by CB in main branch
+      //fillGeneratorPlots(event); // Commented out currently by CB in main branch
 
       // Do functions that have met filters applied
       if( !event.metFilters() ) continue;
@@ -218,11 +220,15 @@ void SimpleAnalysis::runMainAnalysis() {
 
       // Fill other plots now!
       // All of	these plots use	packed PF muons, so the ones corresponding to the PAT muons are provided
-      //fillPackedCandidatePlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
+      fillPackedCandidatePlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
       //fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
 
     } // End loop over all events
 
+    Float_t Nbg;
+    Nbg=exp((log(Nbg1)+log(Nbg2))*6/34);
+    std::cout<<"Number of expected background events "<<Nbg<<std::endl;
+	  
   } // End loop over all datatsets
 
 }    
@@ -1090,7 +1096,15 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       }
     }
   }
+
+  if((Pantiscalar+scalarLVec).M()>105 && (Pantiscalar+scalarLVec).M()<122){ 
+    Nbg1+=Nbg1+eventWeight;
+  }
  
+  if((Pantiscalar+scalarLVec).M()>128 && (Pantiscalar+scalarLVec).M()<145){ 
+    Nbg2+=Nbg2+eventWeight;
+  }
+	
   //Wider higgs window, not refit
   if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_) { //wider higgs mass window \pm20GeV
     if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
