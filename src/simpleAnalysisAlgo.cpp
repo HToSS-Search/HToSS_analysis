@@ -127,8 +127,6 @@ void SimpleAnalysis::runMainAnalysis() {
   std::cout << "Using lumi: " << totalLumi << std::endl;
 
   bool datasetFilled{false};
-  Float_t Nbg1=0; //sideband 105-122
-  Float_t Nbg2=0; //sideband 128-145
 	
   std::string era {""};
   if (is2016_) era = {"2016"};
@@ -139,6 +137,9 @@ void SimpleAnalysis::runMainAnalysis() {
 
   // Begin to loop over all datasets
   for(auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset){
+    Float_t Nbg1=0; //sideband 105-122
+    Float_t Nbg2=0; //sideband 128-145
+	  
     datasetFilled = false;
 
     // Initialise TChain containing all files/events in dataset
@@ -318,22 +319,6 @@ std::pair<int, int> SimpleAnalysis::getDihadronPair(const AnalysisEvent& event, 
 	chsIndex2=k;
       }
     }
-
-    // Remove this bit - get packed Cand muons associated from PAT muons
-    
-    /*if(std::abs(packedId)==13 && event.packedCandsPseudoTrkPt[k]>5){//Selection of muons
-      if(event.packedCandsPseudoTrkPt[k]>mupt1){
-        mupt2=mupt1;
-        mupt1=event.packedCandsPseudoTrkPt[k];
-        muIndex2=muIndex1;
-        muIndex1=k;
-      }
-      else if(event.packedCandsPseudoTrkPt[k]>mupt2){
-             mupt2=event.packedCandsPseudoTrkPt[k];
-             muIndex2=k;
-      }
-    }*/
-    
   }
   return std::make_pair(chsIndex1, chsIndex2); // ADM - return the indices of the selected two pions
 }
@@ -1098,11 +1083,11 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
 
   if((Pantiscalar+scalarLVec).M()>105 && (Pantiscalar+scalarLVec).M()<122){ 
-    Nbg1+=Nbg1+eventWeight;
+    Nbg1+=eventWeight;
   }
  
   if((Pantiscalar+scalarLVec).M()>128 && (Pantiscalar+scalarLVec).M()<145){ 
-    Nbg2+=Nbg2+eventWeight;
+    Nbg2+=eventWeight;
   }
 	
   //Wider higgs window, not refit
