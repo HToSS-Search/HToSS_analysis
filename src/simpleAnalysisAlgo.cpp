@@ -127,8 +127,12 @@ void SimpleAnalysis::runMainAnalysis() {
   std::cout << "Using lumi: " << totalLumi << std::endl;
 
   bool datasetFilled{false};
+	
   Float_t Nbg1=0; //sideband 105-122
   Float_t Nbg2=0; //sideband 128-145
+  Float_t Obs=0; //Observation
+  Float_t rate_signal=0; Float_t rate_QCD=0;
+  Float_t stat_signal=0; Float_t stat_QCD=0;
 	
   std::string era {""};
   if (is2016_) era = {"2016"};
@@ -220,7 +224,7 @@ void SimpleAnalysis::runMainAnalysis() {
 
       // Fill other plots now!
       // All of	these plots use	packed PF muons, so the ones corresponding to the PAT muons are provided
-      fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
+      fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, Obs, rate_signal, rate_QCD, stat_signal, stat_QCD, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
       //fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
 
     } // End loop over all events
@@ -228,6 +232,12 @@ void SimpleAnalysis::runMainAnalysis() {
     Float_t Nbg;
     Nbg=exp((log(Nbg1)+log(Nbg2))*6/34);
     std::cout<<"Number of expected background events "<<Nbg<<std::endl;
+    
+    std::cout<<"Number of observed events "<<Obs<<std::endl;
+    std::cout<<"Rate of signal events "<<rate_signal<<std::endl;
+    std::cout<<"Rate of QCD events "<<rate_QCD<<std::endl;
+    std::cout<<"Uncertainty on signal events "<<stat_signal<<std::endl;
+    std::cout<<"Uncertainty on QCD events "<<stat_QCD<<std::endl;
 	  
   } // End loop over all datatsets
 
@@ -709,7 +719,7 @@ void SimpleAnalysis::fillMuonReconstructionPlots(const AnalysisEvent& event, dou
   //END Muon Reconstruction function
 }
 
-void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double& eventWeight, Float_t& Nbg1, Float_t& Nbg2, const int& patMuIndex1, const int& patMuIndex2, const int& muIndex1, const int& muIndex2, const int& chsIndex1, const int& chsIndex2) const {
+void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double& eventWeight, Float_t& Nbg1, Float_t& Nbg2, Float_t& Obs, Float_t& rate_signal, Float_t& rate_QCD, Float_t& stat_signal, Float_t& stat_QCD, const int& patMuIndex1, const int& patMuIndex2, const int& muIndex1, const int& muIndex2, const int& chsIndex1, const int& chsIndex2) const {
 
   //BEGIN Packed candidates
 
@@ -1077,6 +1087,12 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
          // h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(scalarLVec), eventWeight);
          // h_Pinvmass->Fill(Phadroninv,muoninv, eventWeight);
 	h_PhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
+	Obs+=eventWeight;
+	rate_signal+=eventWeight;
+	rate_QCD+=eventWeight;
+	stat_signal+=1;
+	stat_QCD+=1;
+	   
       }
     }
   }
