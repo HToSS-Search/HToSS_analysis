@@ -1058,27 +1058,30 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       }
     }    	  
   }
+	
 
-  //Muon,pion wider and not refit
-  if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-    //if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){ 
-    if(std::abs((Pantiscalar).M())<statWindow_){
-      if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
+  //Muon,pion wider and not refit	
+  if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
+    if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
+      //if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){ 
+      if(std::abs((Pantiscalar).M())<statWindow_){
         h_P20antiscalarInvMass->Fill(Pantiscalar.M(), eventWeight);
 	QCD_20Pantiscalar+=eventWeight;
       } 
     }
-    if(std::abs((scalarLVec).M())<statWindow_){
-      if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
+  }
+  if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
+    if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
+      if(std::abs((scalarLVec).M())<statWindow_){
         h_P20scalarInvMass->Fill(scalarLVec.M(), eventWeight);
 	QCD_20scalar+=eventWeight;
       }	  
     }
   }
 	
-  if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){ 
-    if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
-      if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
+  if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
+    if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+      if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
          // h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(scalarLVec), eventWeight);
          // h_Pinvmass->Fill(Phadroninv,muoninv, eventWeight);
 	h_PhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
@@ -1092,26 +1095,27 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     }
   }
 
-  if((Pantiscalar+scalarLVec).M()>105 && (Pantiscalar+scalarLVec).M()<122){ 
-    if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
-      if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
+  if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
+    if((Pantiscalar+scalarLVec).M()>105 && (Pantiscalar+scalarLVec).M()<122){
+      if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
         Nbg1+=eventWeight;
       }
     }
   }
  
-  if((Pantiscalar+scalarLVec).M()>128 && (Pantiscalar+scalarLVec).M()<145){ 
-    if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
-      if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
+  if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
+    if((Pantiscalar+scalarLVec).M()>128 && (Pantiscalar+scalarLVec).M()<145){
+      if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
         Nbg2+=eventWeight;
       }
     }
   }
 	
   //Wider higgs window, not refit
-  if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_) { //wider higgs mass window \pm20GeV
-    if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
-      if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
+	
+  if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ //wider higgs mass window \pm20GeV
+    if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
+      if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
         h_P20higgsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
       }    
     }
@@ -1801,7 +1805,7 @@ void SimpleAnalysis::savePlots() {
   h_KhiggsRInvMass->GetYaxis()->SetTitle("Events");
   h_KhiggsRInvMass->Write();
   
-  h_kNentries->GetXaxis()->SetBinLabel(1,"Number of dihadrons"); h_kNentries->GetXaxis()->SetBinLabel(2,"Small Higgs mass window"); h_kNentries->GetXaxis()->SetBinLabel(3,"Statistical window"); h_kNentries->GetXaxis()->SetBinLabel(4,"Relative isolation");
+  h_kNentries->GetXaxis()->SetBinLabel(1,"Number of dihadrons"); h_kNentries->GetXaxis()->SetBinLabel(2,"Relative isolation"); h_kNentries->GetXaxis()->SetBinLabel(3,"Higgs mass window: #pm 3 GeV"); h_kNentries->GetXaxis()->SetBinLabel(4,"Scalar mass window: #pm 150 MeV");
   h_kNentries->Write();	
 	
   //Pion mass assumption
@@ -1845,7 +1849,7 @@ void SimpleAnalysis::savePlots() {
   h_Pinvmass->GetYaxis()->SetTitle("Muon invariant mass (GeV)");
   h_Pinvmass->Write();
 
-  h_pNentries->GetXaxis()->SetBinLabel(1,"Number of dihadrons"); h_pNentries->GetXaxis()->SetBinLabel(2,"Small Higgs mass window"); h_pNentries->GetXaxis()->SetBinLabel(3,"Statistical window"); h_pNentries->GetXaxis()->SetBinLabel(4,"Relative isolation");
+  h_pNentries->GetXaxis()->SetBinLabel(1,"Number of dihadrons"); h_pNentries->GetXaxis()->SetBinLabel(2,"Relative isolation"); h_pNentries->GetXaxis()->SetBinLabel(3,"Higgs mass window: #pm 3 GeV"); h_pNentries->GetXaxis()->SetBinLabel(4,"Scalar mass window: #pm 150 MeV");
   h_pNentries->Write();	
 	
   h_PantiscalarInvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
@@ -1855,9 +1859,8 @@ void SimpleAnalysis::savePlots() {
   h_PscalarInvMass->GetYaxis()->SetTitle("Events");
   h_PscalarInvMass->Write();
 
-  h_mNentries->GetXaxis()->SetBinLabel(1,"Number of dimuons"); h_mNentries->GetXaxis()->SetBinLabel(2,"Small Higgs mass window"); h_mNentries->GetXaxis()->SetBinLabel(3,"Statistical window"); h_mNentries->GetXaxis()->SetBinLabel(4,"Relative isolation");
+  h_mNentries->GetXaxis()->SetBinLabel(1,"Number of dimuons"); h_mNentries->GetXaxis()->SetBinLabel(2,"Relative isolation"); h_mNentries->GetXaxis()->SetBinLabel(3,"Higgs mass window: #pm 3 GeV"); h_mNentries->GetXaxis()->SetBinLabel(4,"Scalar mass window: #pm 150 MeV");
   h_mNentries->Write();		
-	
 	
   h_PhiggsInvMass->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
   h_PhiggsInvMass->GetYaxis()->SetTitle("Events");
