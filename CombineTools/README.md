@@ -51,6 +51,11 @@ cmsenv
 
 ... and Combine will be ready to use.
 
+Copy over appropriate datacard
+
+```
+cp ~/HToSS_analysis/CombineTools/datacard_2GeV_10mm.txt .
+```
 ***
 
 ## Using Combine:
@@ -62,7 +67,7 @@ These six commands cover the observed limit, expected limit, and the upper and l
 
 Observed limit:
 ```
-combine datacard.txt -M HybridNew -H AsymptoticLimits --frequentist --testStat LHC --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+combine datacard_2GeV_10mm.txt -M HybridNew -H AsymptoticLimits --frequentist --testStat LHC --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
 
 Expected (median) limit:
