@@ -227,7 +227,7 @@ void SimpleAnalysis::runMainAnalysis() {
 
       // Fill other plots now!
       // All of	these plots use	packed PF muons, so the ones corresponding to the PAT muons are provided
-      fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, Obs, rate_signal, rate_QCD, stat_signal, stat_QCD, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
+      fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, Obs, rate_signal, rate_QCD, stat_signal, stat_QCD, QCD_Kantiscalar, QCD_Pantiscalar, QCD_20Kantiscalar, QCD_20Pantiscalar, QCD_scalar, QCD_20scalar, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
       //fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
 
     } // End loop over all events
@@ -1431,23 +1431,8 @@ void SimpleAnalysis::setupPlots() {
   h_KhiggsDeltaR = new TH1F("h_KhiggsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.);
 	
   h_kNentries = new TH1F("h_kNentries", "Number of kaon events", 4, 0.,4.);
-  h_kNentries1 = new TH1F("h_kNentries1", "Number of kaon events", 1, 0.,1.);
-  h_kNentries2 = new TH1F("h_kNentries2", "Number of kaon events", 1, 0.,1.);
-  h_kNentries3 = new TH1F("h_kNentries3", "Number of kaon events", 1, 0.,1.);
-  h_kNentries4 = new TH1F("h_kNentries4", "Number of kaon events", 1, 0.,1.);
-	
-  h_pNentries = new TH1F("h_pNentries", "Number of pion events", 4, 0.,4.);
-  h_pNentries1 = new TH1F("h_pNentries1", "Number of pion events", 1, 0.,1.);
-  h_pNentries2 = new TH1F("h_pNentries2", "Number of pion events", 1, 0.,1.);
-  h_pNentries3 = new TH1F("h_pNentries3", "Number of pion events", 1, 0.,1.);
-  h_pNentries4 = new TH1F("h_pNentries4", "Number of pion events", 1, 0.,1.);
-	
+  h_pNentries = new TH1F("h_pNentries", "Number of pion events", 4, 0.,4.);	
   h_mNentries = new TH1F("h_mNentries", "Number of muon events", 4, 0.,4.);
-  h_mNentries1 = new TH1F("h_mNentries1", "Number of muon events", 1, 0.,1.);
-  h_mNentries2 = new TH1F("h_mNentries2", "Number of muon events", 1, 0.,1.);
-  h_mNentries3 = new TH1F("h_mNentries3", "Number of muon events", 1, 0.,1.);
-  h_mNentries4 = new TH1F("h_mNentries4", "Number of muon events", 1, 0.,1.);
-	
 	
   //Pion mass assumption
   h_PhadronDeltaR = new TH1F("h_PhadronDeltaR", "Two hadrons (pions) #DeltaR",2500, -10., 10.);
