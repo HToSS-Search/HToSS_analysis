@@ -44,7 +44,8 @@ These commands install CMSSW version 10_2_13, setup this version's environment, 
 Once this has been done, all you have to do in future is ...
 
 ```
-cd .../yourPathToCMSSW/CMSSW_10_2_13/src/
+cd CMSSW_10_2_13
+cd src
 InitCmsEnv
 cmsenv
 ```
