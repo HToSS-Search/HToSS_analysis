@@ -5,13 +5,13 @@ kmax * number of nuisance parameters # * means figure it out from the rest of th
 ----------------------------------------
 
 bin            a
-observation    1.27067 
+observation    1.208514414057075
 	
 ----------------------------------------
 bin                   a                                       a             
 process               signal                                  QCD           
 process               0                                       1             
-rate                  11.0082                                 1.236208683536157                                                               
+rate                  1.045610395947258                       1.479909217441099                                                               
 ----------------------------------------
 lumi           lnN    1.025                                   -             
 trigger_sig    lnN    1.025                                   -             
@@ -20,7 +20,7 @@ muon_ID_sig    lnN    1.01                                    -
 muon_ID_bkg    lnN    -                                       1.01
 muon_mom_sig   lnN    1.06                                    -
 muon_mom_bkg   lnN    -                                       1.06
-rate_sig       lnN    1.045610395947258         	       	       	      -
+rate_sig       lnN    1.0838         	       	       	      -
 rate_bkg       lnN    -                                       1.046
-stat_unc_sig   lnN    1.027853100187768                           -            
-stat_unc_bkg   lnN    -                                       1.17 
+stat_unc_sig   lnN    1.027853100187768                       -            
+stat_unc_bkg   lnN    -                                       1.707106781186548 
