@@ -133,6 +133,9 @@ void SimpleAnalysis::runMainAnalysis() {
   Float_t Obs=0; //Observation
   Float_t rate_signal=0; Float_t rate_QCD=0;
   Float_t stat_signal=0; Float_t stat_QCD=0;
+
+  Float_t QCD_scalar=0; Float_t QCD_Pantiscalar=0; Float_t QCD_Kantiscalar=0;
+  Float_t QCD_20scalar=0; Float_t QCD_20Pantiscalar=0; Float_t QCD_20Kantiscalar=0;
 	
   std::string era {""};
   if (is2016_) era = {"2016"};
@@ -238,6 +241,13 @@ void SimpleAnalysis::runMainAnalysis() {
     std::cout<<"Rate of QCD events "<<rate_QCD<<std::endl;
     std::cout<<"Uncertainty on signal events "<<stat_signal<<std::endl;
     std::cout<<"Uncertainty on QCD events "<<stat_QCD<<std::endl;
+	  
+    Float_t corr_QCD_scalar;
+    corr_QCD_scalar=QCD_scalar/QCD_20scalar;
+    Float_t corr_QCD_Pantiscalar;
+    corr_QCD_Pantiscalar=QCD_Pantiscalar/QCD_20Pantiscalar;
+    Float_t corr_QCD_Kantiscalar;
+    corr_QCD_Kantiscalar=QCD_Kantiscalar/QCD_20Kantiscalar;
 	  
   } // End loop over all datatsets
 
@@ -899,31 +909,23 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   
 
   //Kaon 
-  h_kNentries1->Fill(Kantiscalar.M(), eventWeight);
-  knentries1=h_kNentries1->GetEntries();
-  h_kNentries->SetBinContent(1,knentries1);   
+  h_kNentries->SetBinContent(1,eventWeight);   
 	
   h_KIsoSum1->Fill(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1], eventWeight);
   h_KIsoSum2->Fill(KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
   h_KIso2->Fill(KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2],event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
   
   if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
-       	    
-     h_kNentries2->Fill(Kantiscalar.M(), eventWeight);
-     knentries2=h_kNentries2->GetEntries();
-     h_kNentries->SetBinContent(2,knentries2);
+     h_kNentries->SetBinContent(2,eventWeight);
 	    
      if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
-       h_kNentries3->Fill(Kantiscalar.M(), eventWeight);
-       knentries3=h_kNentries3->GetEntries();
-       h_kNentries->SetBinContent(3,knentries3);
+       h_kNentries->SetBinContent(3,eventWeight);
 	     
        if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
          h_KantiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
-	      
-	 h_kNentries4->Fill(Kantiscalar.M(), eventWeight);
-         knentries4=h_kNentries4->GetEntries();
-         h_kNentries->SetBinContent(4,knentries4);
+	 QCD_Kantiscalar+=eventWeight;    
+
+         h_kNentries->SetBinContent(4,eventWeight);
        }
      }
   } 
@@ -935,6 +937,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
       if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
           h_K20antiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
+	  QCD_20Kantiscalar+=eventWeight;
       }
     }
   }
@@ -959,7 +962,6 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
         Khiggs=(Kantiscalar+scalarLVec).M();
         h_K20higgsInvMass->Fill(Khiggs, eventWeight);
-         
       } 
     }
   }
@@ -1014,40 +1016,24 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 
   h_MuonIsoSum1->Fill(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1], eventWeight);
   h_MuonIsoSum2->Fill(MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2], eventWeight);
-	  
-  h_pNentries1->Fill(Pantiscalar.M(), eventWeight);
-  pnentries1=h_pNentries1->GetEntries();
-  h_pNentries->SetBinContent(1,pnentries1);
 
-  h_mNentries1->Fill(scalarLVec.M(), eventWeight);
-  mnentries1=h_mNentries1->GetEntries();
-  h_mNentries->SetBinContent(1,mnentries1);
+  h_pNentries->SetBinContent(1,eventWeight);
+  h_mNentries->SetBinContent(1,eventWeight);
 	
   if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
-    h_pNentries2->Fill(Pantiscalar.M(), eventWeight);
-    pnentries2=h_pNentries2->GetEntries();
-    h_pNentries->SetBinContent(2,pnentries2);
-   
-    h_mNentries2->Fill(scalarLVec.M(), eventWeight);
-    mnentries2=h_mNentries2->GetEntries();
-    h_mNentries->SetBinContent(2,mnentries2);
+    h_pNentries->SetBinContent(2,eventWeight);
+    h_mNentries->SetBinContent(2,eventWeight);
 	  
     if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
-      h_pNentries3->Fill(Pantiscalar.M(), eventWeight);
-      pnentries3=h_pNentries3->GetEntries();
-      h_pNentries->SetBinContent(3,pnentries3);
-	    
-      h_mNentries3->Fill(scalarLVec.M(), eventWeight);
-      mnentries3=h_mNentries3->GetEntries();
-      h_mNentries->SetBinContent(3,mnentries3);
+      h_pNentries->SetBinContent(3,eventWeight);
+      h_mNentries->SetBinContent(3,eventWeight);
       
       
       if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
         h_PantiscalarInvMass->Fill(Pantiscalar.M(), eventWeight);
-	
-	h_pNentries4->Fill(Pantiscalar.M(), eventWeight);
-        pnentries4=h_pNentries4->GetEntries();
-        h_pNentries->SetBinContent(4,pnentries4);
+	QCD_Pantiscalar+=eventWeight;
+
+        h_pNentries->SetBinContent(4,eventWeight);
 	      
         //Revealing the inner structure of the tracker layer?
         /*h_HVertexPosXY->Fill(event.packedCandsVx[chsIndex1],event.packedCandsVy[chsIndex1], eventWeight);
@@ -1060,10 +1046,9 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       	
       if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
         h_PscalarInvMass->Fill(scalarLVec.M(), eventWeight);
+	QCD_scalar+=eventWeight;
 	      
-	h_mNentries4->Fill(scalarLVec.M(), eventWeight);
-        mnentries4=h_mNentries4->GetEntries();
-        h_mNentries->SetBinContent(4,mnentries4);
+        h_mNentries->SetBinContent(4,eventWeight);
       }
 	    
     }	  
@@ -1074,9 +1059,11 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){    
       if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
         h_P20antiscalarInvMass->Fill(Pantiscalar.M(), eventWeight);
+	QCD_20Pantiscalar+=eventWeight;
       }  
       if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
         h_P20scalarInvMass->Fill(scalarLVec.M(), eventWeight);
+	QCD_20scalar+=eventWeight;
       }	  
     }
   }
@@ -1813,7 +1800,6 @@ void SimpleAnalysis::savePlots() {
   h_KhiggsRInvMass->GetYaxis()->SetTitle("Events");
   h_KhiggsRInvMass->Write();
   
-  h_kNentries1->Write(); h_kNentries2->Write(); h_kNentries3->Write(); h_kNentries4->Write();
   h_kNentries->GetXaxis()->SetBinLabel(1,"Number of dihadrons"); h_kNentries->GetXaxis()->SetBinLabel(2,"Small Higgs mass window"); h_kNentries->GetXaxis()->SetBinLabel(3,"Statistical window"); h_kNentries->GetXaxis()->SetBinLabel(4,"Relative isolation");
   h_kNentries->Write();	
 	
@@ -1857,7 +1843,7 @@ void SimpleAnalysis::savePlots() {
   h_Pinvmass->GetXaxis()->SetTitle("Hadron (pion) invariant mass (GeV)");
   h_Pinvmass->GetYaxis()->SetTitle("Muon invariant mass (GeV)");
   h_Pinvmass->Write();
-  h_pNentries1->Write(); h_pNentries2->Write(); h_pNentries3->Write(); h_pNentries4->Write();
+
   h_pNentries->GetXaxis()->SetBinLabel(1,"Number of dihadrons"); h_pNentries->GetXaxis()->SetBinLabel(2,"Small Higgs mass window"); h_pNentries->GetXaxis()->SetBinLabel(3,"Statistical window"); h_pNentries->GetXaxis()->SetBinLabel(4,"Relative isolation");
   h_pNentries->Write();	
 	
@@ -1867,7 +1853,7 @@ void SimpleAnalysis::savePlots() {
   h_PscalarInvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
   h_PscalarInvMass->GetYaxis()->SetTitle("Events");
   h_PscalarInvMass->Write();
-  h_mNentries1->Write(); h_mNentries2->Write(); h_mNentries3->Write(); h_mNentries4->Write();
+
   h_mNentries->GetXaxis()->SetBinLabel(1,"Number of dimuons"); h_mNentries->GetXaxis()->SetBinLabel(2,"Small Higgs mass window"); h_mNentries->GetXaxis()->SetBinLabel(3,"Statistical window"); h_mNentries->GetXaxis()->SetBinLabel(4,"Relative isolation");
   h_mNentries->Write();		
 	
