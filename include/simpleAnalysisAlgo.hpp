@@ -200,7 +200,6 @@ class SimpleAnalysis
     TH1F* h_K20higgsInvMass;
     TH1F* h_KhiggsRInvMass;
     TH1F* h_KhiggsDeltaR;
-    TH1F* h_kNentries1; TH1F* h_kNentries2; TH1F* h_kNentries3; TH1F* h_kNentries4;
     TH1F* h_kNentries;
     
     //Pion mass assumption
@@ -217,9 +216,7 @@ class SimpleAnalysis
     TH1F* h_PmuonsInvMass;
     TF1* Gaussian2;
     TH2F* h_Pinvmass;
-    TH1F* h_pNentries1; TH1F* h_pNentries2; TH1F* h_pNentries3; TH1F* h_pNentries4;
     TH1F* h_pNentries;
-    TH1F* h_mNentries1; TH1F* h_mNentries2; TH1F* h_mNentries3; TH1F* h_mNentries4;
     TH1F* h_mNentries;
     
     TH1F* h_PantiscalarInvMass;
