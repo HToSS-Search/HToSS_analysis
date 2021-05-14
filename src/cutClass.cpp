@@ -1485,7 +1485,7 @@ double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const 
         }
     }
 
-    else if (!is2016_)  { // Run2016 needs separate treatments in pre and post HIP eras
+    else if (is2016_)  { // Run2016 needs separate treatments in pre and post HIP eras
 
         double maxIdPt  {h_muonIDs1->GetYaxis()->GetXmax() - 0.1};
 //        double maxIsoPt {h_muonPFiso1->GetYaxis()->GetXmax() - 0.1};
@@ -1544,7 +1544,7 @@ double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const 
         }
     }
 
-    else if (!is2018_)  { // is 2018
+    else if (is2018_)  { // is 2018
         return {1.0};
     }
     else throw std::runtime_error("Unknown channel");
