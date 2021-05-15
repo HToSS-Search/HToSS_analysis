@@ -200,6 +200,7 @@ class SimpleAnalysis
     TH1F* h_KhiggsInvMass;
     TH1F* h_K20higgsInvMass;
     TH1F* h_KhiggsRInvMass;
+    TH1F* h_KhiggsR20InvMass;
     TH1F* h_KhiggsDeltaR;
     TH1F* h_kNentries;
     
