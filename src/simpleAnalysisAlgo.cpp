@@ -956,20 +956,16 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
           //h_Kinvmass->Fill(Khadroninv,muoninv, eventWeight);
       } 
     }
-  }
-
-  //kaon higgs wider window
-  if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
     if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
       if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
         Khiggs=(Kantiscalar+scalarLVec).M();
         h_K20higgsInvMass->Fill(Khiggs, eventWeight);
       } 
-    }
+    } 
   }
 
-  //Kaon refitted
-	
+  
+  //Kaon refitted and wider window	
   TLorentzVector refkaon; TLorentzVector refkaonWide;	
   if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2])){
     if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
@@ -989,7 +985,6 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	   }
 	 }
       }
-      //Kaon refitted wider
       if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
         if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
 	  for(Int_t k{0}; k<event.numChsTrackPairs;k++){
@@ -1004,14 +999,9 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	     }
 	   }	
 	}
-      }
-	    
+      }    
     }
-  }
-
- 
-  
-      
+  }    
 
   //Pion,muon 
 	
@@ -1187,7 +1177,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
  
 	
-  //Higgs refitted and wider window	
+  //Higgs refitted (pion assumption) and wider window	
   if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){	
     if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2]) && event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
       if(std::abs((refpion+refmuon).M()-higgsMass_)<higgsMassWindow_){
@@ -1202,7 +1192,22 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       }
     }
   } 
-    
+   
+  //Higgs refitted (kaon assumption) and wider window	
+  if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){	
+    if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2]) && event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
+      if(std::abs((refkaon+refmuon).M()-higgsMass_)<higgsMassWindow_){
+        if(std::abs((refkaon).M()-(refmuon).M())<statWindow_){
+          h_KhiggsRInvMass->Fill((refkaon+refmuon).M(), eventWeight); 
+	}
+      }
+      if(std::abs((refkaonWide+refmuonWide).M()-higgsMass_)<higgsMassWideWindow_){
+        if(std::abs((refkaonWide).M()-(refmuonWide).M())<statWindow_){
+          h_KhiggsR20InvMass->Fill((refkaonWide+refmuonWide).M(), eventWeight);
+	}
+      }
+    }
+  } 
             
 }//close this function
 
@@ -1429,6 +1434,7 @@ void SimpleAnalysis::setupPlots() {
   h_KhiggsInvMass = new TH1F("h_KhiggsInvMass", "Higgs invariant mass", 500, 0., 200.);
   h_K20higgsInvMass = new TH1F("h_K20higgsInvMass", "Higgs invariant mass", 500, 0., 200.);
   h_KhiggsRInvMass = new TH1F("h_KhiggsRInvMass", "Higgs invariant mass", 500, 0., 200.);
+  h_KhiggsR20InvMass = new TH1F("h_KhiggsR20InvMass", "Higgs invariant mass", 500, 0., 200.);
   h_KhiggsDeltaR = new TH1F("h_KhiggsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.);
 	
   h_kNentries = new TH1F("h_kNentries", "Number of kaon events", 4, 0.,4.);
@@ -1785,6 +1791,9 @@ void SimpleAnalysis::savePlots() {
   h_KhiggsRInvMass->GetXaxis()->SetTitle("GeV");
   h_KhiggsRInvMass->GetYaxis()->SetTitle("Events");
   h_KhiggsRInvMass->Write();
+  h_KhiggsR20InvMass->GetXaxis()->SetTitle("GeV");
+  h_KhiggsR20InvMass->GetYaxis()->SetTitle("Events");
+  h_KhiggsR20InvMass->Write();
   
   h_kNentries->GetXaxis()->SetBinLabel(1,"Number of dihadrons"); h_kNentries->GetXaxis()->SetBinLabel(2,"Relative isolation"); h_kNentries->GetXaxis()->SetBinLabel(3,"Higgs mass window: #pm 3 GeV"); h_kNentries->GetXaxis()->SetBinLabel(4,"Scalar mass window: #pm 150 MeV");
   h_kNentries->Write();	
