@@ -971,7 +971,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
 	    
       if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
-        if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
+        if(std::abs((Kantiscalar).M()-2)<statWindow_){
           for(Int_t k{0}; k<event.numChsTrackPairs;k++){
              if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
 	       if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
@@ -986,7 +986,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	 }
       }
       if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-        if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
+        if(std::abs((Kantiscalar).M()-2)<statWindow_){
 	  for(Int_t k{0}; k<event.numChsTrackPairs;k++){
              if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
 	       if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
