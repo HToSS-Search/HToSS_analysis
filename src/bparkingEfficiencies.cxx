@@ -65,18 +65,18 @@ int main(int argc, char* argv[]) {
     TH1F* h_diMuonMass_truth                     {new TH1F("h_diMuonMass_truth",         "", 200, 0., 100.)}; 
     TH1F* h_diMuonMass                           {new TH1F("h_diMuonMass",               "", 200, 0., 100.)};
     // numerator - bParking
-    TH1F* h_leadingMuonPt_truth_bParkingTrig           {new TH1F("h_leadingMuonPt_truth_bParkingTrig",      "Trigger turn-on for signal; p_{T} (GeV); H_{T} > 250 Calo trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_truth_bParkingTrig        {new TH1F("h_subLeadingMuonPt_truth_bParkingTrig",   "Trigger turn-on for signal; p_{T} (GeV); H_{T} > 250 Calo trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_leadingMuonPt_bParkingTrig                 {new TH1F("h_leadingMuonPt_bParkingTrig",            "Trigger turn-on for signal; p_{T} (GeV); H_{T} > 250 Calo trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_bParkingTrig              {new TH1F("h_subLeadingMuonPt_bParkingTrig",         "Trigger turn-on for signal; p_{T} (GeV); H_{T} > 250 Calo trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_leadingMuonEta_truth_bParkingTrig          {new TH1F("h_leadingMuonEta_truth_bParkingTrig",     "Trigger turn-on for signal; #eta; H_{T} > 250 Calo trigger #epsilon", 300, -3., 3.)};
-    TH1F* h_subLeadingMuonEta_truth_bParkingTrig       {new TH1F("h_subLeadingMuonEta_truth_bParkingTrig",  "Trigger turn-on for signal; #eta; H_{T} > 250 Calo trigger #epsilon", 300, -3., 3.)};
-    TH1F* h_leadingMuonEta_bParkingTrig                {new TH1F("h_leadingMuonEta_bParkingTrig",           "Trigger turn-on for signal; #eta; H_{T} > 250 Calo trigger #epsilon", 300, -3., 3.)};
-    TH1F* h_subLeadingMuonEta_bParkingTrig             {new TH1F("h_subLeadingMuonEta_bParkingTrig",        "Trigger turn-on for signal; #eta; H_{T} > 250 Calo trigger #epsilon", 300, -3., 3.)};
-    TH1F* h_delR_truth_bParkingTrig                    {new TH1F("h_delR_truth_bParkingTrig",               "Trigger turn-on for signal; #Delta R; H_{T} > 250 Calo trigger #epsilon", 100, 0., 1.0)};
-    TH1F* h_delR_bParkingTrig                          {new TH1F("h_delR_bParkingTrig",                     "Trigger turn-on for signal; #Delta R; H_{T} > 250 Calo trigger #epsilon", 100, 0., 1.0)};
-    TH1F* h_diMuonMass_truth_bParkingTrig              {new TH1F("h_diMuonMass_truth_bParkingTrig",         "Trigger turn-on for signal; m_{#mu#mu}; H_{T} > 250 Calo trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_diMuonMass_bParkingTrig                    {new TH1F("h_diMuonMass_bParkingTrig",               "Trigger turn-on for signal; m_{#mu#mu}; H_{T} > 250 Calo trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_leadingMuonPt_truth_bParkingTrig           {new TH1F("h_leadingMuonPt_truth_bParkingTrig",      "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_truth_bParkingTrig        {new TH1F("h_subLeadingMuonPt_truth_bParkingTrig",   "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_leadingMuonPt_bParkingTrig                 {new TH1F("h_leadingMuonPt_bParkingTrig",            "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_bParkingTrig              {new TH1F("h_subLeadingMuonPt_bParkingTrig",         "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_leadingMuonEta_truth_bParkingTrig          {new TH1F("h_leadingMuonEta_truth_bParkingTrig",     "Trigger turn-on for signal; #eta; trigger #epsilon", 300, -3., 3.)};
+    TH1F* h_subLeadingMuonEta_truth_bParkingTrig       {new TH1F("h_subLeadingMuonEta_truth_bParkingTrig",  "Trigger turn-on for signal; #eta; trigger #epsilon", 300, -3., 3.)};
+    TH1F* h_leadingMuonEta_bParkingTrig                {new TH1F("h_leadingMuonEta_bParkingTrig",           "Trigger turn-on for signal; #eta; trigger #epsilon", 300, -3., 3.)};
+    TH1F* h_subLeadingMuonEta_bParkingTrig             {new TH1F("h_subLeadingMuonEta_bParkingTrig",        "Trigger turn-on for signal; #eta; trigger #epsilon", 300, -3., 3.)};
+    TH1F* h_delR_truth_bParkingTrig                    {new TH1F("h_delR_truth_bParkingTrig",               "Trigger turn-on for signal; #Delta R; trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_delR_bParkingTrig                          {new TH1F("h_delR_bParkingTrig",                     "Trigger turn-on for signal; #Delta R; trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_diMuonMass_truth_bParkingTrig              {new TH1F("h_diMuonMass_truth_bParkingTrig",         "Trigger turn-on for signal; m_{#mu#mu}; trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_diMuonMass_bParkingTrig                    {new TH1F("h_diMuonMass_bParkingTrig",               "Trigger turn-on for signal; m_{#mu#mu}; trigger #epsilon", 200, 0., 100.)};
 
     namespace po = boost::program_options;
 
@@ -266,6 +266,19 @@ int main(int argc, char* argv[]) {
     h_delR_bParkingTrig->Divide(h_delR);
     h_diMuonMass_truth_bParkingTrig->Divide(h_diMuonMass_truth);
     h_diMuonMass_bParkingTrig->Divide(h_diMuonMass);
+
+    h_leadingMuonPt_truth_bParkingTrig->Write();
+    h_subLeadingMuonPt_truth_bParkingTrig->Write();
+    h_leadingMuonPt_bParkingTrig->Write();
+    h_subLeadingMuonPt_bParkingTrig->Write();
+    h_leadingMuonEta_truth_bParkingTrig->Write();
+    h_subLeadingMuonEta_truth_bParkingTrig->Write();
+    h_leadingMuonEta_bParkingTrig->Write();
+    h_subLeadingMuonEta_bParkingTrig->Write();
+    h_delR_truth_bParkingTrig->Write();
+    h_delR_bParkingTrig->Write();
+    h_diMuonMass_truth_bParkingTrig->Write();
+    h_diMuonMass_bParkingTrig->Write();
 
     outFile->Close();
 
