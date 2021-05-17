@@ -52,7 +52,7 @@ void bparkingEfficiencyPlotMacro() {
     h_leadingMuonPt_bParkingTrigPt_ctau0->GetXaxis()->SetTitleOffset(1.3);
     h_leadingMuonPt_bParkingTrigPt_ctau0->GetXaxis()->SetTitleFont(42);
     h_leadingMuonPt_bParkingTrigPt_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
-    h_leadingMuonPt_bParkingTrigPt_ctau0->GetYaxis()->SetTitle("H_{T} > 250 calo trigger efficiency");
+    h_leadingMuonPt_bParkingTrigPt_ctau0->GetYaxis()->SetTitle("trigger efficiency");
     h_leadingMuonPt_bParkingTrigPt_ctau0->GetYaxis()->SetLabelFont(42);
     h_leadingMuonPt_bParkingTrigPt_ctau0->GetYaxis()->SetLabelSize(0.035);
     h_leadingMuonPt_bParkingTrigPt_ctau0->GetYaxis()->SetTitleSize(0.035);
@@ -161,7 +161,7 @@ void bparkingEfficiencyPlotMacro() {
     h_leadingMuonEta_bParkingTrigEta_ctau0->GetXaxis()->SetTitleOffset(1.3);
     h_leadingMuonEta_bParkingTrigEta_ctau0->GetXaxis()->SetTitleFont(42);
     h_leadingMuonEta_bParkingTrigEta_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
-    h_leadingMuonEta_bParkingTrigEta_ctau0->GetYaxis()->SetTitle("H_{T} > 250 calo trigger efficiency");
+    h_leadingMuonEta_bParkingTrigEta_ctau0->GetYaxis()->SetTitle("trigger efficiency");
     h_leadingMuonEta_bParkingTrigEta_ctau0->GetYaxis()->SetLabelFont(42);
     h_leadingMuonEta_bParkingTrigEta_ctau0->GetYaxis()->SetLabelSize(0.035);
     h_leadingMuonEta_bParkingTrigEta_ctau0->GetYaxis()->SetTitleSize(0.035);
@@ -236,7 +236,7 @@ void bparkingEfficiencyPlotMacro() {
     Cavnas_bParkingTrigEta->Modified();
     Cavnas_bParkingTrigEta->cd();
     Cavnas_bParkingTrigEta->SetSelected(Cavnas_bParkingTrigEta);
-    Cavnas_bParkingTrigEta->SaveAs( "muTrig_eta_eff.pdf" );
+    Cavnas_bParkingTrigEta->SaveAs( "bParkingTrig_eta_eff.pdf" );
 
     // DeltaR
 
@@ -270,7 +270,7 @@ void bparkingEfficiencyPlotMacro() {
     h_delR_bParkingTrigDelR_ctau0->GetXaxis()->SetTitleOffset(1.3);
     h_delR_bParkingTrigDelR_ctau0->GetXaxis()->SetTitleFont(42);
     h_delR_bParkingTrigDelR_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
-    h_delR_bParkingTrigDelR_ctau0->GetYaxis()->SetTitle("H_{T} > 250 calo trigger efficiency");
+    h_delR_bParkingTrigDelR_ctau0->GetYaxis()->SetTitle("trigger efficiency");
     h_delR_bParkingTrigDelR_ctau0->GetYaxis()->SetLabelFont(42);
     h_delR_bParkingTrigDelR_ctau0->GetYaxis()->SetLabelSize(0.035);
     h_delR_bParkingTrigDelR_ctau0->GetYaxis()->SetTitleSize(0.035);
@@ -345,7 +345,7 @@ void bparkingEfficiencyPlotMacro() {
     Cavnas_bParkingTrigDelR->Modified();
     Cavnas_bParkingTrigDelR->cd();
     Cavnas_bParkingTrigDelR->SetSelected(Cavnas_bParkingTrigDelR);
-    Cavnas_bParkingTrigDelR->SaveAs( "muTrig_DelR_eff.pdf" );
+    Cavnas_bParkingTrigDelR->SaveAs( "bParkingTrig_DelR_eff.pdf" );
 
 ///// mass
 
@@ -381,7 +381,7 @@ void bparkingEfficiencyPlotMacro() {
     h_mass_bParkingTrigMass_ctau0->GetXaxis()->SetTitleOffset(1.3);
     h_mass_bParkingTrigMass_ctau0->GetXaxis()->SetTitleFont(42);
     h_mass_bParkingTrigMass_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
-    h_mass_bParkingTrigMass_ctau0->GetYaxis()->SetTitle("H_{T} > 250 calo trigger efficiency");
+    h_mass_bParkingTrigMass_ctau0->GetYaxis()->SetTitle("trigger efficiency");
     h_mass_bParkingTrigMass_ctau0->GetYaxis()->SetLabelFont(42);
     h_mass_bParkingTrigMass_ctau0->GetYaxis()->SetLabelSize(0.035);
     h_mass_bParkingTrigMass_ctau0->GetYaxis()->SetTitleSize(0.035);
@@ -456,6 +456,6 @@ void bparkingEfficiencyPlotMacro() {
     Cavnas_bParkingTrigMass->Modified();
     Cavnas_bParkingTrigMass->cd();
     Cavnas_bParkingTrigMass->SetSelected(Cavnas_bParkingTrigMass);
-    Cavnas_bParkingTrigMass->SaveAs( "muTrig_mass_eff.pdf" );
+    Cavnas_bParkingTrigMass->SaveAs( "bParkingTrig_mass_eff.pdf" );
 
 }
