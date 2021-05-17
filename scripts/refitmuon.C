@@ -45,7 +45,7 @@
      Double_t corr=nentries/n20entries;
      std::cout<<"correction factor "<<corr<<std::endl;
    
-     Float_t corr_QCD=corrsmall/corrwide;
+     Float_t corr_QCD=corrsmall->Divide(corrwide);
    
      h_PscalarInvMass_ctau0->SetTitle("Dihadron (pion) invariant mass");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
