@@ -1055,41 +1055,41 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   
   //Kaon refitted and wider window	
   TLorentzVector refkaon; TLorentzVector refkaonWide;	
-  if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2])){
-    if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
+  //if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2])){
+    if(RKIsoSum1/event.chsTkPairTk1Pt[chsIndex1]<0.4 && RKIsoSum2/event.chsTkPairTk2Pt[chsIndex2]<1){
 	    
-      if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
-        if(std::abs((Kantiscalar).M()-1)<statWindow_){
-          for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-             if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
-	       if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
-	         TLorentzVector ka1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2))};
-                 TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
+      if(std::abs((RKantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWindow_){
+        if(std::abs((RKantiscalar).M()-1)<statWindow_){
+          //for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+             //if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
+	       //if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
+	         //TLorentzVector ka1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2))};
+                 //TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
 	 
-	         refkaon=ka1+ka2;
-	         h_Rkaonre12InvMass->Fill((ka1+ka2).M(), eventWeight);
-	       }
-	     }
-	   }
+	        // refkaon=ka1+ka2;
+	         h_Rkaonre12InvMass->Fill((RKantiscalar).M(), eventWeight);
+	     //  }
+	    // }
+	  // }
 	 }
       }
-      if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-        if(std::abs((Kantiscalar).M()-1)<statWindow_){
-	  for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-             if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
-	       if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
-	         TLorentzVector ka1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2))};
-                 TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
+      if(std::abs((RKantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
+        if(std::abs((RKantiscalar).M()-1)<statWindow_){
+	  //for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+             //if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
+	      // if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
+	        // TLorentzVector ka1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2))};
+                // TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
 	 
-	         refkaonWide=ka1+ka2;
-	         h_widekaonRInvMass->Fill((ka1+ka2).M(), eventWeight);
-	       }
-	     }
-	   }	
+	         //refkaonWide=ka1+ka2;
+	         h_widekaonRInvMass->Fill((RKantiscalar).M(), eventWeight);
+	      // }
+	     //}
+	   //}	
 	}
       }    
     }
-  }    
+  //}    
 
   //Pion,muon 
 	
@@ -1203,35 +1203,35 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   
   //Pion refitted and wider window
   Float_t refitpion; TLorentzVector refpion; TLorentzVector refpionWide;	
-  if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
-    if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
-      if(std::abs((Pantiscalar).M()-1)<statWindow_){
-        for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-	   if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
-             if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
-	       TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
-               TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
+  if(RPIsoSum1/event.chsTkPairTk1Pt[chsIndex1]<0.4 && RPIsoSum2/event.chsTkPairTk2Pt[chsIndex2]<1){
+    if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWindow_){
+      if(std::abs((RPantiscalar).M()-1)<statWindow_){
+        //for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+	   //if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
+             //if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
+	      // TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
+              // TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
 	 
-	       h_Rpionre12InvMass->Fill((pi1+pi2).M(), eventWeight);
-	       refitpion=(pi1+pi2).M();
-	       refpion=pi1+pi2;
-	     }
-	   }
-	}
+	       h_Rpionre12InvMass->Fill(RPantiscalar.M(), eventWeight);
+	       //refitpion=(RPantiscalar+RscalarLVec).M();
+	       //refpion=pi1+pi2;
+	     //}
+	   //}
+	//}
       }
     }
-    if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-      if(std::abs((Pantiscalar).M()-1)<statWindow_){
-        for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-	   if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
-             if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
-	       TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
-               TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
-	       h_widepionRInvMass->Fill((pi1+pi2).M(), eventWeight); 
-	       refpionWide=pi1+pi2;     
-	     }
-	   }
-	}
+    if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
+      if(std::abs((RPantiscalar).M()-1)<statWindow_){
+       // for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+	  // if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
+            // if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
+	     //  TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
+             //  TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
+	       h_widepionRInvMass->Fill(RPantiscalar+.M(), eventWeight); 
+	      // refpionWide=pi1+pi2;     
+	    // }
+	   //}
+	//}
       }
     }
   }
@@ -1240,60 +1240,60 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   //Muon refitted and wider window
   Float_t refitmuon; Float_t refitmuonWide; TLorentzVector refmuon; TLorentzVector refmuonWide;
 	
-  if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
-    if(event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
-      if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
-        if(std::abs((scalarLVec).M()-1)<statWindow_){
-	  TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
-	  TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
-	  h_Rrefit12InvMass->Fill((Mu1+Mu2).M(), eventWeight);
-	  refitmuon=(Mu1+Mu2).M();
-	  refmuon=Mu1+Mu2;
+  if(RMuonIsoSum1/event.muonTkPairPF2PATTk1Pt[muIndex1]<0.4 && RMuonIsoSum2/event.muonTkPairPF2PATTk2Pt[muIndex2]<1){
+    //if(event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
+      if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWindow_){
+        if(std::abs((RscalarLVec).M()-1)<statWindow_){
+	 // TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
+	  //TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
+	  h_Rrefit12InvMass->Fill(RscalarLVec.M(), eventWeight);
+	  //refitmuon=RscalarLVec.M();
+	  //refmuon=Mu1+Mu2;
 	}
       }
-      if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-        if(std::abs((scalarLVec).M()-1)<statWindow_){
-	  TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
-	  TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
-	  h_widemuonRInvMass->Fill((Mu1+Mu2).M(), eventWeight);
-	  refitmuonWide=(Mu1+Mu2).M();
-	  refmuonWide=Mu1+Mu2;
+      if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
+        if(std::abs((RscalarLVec).M()-1)<statWindow_){
+	  //TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
+	  //TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
+	  h_widemuonRInvMass->Fill((RscalarLVec).M(), eventWeight);
+	  //refitmuonWide=RscalarLVec.M()
+	  //refmuonWide=Mu1+Mu2;
 	}
       }
-    }  
+    //}  
   }
  
 	
   //Higgs refitted (pion assumption) and wider window	
-  if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){	
-    if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2]) && event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
-      if(std::abs((refpion+refmuon).M()-higgsMass_)<higgsMassWindow_){
-        if(std::abs((refpion).M()-(refmuon).M())<statWindow_){
-          h_PhiggsRInvMass->Fill((refpion+refmuon).M(), eventWeight); 
+  if(RPIsoSum1/event.chsTkPairTk1Pt[chsIndex1]<0.4 && RPIsoSum2/event.chsTkPairTk2Pt[chsIndex2]<1 && RMuonIsoSum1/event.muonTkPairPF2PATTk1Pt[muIndex1]<0.4 && RMuonIsoSum2/event.muonTkPairPF2PATTk2Pt[muIndex2]<1){	
+    //if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2]) && event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
+      if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWindow_){
+        if(std::abs((RPantiscalar).M()-(RscalarLVec).M())<statWindow_){
+          h_PhiggsRInvMass->Fill((RPantiscalar+RscalarLVec).M(), eventWeight); 
 	}
       }
-      if(std::abs((refpionWide+refmuonWide).M()-higgsMass_)<higgsMassWideWindow_){
-        if(std::abs((refpionWide).M()-(refmuonWide).M())<statWindow_){
-          h_PhiggsR20InvMass->Fill((refpionWide+refmuonWide).M(), eventWeight);
+      if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
+        if(std::abs((RPantiscalar).M()+(RscalarLVec).M())<statWindow_){
+          h_PhiggsR20InvMass->Fill((RPantiscalar+RscalarLVec).M(), eventWeight);
 	}
       }
-    }
+    //}
   } 
    
   //Higgs refitted (kaon assumption) and wider window	
-  if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){	
-    if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2]) && event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
-      if(std::abs((refkaon+refmuon).M()-higgsMass_)<higgsMassWindow_){
-        if(std::abs((refkaon).M()-(refmuon).M())<statWindow_){
-          h_KhiggsRInvMass->Fill((refkaon+refmuon).M(), eventWeight); 
+  if(RKIsoSum1/event.chsTkPairTk1Pt[chsIndex1]<0.4 && RKIsoSum2/event.chsTkPairTk2Pt[chsIndex2]<1 && RMuonIsoSum1/event.muonTkPairPF2PATTk1Pt[muIndex1]<0.4 && RMuonIsoSum2/event.muonTkPairPF2PATTk2Pt[muIndex2]<1){	
+   // if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2]) && event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
+      if(std::abs((RKantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWindow_){
+        if(std::abs((RKantiscalar).M()-(RscalarLVec).M())<statWindow_){
+          h_KhiggsRInvMass->Fill((RKantiscalar+RscalarLVec).M(), eventWeight); 
 	}
       }
-      if(std::abs((refkaonWide+refmuonWide).M()-higgsMass_)<higgsMassWideWindow_){
-        if(std::abs((refkaonWide).M()-(refmuonWide).M())<statWindow_){
-          h_KhiggsR20InvMass->Fill((refkaonWide+refmuonWide).M(), eventWeight);
+      if(std::abs((RKantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
+        if(std::abs((RKantiscalar).M()-(RscalarLVec).M())<statWindow_){
+          h_KhiggsR20InvMass->Fill((RKantiscalar+RscalarLVec).M(), eventWeight);
 	}
       }
-    }
+   // }
   } 
             
 }//close this function
