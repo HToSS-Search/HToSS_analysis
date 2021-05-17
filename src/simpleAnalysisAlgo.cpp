@@ -980,7 +980,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       KMpx=event.muonTkPairPF2PATTk1Px[muonTrkPairIndex]+event.muonTkPairPF2PATTk2Px[muonTrkPairIndex];
       KMpy=event.muonTkPairPF2PATTk1Py[muonTrkPairIndex]+event.muonTkPairPF2PATTk2Py[muonTrkPairIndex];
       KMpz=event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex]+event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex];
-      KME=std:sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2)*std::pow(0.106,2))+std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2)*std::pow(0.106,2));
+      KME=std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2)*std::pow(0.106,2))+std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2)*std::pow(0.106,2));
 	      
       RscalarLVec.SetPxPyPzE(KMpx,KMpy,KMpz,KME);
       //h_KscalarInvMass->Fill(scalarLVec.M(), eventWeight);
@@ -1227,7 +1227,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
             // if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
 	     //  TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
              //  TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
-	       h_widepionRInvMass->Fill(RPantiscalar+.M(), eventWeight); 
+	       h_widepionRInvMass->Fill((RPantiscalar).M(), eventWeight); 
 	      // refpionWide=pi1+pi2;     
 	    // }
 	   //}
