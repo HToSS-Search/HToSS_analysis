@@ -24,8 +24,8 @@
      TH1F* h_refit12InvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rpionre12InvMass");
      TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PantiscalarInvMass");
      TH1F* h_P20scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20antiscalarInvMass");
-     Float_t* corrsmall = inFileQCD.Get("QCD_Pantiscalar")
-     Float_t* corrwide = inFileQCD.Get("QCD_20Pantiscalar")
+     TObject* corrsmall = inFileQCD.Get("QCD_Pantiscalar");
+     TObject* corrwide = inFileQCD.Get("QCD_20Pantiscalar");
       
      TFile inFileData("dataRunD_1GeV.root"); 
      TH1F* h_refit12InvMass_data    = (TH1F*)inFileData.Get("h_Rpionre12InvMass");
