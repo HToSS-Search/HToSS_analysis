@@ -3,6 +3,7 @@
  #include "TCanvas.h"
  #include "TROOT.h"
  #include "TH1F.h"
+ #include "TObject.h"
  #include "TLegend.h"
  #include "TLegendEntry.h"
  #include "TStyle.h"
@@ -24,8 +25,8 @@
      TH1F* h_refit12InvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rpionre12InvMass");
      TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PantiscalarInvMass");
      TH1F* h_P20scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_P20antiscalarInvMass");
-     TObject* corrsmall = inFileQCD.Get("QCD_Pantiscalar");
-     TObject* corrwide = inFileQCD.Get("QCD_20Pantiscalar");
+     //TObject* corrsmall = inFileQCD.Get("QCD_Pantiscalar");
+     //TObject* corrwide = inFileQCD.Get("QCD_20Pantiscalar");
       
      TFile inFileData("dataRunD_1GeV.root"); 
      TH1F* h_refit12InvMass_data    = (TH1F*)inFileData.Get("h_Rpionre12InvMass");
@@ -45,7 +46,7 @@
      Double_t corr=nentries/n20entries;
      std::cout<<"correction factor "<<corr<<std::endl;
    
-     Float_t corr_QCD=corrsmall->Divide(corrwide);
+     //Float_t corr_QCD=corrsmall->Divide(corrwide);
    
      h_PscalarInvMass_ctau0->SetTitle("Dihadron (pion) invariant mass");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
@@ -65,7 +66,7 @@
      h_PscalarInvMass_ctau10->Draw("HIST same");
      std:cout<<"Not refit "<<h_PscalarInvMass_ctau0->Integral(0,501)<<std::endl;
    
-     h_PscalarInvMass_QCD->Scale(corr_QCD);
+     h_PscalarInvMass_QCD->Scale(corr);
      h_PscalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_QCD->GetXaxis()->SetRangeUser(0,4); 
      h_PscalarInvMass_QCD->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
