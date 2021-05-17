@@ -1010,7 +1010,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
        h_kNentries->SetBinContent(3,eventWeight);
 
        //if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
-       if(std::abs((Kantiscalar).M()-1)<statWindow_){
+       if(std::abs((Kantiscalar).M()-2)<statWindow_){
          h_KantiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
 	 QCD_Kantiscalar+=eventWeight;    
 
@@ -1026,7 +1026,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     
     if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
       //if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
-      if(std::abs((Kantiscalar).M()-1)<statWindow_){
+      if(std::abs((Kantiscalar).M()-2)<statWindow_){
           h_K20antiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
 	  QCD_20Kantiscalar+=eventWeight;
       }
@@ -1059,7 +1059,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     if(RKIsoSum1/event.chsTkPairTk1Pt[chsIndex1]<0.4 && RKIsoSum2/event.chsTkPairTk2Pt[chsIndex2]<1){
 	    
       if(std::abs((RKantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWindow_){
-        if(std::abs((RKantiscalar).M()-1)<statWindow_){
+        if(std::abs((RKantiscalar).M()-2)<statWindow_){
           //for(Int_t k{0}; k<event.numChsTrackPairs;k++){
              //if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
 	       //if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
@@ -1074,7 +1074,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	 }
       }
       if(std::abs((RKantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-        if(std::abs((RKantiscalar).M()-1)<statWindow_){
+        if(std::abs((RKantiscalar).M()-2)<statWindow_){
 	  //for(Int_t k{0}; k<event.numChsTrackPairs;k++){
              //if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
 	      // if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
@@ -1110,7 +1110,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       h_pNentries->SetBinContent(3,eventWeight);
 	    
       //if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
-      if(std::abs((Pantiscalar).M()-1)<statWindow_){
+      if(std::abs((Pantiscalar).M()-2)<statWindow_){
         h_PantiscalarInvMass->Fill(Pantiscalar.M(), eventWeight);
 	QCD_Pantiscalar+=eventWeight;
 
@@ -1131,7 +1131,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){  
       h_mNentries->SetBinContent(3,eventWeight);
 	    
-      if(std::abs((scalarLVec).M()-1)<statWindow_){
+      if(std::abs((scalarLVec).M()-2)<statWindow_){
         h_PscalarInvMass->Fill(scalarLVec.M(), eventWeight);
 	QCD_scalar+=eventWeight;
 	      
@@ -1145,7 +1145,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
     if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
       //if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){ 
-      if(std::abs((Pantiscalar).M()-1)<statWindow_){
+      if(std::abs((Pantiscalar).M()-2)<statWindow_){
         h_P20antiscalarInvMass->Fill(Pantiscalar.M(), eventWeight);
 	QCD_20Pantiscalar+=eventWeight;
       } 
@@ -1153,7 +1153,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
   if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
     if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-      if(std::abs((scalarLVec).M()-1)<statWindow_){
+      if(std::abs((scalarLVec).M()-2)<statWindow_){
         h_P20scalarInvMass->Fill(scalarLVec.M(), eventWeight);
 	QCD_20scalar+=eventWeight;
       }	  
@@ -1205,7 +1205,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   Float_t refitpion; TLorentzVector refpion; TLorentzVector refpionWide;	
   if(RPIsoSum1/event.chsTkPairTk1Pt[chsIndex1]<0.4 && RPIsoSum2/event.chsTkPairTk2Pt[chsIndex2]<1){
     if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWindow_){
-      if(std::abs((RPantiscalar).M()-1)<statWindow_){
+      if(std::abs((RPantiscalar).M()-2)<statWindow_){
         //for(Int_t k{0}; k<event.numChsTrackPairs;k++){
 	   //if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
              //if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
@@ -1221,7 +1221,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       }
     }
     if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-      if(std::abs((RPantiscalar).M()-1)<statWindow_){
+      if(std::abs((RPantiscalar).M()-2)<statWindow_){
        // for(Int_t k{0}; k<event.numChsTrackPairs;k++){
 	  // if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
             // if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
@@ -1243,7 +1243,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   if(RMuonIsoSum1/event.muonTkPairPF2PATTk1Pt[muIndex1]<0.4 && RMuonIsoSum2/event.muonTkPairPF2PATTk2Pt[muIndex2]<1){
     //if(event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
       if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWindow_){
-        if(std::abs((RscalarLVec).M()-1)<statWindow_){
+        if(std::abs((RscalarLVec).M()-2)<statWindow_){
 	 // TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
 	  //TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
 	  h_Rrefit12InvMass->Fill(RscalarLVec.M(), eventWeight);
@@ -1252,7 +1252,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	}
       }
       if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-        if(std::abs((RscalarLVec).M()-1)<statWindow_){
+        if(std::abs((RscalarLVec).M()-2)<statWindow_){
 	  //TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
 	  //TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
 	  h_widemuonRInvMass->Fill((RscalarLVec).M(), eventWeight);
