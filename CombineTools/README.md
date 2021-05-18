@@ -4,8 +4,6 @@ This code WILL NOT run within the analysis code framework and requires the use o
 You do not need to understand how or why the CMS SoftWare works the way it does - these instructions should be able to setup everything and provide the instructions
 on how to use the tool.
 
-Due to environmental conditions, you MUST use m2.iihe.ac.be to do this.
-
 ***
 
 ## CMSSW Setup info:
@@ -27,14 +25,14 @@ This creates a new command 'InitCmsEnv' that sources and sets up the general CMS
 To install the version of CMSSW you need for Combine, execute the following:
 
 ```
-export SCRAM_ARCH=slc7_amd64_gcc700
-cmsrel CMSSW_10_2_13
-cd CMSSW_10_2_13/src
+export SCRAM_ARCH=slc6_amd64_gcc491
+cmsrel CMSSW_7_4_7
+cd CMSSW_7_4_7/src 
 cmsenv
-git clone https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
+git clone git@github.com:cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
 cd HiggsAnalysis/CombinedLimit
 git fetch origin
-git checkout v8.2.0
+git checkout v6.3.1
 scramv1 b clean
 scramv1 b
 ```
@@ -44,7 +42,7 @@ These commands install CMSSW version 10_2_13, setup this version's environment, 
 Once this has been done, all you have to do in future is ...
 
 ```
-cd CMSSW_10_2_13/src/HiggsAnalysis/CombinedLimit
+cd CMSSW_7_4_7/src/HiggsAnalysis/CombinedLimit
 InitCmsEnv
 cmsenv
 ```
@@ -67,32 +65,32 @@ These six commands cover the observed limit, expected limit, and the upper and l
 
 Observed limit:
 ```
-combine datacard_2GeV_10mm.txt -M HybridNew -H AsymptoticLimits --frequentist --testStat LHC --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+combine datacard_2GeV_10mm.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
 
 Expected (median) limit:
 ```
-combine datacard.txt -M HybridNew -H AsymptoticLimits --frequentist --testStat LHC --expectedFromGrid=0.5 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+combine datacard.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.5 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
 
 Upper 1 sigma band
 ```
-combine datacard.txt -M HybridNew -H AsymptoticLimits --frequentist --testStat LHC --expectedFromGrid=0.84 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+combine datacard.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.84 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
 
 Lower 1 sigma band
 ```
-combine datacard.txt -M HybridNew -H AsymptoticLimits --frequentist --testStat LHC --expectedFromGrid=0.16 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+combine datacard.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.16 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
 
 Upper 2 sigma band
 ```
-combine datacard.txt -M HybridNew -H AsymptoticLimits --frequentist --testStat LHC --expectedFromGrid=0.975 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+combine datacard.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.975 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
 
 Lower 2 sigma band
 ```
-combine datacard.txt -M HybridNew -H AsymptoticLimits --frequentist --testStat LHC --expectedFromGrid=0.025 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+combine datacard.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.025 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
 
 ## Updating the datacard.
