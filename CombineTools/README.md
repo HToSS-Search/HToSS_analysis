@@ -37,7 +37,7 @@ scramv1 b clean
 scramv1 b
 ```
 
-These commands install CMSSW version 10_2_13, setup this version's environment, download the Higgs Analysis Combined Limit (Combine) tool, checks out the recommend tag/version, and compiles everything.
+These commands install CMSSW version 7_4_7, setup this version's environment, download the Higgs Analysis Combined Limit (Combine) tool, checks out the recommend tag/version, and compiles everything.
 
 Once this has been done, all you have to do in future is ...
 
@@ -58,7 +58,7 @@ cp ~/HToSS_analysis/CombineTools/datacard_2GeV_10mm.txt .
 
 ## Using Combine:
 
-In the same directory as this README.md is a sample datacard named 'datacard.txt'. This will need copying to ../yourPathToCMSSW/CMSSW_10_2_13/src/HiggsAnalysis/CombinedLimit/.
+In the same directory as this README.md is a sample datacard named 'datacard.txt'. This will need copying to ../yourPathToCMSSW/CMSSW_7_4_7/src/HiggsAnalysis/CombinedLimit/.
 Currently not all the systematics are setup within it, but to run it, you will need to execute the following commands.
 
 These six commands cover the observed limit, expected limit, and the upper and lower 1 and 2 sigma bands.
