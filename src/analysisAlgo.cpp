@@ -34,6 +34,7 @@ AnalysisAlgo::AnalysisAlgo()
     , skipTrig{false}
     , skipScalarCut{false}
     , is2016_{false}
+    , is2016APV_{false}
     , is2018_{false}
     , doNPLs_{false}
     , doZplusCR_{false}
@@ -61,6 +62,9 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         "2016",
         po::bool_switch(&is2016_),
         "Use 2016 conditions (SFs, et al.).")(
+        "2016APV",
+        po::bool_switch(&is2016APV_),
+        "Use 2016 APV conditions (SFs, et al.).")(
         "2018",
         po::bool_switch(&is2018_),
         "Use 2018 conditions (SFs, et al.).")(
@@ -84,7 +88,7 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         po::value<std::string>(&postfix)->default_value("default"),
         "Set postfix for plots. Overrides the config file.")(
         "lumi,l",
-        po::value<double>(&usePreLumi)->default_value(41528.),
+        po::value<double>(&usePreLumi)->default_value(0.),
         "Lumi to scale MC plots to.")(
         "cutConf,x",
         po::value<std::string>(&cutConfName),
@@ -174,7 +178,7 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
 
         po::notify(vm);
 
-        if ( is2016_ && is2018_ ) {
+        if ( (is2016_ || is2016APV_) && is2018_ ) {
             throw std::logic_error(
                 "Default condition is to use 2017. One cannot set "
                 "condition to be BOTH 2016 AND 2018! Chose only "
@@ -265,15 +269,12 @@ void AnalysisAlgo::setupSystematics()
     systNames.emplace_back("__ME__minus");
     systNames.emplace_back("__alphaS__plus");
     systNames.emplace_back("__alphaS__minus");
-    if (!is2016_)
-    {
-        systNames.emplace_back("__isr__plus");
-        systNames.emplace_back("__isr__minus");
-        systNames.emplace_back("__fsr__plus");
-        systNames.emplace_back("__fsr__minus");
-    }
+    systNames.emplace_back("__isr__plus");
+    systNames.emplace_back("__isr__minus");
+    systNames.emplace_back("__fsr__plus");
+    systNames.emplace_back("__fsr__minus");
 
-    if (is2016_) { // If 2016 mode, get 2016 PU
+    if (is2016_ || is2016APV_) { // If 2016 mode, get 2016 PU
         // Make pileupReweighting stuff here
         dataPileupFile = new TFile{"pileup/2016/truePileupTest.root", "READ"};
         dataPU = dynamic_cast<TH1D*>(dataPileupFile->Get("pileup")->Clone());
@@ -334,21 +335,13 @@ void AnalysisAlgo::setupSystematics()
     mcPileupFile->Close();
     systUpFile->Close();
     systDownFile->Close();
-
-    // Initialise PDFs
-    if ((systToRun & 1024 || systToRun & 2048) && is2016_)
-    {
-        LHAPDF::initPDFSet(1, "NNPDF30_nlo_nf_5_pdfas.LHgrid");
-        //    LHAPDF::initPDFSet(1, "cteq6ll.LHpdf");
-        //    LHAPDF::initPDFSet(1, "cteq6lg.LHgrid");
-    }
 }
 
 void AnalysisAlgo::setupCuts()
 {
     // Make cuts object. The methods in it should perhaps just be i nthe
     // AnalysisEvent class....
-    cutObj = new Cuts{plots, plots, invertLepCut, is2016_, is2018_};
+    cutObj = new Cuts{plots, plots, invertLepCut, is2016_, is2016APV_, is2018_};
 
     try
     {
@@ -396,14 +389,22 @@ void AnalysisAlgo::runMainAnalysis() {
     TMVA::gConfig().SetDrawProgressBar(true);
 
     if (totalLumi == 0.) {
-        totalLumi = usePreLumi;
+        if ( usePreLumi > 0.0 ) totalLumi = usePreLumi;
+        else {
+            if (is2016_) totalLumi = 16393.380531441;
+            else if (is2016APV_) totalLumi = 19936.295040581;
+            else if (is2018_) totalLumi = 59819.714473511;
+            else totalLumi = 41477.877399292;
+        }
     }
+
     std::cout << "Using lumi: " << totalLumi << std::endl;
 
     bool datasetFilled{false};
 
     std::string era {""};
     if (is2016_) era = "2016";
+    else if (is2016APV_) era = "2016APV";
     else if (is2018_) era = "2018";
     else era = "2017";
     const std::string postLepSelSkimOutputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "/"};
@@ -646,7 +647,8 @@ void AnalysisAlgo::runMainAnalysis() {
                 std::cout << "No entries in tree, skipping..." << std::endl;
                 continue;
             }
-            AnalysisEvent event{dataset->isMC(), datasetChain, is2016_, is2018_};
+            
+            AnalysisEvent event{dataset->isMC(), datasetChain, (is2016_ || is2016APV_), is2018_};
 
             // Adding in some stuff here to make a skim file out of post lep sel
             // stuff
@@ -923,208 +925,63 @@ void AnalysisAlgo::runMainAnalysis() {
                         continue;
                     }
 
-                    // Do Run 1 style PDF reweighting things for tW samples as
-                    // they use Powerheg V1 Everything else uses LHE event
-                    // weights
                     if (systMask == 1024 || systMask == 2048) {
-                        if (is2016_ && (dataset->name() == "tWInclusive"
-                                || dataset->name() == "tbarWInclusive"
-                                || dataset->name() == "tWInclusive_scaleup"
-                                || dataset->name() == "tWInclusive_scaledown"
-                                || dataset->name() == "tbarWInclusive_scaleup"
-                                || dataset->name()
-                                       == "tbarWInclusive_scaledown")) {
-                            // std::cout << std::setprecision(15) << eventWeight
-                            // << " ";
-                            LHAPDF::usePDFMember(1, 0);
-                            float q{event.genPDFScale};
-                            float x1{event.genPDFx1};
-                            float x2{event.genPDFx2};
-                            int id1{event.genPDFf1};
-                            int id2{event.genPDFf2};
-                            if (id2 == 21)
-                            {
-                                id2 = 0;
-                            }
-                            if (id1 == 21)
-                            {
-                                id1 = 0;
-                            }
-                            double xpdf1{LHAPDF::xfx(1, x1, q, id1)};
-                            double xpdf2{LHAPDF::xfx(1, x2, q, id2)};
-                            std::vector<float> pdf_weights;
-                            // std::cout << q << " " << x1 << " " << x2 << " "
-                            // << id1 << " " << id2 << " "; std::cout << xpdf1
-                            // << " " << xpdf2 << " " << xpdf1 * xpdf2 << " ";
-                            float min{1};
-                            float max{1};
-                            float pdfWeightUp{0};
-                            float pdfWeightDown{0};
-                            for (int j{1}; j <= 100; j++)
-                            {
-                                LHAPDF::usePDFMember(1, j);
-                                double xpdf1_new{LHAPDF::xfx(1, x1, q, id1)};
-                                double xpdf2_new{LHAPDF::xfx(1, x2, q, id2)};
-                                // std::cout << " " << x1 << " " << id1 << " "
-                                // << x2 << " " << id2 << " " << q << " "
-                                // <<xpdf1
-                                // << " " << xpdf2 << " " << xpdf1_new << " " <<
-                                // xpdf2_new << " ";
-                                double weight{1};
-                                if ((xpdf1 * xpdf2) > 0.00001)
-                                {
-                                    weight =
-                                        xpdf1_new * xpdf2_new / (xpdf1 * xpdf2);
-                                }
-                                pdf_weights.emplace_back(weight);
-                                if (weight > 1.0)
-                                {
-                                    pdfWeightUp += (1 - weight) * (1 - weight);
-                                }
-                                if (weight < 1.0)
-                                {
-                                    pdfWeightDown +=
-                                        (1 - weight) * (1 - weight);
-                                }
-                                if (weight > max)
-                                {
-                                    max = weight;
-                                }
-                                if (weight < min)
-                                {
-                                    min = weight;
-                                }
-                                //	      std::cout << " " << xpdf1_new << " "
-                                //<< xpdf2_new << " " << weight << " ";
-                            }
-                            if (systMask == 1024)
-                            {
-                                eventWeight *= max;
-                            }
-                            if (systMask == 2048)
-                            {
-                                eventWeight *= min;
-                            }
-                            // std::cout << eventWeight << std::setprecision(4)
-                            // << max << " " << min << " " <<
-                            // 1+std::sqrt(pdfWeightUp) << " " <<
-                            // 1-std::sqrt(pdfWeightDown) << std::endl;
-                            // std::cout
-                            // << std::setprecision(9) << " " << min << " " <<
-                            // max << " " << eventWeight << std::endl;
-                        }
-                        // LHE event weights for everything else
-                        else
-                        {
-                            if (systMask == 1024)
-                            {
-                                eventWeight *= event.weight_pdfMax; // Max
-                            }
-                            if (systMask == 2048)
-                            {
-                                eventWeight *= event.weight_pdfMin; // Min
-                            }
-                        }
+                        if (systMask == 1024) eventWeight *= event.weight_pdfMax; // Max
+                        if (systMask == 2048) eventWeight *= event.weight_pdfMin; // Min
                     }
-                    if (systMask == 16384 || systMask == 32768)
-                    {
-                        if (systMask == 16384)
-                        {
-                            eventWeight *=
-                                event.weight_alphaMin; // Max, but incorrectly
-                                                       // named branch
-                        }
-                        if (systMask == 32768)
-                        {
-                            eventWeight *=
-                                event.weight_alphaMax; // Min, but incorrectly
-                                                       // named branch
-                        }
+                    if (systMask == 16384 || systMask == 32768) {
+                        if (systMask == 16384) eventWeight *= event.weight_alphaMin; // Max, but incorrectly named branch
+                        if (systMask == 32768) eventWeight *= event.weight_alphaMax; // Min, but incorrectly named branch
                     }
 
                     // PSWeights
-                    if (systMask == 65536)
-                    {
-                        eventWeight *= event.isrDefLo;
-                    }
-                    if (systMask == 131072)
-                    {
-                        eventWeight *= event.isrDefHi;
-                    }
-                    if (systMask == 262144)
-                    {
-                        eventWeight *= event.fsrDefLo;
-                    }
-                    if (systMask == 524288)
-                    {
-                        eventWeight *= event.fsrDefHi;
-                    }
+                    if (systMask == 65536)  eventWeight *= event.isrDefLo;
+                    if (systMask == 131072) eventWeight *= event.isrDefHi;
+                    if (systMask == 262144) eventWeight *= event.fsrDefLo;
+                    if (systMask == 524288) eventWeight *= event.fsrDefHi;
 
                     // Do the Zpt reweighting here
-                    if (makeMVATree)
-                    {
+                    if (makeMVATree) {
                         zLep1Index = event.zPairIndex.first;
                         zLep2Index = event.zPairIndex.second;
                         wQuark1Index = event.wPairIndex.first;
                         wQuark2Index = event.wPairIndex.second;
-                        for (unsigned i{0}; i < 15; i++)
-                        {
-                            if (i < event.jetIndex.size())
-                            {
+                        for (unsigned i{0}; i < 15; i++) {
+                            if (i < event.jetIndex.size()) {
                                 jetInd[i] = event.jetIndex[i];
-                                jetSmearValue[i] = 
-                                    event.jetSmearValue.at(jetInd[i]);
+                                jetSmearValue[i] =  event.jetSmearValue.at(jetInd[i]);
                             }
-                            else
-                            {
+                            else {
                                 jetInd[i] = -1;
                                 jetSmearValue[i] = 0.0;
                             }
                         }
-                        for (unsigned bJetIt{0}; bJetIt < 10; bJetIt++)
-                        {
-                            if (bJetIt < event.bTagIndex.size())
-                            {
-                                bJetInd[bJetIt] = event.bTagIndex[bJetIt];
-                            }
-                            else
-                            {
-                                bJetInd[bJetIt] = -1;
-                            }
+                        for (unsigned bJetIt{0}; bJetIt < 10; bJetIt++) {
+                            if (bJetIt < event.bTagIndex.size()) bJetInd[bJetIt] = event.bTagIndex[bJetIt];
+                            else bJetInd[bJetIt] = -1;
                         }
-                        for (size_t i{0}; i < event.muonMomentumSF.size(); ++i)
-                        {
-                            muonMomentumSF[i] = event.muonMomentumSF[i];
-                        }
+                        for (size_t i{0}; i < event.muonMomentumSF.size(); ++i)  muonMomentumSF[i] = event.muonMomentumSF[i];
                         mvaTree[systInd]->Fill();
                     }
 
                     foundEvents++;
                     foundEventsNorm += eventWeight;
-                    if (systInd > 0)
-                    {
-                        systMask = systMask << 1;
-                    }
+                    if (systInd > 0) systMask = systMask << 1;
+
                 } // End systematics loop.
             } // end event loop
 
             // If we're making post lepSel skims save the tree here
-            if (makePostLepTree)
-            {
+            if (makePostLepTree) {
                 outFile1->cd();
-                std::cout << "\nPrinting some info on the tree "
-                          << dataset->name() << " " << cloneTree->GetEntries()
-                          << std::endl;
-                std::cout << "But there were :" << datasetChain->GetEntries()
-                          << " entries in the original tree" << std::endl;
+                std::cout << "\nPrinting some info on the tree " << dataset->name() << " " << cloneTree->GetEntries() << std::endl;
+                std::cout << "But there were :" << datasetChain->GetEntries() << " entries in the original tree" << std::endl;
                 cloneTree->Write();
                 // Write out mc generator level info
-                if (dataset->isMC())
-                {
+                if (dataset->isMC()) {
                     generatorWeightPlot->Write();
                 }
-                for (unsigned i{0}; i < bTagEffPlots.size(); i++)
-                {
+                for (unsigned i{0}; i < bTagEffPlots.size(); i++) {
                     bTagEffPlots[i]->Write();
                 }
 
@@ -1136,57 +993,37 @@ void AnalysisAlgo::runMainAnalysis() {
             }
 
             // Save mva outputs
-            if (makeMVATree)
-            {
+            if (makeMVATree) {
                 std::string invPostFix{};
-                if (invertLepCut)
-                {
-                    invPostFix = "invLep";
-                }
+                if (invertLepCut) invPostFix = "invLep";
 
-                std::cout << (mvaDir + dataset->name() + postfix
-                              + (invertLepCut ? invPostFix : "")
-                              + "mvaOut.root")
-                          << std::endl;
+                std::cout << (mvaDir + dataset->name() + postfix + (invertLepCut ? invPostFix : "") + "mvaOut.root") << std::endl;
                 mvaOutFile->cd();
                 std::cout << std::endl;
                 int systMask{1};
                 std::cout << "Saving Systematics: ";
-                for (unsigned systInd{0}; systInd < systNames.size(); systInd++)
-                {
-                    if (systInd > 0 && !(systToRun & systMask))
-                    {
+                for (unsigned systInd{0}; systInd < systNames.size(); systInd++) {
+                    if (systInd > 0 && !(systToRun & systMask)) {
                         systMask = systMask << 1;
                         continue;
                     }
-                    std::cout << systNames[systInd] << ": "
-                              << mvaTree[systInd]->GetEntriesFast() << " "
-                              << std::flush;
+                    std::cout << systNames[systInd] << ": "  << mvaTree[systInd]->GetEntriesFast() << " " << std::flush;
                     mvaTree[systInd]->FlushBaskets();
-                    if (systInd > 0)
-                    {
+                    if (systInd > 0) {
                         systMask = systMask << 1;
                     }
-                    if (!dataset->isMC())
-                    {
+                    if (!dataset->isMC()) {
                         break;
                     }
                 }
                 std::cout << std::endl;
                 // Save the efficiency plots for b-tagging here if we're doing
                 // that.
-                if (makePostLepTree)
-                {
-                    for (unsigned i{0}; i < bTagEffPlots.size(); i++)
-                    {
-                        bTagEffPlots[i]->Write();
-                    }
+                if (makePostLepTree) {
+                    for (unsigned i{0}; i < bTagEffPlots.size(); i++) bTagEffPlots[i]->Write();
                 }
                 mvaOutFile->Write();
-                for (unsigned i{0}; i < mvaTree.size(); i++)
-                {
-                    delete mvaTree[i];
-                }
+                for (unsigned i{0}; i < mvaTree.size(); i++) delete mvaTree[i];
                 mvaOutFile->Close();
             }
             std::cerr << "\nFound " << foundEvents << " in " << dataset->name() << std::endl;
@@ -1196,12 +1033,8 @@ void AnalysisAlgo::runMainAnalysis() {
             delete generatorWeightPlot;
             generatorWeightPlot = nullptr;
             // Delete plots from out btag vector. Avoid memory leaks, kids.
-            if (makePostLepTree)
-            {
-                for (unsigned i{0}; i < bTagEffPlots.size(); i++)
-                {
-                    delete bTagEffPlots[i];
-                }
+            if (makePostLepTree) {
+                for (unsigned i{0}; i < bTagEffPlots.size(); i++) delete bTagEffPlots[i];
             }
 
             // datasetChain->MakeClass("AnalysisEvent");
@@ -1210,14 +1043,13 @@ void AnalysisAlgo::runMainAnalysis() {
     } // end dataset loop
 }
 
-void AnalysisAlgo::savePlots()
-{
+void AnalysisAlgo::savePlots() {
     // Save all plot objects. For testing purposes.
 
     // Now test out the histogram plotter class I just wrote.
     // Make the plotting object.
     if (plots) {
-        HistogramPlotter plotObj = HistogramPlotter(legOrder, plotOrder, datasetInfos, is2016_, is2018_, noData_);
+        HistogramPlotter plotObj = HistogramPlotter(legOrder, plotOrder, datasetInfos, (is2016_ || is2016APV_), is2018_, noData_);
 
         // If either making or reading in histos, then set the correct read in
         // directory
@@ -1234,8 +1066,7 @@ void AnalysisAlgo::savePlots()
             plotObj.saveHistos(cutFlowMap, "cutFlow", channel); // Don't forget to save the cutflow too!
         }
 
-        if (!makeHistos)
-        {
+        if (!makeHistos) {
             if (useHistos) {
                 plotObj.loadHistos(); // If using saved histos, read them in ...
             }
@@ -1254,16 +1085,10 @@ void AnalysisAlgo::savePlots()
 
             // cut flow x axis labels
             std::vector<std::string> cutFlowLabels;
-            for (std::vector<
-                     std::pair<std::string, std::string>>::const_iterator lIt =
-                     stageNames.begin();
-                 lIt != stageNames.end();
-                 ++lIt)
-            {
+            for (std::vector<std::pair<std::string, std::string>>::const_iterator lIt = stageNames.begin(); lIt != stageNames.end(); ++lIt) {
                 cutFlowLabels.emplace_back((*lIt).second);
             }
-            if (useHistos)
-            {
+            if (useHistos) {
                 cutFlowMap = plotObj.loadCutFlowMap("cutFlow", channel);
             }
             plotObj.makePlot(
@@ -1277,50 +1102,42 @@ void AnalysisAlgo::savePlots()
     std::cerr << "But not past it" << std::endl;
 }
 
-std::string AnalysisAlgo::channelSetup(unsigned channelInd)
-{
+std::string AnalysisAlgo::channelSetup(unsigned channelInd) {
     std::string chanName{};
 
-    if (channelsToRun)
-    {
-        if (channelInd & 5)
-        { // ee channels
+    if (channelsToRun) {
+        if (channelInd & 5) { // ee channels
             cutObj->setNumLeps(0, 0, 2, 2);
             cutObj->setCutConfTrigLabel("e");
             channel = "ee";
             postfix = "ee";
             chanName += "ee";
         }
-        if (channelInd & 10)
-        { // mumu channels
+        if (channelInd & 10) { // mumu channels
             cutObj->setNumLeps(2, 2, 0, 0);
             cutObj->setCutConfTrigLabel("m");
             channel = "mumu";
             postfix = "mumu";
             chanName += "mumu";
         }
-        if (channelInd & 3)
-        { // nominal samples
+        if (channelInd & 3) { // nominal samples
             cutObj->setInvLepCut(false);
             invertLepCut = false;
             chanName += "nom";
         }
-        if (channelInd & 12)
-        { // same sign samples
+        if (channelInd & 12) { // same sign samples
             cutObj->setInvLepCut(true);
             invertLepCut = true;
             chanName += "inv";
         }
-        if (channelInd & 16)
-        { // emu channel for ttbar background estimation
+        if (channelInd & 16) { // emu channel for ttbar background estimation
             cutObj->setNumLeps(1, 1, 1, 1);
             cutObj->setCutConfTrigLabel("d");
             channel = "emu";
             postfix = "emu";
             chanName += "emu";
         }
-        if (channelInd & 32)
-        { // same signemu channel for NPL ttbar background estimation
+        if (channelInd & 32) { // same signemu channel for NPL ttbar background estimation
             cutObj->setNumLeps(1, 1, 1, 1);
             cutObj->setCutConfTrigLabel("d");
             channel = "emu";

@@ -63,6 +63,7 @@ class Cuts
     bool invertLepCut_; // For background estimation
     bool makeEventDump_;
     const bool is2016_;
+    const bool is2016APV_;
     const bool is2018_;
 
     // Tight electron cuts
@@ -139,10 +140,8 @@ class Cuts
                                                  const int& index,
                                                  const int& syst,
                                                  const bool& initialRun) const;
-    static double
-        jet2016PtSimRes(const double& pt, const double& eta, const double& rho);
-    static double
-        jet2017PtSimRes(const double& pt, const double& eta, const double& rho);
+    static double jet2016PtSimRes(const double& pt, const double& eta, const double& rho);
+    static double jet2017PtSimRes(const double& pt, const double& eta, const double& rho);
     [[gnu::const]] static std::pair<double, double> jet2016SFs(const double& eta);
     static std::pair<double, double> jet2017SFs(const double& eta);
 
@@ -227,7 +226,7 @@ class Cuts
     TH2D* h_muonPFisoSyst2;
 
     public:
-    Cuts(const bool doPlots, const bool fillCutFlows, const bool invertLepCut, const bool is2016, const bool is2018);
+    Cuts(const bool doPlots, const bool fillCutFlows, const bool invertLepCut, const bool is2016, const bool is2016APV, const bool is2018);
     ~Cuts();
     bool makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::string, std::shared_ptr<Plots>>& plotMap, TH1D& cutFlow, const int systToRun);
     void setMC(bool isMC) {

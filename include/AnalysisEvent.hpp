@@ -1889,7 +1889,8 @@ class AnalysisEvent
     bool mumuTrig_massCut() const;
     bool mumuL2Trig() const;
     bool mumuNoVtxTrig() const;
-    bool bParkingTrig() const;
+    bool bParkingTrigInclusive() const;
+    bool bParkingTrigPart0() const;
 //    bool dataScoutingTrig() const;
 
     bool metFilters() const;
@@ -3076,7 +3077,7 @@ inline bool AnalysisEvent::mumuNoVtxTrig() const {
 }
 
 
-inline bool AnalysisEvent::bParkingTrig() const {
+inline bool AnalysisEvent::bParkingTrigInclusive() const {
     if ( !is2018_ ) return false;
     else {
         if ( HLT_Mu12_IP6_part0_v2 > 0 || HLT_Mu12_IP6_part1_v2 > 0 || HLT_Mu12_IP6_part2_v2 > 0 || HLT_Mu12_IP6_part3_v2 > 0 || HLT_Mu12_IP6_part4_v2 > 0
@@ -3087,6 +3088,21 @@ inline bool AnalysisEvent::bParkingTrig() const {
           || HLT_Mu8_IP6_part0_v2 > 0 || HLT_Mu8_IP6_part1_v2 > 0 || HLT_Mu8_IP6_part2_v2 > 0 || HLT_Mu8_IP6_part3_v2 > 0 || HLT_Mu8_IP6_part4_v2 > 0
           || HLT_Mu9_IP6_part0_v3 > 0 || HLT_Mu9_IP6_part1_v3 > 0 || HLT_Mu9_IP6_part2_v3 > 0 || HLT_Mu9_IP6_part3_v3 > 0 || HLT_Mu9_IP6_part4_v3 > 0
           || HLT_Mu8_IP3_part0_v3 > 0 || HLT_Mu8_IP3_part1_v3 > 0 || HLT_Mu8_IP3_part2_v3 > 0 || HLT_Mu8_IP3_part3_v3 > 0 || HLT_Mu8_IP3_part4_v3 > 0 ) return true;
+        else return false;
+    }
+}
+
+inline bool AnalysisEvent::bParkingTrigPart0() const {
+    if ( !is2018_ ) return false;
+    else {
+        if ( HLT_Mu12_IP6_part0_v2 > 0 
+          || HLT_Mu9_IP5_part0_v2 > 0  
+          || HLT_Mu7_IP4_part0_v2 > 0  
+          || HLT_Mu9_IP4_part0_v2 > 0  
+          || HLT_Mu8_IP5_part0_v2 > 0  
+          || HLT_Mu8_IP6_part0_v2 > 0  
+          || HLT_Mu9_IP6_part0_v3 > 0  
+          || HLT_Mu8_IP3_part0_v3 > 0 ) return true;
         else return false;
     }
 }

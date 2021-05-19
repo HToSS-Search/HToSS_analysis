@@ -25,6 +25,7 @@ HistogramPlotter::HistogramPlotter(std::vector<std::string> legOrder,
                                    std::vector<std::string> plotOrder,
                                    std::map<std::string, datasetInfo> dsetMap,
                                    const bool is2016,
+                                   const bool is2016APV,
                                    const bool is2018,
                                    const bool noDataPresent)
     : // Initialise a load of variables. Labels are empty by default, but this
@@ -33,6 +34,7 @@ HistogramPlotter::HistogramPlotter(std::vector<std::string> legOrder,
     , outputFolder_{}
     , postfix_{"defaultPostfix"}
     , is2016_{is2016}
+    , is2016APV_{is2016APV}
     , is2018_{is2018}
     , loadHistos_{false}
     ,
@@ -354,6 +356,7 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
     int pos = 0;
     if (writeExtraText) canvasName += "-prelim";
     if (is2016_) canvasName += "_2016";
+    if (is2016APV_) canvasName += "_2016 APV";
     else if (is2018_) canvasName += "_2018";
     else canvasName += "_2017";
 
@@ -596,10 +599,10 @@ void HistogramPlotter::CMS_lumi(TPad* pad, int posX)
     // ratio of "CMS" and extra text size
     float extraOverCmsTextSize = 0.76;
 
-    TString lumi_2016 = "35.86 fb^{-1}";
-//    TString lumi_2017 = "41.86 fb^{-1}";
-    TString lumi_2017 = "13.56 fb^{-1}";
-    TString lumi_2018 = "59.74 fb^{-1}";
+    TString lumi_2016 = "16.8 fb^{-1}";
+    TString lumi_2016APV = "19.5 fb^{-1}";
+    TString lumi_2017 = "41.48 fb^{-1}";
+    TString lumi_2018 = "59.83 fb^{-1}";
 
     bool drawLogo = false;
 
@@ -650,6 +653,11 @@ void HistogramPlotter::CMS_lumi(TPad* pad, int posX)
     TString lumiText;
     if (is2016_) {
         lumiText += lumi_2016;
+        lumiText += " (13 TeV)";
+    }
+    if (is2016APV_) {
+    TString lumiText;
+        lumiText += lumi_2016APV;
         lumiText += " (13 TeV)";
     }
     else if (is2018_) {

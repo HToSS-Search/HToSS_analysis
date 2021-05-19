@@ -14,8 +14,7 @@ class TPad;
 
 typedef struct datasetInfo datasetInfo;
 
-class HistogramPlotter
-{
+class HistogramPlotter {
     private:
     // A few things that govern the appearance of the plots.
     std::string lumiStr_;
@@ -26,6 +25,7 @@ class HistogramPlotter
     std::string postfix_; // Will be appended to name of saved files. Defaults
                           // to aPostfix. Set with setter.
     const bool is2016_; // Era
+    const bool is2016APV_; // Era
     const bool is2018_; // Era
     bool loadHistos_;
 
@@ -58,6 +58,7 @@ class HistogramPlotter
                      std::vector<std::string>,
                      std::map<std::string, datasetInfo>,
                      const bool,
+                     const bool, 
                      const bool,
                      const bool noDataPresent = true);
     ~HistogramPlotter();

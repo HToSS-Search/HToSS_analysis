@@ -21,11 +21,13 @@ Cuts::Cuts(const bool doPlots,
            const bool fillCutFlows,
            const bool invertLepCut,
            const bool is2016,
+           const bool is2016APV,
            const bool is2018)
     : doPlots_{doPlots}
     , fillCutFlow_{fillCutFlows}
     , invertLepCut_{invertLepCut}
     , is2016_{is2016}
+    , is2016APV_{is2016APV}
     , is2018_{is2018}
 
     , numTightEle_{0}
@@ -548,7 +550,7 @@ std::vector<int> Cuts::getLooseEles(const AnalysisEvent& event) const {
 
 std::vector<int> Cuts::getTightMuons(const AnalysisEvent& event) const {
     std::vector<int> muons;
-    if (is2016_) {
+    if (is2016_ || is2016APV_) {
         for (int i{0}; i < event.numMuonPF2PAT; i++) {
             if (!event.muonPF2PATIsPFMuon[i])
                 continue;
@@ -599,7 +601,7 @@ std::vector<int> Cuts::getTightMuons(const AnalysisEvent& event) const {
 
 std::vector<int> Cuts::getLooseMuons(const AnalysisEvent& event) const {
     std::vector<int> muons;
-    if (is2016_) {
+    if (is2016_ || is2016APV_) {
         for (int i{0}; i < event.numMuonPF2PAT; i++) {
             if (!event.muonPF2PATIsPFMuon[i]) continue;
 
@@ -945,7 +947,7 @@ std::pair<std::vector<int>, std::vector<double>>
 
         if (jetIDDo_ && isProper)
         {
-            if (is2016_)
+            if (is2016_ || is2016APV_)
             {
                 // Jet ID == loose
                 if (std::abs(jetVec.Eta()) <= 2.7)
@@ -1278,7 +1280,7 @@ bool Cuts::triggerCuts(const AnalysisEvent& event, double& eventWeight, const in
         else throw std::runtime_error("Unknown channel");
     }
 
-    else if (is2016_ && isMC_) { // Apply SFs to MC if 2016
+    else if ((is2016_ || is2016APV_) && isMC_) { // Apply SFs to MC if 2016
         // Dilepton channels
 
         if (channel == "mumu") {
@@ -1485,7 +1487,7 @@ double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const 
         }
     }
 
-    else if (is2016_)  { // Run2016 needs separate treatments in pre and post HIP eras
+    else if (is2016_ || is2016APV_)  { // Run2016 needs separate treatments in pre and post HIP eras
 
         double maxIdPt  {h_muonIDs1->GetYaxis()->GetXmax() - 0.1};
 //        double maxIsoPt {h_muonPFiso1->GetYaxis()->GetXmax() - 0.1};
@@ -1666,9 +1668,9 @@ std::pair<TLorentzVector, double> Cuts::getJetLVec(const AnalysisEvent& event, c
     // TODO: Check this is correct
     // For now, just leave jets of too large/small pT, large rho, or large η
     // untouched
-    const double rho{is2016_ ? event.elePF2PATRhoIso[0]
+    const double rho{(is2016_ || is2016APV_) ? event.elePF2PATRhoIso[0]
                              : event.fixedGridRhoFastjetAll};
-    if (event.jetPF2PATPtRaw[index] < 15 || event.jetPF2PATPtRaw[index] > 3000 || rho > (is2016_ ? 40.9 : 42.52) || std::abs(event.jetPF2PATEta[index]) > 4.7) {
+    if (event.jetPF2PATPtRaw[index] < 15 || event.jetPF2PATPtRaw[index] > 3000 || rho > ((is2016_||is2016APV_) ? 40.9 : 42.52) || std::abs(event.jetPF2PATEta[index]) > 4.7) {
         returnJet.SetPxPyPzE(event.jetPF2PATPx[index],
                              event.jetPF2PATPy[index],
                              event.jetPF2PATPz[index],
@@ -1679,10 +1681,10 @@ std::pair<TLorentzVector, double> Cuts::getJetLVec(const AnalysisEvent& event, c
     // TODO: Should this be gen or reco level?
     // I think reco because gen might not exist? (does not exist when
     // smearing)
-    const double ptRes{is2016_ ? jet2016PtSimRes(event.jetPF2PATPtRaw[index], event.jetPF2PATEta[index], rho)
+    const double ptRes{(is2016_ || is2016APV_) ? jet2016PtSimRes(event.jetPF2PATPtRaw[index], event.jetPF2PATEta[index], rho)
                                : jet2017PtSimRes(event.jetPF2PATPtRaw[index], event.jetPF2PATEta[index], rho)};
 
-    auto [jerSF, jerSigma] = is2016_ ? jet2016SFs(std::abs(event.jetPF2PATEta[index])) : jet2017SFs(std::abs(event.jetPF2PATEta[index]));
+    auto [jerSF, jerSigma] = (is2016_ || is2016APV_) ? jet2016SFs(std::abs(event.jetPF2PATEta[index])) : jet2017SFs(std::abs(event.jetPF2PATEta[index]));
 
     if (syst == 16) jerSF += jerSigma;
     else if (syst == 32) jerSF -= jerSigma;
