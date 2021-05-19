@@ -11,7 +11,7 @@ observation    23
 bin                   a                                       a             
 process               signal                                  QCD           
 process               0                                       1             
-rate                  1.009990114677284                       4.34192                                                                 
+rate                  10019.8                                 4.34192                                                                 
 ----------------------------------------
 lumi           lnN    1.025                                   -             
 trigger_sig    lnN    1.025                                   -             
