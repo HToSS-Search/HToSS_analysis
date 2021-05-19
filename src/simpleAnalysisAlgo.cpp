@@ -737,7 +737,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   Float_t chspt1{event.packedCandsPseudoTrkPt[chsIndex1]}, chspt2{event.packedCandsPseudoTrkPt[chsIndex2]};
 
   // Loop over all packed cands to plot displacement info
-  for(Int_t k{0};k<event.numPackedCands;k++) {
+  /*for(Int_t k{0};k<event.numPackedCands;k++) {
      
     // plot Dxy and Dz of all packed cands
     h_packedCDxy->Fill(event.packedCandsDxy[k], eventWeight);
@@ -762,7 +762,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       }
     }
 	      
-  }//end plot displacement info plot
+  }//end plot displacement info plot*/
 
   /////
 
@@ -813,7 +813,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   kaonLVec2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[chsIndex2],event.packedCandsPseudoTrkEta[chsIndex2],event.packedCandsPseudoTrkPhi[chsIndex2],std::sqrt(event.packedCandsE[chsIndex2]*event.packedCandsE[chsIndex2]-std::pow(0.1396,2)+std::pow(0.494,2)));
 
   RkaonLVec1.SetPtEtaPhiE(event.chsTkPairTk1Pt[chsIndex1],event.chsTkPairTk1Eta[chsIndex1],event.chsTkPairTk1Phi[chsIndex1],std::sqrt(event.chsTkPairTk1P2[chsIndex1]+std::pow(0.494,2)*std::pow(0.494,2)));
-  RkaonLVec2.SetPtEtaPhiE(event.chsTkPairTk2Pt[chsIndex1],event.chsTkPairTk2Eta[chsIndex1],event.chsTkPairTk2Phi[chsIndex1],std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.494,2)*std::pow(0.494,2)));
+  RkaonLVec2.SetPtEtaPhiE(event.chsTkPairTk2Pt[chsIndex2],event.chsTkPairTk2Eta[chsIndex2],event.chsTkPairTk2Phi[chsIndex2],std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.494,2)*std::pow(0.494,2)));
 
   h_KhadronDeltaR->Fill(kaonLVec1.DeltaR(kaonLVec2), eventWeight);
 
@@ -822,7 +822,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   pionLVec2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[chsIndex2],event.packedCandsPseudoTrkEta[chsIndex2],event.packedCandsPseudoTrkPhi[chsIndex2],event.packedCandsE[chsIndex2]);
   
   RpionLVec1.SetPtEtaPhiE(event.chsTkPairTk1Pt[chsIndex1],event.chsTkPairTk1Eta[chsIndex1],event.chsTkPairTk1Phi[chsIndex1],std::sqrt(event.chsTkPairTk1P2[chsIndex1]+std::pow(0.1396,2)*std::pow(0.1396,2)));
-  RpionLVec2.SetPtEtaPhiE(event.chsTkPairTk2Pt[chsIndex1],event.chsTkPairTk2Eta[chsIndex1],event.chsTkPairTk2Phi[chsIndex1],std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.1396,2)*std::pow(0.1396,2)));
+  RpionLVec2.SetPtEtaPhiE(event.chsTkPairTk2Pt[chsIndex2],event.chsTkPairTk2Eta[chsIndex2],event.chsTkPairTk2Phi[chsIndex2],std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.1396,2)*std::pow(0.1396,2)));
 
   h_PhadronDeltaR->Fill(pionLVec1.DeltaR(pionLVec2), eventWeight);
 
@@ -856,11 +856,11 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
 	
   for(Int_t k{0};k<event.numChsTrackPairs;k++){
-     R0packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk1Pt[chsIndex1],event.chsTkPairTk1Eta[chsIndex1],event.chsTkPairTk1Phi[chsIndex1],std::sqrt(event.chsTkPairTk1P2[chsIndex2]+std::pow(0.494,2)*std::pow(0.494,2)));
-     R1packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk2Pt[chsIndex1],event.chsTkPairTk2Eta[chsIndex1],event.chsTkPairTk2Phi[chsIndex1],std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.494,2)*std::pow(0.494,2)));
+     R0packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk1Pt[k],event.chsTkPairTk1Eta[k],event.chsTkPairTk1Phi[k],std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2)*std::pow(0.494,2)));
+     R1packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk2Pt[k],event.chsTkPairTk2Eta[k],event.chsTkPairTk2Phi[k],std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2)*std::pow(0.494,2)));
     
-     R4packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk1Pt[chsIndex1],event.chsTkPairTk1Eta[chsIndex1],event.chsTkPairTk1Phi[chsIndex1],std::sqrt(event.chsTkPairTk1P2[chsIndex2]+std::pow(0.1396,2)*std::pow(0.1396,2)));
-     R5packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk2Pt[chsIndex1],event.chsTkPairTk2Eta[chsIndex1],event.chsTkPairTk2Phi[chsIndex1],std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.1396,2)*std::pow(0.1396,2)));
+     R4packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk1Pt[k],event.chsTkPairTk1Eta[k],event.chsTkPairTk1Phi[k],std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2)*std::pow(0.1396,2)));
+     R5packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk2Pt[k],event.chsTkPairTk2Eta[k],event.chsTkPairTk2Phi[k],std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2)*std::pow(0.1396,2)));
   
      if(k!=chsIndex1 && k!=chsIndex2){      
        if(RkaonLVec1.DeltaR(R0packedCandLVec)<isoConeSize_) RKIsoSum1+=event.packedCandsPseudoTrkPt[k];
@@ -1017,21 +1017,16 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
          h_kNentries->SetBinContent(4,eventWeight);
        }
      }
-  } 
-  
-
-  //kaon wider
-	
-  if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
-    
-    if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
+	  
+     if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
       //if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
       if(std::abs((Kantiscalar).M()-2)<statWindow_){
           h_K20antiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
 	  QCD_20Kantiscalar+=eventWeight;
       }
     }
-  }
+  } 
+  
 	
 	
   //kaon higgs
