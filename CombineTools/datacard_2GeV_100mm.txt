@@ -5,7 +5,7 @@ kmax * number of nuisance parameters # * means figure it out from the rest of th
 ----------------------------------------
 
 bin            a
-observation    1.208514414057075 
+observation    23 
 	
 ----------------------------------------
 bin                   a                                       a             
