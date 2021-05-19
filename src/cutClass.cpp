@@ -80,9 +80,6 @@ Cuts::Cuts(const bool doPlots,
     , rc_{is2016 ? "scaleFactors/2016/RoccoR2016.txt"
                  : "scaleFactors/2017/RoccoR2017.txt"}
 
-    , lumiRunsBCDEF_{19713.888}
-    , lumiRunsGH_{16146.178}
-
     , isMC_{true}
 
     , isNPL_{false}
@@ -107,57 +104,8 @@ Cuts::Cuts(const bool doPlots,
     initialiseJECCors();
     std::cout << "Gets past JEC Cors" << std::endl;
 
-    if (!is2016_) {
-//        std::cout << "\nLoad 2017 electron SFs from root file ... "  << std::endl;
-
-        // Electron tight cut-based tight ID
-//        electronSFsFile = new TFile("scaleFactors/2017/egammaEffi.txt_EGM2D_runBCDEF_passingTight94X.root");
-
-        // Electron reco SF
-//        h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
-//        electronRecoFile = new TFile{"scaleFactors/2017/egammaEffi.txt_EGM2D_runBCDEF_passingRECO.root"}; // Electron Reco
-
-//        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
-//        std::cout << "Got 2017 electron SFs!\n" << std::endl;
-
-        std::cout << "Load 2017 muon SFs from root file ... " << std::endl;
-        muonHltFile1 = new TFile{"scaleFactors/2017/EfficienciesAndSF_RunBtoF_Nov17Nov2017.root"};
-
-//        muonIDsFile1 = new TFile{"scaleFactors/2017/RunBC_SF_ID.root"};      // Runs B-C
-//        muonIsoFile1 = new TFile{"scaleFactors/2017/RunBC_SF_ISO.root"};     // Runs B-C
-        muonIDsFile1 = new TFile{"scaleFactors/2017/RunDE_SF_ID.root"};        // Runs D-E
-        muonIsoFile1 = new TFile{"scaleFactors/2017/RunDE_SF_ISO.root"};       // Runs D-E
-//        muonIDsFile1 = new TFile{"scaleFactors/2017/RunBCDEF_SF_ID.root"};   // Runs B-F
-//        muonIsoFile1 = new TFile{"scaleFactors/2017/RunBCDEF_SF_ISO.root"};  // Runs B-F
-
-        muonIDsSystFile1 = new TFile{"scaleFactors/2017/RunBCDEF_SF_ID_syst.root"};
-        muonIsoSystFile1 = new TFile{"scaleFactors/2017/RunBCDEF_SF_ISO_syst.root"};
-
-        // Single muon HLT SF
-        muonHltFile1->cd("IsoMu27_PtEtaBins");
-        h_muonHlt1 = dynamic_cast<TH2F*>(muonHltFile1->Get("IsoMu27_PtEtaBins/abseta_pt_ratio"));
-
-        // Loose ID
-//        h_muonIDs1   = dynamic_cast<TH2D*>(muonIDsFile1->Get("NUM_LooseID_DEN_genTracks"));                            // Runs B-C
-        h_muonIDs1   = dynamic_cast<TH2D*>(muonIDsFile1->Get("NUM_LooseID_DEN_genTracks"));                            // Runs D-E
-//        h_muonIDs1   = dynamic_cast<TH2D*>(muonIDsFile1->Get("NUM_LooseID_DEN_genTracks_pt_abseta"));                  // Runs B-F
-
-        // Loose Iso
-//        h_muonPFiso1 = dynamic_cast<TH2D*>(muonIsoFile1->Get("NUM_LooseRelIso_DEN_LooseID"));                          // Runs B-C
-        h_muonPFiso1 = dynamic_cast<TH2D*>(muonIsoFile1->Get("NUM_LooseRelIso_DEN_LooseID"));                          // Runs D-E
-//        h_muonPFiso1 = dynamic_cast<TH2D*>(muonIsoFile1->Get("NUM_LooseRelIso_DEN_LooseID_pt_abseta"));                // Runs B-F
-
-        // Systs
-        h_muonIDsSyst1   = dynamic_cast<TH2D*>(muonIDsSystFile1->Get("NUM_LooseID_DEN_genTracks_pt_abseta_syst"));
-        h_muonPFisoSyst1 = dynamic_cast<TH2D*>( muonIsoSystFile1->Get("NUM_LooseRelIso_DEN_LooseID_pt_abseta_syst")); 
-
-        std::cout << "Got 2017 muon SFs!\n" << std::endl;
-    }
-    else {
+    if (is2016_) { // 2016 G-H
 //        std::cout << "\nLoad 2016 electron SFs from root file ... " << std::endl;
-
-        std::cout << "lumi set for Runs B-F: " << lumiRunsBCDEF_ << std::endl;
-        std::cout << "lumi set for Runs G-H: " << lumiRunsGH_ << std::endl;
 
         // Single electron HLT SF
 //        electronHltFile = new TFile("scaleFactors/2016/HLT_Ele32_eta2p1_WPTight_Gsf_FullRunRange.root");
@@ -172,62 +120,175 @@ Cuts::Cuts(const bool doPlots,
 //        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
 //        std::cout << "Got 2016 electron SFs!\n" << std::endl;
 
-        std::cout << "Load 2016 muon SFs from root file ... " << std::endl;
+        std::cout << "Load 2016 (G-H) muon SFs from root file ... " << std::endl;
 
-        // Runs B-F (pre-HIP fix)
-        muonHltFile1 = new TFile{"scaleFactors/2016/HLT_Mu24_EfficienciesAndSF_RunBtoF.root"};
-        // Runs G-H (post-HIP fix)
-        muonHltFile2 = new TFile{"scaleFactors/2016/HLT_Mu24_EfficienciesAndSF_RunGtoH.root"};
-
-        // Runs B-F (pre-HIP fix)
-        muonIDsFile1 = new TFile{"scaleFactors/2016/RunBCDEF_SF_ID.root"};
-        muonIsoFile1 = new TFile{"scaleFactors/2016/RunBCDEF_SF_ISO.root"};
-        muonIDsSystFile1 = new TFile{"scaleFactors/2016/RunBCDEF_SF_ID_syst.root"};
-        muonIsoSystFile1 = new TFile{"scaleFactors/2016/RunBCDEF_SF_ISO_syst.root"};
-        // Runs G-H (post-HIP fix)
-        muonIDsFile2 = new TFile{"scaleFactors/2016/RunGH_SF_ID.root"};
-        muonIsoFile2 = new TFile{"scaleFactors/2016/RunGH_SF_ISO.root"};
-        muonIDsSystFile2 = new TFile{"scaleFactors/2016/RunGH_SF_ID_syst.root"};
-        muonIsoSystFile2 = new TFile{"scaleFactors/2016/RunGH_SF_ISO_syst.root"};
+        muonHltFile = new TFile{"scaleFactors/2016/HLT_Mu24_EfficienciesAndSF_RunGtoH.root"};
+        muonIdFile  = new TFile{"scaleFactors/2016/Efficiencies_muon_generalTracks_Z_Run2016_UL_ID.root"};
+        muonIsoFile = new TFile{"scaleFactors/2016/Efficiencies_muon_generalTracks_Z_Run2016_UL_ISO.root"};
 
         // Single Muon HLT SF
-        muonHltFile1->cd("IsoMu24_OR_IsoTkMu24_PtEtaBins");
-        muonHltFile2->cd("IsoMu24_OR_IsoTkMu24_PtEtaBins");
-        h_muonHlt1 = dynamic_cast<TH2F*>(muonHltFile1->Get("IsoMu24_OR_IsoTkMu24_PtEtaBins/abseta_pt_ratio"));
-        h_muonHlt2 = dynamic_cast<TH2F*>(muonHltFile2->Get("IsoMu24_OR_IsoTkMu24_PtEtaBins/abseta_pt_ratio"));
+        muonHltFile->cd("IsoMu24_OR_IsoTkMu24_PtEtaBins");
+        h_muonHlt = dynamic_cast<TH2F*>(muonHltFile->Get("IsoMu24_OR_IsoTkMu24_PtEtaBins/abseta_pt_ratio"));
 
         // Loose ID
-        h_muonIDs1 = dynamic_cast<TH2D*>(muonIDsFile1->Get("NUM_LooseID_DEN_genTracks_eta_pt"));
-        h_muonIDs2 = dynamic_cast<TH2D*>(muonIDsFile2->Get("NUM_LooseID_DEN_genTracks_eta_pt"));
-        h_muonIDsSyst1 = dynamic_cast<TH2D*>(muonIDsSystFile1->Get("NUM_LooseID_DEN_genTracks_eta_pt_syst"));
-        h_muonIDsSyst2 = dynamic_cast<TH2D*>(muonIDsSystFile2->Get("NUM_LooseID_DEN_genTracks_eta_pt_syst"));
+        h_muonId     = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt"));
+        h_muonIdSyst = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt_syst"));
+        h_muonIdStat = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt_stat"));
 
         // Loose Iso
-        h_muonPFiso1 = dynamic_cast<TH2D*>(muonIsoFile1->Get("NUM_LooseRelIso_DEN_LooseID_eta_pt"));
-        h_muonPFiso2 = dynamic_cast<TH2D*>(muonIsoFile2->Get("NUM_LooseRelIso_DEN_LooseID_eta_pt"));
-        h_muonPFisoSyst1 = dynamic_cast<TH2D*>(muonIsoSystFile1->Get("NUM_LooseRelIso_DEN_LooseID_eta_pt_syst"));
-        h_muonPFisoSyst2 = dynamic_cast<TH2D*>(muonIsoSystFile2->Get("NUM_LooseRelIso_DEN_LooseID_eta_pt_syst"));
+        h_muonIso     = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt"));
+        h_muonIsoSyst = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_syst"));
+        h_muonIsoStat = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_stat"));
 
-        std::cout << "Got 2016 muon SFs!\n" << std::endl;
+        maxIdPt_  = {h_muonId->GetXaxis()->GetXmax() - 0.1};
+        maxIsoPt_ = {h_muonIso->GetXaxis()->GetXmax() - 0.1};
+        maxHltPt_ = {h_muonHlt->GetYaxis()->GetXmax() - 0.1};
+
+        minIdPt_  = {h_muonId->GetXaxis()->GetXmin() + 0.1};
+        minIsoPt_ = {h_muonIso->GetXaxis()->GetXmin() + 0.1};
+        minHltPt_ = {h_muonHlt->GetYaxis()->GetXmin() +  0.1};
+
+        std::cout << "Got 2016 (G-H) muon SFs!\n" << std::endl;
+    }
+
+    else if (is2016APV_) { // 2016 B-F
+//        std::cout << "\nLoad 2016 electron SFs from root file ... " << std::endl;
+
+        // Single electron HLT SF
+//        electronHltFile = new TFile("scaleFactors/2016/HLT_Ele32_eta2p1_WPTight_Gsf_FullRunRange.root");
+
+        // Electron cut-based ID
+//        h_eleHlt = dynamic_cast<TH2F*>(electronHltFile->Get("SF"));
+//        electronSFsFile = new TFile("scaleFactors/2016/egammaEffi_Tight_80X.txt_EGM2D.root");
+//        h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
+
+        // Electron reco SF
+//        electronRecoFile = new TFile{"scaleFactors/2016/egammaRecoEffi.txt_EGM2D.root"};
+//        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
+//        std::cout << "Got 2016 electron SFs!\n" << std::endl;
+
+        std::cout << "Load 2016 (B-F) muon SFs from root file ... " << std::endl;
+        muonHltFile = new TFile{"scaleFactors/2016/HLT_Mu24_EfficienciesAndSF_RunBtoF.root"};
+        muonIdFile  = new TFile{"scaleFactors/2016/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root"};
+        muonIsoFile = new TFile{"scaleFactors/2016/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ISO.root"};
+
+        // Single Muon HLT SF
+        muonHltFile->cd("IsoMu24_OR_IsoTkMu24_PtEtaBins");
+        h_muonHlt = dynamic_cast<TH2F*>(muonHltFile->Get("IsoMu24_OR_IsoTkMu24_PtEtaBins/abseta_pt_ratio"));
+
+        // Loose ID
+        h_muonId     = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt"));
+        h_muonIdSyst = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt_syst"));
+        h_muonIdStat = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt_stat"));
+
+        // Loose Iso
+        h_muonIso     = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt"));
+        h_muonIsoSyst = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_syst"));
+        h_muonIsoStat = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_stat"));
+
+        maxIdPt_  = {h_muonId->GetXaxis()->GetXmax() - 0.1};
+        maxIsoPt_ = {h_muonIso->GetXaxis()->GetXmax() - 0.1};
+        maxHltPt_ = {h_muonHlt->GetYaxis()->GetXmax() - 0.1};
+
+        minIdPt_  = {h_muonId->GetXaxis()->GetXmin() + 0.1};
+        minIsoPt_ = {h_muonIso->GetXaxis()->GetXmin() + 0.1};
+        minHltPt_ = {h_muonHlt->GetYaxis()->GetXmin() +  0.1};
+
+        std::cout << "Got 2016 (B-F) muon SFs!\n" << std::endl;
+    }
+
+    if (!is2016_ && !is2016APV_ && !is2018_) { // 2017
+//        std::cout << "\nLoad 2017 electron SFs from root file ... "  << std::endl;
+
+        // Electron tight cut-based tight ID
+//        electronSFsFile = new TFile("scaleFactors/2017/egammaEffi.txt_EGM2D_runBCDEF_passingTight94X.root");
+
+        // Electron reco SF
+//        h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
+//        electronRecoFile = new TFile{"scaleFactors/2017/egammaEffi.txt_EGM2D_runBCDEF_passingRECO.root"}; // Electron Reco
+
+//        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
+//        std::cout << "Got 2017 electron SFs!\n" << std::endl;
+
+        std::cout << "Load 2017 muon SFs from root file ... " << std::endl;
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+        muonHltFile = new TFile{"scaleFactors/2017/EfficienciesAndSF_RunBtoF_Nov17Nov2017.root"};
+        muonIdFile  = new TFile{"scaleFactors/2017/Efficiencies_muon_generalTracks_Z_Run2017_UL_ID.root"};
+        muonIsoFile = new TFile{"scaleFactors/2017/Efficiencies_muon_generalTracks_Z_Run2017_UL_ISO.root"};
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+        // Single Muon HLT SF
+        muonHltFile->cd("IsoMu27_PtEtaBins");
+        h_muonHlt = dynamic_cast<TH2F*>(muonHltFile->Get("IsoMu27_PtEtaBins/abseta_pt_ratio"));
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+        // Loose ID
+        h_muonId     = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt"));
+        h_muonIdSyst = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt_syst"));
+        h_muonIdStat = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt_stat"));
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+        // Loose Iso
+        h_muonIso     = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt"));
+        h_muonIsoSyst = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_syst"));
+        h_muonIsoStat = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_stat"));
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+        maxIdPt_  = h_muonId->GetXaxis()->GetXmax() - 0.1;
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+        maxIsoPt_ = h_muonIso->GetXaxis()->GetXmax() - 0.1;
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+        maxHltPt_ = h_muonHlt->GetYaxis()->GetXmax() - 0.1;
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+        minIdPt_  = h_muonId->GetXaxis()->GetXmin() + 0.1;
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+        minIsoPt_ = h_muonIso->GetXaxis()->GetXmin() + 0.1;
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+        minHltPt_ = h_muonHlt->GetYaxis()->GetXmin() +  0.1;
+
+        std::cout << "Got 2017 muon SFs!\n" << std::endl;
+    }
+    else { // 2018
+        std::cout << "Load 2018 muon SFs from root file ... " << std::endl;
+        muonHltFile = new TFile{"scaleFactors/2017/EfficienciesAndSF_RunBtoF_Nov17Nov2017.root"};
+        muonIdFile  = new TFile{"scaleFactors/2018/Efficiencies_muon_generalTracks_Z_Run2018_UL_ID.root"};
+        muonIsoFile = new TFile{"scaleFactors/2018/Efficiencies_muon_generalTracks_Z_Run2018_UL_ISO.root"};
+
+        // Single Muon HLT SF
+        muonHltFile->cd("IsoMu27_PtEtaBins");
+        h_muonHlt = dynamic_cast<TH2F*>(muonHltFile->Get("IsoMu27_PtEtaBins/abseta_pt_ratio"));
+
+        // Loose ID
+        h_muonId     = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt"));
+        h_muonIdSyst = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt_syst"));
+        h_muonIdStat = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt_stat"));
+
+        // Loose Iso
+        h_muonIso     = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt"));
+        h_muonIsoSyst = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_syst"));
+        h_muonIsoStat = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_stat"));
+
+        maxIdPt_  = {h_muonId->GetXaxis()->GetXmax() - 0.1};
+        maxIsoPt_ = {h_muonIso->GetXaxis()->GetXmax() - 0.1};
+        maxHltPt_ = {h_muonHlt->GetYaxis()->GetXmax() - 0.1};
+
+        minIdPt_  = {h_muonId->GetXaxis()->GetXmin() + 0.1};
+        minIsoPt_ = {h_muonIso->GetXaxis()->GetXmin() + 0.1};
+        minHltPt_ = {h_muonHlt->GetYaxis()->GetXmin() +  0.1};
+
+        std::cout << "Got 2018 muon SFs!\n" << std::endl;
     }
 }
 
 Cuts::~Cuts()
 {
-    electronSFsFile->Close();
-    electronRecoFile->Close();
-    muonHltFile1->Close();
-    muonIDsFile1->Close();
-    muonIsoFile1->Close();
-    muonIDsSystFile1->Close();
-    muonIsoSystFile1->Close();
-    if (is2016_) {
-        muonHltFile2->Close();
-        muonIDsFile2->Close();
-        muonIsoFile2->Close();
-        muonIDsSystFile2->Close();
-        muonIsoSystFile2->Close();
-    }
+//    electronSFsFile->Close();
+//    electronRecoFile->Close();
+    muonHltFile->Close();
+    muonIdFile->Close();
+    muonIsoFile->Close();
 }
 
 void Cuts::parse_config(const std::string confName)
@@ -1247,106 +1308,15 @@ bool Cuts::triggerCuts(const AnalysisEvent& event, double& eventWeight, const in
         channel = "mumu";
     }
 
-    double twgt{1.0};
-
-
-    if (!is2016_ && isMC_) { // Apply to 2017
-        // Lepton SFs obtained from triggerScaleFactorsAlgo
-
-        if (channel == "mumu") {
-            if (muTrig) {
-                twgt = 1.0;
-//                twgt = 0.97170;
-//                if (syst == 1) twgt += 0.01;
-//                else if (syst == 2) twgt -= 0.01;
-            }
-        }
-/*
-        else if (channel == "ee") {
-            if (eTrig || eeTrig) {
-                twgt = 0.93106;
-                if (syst == 1) twgt += 0.01;
-                else if (syst == 2) twgt -= 0.01;
-            }
-        }
-        else if (channel == "emu") {
-            if (muEGTrig) {
-                twgt = 0.95350;
-                if (syst == 1) twgt += 0.02;
-                else if (syst == 2) twgt -= 0.02;
-            }
-        }
-*/
-        else throw std::runtime_error("Unknown channel");
-    }
-
-    else if ((is2016_ || is2016APV_) && isMC_) { // Apply SFs to MC if 2016
-        // Dilepton channels
-
-        if (channel == "mumu") {
-            if (muTrig) { // If doubleMuon or singleMuon trigger fires ...
-
-                // eff pre-HIP fix: 0.98069  +/- -0.00070/0.00073; eff post-HIP
-                // fix: 0.99061 +/- -0.00057/0.00061;
-                // SF pre-HIP fix 0.98703 +/- 0.00016 and 0.99843 +/- 0.00016
-                // for post-HIP fix SF pre-HIP fix 0.98868 +/- 0.00013 and
-                // 0.99868 +/- 0.00017  for post-HIP fix
-
-                twgt = (0.97679 * lumiRunsBCDEF_ + 0.98941 * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
-
-                if (syst == 1) twgt += 0.01;
-                if (syst == 2) twgt -= 0.01;
-            }
-        }
-
-/*        if (channel == "ee") {
-            if (eTrig || eeTrig) { // If singleElectron or doubleEG trigger fires ...
-                twgt = 0.96917; // 0.97554 for data eff; 0.98715 for SF
-                if (syst == 1) twgt += 0.01; // +-/ 0.00138 for eff; 0.00063 for SF
-                if (syst == 2) twgt -= 0.01;
-            }
-        }
-
-        else if (channel == "emu") { // If MuonEG trigger fires, regardless of singleElectron/singleMuon
-          // triggers
-            if (muEGTrig) {
-                twgt = 0.98710;
-                if (syst == 1) twgt += 0.02; // -0.01220/0.01339 for eff; 0.01018 for SF
-                if (syst == 2) twgt -= 0.02;
-            }
-        }
-*/
-        else {
-            std::cout << "Trigger not found!" << std::endl;
-            twgt = 0.0; // Return 0.0 if trigger isn't found.
-        }
-    }
-
     // Check which trigger fired and if it correctly corresponds to the channel being scanned over.
     if (channel == "mumu") {
         // Trigger logic for double + single triggers
 ////        if ( (mumuTrig || muTrig) && !(eeTrig || muEGTrig || eTrig)) { // Old tZq logic
         if ( muTrig ) {
-            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
+//            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
             return true;
         }
     }
-
-/*
-    else if (channel == "emu") {
-        if (muEGTrig) {
-            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
-            return true;
-        }
-    }
-    else if (channel == "ee") {
-        //    if ( eeTrig && !(muEGTrig || mumuTrig) ) { // Original trigger logic, for double triggers only
-        if ((eeTrig || eTrig) && !(muEGTrig || mumuTrig || muTrig)) {
-            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
-            return true;
-        }
-    }
-*/
     return false;
 }
 
@@ -1433,123 +1403,50 @@ double Cuts::eleSF(const double& pt, const double& eta, const int& syst) const {
 
 double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const bool& leadingMuon) const {
 
-    if (!is2016_ && !is2018_) { // Is 2017
+    int binId{0}, binIso{0}, binHlt{0};
+    double muonIdSF{1.0}, muonPFisoSF{1.0}, muonHltSF {1.0};
 
-        double maxIdPt  {h_muonIDs1->GetXaxis()->GetXmax() - 0.1};
-//        double maxIsoPt {h_muonPFiso1->GetXaxis()->GetXmax() - 0.1};
-        double maxHltPt {h_muonHlt1->GetYaxis()->GetXmax() - 0.1};
-        double minIdPt    {h_muonIDs1->GetXaxis()->GetXmin() + 0.1};
-//         double minIsoPt   {h_muonPFiso1->GetXaxis()->GetXmin() + 0.1};
-        double minHltPt {h_muonHlt1->GetYaxis()->GetXmin() +  0.1};
+    if (pt > maxIdPt_) binId = h_muonId->FindBin(std::abs(eta), maxIdPt_);
+    else if (pt < minIdPt_) binId = h_muonId->FindBin(std::abs(eta), minIdPt_);
+    else binId = h_muonId->FindBin(std::abs(eta), pt);
 
-        int binId1{0}, binIso1{0}, binHlt1{0};
-        double muonIdSF{1.0}, muonPFisoSF{1.0}, muonHltSF {1.0};
+    if (pt > maxIsoPt_) binIso = h_muonIso->FindBin(std::abs(eta), maxIsoPt_);
+    else if (pt < minIsoPt_) binIso = h_muonIso->FindBin(std::abs(eta), minIsoPt_);
+    else binIso = h_muonIso->FindBin(std::abs(eta), pt);
 
-        if (pt > maxIdPt) binId1 = h_muonIDs1->FindBin(maxIdPt, std::abs(eta));
-        else if (pt < minIdPt) binId1 = h_muonIDs1->FindBin(minIdPt, std::abs(eta));
-        else binId1 = h_muonIDs1->FindBin(pt, std::abs(eta));
+    if (pt > maxHltPt_) binHlt = h_muonHlt->FindBin(std::abs(eta), maxHltPt_);
+    else if (pt < minHltPt_) binHlt = h_muonHlt->FindBin(std::abs(eta), minHltPt_);
+    else binHlt = h_muonHlt->FindBin(std::abs(eta), pt);
 
-//        if (pt > maxIsoPt) binIso1 = h_muonPFiso1->FindBin(maxIsoPt, std::abs(eta));
-//        else if (pt < minIsoPt) binIso1 = h_muonPFiso1->FindBin(miniIsoPt, std::abs(eta));
-//        else binIso1 = h_muonPFiso1->FindBin(pt, std::abs(eta));
+    muonIdSF    = h_muonId->GetBinContent(binId);
+    muonPFisoSF = h_muonIso->GetBinContent(binIso);
+//    if (leadingMuon) muonHltSF   = h_muonHlt->GetBinContent(binHlt);
 
-        if (pt > maxHltPt) binHlt1 = h_muonHlt1->FindBin(std::abs(eta), maxHltPt);
-        else if (pt < minHltPt) binHlt1 = h_muonHlt1->FindBin(std::abs(eta), minHltPt);
-        else binHlt1 = h_muonHlt1->FindBin(std::abs(eta), pt);
+    if (syst == 1 || syst == 2) {
 
-        muonIdSF    = h_muonIDs1->GetBinContent(binId1);
-//        muonPFisoSF = h_muonPFiso1->GetBinContent(binIso1);
-        if (leadingMuon) muonHltSF   = h_muonHlt1->GetBinContent(binHlt1);
+        double idSystUncert = h_muonIdSyst->GetBinError(binId);
+        double idStatUncert = h_muonIdStat->GetBinError(binId);
+        double idUncert = std::sqrt(idStatUncert*idStatUncert + idSystUncert*idSystUncert);
 
-        if (syst == 1 || syst == 2) {
-            double idStatUncert = h_muonIDs1->GetBinError(binId1);
-            double idSystUncert = h_muonIDsSyst1->GetBinError(binId1);
-            double idUncert = std::sqrt(idStatUncert*idStatUncert + idSystUncert*idSystUncert);
+        double isoSystUncert = h_muonIsoSyst->GetBinError(binId);
+        double isoStatUncert = h_muonIso->GetBinError(binId);
+        double isoUncert = std::sqrt(isoStatUncert*isoStatUncert + isoSystUncert*isoSystUncert);
 
-            double isoStatUncert = h_muonPFiso1->GetBinError(binId1);
-            double isoSystUncert = h_muonPFisoSyst1->GetBinError(binId1);
-            double isoUncert = std::sqrt(isoStatUncert*isoStatUncert + isoSystUncert*isoSystUncert);
-
-            if (syst == 1) {
-                muonIdSF    += idUncert;
-//                muonPFisoSF += isoUncert;
-                if (leadingMuon) muonHltSF   += h_muonHlt1->GetBinError(binHlt1);
-            }
-            else if (syst == 2) {
-                muonIdSF    -= idUncert;
-//                muonPFisoSF -= isoUncert;
-                if (leadingMuon) muonHltSF   -= h_muonHlt1->GetBinError(binHlt1);
-            }
-            return muonIdSF * muonPFisoSF * muonHltSF;
+        if (syst == 1) {
+            muonIdSF += idUncert;
+            muonPFisoSF += isoUncert;
+//            if (leadingMuon) muonHltSF += h_muonHlt->GetBinError(binHlt);
         }
-        else {
-            return muonIdSF * muonPFisoSF * muonHltSF;
+        else if (syst == 2) {
+            muonIdSF -= idUncert;
+            muonPFisoSF -= isoUncert;
+//            if (leadingMuon) muonHltSF   -= h_muonHlt->GetBinError(binHlt);
         }
+        return muonIdSF * muonPFisoSF * muonHltSF;
     }
-
-    else if (is2016_ || is2016APV_)  { // Run2016 needs separate treatments in pre and post HIP eras
-
-        double maxIdPt  {h_muonIDs1->GetYaxis()->GetXmax() - 0.1};
-//        double maxIsoPt {h_muonPFiso1->GetYaxis()->GetXmax() - 0.1};
-        double minIdPt    {h_muonIDs1->GetYaxis()->GetXmin() + 0.1};
-//        double minIsoPt   {h_muonPFiso1->GetYaxis()->GetXmin() + 0.1};
-
-        int binId1{0}, binIso1{0};
-        int binId2{0}, binIso2{0}; // Additional 2016 variables
-        double muonIdSF{1.0}, muonPFisoSF{1.0}, muonHltSF {1.0};
-
-        if (pt > maxIdPt) binId1 = h_muonIDs1->FindBin(eta, maxIdPt);
-        else if (pt < minIdPt) binId1 = h_muonIDs1->FindBin(eta, minIdPt);
-        else binId1 = h_muonIDs1->FindBin(eta, pt);
-        if (pt > maxIdPt) binId2 = h_muonIDs2->FindBin(eta, maxIdPt);
-        else if (pt < minIdPt) binId2 = h_muonIDs2->FindBin(eta, minIdPt);
-        else binId2 = h_muonIDs2->FindBin(eta, pt);
-
-//        if (pt > maxIsoPt) binIso1 = h_muonPFiso1->FindBin(eta, maxIsoPt);
-//        else if (pt < minIsoPt) binIso1 = h_muonPFiso1->FindBin(eta, miniIsoPt);
-//        else binIso1 = h_muonPFiso1->FindBin(eta, pt);
-//        if (pt > maxIsoPt) binIso2 = h_muonPFiso2->FindBin(eta, maxIsoPt);
-//        else if (pt < minIsoPt) binIso2 = h_muonPFiso2->FindBin(eta, minIsoPt);
-//        else binIso2 = h_muonPFiso2->FindBin(eta, pt);
-
-
-        muonIdSF = (h_muonIDs1->GetBinContent(binId1) * lumiRunsBCDEF_ + h_muonIDs2->GetBinContent(binId2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
-//        muonPFisoSF = (h_muonPFiso1->GetBinContent(binIso1) * lumiRunsBCDEF_ + h_muonPFiso2->GetBinContent(binIso2) * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
-
-        if (syst == 1 || syst == 2) {
-            double idStatUncert1 = h_muonIDs1->GetBinError(binId1);
-            double idSystUncert1 = h_muonIDsSyst1->GetBinError(binId1);
-            double idUncert1 = std::sqrt(idStatUncert1*idStatUncert1 + idSystUncert1*idSystUncert1);
-            double idStatUncert2 = h_muonIDs2->GetBinError(binId2);
-            double idSystUncert2 = h_muonIDsSyst2->GetBinError(binId2);
-            double idUncert2 = std::sqrt(idStatUncert2*idStatUncert2 + idSystUncert2*idSystUncert2);
-
-            double isoStatUncert1 = h_muonPFiso1->GetBinError(binId1);
-            double isoSystUncert1 = h_muonPFisoSyst1->GetBinError(binId1);
-            double isoUncert1 = std::sqrt(isoStatUncert1*isoStatUncert1 + isoSystUncert1*isoSystUncert1);
-            double isoStatUncert2 = h_muonPFiso2->GetBinError(binId2);
-            double isoSystUncert2 = h_muonPFisoSyst2->GetBinError(binId2);
-            double isoUncert2 = std::sqrt(isoStatUncert2*isoStatUncert2 + isoSystUncert2*isoSystUncert2);
-
-            if (syst == 1) {
-                muonIdSF += (idUncert1 * lumiRunsBCDEF_ + idUncert2 * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
-//                muonPFisoSF += (isoUncert1 * lumiRunsBCDEF_ + isoUncert2 * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
-            }
-            else if (syst == 2) {
-                muonIdSF -= (idUncert1 * lumiRunsBCDEF_ + idUncert2 * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
-//                muonPFisoSF -= (isoUncert1 * lumiRunsBCDEF_ + isoUncert2 * lumiRunsGH_) / (lumiRunsBCDEF_ + lumiRunsGH_ + 1.0e-06);
-            }
-            return muonIdSF * muonPFisoSF * muonHltSF;
-        }
-	else {
-            return muonIdSF * muonPFisoSF * muonHltSF;
-        }
+    else {
+        return muonIdSF * muonPFisoSF * muonHltSF;
     }
-
-    else if (is2018_)  { // is 2018
-        return {1.0};
-    }
-    else throw std::runtime_error("Unknown channel");
 }
 
 int Cuts::getMuonTrackPairIndex(const AnalysisEvent& event) const { 

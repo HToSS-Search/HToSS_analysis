@@ -121,10 +121,6 @@ class Cuts
     // Rochester Corrections
     RoccoR rc_;
 
-    // lumi for pre-hip and post-hip era
-    double lumiRunsBCDEF_;
-    double lumiRunsGH_;
-
     // Some things that will be used for JEC uncertainties.
     std::vector<double> ptMinJEC_;
     std::vector<double> ptMaxJEC_;
@@ -202,28 +198,25 @@ class Cuts
     TH2F* h_eleSFs;
     TH2F* h_eleReco;
 
-    TFile* muonHltFile1;
-    TFile* muonHltFile2;
-    TFile* muonIDsFile1;
-    TFile* muonIsoFile1;
-    TFile* muonIDsFile2;
-    TFile* muonIsoFile2;
+    TFile* muonHltFile;
+    TFile* muonIdFile;
+    TFile* muonIsoFile;
 
-    TFile* muonIDsSystFile1;
-    TFile* muonIsoSystFile1;
-    TFile* muonIDsSystFile2;
-    TFile* muonIsoSystFile2;
+    TH2F* h_muonHlt;
+    TH2F* h_muonId;
+    TH2F* h_muonIdSyst;
+    TH2F* h_muonIdStat;
+    TH2F* h_muonIso;
+    TH2F* h_muonIsoSyst;
+    TH2F* h_muonIsoStat;
 
-    TH2F* h_muonHlt1;
-    TH2F* h_muonHlt2;
-    TH2D* h_muonIDs1;
-    TH2D* h_muonIDs2;
-    TH2D* h_muonPFiso1;
-    TH2D* h_muonPFiso2;
-    TH2D* h_muonIDsSyst1;
-    TH2D* h_muonIDsSyst2;
-    TH2D* h_muonPFisoSyst1;
-    TH2D* h_muonPFisoSyst2;
+    double maxIdPt_;
+    double maxIsoPt_;
+    double maxHltPt_;
+
+    double minIdPt_;
+    double minIsoPt_;
+    double minHltPt_;
 
     public:
     Cuts(const bool doPlots, const bool fillCutFlows, const bool invertLepCut, const bool is2016, const bool is2016APV, const bool is2018);
