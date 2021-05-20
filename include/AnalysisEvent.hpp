@@ -859,11 +859,6 @@ class AnalysisEvent
     Int_t HLT_Mu7_IP4_part2_v2;
     Int_t HLT_Mu7_IP4_part3_v2;
     Int_t HLT_Mu7_IP4_part4_v2;
-    Int_t HLT_Mu9_IP4_part0_v2;
-    Int_t HLT_Mu9_IP4_part1_v2;
-    Int_t HLT_Mu9_IP4_part2_v2;
-    Int_t HLT_Mu9_IP4_part3_v2;
-    Int_t HLT_Mu9_IP4_part4_v2;
     Int_t HLT_Mu8_IP5_part0_v2;
     Int_t HLT_Mu8_IP5_part1_v2;
     Int_t HLT_Mu8_IP5_part2_v2;
@@ -874,16 +869,21 @@ class AnalysisEvent
     Int_t HLT_Mu8_IP6_part2_v2;
     Int_t HLT_Mu8_IP6_part3_v2;
     Int_t HLT_Mu8_IP6_part4_v2;
+    Int_t HLT_Mu9_IP6_part0_v1;
+    Int_t HLT_Mu9_IP6_part1_v1;
+    Int_t HLT_Mu9_IP6_part2_v1;
+    Int_t HLT_Mu9_IP6_part3_v1;
+    Int_t HLT_Mu9_IP6_part4_v1;
+    Int_t HLT_Mu9_IP6_part0_v2;
+    Int_t HLT_Mu9_IP6_part1_v2;
+    Int_t HLT_Mu9_IP6_part2_v2;
+    Int_t HLT_Mu9_IP6_part3_v2;
+    Int_t HLT_Mu9_IP6_part4_v2;
     Int_t HLT_Mu9_IP6_part0_v3;
     Int_t HLT_Mu9_IP6_part1_v3;
     Int_t HLT_Mu9_IP6_part2_v3;
     Int_t HLT_Mu9_IP6_part3_v3;
     Int_t HLT_Mu9_IP6_part4_v3;
-    Int_t HLT_Mu8_IP3_part0_v3;
-    Int_t HLT_Mu8_IP3_part1_v3;
-    Int_t HLT_Mu8_IP3_part2_v3;
-    Int_t HLT_Mu8_IP3_part3_v3;
-    Int_t HLT_Mu8_IP3_part4_v3;
 	
 /*
     // 2017 Data scouting triggers
@@ -1743,11 +1743,6 @@ class AnalysisEvent
     TBranch* b_HLT_Mu7_IP4_part2_v2;
     TBranch* b_HLT_Mu7_IP4_part3_v2;
     TBranch* b_HLT_Mu7_IP4_part4_v2;
-    TBranch* b_HLT_Mu9_IP4_part0_v2;
-    TBranch* b_HLT_Mu9_IP4_part1_v2;
-    TBranch* b_HLT_Mu9_IP4_part2_v2;
-    TBranch* b_HLT_Mu9_IP4_part3_v2;
-    TBranch* b_HLT_Mu9_IP4_part4_v2;
     TBranch* b_HLT_Mu8_IP5_part0_v2;
     TBranch* b_HLT_Mu8_IP5_part1_v2;
     TBranch* b_HLT_Mu8_IP5_part2_v2;
@@ -1758,16 +1753,21 @@ class AnalysisEvent
     TBranch* b_HLT_Mu8_IP6_part2_v2;
     TBranch* b_HLT_Mu8_IP6_part3_v2;
     TBranch* b_HLT_Mu8_IP6_part4_v2;
+    TBranch* b_HLT_Mu9_IP6_part0_v1;
+    TBranch* b_HLT_Mu9_IP6_part1_v1;
+    TBranch* b_HLT_Mu9_IP6_part2_v1;
+    TBranch* b_HLT_Mu9_IP6_part3_v1;
+    TBranch* b_HLT_Mu9_IP6_part4_v1;
+    TBranch* b_HLT_Mu9_IP6_part0_v2;
+    TBranch* b_HLT_Mu9_IP6_part1_v2;
+    TBranch* b_HLT_Mu9_IP6_part2_v2;
+    TBranch* b_HLT_Mu9_IP6_part3_v2;
+    TBranch* b_HLT_Mu9_IP6_part4_v2;
     TBranch* b_HLT_Mu9_IP6_part0_v3;
     TBranch* b_HLT_Mu9_IP6_part1_v3;
     TBranch* b_HLT_Mu9_IP6_part2_v3;
     TBranch* b_HLT_Mu9_IP6_part3_v3;
     TBranch* b_HLT_Mu9_IP6_part4_v3;
-    TBranch* b_HLT_Mu8_IP3_part0_v3;
-    TBranch* b_HLT_Mu8_IP3_part1_v3;
-    TBranch* b_HLT_Mu8_IP3_part2_v3;
-    TBranch* b_HLT_Mu8_IP3_part3_v3;
-    TBranch* b_HLT_Mu8_IP3_part4_v3;
 
 /*
     TBranch* b_DST_HT250_CaloScouting_v6;
@@ -2777,11 +2777,6 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
        fChain->SetBranchAddress("HLT_Mu7_IP4_part2_v2", &HLT_Mu7_IP4_part2_v2, &b_HLT_Mu7_IP4_part2_v2);
        fChain->SetBranchAddress("HLT_Mu7_IP4_part3_v2", &HLT_Mu7_IP4_part3_v2, &b_HLT_Mu7_IP4_part3_v2);
        fChain->SetBranchAddress("HLT_Mu7_IP4_part4_v2", &HLT_Mu7_IP4_part4_v2, &b_HLT_Mu7_IP4_part4_v2);
-       fChain->SetBranchAddress("HLT_Mu9_IP4_part0_v2", &HLT_Mu9_IP4_part0_v2, &b_HLT_Mu9_IP4_part0_v2);
-       fChain->SetBranchAddress("HLT_Mu9_IP4_part1_v2", &HLT_Mu9_IP4_part1_v2, &b_HLT_Mu9_IP4_part1_v2);
-       fChain->SetBranchAddress("HLT_Mu9_IP4_part2_v2", &HLT_Mu9_IP4_part2_v2, &b_HLT_Mu9_IP4_part2_v2);
-       fChain->SetBranchAddress("HLT_Mu9_IP4_part3_v2", &HLT_Mu9_IP4_part3_v2, &b_HLT_Mu9_IP4_part3_v2);
-       fChain->SetBranchAddress("HLT_Mu9_IP4_part4_v2", &HLT_Mu9_IP4_part4_v2, &b_HLT_Mu9_IP4_part4_v2);
        fChain->SetBranchAddress("HLT_Mu8_IP5_part0_v2", &HLT_Mu8_IP5_part0_v2, &b_HLT_Mu8_IP5_part0_v2);
        fChain->SetBranchAddress("HLT_Mu8_IP5_part1_v2", &HLT_Mu8_IP5_part1_v2, &b_HLT_Mu8_IP5_part1_v2);
        fChain->SetBranchAddress("HLT_Mu8_IP5_part2_v2", &HLT_Mu8_IP5_part2_v2, &b_HLT_Mu8_IP5_part2_v2);
@@ -2792,16 +2787,21 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
        fChain->SetBranchAddress("HLT_Mu8_IP6_part2_v2", &HLT_Mu8_IP6_part2_v2, &b_HLT_Mu8_IP6_part2_v2);
        fChain->SetBranchAddress("HLT_Mu8_IP6_part3_v2", &HLT_Mu8_IP6_part3_v2, &b_HLT_Mu8_IP6_part3_v2);
        fChain->SetBranchAddress("HLT_Mu8_IP6_part4_v2", &HLT_Mu8_IP6_part4_v2, &b_HLT_Mu8_IP6_part4_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part0_v1", &HLT_Mu9_IP6_part0_v1, &b_HLT_Mu9_IP6_part0_v1);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part1_v1", &HLT_Mu9_IP6_part1_v1, &b_HLT_Mu9_IP6_part1_v1);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part2_v1", &HLT_Mu9_IP6_part2_v1, &b_HLT_Mu9_IP6_part2_v1);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part3_v1", &HLT_Mu9_IP6_part3_v1, &b_HLT_Mu9_IP6_part3_v1);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part4_v1", &HLT_Mu9_IP6_part4_v1, &b_HLT_Mu9_IP6_part4_v1);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part0_v2", &HLT_Mu9_IP6_part0_v2, &b_HLT_Mu9_IP6_part0_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part1_v2", &HLT_Mu9_IP6_part1_v2, &b_HLT_Mu9_IP6_part1_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part2_v2", &HLT_Mu9_IP6_part2_v2, &b_HLT_Mu9_IP6_part2_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part3_v2", &HLT_Mu9_IP6_part3_v2, &b_HLT_Mu9_IP6_part3_v2);
+       fChain->SetBranchAddress("HLT_Mu9_IP6_part4_v2", &HLT_Mu9_IP6_part4_v2, &b_HLT_Mu9_IP6_part4_v2);
        fChain->SetBranchAddress("HLT_Mu9_IP6_part0_v3", &HLT_Mu9_IP6_part0_v3, &b_HLT_Mu9_IP6_part0_v3);
        fChain->SetBranchAddress("HLT_Mu9_IP6_part1_v3", &HLT_Mu9_IP6_part1_v3, &b_HLT_Mu9_IP6_part1_v3);
        fChain->SetBranchAddress("HLT_Mu9_IP6_part2_v3", &HLT_Mu9_IP6_part2_v3, &b_HLT_Mu9_IP6_part2_v3);
        fChain->SetBranchAddress("HLT_Mu9_IP6_part3_v3", &HLT_Mu9_IP6_part3_v3, &b_HLT_Mu9_IP6_part3_v3);
        fChain->SetBranchAddress("HLT_Mu9_IP6_part4_v3", &HLT_Mu9_IP6_part4_v3, &b_HLT_Mu9_IP6_part4_v3);
-       fChain->SetBranchAddress("HLT_Mu8_IP3_part0_v3", &HLT_Mu8_IP3_part0_v3, &b_HLT_Mu8_IP3_part0_v3);
-       fChain->SetBranchAddress("HLT_Mu8_IP3_part1_v3", &HLT_Mu8_IP3_part1_v3, &b_HLT_Mu8_IP3_part1_v3);
-       fChain->SetBranchAddress("HLT_Mu8_IP3_part2_v3", &HLT_Mu8_IP3_part2_v3, &b_HLT_Mu8_IP3_part2_v3);
-       fChain->SetBranchAddress("HLT_Mu8_IP3_part3_v3", &HLT_Mu8_IP3_part3_v3, &b_HLT_Mu8_IP3_part3_v3);
-       fChain->SetBranchAddress("HLT_Mu8_IP3_part4_v3", &HLT_Mu8_IP3_part4_v3, &b_HLT_Mu8_IP3_part4_v3);
    }
 /*
    // DST branches
@@ -3083,11 +3083,9 @@ inline bool AnalysisEvent::bParkingTrigInclusive() const {
         if ( HLT_Mu12_IP6_part0_v2 > 0 || HLT_Mu12_IP6_part1_v2 > 0 || HLT_Mu12_IP6_part2_v2 > 0 || HLT_Mu12_IP6_part3_v2 > 0 || HLT_Mu12_IP6_part4_v2 > 0
           || HLT_Mu9_IP5_part0_v2 > 0 || HLT_Mu9_IP5_part1_v2 > 0 || HLT_Mu9_IP5_part2_v2 > 0 || HLT_Mu9_IP5_part3_v2 > 0 || HLT_Mu9_IP5_part4_v2 > 0
           || HLT_Mu7_IP4_part0_v2 > 0 || HLT_Mu7_IP4_part1_v2 > 0 || HLT_Mu7_IP4_part2_v2 > 0 || HLT_Mu7_IP4_part3_v2 > 0 || HLT_Mu7_IP4_part4_v2 > 0
-          || HLT_Mu9_IP4_part0_v2 > 0 || HLT_Mu9_IP4_part1_v2 > 0 || HLT_Mu9_IP4_part2_v2 > 0 || HLT_Mu9_IP4_part3_v2 > 0 || HLT_Mu9_IP4_part4_v2 > 0
           || HLT_Mu8_IP5_part0_v2 > 0 || HLT_Mu8_IP5_part1_v2 > 0 || HLT_Mu8_IP5_part2_v2 > 0 || HLT_Mu8_IP5_part3_v2 > 0 || HLT_Mu8_IP5_part4_v2 > 0
           || HLT_Mu8_IP6_part0_v2 > 0 || HLT_Mu8_IP6_part1_v2 > 0 || HLT_Mu8_IP6_part2_v2 > 0 || HLT_Mu8_IP6_part3_v2 > 0 || HLT_Mu8_IP6_part4_v2 > 0
-          || HLT_Mu9_IP6_part0_v3 > 0 || HLT_Mu9_IP6_part1_v3 > 0 || HLT_Mu9_IP6_part2_v3 > 0 || HLT_Mu9_IP6_part3_v3 > 0 || HLT_Mu9_IP6_part4_v3 > 0
-          || HLT_Mu8_IP3_part0_v3 > 0 || HLT_Mu8_IP3_part1_v3 > 0 || HLT_Mu8_IP3_part2_v3 > 0 || HLT_Mu8_IP3_part3_v3 > 0 || HLT_Mu8_IP3_part4_v3 > 0 ) return true;
+          || HLT_Mu9_IP6_part0_v3 > 0 || HLT_Mu9_IP6_part1_v3 > 0 || HLT_Mu9_IP6_part2_v3 > 0 || HLT_Mu9_IP6_part3_v3 > 0 || HLT_Mu9_IP6_part4_v3 > 0 ) return true;
         else return false;
     }
 }
@@ -3098,11 +3096,9 @@ inline bool AnalysisEvent::bParkingTrigPart0() const {
         if ( HLT_Mu12_IP6_part0_v2 > 0 
           || HLT_Mu9_IP5_part0_v2 > 0  
           || HLT_Mu7_IP4_part0_v2 > 0  
-          || HLT_Mu9_IP4_part0_v2 > 0  
           || HLT_Mu8_IP5_part0_v2 > 0  
           || HLT_Mu8_IP6_part0_v2 > 0  
-          || HLT_Mu9_IP6_part0_v3 > 0  
-          || HLT_Mu8_IP3_part0_v3 > 0 ) return true;
+          || HLT_Mu9_IP6_part0_v3 > 0 ) return true;
         else return false;
     }
 }
