@@ -52,7 +52,7 @@
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(120,130); 
-     h_PscalarInvMass_ctau0->GetYaxis()->SetRangeUser(0,1100); 
+    // h_PscalarInvMass_ctau0->GetYaxis()->SetRangeUser(0,1100); 
      h_PscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
      h_PscalarInvMass_ctau0->SetMarkerColor(4);
      h_PscalarInvMass_ctau0->SetLineColor(4);
