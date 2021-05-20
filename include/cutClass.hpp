@@ -198,6 +198,11 @@ class Cuts
     TH2F* h_eleSFs;
     TH2F* h_eleReco;
 
+    double maxEleIdPt_;
+    double maxEleIdReco_;
+    double minEleIdPt_;
+    double minEleIdReco_;
+
     TFile* muonHltFile;
     TFile* muonIdFile;
     TFile* muonIsoFile;
@@ -210,13 +215,13 @@ class Cuts
     TH2F* h_muonIsoSyst;
     TH2F* h_muonIsoStat;
 
-    double maxIdPt_;
-    double maxIsoPt_;
-    double maxHltPt_;
+    double maxMuonIdPt_;
+    double maxMuonIsoPt_;
+    double maxMuonHltPt_;
 
-    double minIdPt_;
-    double minIsoPt_;
-    double minHltPt_;
+    double minMuonIdPt_;
+    double minMuonIsoPt_;
+    double minMuonHltPt_;
 
     public:
     Cuts(const bool doPlots, const bool fillCutFlows, const bool invertLepCut, const bool is2016, const bool is2016APV, const bool is2018);

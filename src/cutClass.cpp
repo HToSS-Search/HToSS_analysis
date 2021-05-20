@@ -105,21 +105,28 @@ Cuts::Cuts(const bool doPlots,
     std::cout << "Gets past JEC Cors" << std::endl;
 
     if (is2016_) { // 2016 G-H
-//        std::cout << "\nLoad 2016 electron SFs from root file ... " << std::endl;
+/*
+        std::cout << "\nLoad 2016 (G-H) electron SFs from root file ... " << std::endl;
 
         // Single electron HLT SF
-//        electronHltFile = new TFile("scaleFactors/2016/HLT_Ele32_eta2p1_WPTight_Gsf_FullRunRange.root");
+        electronHltFile = new TFile("scaleFactors/2016/HLT_Ele32_eta2p1_WPTight_Gsf_FullRunRange.root");
+        h_eleHlt = dynamic_cast<TH2F*>(electronHltFile->Get("SF"));
 
         // Electron cut-based ID
-//        h_eleHlt = dynamic_cast<TH2F*>(electronHltFile->Get("SF"));
-//        electronSFsFile = new TFile("scaleFactors/2016/egammaEffi_Tight_80X.txt_EGM2D.root");
-//        h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
+        electronSFsFile = new TFile("scaleFactors/2016/egammaEffi.txt_Ele_Tight_postVFP_EGM2D.root");
+        h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
 
         // Electron reco SF
-//        electronRecoFile = new TFile{"scaleFactors/2016/egammaRecoEffi.txt_EGM2D.root"};
-//        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
-//        std::cout << "Got 2016 electron SFs!\n" << std::endl;
+        electronRecoFile = new TFile{"scaleFactors/2016/egammaEffi_ptAbove20.txt_EGM2D_UL2016postVFP.root"};
+        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
 
+        maxEleIdPt_   = {h_eleSFs->GetXaxis()->GetXmax() - 0.1};
+        maxEleIdReco_ = {h_eleReco->GetXaxis()->GetXmax() - 0.1};
+        minEleIdPt_   = {h_eleSFs->GetXaxis()->GetXmin() + 0.1};
+        minEleIdReco_ = {h_eleReco->GetXaxis()->GetXmin() + 0.1};
+
+        std::cout << "Got 2016 (G-H) electron SFs!\n" << std::endl;
+*/
         std::cout << "Load 2016 (G-H) muon SFs from root file ... " << std::endl;
 
         muonHltFile = new TFile{"scaleFactors/2016/HLT_Mu24_EfficienciesAndSF_RunGtoH.root"};
@@ -140,41 +147,49 @@ Cuts::Cuts(const bool doPlots,
         h_muonIsoSyst = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_syst"));
         h_muonIsoStat = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_stat"));
 
-        maxIdPt_  = {h_muonId->GetXaxis()->GetXmax() - 0.1};
-        maxIsoPt_ = {h_muonIso->GetXaxis()->GetXmax() - 0.1};
-        maxHltPt_ = {h_muonHlt->GetYaxis()->GetXmax() - 0.1};
+        maxMuonIdPt_  = {h_muonId->GetXaxis()->GetXmax() - 0.1};
+        maxMuonIsoPt_ = {h_muonIso->GetXaxis()->GetXmax() - 0.1};
+        maxMuonHltPt_ = {h_muonHlt->GetYaxis()->GetXmax() - 0.1};
 
-        minIdPt_  = {h_muonId->GetXaxis()->GetXmin() + 0.1};
-        minIsoPt_ = {h_muonIso->GetXaxis()->GetXmin() + 0.1};
-        minHltPt_ = {h_muonHlt->GetYaxis()->GetXmin() +  0.1};
+        minMuonIdPt_  = {h_muonId->GetXaxis()->GetXmin() + 0.1};
+        minMuonIsoPt_ = {h_muonIso->GetXaxis()->GetXmin() + 0.1};
+        minMuonHltPt_ = {h_muonHlt->GetYaxis()->GetXmin() +  0.1};
 
         std::cout << "Got 2016 (G-H) muon SFs!\n" << std::endl;
     }
 
     else if (is2016APV_) { // 2016 B-F
-//        std::cout << "\nLoad 2016 electron SFs from root file ... " << std::endl;
+/*
+  	std::cout << "\nLoad 2016 (B-F) electron SFs from root file ... " << std::endl;
 
         // Single electron HLT SF
-//        electronHltFile = new TFile("scaleFactors/2016/HLT_Ele32_eta2p1_WPTight_Gsf_FullRunRange.root");
+        electronHltFile = new TFile("scaleFactors/2016/HLT_Ele32_eta2p1_WPTight_Gsf_FullRunRange.root");
+        h_eleHlt = dynamic_cast<TH2F*>(electronHltFile->Get("SF"));
 
         // Electron cut-based ID
-//        h_eleHlt = dynamic_cast<TH2F*>(electronHltFile->Get("SF"));
-//        electronSFsFile = new TFile("scaleFactors/2016/egammaEffi_Tight_80X.txt_EGM2D.root");
-//        h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
+        electronSFsFile = new TFile("scaleFactors/2016/egammaEffi.txt_Ele_Tight_preVFP_EGM2D.root");
+        h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
 
         // Electron reco SF
-//        electronRecoFile = new TFile{"scaleFactors/2016/egammaRecoEffi.txt_EGM2D.root"};
-//        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
-//        std::cout << "Got 2016 electron SFs!\n" << std::endl;
+        electronRecoFile = new TFile{"scaleFactors/2016/egammaEffi_ptAbove20.txt_EGM2D_UL2016preVFP.root"};
+        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
 
+        maxEleIdPt_   = {h_eleSFs->GetXaxis()->GetXmax() - 0.1};
+        maxEleIdReco_ = {h_eleReco->GetXaxis()->GetXmax() - 0.1};
+        minEleIdPt_   = {h_eleSFs->GetXaxis()->GetXmin() + 0.1};
+        minEleIdReco_ = {h_eleReco->GetXaxis()->GetXmin() + 0.1};
+
+        std::cout << "Got 2016 (B-F) electron SFs!\n" << std::endl;
+*/
         std::cout << "Load 2016 (B-F) muon SFs from root file ... " << std::endl;
-        muonHltFile = new TFile{"scaleFactors/2016/HLT_Mu24_EfficienciesAndSF_RunBtoF.root"};
+
+//        muonHltFile = new TFile{"scaleFactors/2016/HLT_Mu24_EfficienciesAndSF_RunBtoF.root"};
         muonIdFile  = new TFile{"scaleFactors/2016/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root"};
         muonIsoFile = new TFile{"scaleFactors/2016/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ISO.root"};
 
         // Single Muon HLT SF
-        muonHltFile->cd("IsoMu24_OR_IsoTkMu24_PtEtaBins");
-        h_muonHlt = dynamic_cast<TH2F*>(muonHltFile->Get("IsoMu24_OR_IsoTkMu24_PtEtaBins/abseta_pt_ratio"));
+//        muonHltFile->cd("IsoMu24_OR_IsoTkMu24_PtEtaBins");
+//        h_muonHlt = dynamic_cast<TH2F*>(muonHltFile->Get("IsoMu24_OR_IsoTkMu24_PtEtaBins/abseta_pt_ratio"));
 
         // Loose ID
         h_muonId     = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt"));
@@ -186,79 +201,103 @@ Cuts::Cuts(const bool doPlots,
         h_muonIsoSyst = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_syst"));
         h_muonIsoStat = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_stat"));
 
-        maxIdPt_  = {h_muonId->GetXaxis()->GetXmax() - 0.1};
-        maxIsoPt_ = {h_muonIso->GetXaxis()->GetXmax() - 0.1};
-        maxHltPt_ = {h_muonHlt->GetYaxis()->GetXmax() - 0.1};
+        maxMuonIdPt_  = {h_muonId->GetXaxis()->GetXmax() - 0.1};
+        maxMuonIsoPt_ = {h_muonIso->GetXaxis()->GetXmax() - 0.1};
+//        maxMuonHltPt_ = {h_muonHlt->GetYaxis()->GetXmax() - 0.1};
 
-        minIdPt_  = {h_muonId->GetXaxis()->GetXmin() + 0.1};
-        minIsoPt_ = {h_muonIso->GetXaxis()->GetXmin() + 0.1};
-        minHltPt_ = {h_muonHlt->GetYaxis()->GetXmin() +  0.1};
+        minMuonIdPt_  = {h_muonId->GetXaxis()->GetXmin() + 0.1};
+        minMuonIsoPt_ = {h_muonIso->GetXaxis()->GetXmin() + 0.1};
+//        minMuonHltPt_ = {h_muonHlt->GetYaxis()->GetXmin() +  0.1};
 
         std::cout << "Got 2016 (B-F) muon SFs!\n" << std::endl;
     }
 
-    if (!is2016_ && !is2016APV_ && !is2018_) { // 2017
-//        std::cout << "\nLoad 2017 electron SFs from root file ... "  << std::endl;
+    else if (!is2016_ && !is2016APV_ && !is2018_) { // 2017
+/*
+  	std::cout << "\nLoad 2017 electron SFs from root file ... " << std::endl;
 
-        // Electron tight cut-based tight ID
-//        electronSFsFile = new TFile("scaleFactors/2017/egammaEffi.txt_EGM2D_runBCDEF_passingTight94X.root");
+        // Single electron HLT SF
+        electronHltFile = new TFile("scaleFactors/2016/HLT_Ele32_eta2p1_WPTight_Gsf_FullRunRange.root");
+        h_eleHlt = dynamic_cast<TH2F*>(electronHltFile->Get("SF"));
+
+        // Electron cut-based ID
+        electronSFsFile = new TFile("scaleFactors/2017/egammaEffi.txt_EGM2D_Tight_UL17.root");
+        h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
 
         // Electron reco SF
-//        h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
-//        electronRecoFile = new TFile{"scaleFactors/2017/egammaEffi.txt_EGM2D_runBCDEF_passingRECO.root"}; // Electron Reco
+        electronRecoFile = new TFile{"scaleFactors/2017/egammaEffi_ptAbove20.txt_EGM2D_UL2017"};
+        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
 
-//        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
-//        std::cout << "Got 2017 electron SFs!\n" << std::endl;
+        maxEleIdPt_   = {h_eleSFs->GetXaxis()->GetXmax() - 0.1};
+        maxEleIdReco_ = {h_eleReco->GetXaxis()->GetXmax() - 0.1};
+        minEleIdPt_   = {h_eleSFs->GetXaxis()->GetXmin() + 0.1};
+        minEleIdReco_ = {h_eleReco->GetXaxis()->GetXmin() + 0.1};
+
+        std::cout << "Got 2017 electron SFs!\n" << std::endl;
+*/
 
         std::cout << "Load 2017 muon SFs from root file ... " << std::endl;
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-        muonHltFile = new TFile{"scaleFactors/2017/EfficienciesAndSF_RunBtoF_Nov17Nov2017.root"};
+
+//        muonHltFile = new TFile{"scaleFactors/2017/EfficienciesAndSF_RunBtoF_Nov17Nov2017.root"};
         muonIdFile  = new TFile{"scaleFactors/2017/Efficiencies_muon_generalTracks_Z_Run2017_UL_ID.root"};
         muonIsoFile = new TFile{"scaleFactors/2017/Efficiencies_muon_generalTracks_Z_Run2017_UL_ISO.root"};
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
         // Single Muon HLT SF
-        muonHltFile->cd("IsoMu27_PtEtaBins");
-        h_muonHlt = dynamic_cast<TH2F*>(muonHltFile->Get("IsoMu27_PtEtaBins/abseta_pt_ratio"));
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+//        muonHltFile->cd("IsoMu27_PtEtaBins");
+//        h_muonHlt = dynamic_cast<TH2F*>(muonHltFile->Get("IsoMu27_PtEtaBins/abseta_pt_ratio"));
 
         // Loose ID
         h_muonId     = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt"));
         h_muonIdSyst = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt_syst"));
         h_muonIdStat = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt_stat"));
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
         // Loose Iso
         h_muonIso     = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt"));
         h_muonIsoSyst = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_syst"));
         h_muonIsoStat = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_stat"));
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
 
-        maxIdPt_  = h_muonId->GetXaxis()->GetXmax() - 0.1;
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-        maxIsoPt_ = h_muonIso->GetXaxis()->GetXmax() - 0.1;
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-        maxHltPt_ = h_muonHlt->GetYaxis()->GetXmax() - 0.1;
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+        maxMuonIdPt_  = h_muonId->GetXaxis()->GetXmax() - 0.1;
+        maxMuonIsoPt_ = h_muonIso->GetXaxis()->GetXmax() - 0.1;
+//	    maxMuonHltPt_ = h_muonHlt->GetYaxis()->GetXmax() - 0.1;
 
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-        minIdPt_  = h_muonId->GetXaxis()->GetXmin() + 0.1;
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-        minIsoPt_ = h_muonIso->GetXaxis()->GetXmin() + 0.1;
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-        minHltPt_ = h_muonHlt->GetYaxis()->GetXmin() +  0.1;
+        minMuonIdPt_  = h_muonId->GetXaxis()->GetXmin() + 0.1;
+        minMuonIsoPt_ = h_muonIso->GetXaxis()->GetXmin() + 0.1;
+//        minMuonHltPt_ = h_muonHlt->GetYaxis()->GetXmin() +  0.1;
 
         std::cout << "Got 2017 muon SFs!\n" << std::endl;
     }
     else { // 2018
+/*
+        std::cout << "\nLoad 2018 electron SFs from root file ... " << std::endl;
+
+        // Single electron HLT SF
+        electronHltFile = new TFile("scaleFactors/2016/HLT_Ele32_eta2p1_WPTight_Gsf_FullRunRange.root");
+        h_eleHlt = dynamic_cast<TH2F*>(electronHltFile->Get("SF"));
+
+        // Electron cut-based ID
+        electronSFsFile = new TFile("scaleFactors/2018/egammaEffi.txt_EGM2D_Tight_UL18.root");
+        h_eleSFs = dynamic_cast<TH2F*>(electronSFsFile->Get("EGamma_SF2D"));
+
+        // Electron reco SF
+        electronRecoFile = new TFile{"scaleFactors/2018/egammaEffi_ptAbove20.txt_EGM2D_UL2018"};
+        h_eleReco = dynamic_cast<TH2F*>(electronRecoFile->Get("EGamma_SF2D"));
+
+        maxEleIdPt_   = {h_eleSFs->GetXaxis()->GetXmax() - 0.1};
+        maxEleIdReco_ = {h_eleReco->GetXaxis()->GetXmax() - 0.1};
+        minEleIdPt_   = {h_eleSFs->GetXaxis()->GetXmin() + 0.1};
+        minEleIdReco_ = {h_eleReco->GetXaxis()->GetXmin() + 0.1};
+
+        std::cout << "Got 2017 electron SFs!\n" << std::endl;
+*/
+
         std::cout << "Load 2018 muon SFs from root file ... " << std::endl;
-        muonHltFile = new TFile{"scaleFactors/2017/EfficienciesAndSF_RunBtoF_Nov17Nov2017.root"};
+//        muonHltFile = new TFile{"scaleFactors/2017/EfficienciesAndSF_RunBtoF_Nov17Nov2017.root"};
         muonIdFile  = new TFile{"scaleFactors/2018/Efficiencies_muon_generalTracks_Z_Run2018_UL_ID.root"};
         muonIsoFile = new TFile{"scaleFactors/2018/Efficiencies_muon_generalTracks_Z_Run2018_UL_ISO.root"};
 
         // Single Muon HLT SF
-        muonHltFile->cd("IsoMu27_PtEtaBins");
-        h_muonHlt = dynamic_cast<TH2F*>(muonHltFile->Get("IsoMu27_PtEtaBins/abseta_pt_ratio"));
+//        muonHltFile->cd("IsoMu27_PtEtaBins");
+//        h_muonHlt = dynamic_cast<TH2F*>(muonHltFile->Get("IsoMu27_PtEtaBins/abseta_pt_ratio"));
 
         // Loose ID
         h_muonId     = dynamic_cast<TH2F*>(muonIdFile->Get("NUM_LooseID_DEN_TrackerMuons_abseta_pt"));
@@ -270,13 +309,13 @@ std::cout << __LINE__ << " : " << __FILE__ << std::endl;
         h_muonIsoSyst = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_syst"));
         h_muonIsoStat = dynamic_cast<TH2F*>(muonIsoFile->Get("NUM_LooseRelIso_DEN_LooseID_abseta_pt_stat"));
 
-        maxIdPt_  = {h_muonId->GetXaxis()->GetXmax() - 0.1};
-        maxIsoPt_ = {h_muonIso->GetXaxis()->GetXmax() - 0.1};
-        maxHltPt_ = {h_muonHlt->GetYaxis()->GetXmax() - 0.1};
+        maxMuonIdPt_  = {h_muonId->GetXaxis()->GetXmax() - 0.1};
+        maxMuonIsoPt_ = {h_muonIso->GetXaxis()->GetXmax() - 0.1};
+//        maxMuonHltPt_ = {h_muonHlt->GetYaxis()->GetXmax() - 0.1};
 
-        minIdPt_  = {h_muonId->GetXaxis()->GetXmin() + 0.1};
-        minIsoPt_ = {h_muonIso->GetXaxis()->GetXmin() + 0.1};
-        minHltPt_ = {h_muonHlt->GetYaxis()->GetXmin() +  0.1};
+        minMuonIdPt_  = {h_muonId->GetXaxis()->GetXmin() + 0.1};
+        minMuonIsoPt_ = {h_muonIso->GetXaxis()->GetXmin() + 0.1};
+//        minMuonHltPt_ = {h_muonHlt->GetYaxis()->GetXmin() +  0.1};
 
         std::cout << "Got 2018 muon SFs!\n" << std::endl;
     }
@@ -1341,7 +1380,6 @@ double Cuts::getLeptonWeight(const AnalysisEvent& event, const int& syst) const 
         leptonWeight *= eleSF(event.zPairLeptons.first.Pt(), event.elePF2PATSCEta[event.zPairIndex.first], syst);
         leptonWeight *= eleSF(event.zPairLeptons.second.Pt(), event.elePF2PATSCEta[event.zPairIndex.second], syst);
     }
-
     else if (numTightMu_ == 2) {
         leptonWeight *= muonSF(event.zPairLeptons.first.Pt(), event.zPairLeptons.first.Eta(), syst, true);
         leptonWeight *= muonSF(event.zPairLeptons.second.Pt(), event.zPairLeptons.second.Eta(), syst, false);
@@ -1357,41 +1395,31 @@ double Cuts::getLeptonWeight(const AnalysisEvent& event, const int& syst) const 
 double Cuts::eleSF(const double& pt, const double& eta, const int& syst) const {
     return 1.0;
 /*
-    const double maxPt{h_eleSFs->GetYaxis()->GetXmax() - 0.1};
-    const double minRecoPt{h_eleReco->GetYaxis()->GetXmin() + 0.1};
-    int bin1{0};
-    int bin2{0};
+    int binId{0};
+    int binReco{0};
 
-    // If cut-based, std::abs eta, else just eta
-    if (pt <= maxPt) {
-        bin1 = h_eleSFs->FindBin(eta, pt);
-        // Reco SF has a min to consider
-        if (pt > minRecoPt) {
-            bin2 = h_eleReco->FindBin(eta, pt);
-        }
-        else {
-            bin2 = h_eleReco->FindBin(eta, minRecoPt);
-        }
-    }
-    else {
-        bin1 = h_eleSFs->FindBin(eta, maxPt);
-        bin2 = h_eleReco->FindBin(eta, maxPt);
-    }
+    if (pt <= maxEleIdPt_ && pt > minEleIdPt_) binId = h_eleSFs->FindBin(eta, pt);
+    else if (pt > maxElePt) binId = h_eleSFs->FindBin(eta, maxEleIdPt_);
+    else binId = h_eleSFs->FindBin(eta, minEleIdPt_);
 
-    double eleIdSF{h_eleSFs->GetBinContent(bin1)};
-    double eleRecoSF{h_eleReco->GetBinContent(bin2)};
+    if ( pt <= maxEleRecoPt && pt > minEleRecoPt_ ) binReco = h_eleReco->FindBin(eta, pt);
+    else if ( pt > maxEleRecoPt ) binReco = h_eleReco->FindBin(eta, maxEleRecoPt);
+    else binReco = h_eleReco->FindBin(eta, minEleRecoPt_);
+
+    double eleIdSF{h_eleSFs->GetBinContent(binId)};
+    double eleRecoSF{h_eleReco->GetBinContent(binReco)};
 
     if (syst == 1) {
-        eleIdSF += h_eleSFs->GetBinError(bin1);
-        eleRecoSF += h_eleReco->GetBinError(bin2);
+        eleIdSF += h_eleSFs->GetBinError(binId);
+        eleRecoSF += h_eleReco->GetBinError(binReco);
         if (pt > 80.0 || pt <= 20.0) {
             eleRecoSF += 0.01;
         }
     }
 
     if (syst == 2) {
-        eleIdSF -= h_eleSFs->GetBinError(bin1);
-        eleRecoSF -= h_eleReco->GetBinError(bin2);
+        eleIdSF -= h_eleSFs->GetBinError(binId);
+        eleRecoSF -= h_eleReco->GetBinError(binReco);
         if (pt > 80.0 || pt <= 20.0) {
             eleRecoSF -= 0.01;
         }
@@ -1404,22 +1432,22 @@ double Cuts::eleSF(const double& pt, const double& eta, const int& syst) const {
 double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const bool& leadingMuon) const {
 
     int binId{0}, binIso{0}, binHlt{0};
-    double muonIdSF{1.0}, muonPFisoSF{1.0}, muonHltSF {1.0};
+    double muonIdSF{1.0}, muonIsoSF{1.0}, muonHltSF {1.0};
 
-    if (pt > maxIdPt_) binId = h_muonId->FindBin(std::abs(eta), maxIdPt_);
-    else if (pt < minIdPt_) binId = h_muonId->FindBin(std::abs(eta), minIdPt_);
+    if (pt > maxMuonIdPt_) binId = h_muonId->FindBin(std::abs(eta), maxMuonIdPt_);
+    else if (pt < minMuonIdPt_) binId = h_muonId->FindBin(std::abs(eta), minMuonIdPt_);
     else binId = h_muonId->FindBin(std::abs(eta), pt);
 
-    if (pt > maxIsoPt_) binIso = h_muonIso->FindBin(std::abs(eta), maxIsoPt_);
-    else if (pt < minIsoPt_) binIso = h_muonIso->FindBin(std::abs(eta), minIsoPt_);
+    if (pt > maxMuonIsoPt_) binIso = h_muonIso->FindBin(std::abs(eta), maxMuonIsoPt_);
+    else if (pt < minMuonIsoPt_) binIso = h_muonIso->FindBin(std::abs(eta), minMuonIsoPt_);
     else binIso = h_muonIso->FindBin(std::abs(eta), pt);
 
-    if (pt > maxHltPt_) binHlt = h_muonHlt->FindBin(std::abs(eta), maxHltPt_);
-    else if (pt < minHltPt_) binHlt = h_muonHlt->FindBin(std::abs(eta), minHltPt_);
-    else binHlt = h_muonHlt->FindBin(std::abs(eta), pt);
+//    if (pt > maxMuonHltPt_) binHlt = h_muonHlt->FindBin(std::abs(eta), maxMuonHltPt_);
+//    else if (pt < minMuonHltPt_) binHlt = h_muonHlt->FindBin(std::abs(eta), minMuonHltPt_);
+//    else binHlt = h_muonHlt->FindBin(std::abs(eta), pt);
 
-    muonIdSF    = h_muonId->GetBinContent(binId);
-    muonPFisoSF = h_muonIso->GetBinContent(binIso);
+    muonIdSF  = h_muonId->GetBinContent(binId);
+    if (leadingMuon) muonIsoSF = h_muonIso->GetBinContent(binIso);
 //    if (leadingMuon) muonHltSF   = h_muonHlt->GetBinContent(binHlt);
 
     if (syst == 1 || syst == 2) {
@@ -1434,18 +1462,18 @@ double Cuts::muonSF(const double& pt, const double& eta, const int& syst, const 
 
         if (syst == 1) {
             muonIdSF += idUncert;
-            muonPFisoSF += isoUncert;
+            if (leadingMuon) muonIsoSF += isoUncert;
 //            if (leadingMuon) muonHltSF += h_muonHlt->GetBinError(binHlt);
         }
         else if (syst == 2) {
             muonIdSF -= idUncert;
-            muonPFisoSF -= isoUncert;
+            if (leadingMuon) muonIsoSF -= isoUncert;
 //            if (leadingMuon) muonHltSF   -= h_muonHlt->GetBinError(binHlt);
         }
-        return muonIdSF * muonPFisoSF * muonHltSF;
+        return muonIdSF * muonIsoSF * muonHltSF;
     }
     else {
-        return muonIdSF * muonPFisoSF * muonHltSF;
+        return muonIdSF * muonIsoSF * muonHltSF;
     }
 }
 
