@@ -34,24 +34,28 @@ Cuts::Cuts(const bool doPlots,
     , tightElePt_{0.}
     , tightElePtLeading_{0.}
     , tightEleEta_{5.0}
+    , tightEleEtaLeading_{5.0}
     , tightEleRelIso_{0.107587}
 
     , numLooseEle_{0}
     , looseElePt_{0.}
     , looseElePtLeading_{0.}
     , looseEleEta_{5.0}
+    , looseEleEtaLeading_{5.0}
     , looseEleRelIso_{0.15}
 
     , numTightMu_{0}
     , tightMuonPt_{0.}
     , tightMuonPtLeading_{0.}
     , tightMuonEta_{5.0}
+    , tightMuonEtaLeading_{5.0}
     , tightMuonRelIso_{0.15}
 
     , numLooseMu_{0}
     , looseMuonPt_{0.}
     , looseMuonPtLeading_{0.}
     , looseMuonEta_{5.0}
+    , looseMuonEtaLeading_{5.0}
     , looseMuonRelIso_{0.25}
 
     , scalarMassCut_{4.}
@@ -348,6 +352,7 @@ void Cuts::parse_config(const std::string confName)
     tightElePt_ = tight_eles["pt"].as<double>();
     tightElePtLeading_ = tight_eles["ptLeading"].as<double>();
     tightEleEta_ = tight_eles["eta"].as<double>();
+    tightEleEtaLeading_ = tight_eles["etaLeading"].as<double>();
     tightEleRelIso_ = tight_eles["relIso"].as<double>();
     numTightEle_ = tight_eles["number"].as<unsigned>();
 
@@ -355,6 +360,7 @@ void Cuts::parse_config(const std::string confName)
     looseElePt_ = loose_eles["pt"].as<double>();
     looseElePtLeading_ = loose_eles["ptLeading"].as<double>();
     looseEleEta_ = loose_eles["eta"].as<double>();
+    looseEleEtaLeading_ = loose_eles["etaLeading"].as<double>();
     looseEleRelIso_ = loose_eles["relIso"].as<double>();
     numLooseEle_ = loose_eles["number"].as<unsigned>();
 
@@ -362,6 +368,7 @@ void Cuts::parse_config(const std::string confName)
     tightMuonPt_ = tight_mus["pt"].as<double>();
     tightMuonPtLeading_ = tight_mus["ptLeading"].as<double>();
     tightMuonEta_ = tight_mus["eta"].as<double>();
+    tightMuonEtaLeading_ = tight_mus["etaLeading"].as<double>();
     tightMuonRelIso_ = tight_mus["relIso"].as<double>();
     numTightMu_ = tight_mus["number"].as<unsigned>();
 
@@ -369,6 +376,7 @@ void Cuts::parse_config(const std::string confName)
     looseMuonPt_ = loose_mus["pt"].as<double>();
     looseMuonPtLeading_ = loose_mus["ptLeading"].as<double>();
     looseMuonEta_ = loose_mus["eta"].as<double>();
+    looseMuonEtaLeading_ = loose_mus["etaLeading"].as<double>();
     looseMuonRelIso_ = loose_mus["relIso"].as<double>();
     numLooseMu_ = loose_mus["number"].as<unsigned>();
 
@@ -573,38 +581,29 @@ std::vector<int> Cuts::getTightEles(const AnalysisEvent& event) const {
     std::vector<int> electrons;
 
     for (int i{0}; i < event.numElePF2PAT; i++) {
-        if (!event.elePF2PATIsGsf[i])
-            continue;
+        if (!event.elePF2PATIsGsf[i]) continue;
 
-        if (electrons.size() < 1 && event.elePF2PATPT[i] <= tightElePtLeading_)
-            continue;
-        else if (electrons.size() >= 1 && event.elePF2PATPT[i] <= tightElePt_)
-            continue;
+        if (electrons.size() < 1 && event.elePF2PATPT[i] <= tightElePtLeading_) continue;
+        else if (electrons.size() >= 1 && event.elePF2PATPT[i] <= tightElePt_) continue;
 
-        if (std::abs(event.elePF2PATSCEta[i]) > tightEleEta_)
-            continue;
+        if (electrons.size() < 1 && std::abs(event.elePF2PATSCEta[i]) > tightEleEtaLeading_) continue;
+        else if (electrons.size() >= 1 && std::abs(event.elePF2PATSCEta[i]) > tightEleEta_) continue;
  
         // Ensure we aren't in the barrel/endcap gap and below the max safe eta
         // range
-        if ((std::abs(event.elePF2PATSCEta[i]) > 1.4442 && std::abs(event.elePF2PATSCEta[i]) < 1.566) || std::abs(event.elePF2PATSCEta[i]) > 2.50)
-            continue;
+        if ((std::abs(event.elePF2PATSCEta[i]) > 1.4442 && std::abs(event.elePF2PATSCEta[i]) < 1.566) || std::abs(event.elePF2PATSCEta[i]) > 2.50) continue;
 
         // VID cut
-        if (event.elePF2PATCutIdTight[i] < 1)
-            continue;
+        if (event.elePF2PATCutIdTight[i] < 1) continue;
 
         // Cuts not part of the tuned ID
         if (std::abs(event.elePF2PATSCEta[i]) <= 1.479) {
-            if (std::abs(event.elePF2PATD0PV[i]) >= 0.05)
-                continue;
-            if (std::abs(event.elePF2PATDZPV[i]) >= 0.10)
-                continue;
+            if (std::abs(event.elePF2PATD0PV[i]) >= 0.05) continue;
+            if (std::abs(event.elePF2PATDZPV[i]) >= 0.10) continue;
         }
         else if (std::abs(event.elePF2PATSCEta[i]) > 1.479 && std::abs(event.elePF2PATSCEta[i]) < 2.50) {
-            if (std::abs(event.elePF2PATD0PV[i]) >= 0.10)
-                continue;
-            if (std::abs(event.elePF2PATDZPV[i]) >= 0.20)
-                continue;
+            if (std::abs(event.elePF2PATD0PV[i]) >= 0.10) continue;
+            if (std::abs(event.elePF2PATDZPV[i]) >= 0.20) continue;
         }
         electrons.emplace_back(i);
     }
@@ -614,34 +613,27 @@ std::vector<int> Cuts::getTightEles(const AnalysisEvent& event) const {
 std::vector<int> Cuts::getLooseEles(const AnalysisEvent& event) const {
     std::vector<int> electrons;
     for (int i{0}; i < event.numElePF2PAT; i++) {
-        if (electrons.size() < 1 && event.elePF2PATPT[i] <= looseElePtLeading_)
-            continue;
-        else if (electrons.size() >= 1 && event.elePF2PATPT[i] <= looseElePt_)
-            continue;
-        if (std::abs(event.elePF2PATSCEta[i]) > tightEleEta_)
-            continue;
 
-        // Ensure we aren't in the barrel/endcap gap and below the max safe
-        // eta range
-        if ((std::abs(event.elePF2PATSCEta[i]) > 1.4442 && std::abs(event.elePF2PATSCEta[i]) < 1.566) || std::abs(event.elePF2PATSCEta[i]) > 2.50)
-            continue;
+        if (electrons.size() < 1 && event.elePF2PATPT[i] <= looseElePtLeading_) continue;
+        else if (electrons.size() >= 1 && event.elePF2PATPT[i] <= looseElePt_) continue;
+
+        if (electrons.size() < 1 && std::abs(event.elePF2PATSCEta[i]) > tightEleEtaLeading_) continue;
+        else if (electrons.size() >= 1 && std::abs(event.elePF2PATSCEta[i]) > tightEleEta_) continue;
+
+        // Ensure we aren't in the barrel/endcap gap and below the max safe eta range
+        if ((std::abs(event.elePF2PATSCEta[i]) > 1.4442 && std::abs(event.elePF2PATSCEta[i]) < 1.566) || std::abs(event.elePF2PATSCEta[i]) > 2.50) continue;
 
         // VID cut
-        if (!event.elePF2PATCutIdVeto[i])
-            continue;
+        if (!event.elePF2PATCutIdVeto[i]) continue;
 
         // Cuts not part of the tuned ID
         if (std::abs(event.elePF2PATSCEta[i]) <= 1.479) {
-            if (std::abs(event.elePF2PATD0PV[i]) >= 0.05)
-                continue;
-            if (std::abs(event.elePF2PATDZPV[i]) >= 0.10)
-                continue;
+            if (std::abs(event.elePF2PATD0PV[i]) >= 0.05) continue;
+            if (std::abs(event.elePF2PATDZPV[i]) >= 0.10) continue;
         }
         else if (std::abs(event.elePF2PATSCEta[i]) > 1.479 && std::abs(event.elePF2PATSCEta[i]) < 2.50) {
-            if (std::abs(event.elePF2PATD0PV[i]) >= 0.10)
-                continue;
-            if (std::abs(event.elePF2PATDZPV[i]) >= 0.20)
-                continue;
+            if (std::abs(event.elePF2PATD0PV[i]) >= 0.10) continue;
+            if (std::abs(event.elePF2PATDZPV[i]) >= 0.20) continue;
         }
         electrons.emplace_back(i);
     }
@@ -655,44 +647,38 @@ std::vector<int> Cuts::getTightMuons(const AnalysisEvent& event) const {
             if (!event.muonPF2PATIsPFMuon[i])
                 continue;
 
-            if (muons.size() < 1 && event.muonPF2PATPt[i] <= tightMuonPtLeading_)
-                continue;
-            else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= tightMuonPt_)
-                continue;
+            if (muons.size() < 1 && event.muonPF2PATPt[i] <= tightMuonPtLeading_) continue;
+            else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= tightMuonPt_) continue;
 
-            if (std::abs(event.muonPF2PATEta[i]) >= tightMuonEta_)
-                continue;
-            if (event.muonPF2PATComRelIsodBeta[i] >= tightMuonRelIso_)
-                continue;
+            if (muons.size() < 1 && std::abs(event.muonPF2PATEta[i]) >= tightMuonEtaLeading_) continue;
+            else if (muons.size() >= 1 && std::abs(event.muonPF2PATEta[i]) >= tightMuonEta_) continue;
+
+            if (event.muonPF2PATComRelIsodBeta[i] >= tightMuonRelIso_) continue;
 
             // Tight ID Cut
-            if (!event.muonPF2PATTrackID[i])
-                continue;
-            if (!event.muonPF2PATGlobalID[i])
-                continue;
-            if (event.muonPF2PATGlbTkNormChi2[i] >= 10.)
-                continue;
-            if (event.muonPF2PATMatchedStations[i] < 2)
-                continue; //
-            if (std::abs(event.muonPF2PATDBPV[i]) >= 0.2)
-                continue;
-            if (std::abs(event.muonPF2PATDZPV[i]) >= 0.5)
-                continue;
-            if (event.muonPF2PATMuonNHits[i] < 1)
-                continue;
-            if (event.muonPF2PATVldPixHits[i] < 1)
-                continue;
-            if (event.muonPF2PATTkLysWithMeasurements[i] <= 5)
-                continue;
+            if (!event.muonPF2PATTrackID[i]) continue;
+            if (!event.muonPF2PATGlobalID[i]) continue;
+            if (event.muonPF2PATGlbTkNormChi2[i] >= 10.) continue;
+            if (event.muonPF2PATMatchedStations[i] < 2) continue;
+            if (std::abs(event.muonPF2PATDBPV[i]) >= 0.2) continue;
+            if (std::abs(event.muonPF2PATDZPV[i]) >= 0.5) continue;
+            if (event.muonPF2PATMuonNHits[i] < 1) continue;
+            if (event.muonPF2PATVldPixHits[i] < 1) continue;
+            if (event.muonPF2PATTkLysWithMeasurements[i] <= 5) continue;
             muons.emplace_back(i);
         }
     }
     else {
         for (int i{0}; i < event.numMuonPF2PAT; i++) {
-            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATTightCutId[i] && event.muonPF2PATPfIsoTight[i] && std::abs(event.muonPF2PATEta[i]) <= tightMuonEta_) {
-                if (event.muonPF2PATPt[i] >= (muons.empty() ? tightMuonPtLeading_ : tightMuonPt_)) {
-                    muons.emplace_back(i);
-                }
+            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATTightCutId[i] /*&& event.muonPF2PATPfIsoTight[i]*/ ) {
+
+                if (muons.size() < 1 && event.muonPF2PATPt[i] <= tightMuonPtLeading_) continue;
+                else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= tightMuonPt_) continue;
+
+                if (muons.size() < 1 && std::abs(event.muonPF2PATEta[i]) <= tightMuonEtaLeading_) continue;
+                if (muons.size() >= 1 && std::abs(event.muonPF2PATEta[i]) <= tightMuonEta_) continue;
+
+                muons.emplace_back(i);
             }
         }
     }
@@ -708,15 +694,24 @@ std::vector<int> Cuts::getLooseMuons(const AnalysisEvent& event) const {
             if (muons.size() < 1 && event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
             else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= looseMuonPt_) continue;
 
-            if (std::abs(event.muonPF2PATEta[i]) >= looseMuonEta_) continue;
+            if (muons.size() < 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEtaLeading_) continue;
+            else if (muons.size() >= 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEta_) continue;
+
             if (event.muonPF2PATComRelIsodBeta[i] >= looseMuonRelIso_)  continue;
             if (event.muonPF2PATGlobalID[i] || event.muonPF2PATTrackID[i])  muons.emplace_back(i);
         }
     }
     else {
         for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && /*event.muonPF2PATPfIsoVeryLoose[i] &&*/ std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
-                if (event.muonPF2PATPt[i] >= (muons.empty() ? looseMuonPtLeading_ : looseMuonPt_)) muons.emplace_back(i);
+            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] /* && event.muonPF2PATPfIsoVeryLoose[i] */ ) {
+
+                if (muons.size() < 1 && event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
+                else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= looseMuonPt_) continue;
+
+                if (muons.size() < 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEtaLeading_) continue;
+                else if (muons.size() >= 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEta_) continue;
+
+                muons.emplace_back(i);
             }
         }
     }

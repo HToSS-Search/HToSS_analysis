@@ -71,6 +71,7 @@ class Cuts
     double tightElePt_;
     double tightElePtLeading_;
     double tightEleEta_;
+    double tightEleEtaLeading_;
     double tightEleRelIso_;
 
     // Loose electron cuts
@@ -78,6 +79,7 @@ class Cuts
     double looseElePt_;
     double looseElePtLeading_;
     double looseEleEta_;
+    double looseEleEtaLeading_;
     double looseEleRelIso_;
 
     // Tight muon cuts
@@ -85,6 +87,7 @@ class Cuts
     double tightMuonPt_;
     double tightMuonPtLeading_;
     double tightMuonEta_;
+    double tightMuonEtaLeading_;
     double tightMuonRelIso_;
 
     // Loose muon cuts
@@ -92,6 +95,7 @@ class Cuts
     double looseMuonPt_;
     double looseMuonPtLeading_;
     double looseMuonEta_;
+    double looseMuonEtaLeading_;
     double looseMuonRelIso_;
 
     double scalarMassCut_;
