@@ -65,6 +65,8 @@ class Cuts
     const bool is2016_;
     const bool is2016APV_;
     const bool is2018_;
+    bool usingBparking_;
+
 
     // Tight electron cuts
     unsigned numTightEle_;
@@ -288,6 +290,9 @@ class Cuts
         maxbJets_ = maxBJets;
     }
     void parse_config(const std::string confName);
+    void setBparking(bool usingBparking) {
+        usingBparking_ = usingBparking;
+    }
     void setNplFlag(bool isNPL) {
         isNPL_ = isNPL;
     }

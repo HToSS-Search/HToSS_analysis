@@ -1,26 +1,30 @@
 cuts:
     tightMuons:
         pt: 5.0
-        ptLeading: 30.0
+        ptLeading: 27.0
         eta: 2.4
+        etaLeading: 2.4
         relIso: 100.0
         number: 2
     looseMuons:
         pt: 5.0
-        ptLeading: 30.0
+        ptLeading: 27.0
         eta: 2.4
+        etaLeading: 2.4
         relIso: 100.0
         number: 2
     tightElectrons:
         pt: 0
         ptLeading: 5.0
         eta: 5.0
+        etaLeading: 5.0
         relIso: 0.107587
         number: 0
     looseElectrons:
         pt: 0
         ptLeading: 0
         eta: 5.0
+        etaLeading: 5.0
         relIso: 0.107587
         number: 0
     jets:

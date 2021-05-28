@@ -29,6 +29,7 @@ Cuts::Cuts(const bool doPlots,
     , is2016_{is2016}
     , is2016APV_{is2016APV}
     , is2018_{is2018}
+    , usingBparking_{false}
 
     , numTightEle_{0}
     , tightElePt_{0.}
@@ -402,12 +403,15 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
 
     if ( !event.metFilters() ) return false;
 
+
     // Make lepton cuts. If the trigLabel contains d, we are in the ttbar CR so the Z mass cut is skipped
     ////  Do this outside original function because this is simpler for HToSS unlike in tZq
     ////  if (!makeLeptonCuts(event, eventWeight, plotMap, cutFlow, systToRun)) return false;
 
     event.muonIndexTight = getLooseMuons(event);
     if (event.muonIndexTight.size() < numTightMu_) return false;
+
+    return true;
 
     const bool validDileptonCand = getDileptonCand(event, event.muonIndexTight);
     if ( !validDileptonCand ) return false;
@@ -705,12 +709,13 @@ std::vector<int> Cuts::getLooseMuons(const AnalysisEvent& event) const {
         for (int i{0}; i < event.numMuonPF2PAT; i++)  {
             if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] /* && event.muonPF2PATPfIsoVeryLoose[i] */ ) {
 
+/*
                 if (muons.size() < 1 && event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
                 else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= looseMuonPt_) continue;
 
                 if (muons.size() < 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEtaLeading_) continue;
                 else if (muons.size() >= 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEta_) continue;
-
+*/
                 muons.emplace_back(i);
             }
         }
@@ -1308,13 +1313,7 @@ bool Cuts::triggerCuts(const AnalysisEvent& event, double& eventWeight, const in
 
     // TRIGGER LOGIC
 
-    // MuEG triggers
-    // clang-format off
 //    const bool muEGTrig{event.muEGTrig()};
-
-    // clang-format on
-
-    // double electron triggers
 //    const bool eeTrig{event.eeTrig()};
 
     // double muon triggers
@@ -1328,6 +1327,11 @@ bool Cuts::triggerCuts(const AnalysisEvent& event, double& eventWeight, const in
 
     // single muon triggers
     const bool muTrig{event.muTrig()};
+
+    // B-parking triggers
+//    const bool bParkingMu9IP5 {event.bParkingTrig_Mu9_IP5()};
+//    const bool bParkingMu9IP6 {event.bParkingTrig_Mu9_IP6()};
+    const bool bParkingMu12IP6 {event.bParkingTrig_Mu12_IP6()};
 
     std::string channel = "";
 
@@ -1344,9 +1348,11 @@ bool Cuts::triggerCuts(const AnalysisEvent& event, double& eventWeight, const in
 
     // Check which trigger fired and if it correctly corresponds to the channel being scanned over.
     if (channel == "mumu") {
-        // Trigger logic for double + single triggers
-////        if ( (mumuTrig || muTrig) && !(eeTrig || muEGTrig || eTrig)) { // Old tZq logic
-        if ( muTrig ) {
+        if ( muTrig && !usingBparking_ ) {
+//            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
+            return true;
+        }
+        else if (bParkingMu12IP6 && usingBparking_){
 //            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
             return true;
         }

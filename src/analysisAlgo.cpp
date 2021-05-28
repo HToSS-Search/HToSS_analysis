@@ -36,6 +36,7 @@ AnalysisAlgo::AnalysisAlgo()
     , is2016_{false}
     , is2016APV_{false}
     , is2018_{false}
+    , usingBparking_{false}
     , doNPLs_{false}
     , doZplusCR_{false}
     , noData_ {true}
@@ -99,20 +100,12 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         "--allPlots.")("invert,i",
                        po::bool_switch(&invertLepCut),
                        "Inverts the different charge cut for leptons.")(
-        "MC,m",
-        po::bool_switch(&skipData),
-        "Monte Carlo only mode. Ignores all data in the config file.")(
-        "data,b",
-        po::bool_switch(&skipMC),
-        "Data only mode. Ignores all data in the config file.")(
-        "bTag,t",
-        po::bool_switch(&usebTagWeight),
-        "Use b-tagging efficiencies to reweight the Monte Carlo. Currently "
-        "requires -u.")(
+        "MC,m", po::bool_switch(&skipData), "Monte Carlo only mode. Ignores all data in the config file.")(
+        "data,d", po::bool_switch(&skipMC), "Data only mode. Ignores all data in the config file.")(
+        "bTag,t", po::bool_switch(&usebTagWeight), "Use b-tagging efficiencies to reweight the Monte Carlo. Currently requires -u.")(
+        "Bparking,b", po::bool_switch(&usingBparking_), "Use B-parking")(
         "NPLs", po::bool_switch(&doNPLs_), "Make or use NPL shapes")(
-        "zPlus",
-        po::bool_switch(&doZplusCR_),
-        "Use Z+jets CR for dilepton channel. Region mwCut and metCut set by "
+        "zPlus",po::bool_switch(&doZplusCR_), "Use Z+jets CR for dilepton channel. Region mwCut and metCut set by "
         "--mwCut and --metCut.")(
         "events,e",
         po::value<std::vector<int>>(&eventNumbers)->multitoken(),
@@ -184,6 +177,11 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
                 "condition to be BOTH 2016 AND 2018! Chose only "
                 " one or none!");
         }
+        if ( usingBparking_ && !is2018_ ) {
+            throw std::logic_error(
+                "Bparking is only avaliable in 2018 for Run 2!");
+        }
+
         if (vm.count("channels") && !vm.count("config")) {
             throw std::logic_error(
                 "--channels requires --config to be specified");
@@ -367,10 +365,8 @@ void AnalysisAlgo::setupCuts()
     cutObj->setHiggsCut(mhCut);
     cutObj->setChsCandidateMass(chsMass);
     cutObj->setBlindingFlag(unblind_);
-    if (doZplusCR_)
-    {
-        cutObj->setZplusControlRegionFlag(true);
-    }
+    if (doZplusCR_) cutObj->setZplusControlRegionFlag(true);
+    if (usingBparking_) cutObj->setBparking(true);
 }
 
 void AnalysisAlgo::setupPlots()
@@ -858,7 +854,7 @@ void AnalysisAlgo::runMainAnalysis() {
                             pileupWeight = puSystDown->GetBinContent(
                                 puSystDown->GetXaxis()->FindBin(event.numVert));
                         }
-                        eventWeight *= pileupWeight;
+//                        eventWeight *= pileupWeight;
                         // std::cout << "pileupWeight: " <<  pileupWeight <<
                         // std::endl;
                     }
