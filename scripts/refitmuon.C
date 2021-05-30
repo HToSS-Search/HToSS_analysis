@@ -37,12 +37,12 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     Double_t nentries=h_PscalarInvMass_QCD->GetEntries();
-     std::cout<<"entries QCD "<<nentries<<std::endl;
-     Double_t n20entries=h_P20scalarInvMass_QCD->GetEntries();
-     std::cout<<"entries QCD 20 "<<n20entries<<std::endl;
-     Double_t corr=nentries/n20entries;
-     std::cout<<"correction factor "<<corr<<std::endl;
+     //Double_t nentries=h_PscalarInvMass_QCD->GetEntries();
+     //std::cout<<"entries QCD "<<nentries<<std::endl;
+     //Double_t n20entries=h_P20scalarInvMass_QCD->GetEntries();
+     //std::cout<<"entries QCD 20 "<<n20entries<<std::endl;
+     //Double_t corr=nentries/n20entries;
+     //std::cout<<"correction factor "<<corr<<std::endl;
    
      //Float_t corr_QCD=corrsmall->Divide(corrwide);
    
@@ -64,7 +64,7 @@
      h_PscalarInvMass_ctau10->Draw("HIST same");
      //std:cout<<"Not refit "<<h_PscalarInvMass_ctau0->Integral(0,501)<<std::endl;
    
-     h_PscalarInvMass_QCD->Scale(corr);
+     //h_PscalarInvMass_QCD->Scale(corr);
      h_PscalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_QCD->GetXaxis()->SetRangeUser(1,3); 
      h_PscalarInvMass_QCD->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
