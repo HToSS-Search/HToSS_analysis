@@ -993,9 +993,33 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   // Loop over all packed cands
  
 	//end of for-loop
-	   
-  
 
+  //Refitted objects
+  TLorentzVector refkaon; TLorentzVector refpion; TLorentzVector refitmuon;	   
+  for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+     if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
+       if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
+	 TLorentzVector ka1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2))};
+         TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
+	 
+	 refkaon=ka1+ka2;
+	       
+	 TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
+         TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
+	 
+	 refpion=pi1+pi2;
+       }
+     }
+  }
+  if(event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
+    TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
+    TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
+	  
+    refitmuon=Mu1+Mu2;	
+  }
+	      
+	      
+	      
   //Kaon 
   h_kNentries->SetBinContent(1,eventWeight);   
 	
@@ -1049,10 +1073,10 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   //Kaon refitted and wider window	
   TLorentzVector refkaon; TLorentzVector refkaonWide;	
   //if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2])){
-  /*  if(RKIsoSum1/event.chsTkPairTk1Pt[chsIndex1]<0.4 && RKIsoSum2/event.chsTkPairTk2Pt[chsIndex2]<1){
+  if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
 	    
-      if(std::abs((RKantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWindow_){
-        if(std::abs((RKantiscalar).M()-2)<statWindow_){
+    if(std::abs((refkaon+refitmuon).M()-higgsMass_)<higgsMassWindow_){
+      if(std::abs((refkaon).M()-2)<statWindow_){
           //for(Int_t k{0}; k<event.numChsTrackPairs;k++){
              //if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
 	       //if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
@@ -1060,14 +1084,14 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
                  //TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
 	 
 	        // refkaon=ka1+ka2;
-	         h_Rkaonre12InvMass->Fill((RKantiscalar).M(), eventWeight);
+	h_Rkaonre12InvMass->Fill((refkaon).M(), eventWeight);
 	     //  }
 	    // }
 	  // }
-	 }
       }
-      if(std::abs((RKantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-        if(std::abs((RKantiscalar).M()-2)<statWindow_){
+    }
+    if(std::abs((refkaon+refitmuon).M()-higgsMass_)<higgsMassWideWindow_){
+      if(std::abs((refkaon).M()-2)<statWindow_){
 	  //for(Int_t k{0}; k<event.numChsTrackPairs;k++){
              //if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
 	      // if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
@@ -1075,13 +1099,13 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
                 // TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
 	 
 	         //refkaonWide=ka1+ka2;
-	         h_widekaonRInvMass->Fill((RKantiscalar).M(), eventWeight);
+	h_widekaonRInvMass->Fill((refkaon).M(), eventWeight);
 	      // }
 	     //}
 	   //}	
-	}
-      }    
-    }*/
+      }
+    }    
+  }
   //}    
 
   //Pion,muon 
