@@ -906,19 +906,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     //h_KantiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
   } // End Kaon delR if
 	
-  /*if(RkaonLVec1.DeltaR(RkaonLVec2)<packedCandKaonDeltaR_){
-      
-    if(event.chsTkPairTk1Charge[chsIndex1]==-(event.chsTkPairTk2Charge[chsIndex2])){
-      Kpx=event.chsTkPairTk1Px[chsIndex1]+event.chsTkPairTk2Px[chsIndex2];
-      Kpy=event.chsTkPairTk1Py[chsIndex1]+event.chsTkPairTk2Py[chsIndex2];
-      Kpz=event.chsTkPairTk1Pz[chsIndex1]+event.chsTkPairTk2Pz[chsIndex2];
-      KE=std::sqrt(event.chsTkPairTk1P2[chsIndex1]+std::pow(0.494,2)*std::pow(0.494,2))+std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.494,2)*std::pow(0.494,2));
-		
-      RKantiscalar.SetPxPyPzE(Kpx,Kpy,Kpz,KE);
-    }
-    //h_KantiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
-  } // End Kaon delR if
-*/
+
   // pion bit
   if(pionLVec1.DeltaR(pionLVec2)<packedCandPionDeltaR_){
     //Invariant mass for two pions
@@ -940,20 +928,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     }
     //h_PantiscalarInvMass->Fill(Pantiscalar.M(), eventWeight);
   } // End pion delR if
-/*
-  if(RpionLVec1.DeltaR(RpionLVec2)<packedCandPionDeltaR_){
-      
-    if(event.chsTkPairTk1Charge[chsIndex1]==-(event.chsTkPairTk2Charge[chsIndex2])){
-      Ppx=event.chsTkPairTk1Px[chsIndex1]+event.chsTkPairTk2Px[chsIndex2];
-      Ppy=event.chsTkPairTk1Py[chsIndex1]+event.chsTkPairTk2Py[chsIndex2];
-      Ppz=event.chsTkPairTk1Pz[chsIndex1]+event.chsTkPairTk2Pz[chsIndex2];
-      PE=std::sqrt(event.chsTkPairTk1P2[chsIndex1]+std::pow(0.1396,2)*std::pow(0.1396,2))+std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.1396,2)*std::pow(0.1396,2));
-		
-      RPantiscalar.SetPxPyPzE(Ppx,Ppy,Ppz,PE);
-    }
-    //h_KantiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
-  } // End Kaon delR if
-*/
+
   // muon bit
   if(mm1.DeltaR(mm2)<packedCandMuonDeltaR_){
 		   
@@ -974,26 +949,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     }
 		   
   }
- /* if(Rmm1.DeltaR(Rmm2)<packedCandMuonDeltaR_){
-		   
-    if(event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
-      KMpx=event.muonTkPairPF2PATTk1Px[muonTrkPairIndex]+event.muonTkPairPF2PATTk2Px[muonTrkPairIndex];
-      KMpy=event.muonTkPairPF2PATTk1Py[muonTrkPairIndex]+event.muonTkPairPF2PATTk2Py[muonTrkPairIndex];
-      KMpz=event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex]+event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex];
-      KME=std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2)*std::pow(0.106,2))+std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2)*std::pow(0.106,2));
-	      
-      RscalarLVec.SetPxPyPzE(KMpx,KMpy,KMpz,KME);
-      //h_KscalarInvMass->Fill(scalarLVec.M(), eventWeight);
-    }
-		   
-  }*/
-
-  // Calculate isolation for all charged hadrons and muons
-
-  // Loop over all packed cands
  
-	//end of for-loop
-
   //Refitted objects
   TLorentzVector refkaon; TLorentzVector refpion; TLorentzVector refitmuon;	   
   for(Int_t k{0}; k<event.numChsTrackPairs;k++){
@@ -1071,42 +1027,19 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
 
   //Kaon refitted and wider window	
-  //TLorentzVector refkaon; TLorentzVector refkaonWide;	
-  //if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2])){
-  if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
-	    
+  if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){	    
     if(std::abs((refkaon+refitmuon).M()-higgsMass_)<higgsMassWindow_){
-      if(std::abs((refkaon).M()-2)<statWindow_){
-          //for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-             //if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
-	       //if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
-	         //TLorentzVector ka1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2))};
-                 //TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
-	 
-	        // refkaon=ka1+ka2;
+      if(std::abs((refkaon).M()-2)<statWindow_){   
 	h_Rkaonre12InvMass->Fill((refkaon).M(), eventWeight);
-	     //  }
-	    // }
-	  // }
       }
     }
     if(std::abs((refkaon+refitmuon).M()-higgsMass_)<higgsMassWideWindow_){
       if(std::abs((refkaon).M()-2)<statWindow_){
-	  //for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-             //if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
-	      // if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
-	        // TLorentzVector ka1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2))};
-                // TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
-	 
-	         //refkaonWide=ka1+ka2;
 	h_widekaonRInvMass->Fill((refkaon).M(), eventWeight);
-	      // }
-	     //}
-	   //}	
       }
     }    
   }
-  //}    
+      
 
   //Pion,muon 
 	
@@ -1161,7 +1094,6 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   //Muon,pion wider	
   if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
     if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-      //if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){ 
       if(std::abs((Pantiscalar).M()-1)<statWindow_){
         h_P20antiscalarInvMass->Fill(Pantiscalar.M(), eventWeight);
 	QCD_20Pantiscalar+=eventWeight;
@@ -1218,98 +1150,62 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
  
   
   //Pion refitted and wider window
- /* Float_t refitpion; TLorentzVector refpion; TLorentzVector refpionWide;	
-  if(RPIsoSum1/event.chsTkPairTk1Pt[chsIndex1]<0.4 && RPIsoSum2/event.chsTkPairTk2Pt[chsIndex2]<1){
-    if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWindow_){
-      if(std::abs((RPantiscalar).M()-2)<statWindow_){
-        //for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-	   //if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
-             //if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
-	      // TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
-              // TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
-	 
-	       h_Rpionre12InvMass->Fill(RPantiscalar.M(), eventWeight);
-	       //refitpion=(RPantiscalar+RscalarLVec).M();
-	       //refpion=pi1+pi2;
-	     //}
-	   //}
-	//}
+  if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){	    
+    if(std::abs((refpion+refitmuon).M()-higgsMass_)<higgsMassWindow_){
+      if(std::abs((refpion).M()-2)<statWindow_){   
+	h_Rpionre12InvMass->Fill((refpion).M(), eventWeight);
       }
     }
-    if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-      if(std::abs((RPantiscalar).M()-2)<statWindow_){
-       // for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-	  // if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
-            // if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
-	     //  TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
-             //  TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
-	       h_widepionRInvMass->Fill((RPantiscalar).M(), eventWeight); 
-	      // refpionWide=pi1+pi2;     
-	    // }
-	   //}
-	//}
+    if(std::abs((refpion+refitmuon).M()-higgsMass_)<higgsMassWideWindow_){
+      if(std::abs((refpion).M()-2)<statWindow_){
+	h_widepionRInvMass->Fill((refpion).M(), eventWeight);
       }
-    }
+    }    
   }
 	
-  //Muon refitted and wider window
-  Float_t refitmuon; Float_t refitmuonWide; TLorentzVector refmuon; TLorentzVector refmuonWide;
-	
-  if(RMuonIsoSum1/event.muonTkPairPF2PATTk1Pt[muIndex1]<0.4 && RMuonIsoSum2/event.muonTkPairPF2PATTk2Pt[muIndex2]<1){
-    //if(event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
-      if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWindow_){
-        if(std::abs((RscalarLVec).M()-2)<statWindow_){
-	 // TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
-	  //TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
-	  h_Rrefit12InvMass->Fill(RscalarLVec.M(), eventWeight);
-	  //refitmuon=RscalarLVec.M();
-	  //refmuon=Mu1+Mu2;
+  //Muon refitted and wider window	
+  if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
+    if(std::abs((refpion+refitmuon).M()-higgsMass_)<higgsMassWindow_){
+      if(std::abs((refitmuon).M()-2)<statWindow_){
+	  h_Rrefit12InvMass->Fill(refitmuon.M(), eventWeight);
+      }
+    }
+    if(std::abs((refpion+refitmuon).M()-higgsMass_)<higgsMassWideWindow_){
+      if(std::abs((refitmuon).M()-2)<statWindow_){
+        h_widemuonRInvMass->Fill((refitmuon).M(), eventWeight);
 	}
       }
-      if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-        if(std::abs((RscalarLVec).M()-2)<statWindow_){
-	  //TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
-	  //TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
-	  h_widemuonRInvMass->Fill((RscalarLVec).M(), eventWeight);
-	  //refitmuonWide=RscalarLVec.M()
-	  //refmuonWide=Mu1+Mu2;
-	}
-      }
-    //}  
-  }*/
+  }
+  
  
 	
   //Higgs refitted (pion assumption) and wider window	
-/*  if(RPIsoSum1/event.chsTkPairTk1Pt[chsIndex1]<0.4 && RPIsoSum2/event.chsTkPairTk2Pt[chsIndex2]<1 && RMuonIsoSum1/event.muonTkPairPF2PATTk1Pt[muIndex1]<0.4 && RMuonIsoSum2/event.muonTkPairPF2PATTk2Pt[muIndex2]<1){	
-    //if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2]) && event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
-      if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWindow_){
-        if(std::abs((RPantiscalar).M()-(RscalarLVec).M())<statWindow_){
-          h_PhiggsRInvMass->Fill((RPantiscalar+RscalarLVec).M(), eventWeight); 
-	}
+  if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){	
+    if(std::abs((refpion+refitmuon).M()-higgsMass_)<higgsMassWindow_){
+      if(std::abs((refpion).M()-(refitmuon).M())<statWindow_){
+        h_PhiggsRInvMass->Fill((refpion+refitmuon).M(), eventWeight); 
       }
-      if(std::abs((RPantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-        if(std::abs((RPantiscalar).M()+(RscalarLVec).M())<statWindow_){
-          h_PhiggsR20InvMass->Fill((RPantiscalar+RscalarLVec).M(), eventWeight);
-	}
+    }
+    if(std::abs((refpion+refitmuon).M()-higgsMass_)<higgsMassWideWindow_){
+      if(std::abs((refpion).M()+(refitmuon).M())<statWindow_){
+        h_PhiggsR20InvMass->Fill((refpion+refitmuon).M(), eventWeight);
       }
-    //}
-  } */
+    }
+  } 
 
   //Higgs refitted (kaon assumption) and wider window	
-/*  if(RKIsoSum1/event.chsTkPairTk1Pt[chsIndex1]<0.4 && RKIsoSum2/event.chsTkPairTk2Pt[chsIndex2]<1 && RMuonIsoSum1/event.muonTkPairPF2PATTk1Pt[muIndex1]<0.4 && RMuonIsoSum2/event.muonTkPairPF2PATTk2Pt[muIndex2]<1){	
-   // if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2]) && event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
-      if(std::abs((RKantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWindow_){
-        if(std::abs((RKantiscalar).M()-(RscalarLVec).M())<statWindow_){
-          h_KhiggsRInvMass->Fill((RKantiscalar+RscalarLVec).M(), eventWeight); 
-	}
+  if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){	
+    if(std::abs((refkaon+refitmuon).M()-higgsMass_)<higgsMassWindow_){
+      if(std::abs((refkaon).M()-(refitmuon).M())<statWindow_){
+        h_KhiggsRInvMass->Fill((refkaon+refitmuon).M(), eventWeight); 
       }
-      if(std::abs((RKantiscalar+RscalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-        if(std::abs((RKantiscalar).M()-(RscalarLVec).M())<statWindow_){
-          h_KhiggsR20InvMass->Fill((RKantiscalar+RscalarLVec).M(), eventWeight);
-	}
+    }
+    if(std::abs((refkaon+refitmuon).M()-higgsMass_)<higgsMassWideWindow_){
+      if(std::abs((refkaon).M()-(refitmuon).M())<statWindow_){
+        h_KhiggsR20InvMass->Fill((refkaon+refitmuon).M(), eventWeight);
       }
-   // }
-  } */
+    }
+  } 
         
 }//close this function
 
