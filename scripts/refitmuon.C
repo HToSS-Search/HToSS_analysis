@@ -46,7 +46,7 @@
    
      //Float_t corr_QCD=corrsmall->Divide(corrwide);
    
-     h_PscalarInvMass_ctau0->SetTitle("Dimuon invariant mass");
+     h_PscalarInvMass_ctau0->SetTitle("Dihadron (pion) invariant mass");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(1,3); 
