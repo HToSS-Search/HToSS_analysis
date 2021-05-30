@@ -1071,7 +1071,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
 
   //Kaon refitted and wider window	
-  TLorentzVector refkaon; TLorentzVector refkaonWide;	
+  //TLorentzVector refkaon; TLorentzVector refkaonWide;	
   //if(event.packedCandsPseudoTrkCharge[chsIndex1]==-(event.packedCandsPseudoTrkCharge[chsIndex2])){
   if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
 	    
