@@ -15,20 +15,20 @@
   
      TFile inFile0("ggH_MS1_ctau0.root"); 
      TH1F* h_refit12InvMass_ctau0    = (TH1F*)inFile0.Get("h_Rpionre12InvMass");
-     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_PhiggsRInvMass");
+     TH1F* h_PscalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_KhiggsRInvMass");
      
      TFile inFile10("ggH_MS1_ctau10.root"); 
      TH1F* h_refit12InvMass_ctau10    = (TH1F*)inFile10.Get("h_Rpionre12InvMass");
-     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_PhiggsRInvMass");
+     TH1F* h_PscalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_KhiggsRInvMass");
 
      TFile inFileQCD("ggH_MC_QCD_1GeV.root"); 
      TH1F* h_refit12InvMass_QCD    = (TH1F*)inFileQCD.Get("h_Rpionre12InvMass");
-     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PhiggsRInvMass");
-     TH1F* h_P20scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_PhiggsR20InvMass");
+     TH1F* h_PscalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_KhiggsRInvMass");
+     TH1F* h_P20scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_KhiggsR20InvMass");
       
      TFile inFileData("dataRunD_1GeV.root"); 
      TH1F* h_refit12InvMass_data    = (TH1F*)inFileData.Get("h_Rpionre12InvMass");
-     TH1F* h_PscalarInvMass_data    = (TH1F*)inFileData.Get("h_PhiggsRInvMass");
+     TH1F* h_PscalarInvMass_data    = (TH1F*)inFileData.Get("h_KhiggsRInvMass");
 
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
@@ -47,7 +47,7 @@
      //}
      //Float_t corr_QCD=corrsmall->Divide(corrwide);
    
-     h_PscalarInvMass_ctau0->SetTitle("Higgs invariant mass");
+     h_PscalarInvMass_ctau0->SetTitle("Higgs invariant mass (kaon assumption)");
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_PscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_ctau0->GetXaxis()->SetRangeUser(120,130); 
