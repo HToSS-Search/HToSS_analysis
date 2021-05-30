@@ -76,7 +76,7 @@
    
      h_PscalarInvMass_data->GetYaxis()->SetTitle("Events");
      h_PscalarInvMass_data->GetXaxis()->SetRangeUser(1,3); 
-     h_PscalarInvMass_data->GetYaxis()->SetRangeUser(0,1100); 
+     h_PscalarInvMass_data->GetYaxis()->SetRangeUser(0.1,1100); 
      h_PscalarInvMass_data->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
      h_PscalarInvMass_data->SetMarkerColor(94);
      h_PscalarInvMass_data->SetLineColor(94);
