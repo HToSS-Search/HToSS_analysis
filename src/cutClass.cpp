@@ -1344,7 +1344,7 @@ bool Cuts::triggerCuts(const AnalysisEvent& event, double& eventWeight, const in
 
     // Check which trigger fired and if it correctly corresponds to the channel being scanned over.
     if (channel == "mumu") {
-        if (postLepSelTree_) {
+        if (postLepSelTree_ && is2018_) {
             if (muTrig || bParkingMu12IP6) return true;
         }
 
