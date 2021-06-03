@@ -403,15 +403,12 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
 
     if ( !event.metFilters() ) return false;
 
-
     // Make lepton cuts. If the trigLabel contains d, we are in the ttbar CR so the Z mass cut is skipped
     ////  Do this outside original function because this is simpler for HToSS unlike in tZq
     ////  if (!makeLeptonCuts(event, eventWeight, plotMap, cutFlow, systToRun)) return false;
 
     event.muonIndexTight = getLooseMuons(event);
     if (event.muonIndexTight.size() < numTightMu_) return false;
-
-    return true;
 
     const bool validDileptonCand = getDileptonCand(event, event.muonIndexTight);
     if ( !validDileptonCand ) return false;
@@ -421,7 +418,7 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     // This is to make some skims for faster running. Do lepSel and save some files. If flag is true, scalar mass cuts are applied, and dilepton mass <= threshold, fill tree
     if (postLepSelTree_ && dileptonMass <= scalarMassCut_ && !skipScalarMassCut_) postLepSelTree_->Fill();
 
-    eventWeight *= getLeptonWeight(event, systToRun);
+////    eventWeight *= getLeptonWeight(event, systToRun);
 //    event.muonMomentumSF = getRochesterSFs(event);
 
     // Get CHS
@@ -707,15 +704,14 @@ std::vector<int> Cuts::getLooseMuons(const AnalysisEvent& event) const {
     }
     else {
         for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] /* && event.muonPF2PATPfIsoVeryLoose[i] */ ) {
+            if (event.muonPF2PATIsPFMuon[i] /*&& event.muonPF2PATLooseCutId[i]*/ /* && event.muonPF2PATPfIsoVeryLoose[i] */ ) {
 
-/*
-                if (muons.size() < 1 && event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
+               if (muons.size() < 1 && event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
                 else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= looseMuonPt_) continue;
 
                 if (muons.size() < 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEtaLeading_) continue;
                 else if (muons.size() >= 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEta_) continue;
-*/
+
                 muons.emplace_back(i);
             }
         }
@@ -1348,6 +1344,10 @@ bool Cuts::triggerCuts(const AnalysisEvent& event, double& eventWeight, const in
 
     // Check which trigger fired and if it correctly corresponds to the channel being scanned over.
     if (channel == "mumu") {
+        if (postLepSelTree_) {
+            if (muTrig || bParkingMu12IP6) return true;
+        }
+
         if ( muTrig && !usingBparking_ ) {
 //            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
             return true;
