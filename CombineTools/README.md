@@ -8,7 +8,7 @@ on how to use the tool.
 
 ## CMSSW Setup info:
 
-Add the following to your .bashrc file in your home directy on the m-2 machine.
+Add the following to your .bashrc file in your home directy on the m-9 machine.
 
 ```
 alias InitCmsEnv='. /cvmfs/cms.cern.ch/cmsset_default.sh'
