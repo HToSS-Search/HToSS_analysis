@@ -26,12 +26,12 @@ Lower 2 sigma band: r < 0.0390012 +/- 0.00856125
 
 10 mm
 
-Observed limit:  r < 0.953614 +/- 0.0130695 @ 95% CL
-Expected (median) limit: 
-Upper 1 sigma band: 
-Lower 1 sigma band: 
-Upper 2 sigma band: 
-Lower 2 sigma band: 
+Observed limit:  r < 0.953614 +/- 0.0130695 
+Expected (median) limit: r < 0.49295 +/- 0.00371334
+Upper 1 sigma band: r < 0.654353 +/- 0.00289558
+Lower 1 sigma band: r < 0.427539 +/- 0.00301467
+Upper 2 sigma band: r < 0.837095 +/- 0.0403924
+Lower 2 sigma band: r < 0.420856 +/- 0.00755817
 
 -- 2 GeV --
 
