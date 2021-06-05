@@ -1,7 +1,7 @@
 name: "ggH_HToSS_MS2_ctauS10"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ggH_noCuts/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS2_ctauS10/"
-cross_section: 16.5172
+cross_section: 1.5238108032
 mc: true
 histogram: "ggH_HToSS_MS2_ctauS10"
 colour: "#fc0303"
