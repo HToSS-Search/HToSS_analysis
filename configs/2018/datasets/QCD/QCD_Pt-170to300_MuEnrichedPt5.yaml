@@ -1,0 +1,9 @@
+name: "QCD_Pt-170to300_MuEnrichedPt5"
+locations:
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2018_v5/QCD/QCD_Pt-170to300_MuEnrichedPt5/"
+cross_section: 7055.0
+mc: true
+histogram: "QCD"
+colour: "#993399"
+label: "QCD"
+plot_type: "f"
