@@ -13,19 +13,19 @@
   void eff() {  
   
      TFile inFile0("ggH_MS2_ctau0.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
-     TH1F* h_ptdiv_ctau0    = (TH1F*)inFile0.Get("h_genParScalarMuonCutPtDS;2");
+     TH1F* h_ptdiv_ctau0    = (TH1F*)inFile0.Get("h_genParScalarMuonCutPtSL;2");
    
      TFile inFile1("ggH_MS2_ctau1.root"); 
-     TH1F* h_ptdiv_ctau1    = (TH1F*)inFile1.Get("h_genParScalarMuonCutPtDS;2");
+     TH1F* h_ptdiv_ctau1    = (TH1F*)inFile1.Get("h_genParScalarMuonCutPtSL;2");
    
      TFile inFile10("ggH_MS2_ctau10.root"); 
-     TH1F* h_ptdiv_ctau10    = (TH1F*)inFile10.Get("h_genParScalarMuonCutPtDS;2");
+     TH1F* h_ptdiv_ctau10    = (TH1F*)inFile10.Get("h_genParScalarMuonCutPtSL;2");
    
      TFile inFile100("ggH_MS2_ctau100.root"); 
-     TH1F* h_ptdiv_ctau100    = (TH1F*)inFile100.Get("h_genParScalarMuonCutPtDS;2");
+     TH1F* h_ptdiv_ctau100    = (TH1F*)inFile100.Get("h_genParScalarMuonCutPtSL;2");
    
      TFile inFile1000("ggH_MS2_ctau1000.root"); 
-     TH1F* h_ptdiv_ctau1000    = (TH1F*)inFile1000.Get("h_genParScalarMuonCutPtDS;2");
+     TH1F* h_ptdiv_ctau1000    = (TH1F*)inFile1000.Get("h_genParScalarMuonCutPtSL;2");
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
@@ -33,7 +33,8 @@
      canv1->SetFillColor(0);
    
      h_ptdiv_ctau0->GetYaxis()->SetTitle("Efficiency");
-     h_ptdiv_ctau0->GetXaxis()->SetRangeUser(0.0,100); 
+     h_ptdiv_ctau0->GetXaxis()->SetRangeUser(0.0,100);
+     h_ptdiv_ctau0->GetYaxis()->SetRangeUser(0.0,1);
      h_ptdiv_ctau0->GetXaxis()->SetTitle("p_{T} (GeV)");
      h_ptdiv_ctau0->SetMarkerColor(4);
      h_ptdiv_ctau0->SetLineColor(4);
