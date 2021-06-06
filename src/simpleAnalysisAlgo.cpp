@@ -212,7 +212,7 @@ void SimpleAnalysis::runMainAnalysis() {
       if( !event.metFilters() ) continue;
 
       // Get physics objects
-      std::pair<int, int> patMuons = getPatMuonPair(event); // Get PAT muons inidices
+      std::pair<int, int> patMuons = getPatMuonPair(event); // Get PAT muons indices
       // This function needs a pair of selected muons, but also looks at all muons and different triggers within this, so no blanket trigger application and no skip event if no incompatible muon pair is found
       //fillMuonReconstructionPlots(event, eventWeight, patMuons.first, patMuons.second);
 
@@ -326,7 +326,7 @@ std::pair<int, int> SimpleAnalysis::getDihadronPair(const AnalysisEvent& event, 
 
     //Find the hadrons (pions)
 
-    if(std::abs(packedId)==211 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons)
+    if(std::abs(packedId)==211 && event.packedCandsPseudoTrkPt[k]>1){//Selection of pions (charged hadrons)
       if(event.packedCandsPseudoTrkPt[k]>chspt1){
 	chspt2=chspt1;
 	chspt1=event.packedCandsPseudoTrkPt[k];
