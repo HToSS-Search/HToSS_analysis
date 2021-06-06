@@ -66,14 +66,14 @@
      h_PIsoSum1_ctau0->SetLineColor(4);
      h_PIsoSum1_ctau0->Draw("HIST");
  
-     h_PIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
-     h_PIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
-     h_PIsoSum1_ctau10->GetXaxis()->SetTitle("Rel. iso");
-     h_PIsoSum1_ctau10->SetMarkerColor(3);
-     h_PIsoSum1_ctau10->SetLineColor(3);
-     h_PIsoSum1_ctau10->Draw("HIST same");
+     h_PIsoSum2_ctau0->GetYaxis()->SetTitle("Events");
+     h_PIsoSum2_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
+     h_PIsoSum2_ctau0->GetXaxis()->SetTitle("Rel. iso");
+     h_PIsoSum2_ctau0->SetMarkerColor(2);
+     h_PIsoSum2_ctau0->SetLineColor(2);
+     h_PIsoSum2_ctau0->Draw("HIST same");
    
-     h_PIsoSum1_QCD->GetYaxis()->SetTitle("Events");
+     /*h_PIsoSum1_QCD->GetYaxis()->SetTitle("Events");
      h_PIsoSum1_QCD->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_QCD->GetXaxis()->SetTitle("Rel. iso");
      h_PIsoSum1_QCD->SetMarkerColor(6);
@@ -85,26 +85,26 @@
      h_PIsoSum1_data->GetXaxis()->SetTitle("Rel. iso");
      h_PIsoSum1_data->SetMarkerColor(94);
      h_PIsoSum1_data->SetLineColor(94);
-     h_PIsoSum1_data->Draw("P* same");
+     h_PIsoSum1_data->Draw("P* same");*/
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_PIsoSum1_ctau0","c_{#tau}=0mm","L");
+     TLegendEntry *legenda = legend1->AddEntry("h_PIsoSum1_ctau0","Leading","L");
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_PIsoSum1_ctau10","c_{#tau}=10mm","L");
-     legenda->SetLineColor(3);
-     legenda->SetMarkerColor(3);
+     legenda=legend1->AddEntry("h_PIsoSum2_ctau0","Subleading","L");
+     legenda->SetLineColor(2);
+     legenda->SetMarkerColor(2);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_PIsoSum1_QCD","QCD","L");
+     /*legenda=legend1->AddEntry("h_PIsoSum1_QCD","QCD","L");
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_PIsoSum1_data","Data","P*");
      legenda->SetLineColor(94);
      legenda->SetMarkerColor(94);
-     legenda->SetMarkerSize(2);
+     legenda->SetMarkerSize(2);*/
      legend1->Draw();
    
      canv1->Modified();
