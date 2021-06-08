@@ -1187,7 +1187,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       }
     }
     if(std::abs((refpion+refitmuon).M()-higgsMass_)<higgsMassWideWindow_){
-      if(std::abs((refpion).M()+(refitmuon).M())<statWindow_){
+      if(std::abs((refpion).M()-(refitmuon).M())<statWindow_){
         h_PhiggsR20InvMass->Fill((refpion+refitmuon).M(), eventWeight);
       }
     }
