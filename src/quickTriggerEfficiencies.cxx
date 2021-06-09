@@ -285,6 +285,28 @@ int main(int argc, char* argv[])
         Long64_t numberOfEvents{datasetChain->GetEntries()};
         if (nEvents && nEvents < numberOfEvents) numberOfEvents = nEvents;
 
+        int foundEvents{0};
+        double foundEventsNorm{0.0};
+
+        TH1I* generatorWeightPlot{nullptr};
+        if (dataset->isMC()) {
+            if (usePostLepTree) {
+                std::string inputPostfix{"mumu"};
+                TFile* datasetFileForHists;
+                datasetFileForHists = new TFile((postLepSelSkimInputDir + dataset->name()  + inputPostfix + "SmallSkim.root").c_str(), "READ");
+                generatorWeightPlot = dynamic_cast<TH1I*>(datasetFileForHists->Get("weightHisto")->Clone());
+                generatorWeightPlot->SetDirectory(nullptr);
+                datasetFileForHists->Close();
+            }
+            else {
+                generatorWeightPlot = dynamic_cast<TH1I*>(dataset->getGeneratorWeightHistogram()->Clone());
+                generatorWeightPlot->SetDirectory(nullptr);
+            }
+        }
+
+        double sumPositiveWeights_          = generatorWeightPlot->GetBinContent(1)  + generatorWeightPlot->GetBinContent(2);
+        double sumNegativeWeights_          = generatorWeightPlot->GetBinContent(1)  - generatorWeightPlot->GetBinContent(2);
+
         TMVA::Timer* lEventTimer{ new TMVA::Timer{boost::numeric_cast<int>(numberOfEvents), "Running over dataset ...", false}}; 
         lEventTimer->DrawProgressBar(0, "");
     
@@ -340,6 +362,15 @@ int main(int argc, char* argv[])
 
                 // Fill pT post trigger (with and without scalar parentage)
                 if (passSingleMuonTrigger) {
+
+                    double eventWeight = 1;
+
+                    eventWeight *= (sumPositiveWeights_) / (sumNegativeWeights_) * (event.origWeightForNorm / std::abs(event.origWeightForNorm));
+                    eventWeight *= datasetWeight;
+
+                    foundEvents++;
+                    foundEventsNorm += eventWeight;
+
                     h_leadingMuonPt_truth_muTrig->Fill(event.muonPF2PATPt[mu1]);
                     h_subLeadingMuonPt_truth_muTrig->Fill(event.muonPF2PATPt[mu2]);
                     h_leadingMuonPt_muTrig->Fill(event.muonPF2PATPt[0]);
@@ -447,6 +478,9 @@ int main(int argc, char* argv[])
 
 
         } // end event loop
+        std::cerr << "\nFound " << foundEvents << " that pass single muon trigger in " << dataset->name() << std::endl;
+        std::cerr << "Found " << foundEventsNorm << " after normalisation that pass single muon trigger in " << dataset->name() << std::endl;
+        std::cerr << "\n\n";
     } // end dataset loop
 
     TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};

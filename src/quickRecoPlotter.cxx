@@ -46,11 +46,11 @@ float deltaR(float eta1, float phi1, float eta2, float phi2);
 namespace fs = boost::filesystem;
 
 // Lepton cut variables
-const float looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {30.}, looseMuonRelIso_ {100.};
+const float looseMuonEtaLeading_ {2.5}, looseMuonEta_ {2.5}, looseMuonPt_ {5.}, looseMuonPtLeading_ {5.}, looseMuonRelIso_ {100.};
 const float invZMassCut_ {10.0}, chsMass_{0.13957018};
 
 // Diparticle cuts
-double maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4};
+double maxDileptonDeltaR_ {999990.4}, maxChsDeltaR_ {0.4};
 double higgsTolerence_ {999.};
 
 int main(int argc, char* argv[]) {
@@ -70,15 +70,39 @@ int main(int argc, char* argv[]) {
     Long64_t totalEvents {0};
     const std::regex mask{".*\\.root"};
 
-    TH1F* h_muonPtGenuine           { new TH1F("h_muonPtGenuine",          ";p_{T}", 200, 0., 100.)};
-    TH1F* h_muon1PtGenuine          { new TH1F("h_muon1PtGenuine",         ";p_{T}", 200, 0., 100.)};
-    TH1F* h_muon2PtGenuine          { new TH1F("h_muon2PtGenuine",         ";p_{T}", 200, 0., 100.)};
-    TH1F* h_muonDeltaRGenuine       { new TH1F("h_muonDeltaRGenuine",       "#DeltaR between muons from scalar decay; #DeltaR", 500, 0., 1.)};
+    TH1F* h_genParMuonPt            { new TH1F("h_genParMuonPt",           ";p_{T}", 200, 0., 100.)};
+    TH1F* h_genParMuonEta           { new TH1F("h_genParMuonEta",          "#eta", 250, -2.5, 2.5)};
+    TH1F* h_genParMuonPt1           { new TH1F("h_genParMuonPt1",          ";p_{T}", 200, 0., 100.)};
+    TH1F* h_genParMuonEta1          { new TH1F("h_genParMuonEta1",         "#eta", 250, -2.5, 2.5)};
+    TH1F* h_genParMuonPt2           { new TH1F("h_genParMuonPt2",          ";p_{T}", 200, 0., 100.)};
+    TH1F* h_genParMuonEta2          { new TH1F("h_genParMuonEta2",         "#eta", 250, -2.5, 2.5)};
+    TH1F* h_genParMuonDeltaR        { new TH1F("h_genParMuonDeltaR",       "#DeltaR between muons from scalar decay; #DeltaR", 500, 0., 1.)};
+    TH2F* h_genParMuon1PtVsEta      { new TH2F("h_genParMuon1PtVsEta",     ";p_{T}; #eta", 200, 0., 100., 250, -2.5, 2.50)};
+    TH2F* h_genParMuon2PtVsEta      { new TH2F("h_genParMuon2PtVsEta",     ";p_{T}; #eta", 200, 0., 100., 250, -2.5, 2.50)};
+    TH2F* h_genParMuonPtVsDr        { new TH2F("h_genParMuonPtVsDr",       ";p_{T}; #DeltaR", 200, 0., 100., 500, 0., 1.)};
 
-    TH1F* h_genMuonPtGenuine        { new TH1F("h_genMuonPtGenuine",          ";p_{T}", 200, 0., 100.)};
-    TH1F* h_genMuon1PtGenuine       { new TH1F("h_genMuon1PtGenuine",         ";p_{T}", 200, 0., 100.)};
-    TH1F* h_genMuon2PtGenuine       { new TH1F("h_genMuon2PtGenuine",         ";p_{T}", 200, 0., 100.)};
-    TH1F* h_genMuonDeltaRGenuine    { new TH1F("h_genMuonDeltaRGenuine",      "#DeltaR between muons from scalar decay; #DeltaR", 500, 0., 1.)};
+    TH1F* h_muonPtGenuine           { new TH1F("h_muonPtGenuine",          ";p_{T}", 200, 0., 100.)};
+    TH1F* h_muonEtaGenuine          { new TH1F("h_muonEtaGenuine",         "#eta", 250, -2.5, 2.5)};
+    TH1F* h_muon1PtGenuine          { new TH1F("h_muon1PtGenuine",         ";p_{T}", 200, 0., 100.)};
+    TH1F* h_muon1EtaGenuine         { new TH1F("h_muon1EtaGenuine",        ";#eta", 250, -2.5, 2.5)};
+    TH1F* h_muon2PtGenuine          { new TH1F("h_muon2PtGenuine",         ";p_{T}", 200, 0., 100.)};
+    TH1F* h_muon2EtaGenuine         { new TH1F("h_muon2EtaGenuine",        ";#eta", 250, -2.5, 2.5)};
+    TH1F* h_muonDeltaRGenuine       { new TH1F("h_muonDeltaRGenuine",      "#DeltaR between muons from scalar decay; #DeltaR", 500, 0., 1.)};
+
+    TH2F* h_muon1PtVsEtaGenuine     { new TH2F("h_muon1PtVsEtaGenuine",    ";p_{T}; #eta", 200, 0., 100., 250, -2.5, 2.50)};
+    TH2F* h_muon2PtVsEtaGenuine     { new TH2F("h_muon2PtVsEtaGenuine",    ";p_{T}; #eta", 200, 0., 100., 250, -2.5, 2.50)};
+    TH2F* h_muonPtVsDrGenuine       { new TH2F("h_muonPtVsDrGenuine",      ";p_{T}; #DeltaR", 200, 0., 100., 500, 0., 1.)};
+
+    TH1F* h_genMuonPtGenuine        { new TH1F("h_genMuonPtGenuine",       ";p_{T}", 200, 0., 100.)};
+    TH1F* h_genMuonEtaGenuine       { new TH1F("h_genMuonEtaGenuine",      ";#eta", 250, -2.5, 2.5)};
+    TH1F* h_genMuon1PtGenuine       { new TH1F("h_genMuon1PtGenuine",      ";p_{T}", 200, 0., 100.)};
+    TH1F* h_genMuon1EtaGenuine      { new TH1F("h_genMuon1EtaGenuine",     ";#eta", 250, -2.5, 2.5)};
+    TH1F* h_genMuon2PtGenuine       { new TH1F("h_genMuon2PtGenuine",      ";p_{T}", 200, 0., 100.)};
+    TH1F* h_genMuon2EtaGenuine      { new TH1F("h_genMuon2EtaGenuine",     ";#eta", 250, -2.5, 2.5)};
+    TH1F* h_genMuonDeltaRGenuine    { new TH1F("h_genMuonDeltaRGenuine",   "#DeltaR between muons from scalar decay; #DeltaR", 500, 0., 1.)};
+
+    TH2F* h_genMuon1PtVsEtaGenuine  { new TH2F("h_genMuon1PtVsEtaGenuine", ";p_{T}; #eta", 200, 0., 100., 250, -2.5, 2.50)};
+    TH2F* h_genMuon2PtVsEtaGenuine  { new TH2F("h_genMuon2PtVsEtaGenuine", ";p_{T}; #eta", 200, 0., 100., 250, -2.5, 2.50)};
 
     // Quick and dirty plots
     TH1F* h_leadingMuonPt        { new TH1F("h_leadingMuonPt",          ";p_{T}", 200, 0., 100.)};
@@ -289,34 +313,85 @@ int main(int argc, char* argv[]) {
 
             event.GetEntry(i);
 
-            float eventWeight = 1.;
+            std::vector<int> genMuonIndex;
+            for (Int_t k = 0; k < event.nGenPar; k++ ){
+                const int pid { std::abs(event.genParId[k]) };
+                const int motherId { std::abs(event.genParMotherId[k]) };
+                if ( pid == 13 && motherId == 9000006) {
+                    genMuonIndex.emplace_back(k);
+                }
+            }
+
+            TLorentzVector genMuon1, genMuon2;
+            if ( genMuonIndex.size() == 2 ) {
+                bool firstLeading {false};
+                if ( event.genParPt[genMuonIndex[0]] > event.genParPt[genMuonIndex[1]] ) firstLeading = true;
+                if (firstLeading) {
+                    genMuon1.SetPtEtaPhiE(event.genParPt[genMuonIndex[0]], event.genParEta[genMuonIndex[0]], event.genParPhi[genMuonIndex[0]], event.genParE[genMuonIndex[0]]);
+                    genMuon2.SetPtEtaPhiE(event.genParPt[genMuonIndex[1]], event.genParEta[genMuonIndex[1]], event.genParPhi[genMuonIndex[1]], event.genParE[genMuonIndex[1]]);
+                }
+                else {
+                    genMuon1.SetPtEtaPhiE(event.genParPt[genMuonIndex[1]], event.genParEta[genMuonIndex[1]], event.genParPhi[genMuonIndex[1]], event.genParE[genMuonIndex[1]]);
+                    genMuon2.SetPtEtaPhiE(event.genParPt[genMuonIndex[0]], event.genParEta[genMuonIndex[0]], event.genParPhi[genMuonIndex[0]], event.genParE[genMuonIndex[0]]);
+                }
+
+                h_genParMuonPt->Fill(  (genMuon1+genMuon2).Pt(), datasetWeight);
+                h_genParMuonEta->Fill( (genMuon1+genMuon2).Eta(), datasetWeight);
+
+                h_genParMuonPt1->Fill(  genMuon1.Pt(), datasetWeight);
+                h_genParMuonEta1->Fill( genMuon1.Eta(), datasetWeight);
+                h_genParMuonPt2->Fill(  genMuon2.Pt(), datasetWeight);
+                h_genParMuonEta2->Fill( genMuon2.Eta(), datasetWeight);
+
+                h_genParMuonDeltaR->Fill(   genMuon1.DeltaR(genMuon2), datasetWeight);
+                h_genParMuon1PtVsEta->Fill( genMuon1.Pt(), genMuon1.Eta(), datasetWeight);
+                h_genParMuon2PtVsEta->Fill( genMuon2.Pt(), genMuon2.Eta(), datasetWeight);
+                h_genParMuonPtVsDr->Fill(  (genMuon1+genMuon2).Pt(), genMuon1.DeltaR(genMuon2), datasetWeight );
+            }
 
             for (Int_t k = 0; k < event.numMuonPF2PAT; k++ ){
                 if ( event.genMuonPF2PATMotherId[k] == 9000006 )  {
                     h_muonPtGenuine->Fill(event.muonPF2PATPt[k]);
+                    h_muonEtaGenuine->Fill(event.muonPF2PATEta[k]);
                     h_genMuonPtGenuine->Fill(event.genMuonPF2PATPT[k]);
+                    h_genMuonEtaGenuine->Fill(event.genMuonPF2PATEta[k]);
                 }
             }
 
             // Get muons
-            std::vector<int> looseMuonIndex = getLooseMuons(event);
+            const std::vector<int> looseMuonIndex = getLooseMuons(event);
 
             if ( looseMuonIndex.size() < 2 ) continue;
 
-            getDileptonCand( event, looseMuonIndex, false);
+            getDileptonCand( event, looseMuonIndex, true);
 
             if ( event.genMuonPF2PATMotherId[event.zPairIndex.first] == 9000006 )  {
-                h_muon1PtGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.first],datasetWeight);
-                h_genMuon1PtGenuine->Fill(event.genMuonPF2PATPT[event.zPairIndex.first],datasetWeight);
+                h_muon1PtGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.first], datasetWeight);
+                h_muon1EtaGenuine->Fill(event.muonPF2PATEta[event.zPairIndex.first], datasetWeight);
+
+                h_genMuon1PtGenuine->Fill(event.genMuonPF2PATPT[event.zPairIndex.first], datasetWeight);
+                h_genMuon1EtaGenuine->Fill(event.genMuonPF2PATEta[event.zPairIndex.first], datasetWeight);
+
+                h_muon1PtVsEtaGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.first], event.muonPF2PATEta[event.zPairIndex.first], datasetWeight);
+                h_genMuon1PtVsEtaGenuine->Fill(event.genMuonPF2PATPT[event.zPairIndex.first], event.genMuonPF2PATEta[event.zPairIndex.first], datasetWeight);
             }
+
             if ( event.genMuonPF2PATMotherId[event.zPairIndex.second] == 9000006 ) {
-                h_muon2PtGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.second],datasetWeight);
-                h_genMuon2PtGenuine->Fill(event.genMuonPF2PATPT[event.zPairIndex.second],datasetWeight);
+                h_muon2PtGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.second], datasetWeight);
+                h_muon2EtaGenuine->Fill(event.muonPF2PATEta[event.zPairIndex.second], datasetWeight);
+
+                h_genMuon2PtGenuine->Fill(event.genMuonPF2PATPT[event.zPairIndex.second], datasetWeight);
+                h_genMuon2EtaGenuine->Fill(event.genMuonPF2PATEta[event.zPairIndex.second], datasetWeight);
+
+                h_muon2PtVsEtaGenuine->Fill(event.muonPF2PATPt[event.zPairIndex.second], event.muonPF2PATEta[event.zPairIndex.second], datasetWeight);
+                h_genMuon2PtVsEtaGenuine->Fill(event.genMuonPF2PATPT[event.zPairIndex.second], event.genMuonPF2PATEta[event.zPairIndex.second], datasetWeight);
             }
 
             if ( event.genMuonPF2PATMotherId[event.zPairIndex.first] == 9000006 && event.genMuonPF2PATMotherId[event.zPairIndex.second] == 9000006 ) {
-                h_muonDeltaRGenuine->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second));
-                h_genMuonDeltaRGenuine->Fill( deltaR(event.genMuonPF2PATEta[event.zPairIndex.first], event.genMuonPF2PATPhi[event.zPairIndex.first], event.genMuonPF2PATEta[event.zPairIndex.second], event.genMuonPF2PATPhi[event.zPairIndex.second]) );
+                h_muonDeltaRGenuine->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second), datasetWeight);
+                h_genMuonDeltaRGenuine->Fill( deltaR(event.genMuonPF2PATEta[event.zPairIndex.first], event.genMuonPF2PATPhi[event.zPairIndex.first], event.genMuonPF2PATEta[event.zPairIndex.second], event.genMuonPF2PATPhi[event.zPairIndex.second]), datasetWeight);
+
+                h_muonPtVsDrGenuine->Fill( (event.zPairLeptons.first+event.zPairLeptons.second).Pt(), event.zPairLeptons.first.DeltaR(event.zPairLeptons.second), datasetWeight);
             }
 	
             if (!event.metFilters()) continue;
@@ -440,15 +515,39 @@ int main(int argc, char* argv[]) {
     TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
     outFile->cd();
 
+    h_genParMuonPt->Write();
+    h_genParMuonEta->Write();
+    h_genParMuonPt1->Write();
+    h_genParMuonEta1->Write();
+    h_genParMuonPt2->Write();
+    h_genParMuonEta2->Write();
+    h_genParMuonDeltaR->Write();
+    h_genParMuon1PtVsEta->Write();
+    h_genParMuon2PtVsEta->Write();
+    h_genParMuonPtVsDr->Write();
+
     h_muonPtGenuine->Write();
+    h_muonEtaGenuine->Write();
     h_muon1PtGenuine->Write();
+    h_muon1EtaGenuine->Write();
     h_muon2PtGenuine->Write();
+    h_muon2EtaGenuine->Write();
     h_muonDeltaRGenuine->Write();
 
+    h_muon1PtVsEtaGenuine->Write();
+    h_muon2PtVsEtaGenuine->Write();
+    h_muonPtVsDrGenuine->Write();
+
     h_genMuonPtGenuine->Write();
+    h_genMuonEtaGenuine->Write();
     h_genMuon1PtGenuine->Write();
+    h_genMuon1EtaGenuine->Write();
     h_genMuon2PtGenuine->Write();
+    h_genMuon2EtaGenuine->Write();
     h_genMuonDeltaRGenuine->Write();
+
+    h_genMuon1PtVsEtaGenuine->Write();
+    h_genMuon2PtVsEtaGenuine->Write();
 
     h_leadingMuonPt->Write();
     h_subleadingMuonPt->Write();
@@ -540,9 +639,18 @@ int main(int argc, char* argv[]) {
 std::vector<int> getLooseMuons(const AnalysisEvent& event) {
     std::vector<int> muons;
     for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-       if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
-           if (event.muonPF2PATPt[i] >= (muons.empty() ? looseMuonPtLeading_ : looseMuonPt_)) muons.emplace_back(i);
-        }
+       if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i]) { //
+
+           if (muons.size() < 1 && event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
+           else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= looseMuonPt_) continue;
+
+            if (muons.size() < 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEtaLeading_) continue;
+            else if (muons.size() >= 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEta_) continue;
+
+        //    if (event.genMuonPF2PATMotherId[i] != 9000006) continue;
+        //    muons.emplace_back(i);
+
+        } //
     }
     return muons;
 }
@@ -571,19 +679,28 @@ std::vector<int> getPromptMuons(const AnalysisEvent& event, const std::vector<in
 
 bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool mcTruth) {
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
+
+        if ( mcTruth && !event.genMuonPF2PATDirectScalarAncestor[muons[i]] ) continue;
+
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
+ 
+           if ( mcTruth && !event.genMuonPF2PATDirectScalarAncestor[muons[j]] ) continue;
 
             if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
-            if ( mcTruth && (!event.genMuonPF2PATDirectScalarAncestor[muons[i]] || !event.genMuonPF2PATDirectScalarAncestor[muons[j]]) ) continue;
 
             TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
             TLorentzVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
+
             double delR { lepton1.DeltaR(lepton2) };
+
             if ( delR < maxDileptonDeltaR_  ) {
+
                 event.zPairLeptons.first  = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
                 event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
+
                 event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[i] : muons[j];
                 event.zPairIndex.second  = lepton1.Pt() > lepton2.Pt() ? muons[j] : muons[i];
+
                 event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
                 event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
 

@@ -264,10 +264,10 @@ int main(int argc, char* argv[]) {
             const bool matchedEle1    {validEle1    ? event.genElePF2PATScalarAncestor[eleIndex1]    : false}, matchedEle2    {validEle2    ? event.genElePF2PATScalarAncestor[eleIndex2]    : false};
             const bool matchedMuon1   {validMuon1   ? event.genMuonPF2PATScalarAncestor[validMuon1]  : false}, matchedMuon2   {validMuon2   ? event.genMuonPF2PATScalarAncestor[validMuon2] : false};
             const bool matchedJet1    {validJet1    ? event.genJetPF2PATScalarAncestor[jetIndex1]    : false}, matchedJet2    {validJet2    ? event.genJetPF2PATScalarAncestor[jetIndex2]  	: false};
-            const bool matchedPhoton1 {validPhoton1 ? event.genPhoPF2PATScalarAncestor[photonIndex1] : false}, matchedPhoton2 {validPhoton2 ? event.genPhoPF2PATScalarAncestor[photonIndex2] : false};
+//            const bool matchedPhoton1 {validPhoton1 ? event.genPhoPF2PATScalarAncestor[photonIndex1] : false}, matchedPhoton2 {validPhoton2 ? event.genPhoPF2PATScalarAncestor[photonIndex2] : false};
 
-            const bool leadingGen    { (matchedEle1 || matchedMuon1 || matchedJet1 || matchedPhoton1) };
-            const bool subleadingGen { (matchedEle2 || matchedMuon2 || matchedJet2 || matchedPhoton2) };
+            const bool leadingGen    { (matchedEle1 || matchedMuon1 || matchedJet1 /*|| matchedPhoton1*/) };
+            const bool subleadingGen { (matchedEle2 || matchedMuon2 || matchedJet2 /*|| matchedPhoton2*/) };
 
             p_selectedChsMatching->Fill( 1.0, bool (  leadingGen &&  subleadingGen ), eventWeight );
             p_selectedChsMatching->Fill( 2.0, bool (  leadingGen && !subleadingGen ), eventWeight );

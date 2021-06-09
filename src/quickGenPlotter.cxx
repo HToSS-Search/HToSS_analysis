@@ -133,6 +133,10 @@ int main(int argc, char* argv[]) {
     TH1F* h_genDiscalarDeltaR_mumu_pipi     {new TH1F("h_genDiscalarDeltaR_mumu_pipi",      "#DeltaR_{#mu#mu#pi#pi}^{gen}", 500, 0., 10.)};
     TH1F* h_genDiscalarDeltaR_mumu_kaonkaon {new TH1F("h_genDiscalarDeltaR_mumu_kaonkaon",  "#DeltaR_{#mu#muKK}^{gen}", 500, 0., 10.)};
 
+    // scalar ratio plots
+    TH1F* h_genScalarMassRatio    {new TH1F("h_genScalarMassRatio",     "Ratio of m_{hadron+hadron}/m_{#mu#mu}", 200, 0., 2.0)};
+    TH2F* h_genScalarMass2D       {new TH2F("h_genScalarMass2D",        "scalar mass 2D plots; m_{#mu#mu}; m_{hadron+hadron}", 400, 0., 4.0, 400, 0., 4.0)};
+
     // Reco plots
 
     TH1F* h_numLooseMuons             {new TH1F("h_numLooseMuons",            "Number of loose muons IDed", 10, -0.5, 9.5)};
@@ -743,7 +747,11 @@ int main(int argc, char* argv[]) {
                     h_genSubleadingVzPion->Fill( event.genParVz[genPionIndex[1]] );
                     h_genSubleadingVxyPion->Fill( std::sqrt(event.genParVx[genPionIndex[1]]*event.genParVx[genPionIndex[1]] + event.genParVy[genPionIndex[1]]*event.genParVy[genPionIndex[1]]) );
                     h_genSubleadingVdPion->Fill( std::sqrt(event.genParVx[genPionIndex[1]]*event.genParVx[genPionIndex[1]] + event.genParVy[genPionIndex[1]]*event.genParVy[genPionIndex[1]] + event.genParVz[genPionIndex[1]]*event.genParVz[genPionIndex[1]]) );
-                    if ( genMuonSortedIndex.size() == 2 ) h_genDiscalarDeltaR_mumu_pipi->Fill( (genMuon1+genMuon2).DeltaR( (genPion1+genPion2) ) );
+                    if ( genMuonSortedIndex.size() == 2 ) {
+                        h_genDiscalarDeltaR_mumu_pipi->Fill( (genMuon1+genMuon2).DeltaR( (genPion1+genPion2) ) );
+                        h_genScalarMassRatio->Fill( (genPion1+genPion2).M()/( (genMuon1+genMuon2).M() + 1.0e-06) );
+                        h_genScalarMass2D->Fill( (genMuon1+genMuon2).M(), (genPion1+genPion2).M() );
+                    }
                 }
                 else {
                     genPion1.SetPtEtaPhiE(event.genParPt[genPionIndex[1]], event.genParEta[genPionIndex[1]], event.genParPhi[genPionIndex[1]], event.genParE[genPionIndex[1]]);
@@ -769,7 +777,11 @@ int main(int argc, char* argv[]) {
                     h_genSubleadingVzPion->Fill( event.genParVz[genPionIndex[0]] );
                     h_genSubleadingVxyPion->Fill( std::sqrt(event.genParVx[genPionIndex[0]]*event.genParVx[genPionIndex[0]] + event.genParVy[genPionIndex[0]]*event.genParVy[genPionIndex[0]]) );
                     h_genSubleadingVdPion->Fill( std::sqrt(event.genParVx[genPionIndex[0]]*event.genParVx[genPionIndex[0]] + event.genParVy[genPionIndex[0]]*event.genParVy[genPionIndex[0]] + event.genParVz[genPionIndex[0]]*event.genParVz[genPionIndex[0]]) );
-                    if ( genMuonSortedIndex.size() == 2 ) h_genDiscalarDeltaR_mumu_pipi->Fill( (genMuon1+genMuon2).DeltaR( (genPion1+genPion2) ) );
+                    if ( genMuonSortedIndex.size() == 2 ) {
+                        h_genDiscalarDeltaR_mumu_pipi->Fill( (genMuon1+genMuon2).DeltaR( (genPion1+genPion2) ) );
+                        h_genScalarMassRatio->Fill( (genPion1+genPion2).M()/( (genMuon1+genMuon2).M() + 1.0e-06) );
+                        h_genScalarMass2D->Fill( (genMuon1+genMuon2).M(), (genPion1+genPion2).M() );
+                    }
                 }
             }
 
@@ -801,7 +813,11 @@ int main(int argc, char* argv[]) {
                     h_genSubleadingVzKaon->Fill( event.genParVz[genKaonIndex[1]] );
                     h_genSubleadingVxyKaon->Fill( std::sqrt(event.genParVx[genKaonIndex[1]]*event.genParVx[genKaonIndex[1]] + event.genParVy[genKaonIndex[1]]*event.genParVy[genKaonIndex[1]]) );
                     h_genSubleadingVdKaon->Fill( std::sqrt(event.genParVx[genKaonIndex[1]]*event.genParVx[genKaonIndex[1]] + event.genParVy[genKaonIndex[1]]*event.genParVy[genKaonIndex[1]] + event.genParVz[genKaonIndex[1]]*event.genParVz[genKaonIndex[1]]) );
-                    if ( genMuonSortedIndex.size() == 2 ) h_genDiscalarDeltaR_mumu_kaonkaon->Fill( (genMuon1+genMuon2).DeltaR( (genKaon1+genKaon2) ) );
+                    if ( genMuonSortedIndex.size() == 2 ) {
+                        h_genDiscalarDeltaR_mumu_kaonkaon->Fill( (genMuon1+genMuon2).DeltaR( (genKaon1+genKaon2) ) );
+                        h_genScalarMassRatio->Fill( (genKaon1+genKaon2).M()/( (genMuon1+genMuon2).M() + 1.0e-06) );
+                        h_genScalarMass2D->Fill( (genMuon1+genMuon2).M(), (genKaon1+genKaon2).M() );
+                    }
                 }
                 else {
                     genKaon1.SetPtEtaPhiE(event.genParPt[genKaonIndex[1]], event.genParEta[genKaonIndex[1]], event.genParPhi[genKaonIndex[1]], event.genParE[genKaonIndex[1]]);
@@ -827,7 +843,11 @@ int main(int argc, char* argv[]) {
                     h_genSubleadingVzKaon->Fill( event.genParVz[genKaonIndex[0]] );
                     h_genSubleadingVxyKaon->Fill( std::sqrt(event.genParVx[genKaonIndex[0]]*event.genParVx[genKaonIndex[0]] + event.genParVy[genKaonIndex[0]]*event.genParVy[genKaonIndex[0]]) );
                     h_genSubleadingVdKaon->Fill( std::sqrt(event.genParVx[genKaonIndex[0]]*event.genParVx[genKaonIndex[0]] + event.genParVy[genKaonIndex[0]]*event.genParVy[genKaonIndex[0]] + event.genParVz[genKaonIndex[0]]*event.genParVz[genKaonIndex[0]]) );
-                    if ( genMuonSortedIndex.size() == 2 ) h_genDiscalarDeltaR_mumu_kaonkaon->Fill( (genMuon1+genMuon2).DeltaR( (genKaon1+genKaon2) ) );
+                    if ( genMuonSortedIndex.size() == 2 ) {
+                        h_genDiscalarDeltaR_mumu_kaonkaon->Fill( (genMuon1+genMuon2).DeltaR( (genKaon1+genKaon2) ) );
+                        h_genScalarMassRatio->Fill( (genKaon1+genKaon2).M()/( (genMuon1+genMuon2).M() + 1.0e-06) );
+                        h_genScalarMass2D->Fill( (genMuon1+genMuon2).M(), (genKaon1+genKaon2).M() );
+                    }
                 }
             }
 
@@ -977,10 +997,10 @@ int main(int argc, char* argv[]) {
                         nMatchedGenuineTracks++;
                         nMatchedGenuineExclusiveTracks++;
        	       	    }
-                    else if ( validPhoton && event.genPhoPF2PATScalarAncestor[event.packedCandsPhotonIndex[chsIndex[i]]] > 0 ) {
+/*                    else if ( validPhoton && event.genPhoPF2PATScalarAncestor[event.packedCandsPhotonIndex[chsIndex[i]]] > 0 ) {
        	       	       	nMatchedGenuineTracks++;
                         nMatchedGenuineExclusiveTracks++;
-       	       	    }
+       	       	    }*/
                 }
             }
 
@@ -1014,12 +1034,12 @@ int main(int argc, char* argv[]) {
             const bool matchedEle1    {validEle1    ? event.genElePF2PATScalarAncestor[eleIndex1]    : false}, matchedEle2    {validEle2    ? event.genElePF2PATScalarAncestor[eleIndex2]    : false};
             const bool matchedMuon1   {validMuon1   ? event.genMuonPF2PATScalarAncestor[validMuon1]  : false}, matchedMuon2   {validMuon2   ? event.genMuonPF2PATScalarAncestor[validMuon2] : false};
             const bool matchedJet1    {validJet1    ? event.genJetPF2PATScalarAncestor[jetIndex1]    : false}, matchedJet2    {validJet2    ? event.genJetPF2PATScalarAncestor[jetIndex2]  	: false};
-            const bool matchedPhoton1 {validPhoton1 ? event.genPhoPF2PATScalarAncestor[photonIndex1] : false}, matchedPhoton2 {validPhoton2 ? event.genPhoPF2PATScalarAncestor[photonIndex2] : false};
+//            const bool matchedPhoton1 {validPhoton1 ? event.genPhoPF2PATScalarAncestor[photonIndex1] : false}, matchedPhoton2 {validPhoton2 ? event.genPhoPF2PATScalarAncestor[photonIndex2] : false};
 
             const float chsDeltaR { float (event.chsPairVec.first.DeltaR(event.chsPairVec.second)) };
 
-            const bool leadingGen    { (matchedEle1 || matchedMuon1 || matchedJet1 || matchedPhoton1) };
-            const bool subleadingGen { (matchedEle2 || matchedMuon2 || matchedJet2 || matchedPhoton2) };
+            const bool leadingGen    { (matchedEle1 || matchedMuon1 || matchedJet1 /*|| matchedPhoton1*/) };
+            const bool subleadingGen { (matchedEle2 || matchedMuon2 || matchedJet2 /*|| matchedPhoton2*/) };
 
             const TLorentzVector leptonicScalarVec {event.zPairLeptons.first + event.zPairLeptons.second}, hadronicScalarVec {event.chsPairVec.first + event.chsPairVec.second};
             const TLorentzVector refittedLeptonicScalarVec {event.zPairLeptonsRefitted.first + event.zPairLeptonsRefitted.second};
@@ -1423,6 +1443,9 @@ int main(int argc, char* argv[]) {
 
     h_genDiscalarDeltaR_mumu_pipi->Write();
     h_genDiscalarDeltaR_mumu_kaonkaon->Write();
+
+    h_genScalarMassRatio->Write();
+    h_genScalarMass2D->Write();
 
     h_numLooseMuons->Write();
     h_numRecoScalarMuons->Write();

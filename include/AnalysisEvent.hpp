@@ -41,14 +41,14 @@ class AnalysisEvent
     Int_t elePF2PATCutIdLoose[NELECTRONSMAX];
     Int_t elePF2PATCutIdMedium[NELECTRONSMAX];
     Int_t elePF2PATCutIdTight[NELECTRONSMAX];
-/*    Int_t elePF2PATMvaIdWp80[NELECTRONSMAX];
+    Int_t elePF2PATMvaIdWp80[NELECTRONSMAX];
     Int_t elePF2PATMvaIdWp90[NELECTRONSMAX];
     Int_t elePF2PATMvaIdWpLoose[NELECTRONSMAX];
-    Int_t elePF2PATMvaIdWpHzz[NELECTRONSMAX];
+/*    Int_t elePF2PATMvaIdWpHzz[NELECTRONSMAX];
     Int_t elePF2PATMvaIdNoIsoWp80[NELECTRONSMAX];
     Int_t elePF2PATMvaIdNoIsoWp90[NELECTRONSMAX];
     Int_t elePF2PATMvaIdNoIsoWpLoose[NELECTRONSMAX];*/
-    Int_t elePF2PATImpactTransDist[NELECTRONSMAX];
+    Float_t elePF2PATImpactTransDist[NELECTRONSMAX];
     Float_t elePF2PATImpactTransError[NELECTRONSMAX];
     Float_t elePF2PATImpactTransSignificance[NELECTRONSMAX];
     Float_t elePF2PATImpact3DDist[NELECTRONSMAX];
@@ -196,6 +196,12 @@ class AnalysisEvent
     Int_t muonPF2PATTkLysWithMeasurements[NMUONSMAX];
     Int_t muonPF2PATVldPixHits[NMUONSMAX];
     Int_t muonPF2PATMatchedStations[NMUONSMAX];
+    Float_t muonPF2PATImpactTransDist[NMUONSMAX];
+    Float_t muonPF2PATImpactTransError[NMUONSMAX];
+    Float_t muonPF2PATImpactTransSignificance[NMUONSMAX];
+    Float_t muonPF2PATImpact3DDist[NMUONSMAX];
+    Float_t muonPF2PATImpact3DError[NMUONSMAX];
+    Float_t muonPF2PATImpact3DSignificance[NMUONSMAX];
     Float_t muonPF2PATGlbTkNormChi2[NMUONSMAX];
     Float_t muonPF2PATInnerTkNormChi2[NMUONSMAX];	
     Float_t muonPF2PATValidFraction[NMUONSMAX];
@@ -377,7 +383,7 @@ class AnalysisEvent
     Float_t tauPF2PATPhi[NTAUSMAX];
     Float_t tauPF2PATEta[NTAUSMAX];
 */
-
+/*
     static constexpr size_t NPHOTONSMAX{30};
     Int_t numPhoPF2PAT;
     Float_t phoPF2PATE[NPHOTONSMAX];
@@ -439,7 +445,7 @@ class AnalysisEvent
     Int_t genPhoPF2PATIsJet[NPHOTONSMAX];
     Int_t genPhoPF2PATScalarAncestor[NPHOTONSMAX];
     Int_t genPhoPF2PATDirectScalarAncestor[NPHOTONSMAX];
-
+*/
 /*
     static constexpr size_t NOOTPHOTONSMAX{30};
     Int_t numPhoOOT_PF2PAT;
@@ -579,6 +585,12 @@ class AnalysisEvent
 //    Int_t packedCandsPseudoTrkStripLayersWithMeasurement[NPACKEDCANDSMAX];
 //    Int_t packedCandsPseudoTrkTrackerLayersWithMeasurement[NPACKEDCANDSMAX];
     Int_t packedCandsHighPurityTrack[NPACKEDCANDSMAX];
+    Float_t packedCandsTrkImpactTransDist[NPACKEDCANDSMAX];
+    Float_t packedCandsTrkImpactTransError[NPACKEDCANDSMAX];
+    Float_t packedCandsTrkImpactTransSignificance[NPACKEDCANDSMAX];
+    Float_t packedCandsTrkImpact3DDist[NPACKEDCANDSMAX];
+    Float_t packedCandsTrkImpact3DError[NPACKEDCANDSMAX];
+    Float_t packedCandsTrkImpact3DSignificance[NPACKEDCANDSMAX];
 
     static constexpr size_t NCHSTKPAIRMAX{350};
     Int_t   numChsTrackPairs;
@@ -962,10 +974,10 @@ class AnalysisEvent
     TBranch* b_elePF2PATCutIdLoose; //!
     TBranch* b_elePF2PATCutIdMedium; //!
     TBranch* b_elePF2PATCutIdTight; //!
-/*    TBranch* b_elePF2PATMvaIdWp80;
+    TBranch* b_elePF2PATMvaIdWp80;
     TBranch* b_elePF2PATMvaIdWp90; //!
     TBranch* b_elePF2PATMvaIdWpLoose; //!
-    TBranch* b_elePF2PATMvaIdWpHzz; //!
+/*    TBranch* b_elePF2PATMvaIdWpHzz; //!
     TBranch* b_elePF2PATMvaIdNoIsoWp80; //!
     TBranch* b_elePF2PATMvaIdNoIsoWp90; //!
     TBranch* b_elePF2PATMvaIdNoIsoWpLoose; //!*/
@@ -1115,6 +1127,12 @@ class AnalysisEvent
     TBranch* b_muonPF2PATTkLysWithMeasurements; //!
     TBranch* b_muonPF2PATVldPixHits; //!
     TBranch* b_muonPF2PATMatchedStations; //!
+    TBranch* b_muonPF2PATImpactTransDist; //!
+    TBranch* b_muonPF2PATImpactTransError; //!
+    TBranch* b_muonPF2PATImpactTransSignificance; //!
+    TBranch* b_muonPF2PATImpact3DDist; //!
+    TBranch* b_muonPF2PATImpact3DError; //!
+    TBranch* b_muonPF2PATImpact3DSignificance; //!
     TBranch* b_muonPF2PATGlbTkNormChi2; //!
     TBranch* b_muonPF2PATInnerTkNormChi2; //!	
     TBranch* b_muonPF2PATValidFraction; //!
@@ -1290,6 +1308,7 @@ class AnalysisEvent
     TBranch* b_tauPF2PATPhi; //!
     TBranch* b_tauPF2PATEta; //!
 */
+/*
     TBranch* b_numPhoPF2PAT; //!
     TBranch* b_phoPF2PATE; //!
     TBranch* b_phoPF2PATSigmaE; //!
@@ -1350,7 +1369,7 @@ class AnalysisEvent
     TBranch* b_genPhoPF2PATIsJet; //!
     TBranch* b_genPhoPF2PATScalarAncestor; //!
     TBranch* b_genPhoPF2PATDirectScalarAncestor; //!
-
+*/
 /*
     TBranch* b_numPhoOOT_PF2PAT; //!
     TBranch* b_phoOOT_PF2PATE; //!
@@ -1537,6 +1556,13 @@ class AnalysisEvent
     TBranch* b_chsTkPairTk2Ndof; //!
     TBranch* b_chsTkPairTkVtxDcaPreFit; //!
     TBranch* b_packedCandsHighPurityTrack; //!
+    TBranch* b_packedCandsTrkImpactTransDist; //!
+    TBranch* b_packedCandsTrkImpactTransError; //!
+    TBranch* b_packedCandsTrkImpactTransSignificance; //!
+    TBranch* b_packedCandsTrkImpact3DDist; //!
+    TBranch* b_packedCandsTrkImpact3DError; //!
+    TBranch* b_packedCandsTrkImpact3DSignificance; //!
+
     TBranch* b_isElePlusJets; //!
     TBranch* b_genPDFScale; //!
     TBranch* b_genPDFx1; //!
@@ -1948,10 +1974,10 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
    fChain->SetBranchAddress("elePF2PATCutIdLoose", elePF2PATCutIdLoose, &b_elePF2PATCutIdLoose);
    fChain->SetBranchAddress("elePF2PATCutIdMedium", elePF2PATCutIdMedium, &b_elePF2PATCutIdMedium);
    fChain->SetBranchAddress("elePF2PATCutIdTight", elePF2PATCutIdTight, &b_elePF2PATCutIdTight);
-/*   fChain->SetBranchAddress("elePF2PATMvaIdWp80", elePF2PATMvaIdWp80, &b_elePF2PATMvaIdWp80);
+   fChain->SetBranchAddress("elePF2PATMvaIdWp80", elePF2PATMvaIdWp80, &b_elePF2PATMvaIdWp80);
    fChain->SetBranchAddress("elePF2PATMvaIdWp90", elePF2PATMvaIdWp90, &b_elePF2PATMvaIdWp90);
    fChain->SetBranchAddress("elePF2PATMvaIdWpLoose", elePF2PATMvaIdWpLoose, &b_elePF2PATMvaIdWpLoose);
-   fChain->SetBranchAddress("elePF2PATMvaIdWpHzz", elePF2PATMvaIdWpHzz, &b_elePF2PATMvaIdWpHzz);
+/*   fChain->SetBranchAddress("elePF2PATMvaIdWpHzz", elePF2PATMvaIdWpHzz, &b_elePF2PATMvaIdWpHzz);
    fChain->SetBranchAddress("elePF2PATMvaIdNoIsoWp80", elePF2PATMvaIdNoIsoWp80, &b_elePF2PATMvaIdNoIsoWp80);
    fChain->SetBranchAddress("elePF2PATMvaIdNoIsoWp90", elePF2PATMvaIdNoIsoWp90, &b_elePF2PATMvaIdNoIsoWp90);
    fChain->SetBranchAddress("elePF2PATMvaIdNoIsoWpLoose", elePF2PATMvaIdNoIsoWpLoose, &b_elePF2PATMvaIdNoIsoWpLoose);*/
@@ -2117,6 +2143,12 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
    fChain->SetBranchAddress("muonPF2PATDZPVError", muonPF2PATDZPVError, &b_muonPF2PATDZPVError);
    fChain->SetBranchAddress("muonPF2PATVldPixHits", muonPF2PATVldPixHits, &b_muonPF2PATVldPixHits);
    fChain->SetBranchAddress("muonPF2PATMatchedStations", muonPF2PATMatchedStations, &b_muonPF2PATMatchedStations);
+   fChain->SetBranchAddress("muonPF2PATImpactTransDist", muonPF2PATImpactTransDist, &b_muonPF2PATImpactTransDist);
+   fChain->SetBranchAddress("muonPF2PATImpactTransError", muonPF2PATImpactTransError, &b_muonPF2PATImpactTransError);
+   fChain->SetBranchAddress("muonPF2PATImpactTransSignificance", muonPF2PATImpactTransSignificance, &b_muonPF2PATImpactTransSignificance);
+   fChain->SetBranchAddress("muonPF2PATImpact3DDist", muonPF2PATImpact3DDist, &b_muonPF2PATImpact3DDist);
+   fChain->SetBranchAddress("muonPF2PATImpact3DError", muonPF2PATImpact3DError, &b_muonPF2PATImpact3DError);
+   fChain->SetBranchAddress("muonPF2PATImpact3DSignificance", muonPF2PATImpact3DSignificance, &b_muonPF2PATImpact3DSignificance);
    fChain->SetBranchAddress("muonPF2PATNumSourceCandidates", muonPF2PATNumSourceCandidates, &b_muonPF2PATNumSourceCandidates);
    fChain->SetBranchAddress("muonPF2PATPackedCandIndex", muonPF2PATPackedCandIndex, &b_muonPF2PATPackedCandIndex);
    if (isMC)
@@ -2302,6 +2334,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
    fChain->SetBranchAddress("tauPF2PATPhi", tauPF2PATPhi, &b_tauPF2PATPhi);
    fChain->SetBranchAddress("tauPF2PATEta", tauPF2PATEta, &b_tauPF2PATEta);
 */
+/*
    fChain->SetBranchAddress("numPhoPF2PAT", &numPhoPF2PAT, &b_numPhoPF2PAT);
    fChain->SetBranchAddress("phoPF2PATE", phoPF2PATE, &b_phoPF2PATE);
    fChain->SetBranchAddress("phoPF2PATSigmaE", phoPF2PATSigmaE, &b_phoPF2PATSigmaE);
@@ -2364,7 +2397,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
       fChain->SetBranchAddress("genPhoPF2PATScalarAncestor", genPhoPF2PATScalarAncestor, &b_genPhoPF2PATScalarAncestor);
       fChain->SetBranchAddress("genPhoPF2PATDirectScalarAncestor", genPhoPF2PATDirectScalarAncestor, &b_genPhoPF2PATDirectScalarAncestor);
    }
-
+*/
 /*
    fChain->SetBranchAddress("numPhoOOT_PF2PAT", &numPhoOOT_PF2PAT, &b_numPhoOOT_PF2PAT);
    fChain->SetBranchAddress("phoOOT_PF2PATE", phoOOT_PF2PATE, &b_phoOOT_PF2PATE);
@@ -2503,6 +2536,12 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
 //   fChain->SetBranchAddress("packedCandsPseudoTrkStripLayersWithMeasurement", packedCandsPseudoTrkStripLayersWithMeasurement, &b_packedCandsPseudoTrkStripLayersWithMeasurement);
 //   fChain->SetBranchAddress("packedCandsPseudoTrkTrackerLayersWithMeasurement", packedCandsPseudoTrkTrackerLayersWithMeasurement, &b_packedCandsPseudoTrkTrackerLayersWithMeasurement);
    fChain->SetBranchAddress("packedCandsHighPurityTrack", packedCandsHighPurityTrack, &b_packedCandsHighPurityTrack);
+   fChain->SetBranchAddress("packedCandsTrkImpactTransDist", packedCandsTrkImpactTransDist, &b_packedCandsTrkImpactTransDist);
+   fChain->SetBranchAddress("packedCandsTrkImpactTransError", packedCandsTrkImpactTransError, &b_packedCandsTrkImpactTransError);
+   fChain->SetBranchAddress("packedCandsTrkImpactTransSignificance", packedCandsTrkImpactTransSignificance, &b_packedCandsTrkImpactTransSignificance);
+   fChain->SetBranchAddress("packedCandsTrkImpact3DDist", packedCandsTrkImpact3DDist, &b_packedCandsTrkImpact3DDist);
+   fChain->SetBranchAddress("packedCandsTrkImpact3DError", packedCandsTrkImpact3DError, &b_packedCandsTrkImpact3DError);
+   fChain->SetBranchAddress("packedCandsTrkImpact3DSignificance", packedCandsTrkImpact3DSignificance, &b_packedCandsTrkImpact3DSignificance);
    fChain->SetBranchAddress("numChsTrackPairs", &numChsTrackPairs, &b_numChsTrackPairs);	
    fChain->SetBranchAddress("chsTkPairIndex1", chsTkPairIndex1, &b_chsTkPairIndex1); 	
    fChain->SetBranchAddress("chsTkPairIndex2", chsTkPairIndex2, &b_chsTkPairIndex2);	
