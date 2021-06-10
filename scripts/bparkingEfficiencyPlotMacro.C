@@ -14,11 +14,11 @@
 
 void bparkingEfficiencyPlotMacro() {
 
-    TFile* inFile0  =  new TFile ("plots/bparkingDistributions/output_HtoSS_MS2_ctau0.root");
-    TFile* inFile1  =  new TFile ("plots/bparkingDistributions/output_HtoSS_MS2_ctau1.root");
-    TFile* inFile2  =  new TFile ("plots/bparkingDistributions/output_HtoSS_MS2_ctau10.root");
-    TFile* inFile3  =  new TFile ("plots/bparkingDistributions/output_HtoSS_MS2_ctau100.root");
-    TFile* inFile4  =  new TFile ("plots/bparkingDistributions/output_HtoSS_MS2_ctau1000.root");
+    TFile* inFile0  =  new TFile ("plots/bparkingDistributionsMu12IP6/output_HtoSS_MS2_ctau0.root");
+    TFile* inFile1  =  new TFile ("plots/bparkingDistributionsMu12IP6/output_HtoSS_MS2_ctau1.root");
+    TFile* inFile2  =  new TFile ("plots/bparkingDistributionsMu12IP6/output_HtoSS_MS2_ctau10.root");
+    TFile* inFile3  =  new TFile ("plots/bparkingDistributionsMu12IP6/output_HtoSS_MS2_ctau100.root");
+    TFile* inFile4  =  new TFile ("plots/bparkingDistributionsMu12IP6/output_HtoSS_MS2_ctau1000.root");
 
     // pT
 
@@ -457,5 +457,222 @@ void bparkingEfficiencyPlotMacro() {
     Cavnas_bParkingTrigMass->cd();
     Cavnas_bParkingTrigMass->SetSelected(Cavnas_bParkingTrigMass);
     Cavnas_bParkingTrigMass->SaveAs( "bParkingTrig_mass_eff.pdf" );
+
+    // Impact Trans Sig
+
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonImpactTransSig");
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonImpactTransSig");
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonImpactTransSig");
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonImpactTransSig");
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonImpactTransSig");
+
+    TCanvas *Cavnas_bParkingTrigImpactTransSig = new TCanvas("Cavnas_bParkingTrigImpactTransSig", "Cavnas_bParkingTrigImpactTransSig",0,0,1280,925);
+    gStyle->SetOptStat(0);
+    Cavnas_bParkingTrigImpactTransSig->Range(-0.4860759,-0.2025316,2.551899,1.063291);
+    Cavnas_bParkingTrigImpactTransSig->SetFillColor(0);
+    Cavnas_bParkingTrigImpactTransSig->SetBorderMode(0);
+    Cavnas_bParkingTrigImpactTransSig->SetBorderSize(2);
+    Cavnas_bParkingTrigImpactTransSig->SetLeftMargin(0.15);
+    Cavnas_bParkingTrigImpactTransSig->SetRightMargin(0.05);
+    Cavnas_bParkingTrigImpactTransSig->SetTopMargin(0.05);
+    Cavnas_bParkingTrigImpactTransSig->SetBottomMargin(0.15);
+    Cavnas_bParkingTrigImpactTransSig->SetGridy();
+    Cavnas_bParkingTrigImpactTransSig->SetTickx(1);
+    Cavnas_bParkingTrigImpactTransSig->SetTicky(1);
+    Cavnas_bParkingTrigImpactTransSig->SetFrameBorderMode(0);
+    Cavnas_bParkingTrigImpactTransSig->cd();
+
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->SetTitle("");
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetXaxis()->SetLabelFont(42);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetXaxis()->SetLabelSize(0.05);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetXaxis()->SetTitleSize(0.05);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetXaxis()->SetTitleOffset(1.3);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetXaxis()->SetTitleFont(42);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetYaxis()->SetTitle("trigger efficiency");
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetYaxis()->SetLabelFont(42);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetYaxis()->SetLabelSize(0.035);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetYaxis()->SetTitleSize(0.035);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetYaxis()->SetTitleOffset(0);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetYaxis()->SetTitleFont(42);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetYaxis()->SetNdivisions(510);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->SetLineColor(9);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->SetMarkerColor(9);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->SetMarkerStyle(26);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->SetMarkerSize(1);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->Draw("HIST p");
+
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1->SetLineColor(8);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1->SetMarkerColor(8);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1->SetMarkerStyle(4);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1->SetMarkerSize(1);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1->Draw("HIST p same");
+
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau10->SetLineColor(2);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau10->SetMarkerColor(2);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau10->SetMarkerStyle(5);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau10->SetMarkerSize(1);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau10->Draw("HIST p same");
+
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau100->SetLineColor(1);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau100->SetMarkerColor(1);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau100->SetMarkerStyle(2);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau100->SetMarkerSize(1);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau100->Draw("HIST p same");
+
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1000->SetLineColor(4);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1000->SetMarkerColor(4);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1000->SetMarkerStyle(3);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1000->SetMarkerSize(1);
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1000->Draw("HIST p same");
+
+    TLegend *leg_bParkingTrigImpactTransSig = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
+    leg_bParkingTrigImpactTransSig->SetBorderSize(0);
+    leg_bParkingTrigImpactTransSig->SetTextSize(0.03);
+    leg_bParkingTrigImpactTransSig->SetLineColor(1);
+    leg_bParkingTrigImpactTransSig->SetLineStyle(1);
+    leg_bParkingTrigImpactTransSig->SetLineWidth(1);
+    leg_bParkingTrigImpactTransSig->SetFillColor(0);
+    leg_bParkingTrigImpactTransSig->SetFillStyle(1001);
+    TLegendEntry *entry_bParkingTrigImpactTransSig = leg_bParkingTrigImpactTransSig->AddEntry("ms2_ctau0", "c_{#tau} = 0 mm", "P");
+    entry_bParkingTrigImpactTransSig->SetMarkerColor(9);
+    entry_bParkingTrigImpactTransSig->SetMarkerStyle(26);
+    entry_bParkingTrigImpactTransSig->SetMarkerSize(2);
+    entry_bParkingTrigImpactTransSig->SetTextFont(42);
+    entry_bParkingTrigImpactTransSig = leg_bParkingTrigImpactTransSig->AddEntry("ms2_ctau1", "c_{#tau} = 1 mm", "P");
+    entry_bParkingTrigImpactTransSig->SetMarkerColor(8);
+    entry_bParkingTrigImpactTransSig->SetMarkerStyle(4);
+    entry_bParkingTrigImpactTransSig->SetMarkerSize(2);
+    entry_bParkingTrigImpactTransSig->SetTextFont(42);
+    entry_bParkingTrigImpactTransSig = leg_bParkingTrigImpactTransSig->AddEntry("ms2_ctau10", "c_{#tau} = 10 mm", "P");
+    entry_bParkingTrigImpactTransSig->SetMarkerColor(2);
+    entry_bParkingTrigImpactTransSig->SetMarkerStyle(5);
+    entry_bParkingTrigImpactTransSig->SetMarkerSize(2);
+    entry_bParkingTrigImpactTransSig->SetTextFont(42);
+    entry_bParkingTrigImpactTransSig = leg_bParkingTrigImpactTransSig->AddEntry("ms2_ctau100", "c_{#tau} = 100 mm", "P");
+    entry_bParkingTrigImpactTransSig->SetMarkerColor(1);
+    entry_bParkingTrigImpactTransSig->SetMarkerStyle(2);
+    entry_bParkingTrigImpactTransSig->SetMarkerSize(2);
+    entry_bParkingTrigImpactTransSig->SetTextFont(42);
+    entry_bParkingTrigImpactTransSig = leg_bParkingTrigImpactTransSig->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+    entry_bParkingTrigImpactTransSig->SetMarkerColor(4);
+    entry_bParkingTrigImpactTransSig->SetMarkerStyle(3);
+    entry_bParkingTrigImpactTransSig->SetMarkerSize(2);
+    entry_bParkingTrigImpactTransSig->SetTextFont(42);
+    leg_bParkingTrigImpactTransSig->Draw("HIST");
+
+    Cavnas_bParkingTrigImpactTransSig->Modified();
+    Cavnas_bParkingTrigImpactTransSig->cd();
+    Cavnas_bParkingTrigImpactTransSig->SetSelected(Cavnas_bParkingTrigImpactTransSig);
+    Cavnas_bParkingTrigImpactTransSig->SaveAs( "bParkingTrig_ImpactTransSig_eff.pdf" );
+
+    // Impact 3D Sig
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonImpact3DSig");
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonImpact3DSig");
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonImpact3DSig");
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonImpact3DSig");
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonImpact3DSig");
+
+    TCanvas *Cavnas_bParkingTrigImpact3DSig = new TCanvas("Cavnas_bParkingTrigImpact3DSig", "Cavnas_bParkingTrigImpact3DSig",0,0,1280,925);
+    gStyle->SetOptStat(0);
+    Cavnas_bParkingTrigImpact3DSig->Range(-0.4860759,-0.2025316,2.551899,1.063291);
+    Cavnas_bParkingTrigImpact3DSig->SetFillColor(0);
+    Cavnas_bParkingTrigImpact3DSig->SetBorderMode(0);
+    Cavnas_bParkingTrigImpact3DSig->SetBorderSize(2);
+    Cavnas_bParkingTrigImpact3DSig->SetLeftMargin(0.15);
+    Cavnas_bParkingTrigImpact3DSig->SetRightMargin(0.05);
+    Cavnas_bParkingTrigImpact3DSig->SetTopMargin(0.05);
+    Cavnas_bParkingTrigImpact3DSig->SetBottomMargin(0.15);
+    Cavnas_bParkingTrigImpact3DSig->SetGridy();
+    Cavnas_bParkingTrigImpact3DSig->SetTickx(1);
+    Cavnas_bParkingTrigImpact3DSig->SetTicky(1);
+    Cavnas_bParkingTrigImpact3DSig->SetFrameBorderMode(0);
+    Cavnas_bParkingTrigImpact3DSig->cd();
+
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->SetTitle("");
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetLabelFont(42);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetLabelSize(0.05);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetTitleSize(0.05);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetTitleOffset(1.3);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetTitleFont(42);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetYaxis()->SetTitle("trigger efficiency");
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetYaxis()->SetLabelFont(42);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetYaxis()->SetLabelSize(0.035);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetYaxis()->SetTitleSize(0.035);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetYaxis()->SetTitleOffset(0);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetYaxis()->SetTitleFont(42);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetYaxis()->SetNdivisions(510);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->SetLineColor(9);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->SetMarkerColor(9);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->SetMarkerStyle(26);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->SetMarkerSize(1);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->Draw("HIST p");
+
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau1->SetLineColor(8);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau1->SetMarkerColor(8);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau1->SetMarkerStyle(4);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau1->SetMarkerSize(1);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau1->Draw("HIST p same");
+
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau10->SetLineColor(2);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau10->SetMarkerColor(2);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau10->SetMarkerStyle(5);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau10->SetMarkerSize(1);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau10->Draw("HIST p same");
+
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau100->SetLineColor(1);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau100->SetMarkerColor(1);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau100->SetMarkerStyle(2);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau100->SetMarkerSize(1);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau100->Draw("HIST p same");
+
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau1000->SetLineColor(4);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau1000->SetMarkerColor(4);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau1000->SetMarkerStyle(3);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau1000->SetMarkerSize(1);
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau1000->Draw("HIST p same");
+
+    TLegend *leg_bParkingTrigImpact3DSig = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
+    leg_bParkingTrigImpact3DSig->SetBorderSize(0);
+    leg_bParkingTrigImpact3DSig->SetTextSize(0.03);
+    leg_bParkingTrigImpact3DSig->SetLineColor(1);
+    leg_bParkingTrigImpact3DSig->SetLineStyle(1);
+    leg_bParkingTrigImpact3DSig->SetLineWidth(1);
+    leg_bParkingTrigImpact3DSig->SetFillColor(0);
+    leg_bParkingTrigImpact3DSig->SetFillStyle(1001);
+    TLegendEntry *entry_bParkingTrigImpact3DSig = leg_bParkingTrigImpact3DSig->AddEntry("ms2_ctau0", "c_{#tau} = 0 mm", "P");
+    entry_bParkingTrigImpact3DSig->SetMarkerColor(9);
+    entry_bParkingTrigImpact3DSig->SetMarkerStyle(26);
+    entry_bParkingTrigImpact3DSig->SetMarkerSize(2);
+    entry_bParkingTrigImpact3DSig->SetTextFont(42);
+    entry_bParkingTrigImpact3DSig = leg_bParkingTrigImpact3DSig->AddEntry("ms2_ctau1", "c_{#tau} = 1 mm", "P");
+    entry_bParkingTrigImpact3DSig->SetMarkerColor(8);
+    entry_bParkingTrigImpact3DSig->SetMarkerStyle(4);
+    entry_bParkingTrigImpact3DSig->SetMarkerSize(2);
+    entry_bParkingTrigImpact3DSig->SetTextFont(42);
+    entry_bParkingTrigImpact3DSig = leg_bParkingTrigImpact3DSig->AddEntry("ms2_ctau10", "c_{#tau} = 10 mm", "P");
+    entry_bParkingTrigImpact3DSig->SetMarkerColor(2);
+    entry_bParkingTrigImpact3DSig->SetMarkerStyle(5);
+    entry_bParkingTrigImpact3DSig->SetMarkerSize(2);
+    entry_bParkingTrigImpact3DSig->SetTextFont(42);
+    entry_bParkingTrigImpact3DSig = leg_bParkingTrigImpact3DSig->AddEntry("ms2_ctau100", "c_{#tau} = 100 mm", "P");
+    entry_bParkingTrigImpact3DSig->SetMarkerColor(1);
+    entry_bParkingTrigImpact3DSig->SetMarkerStyle(2);
+    entry_bParkingTrigImpact3DSig->SetMarkerSize(2);
+    entry_bParkingTrigImpact3DSig->SetTextFont(42);
+    entry_bParkingTrigImpact3DSig = leg_bParkingTrigImpact3DSig->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+    entry_bParkingTrigImpact3DSig->SetMarkerColor(4);
+    entry_bParkingTrigImpact3DSig->SetMarkerStyle(3);
+    entry_bParkingTrigImpact3DSig->SetMarkerSize(2);
+    entry_bParkingTrigImpact3DSig->SetTextFont(42);
+    leg_bParkingTrigImpact3DSig->Draw("HIST");
+
+    Cavnas_bParkingTrigImpact3DSig->Modified();
+    Cavnas_bParkingTrigImpact3DSig->cd();
+    Cavnas_bParkingTrigImpact3DSig->SetSelected(Cavnas_bParkingTrigImpact3DSig);
+    Cavnas_bParkingTrigImpact3DSig->SaveAs( "bParkingTrig_Impact3DSig_eff.pdf" );
 
 }
