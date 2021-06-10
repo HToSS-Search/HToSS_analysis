@@ -460,11 +460,11 @@ void bparkingEfficiencyPlotMacro() {
 
     // Impact Trans Sig
 
-    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonImpactTransSig");
-    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonImpactTransSig");
-    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonImpactTransSig");
-    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonImpactTransSig");
-    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonImpactTransSig");
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonImpactTransSig_bParkingTrig");
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonImpactTransSig_bParkingTrig");
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonImpactTransSig_bParkingTrig");
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonImpactTransSig_bParkingTrig");
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonImpactTransSig_bParkingTrig");
 
     TCanvas *Cavnas_bParkingTrigImpactTransSig = new TCanvas("Cavnas_bParkingTrigImpactTransSig", "Cavnas_bParkingTrigImpactTransSig",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -568,11 +568,11 @@ void bparkingEfficiencyPlotMacro() {
     Cavnas_bParkingTrigImpactTransSig->SaveAs( "bParkingTrig_ImpactTransSig_eff.pdf" );
 
     // Impact 3D Sig
-    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonImpact3DSig");
-    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonImpact3DSig");
-    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonImpact3DSig");
-    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonImpact3DSig");
-    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonImpact3DSig");
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonImpact3DSig_bParkingTrig");
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonImpact3DSig_bParkingTrig");
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonImpact3DSig_bParkingTrig");
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonImpact3DSig_bParkingTrig");
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonImpact3DSig_bParkingTrig");
 
     TCanvas *Cavnas_bParkingTrigImpact3DSig = new TCanvas("Cavnas_bParkingTrigImpact3DSig", "Cavnas_bParkingTrigImpact3DSig",0,0,1280,925);
     gStyle->SetOptStat(0);
