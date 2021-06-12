@@ -233,21 +233,21 @@ void SimpleAnalysis::runMainAnalysis() {
     } // End loop over all events
 
     Float_t Nbg;
-    Nbg=exp((log(Nbg1)+log(Nbg2))*6/34);
-    std::cout<<"Number of expected background events "<<Nbg<<std::endl;
-    
-    std::cout<<"Number of observed events "<<Obs<<std::endl;
+    Nbg=(Nbg1+Nbg2)*6/34;
+    std::cout<<"Number of expected background events for QCD "<<Nbg<<std::endl;
+    std::cout<<"Number of observed events (data) "<<Obs<<std::endl;
+    std::cout<<"   "<<std::endl;
     std::cout<<"Rate of signal events "<<rate_signal<<std::endl;
     std::cout<<"Rate of QCD events "<<rate_QCD<<std::endl;
     std::cout<<"Uncertainty on signal events "<<stat_signal<<std::endl;
     std::cout<<"Uncertainty on QCD events "<<stat_QCD<<std::endl;
 	  
-    Float_t corr_QCD_scalar;
+    /*Float_t corr_QCD_scalar;
     corr_QCD_scalar=QCD_scalar/QCD_20scalar;
     Float_t corr_QCD_Pantiscalar;
     corr_QCD_Pantiscalar=QCD_Pantiscalar/QCD_20Pantiscalar;
     Float_t corr_QCD_Kantiscalar;
-    corr_QCD_Kantiscalar=QCD_Kantiscalar/QCD_20Kantiscalar;
+    corr_QCD_Kantiscalar=QCD_Kantiscalar/QCD_20Kantiscalar;*/
 	  
   } // End loop over all datatsets
 
@@ -1116,7 +1116,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
          // h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(scalarLVec), eventWeight);
          // h_Pinvmass->Fill(Phadroninv,muoninv, eventWeight);
 	h_PhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
-	Obs+=eventWeight;
+	Obs+=1;
 	rate_signal+=eventWeight;
 	rate_QCD+=eventWeight;
 	stat_signal+=1;
@@ -1135,7 +1135,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
     if((Pantiscalar+scalarLVec).M()>105 && (Pantiscalar+scalarLVec).M()<122){
       if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
-        Nbg1+=eventWeight;
+        Nbg1+=1;//eventWeight;
       }
     }
   }
@@ -1143,7 +1143,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
     if((Pantiscalar+scalarLVec).M()>128 && (Pantiscalar+scalarLVec).M()<145){
       if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
-        Nbg2+=eventWeight;
+        Nbg2+=1;//eventWeight;
       }
     }
   }	
