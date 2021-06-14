@@ -4,12 +4,12 @@ All @ 95% CL
 
 0 mm
 
-Observed limit: 
-Expected (median) limit: 
-Upper 1 sigma band: 
-Lower 1 sigma band: 
-Upper 2 sigma band: 
-Lower 2 sigma band: 
+Observed limit: r < 0.205052 +/- 0.00161921
+Expected (median) limit:  r < 0.193832 +/- 0.00157376
+Upper 1 sigma band: r < 0.253661 +/- 0.00143675
+Lower 1 sigma band: r < 0.152012 +/- 0.00191164
+Upper 2 sigma band: r < 0.33131 +/- 0.00127077
+Lower 2 sigma band: r < 0.122142 +/- 0.00210982
 
 -- 1 GeV --
 
