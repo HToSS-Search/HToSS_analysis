@@ -2,7 +2,7 @@ All @ 95% CL
 
 -- 2 GeV -- 
 
-0 mm: ok
+0 mm
 
 Observed limit: r < 0.0451856 +/- 0.00876595
 Expected (median) limit: r < 0.0439718 +/- 0.00661263
@@ -13,7 +13,7 @@ Lower 2 sigma band: r < 0.0301499 +/- 0.000499847
 
 -- 2 GeV --
 
-1 mm: ok
+1 mm
 
 Observed limit:  r < 0.0626194 +/- 0.00868539
 Expected (median) limit: r < 0.0595035 +/- 0.000678093
@@ -24,7 +24,7 @@ Lower 2 sigma band: r < 0.0381061 +/- 0.000618866
 
 -- 2 GeV --
 
-10 mm: ok
+10 mm
 
 Observed limit:  r < 0.666122 +/- 0.00470596 
 Expected (median) limit: r < 0.598097 +/- 0.016964
@@ -35,7 +35,7 @@ Lower 2 sigma band: r < 0.430393 +/- 0.00469872
 
 -- 2 GeV --
 
-100 mm: ok
+100 mm
 
 Observed limit:  r < 51.0228 +/- 2.31597
 Expected (median) limit: r < 47.5716 +/- 0.592594
