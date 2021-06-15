@@ -483,7 +483,7 @@ void bparkingEfficiencyPlotMacro() {
     Cavnas_bParkingTrigImpactTransSig->cd();
 
     h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->SetTitle("");
-    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
+    h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetXaxis()->SetTitle("2D Sig");
     h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetXaxis()->SetLabelFont(42);
     h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetXaxis()->SetLabelSize(0.05);
     h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0->GetXaxis()->SetTitleSize(0.05);
@@ -591,7 +591,7 @@ void bparkingEfficiencyPlotMacro() {
     Cavnas_bParkingTrigImpact3DSig->cd();
 
     h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->SetTitle("");
-    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetTitle("2D Sig");
     h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetLabelFont(42);
     h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetLabelSize(0.05);
     h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetTitleSize(0.05);
