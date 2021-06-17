@@ -131,8 +131,8 @@ void SimpleAnalysis::runMainAnalysis() {
   Float_t Nbg1=0; //sideband 105-122
   Float_t Nbg2=0; //sideband 128-145
   Float_t Obs=0; //Observation
-  Float_t rate_signal=0; Float_t rate_QCD=0;
-  Float_t stat_signal=0; Float_t stat_QCD=0;
+  Float_t rate_signal=0; 
+  Float_t stat_signal=0; 
 
   Float_t QCD_scalar=0; Float_t QCD_Pantiscalar=0; Float_t QCD_Kantiscalar=0;
   Float_t QCD_20scalar=0; Float_t QCD_20Pantiscalar=0; Float_t QCD_20Kantiscalar=0;
@@ -234,20 +234,12 @@ void SimpleAnalysis::runMainAnalysis() {
 
     Float_t Nbg;
     Nbg=(Nbg1+Nbg2)*6/34;
-    std::cout<<"Number of expected background events for QCD "<<Nbg<<std::endl;
-    std::cout<<"Number of observed events (data) "<<Obs<<std::endl;
+    std::cout<<"Background estimate: "<<Nbg<<std::endl;
+    std::cout<<"Sideband left: "<<Nbg1<<std::endl; std::cout<<"Sideband right: "<<Nbg2<<std::endl;
+    std::cout<<"Observation: "<<Obs<<std::endl;
     std::cout<<"   "<<std::endl;
-    std::cout<<"Rate of signal events "<<rate_signal<<std::endl;
-    std::cout<<"Rate of QCD events "<<rate_QCD<<std::endl;
-    std::cout<<"Uncertainty on signal events "<<stat_signal<<std::endl;
-    std::cout<<"Uncertainty on QCD events "<<stat_QCD<<std::endl;
-	  
-    /*Float_t corr_QCD_scalar;
-    corr_QCD_scalar=QCD_scalar/QCD_20scalar;
-    Float_t corr_QCD_Pantiscalar;
-    corr_QCD_Pantiscalar=QCD_Pantiscalar/QCD_20Pantiscalar;
-    Float_t corr_QCD_Kantiscalar;
-    corr_QCD_Kantiscalar=QCD_Kantiscalar/QCD_20Kantiscalar;*/
+    std::cout<<"Rate: "<<rate_signal<<std::endl;
+    std::cout<<"Statistical uncertainty: "<<stat_signal<<std::endl;
 	  
   } // End loop over all datatsets
 
@@ -1116,11 +1108,10 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
          // h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(scalarLVec), eventWeight);
          // h_Pinvmass->Fill(Phadroninv,muoninv, eventWeight);
 	h_PhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
+	      
 	Obs+=1;
 	rate_signal+=eventWeight;
-	rate_QCD+=eventWeight;
 	stat_signal+=1;
-	stat_QCD+=1;  
       }
     }
     if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
