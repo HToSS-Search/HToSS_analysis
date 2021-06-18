@@ -233,7 +233,7 @@ void SimpleAnalysis::runMainAnalysis() {
     } // End loop over all events
 
     Float_t Nbg;
-    Nbg=(Nbg1+Nbg2)*6/34;
+    Nbg=(Nbg1+Nbg2)*6/54;
     std::cout<<"Background estimate: "<<Nbg<<std::endl;
     std::cout<<"Sideband left: "<<Nbg1<<std::endl; std::cout<<"Sideband right: "<<Nbg2<<std::endl;
     std::cout<<"Observation: "<<Obs<<std::endl;
@@ -1124,7 +1124,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	
   //Background estimate
   if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
-    if((Pantiscalar+scalarLVec).M()>105 && (Pantiscalar+scalarLVec).M()<122){
+    if((Pantiscalar+scalarLVec).M()>95 && (Pantiscalar+scalarLVec).M()<122){
       if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
         Nbg1+=1;//eventWeight;
       }
@@ -1132,7 +1132,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
  
   if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
-    if((Pantiscalar+scalarLVec).M()>128 && (Pantiscalar+scalarLVec).M()<145){
+    if((Pantiscalar+scalarLVec).M()>128 && (Pantiscalar+scalarLVec).M()<155){
       if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
         Nbg2+=1;//eventWeight;
       }
