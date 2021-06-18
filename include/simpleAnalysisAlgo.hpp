@@ -58,6 +58,7 @@ class SimpleAnalysis
     double higgsMassWindow_;
     double higgsMassWideWindow_;
     double statWindow_;
+    double mass_range_;
 
     std::string config;
     std::vector<Dataset> datasets;
