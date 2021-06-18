@@ -2,7 +2,7 @@
 
  #include "TCanvas.h"
  #include "TROOT.h"
- #include "TH1F.h"
+
  #include "TLegend.h"
  #include "TLegendEntry.h"
  #include "TStyle.h"
@@ -24,11 +24,11 @@
      auto obs = new TGraphErrors(4, x1, y1, ex1, ey1);
      obs->Draw("ap");
     
-     double y2[] = {0.383998, 2, 4, 1};
+     /*double y2[] = {0.383998, 2, 4, 1};
      double ex2[] = {0., 0., 0., 0.};
      double ey2[] = {0.00417906, 0.005, 0.005, 0.005};
      auto exp = new TGraphErrors(4, x1, y2, ex2, ey2);
-     exp->Draw("ap same");
+     exp->Draw("ap same");*/
     
    
      canv1->Modified();
