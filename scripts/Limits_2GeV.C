@@ -39,7 +39,7 @@
      auto sigma1 = new TGraphErrors(3, x1, y3, ex3, ey3);
      sigma1->SetFillColor(8);
      sigma1->SetFillStyle(3001);
-     sigma1->Draw("A4");
+     sigma1->Draw("A3");
    
      /*double x[] = {0, 1, 2};
      double y[] = {0, 2, 4};
