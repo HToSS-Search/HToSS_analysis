@@ -30,7 +30,7 @@
      auto exp = new TGraphErrors(3, x1, y2, ex2, ey2);
      exp->SetMarkerColor(1); //black
      exp->SetMarkerStyle(21);
-     exp->Draw("AP");
+     exp->Draw("AP same");
     
      
      double y3[] = {0.03444700,0.04362106,0.41502756};
@@ -39,7 +39,7 @@
      auto sigma1 = new TGraphErrors(3, x1, y3, ex3, ey3);
      sigma1->SetFillColor(8);
      sigma1->SetFillStyle(3001);
-     sigma1->Draw("A3");
+     sigma1->Draw("A3 same");
    
      /*double x[] = {0, 1, 2};
      double y[] = {0, 2, 4};
