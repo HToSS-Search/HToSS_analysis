@@ -53,8 +53,8 @@
      auto exp = new TGraphErrors(3, x1, y2, ex2, ey2);
      exp->SetMarkerColor(1); //black
      exp->SetMarkerStyle(21);
+     exp->GetLineStyle(9);
      exp->SetLineColor(1); 
-     exp->SetLineStyle(9);
      exp->Draw("p same");
    
      canv1->Modified();
