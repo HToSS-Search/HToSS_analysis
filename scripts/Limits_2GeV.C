@@ -8,6 +8,7 @@
  #include "TString.h"
  #include "TLatex.h"
  #include "TPRegexp.h"
+ #include "TattLine.h"
 
   void Limits_2GeV() {  
   
@@ -53,7 +54,7 @@
      auto exp = new TGraphErrors(3, x1, y2, ex2, ey2);
      exp->SetMarkerColor(1); //black
      exp->SetMarkerStyle(21);
-     exp->GetLineStyle(9);
+     exp->SetLineStyle(9);
      exp->SetLineColor(1); 
      exp->Draw("p same");
    
