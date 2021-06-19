@@ -57,6 +57,28 @@
      exp->SetLineStyle(9);
      exp->SetLineColor(1); 
      exp->Draw("lp same");
+     
+     TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
+     legend1->SetBorderSize(1);
+     TLegendEntry *legenda = legend1->AddEntry("obs","Observed","L");
+     legenda->SetLineColor(1);
+     legenda->SetMarkerStyle(21);
+     legenda->SetMarkerColor(1);
+     legenda->SetLineStyle(9);
+     legenda->SetLineColor(1); 
+     legenda=legend1->AddEntry("exp","Expected","L");
+     legenda->SetLineColor(3);
+     legenda->SetMarkerColor(3);
+     legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("sigma1","1#sigma","F");
+     legenda->SetLineColor(6);
+     legenda->SetMarkerColor(6);
+     legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("sigma2","2#sigma","F");
+     legenda->SetLineColor(94);
+     legenda->SetMarkerColor(94);
+     legenda->SetMarkerSize(2);
+     legend1->Draw();
    
      canv1->Modified();
      canv1->cd();
