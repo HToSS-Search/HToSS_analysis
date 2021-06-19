@@ -56,7 +56,7 @@
      exp->SetMarkerStyle(21);
      exp->SetLineStyle(9);
      exp->SetLineColor(1); 
-     exp->Draw("p same");
+     exp->Draw("lp same");
    
      canv1->Modified();
      canv1->cd();
