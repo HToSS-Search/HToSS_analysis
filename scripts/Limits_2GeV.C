@@ -10,7 +10,7 @@
  #include "TLatex.h"
  #include "TPRegexp.h"
 
-  void PlotLimits_2GeV() {  
+  void Limits_2GeV() {  
   
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
@@ -60,5 +60,5 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("PlotLimits_2GeV.gif"); // .pdf and other formats work too! 
+     canv1->SaveAs("Limits_2GeV.gif"); // .pdf and other formats work too! 
   }
