@@ -23,7 +23,7 @@
      auto obs = new TGraphErrors(3, x1, y1, ex1, ey1);
      obs->SetMarkerColor(4); //blue
      obs->SetMarkerStyle(21); //square
-     obs->Draw("alp");
+     obs->Draw("alp ");
    
      //expected (median)
      double y2[] = {0.0290654, 0.0383966, 0.383998}; //value
@@ -32,7 +32,7 @@
      auto exp = new TGraphErrors(3, x1, y2, ex2, ey2);
      exp->SetMarkerColor(1); //black
      exp->SetMarkerStyle(21);
-     exp->Draw("ap");
+     exp->Draw("ap same");
      
      //2 sigma band
      double y3[] = {0.03863480, 0.04905365, 0.49274297}; 
@@ -41,7 +41,7 @@
      auto sigma2 = new TGraphErrors(3, x1, y3, ex3, ey3);
      sigma2->SetFillColor(5);
      sigma2->SetFillStyle(3001);
-     sigma2->Draw("a3");
+     sigma2->Draw("a3 same");
      
      //1 sigma band
      double y4[] = {0.03444700,0.04362106,0.41502756};
@@ -52,7 +52,7 @@
      sigma1->SetFillStyle(3001);
      sigma1->GetXaxis()->SetTitle("c#tau (mm)");
      sigma1->GetYaxis()->SetTitle("Signal strength (r)");
-     sigma1->Draw("a3");
+     sigma1->Draw("a3 same");
    
      
    
