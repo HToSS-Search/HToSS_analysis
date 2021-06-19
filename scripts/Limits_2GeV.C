@@ -61,20 +61,19 @@
      
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("obs","Observed","P");
+     TLegendEntry *legenda = legend1->AddEntry("obs","Observed","LP");
      legenda->SetMarkerStyle(21);
      legenda->SetMarkerColor(4);
-     legenda=legend1->AddEntry("exp","Expected","P");
+     legenda=legend1->AddEntry("exp","Expected","LP");
      legenda->SetMarkerStyle(21);
      legenda->SetMarkerColor(1);
+     legenda->SetLineStyle(9);
      legenda=legend1->AddEntry("sigma1","#pm 1#sigma band","F");
-     legenda->SetLineColor(8);
-     legenda->SetMarkerSize(2);
      legenda->SetFillColor(8);
+     //legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("sigma2","#pm 2#sigma band","F");
-     legenda->SetLineColor(5);
-     legenda->SetMarkerSize(2);
      legenda->SetFillColor(5);
+     //legenda->SetMarkerSize(2);
      legend1->Draw();
    
      canv1->Modified();
