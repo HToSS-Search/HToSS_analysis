@@ -59,7 +59,7 @@
      exp->SetLineColor(1); 
      exp->Draw("lp same");
      
-     TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
+     TLegend *legend1 = new TLegend(0.1,0.1,0.5,0.5);
      legend1->SetBorderSize(1);
      TLegendEntry *legenda = legend1->AddEntry("obs","Observed","LP");
      legenda->SetMarkerStyle(21);
