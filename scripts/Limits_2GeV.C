@@ -62,10 +62,8 @@
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
      TLegendEntry *legenda = legend1->AddEntry("obs","Observed","P");
-     legenda->SetLineColor(4);
      legenda->SetMarkerStyle(21);
-     legenda->SetMarkerColor(1);
-     legenda->SetLineColor(4); 
+     legenda->SetMarkerColor(4);
      legenda=legend1->AddEntry("exp","Expected","P");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
