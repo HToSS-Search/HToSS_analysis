@@ -27,7 +27,7 @@
      sigma2->SetFillStyle(3001);
      sigma2->GetXaxis()->SetTitle("c#tau (mm)");
      sigma2->GetYaxis()->SetTitle("Signal strength (r)");
-     sigma2->GetXaxis()->SetRangeUser(0,10);
+     sigma2->GetXaxis()->SetRangeUser(0,100);
      sigma2->SetTitle(" ");
      sigma2->Draw("a3");
      
