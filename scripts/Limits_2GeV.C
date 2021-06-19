@@ -71,10 +71,11 @@
      legenda=legend1->AddEntry("sigma1","#pm 1#sigma band","F");
      legenda->SetFillColor(8);
      legenda->SetFillStyle(3001);
-     //legenda->SetMarkerSize(2);
+     legenda->SetMarkerColor(8);
      legenda=legend1->AddEntry("sigma2","#pm 2#sigma band","F");
      legenda->SetFillColor(5);
      legenda->SetFillStyle(3001);
+     legenda->SetMarkerColor(5);
      legend1->Draw();
    
      canv1->Modified();
