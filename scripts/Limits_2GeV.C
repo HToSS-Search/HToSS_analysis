@@ -43,6 +43,7 @@
      auto obs = new TGraphErrors(3, x1, y1, ex1, ey1);
      obs->SetMarkerColor(4); //blue
      obs->SetMarkerStyle(21); //square
+     obs->SetLineColor(4);
      obs->Draw("lp same");
    
      //expected (median)
@@ -52,6 +53,8 @@
      auto exp = new TGraphErrors(3, x1, y2, ex2, ey2);
      exp->SetMarkerColor(1); //black
      exp->SetMarkerStyle(21);
+     exp->SetLineColor(1); 
+     exp->SetLineStyle(9);
      exp->Draw("p same");
    
      canv1->Modified();
