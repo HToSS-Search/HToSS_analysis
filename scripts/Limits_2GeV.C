@@ -13,9 +13,6 @@
   void Limits_2GeV() {  
   
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
-     gStyle->SetOptStat(0);
-     canv1->SetLineColor(0);
-     canv1->SetFillColor(0);
    
      double x1[] = {0, 1, 10};
      double y1[] = {0.0369502, 0.0479211, 0.477744}; //value
@@ -36,16 +33,15 @@
      exp->Draw("AP");
     
      
-     /*double x[] = {0, 1, 2};
-     double y[] = {0, 2, 4};
-     double ex[] = {0.1, 0.2, 0.3};
-     double ey[] = {1, 0.5, 1};
-     auto ge = new TGraphErrors(3, x, y, ex, ey);
-     up1->SetFillColor(8);
-     up1->SetFillStyle(3001);
-     up->Draw("A4");
+     double y3[] = {0.03444700,0.04362106,0.41502756};
+     double ex3[] = {0., 0., 0.};
+     double ey3[] = {0.01427847,0.01799699,0.14057155};
+     auto sigma1 = new TGraphErrors(3, x1, y3, ex3, ey3);
+     sigma1->SetFillColor(8);
+     sigma1->SetFillStyle(3001);
+     sigma1->Draw("A4");
    
-     double x[] = {0, 1, 2};
+     /*double x[] = {0, 1, 2};
      double y[] = {0, 2, 4};
      double ex[] = {0.1, 0.2, 0.3};
      double ey[] = {1, 0.5, 1};
