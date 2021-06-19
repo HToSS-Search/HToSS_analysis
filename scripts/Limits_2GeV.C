@@ -24,6 +24,9 @@
      auto sigma2 = new TGraphErrors(3, x1, y3, ex3, ey3);
      sigma2->SetFillColor(5);
      sigma2->SetFillStyle(3001);
+     sigma2->GetXaxis()->SetTitle("c#tau (mm)");
+     sigma2->GetYaxis()->SetTitle("Signal strength (r)");
+     sigma2->SetTitle(" ");
      sigma2->Draw("a3");
      
      //1 sigma band
@@ -33,8 +36,6 @@
      auto sigma1 = new TGraphErrors(3, x1, y4, ex4, ey4);
      sigma1->SetFillColor(8);
      sigma1->SetFillStyle(3001);
-     sigma1->GetXaxis()->SetTitle("c#tau (mm)");
-     sigma1->GetYaxis()->SetTitle("Signal strength (r)");
      sigma1->Draw("3 same");
    
      //observed
@@ -60,24 +61,25 @@
      
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("obs","Observed","L");
-     legenda->SetLineColor(1);
+     TLegendEntry *legenda = legend1->AddEntry("obs","Observed","P");
+     legenda->SetLineColor(4);
      legenda->SetMarkerStyle(21);
      legenda->SetMarkerColor(1);
-     legenda->SetLineStyle(9);
-     legenda->SetLineColor(1); 
-     legenda=legend1->AddEntry("exp","Expected","L");
+     legenda->SetLineColor(4); 
+     legenda=legend1->AddEntry("exp","Expected","P");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("sigma1","1#sigma","F");
-     legenda->SetLineColor(6);
-     legenda->SetMarkerColor(6);
+     legenda=legend1->AddEntry("sigma1","#pm 1#sigma band","F");
+     legenda->SetLineColor(8);
+     legenda->SetMarkerColor(8);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("sigma2","2#sigma","F");
-     legenda->SetLineColor(94);
-     legenda->SetMarkerColor(94);
+     legenda->SetFillColor(8);
+     legenda=legend1->AddEntry("sigma2","#pm 2#sigma band","F");
+     legenda->SetLineColor(5);
+     legenda->SetMarkerColor(5);
      legenda->SetMarkerSize(2);
+     legenda->SetFillColor(5);
      legend1->Draw();
    
      canv1->Modified();
