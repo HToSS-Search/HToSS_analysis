@@ -16,13 +16,13 @@
      canv1->SetGrid();
      //gPad->SetLogx(1);
    
-     double x1[3] = {0, 1, 10};//, 100};
+     double x1[4] = {0, 1, 10, 100};
     
      //2 sigma band
-     double y3[3] = {0.15742144, 0.33018447, 7.25217465};//,1024.32535}; 
-     double ex3[3] = {0., 0., 0.};//, 0.};
-     double ey3[3] = {0.0862955, 0.18154283, 4.06502265};//,652.56025};
-     auto sigma2 = new TGraphErrors(3, x1, y3, ex3, ey3);
+     double y3[4] = {0.15742144, 0.33018447, 7.25217465,1024.32535}; 
+     double ex3[4] = {0., 0., 0., 0.};
+     double ey3[4] = {0.0862955, 0.18154283, 4.06502265,652.56025};
+     auto sigma2 = new TGraphErrors(4, x1, y3, ex3, ey3);
      sigma2->SetFillColor(5);
      sigma2->SetFillStyle(3001);
      sigma2->GetXaxis()->SetTitle("c#tau (mm)");
@@ -32,29 +32,29 @@
      sigma2->Draw("a3");
      
      //1 sigma band
-     double y4[3] = {0.13091717,0.27584271,6.22543725};//,761.203710};
-     double ex4[3] = {0., 0., 0.};//, 0.};
-     double ey4[3] = {0.04392347,0.09454320,2.07153605};//,294.16827};
-     auto sigma1 = new TGraphErrors(3, x1, y4, ex4, ey4);
+     double y4[4] = {0.13091717,0.27584271,6.22543725,761.203710};
+     double ex4[4] = {0., 0., 0., 0.};
+     double ey4[4] = {0.04392347,0.09454320,2.07153605,294.16827};
+     auto sigma1 = new TGraphErrors(4, x1, y4, ex4, ey4);
      sigma1->SetFillColor(8);
      sigma1->SetFillStyle(3001);
      sigma1->Draw("3 same");
    
      //observed
-     double y1[3] = {0.150737, 0.318525, 7.29339};//,867.942}; //value
-     double ex1[3] = {0., 0., 0.};//, 0.};
-     double ey1[3] = {0.00104866, 0.00218634 , 0.0460924};//,9.16968 }; //error
-     auto obs = new TGraphErrors(3, x1, y1, ex1, ey1);
+     double y1[4] = {0.150737, 0.318525, 7.29339,867.942}; //value
+     double ex1[4] = {0., 0., 0., 0.};
+     double ey1[4] = {0.00104866, 0.00218634 , 0.0460924,9.16968 }; //error
+     auto obs = new TGraphErrors(4, x1, y1, ex1, ey1);
      obs->SetMarkerColor(4); //blue
      obs->SetMarkerStyle(21); //square
      obs->SetLineColor(4);
      obs->Draw("lp same");
    
      //expected (median)
-     double y2[3] = {0.124341, 0.253632, 5.74471};//,677.605}; //value
-     double ex2[3] = {0., 0., 0.};//, 0.};
-     double ey2[3] = {0.00187638, 0.00304252,0.06705996};//,7.82232}; //error
-     auto exp = new TGraphErrors(3, x1, y2, ex2, ey2);
+     double y2[4] = {0.124341, 0.253632, 5.74471,677.605}; //value
+     double ex2[4] = {0., 0., 0., 0.};
+     double ey2[4] = {0.00187638, 0.00304252,0.0670599,7.82232}; //error
+     auto exp = new TGraphErrors(4, x1, y2, ex2, ey2);
      exp->SetMarkerColor(1); //black
      exp->SetMarkerStyle(21);
      exp->SetLineStyle(9);
