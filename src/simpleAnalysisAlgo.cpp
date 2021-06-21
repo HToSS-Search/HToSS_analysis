@@ -50,9 +50,9 @@ SimpleAnalysis::SimpleAnalysis()
 , isoConeSize_{0.3}          // Isolation cone size of 0.3 is used repeatedly. Define once here for efficiency.
 , higgsMass_{125.35}         // Standard Higgs mass - define here rather than multiple locations
 , higgsMassWindow_{3.0}      // Define Standard Higgs mass +/ window here rather than in multiple locations
-, higgsMassWideWindow_{30.0} // Define wider Standard Higgs mass +/ window here rather than in multiple locations
+, higgsMassWideWindow_{20.0} // Define wider Standard Higgs mass +/ window here rather than in multiple locations
 , statWindow_{0.15} 
-, mass_range_{1.0}              // 1 or 2 GeV sample run
+, mass_range_{2.0}              // 1 or 2 GeV sample run
 , debug_{false}              // Set to true to enable debug couts
 {}
 SimpleAnalysis::~SimpleAnalysis() {}
@@ -1125,7 +1125,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	
   //Background estimate
   if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
-    if((Pantiscalar+scalarLVec).M()>95 && (Pantiscalar+scalarLVec).M()<122){
+    if((Pantiscalar+scalarLVec).M()>105 && (Pantiscalar+scalarLVec).M()<122){
       if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
         Nbg1+=1;//eventWeight;
       }
@@ -1133,7 +1133,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
  
   if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
-    if((Pantiscalar+scalarLVec).M()>128 && (Pantiscalar+scalarLVec).M()<155){
+    if((Pantiscalar+scalarLVec).M()>128 && (Pantiscalar+scalarLVec).M()<145){
       if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
         Nbg2+=1;//eventWeight;
       }
