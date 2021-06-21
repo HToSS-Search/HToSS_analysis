@@ -127,6 +127,54 @@ plots:
     fillExp: "lep2DZSig"
     xAxisLabel: "lepton 2 d_{Z} significance"
     cutStage: 0
+  - title: "Leading lepton Transverse IP"
+    name: "lep1ImpactTransDist"
+    xMax: 100.0
+    xMin: 0.
+    nBins: 400
+    fillExp: "lep1ImpactTransDist"
+    xAxisLabel: "lepton 1 IP_{trans}"
+    cutStage: 0
+  - title: "Leading lepton Transverse IP Error"
+    name: "lep1ImpactTransError"
+    xMax: 100.0
+    xMin: 0.
+    nBins: 400
+    fillExp: "lep1ImpactTransError"
+    xAxisLabel:	"lepton	1 IP_{trans} Error"
+    cutStage: 0
+  - title: "Leading lepton IP Transverse Sigificance"
+    name: "lep1ImpactTransSig"
+    xMax: 100.0
+    xMin: 0.
+    nBins: 400
+    fillExp: "lep1ImpactTransSig"
+    xAxisLabel:	"lepton	1 IP_{trans} Sig"
+    cutStage: 0
+  - title: "Second lepton Transverse IP"
+    name: "lep2ImpactTransDist"
+    xMax: 100.0
+    xMin: 0.
+    nBins: 400
+    fillExp: "lep2ImpactTransDist"
+    xAxisLabel: "lepton 2 IP_{trans}"
+    cutStage: 0
+  - title: "Second lepton Transverse IP Error"
+    name: "lep2ImpactTransError"
+    xMax: 100.0
+    xMin: 0.
+    nBins: 400
+    fillExp: "lep2ImpactTransError"
+    xAxisLabel: "lepton 2 IP_{trans} Error"
+    cutStage: 0
+  - title: "Second lepton IP Transverse Sigificance"
+    name: "lep2ImpactTransSig"
+    xMax: 100.0
+    xMin: 0.
+    nBins: 400
+    fillExp: "lep2ImpactTransSig"
+    xAxisLabel:	"lepton	2 IP_{trans} Sig"
+    cutStage: 0
   - title: "Leading charged hadron pf cand p_{T}"
     name: "chs1Pt"
     xMax: 200.

@@ -60,19 +60,29 @@ int main(int argc, char* argv[]) {
     TH1F* h_subLeadingMuonEta_truth              {new TH1F("h_subLeadingMuonEta_truth",            "", 300, -3., 3.)};
     TH1F* h_leadingMuonEta                       {new TH1F("h_leadingMuonEta",                     "", 300, -3., 3.)};
     TH1F* h_subLeadingMuonEta                    {new TH1F("h_subLeadingMuonEta",                  "", 300, -3., 3.)};
+
+    TH1F* h_leadingMuonD0_truth                  {new TH1F("h_leadingMuonD0_truth",                "", 200, -100., 100)};
+    TH1F* h_subLeadingMuonD0_truth               {new TH1F("h_subLeadingMuonD0_truth",             "", 200, -100., 100)};
+    TH1F* h_leadingMuonD0                        {new TH1F("h_leadingMuonD0",                      "", 200, -100., 100)};
+    TH1F* h_subLeadingMuonD0                     {new TH1F("h_subLeadingMuonD0",                   "", 200, -100., 100)};
+    TH1F* h_leadingMuonDz_truth                  {new TH1F("h_leadingMuonDz_truth",                "", 200, -100., 100)};
+    TH1F* h_subLeadingMuonDz_truth               {new TH1F("h_subLeadingMuonDz_truth",             "", 200, -100., 100)};
+    TH1F* h_leadingMuonDz                        {new TH1F("h_leadingMuonDz",                      "", 200, -100., 100)};
+    TH1F* h_subLeadingMuonDz                     {new TH1F("h_subLeadingMuonDz",                   "", 200, -100., 100)};
+
     TH1F* h_delR_truth                           {new TH1F("h_delR_truth",                         "", 100, 0., 1.0)};
     TH1F* h_delR                                 {new TH1F("h_delR",                               "", 100, 0., 1.0)};
     TH1F* h_diMuonMass_truth                     {new TH1F("h_diMuonMass_truth",                   "", 200, 0., 100.)}; 
     TH1F* h_diMuonMass                           {new TH1F("h_diMuonMass",                         "", 200, 0., 100.)};
 
-    TH1F* h_leadingMuonImpactTransSig_truth      {new TH1F("h_leadingMuonImpactTransSig_truth",    "", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonImpactTransSig_truth   {new TH1F("h_subLeadingMuonImpactTransSig_truth", "", 200, 0., 100.)};
-    TH1F* h_leadingMuonImpactTransSig            {new TH1F("h_leadingMuonImpactTransSig",          "", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonImpactTransSig         {new TH1F("h_subLeadingMuonImpactTransSig",       "", 200, 0., 100.)};
-    TH1F* h_leadingMuonImpact3DSig_truth         {new TH1F("h_leadingMuonImpact3DSig_truth",       "", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonImpact3DSig_truth      {new TH1F("h_subLeadingMuonImpact3DSig_truth",    "", 200, 0., 100.)};
-    TH1F* h_leadingMuonImpact3DSig               {new TH1F("h_leadingMuonImpact3DSig",             "", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonImpact3DSig            {new TH1F("h_subLeadingMuonImpact3DSig",          "", 200, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_truth      {new TH1F("h_leadingMuonImpactTransSig_truth",    "", 400, 0., 100.)};
+    TH1F* h_subLeadingMuonImpactTransSig_truth   {new TH1F("h_subLeadingMuonImpactTransSig_truth", "", 400, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig            {new TH1F("h_leadingMuonImpactTransSig",          "", 400, 0., 100.)};
+    TH1F* h_subLeadingMuonImpactTransSig         {new TH1F("h_subLeadingMuonImpactTransSig",       "", 400, 0., 100.)};
+    TH1F* h_leadingMuonImpact3DSig_truth         {new TH1F("h_leadingMuonImpact3DSig_truth",       "", 400, 0., 100.)};
+    TH1F* h_subLeadingMuonImpact3DSig_truth      {new TH1F("h_subLeadingMuonImpact3DSig_truth",    "", 400, 0., 100.)};
+    TH1F* h_leadingMuonImpact3DSig               {new TH1F("h_leadingMuonImpact3DSig",             "", 400, 0., 100.)};
+    TH1F* h_subLeadingMuonImpact3DSig            {new TH1F("h_subLeadingMuonImpact3DSig",          "", 400, 0., 100.)};
 
     // numerator - bParking
     TH1F* h_leadingMuonPt_truth_bParkingTrig                  {new TH1F("h_leadingMuonPt_truth_bParkingTrig",                 "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 200, 0., 100.)};
@@ -83,19 +93,62 @@ int main(int argc, char* argv[]) {
     TH1F* h_subLeadingMuonEta_truth_bParkingTrig              {new TH1F("h_subLeadingMuonEta_truth_bParkingTrig",             "Trigger turn-on for signal; #eta; trigger #epsilon", 300, -3., 3.)};
     TH1F* h_leadingMuonEta_bParkingTrig                       {new TH1F("h_leadingMuonEta_bParkingTrig",                      "Trigger turn-on for signal; #eta; trigger #epsilon", 300, -3., 3.)};
     TH1F* h_subLeadingMuonEta_bParkingTrig                    {new TH1F("h_subLeadingMuonEta_bParkingTrig",                   "Trigger turn-on for signal; #eta; trigger #epsilon", 300, -3., 3.)};
+
+    TH1F* h_leadingMuonD0_truth_bParkingTrig                  {new TH1F("h_leadingMuonD0_truth_bParkingTrig",                 "Trigger turn-on for signal; d_{0} (cm); trigger #epsilon", 200, -100., 100)};
+    TH1F* h_subLeadingMuonD0_truth_bParkingTrig               {new TH1F("h_subLeadingMuonD0_truth_bParkingTrig",              "Trigger turn-on for signal; d_{0} (cm); trigger #epsilon", 200, -100., 100)};
+    TH1F* h_leadingMuonD0_bParkingTrig                        {new TH1F("h_leadingMuonD0_bParkingTrig",                       "Trigger turn-on for signal; d_{0} (cm); trigger #epsilon", 200, -100., 100)};
+    TH1F* h_subLeadingMuonD0_bParkingTrig                     {new TH1F("h_subLeadingMuonD0_bParkingTrig",                    "Trigger turn-on for signal; d_{0} (cm); trigger #epsilon", 200, -100., 100)};
+    TH1F* h_leadingMuonDz_truth_bParkingTrig                  {new TH1F("h_leadingMuonDz_truth_bParkingTrig",                 "Trigger turn-on for signal; d_{z} (cm); trigger #epsilon", 200, -100., 100)};
+    TH1F* h_subLeadingMuonDz_truth_bParkingTrig               {new TH1F("h_subLeadingMuonDz_truth_bParkingTrig",              "Trigger turn-on for signal; d_{z} (cm); trigger #epsilon", 200, -100., 100)};
+    TH1F* h_leadingMuonDz_bParkingTrig                        {new TH1F("h_leadingMuonDz_bParkingTrig",                       "Trigger turn-on for signal; d_{z} (cm); trigger #epsilon", 200, -100., 100)};
+    TH1F* h_subLeadingMuonDz_bParkingTrig                     {new TH1F("h_subLeadingMuonDz_bParkingTrig",                    "Trigger turn-on for signal; d_{z} (cm); trigger #epsilon", 200, -100., 100)};
+
     TH1F* h_delR_truth_bParkingTrig                           {new TH1F("h_delR_truth_bParkingTrig",                          "Trigger turn-on for signal; #Delta R; trigger #epsilon", 100, 0., 1.0)};
     TH1F* h_delR_bParkingTrig                                 {new TH1F("h_delR_bParkingTrig",                                "Trigger turn-on for signal; #Delta R; trigger #epsilon", 100, 0., 1.0)};
     TH1F* h_diMuonMass_truth_bParkingTrig                     {new TH1F("h_diMuonMass_truth_bParkingTrig",                    "Trigger turn-on for signal; m_{#mu#mu}; trigger #epsilon", 200, 0., 100.)};
     TH1F* h_diMuonMass_bParkingTrig                           {new TH1F("h_diMuonMass_bParkingTrig",                          "Trigger turn-on for signal; m_{#mu#mu}; trigger #epsilon", 200, 0., 100.)};
 
-    TH1F* h_leadingMuonImpactTransSig_truth_bParkingTrig      {new TH1F("h_leadingMuonImpactTransSig_truth_bParkingTrig",     "Trigger turn-on for signal; IP_{trans}; trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonImpactTransSig_truth_bParkingTrig   {new TH1F("h_subLeadingMuonImpactTransSig_truth_bParkingTrig",  "Trigger turn-on for signal; IP_{trans}; trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_leadingMuonImpactTransSig_bParkingTrig  	      {new TH1F("h_leadingMuonImpactTransSig_bParkingTrig",           "Trigger turn-on for signal; IP_{trans}; trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonImpactTransSig_bParkingTrig  	      {new TH1F("h_subLeadingMuonImpactTransSig_bParkingTrig",        "Trigger turn-on for signal; IP_{trans}; trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_leadingMuonImpact3DSig_truth_bParkingTrig         {new TH1F("h_leadingMuonImpact3DSig_truth_bParkingTrig",        "Trigger turn-on for signal; IP_{3D}; trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonImpact3DSig_truth_bParkingTrig      {new TH1F("h_subLeadingMuonImpact3DSig_truth_bParkingTrig",     "Trigger turn-on for signal; IP_{3D}; trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_leadingMuonImpact3DSig_bParkingTrig     	      {new TH1F("h_leadingMuonImpact3DSig_bParkingTrig",              "Trigger turn-on for signal; IP_{3D}; trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonImpact3DSig_bParkingTrig     	      {new TH1F("h_subLeadingMuonImpact3DSig_bParkingTrig",           "Trigger turn-on for signal; IP_{3D}; trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_truth_bParkingTrig      {new TH1F("h_leadingMuonImpactTransSig_truth_bParkingTrig",     "Trigger turn-on for signal; IP_{trans}; trigger #epsilon", 400, 0., 100.)};
+    TH1F* h_subLeadingMuonImpactTransSig_truth_bParkingTrig   {new TH1F("h_subLeadingMuonImpactTransSig_truth_bParkingTrig",  "Trigger turn-on for signal; IP_{trans}; trigger #epsilon", 400, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_bParkingTrig  	      {new TH1F("h_leadingMuonImpactTransSig_bParkingTrig",           "Trigger turn-on for signal; IP_{trans}; trigger #epsilon", 400, 0., 100.)};
+    TH1F* h_subLeadingMuonImpactTransSig_bParkingTrig  	      {new TH1F("h_subLeadingMuonImpactTransSig_bParkingTrig",        "Trigger turn-on for signal; IP_{trans}; trigger #epsilon", 400, 0., 100.)};
+    TH1F* h_leadingMuonImpact3DSig_truth_bParkingTrig         {new TH1F("h_leadingMuonImpact3DSig_truth_bParkingTrig",        "Trigger turn-on for signal; IP_{3D}; trigger #epsilon", 400, 0., 100.)};
+    TH1F* h_subLeadingMuonImpact3DSig_truth_bParkingTrig      {new TH1F("h_subLeadingMuonImpact3DSig_truth_bParkingTrig",     "Trigger turn-on for signal; IP_{3D}; trigger #epsilon", 400, 0., 100.)};
+    TH1F* h_leadingMuonImpact3DSig_bParkingTrig     	      {new TH1F("h_leadingMuonImpact3DSig_bParkingTrig",              "Trigger turn-on for signal; IP_{3D}; trigger #epsilon", 400, 0., 100.)};
+    TH1F* h_subLeadingMuonImpact3DSig_bParkingTrig     	      {new TH1F("h_subLeadingMuonImpact3DSig_bParkingTrig",           "Trigger turn-on for signal; IP_{3D}; trigger #epsilon", 400, 0., 100.)};
+
+    // ratio 
+    TH1F* h_leadingMuonPt_truth_bParkingTrig_ratio;
+    TH1F* h_subLeadingMuonPt_truth_bParkingTrig_ratio;
+    TH1F* h_leadingMuonPt_bParkingTrig_ratio;
+    TH1F* h_subLeadingMuonPt_bParkingTrig_ratio;
+    TH1F* h_leadingMuonEta_truth_bParkingTrig_ratio;
+    TH1F* h_subLeadingMuonEta_truth_bParkingTrig_ratio;
+    TH1F* h_leadingMuonEta_bParkingTrig_ratio;
+    TH1F* h_subLeadingMuonEta_bParkingTrig_ratio;
+
+    TH1F* h_leadingMuonD0_truth_bParkingTrig_ratio;
+    TH1F* h_subLeadingMuonD0_truth_bParkingTrig_ratio;
+    TH1F* h_leadingMuonD0_bParkingTrig_ratio;
+    TH1F* h_subLeadingMuonD0_bParkingTrig_ratio;
+    TH1F* h_leadingMuonDz_truth_bParkingTrig_ratio;
+    TH1F* h_subLeadingMuonDz_truth_bParkingTrig_ratio;
+    TH1F* h_leadingMuonDz_bParkingTrig_ratio;
+    TH1F* h_subLeadingMuonDz_bParkingTrig_ratio;
+
+    TH1F* h_delR_truth_bParkingTrig_ratio;
+    TH1F* h_delR_bParkingTrig_ratio;
+    TH1F* h_diMuonMass_truth_bParkingTrig_ratio;
+    TH1F* h_diMuonMass_bParkingTrig_ratio;
+
+    TH1F* h_leadingMuonImpactTransSig_truth_bParkingTrig_ratio;
+    TH1F* h_subLeadingMuonImpactTransSig_truth_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_bParkingTrig_ratio;
+    TH1F* h_subLeadingMuonImpactTransSig_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpact3DSig_truth_bParkingTrig_ratio;
+    TH1F* h_subLeadingMuonImpact3DSig_truth_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpact3DSig_bParkingTrig_ratio;
+    TH1F* h_subLeadingMuonImpact3DSig_bParkingTrig_ratio;
 
     namespace po = boost::program_options;
 
@@ -267,6 +320,16 @@ int main(int argc, char* argv[]) {
                 h_subLeadingMuonEta_truth->Fill(event.muonPF2PATEta[mu2]);
                 h_leadingMuonEta->Fill(event.muonPF2PATEta[0]);
                 h_subLeadingMuonEta->Fill(event.muonPF2PATEta[1]);
+
+                h_leadingMuonD0_truth->Fill(event.muonPF2PATDBPV[mu1]);
+                h_subLeadingMuonD0_truth->Fill(event.muonPF2PATDBPV[mu2]);
+                h_leadingMuonDz_truth->Fill(event.muonPF2PATDBPV[0]);
+                h_subLeadingMuonDz_truth->Fill(event.muonPF2PATDBPV[1]);
+                h_leadingMuonD0->Fill(event.muonPF2PATDZPV[mu1]);
+                h_subLeadingMuonD0->Fill(event.muonPF2PATDZPV[mu2]);
+                h_leadingMuonDz->Fill(event.muonPF2PATDZPV[0]);
+                h_subLeadingMuonDz->Fill(event.muonPF2PATDZPV[1]);
+
                 h_delR_truth->Fill(delR_truth);
                 h_delR->Fill(delR);
                 h_diMuonMass_truth->Fill(mass_truth);
@@ -282,7 +345,10 @@ int main(int argc, char* argv[]) {
                 h_subLeadingMuonImpact3DSig->Fill(event.muonPF2PATImpact3DSignificance[1]);
 
                 // Fill pT post trigger (with and without scalar parentage)
-                if (event.bParkingTrig_Mu12_IP6()) {
+                if (event.bParkingTrigInclusive()) {
+//                if (event.bParkingTrig_Mu12_IP6()) {
+//                if (event.bParkingTrig_Mu9_IP6()) {
+//                if (event.bParkingTrig_Mu9_IP5()) {
 
                     double eventWeight = 1.;
 
@@ -300,6 +366,16 @@ int main(int argc, char* argv[]) {
                     h_subLeadingMuonEta_truth_bParkingTrig->Fill(event.muonPF2PATEta[mu2]);
                     h_leadingMuonEta_bParkingTrig->Fill(event.muonPF2PATEta[0]);
                     h_subLeadingMuonEta_bParkingTrig->Fill(event.muonPF2PATEta[1]);
+
+                    h_leadingMuonD0_truth_bParkingTrig->Fill(event.muonPF2PATDBPV[mu1]);
+                    h_subLeadingMuonD0_truth_bParkingTrig->Fill(event.muonPF2PATDBPV[mu2]);
+                    h_leadingMuonDz_truth_bParkingTrig->Fill(event.muonPF2PATDBPV[0]);
+                    h_subLeadingMuonDz_truth_bParkingTrig->Fill(event.muonPF2PATDBPV[1]);
+                    h_leadingMuonD0_bParkingTrig->Fill(event.muonPF2PATDZPV[mu1]);
+                    h_subLeadingMuonD0_bParkingTrig->Fill(event.muonPF2PATDZPV[mu2]);
+                    h_leadingMuonDz_bParkingTrig->Fill(event.muonPF2PATDZPV[0]);
+                    h_subLeadingMuonDz_bParkingTrig->Fill(event.muonPF2PATDZPV[1]);
+
                     h_delR_truth_bParkingTrig->Fill(delR_truth);
                     h_delR_bParkingTrig->Fill(delR);
                     h_diMuonMass_truth_bParkingTrig->Fill(mass_truth);
@@ -327,28 +403,30 @@ int main(int argc, char* argv[]) {
     TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
     outFile->cd();
 
-    h_leadingMuonPt_truth_bParkingTrig->Divide(h_leadingMuonPt_truth);
-    h_subLeadingMuonPt_truth_bParkingTrig->Divide(h_subLeadingMuonPt_truth);
-    h_leadingMuonPt_bParkingTrig->Divide(h_leadingMuonPt);
-    h_subLeadingMuonPt_bParkingTrig->Divide(h_subLeadingMuonPt);
-    h_leadingMuonEta_truth_bParkingTrig->Divide(h_leadingMuonEta_truth);
-    h_subLeadingMuonEta_truth_bParkingTrig->Divide(h_subLeadingMuonEta_truth);
-    h_leadingMuonEta_bParkingTrig->Divide(h_leadingMuonEta);
-    h_subLeadingMuonEta_bParkingTrig->Divide(h_subLeadingMuonEta);
-    h_delR_truth_bParkingTrig->Divide(h_delR_truth);
-    h_delR_bParkingTrig->Divide(h_delR);
-    h_diMuonMass_truth_bParkingTrig->Divide(h_diMuonMass_truth);
-    h_diMuonMass_bParkingTrig->Divide(h_diMuonMass);
+    // Denominators
+    h_leadingMuonPt_truth->Write();
+    h_subLeadingMuonPt_truth->Write();
+    h_leadingMuonPt->Write();
+    h_subLeadingMuonPt->Write();
+    h_leadingMuonEta_truth->Write();
+    h_subLeadingMuonEta_truth->Write();
+    h_leadingMuonEta->Write();
+    h_subLeadingMuonEta->Write();
+    h_delR_truth->Write();
+    h_delR->Write();
+    h_diMuonMass_truth->Write();
+    h_diMuonMass->Write();
 
-    h_leadingMuonImpactTransSig_truth_bParkingTrig->Divide(h_leadingMuonImpactTransSig_truth);
-    h_subLeadingMuonImpactTransSig_truth_bParkingTrig->Divide(h_subLeadingMuonImpactTransSig_truth);
-    h_leadingMuonImpactTransSig_bParkingTrig->Divide(h_leadingMuonImpactTransSig);
-    h_subLeadingMuonImpactTransSig_bParkingTrig->Divide(h_subLeadingMuonImpactTransSig);
-    h_leadingMuonImpact3DSig_truth_bParkingTrig->Divide(h_leadingMuonImpact3DSig_truth);
-    h_subLeadingMuonImpact3DSig_truth_bParkingTrig->Divide(h_subLeadingMuonImpact3DSig_truth);
-    h_leadingMuonImpact3DSig_bParkingTrig->Divide(h_leadingMuonImpact3DSig);
-    h_subLeadingMuonImpact3DSig_bParkingTrig->Divide(h_subLeadingMuonImpact3DSig);
+    h_leadingMuonImpactTransSig_truth->Write();
+    h_subLeadingMuonImpactTransSig_truth->Write();
+    h_leadingMuonImpactTransSig->Write();
+    h_subLeadingMuonImpactTransSig->Write();
+    h_leadingMuonImpact3DSig_truth->Write();
+    h_subLeadingMuonImpact3DSig_truth->Write();
+    h_leadingMuonImpact3DSig->Write();
+    h_subLeadingMuonImpact3DSig->Write();   
 
+    // Numerators
     h_leadingMuonPt_truth_bParkingTrig->Write();
     h_subLeadingMuonPt_truth_bParkingTrig->Write();
     h_leadingMuonPt_bParkingTrig->Write();
@@ -370,6 +448,103 @@ int main(int argc, char* argv[]) {
     h_subLeadingMuonImpact3DSig_truth_bParkingTrig->Write();
     h_leadingMuonImpact3DSig_bParkingTrig->Write();
     h_subLeadingMuonImpact3DSig_bParkingTrig->Write();
+
+    // Ratio
+    h_leadingMuonPt_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonPt_truth_bParkingTrig->Clone("h_leadingMuonPt_truth_bParkingTrig_ratio"));
+    h_subLeadingMuonPt_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_subLeadingMuonPt_truth_bParkingTrig->Clone("h_subLeadingMuonPt_truth_bParkingTrig_ratio"));
+    h_leadingMuonPt_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonPt_bParkingTrig->Clone("h_leadingMuonPt_bParkingTrig_ratio"));
+    h_subLeadingMuonPt_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_subLeadingMuonPt_bParkingTrig->Clone("h_subLeadingMuonPt_bParkingTrig_ratio"));
+    h_leadingMuonEta_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonEta_truth_bParkingTrig->Clone("h_leadingMuonEta_truth_bParkingTrig_ratio"));
+    h_subLeadingMuonEta_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_subLeadingMuonEta_truth_bParkingTrig->Clone("h_subLeadingMuonEta_truth_bParkingTrig_ratio"));
+    h_leadingMuonEta_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonEta_bParkingTrig->Clone("h_leadingMuonEta_bParkingTrig_ratio"));
+    h_subLeadingMuonEta_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_subLeadingMuonEta_bParkingTrig->Clone("h_subLeadingMuonEta_bParkingTrig_ratio"));
+
+    h_leadingMuonD0_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonD0_truth_bParkingTrig->Clone("h_leadingMuonD0_truth_bParkingTrig_ratio"));
+    h_subLeadingMuonD0_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_subLeadingMuonD0_truth_bParkingTrig->Clone("h_subLeadingMuonD0_truth_bParkingTrig_ratio"));
+    h_leadingMuonD0_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonD0_bParkingTrig->Clone("h_leadingMuonD0_bParkingTrig_ratio"));
+    h_subLeadingMuonD0_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_subLeadingMuonD0_bParkingTrig->Clone("h_subLeadingMuonD0_bParkingTrig_ratio"));
+    h_leadingMuonDz_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonDz_truth_bParkingTrig->Clone("h_leadingMuonDz_truth_bParkingTrig_ratio"));
+    h_subLeadingMuonDz_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_subLeadingMuonDz_truth_bParkingTrig->Clone("h_subLeadingMuonDz_truth_bParkingTrig_ratio"));
+    h_leadingMuonDz_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonDz_bParkingTrig->Clone("h_leadingMuonDz_bParkingTrig_ratio"));
+    h_subLeadingMuonDz_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_subLeadingMuonDz_bParkingTrig->Clone("h_subLeadingMuonDz_bParkingTrig_ratio"));
+
+    h_delR_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_delR_truth_bParkingTrig->Clone("h_delR_truth_bParkingTrig_ratio"));
+    h_delR_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_delR_bParkingTrig->Clone("h_delR_bParkingTrig_ratio"));
+    h_diMuonMass_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_diMuonMass_truth_bParkingTrig->Clone("h_diMuonMass_truth_bParkingTrig_ratio"));
+    h_diMuonMass_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_diMuonMass_bParkingTrig->Clone("h_diMuonMass_bParkingTrig_ratio"));
+
+    h_leadingMuonImpactTransSig_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_truth_bParkingTrig->Clone("h_leadingMuonImpactTransSig_truth_bParkingTrig_ratio"));
+    h_subLeadingMuonImpactTransSig_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_subLeadingMuonImpactTransSig_truth_bParkingTrig->Clone("h_subLeadingMuonImpactTransSig_truth_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_bParkingTrig->Clone("h_leadingMuonImpactTransSig_bParkingTrig_ratio"));
+    h_subLeadingMuonImpactTransSig_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_subLeadingMuonImpactTransSig_bParkingTrig->Clone("h_subLeadingMuonImpactTransSig_bParkingTrig_ratio"));
+    h_leadingMuonImpact3DSig_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpact3DSig_truth_bParkingTrig->Clone("h_leadingMuonImpact3DSig_truth_bParkingTrig_ratio"));
+    h_subLeadingMuonImpact3DSig_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_subLeadingMuonImpact3DSig_truth_bParkingTrig->Clone("h_subLeadingMuonImpact3DSig_truth_bParkingTrig_ratio"));
+    h_leadingMuonImpact3DSig_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpact3DSig_bParkingTrig->Clone("h_leadingMuonImpact3DSig_bParkingTrig_ratio"));
+    h_subLeadingMuonImpact3DSig_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_subLeadingMuonImpact3DSig_bParkingTrig->Clone("h_subLeadingMuonImpact3DSig_bParkingTrig_ratio"));
+
+    h_leadingMuonPt_truth_bParkingTrig_ratio->Divide(h_leadingMuonPt_truth);
+    h_subLeadingMuonPt_truth_bParkingTrig_ratio->Divide(h_subLeadingMuonPt_truth);
+    h_leadingMuonPt_bParkingTrig_ratio->Divide(h_leadingMuonPt);
+    h_subLeadingMuonPt_bParkingTrig_ratio->Divide(h_subLeadingMuonPt);
+    h_leadingMuonEta_truth_bParkingTrig_ratio->Divide(h_leadingMuonEta_truth);
+    h_subLeadingMuonEta_truth_bParkingTrig_ratio->Divide(h_subLeadingMuonEta_truth);
+    h_leadingMuonEta_bParkingTrig_ratio->Divide(h_leadingMuonEta);
+    h_subLeadingMuonEta_bParkingTrig_ratio->Divide(h_subLeadingMuonEta);
+
+    h_leadingMuonD0_truth_bParkingTrig_ratio->Divide(h_leadingMuonD0_truth);
+    h_subLeadingMuonD0_truth_bParkingTrig_ratio->Divide(h_subLeadingMuonD0_truth);
+    h_leadingMuonD0_bParkingTrig_ratio->Divide(h_leadingMuonD0);
+    h_subLeadingMuonD0_bParkingTrig_ratio->Divide(h_subLeadingMuonD0);
+    h_leadingMuonDz_truth_bParkingTrig_ratio->Divide(h_leadingMuonDz_truth);
+    h_subLeadingMuonDz_truth_bParkingTrig_ratio->Divide(h_subLeadingMuonDz_truth);
+    h_leadingMuonDz_bParkingTrig_ratio->Divide(h_leadingMuonDz);
+    h_subLeadingMuonDz_bParkingTrig_ratio->Divide(h_subLeadingMuonDz);
+
+    h_delR_truth_bParkingTrig_ratio->Divide(h_delR_truth);
+    h_delR_bParkingTrig_ratio->Divide(h_delR);
+    h_diMuonMass_truth_bParkingTrig_ratio->Divide(h_diMuonMass_truth);
+    h_diMuonMass_bParkingTrig_ratio->Divide(h_diMuonMass);
+
+    h_leadingMuonImpactTransSig_truth_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_truth);
+    h_subLeadingMuonImpactTransSig_truth_bParkingTrig_ratio->Divide(h_subLeadingMuonImpactTransSig_truth);
+    h_leadingMuonImpactTransSig_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig);
+    h_subLeadingMuonImpactTransSig_bParkingTrig_ratio->Divide(h_subLeadingMuonImpactTransSig);
+    h_leadingMuonImpact3DSig_truth_bParkingTrig_ratio->Divide(h_leadingMuonImpact3DSig_truth);
+    h_subLeadingMuonImpact3DSig_truth_bParkingTrig_ratio->Divide(h_subLeadingMuonImpact3DSig_truth);
+    h_leadingMuonImpact3DSig_bParkingTrig_ratio->Divide(h_leadingMuonImpact3DSig);
+    h_subLeadingMuonImpact3DSig_bParkingTrig_ratio->Divide(h_subLeadingMuonImpact3DSig);
+
+    h_leadingMuonPt_truth_bParkingTrig_ratio->Write();
+    h_subLeadingMuonPt_truth_bParkingTrig_ratio->Write();
+    h_leadingMuonPt_bParkingTrig_ratio->Write();
+    h_subLeadingMuonPt_bParkingTrig_ratio->Write();
+    h_leadingMuonEta_truth_bParkingTrig_ratio->Write();
+    h_subLeadingMuonEta_truth_bParkingTrig_ratio->Write();
+    h_leadingMuonEta_bParkingTrig_ratio->Write();
+    h_subLeadingMuonEta_bParkingTrig_ratio->Write();
+
+    h_leadingMuonD0_truth_bParkingTrig_ratio->Write();
+    h_subLeadingMuonD0_truth_bParkingTrig_ratio->Write();
+    h_leadingMuonD0_bParkingTrig_ratio->Write();
+    h_subLeadingMuonD0_bParkingTrig_ratio->Write();
+    h_leadingMuonDz_truth_bParkingTrig_ratio->Write();
+    h_subLeadingMuonDz_truth_bParkingTrig_ratio->Write();
+    h_leadingMuonDz_bParkingTrig_ratio->Write();
+    h_subLeadingMuonDz_bParkingTrig_ratio->Write();
+
+    h_delR_truth_bParkingTrig_ratio->Write();
+    h_delR_bParkingTrig_ratio->Write();
+    h_diMuonMass_truth_bParkingTrig_ratio->Write();
+    h_diMuonMass_bParkingTrig_ratio->Write();
+
+    h_leadingMuonImpactTransSig_truth_bParkingTrig_ratio->Write();
+    h_subLeadingMuonImpactTransSig_truth_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_bParkingTrig_ratio->Write();
+    h_subLeadingMuonImpactTransSig_bParkingTrig_ratio->Write();
+    h_leadingMuonImpact3DSig_truth_bParkingTrig_ratio->Write();
+    h_subLeadingMuonImpact3DSig_truth_bParkingTrig_ratio->Write();
+    h_leadingMuonImpact3DSig_bParkingTrig_ratio->Write();
+    h_subLeadingMuonImpact3DSig_bParkingTrig_ratio->Write();
 
     outFile->Close();
 

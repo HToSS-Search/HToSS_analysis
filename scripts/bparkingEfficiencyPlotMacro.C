@@ -22,11 +22,11 @@ void bparkingEfficiencyPlotMacro() {
 
     // pT
 
-    TH1F* h_leadingMuonPt_bParkingTrigPt_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonPt_bParkingTrig");
-    TH1F* h_leadingMuonPt_bParkingTrigPt_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonPt_bParkingTrig");
-    TH1F* h_leadingMuonPt_bParkingTrigPt_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonPt_bParkingTrig");
-    TH1F* h_leadingMuonPt_bParkingTrigPt_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonPt_bParkingTrig");
-    TH1F* h_leadingMuonPt_bParkingTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_bParkingTrig");
+    TH1F* h_leadingMuonPt_bParkingTrigPt_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonPt_bParkingTrig_ratio");
+    TH1F* h_leadingMuonPt_bParkingTrigPt_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonPt_bParkingTrig_ratio");
+    TH1F* h_leadingMuonPt_bParkingTrigPt_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonPt_bParkingTrig_ratio");
+    TH1F* h_leadingMuonPt_bParkingTrigPt_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonPt_bParkingTrig_ratio");
+    TH1F* h_leadingMuonPt_bParkingTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_bParkingTrig_ratio");
 
     TCanvas *Cavnas_bParkingTrigPt = new TCanvas("Cavnas_bParkingTrigPt", "Cavnas_bParkingTrigPt",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -131,11 +131,11 @@ void bparkingEfficiencyPlotMacro() {
 
     // eta
 
-    TH1F* h_leadingMuonEta_bParkingTrigEta_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonEta_bParkingTrig");
-    TH1F* h_leadingMuonEta_bParkingTrigEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_bParkingTrig");
-    TH1F* h_leadingMuonEta_bParkingTrigEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_bParkingTrig");
-    TH1F* h_leadingMuonEta_bParkingTrigEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_bParkingTrig");
-    TH1F* h_leadingMuonEta_bParkingTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_bParkingTrig");
+    TH1F* h_leadingMuonEta_bParkingTrigEta_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonEta_bParkingTrig_ratio");
+    TH1F* h_leadingMuonEta_bParkingTrigEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_bParkingTrig_ratio");
+    TH1F* h_leadingMuonEta_bParkingTrigEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_bParkingTrig_ratio");
+    TH1F* h_leadingMuonEta_bParkingTrigEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_bParkingTrig_ratio");
+    TH1F* h_leadingMuonEta_bParkingTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_bParkingTrig_ratio");
 
     TCanvas *Cavnas_bParkingTrigEta = new TCanvas("Cavnas_bParkingTrigEta", "Cavnas_bParkingTrigEta",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -238,13 +238,231 @@ void bparkingEfficiencyPlotMacro() {
     Cavnas_bParkingTrigEta->SetSelected(Cavnas_bParkingTrigEta);
     Cavnas_bParkingTrigEta->SaveAs( "bParkingTrig_eta_eff.pdf" );
 
+    // d0
+
+    TH1F* h_leadingMuonD0_bParkingTrigD0_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonD0_bParkingTrig_ratio");
+    TH1F* h_leadingMuonD0_bParkingTrigD0_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonD0_bParkingTrig_ratio");
+    TH1F* h_leadingMuonD0_bParkingTrigD0_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonD0_bParkingTrig_ratio");
+    TH1F* h_leadingMuonD0_bParkingTrigD0_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonD0_bParkingTrig_ratio");
+    TH1F* h_leadingMuonD0_bParkingTrigD0_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonD0_bParkingTrig_ratio");
+
+    TCanvas *Cavnas_bParkingTrigD0 = new TCanvas("Cavnas_bParkingTrigD0", "Cavnas_bParkingTrigD0",0,0,1280,925);
+    gStyle->SetOptStat(0);
+    Cavnas_bParkingTrigD0->Range(-0.4860759,-0.2025316,2.551899,1.063291);
+    Cavnas_bParkingTrigD0->SetFillColor(0);
+    Cavnas_bParkingTrigD0->SetBorderMode(0);
+    Cavnas_bParkingTrigD0->SetBorderSize(2);
+    Cavnas_bParkingTrigD0->SetLeftMargin(0.15);
+    Cavnas_bParkingTrigD0->SetRightMargin(0.05);
+    Cavnas_bParkingTrigD0->SetTopMargin(0.05);
+    Cavnas_bParkingTrigD0->SetBottomMargin(0.15);
+    Cavnas_bParkingTrigD0->SetGridy();
+    Cavnas_bParkingTrigD0->SetTickx(1);
+    Cavnas_bParkingTrigD0->SetTicky(1);
+    Cavnas_bParkingTrigD0->SetFrameBorderMode(0);
+    Cavnas_bParkingTrigD0->cd();
+
+    h_leadingMuonD0_bParkingTrigD0_ctau0->SetTitle("");
+    h_leadingMuonD0_bParkingTrigD0_ctau0->GetXaxis()->SetTitle("leading muon d_{0} [cm]");
+    h_leadingMuonD0_bParkingTrigD0_ctau0->GetXaxis()->SetLabelFont(42);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->GetXaxis()->SetLabelSize(0.05);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->GetXaxis()->SetTitleSize(0.05);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->GetXaxis()->SetTitleOffset(1.3);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->GetXaxis()->SetTitleFont(42);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->GetYaxis()->SetTitle("trigger efficiency");
+    h_leadingMuonD0_bParkingTrigD0_ctau0->GetYaxis()->SetLabelFont(42);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->GetYaxis()->SetLabelSize(0.035);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->GetYaxis()->SetTitleSize(0.035);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->GetYaxis()->SetTitleOffset(0);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->GetYaxis()->SetTitleFont(42);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->GetYaxis()->SetNdivisions(510);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->SetLineColor(9);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->SetMarkerColor(9);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->SetMarkerStyle(26);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->SetMarkerSize(1);
+    h_leadingMuonD0_bParkingTrigD0_ctau0->Draw("HIST p");
+
+    h_leadingMuonD0_bParkingTrigD0_ctau1->SetLineColor(8);
+    h_leadingMuonD0_bParkingTrigD0_ctau1->SetMarkerColor(8);
+    h_leadingMuonD0_bParkingTrigD0_ctau1->SetMarkerStyle(4);
+    h_leadingMuonD0_bParkingTrigD0_ctau1->SetMarkerSize(1);
+    h_leadingMuonD0_bParkingTrigD0_ctau1->Draw("HIST p same");
+
+    h_leadingMuonD0_bParkingTrigD0_ctau10->SetLineColor(2);
+    h_leadingMuonD0_bParkingTrigD0_ctau10->SetMarkerColor(2);
+    h_leadingMuonD0_bParkingTrigD0_ctau10->SetMarkerStyle(5);
+    h_leadingMuonD0_bParkingTrigD0_ctau10->SetMarkerSize(1);
+    h_leadingMuonD0_bParkingTrigD0_ctau10->Draw("HIST p same");
+
+    h_leadingMuonD0_bParkingTrigD0_ctau100->SetLineColor(1);
+    h_leadingMuonD0_bParkingTrigD0_ctau100->SetMarkerColor(1);
+    h_leadingMuonD0_bParkingTrigD0_ctau100->SetMarkerStyle(2);
+    h_leadingMuonD0_bParkingTrigD0_ctau100->SetMarkerSize(1);
+    h_leadingMuonD0_bParkingTrigD0_ctau100->Draw("HIST p same");
+
+    h_leadingMuonD0_bParkingTrigD0_ctau1000->SetLineColor(4);
+    h_leadingMuonD0_bParkingTrigD0_ctau1000->SetMarkerColor(4);
+    h_leadingMuonD0_bParkingTrigD0_ctau1000->SetMarkerStyle(3);
+    h_leadingMuonD0_bParkingTrigD0_ctau1000->SetMarkerSize(1);
+    h_leadingMuonD0_bParkingTrigD0_ctau1000->Draw("HIST p same");
+
+    TLegend *leg_bParkingTrigD0 = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
+    leg_bParkingTrigD0->SetBorderSize(0);
+    leg_bParkingTrigD0->SetTextSize(0.03);
+    leg_bParkingTrigD0->SetLineColor(1);
+    leg_bParkingTrigD0->SetLineStyle(1);
+    leg_bParkingTrigD0->SetLineWidth(1);
+    leg_bParkingTrigD0->SetFillColor(0);
+    leg_bParkingTrigD0->SetFillStyle(1001);
+    TLegendEntry *entry_bParkingTrigD0 = leg_bParkingTrigD0->AddEntry("ms2_ctau0", "c_{#tau} = 0 mm", "P");
+    entry_bParkingTrigD0->SetMarkerColor(9);
+    entry_bParkingTrigD0->SetMarkerStyle(26);
+    entry_bParkingTrigD0->SetMarkerSize(2);
+    entry_bParkingTrigD0->SetTextFont(42);
+    entry_bParkingTrigD0 = leg_bParkingTrigD0->AddEntry("ms2_ctau1", "c_{#tau} = 1 mm", "P");
+    entry_bParkingTrigD0->SetMarkerColor(8);
+    entry_bParkingTrigD0->SetMarkerStyle(4);
+    entry_bParkingTrigD0->SetMarkerSize(2);
+    entry_bParkingTrigD0->SetTextFont(42);
+    entry_bParkingTrigD0 = leg_bParkingTrigD0->AddEntry("ms2_ctau10", "c_{#tau} = 10 mm", "P");
+    entry_bParkingTrigD0->SetMarkerColor(2);
+    entry_bParkingTrigD0->SetMarkerStyle(5);
+    entry_bParkingTrigD0->SetMarkerSize(2);
+    entry_bParkingTrigD0->SetTextFont(42);
+    entry_bParkingTrigD0 = leg_bParkingTrigD0->AddEntry("ms2_ctau100", "c_{#tau} = 100 mm", "P");
+    entry_bParkingTrigD0->SetMarkerColor(1);
+    entry_bParkingTrigD0->SetMarkerStyle(2);
+    entry_bParkingTrigD0->SetMarkerSize(2);
+    entry_bParkingTrigD0->SetTextFont(42);
+    entry_bParkingTrigD0 = leg_bParkingTrigD0->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+    entry_bParkingTrigD0->SetMarkerColor(4);
+    entry_bParkingTrigD0->SetMarkerStyle(3);
+    entry_bParkingTrigD0->SetMarkerSize(2);
+    entry_bParkingTrigD0->SetTextFont(42);
+    leg_bParkingTrigD0->Draw("HIST");
+
+    Cavnas_bParkingTrigD0->Modified();
+    Cavnas_bParkingTrigD0->cd();
+    Cavnas_bParkingTrigD0->SetSelected(Cavnas_bParkingTrigD0);
+    Cavnas_bParkingTrigD0->SaveAs("bParkingTrig_D0_eff.pdf");
+
+    // Dz
+
+    TH1F* h_leadingMuonDz_bParkingTrigDz_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonDz_bParkingTrig_ratio");
+    TH1F* h_leadingMuonDz_bParkingTrigDz_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonDz_bParkingTrig_ratio");
+    TH1F* h_leadingMuonDz_bParkingTrigDz_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonDz_bParkingTrig_ratio");
+    TH1F* h_leadingMuonDz_bParkingTrigDz_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonDz_bParkingTrig_ratio");
+    TH1F* h_leadingMuonDz_bParkingTrigDz_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonDz_bParkingTrig_ratio");
+
+    TCanvas *Cavnas_bParkingTrigDz = new TCanvas("Cavnas_bParkingTrigDz", "Cavnas_bParkingTrigDz",0,0,1280,925);
+    gStyle->SetOptStat(0);
+    Cavnas_bParkingTrigDz->Range(-0.4860759,-0.2025316,2.551899,1.063291);
+    Cavnas_bParkingTrigDz->SetFillColor(0);
+    Cavnas_bParkingTrigDz->SetBorderMode(0);
+    Cavnas_bParkingTrigDz->SetBorderSize(2);
+    Cavnas_bParkingTrigDz->SetLeftMargin(0.15);
+    Cavnas_bParkingTrigDz->SetRightMargin(0.05);
+    Cavnas_bParkingTrigDz->SetTopMargin(0.05);
+    Cavnas_bParkingTrigDz->SetBottomMargin(0.15);
+    Cavnas_bParkingTrigDz->SetGridy();
+    Cavnas_bParkingTrigDz->SetTickx(1);
+    Cavnas_bParkingTrigDz->SetTicky(1);
+    Cavnas_bParkingTrigDz->SetFrameBorderMode(0);
+    Cavnas_bParkingTrigDz->cd();
+
+    h_leadingMuonDz_bParkingTrigDz_ctau0->SetTitle("");
+    h_leadingMuonDz_bParkingTrigDz_ctau0->GetXaxis()->SetTitle("leading muon d_{z} [cm]");
+    h_leadingMuonDz_bParkingTrigDz_ctau0->GetXaxis()->SetLabelFont(42);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->GetXaxis()->SetLabelSize(0.05);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->GetXaxis()->SetTitleSize(0.05);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->GetXaxis()->SetTitleOffset(1.3);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->GetXaxis()->SetTitleFont(42);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->GetYaxis()->SetTitle("trigger efficiency");
+    h_leadingMuonDz_bParkingTrigDz_ctau0->GetYaxis()->SetLabelFont(42);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->GetYaxis()->SetLabelSize(0.035);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->GetYaxis()->SetTitleSize(0.035);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->GetYaxis()->SetTitleOffset(0);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->GetYaxis()->SetTitleFont(42);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->GetYaxis()->SetNdivisions(510);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->SetLineColor(9);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->SetMarkerColor(9);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->SetMarkerStyle(26);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->SetMarkerSize(1);
+    h_leadingMuonDz_bParkingTrigDz_ctau0->Draw("HIST p");
+
+    h_leadingMuonDz_bParkingTrigDz_ctau1->SetLineColor(8);
+    h_leadingMuonDz_bParkingTrigDz_ctau1->SetMarkerColor(8);
+    h_leadingMuonDz_bParkingTrigDz_ctau1->SetMarkerStyle(4);
+    h_leadingMuonDz_bParkingTrigDz_ctau1->SetMarkerSize(1);
+    h_leadingMuonDz_bParkingTrigDz_ctau1->Draw("HIST p same");
+
+    h_leadingMuonDz_bParkingTrigDz_ctau10->SetLineColor(2);
+    h_leadingMuonDz_bParkingTrigDz_ctau10->SetMarkerColor(2);
+    h_leadingMuonDz_bParkingTrigDz_ctau10->SetMarkerStyle(5);
+    h_leadingMuonDz_bParkingTrigDz_ctau10->SetMarkerSize(1);
+    h_leadingMuonDz_bParkingTrigDz_ctau10->Draw("HIST p same");
+
+    h_leadingMuonDz_bParkingTrigDz_ctau100->SetLineColor(1);
+    h_leadingMuonDz_bParkingTrigDz_ctau100->SetMarkerColor(1);
+    h_leadingMuonDz_bParkingTrigDz_ctau100->SetMarkerStyle(2);
+    h_leadingMuonDz_bParkingTrigDz_ctau100->SetMarkerSize(1);
+    h_leadingMuonDz_bParkingTrigDz_ctau100->Draw("HIST p same");
+
+    h_leadingMuonDz_bParkingTrigDz_ctau1000->SetLineColor(4);
+    h_leadingMuonDz_bParkingTrigDz_ctau1000->SetMarkerColor(4);
+    h_leadingMuonDz_bParkingTrigDz_ctau1000->SetMarkerStyle(3);
+    h_leadingMuonDz_bParkingTrigDz_ctau1000->SetMarkerSize(1);
+    h_leadingMuonDz_bParkingTrigDz_ctau1000->Draw("HIST p same");
+
+    TLegend *leg_bParkingTrigDz = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
+    leg_bParkingTrigDz->SetBorderSize(0);
+    leg_bParkingTrigDz->SetTextSize(0.03);
+    leg_bParkingTrigDz->SetLineColor(1);
+    leg_bParkingTrigDz->SetLineStyle(1);
+    leg_bParkingTrigDz->SetLineWidth(1);
+    leg_bParkingTrigDz->SetFillColor(0);
+    leg_bParkingTrigDz->SetFillStyle(1001);
+    TLegendEntry *entry_bParkingTrigDz = leg_bParkingTrigDz->AddEntry("ms2_ctau0", "c_{#tau} = 0 mm", "P");
+    entry_bParkingTrigDz->SetMarkerColor(9);
+    entry_bParkingTrigDz->SetMarkerStyle(26);
+    entry_bParkingTrigDz->SetMarkerSize(2);
+    entry_bParkingTrigDz->SetTextFont(42);
+    entry_bParkingTrigDz = leg_bParkingTrigDz->AddEntry("ms2_ctau1", "c_{#tau} = 1 mm", "P");
+    entry_bParkingTrigDz->SetMarkerColor(8);
+    entry_bParkingTrigDz->SetMarkerStyle(4);
+    entry_bParkingTrigDz->SetMarkerSize(2);
+    entry_bParkingTrigDz->SetTextFont(42);
+    entry_bParkingTrigDz = leg_bParkingTrigDz->AddEntry("ms2_ctau10", "c_{#tau} = 10 mm", "P");
+    entry_bParkingTrigDz->SetMarkerColor(2);
+    entry_bParkingTrigDz->SetMarkerStyle(5);
+    entry_bParkingTrigDz->SetMarkerSize(2);
+    entry_bParkingTrigDz->SetTextFont(42);
+    entry_bParkingTrigDz = leg_bParkingTrigDz->AddEntry("ms2_ctau100", "c_{#tau} = 100 mm", "P");
+    entry_bParkingTrigDz->SetMarkerColor(1);
+    entry_bParkingTrigDz->SetMarkerStyle(2);
+    entry_bParkingTrigDz->SetMarkerSize(2);
+    entry_bParkingTrigDz->SetTextFont(42);
+    entry_bParkingTrigDz = leg_bParkingTrigDz->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+    entry_bParkingTrigDz->SetMarkerColor(4);
+    entry_bParkingTrigDz->SetMarkerStyle(3);
+    entry_bParkingTrigDz->SetMarkerSize(2);
+    entry_bParkingTrigDz->SetTextFont(42);
+    leg_bParkingTrigDz->Draw("HIST");
+
+    Cavnas_bParkingTrigDz->Modified();
+    Cavnas_bParkingTrigDz->cd();
+    Cavnas_bParkingTrigDz->SetSelected(Cavnas_bParkingTrigDz);
+    Cavnas_bParkingTrigDz->SaveAs("bParkingTrig_Dz_eff.pdf");
+
     // DeltaR
 
-    TH1F* h_delR_bParkingTrigDelR_ctau0    = (TH1F*)inFile0->Get("h_delR_bParkingTrig");
-    TH1F* h_delR_bParkingTrigDelR_ctau1    = (TH1F*)inFile1->Get("h_delR_bParkingTrig");
-    TH1F* h_delR_bParkingTrigDelR_ctau10   = (TH1F*)inFile2->Get("h_delR_bParkingTrig");
-    TH1F* h_delR_bParkingTrigDelR_ctau100  = (TH1F*)inFile3->Get("h_delR_bParkingTrig");
-    TH1F* h_delR_bParkingTrigDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_bParkingTrig");
+    TH1F* h_delR_bParkingTrigDelR_ctau0    = (TH1F*)inFile0->Get("h_delR_bParkingTrig_ratio");
+    TH1F* h_delR_bParkingTrigDelR_ctau1    = (TH1F*)inFile1->Get("h_delR_bParkingTrig_ratio");
+    TH1F* h_delR_bParkingTrigDelR_ctau10   = (TH1F*)inFile2->Get("h_delR_bParkingTrig_ratio");
+    TH1F* h_delR_bParkingTrigDelR_ctau100  = (TH1F*)inFile3->Get("h_delR_bParkingTrig_ratio");
+    TH1F* h_delR_bParkingTrigDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_bParkingTrig_ratio");
 
     TCanvas *Cavnas_bParkingTrigDelR = new TCanvas("Cavnas_bParkingTrigDelR", "Cavnas_bParkingTrigDelR",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -351,11 +569,11 @@ void bparkingEfficiencyPlotMacro() {
 
     // mass
 
-    TH1F* h_mass_bParkingTrigMass_ctau0    = (TH1F*)inFile0->Get("h_diMuonMass_bParkingTrig");
-    TH1F* h_mass_bParkingTrigMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_bParkingTrig");
-    TH1F* h_mass_bParkingTrigMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_bParkingTrig");
-    TH1F* h_mass_bParkingTrigMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_bParkingTrig");
-    TH1F* h_mass_bParkingTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_bParkingTrig");
+    TH1F* h_mass_bParkingTrigMass_ctau0    = (TH1F*)inFile0->Get("h_diMuonMass_bParkingTrig_ratio");
+    TH1F* h_mass_bParkingTrigMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_bParkingTrig_ratio");
+    TH1F* h_mass_bParkingTrigMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_bParkingTrig_ratio");
+    TH1F* h_mass_bParkingTrigMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_bParkingTrig_ratio");
+    TH1F* h_mass_bParkingTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_bParkingTrig_ratio");
 
     TCanvas *Cavnas_bParkingTrigMass = new TCanvas("Cavnas_bParkingTrigMass", "Cavnas_bParkingTrigMass",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -460,11 +678,11 @@ void bparkingEfficiencyPlotMacro() {
 
     // Impact Trans Sig
 
-    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonImpactTransSig_bParkingTrig");
-    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonImpactTransSig_bParkingTrig");
-    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonImpactTransSig_bParkingTrig");
-    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonImpactTransSig_bParkingTrig");
-    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonImpactTransSig_bParkingTrig");
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonImpactTransSig_bParkingTrig_ratio");
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonImpactTransSig_bParkingTrig_ratio");
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonImpactTransSig_bParkingTrig_ratio");
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonImpactTransSig_bParkingTrig_ratio");
+    TH1F* h_ImpactTransSig_bParkingTrigImpactTransSig_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonImpactTransSig_bParkingTrig_ratio");
 
     TCanvas *Cavnas_bParkingTrigImpactTransSig = new TCanvas("Cavnas_bParkingTrigImpactTransSig", "Cavnas_bParkingTrigImpactTransSig",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -568,11 +786,11 @@ void bparkingEfficiencyPlotMacro() {
     Cavnas_bParkingTrigImpactTransSig->SaveAs( "bParkingTrig_ImpactTransSig_eff.pdf" );
 
     // Impact 3D Sig
-    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonImpact3DSig_bParkingTrig");
-    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonImpact3DSig_bParkingTrig");
-    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonImpact3DSig_bParkingTrig");
-    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonImpact3DSig_bParkingTrig");
-    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonImpact3DSig_bParkingTrig");
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau0    = (TH1F*)inFile0->Get("h_leadingMuonImpact3DSig_bParkingTrig_ratio");
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonImpact3DSig_bParkingTrig_ratio");
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonImpact3DSig_bParkingTrig_ratio");
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonImpact3DSig_bParkingTrig_ratio");
+    TH1F* h_Impact3DSig_bParkingTrigImpact3DSig_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonImpact3DSig_bParkingTrig_ratio");
 
     TCanvas *Cavnas_bParkingTrigImpact3DSig = new TCanvas("Cavnas_bParkingTrigImpact3DSig", "Cavnas_bParkingTrigImpact3DSig",0,0,1280,925);
     gStyle->SetOptStat(0);

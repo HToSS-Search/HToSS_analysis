@@ -109,10 +109,15 @@ int main(int argc, char* argv[]) {
     TH1F* h_subleadingMuonPt     { new TH1F("h_subleadingMuonPt",       ";p_{T}", 200, 0., 100.)};
     TH1F* h_muonDeltaR           { new TH1F("h_muonDeltaR",             ";#Delta R", 500, 0., 1.)}; 
     TH1F* h_dimuonPt             { new TH1F("h_dimuonPt",               ";p_{T}", 400, 0., 200.)};
-    TH1F* h_muonPtOverDeltaR     { new TH1F("h_muonPtOverDeltaR",       "p_{T}/#Delta R", 4000, 0., 10.)};
-    TH2F* h_muonPtOverDeltaR2D   { new TH2F("h_muonPtOverDeltaR2D",     "", 200, 0., 100., 500, 0., 5.)};
+    TH1F* h_muonPtOverDeltaR     { new TH1F("h_muonPtOverDeltaR",       ";p_{T}/#Delta R", 4000, 0., 10.)};
+    TH2F* h_muonPtOverDeltaR2D   { new TH2F("h_muonPtOverDeltaR2D",     ";p_{T};Delta R", 200, 0., 100., 500, 0., 5.)};
     TH1F* h_diMuonMass           { new TH1F("h_diMuonMass",             ";Mass", 100, 0., 4.0)};
     TH1F* h_diMuonRefittedMass   { new TH1F("h_diMuonRefittedMass",     ";Mass", 100, 0., 4.0)};
+
+    TH2F* h_leadingMuonPtOverIPSigTrans    { new TH2F("h_leadingMuonPtOverIPSigTrans",    ";p_{T};IP_{Trans} Sig", 200, 0., 100.,  400, 0., 100)};
+    TH2F* h_leadingMuonPtOverIPSig3D       { new TH2F("h_leadingMuonPtOverIPSig3D",       ";p_{T};IP_{3D} Sig", 200, 0., 100.,  400, 0., 100)};
+    TH2F* h_subleadingMuonPtOverIPSigTrans { new TH2F("h_subleadingMuonPtOverIPSigTrans", ";p_{T};IP_{Trans} Sig", 200, 0., 100.,  400, 0., 100)};
+    TH2F* h_subleadingMuonPtOverIPSig3D    { new TH2F("h_subLeadingMuonPtOverIPSig3D",    ";p_{T};IP_{3D} Sig", 200, 0., 100.,  400, 0., 100)};
 
     TH1F* h_leadingChsPt         { new TH1F("h_leadingChsPt", 	        ";p_{T}", 200, 0., 100.)};
     TH1F* h_subleadingChsPt      { new TH1F("h_subleadingChsPt",        ";p_{T}", 200, 0., 100.)};
@@ -154,6 +159,11 @@ int main(int argc, char* argv[]) {
     TH2F* ht_muonPtOverDeltaR2D  { new TH2F("ht_muonPtOverDeltaR2D",    "; p_{T}; #Delta R", 200, 0., 100., 500, 0., 5.)};
     TH1F* ht_diMuonMass          { new TH1F("ht_diMuonMass",            "Mass", 100, 0., 4.0)};
     TH1F* ht_diMuonRefittedMass  { new TH1F("ht_diMuonRefittedMass",    ";Mass", 100, 0., 4.0)};
+
+    TH2F* ht_leadingMuonPtOverIPSigTrans    { new TH2F("ht_leadingMuonPtOverIPSigTrans",    ";p_{T};IP_{Trans} Sig", 200, 0., 100.,  400, 0., 100)};
+    TH2F* ht_leadingMuonPtOverIPSig3D	    { new TH2F("ht_leadingMuonPtOverIPSig3D",  	    ";p_{T};IP_{3D} Sig", 200, 0., 100.,  400, 0., 100)};
+    TH2F* ht_subleadingMuonPtOverIPSigTrans { new TH2F("ht_subleadingMuonPtOverIPSigTrans", ";p_{T};IP_{Trans} Sig", 200, 0., 100.,  400, 0., 100)};
+    TH2F* ht_subleadingMuonPtOverIPSig3D    { new TH2F("ht_subLeadingMuonPtOverIPSig3D",    ";p_{T};IP_{3D} Sig", 200, 0., 100.,  400, 0., 100)};
 
     TH1F* ht_leadingChsPt        { new TH1F("ht_leadingChsPt",          ";p_{T}", 200, 0., 100.)};
     TH1F* ht_subleadingChsPt     { new TH1F("ht_subleadingChsPt",       ";p_{T}", 200, 0., 100.)};
@@ -435,6 +445,11 @@ int main(int argc, char* argv[]) {
             h_muonPtOverDeltaR2D->Fill( (muon1Vec + muon2Vec).Pt(), muon1Vec.DeltaR(muon2Vec),datasetWeight );
             h_diMuonMass->Fill((muon1Vec + muon2Vec).M(),datasetWeight );
             h_diMuonRefittedMass->Fill((event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(),datasetWeight );
+ 
+            h_leadingMuonPtOverIPSigTrans->Fill(muon1Vec.Pt(), event.muonPF2PATImpactTransSignificance[event.zPairIndex.first], datasetWeight);
+            h_leadingMuonPtOverIPSig3D->Fill(muon1Vec.Pt(), event.muonPF2PATImpact3DSignificance[event.zPairIndex.first], datasetWeight);
+            h_subleadingMuonPtOverIPSigTrans->Fill(muon2Vec.Pt(), event.muonPF2PATImpactTransSignificance[event.zPairIndex.second], datasetWeight);
+            h_subleadingMuonPtOverIPSig3D->Fill(muon2Vec.Pt(), event.muonPF2PATImpact3DSignificance[event.zPairIndex.second], datasetWeight);
 
             h_leadingChsPt->Fill(chs1Vec.Pt(),datasetWeight);
       	    h_subleadingChsPt->Fill(chs2Vec.Pt(),datasetWeight);
@@ -477,6 +492,11 @@ int main(int argc, char* argv[]) {
                 ht_muonPtOverDeltaR2D->Fill( (muon1Vec + muon2Vec).Pt(), muon1Vec.DeltaR(muon2Vec),datasetWeight );
                 ht_diMuonMass->Fill((muon1Vec + muon2Vec).M(),datasetWeight );
                 ht_diMuonRefittedMass->Fill((event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M(),datasetWeight );
+
+                ht_leadingMuonPtOverIPSigTrans->Fill(muon1Vec.Pt(), event.muonPF2PATImpactTransSignificance[event.zPairIndex.first], datasetWeight);
+                ht_leadingMuonPtOverIPSig3D->Fill(muon1Vec.Pt(), event.muonPF2PATImpact3DSignificance[event.zPairIndex.first], datasetWeight);
+                ht_subleadingMuonPtOverIPSigTrans->Fill(muon2Vec.Pt(), event.muonPF2PATImpactTransSignificance[event.zPairIndex.second], datasetWeight);
+                ht_subleadingMuonPtOverIPSig3D->Fill(muon2Vec.Pt(), event.muonPF2PATImpact3DSignificance[event.zPairIndex.second], datasetWeight);
 
                 ht_leadingChsPt->Fill(chs1Vec.Pt(),datasetWeight);
                 ht_subleadingChsPt->Fill(chs2Vec.Pt(),datasetWeight);
@@ -558,6 +578,11 @@ int main(int argc, char* argv[]) {
     h_diMuonMass->Write();
     h_diMuonRefittedMass->Write();
 
+    h_leadingMuonPtOverIPSigTrans->Write();
+    h_leadingMuonPtOverIPSig3D->Write();
+    h_subleadingMuonPtOverIPSigTrans->Write();
+    h_subleadingMuonPtOverIPSig3D->Write();
+
     h_leadingChsPt->Write();
     h_subleadingChsPt->Write();
     h_chsDeltaR->Write();
@@ -597,6 +622,11 @@ int main(int argc, char* argv[]) {
     ht_muonPtOverDeltaR2D->Write();   
     ht_diMuonMass->Write();
     ht_diMuonRefittedMass->Write();
+
+    ht_leadingMuonPtOverIPSigTrans->Write();
+    ht_leadingMuonPtOverIPSig3D->Write();
+    ht_subleadingMuonPtOverIPSigTrans->Write();
+    ht_subleadingMuonPtOverIPSig3D->Write();
 
     ht_leadingChsPt->Write();
     ht_subleadingChsPt->Write();

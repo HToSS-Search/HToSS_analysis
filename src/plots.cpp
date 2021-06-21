@@ -1110,6 +1110,60 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
                  return {event.muonPF2PATDBInnerTrackD0[event.muonIndexTight[1]]};
              }
          }},
+        {"lep1ImpactTransDist",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             if ( event.electronIndexTight.size() > 1 ) {
+                 return {event.elePF2PATImpactTransDist[event.electronIndexTight[0]]};
+             }
+             else {
+                 return {event.muonPF2PATImpactTransDist[event.muonIndexTight[0]]};
+             }
+         }},
+        {"lep2ImpactTransDist",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             if ( event.electronIndexTight.size() > 1 ) {
+                 return {event.elePF2PATImpactTransDist[event.electronIndexTight[1]]};
+             }
+             else {
+                 return {event.muonPF2PATImpactTransDist[event.muonIndexTight[1]]};
+             }
+         }},
+	{"lep1ImpactTransError",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             if ( event.electronIndexTight.size() > 1 ) {
+                 return {event.elePF2PATImpactTransError[event.electronIndexTight[0]]};
+             }
+             else {
+                 return {event.muonPF2PATImpactTransError[event.muonIndexTight[0]]};
+             }
+         }},
+        {"lep2ImpactTransError",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             if ( event.electronIndexTight.size() > 1 ) {
+                 return {event.elePF2PATImpactTransError[event.electronIndexTight[1]]};
+             }
+             else {
+                 return {event.muonPF2PATImpactTransError[event.muonIndexTight[1]]};
+             }
+         }},
+	{"lep1ImpactTransSig",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             if ( event.electronIndexTight.size() > 1 ) {
+                 return {event.elePF2PATImpactTransSignificance[event.electronIndexTight[0]]};
+             }
+             else {
+                 return {event.muonPF2PATImpactTransSignificance[event.muonIndexTight[0]]};
+             }
+         }},
+        {"lep2ImpactTransSig",
+         [](const AnalysisEvent& event) -> std::vector<float> {
+             if ( event.electronIndexTight.size() > 1 ) {
+                 return {event.elePF2PATImpactTransSignificance[event.electronIndexTight[1]]};
+             }
+             else {
+                 return {event.muonPF2PATImpactTransSignificance[event.muonIndexTight[1]]};
+             }
+         }},
         {"wTransverseMass",
          [](const AnalysisEvent& event) -> std::vector<float> {
              return { float (std::sqrt(2 * event.wPairQuarks.first.Pt() * event.wPairQuarks.second.Pt() * (1 - std::cos(event.wPairQuarks.first.Phi() - event.wPairQuarks.second.Phi()))))};
