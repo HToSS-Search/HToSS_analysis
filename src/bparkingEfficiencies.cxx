@@ -84,22 +84,22 @@ int main(int argc, char* argv[]) {
     TH1F* h_leadingMuonImpact3DSig               {new TH1F("h_leadingMuonImpact3DSig",             "", 400, 0., 100.)};
     TH1F* h_subLeadingMuonImpact3DSig            {new TH1F("h_subLeadingMuonImpact3DSig",          "", 400, 0., 100.)};
 
-    TH1F* h_leadingMuonImpactTransSig_0to2_truth     {new TH1F("h_leadingMuonImpactTransSig_0to2_truth",   "", 400, 0., 2.)};
-    TH1F* h_leadingMuonImpactTransSig_0to2           {new TH1F("h_leadingMuonImpactTransSig_0to2",         "", 400, 0., 2.)};
-    TH1F* h_leadingMuonImpactTransSig_2to4_truth     {new TH1F("h_leadingMuonImpactTransSig_2to4_truth",   "", 400, 2., 4.)};
-    TH1F* h_leadingMuonImpactTransSig_2to4           {new TH1F("h_leadingMuonImpactTransSig_2to4",         "", 400, 2., 4.)};
-    TH1F* h_leadingMuonImpactTransSig_4to6_truth     {new TH1F("h_leadingMuonImpactTransSig_4to6_truth",   "", 400, 4., 6.)};
-    TH1F* h_leadingMuonImpactTransSig_4to6           {new TH1F("h_leadingMuonImpactTransSig_4to6",         "", 400, 4., 6.)};
-    TH1F* h_leadingMuonImpactTransSig_6to8_truth     {new TH1F("h_leadingMuonImpactTransSig_6to8_truth",   "", 400, 6., 8.)};
-    TH1F* h_leadingMuonImpactTransSig_6to8           {new TH1F("h_leadingMuonImpactTransSig_6to8",         "", 400, 6., 8.)};
-    TH1F* h_leadingMuonImpactTransSig_8to10_truth    {new TH1F("h_leadingMuonImpactTransSig_8to10_truth",  "", 400, 8., 10.)};
-    TH1F* h_leadingMuonImpactTransSig_8to10          {new TH1F("h_leadingMuonImpactTransSig_8to10",        "", 400, 8., 10.)};
-    TH1F* h_leadingMuonImpactTransSig_0to10_truth    {new TH1F("h_leadingMuonImpactTransSig_0to10_truth",  "", 400, 0., 10.)};
-    TH1F* h_leadingMuonImpactTransSig_0to10          {new TH1F("h_leadingMuonImpactTransSig_0to10",        "", 400, 0., 10.)};
-    TH1F* h_leadingMuonImpactTransSig_10to20_truth   {new TH1F("h_leadingMuonImpactTransSig_10to20_truth", "", 400, 10., 20.)};
-    TH1F* h_leadingMuonImpactTransSig_10to20         {new TH1F("h_leadingMuonImpactTransSig_10to20",       "", 400, 10., 20.)};
-    TH1F* h_leadingMuonImpactTransSig_20to30_truth   {new TH1F("h_leadingMuonImpactTransSig_20to30_truth", "", 400, 20., 30.)};
-    TH1F* h_leadingMuonImpactTransSig_20to30         {new TH1F("h_leadingMuonImpactTransSig_20to30",       "", 400, 20., 30.)};
+    TH1F* h_leadingMuonImpactTransSig_0to2_truth     {new TH1F("h_leadingMuonImpactTransSig_0to2_truth",   "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_0to2           {new TH1F("h_leadingMuonImpactTransSig_0to2",         "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_2to4_truth     {new TH1F("h_leadingMuonImpactTransSig_2to4_truth",   "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_2to4           {new TH1F("h_leadingMuonImpactTransSig_2to4",         "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_4to6_truth     {new TH1F("h_leadingMuonImpactTransSig_4to6_truth",   "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_4to6           {new TH1F("h_leadingMuonImpactTransSig_4to6",         "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_6to8_truth     {new TH1F("h_leadingMuonImpactTransSig_6to8_truth",   "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_6to8           {new TH1F("h_leadingMuonImpactTransSig_6to8",         "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_8to10_truth    {new TH1F("h_leadingMuonImpactTransSig_8to10_truth",  "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_8to10          {new TH1F("h_leadingMuonImpactTransSig_8to10",        "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_0to10_truth    {new TH1F("h_leadingMuonImpactTransSig_0to10_truth",  "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_0to10          {new TH1F("h_leadingMuonImpactTransSig_0to10",        "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_10to20_truth   {new TH1F("h_leadingMuonImpactTransSig_10to20_truth", "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_10to20         {new TH1F("h_leadingMuonImpactTransSig_10to20",       "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_20to30_truth   {new TH1F("h_leadingMuonImpactTransSig_20to30_truth", "", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_20to30         {new TH1F("h_leadingMuonImpactTransSig_20to30",       "", 100, 0., 100.)};
 
     // numerator - bParking
     TH1F* h_leadingMuonPt_truth_bParkingTrig                  {new TH1F("h_leadingMuonPt_truth_bParkingTrig",                 "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 200, 0., 100.)};
@@ -134,22 +134,22 @@ int main(int argc, char* argv[]) {
     TH1F* h_leadingMuonImpact3DSig_bParkingTrig     	      {new TH1F("h_leadingMuonImpact3DSig_bParkingTrig",              "Trigger turn-on for signal; IP_{3D}; trigger #epsilon", 400, 0., 100.)};
     TH1F* h_subLeadingMuonImpact3DSig_bParkingTrig     	      {new TH1F("h_subLeadingMuonImpact3DSig_bParkingTrig",           "Trigger turn-on for signal; IP_{3D}; trigger #epsilon", 400, 0., 100.)};
 
-    TH1F* h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig     {new TH1F("h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig",   "", 400, 0., 2.)};
-    TH1F* h_leadingMuonImpactTransSig_0to2_bParkingTrig           {new TH1F("h_leadingMuonImpactTransSig_0to2_bParkingTrig",         "", 400, 0., 2.)};
-    TH1F* h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig     {new TH1F("h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig",   "", 400, 2., 4.)};
-    TH1F* h_leadingMuonImpactTransSig_2to4_bParkingTrig           {new TH1F("h_leadingMuonImpactTransSig_2to4_bParkingTrig",         "", 400, 2., 4.)};
-    TH1F* h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig     {new TH1F("h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig",   "", 400, 4., 6.)};
-    TH1F* h_leadingMuonImpactTransSig_4to6_bParkingTrig           {new TH1F("h_leadingMuonImpactTransSig_4to6_bParkingTrig",         "", 400, 4., 6.)};
-    TH1F* h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig     {new TH1F("h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig",   "", 400, 6., 8.)};
-    TH1F* h_leadingMuonImpactTransSig_6to8_bParkingTrig           {new TH1F("h_leadingMuonImpactTransSig_6to8_bParkingTrig",         "", 400, 6., 8.)};
-    TH1F* h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig    {new TH1F("h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig",  "", 400, 8., 10.)};
-    TH1F* h_leadingMuonImpactTransSig_8to10_bParkingTrig          {new TH1F("h_leadingMuonImpactTransSig_8to10_bParkingTrig",        "", 400, 8., 10.)};
-    TH1F* h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig    {new TH1F("h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig",  "", 400, 0., 10.)};
-    TH1F* h_leadingMuonImpactTransSig_0to10_bParkingTrig          {new TH1F("h_leadingMuonImpactTransSig_0to10_bParkingTrig",        "", 400, 0., 10.)};
-    TH1F* h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig   {new TH1F("h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig", "", 400, 10., 20.)};
-    TH1F* h_leadingMuonImpactTransSig_10to20_bParkingTrig         {new TH1F("h_leadingMuonImpactTransSig_10to20_bParkingTrig",       "", 400, 10., 20.)};
-    TH1F* h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig   {new TH1F("h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig", "", 400, 20., 30.)};
-    TH1F* h_leadingMuonImpactTransSig_20to30_bParkingTrig         {new TH1F("h_leadingMuonImpactTransSig_20to30_bParkingTrig",       "", 400, 20., 30.)};
+    TH1F* h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig     {new TH1F("h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig",   "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_0to2_bParkingTrig           {new TH1F("h_leadingMuonImpactTransSig_0to2_bParkingTrig",         "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig     {new TH1F("h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig",   "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_2to4_bParkingTrig           {new TH1F("h_leadingMuonImpactTransSig_2to4_bParkingTrig",         "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig     {new TH1F("h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig",   "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_4to6_bParkingTrig           {new TH1F("h_leadingMuonImpactTransSig_4to6_bParkingTrig",         "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig     {new TH1F("h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig",   "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_6to8_bParkingTrig           {new TH1F("h_leadingMuonImpactTransSig_6to8_bParkingTrig",         "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig    {new TH1F("h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig",  "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_8to10_bParkingTrig          {new TH1F("h_leadingMuonImpactTransSig_8to10_bParkingTrig",        "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig    {new TH1F("h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig",  "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_0to10_bParkingTrig          {new TH1F("h_leadingMuonImpactTransSig_0to10_bParkingTrig",        "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig   {new TH1F("h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig", "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_10to20_bParkingTrig         {new TH1F("h_leadingMuonImpactTransSig_10to20_bParkingTrig",       "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig   {new TH1F("h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig", "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
+    TH1F* h_leadingMuonImpactTransSig_20to30_bParkingTrig         {new TH1F("h_leadingMuonImpactTransSig_20to30_bParkingTrig",       "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 100, 0., 100.)};
 
     // ratio 
     TH1F* h_leadingMuonPt_truth_bParkingTrig_ratio;
@@ -413,10 +413,10 @@ int main(int argc, char* argv[]) {
                 if (event.muonPF2PATImpactTransSignificance[0]   >= 20. && event.muonPF2PATImpactTransSignificance[0]   < 30.0) h_leadingMuonImpactTransSig_20to30->Fill(event.muonPF2PATImpactTransSignificance[0]);
 
                 // Fill pT post trigger (with and without scalar parentage)
-                if (event.bParkingTrigInclusive()) {
+//                if (event.bParkingTrigInclusive()) {
 //                if (event.bParkingTrig_Mu12_IP6()) {
 //                if (event.bParkingTrig_Mu9_IP6()) {
-//                if (event.bParkingTrig_Mu9_IP5()) {
+                if (event.bParkingTrig_Mu9_IP5()) {
 
                     double eventWeight = 1.;
 
