@@ -84,6 +84,23 @@ int main(int argc, char* argv[]) {
     TH1F* h_leadingMuonImpact3DSig               {new TH1F("h_leadingMuonImpact3DSig",             "", 400, 0., 100.)};
     TH1F* h_subLeadingMuonImpact3DSig            {new TH1F("h_subLeadingMuonImpact3DSig",          "", 400, 0., 100.)};
 
+    TH1F* h_leadingMuonImpactTransSig_0to2_truth     {new TH1F("h_leadingMuonImpactTransSig_0to2_truth",   "", 400, 0., 2.)};
+    TH1F* h_leadingMuonImpactTransSig_0to2           {new TH1F("h_leadingMuonImpactTransSig_0to2",         "", 400, 0., 2.)};
+    TH1F* h_leadingMuonImpactTransSig_2to4_truth     {new TH1F("h_leadingMuonImpactTransSig_2to4_truth",   "", 400, 2., 4.)};
+    TH1F* h_leadingMuonImpactTransSig_2to4           {new TH1F("h_leadingMuonImpactTransSig_2to4",         "", 400, 2., 4.)};
+    TH1F* h_leadingMuonImpactTransSig_4to6_truth     {new TH1F("h_leadingMuonImpactTransSig_4to6_truth",   "", 400, 4., 6.)};
+    TH1F* h_leadingMuonImpactTransSig_4to6           {new TH1F("h_leadingMuonImpactTransSig_4to6",         "", 400, 4., 6.)};
+    TH1F* h_leadingMuonImpactTransSig_6to8_truth     {new TH1F("h_leadingMuonImpactTransSig_6to8_truth",   "", 400, 6., 8.)};
+    TH1F* h_leadingMuonImpactTransSig_6to8           {new TH1F("h_leadingMuonImpactTransSig_6to8",         "", 400, 6., 8.)};
+    TH1F* h_leadingMuonImpactTransSig_8to10_truth    {new TH1F("h_leadingMuonImpactTransSig_8to10_truth",  "", 400, 8., 10.)};
+    TH1F* h_leadingMuonImpactTransSig_8to10          {new TH1F("h_leadingMuonImpactTransSig_8to10",        "", 400, 8., 10.)};
+    TH1F* h_leadingMuonImpactTransSig_0to10_truth    {new TH1F("h_leadingMuonImpactTransSig_0to10_truth",  "", 400, 0., 10.)};
+    TH1F* h_leadingMuonImpactTransSig_0to10          {new TH1F("h_leadingMuonImpactTransSig_0to10",        "", 400, 0., 10.)};
+    TH1F* h_leadingMuonImpactTransSig_10to20_truth   {new TH1F("h_leadingMuonImpactTransSig_10to20_truth", "", 400, 10., 20.)};
+    TH1F* h_leadingMuonImpactTransSig_10to20         {new TH1F("h_leadingMuonImpactTransSig_10to20",       "", 400, 10., 20.)};
+    TH1F* h_leadingMuonImpactTransSig_20to30_truth   {new TH1F("h_leadingMuonImpactTransSig_20to30_truth", "", 400, 20., 30.)};
+    TH1F* h_leadingMuonImpactTransSig_20to30         {new TH1F("h_leadingMuonImpactTransSig_20to30",       "", 400, 20., 30.)};
+
     // numerator - bParking
     TH1F* h_leadingMuonPt_truth_bParkingTrig                  {new TH1F("h_leadingMuonPt_truth_bParkingTrig",                 "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 200, 0., 100.)};
     TH1F* h_subLeadingMuonPt_truth_bParkingTrig               {new TH1F("h_subLeadingMuonPt_truth_bParkingTrig",              "Trigger turn-on for signal; p_{T} (GeV); trigger #epsilon", 200, 0., 100.)};
@@ -117,6 +134,23 @@ int main(int argc, char* argv[]) {
     TH1F* h_leadingMuonImpact3DSig_bParkingTrig     	      {new TH1F("h_leadingMuonImpact3DSig_bParkingTrig",              "Trigger turn-on for signal; IP_{3D}; trigger #epsilon", 400, 0., 100.)};
     TH1F* h_subLeadingMuonImpact3DSig_bParkingTrig     	      {new TH1F("h_subLeadingMuonImpact3DSig_bParkingTrig",           "Trigger turn-on for signal; IP_{3D}; trigger #epsilon", 400, 0., 100.)};
 
+    TH1F* h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig     {new TH1F("h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig",   "", 400, 0., 2.)};
+    TH1F* h_leadingMuonImpactTransSig_0to2_bParkingTrig           {new TH1F("h_leadingMuonImpactTransSig_0to2_bParkingTrig",         "", 400, 0., 2.)};
+    TH1F* h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig     {new TH1F("h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig",   "", 400, 2., 4.)};
+    TH1F* h_leadingMuonImpactTransSig_2to4_bParkingTrig           {new TH1F("h_leadingMuonImpactTransSig_2to4_bParkingTrig",         "", 400, 2., 4.)};
+    TH1F* h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig     {new TH1F("h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig",   "", 400, 4., 6.)};
+    TH1F* h_leadingMuonImpactTransSig_4to6_bParkingTrig           {new TH1F("h_leadingMuonImpactTransSig_4to6_bParkingTrig",         "", 400, 4., 6.)};
+    TH1F* h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig     {new TH1F("h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig",   "", 400, 6., 8.)};
+    TH1F* h_leadingMuonImpactTransSig_6to8_bParkingTrig           {new TH1F("h_leadingMuonImpactTransSig_6to8_bParkingTrig",         "", 400, 6., 8.)};
+    TH1F* h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig    {new TH1F("h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig",  "", 400, 8., 10.)};
+    TH1F* h_leadingMuonImpactTransSig_8to10_bParkingTrig          {new TH1F("h_leadingMuonImpactTransSig_8to10_bParkingTrig",        "", 400, 8., 10.)};
+    TH1F* h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig    {new TH1F("h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig",  "", 400, 0., 10.)};
+    TH1F* h_leadingMuonImpactTransSig_0to10_bParkingTrig          {new TH1F("h_leadingMuonImpactTransSig_0to10_bParkingTrig",        "", 400, 0., 10.)};
+    TH1F* h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig   {new TH1F("h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig", "", 400, 10., 20.)};
+    TH1F* h_leadingMuonImpactTransSig_10to20_bParkingTrig         {new TH1F("h_leadingMuonImpactTransSig_10to20_bParkingTrig",       "", 400, 10., 20.)};
+    TH1F* h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig   {new TH1F("h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig", "", 400, 20., 30.)};
+    TH1F* h_leadingMuonImpactTransSig_20to30_bParkingTrig         {new TH1F("h_leadingMuonImpactTransSig_20to30_bParkingTrig",       "", 400, 20., 30.)};
+
     // ratio 
     TH1F* h_leadingMuonPt_truth_bParkingTrig_ratio;
     TH1F* h_subLeadingMuonPt_truth_bParkingTrig_ratio;
@@ -149,6 +183,23 @@ int main(int argc, char* argv[]) {
     TH1F* h_subLeadingMuonImpact3DSig_truth_bParkingTrig_ratio;
     TH1F* h_leadingMuonImpact3DSig_bParkingTrig_ratio;
     TH1F* h_subLeadingMuonImpact3DSig_bParkingTrig_ratio;
+
+    TH1F* h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_0to2_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_2to4_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_4to6_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_6to8_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_8to10_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_0to10_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_10to20_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig_ratio;
+    TH1F* h_leadingMuonImpactTransSig_20to30_bParkingTrig_ratio;
 
     namespace po = boost::program_options;
 
@@ -344,6 +395,23 @@ int main(int argc, char* argv[]) {
                 h_leadingMuonImpact3DSig->Fill(event.muonPF2PATImpact3DSignificance[0]);
                 h_subLeadingMuonImpact3DSig->Fill(event.muonPF2PATImpact3DSignificance[1]);
 
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 0. && event.muonPF2PATImpactTransSignificance[mu1] < 2.0  ) h_leadingMuonImpactTransSig_0to2_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 0. && event.muonPF2PATImpactTransSignificance[0]   < 2.0  ) h_leadingMuonImpactTransSig_0to2->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 2. && event.muonPF2PATImpactTransSignificance[mu1] < 4.0  ) h_leadingMuonImpactTransSig_2to4_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 2. && event.muonPF2PATImpactTransSignificance[0]   < 4.0  ) h_leadingMuonImpactTransSig_2to4->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 4. && event.muonPF2PATImpactTransSignificance[mu1] < 6.0  ) h_leadingMuonImpactTransSig_4to6_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 4. && event.muonPF2PATImpactTransSignificance[0]   < 6.0  ) h_leadingMuonImpactTransSig_4to6->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 6. && event.muonPF2PATImpactTransSignificance[mu1] < 8.0  ) h_leadingMuonImpactTransSig_6to8_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 6. && event.muonPF2PATImpactTransSignificance[0]   < 8.0  ) h_leadingMuonImpactTransSig_6to8->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 8. && event.muonPF2PATImpactTransSignificance[mu1] < 10.0 ) h_leadingMuonImpactTransSig_8to10_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 8. && event.muonPF2PATImpactTransSignificance[0]   < 10.0 ) h_leadingMuonImpactTransSig_8to10->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 0. && event.muonPF2PATImpactTransSignificance[mu1] < 10.0 ) h_leadingMuonImpactTransSig_0to10_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 0. && event.muonPF2PATImpactTransSignificance[0]   < 10.0 ) h_leadingMuonImpactTransSig_0to10->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 10. && event.muonPF2PATImpactTransSignificance[mu1] < 20.0) h_leadingMuonImpactTransSig_10to20_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 10. && event.muonPF2PATImpactTransSignificance[0]   < 20.0) h_leadingMuonImpactTransSig_10to20->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 20. && event.muonPF2PATImpactTransSignificance[mu1] < 30.0) h_leadingMuonImpactTransSig_20to30_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 20. && event.muonPF2PATImpactTransSignificance[0]   < 30.0) h_leadingMuonImpactTransSig_20to30->Fill(event.muonPF2PATImpactTransSignificance[0]);
+
                 // Fill pT post trigger (with and without scalar parentage)
                 if (event.bParkingTrigInclusive()) {
 //                if (event.bParkingTrig_Mu12_IP6()) {
@@ -389,6 +457,23 @@ int main(int argc, char* argv[]) {
                     h_subLeadingMuonImpact3DSig_truth_bParkingTrig->Fill(event.muonPF2PATImpact3DSignificance[mu2]);
                     h_leadingMuonImpact3DSig_bParkingTrig->Fill(event.muonPF2PATImpact3DSignificance[0]);
                     h_subLeadingMuonImpact3DSig_bParkingTrig->Fill(event.muonPF2PATImpact3DSignificance[1]);
+
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 0. && event.muonPF2PATImpactTransSignificance[mu1] < 2.0  ) h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 0. && event.muonPF2PATImpactTransSignificance[0]   < 2.0  ) h_leadingMuonImpactTransSig_0to2_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 2. && event.muonPF2PATImpactTransSignificance[mu1] < 4.0  ) h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 2. && event.muonPF2PATImpactTransSignificance[0]   < 4.0  ) h_leadingMuonImpactTransSig_2to4_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 4. && event.muonPF2PATImpactTransSignificance[mu1] < 6.0  ) h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 4. && event.muonPF2PATImpactTransSignificance[0]   < 6.0  ) h_leadingMuonImpactTransSig_4to6_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 6. && event.muonPF2PATImpactTransSignificance[mu1] < 8.0  ) h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 6. && event.muonPF2PATImpactTransSignificance[0]   < 8.0  ) h_leadingMuonImpactTransSig_6to8_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 8. && event.muonPF2PATImpactTransSignificance[mu1] < 10.0 ) h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 8. && event.muonPF2PATImpactTransSignificance[0]   < 10.0 ) h_leadingMuonImpactTransSig_8to10_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 0. && event.muonPF2PATImpactTransSignificance[mu1] < 10.0 ) h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 0. && event.muonPF2PATImpactTransSignificance[0]   < 10.0 ) h_leadingMuonImpactTransSig_0to10_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 10. && event.muonPF2PATImpactTransSignificance[mu1] < 20.0) h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 10. && event.muonPF2PATImpactTransSignificance[0]   < 20.0) h_leadingMuonImpactTransSig_10to20_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 20. && event.muonPF2PATImpactTransSignificance[mu1] < 30.0) h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 20. && event.muonPF2PATImpactTransSignificance[0]   < 30.0) h_leadingMuonImpactTransSig_20to30_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
                 }
             }
 
@@ -482,6 +567,23 @@ int main(int argc, char* argv[]) {
     h_leadingMuonImpact3DSig_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpact3DSig_bParkingTrig->Clone("h_leadingMuonImpact3DSig_bParkingTrig_ratio"));
     h_subLeadingMuonImpact3DSig_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_subLeadingMuonImpact3DSig_bParkingTrig->Clone("h_subLeadingMuonImpact3DSig_bParkingTrig_ratio"));
 
+    h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig->Clone("h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_0to2_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_0to2_bParkingTrig->Clone("h_leadingMuonImpactTransSig_0to2_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig_ratio  = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig->Clone("h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_2to4_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_2to4_bParkingTrig->Clone("h_leadingMuonImpactTransSig_2to4_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig_ratio  = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig->Clone("h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_4to6_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_4to6_bParkingTrig->Clone("h_leadingMuonImpactTransSig_4to6_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig->Clone("h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_6to8_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_6to8_bParkingTrig->Clone("h_leadingMuonImpactTransSig_6to8_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig->Clone("h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_8to10_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_8to10_bParkingTrig->Clone("h_leadingMuonImpactTransSig_8to10_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig->Clone("h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_0to10_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_0to10_bParkingTrig->Clone("h_leadingMuonImpactTransSig_0to10_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig->Clone("h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_10to20_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_10to20_bParkingTrig->Clone("h_leadingMuonImpactTransSig_10to20_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig->Clone("h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig_ratio"));
+    h_leadingMuonImpactTransSig_20to30_bParkingTrig_ratio = dynamic_cast<TH1F*>(h_leadingMuonImpactTransSig_20to30_bParkingTrig->Clone("h_leadingMuonImpactTransSig_20to30_bParkingTrig_ratio"));
+
     h_leadingMuonPt_truth_bParkingTrig_ratio->Divide(h_leadingMuonPt_truth);
     h_subLeadingMuonPt_truth_bParkingTrig_ratio->Divide(h_subLeadingMuonPt_truth);
     h_leadingMuonPt_bParkingTrig_ratio->Divide(h_leadingMuonPt);
@@ -514,6 +616,23 @@ int main(int argc, char* argv[]) {
     h_leadingMuonImpact3DSig_bParkingTrig_ratio->Divide(h_leadingMuonImpact3DSig);
     h_subLeadingMuonImpact3DSig_bParkingTrig_ratio->Divide(h_subLeadingMuonImpact3DSig);
 
+    h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_0to2_truth);
+    h_leadingMuonImpactTransSig_0to2_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_0to2);
+    h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_2to4_truth);
+    h_leadingMuonImpactTransSig_2to4_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_2to4);
+    h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_4to6_truth);
+    h_leadingMuonImpactTransSig_4to6_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_4to6);
+    h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_6to8_truth);
+    h_leadingMuonImpactTransSig_6to8_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_6to8);
+    h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_8to10_truth);
+    h_leadingMuonImpactTransSig_8to10_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_8to10);
+    h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_0to10_truth);
+    h_leadingMuonImpactTransSig_0to10_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_0to10);
+    h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_10to20_truth);
+    h_leadingMuonImpactTransSig_10to20_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_10to20);
+    h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_20to30_truth);
+    h_leadingMuonImpactTransSig_20to30_bParkingTrig_ratio->Divide(h_leadingMuonImpactTransSig_20to30);
+
     h_leadingMuonPt_truth_bParkingTrig_ratio->Write();
     h_subLeadingMuonPt_truth_bParkingTrig_ratio->Write();
     h_leadingMuonPt_bParkingTrig_ratio->Write();
@@ -545,6 +664,23 @@ int main(int argc, char* argv[]) {
     h_subLeadingMuonImpact3DSig_truth_bParkingTrig_ratio->Write();
     h_leadingMuonImpact3DSig_bParkingTrig_ratio->Write();
     h_subLeadingMuonImpact3DSig_bParkingTrig_ratio->Write();
+
+    h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_0to2_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_2to4_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_4to6_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_6to8_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_8to10_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_0to10_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_10to20_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig_ratio->Write();
+    h_leadingMuonImpactTransSig_20to30_bParkingTrig_ratio->Write();
 
     outFile->Close();
 
