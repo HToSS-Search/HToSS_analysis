@@ -809,7 +809,7 @@ void bparkingEfficiencyPlotMacro() {
     Cavnas_bParkingTrigImpact3DSig->cd();
 
     h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->SetTitle("");
-    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetTitle("2D Sig");
+    h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetTitle("3D Sig");
     h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetLabelFont(42);
     h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetLabelSize(0.05);
     h_Impact3DSig_bParkingTrigImpact3DSig_ctau0->GetXaxis()->SetTitleSize(0.05);
