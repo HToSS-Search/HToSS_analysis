@@ -142,7 +142,7 @@ void SimpleAnalysis::runMainAnalysis() {
   else if (is2018_) era = {"2018"};
   else era = {"2017"};
 
-  const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "/"};
+  const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "_legacy/"};
 
   // Begin to loop over all datasets
   for(auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset){ 
