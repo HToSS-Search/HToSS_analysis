@@ -395,28 +395,28 @@ int main(int argc, char* argv[]) {
                 h_leadingMuonImpact3DSig->Fill(event.muonPF2PATImpact3DSignificance[0]);
                 h_subLeadingMuonImpact3DSig->Fill(event.muonPF2PATImpact3DSignificance[1]);
 
-                if (event.muonPF2PATImpactTransSignificance[mu1] >= 0. && event.muonPF2PATImpactTransSignificance[mu1] < 2.0  ) h_leadingMuonImpactTransSig_0to2_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                if (event.muonPF2PATImpactTransSignificance[0]   >= 0. && event.muonPF2PATImpactTransSignificance[0]   < 2.0  ) h_leadingMuonImpactTransSig_0to2->Fill(event.muonPF2PATImpactTransSignificance[0]);
-                if (event.muonPF2PATImpactTransSignificance[mu1] >= 2. && event.muonPF2PATImpactTransSignificance[mu1] < 4.0  ) h_leadingMuonImpactTransSig_2to4_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                if (event.muonPF2PATImpactTransSignificance[0]   >= 2. && event.muonPF2PATImpactTransSignificance[0]   < 4.0  ) h_leadingMuonImpactTransSig_2to4->Fill(event.muonPF2PATImpactTransSignificance[0]);
-                if (event.muonPF2PATImpactTransSignificance[mu1] >= 4. && event.muonPF2PATImpactTransSignificance[mu1] < 6.0  ) h_leadingMuonImpactTransSig_4to6_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                if (event.muonPF2PATImpactTransSignificance[0]   >= 4. && event.muonPF2PATImpactTransSignificance[0]   < 6.0  ) h_leadingMuonImpactTransSig_4to6->Fill(event.muonPF2PATImpactTransSignificance[0]);
-                if (event.muonPF2PATImpactTransSignificance[mu1] >= 6. && event.muonPF2PATImpactTransSignificance[mu1] < 8.0  ) h_leadingMuonImpactTransSig_6to8_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                if (event.muonPF2PATImpactTransSignificance[0]   >= 6. && event.muonPF2PATImpactTransSignificance[0]   < 8.0  ) h_leadingMuonImpactTransSig_6to8->Fill(event.muonPF2PATImpactTransSignificance[0]);
-                if (event.muonPF2PATImpactTransSignificance[mu1] >= 8. && event.muonPF2PATImpactTransSignificance[mu1] < 10.0 ) h_leadingMuonImpactTransSig_8to10_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                if (event.muonPF2PATImpactTransSignificance[0]   >= 8. && event.muonPF2PATImpactTransSignificance[0]   < 10.0 ) h_leadingMuonImpactTransSig_8to10->Fill(event.muonPF2PATImpactTransSignificance[0]);
-                if (event.muonPF2PATImpactTransSignificance[mu1] >= 0. && event.muonPF2PATImpactTransSignificance[mu1] < 10.0 ) h_leadingMuonImpactTransSig_0to10_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                if (event.muonPF2PATImpactTransSignificance[0]   >= 0. && event.muonPF2PATImpactTransSignificance[0]   < 10.0 ) h_leadingMuonImpactTransSig_0to10->Fill(event.muonPF2PATImpactTransSignificance[0]);
-                if (event.muonPF2PATImpactTransSignificance[mu1] >= 10. && event.muonPF2PATImpactTransSignificance[mu1] < 20.0) h_leadingMuonImpactTransSig_10to20_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                if (event.muonPF2PATImpactTransSignificance[0]   >= 10. && event.muonPF2PATImpactTransSignificance[0]   < 20.0) h_leadingMuonImpactTransSig_10to20->Fill(event.muonPF2PATImpactTransSignificance[0]);
-                if (event.muonPF2PATImpactTransSignificance[mu1] >= 20. && event.muonPF2PATImpactTransSignificance[mu1] < 30.0) h_leadingMuonImpactTransSig_20to30_truth->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                if (event.muonPF2PATImpactTransSignificance[0]   >= 20. && event.muonPF2PATImpactTransSignificance[0]   < 30.0) h_leadingMuonImpactTransSig_20to30->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 0. && event.muonPF2PATImpactTransSignificance[mu1] < 2.0  ) h_leadingMuonImpactTransSig_0to2_truth->Fill(event.muonPF2PATPt[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 0. && event.muonPF2PATImpactTransSignificance[0]   < 2.0  ) h_leadingMuonImpactTransSig_0to2->Fill(event.muonPF2PATPt[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 2. && event.muonPF2PATImpactTransSignificance[mu1] < 4.0  ) h_leadingMuonImpactTransSig_2to4_truth->Fill(event.muonPF2PATPt[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 2. && event.muonPF2PATImpactTransSignificance[0]   < 4.0  ) h_leadingMuonImpactTransSig_2to4->Fill(event.muonPF2PATPt[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 4. && event.muonPF2PATImpactTransSignificance[mu1] < 6.0  ) h_leadingMuonImpactTransSig_4to6_truth->Fill(event.muonPF2PATPt[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 4. && event.muonPF2PATImpactTransSignificance[0]   < 6.0  ) h_leadingMuonImpactTransSig_4to6->Fill(event.muonPF2PATPt[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 6. && event.muonPF2PATImpactTransSignificance[mu1] < 8.0  ) h_leadingMuonImpactTransSig_6to8_truth->Fill(event.muonPF2PATPt[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 6. && event.muonPF2PATImpactTransSignificance[0]   < 8.0  ) h_leadingMuonImpactTransSig_6to8->Fill(event.muonPF2PATPt[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 8. && event.muonPF2PATImpactTransSignificance[mu1] < 10.0 ) h_leadingMuonImpactTransSig_8to10_truth->Fill(event.muonPF2PATPt[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 8. && event.muonPF2PATImpactTransSignificance[0]   < 10.0 ) h_leadingMuonImpactTransSig_8to10->Fill(event.muonPF2PATPt[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 0. && event.muonPF2PATImpactTransSignificance[mu1] < 10.0 ) h_leadingMuonImpactTransSig_0to10_truth->Fill(event.muonPF2PATPt[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 0. && event.muonPF2PATImpactTransSignificance[0]   < 10.0 ) h_leadingMuonImpactTransSig_0to10->Fill(event.muonPF2PATPt[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 10. && event.muonPF2PATImpactTransSignificance[mu1] < 20.0) h_leadingMuonImpactTransSig_10to20_truth->Fill(event.muonPF2PATPt[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 10. && event.muonPF2PATImpactTransSignificance[0]   < 20.0) h_leadingMuonImpactTransSig_10to20->Fill(event.muonPF2PATPt[0]);
+                if (event.muonPF2PATImpactTransSignificance[mu1] >= 20. && event.muonPF2PATImpactTransSignificance[mu1] < 30.0) h_leadingMuonImpactTransSig_20to30_truth->Fill(event.muonPF2PATPt[mu1]);
+                if (event.muonPF2PATImpactTransSignificance[0]   >= 20. && event.muonPF2PATImpactTransSignificance[0]   < 30.0) h_leadingMuonImpactTransSig_20to30->Fill(event.muonPF2PATPt[0]);
 
                 // Fill pT post trigger (with and without scalar parentage)
-//                if (event.bParkingTrigInclusive()) {
+                if (event.bParkingTrigInclusive()) {
 //                if (event.bParkingTrig_Mu12_IP6()) {
 //                if (event.bParkingTrig_Mu9_IP6()) {
-                if (event.bParkingTrig_Mu9_IP5()) {
+//                if (event.bParkingTrig_Mu9_IP5()) {
 
                     double eventWeight = 1.;
 
@@ -458,22 +458,22 @@ int main(int argc, char* argv[]) {
                     h_leadingMuonImpact3DSig_bParkingTrig->Fill(event.muonPF2PATImpact3DSignificance[0]);
                     h_subLeadingMuonImpact3DSig_bParkingTrig->Fill(event.muonPF2PATImpact3DSignificance[1]);
 
-                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 0. && event.muonPF2PATImpactTransSignificance[mu1] < 2.0  ) h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                    if (event.muonPF2PATImpactTransSignificance[0]   >= 0. && event.muonPF2PATImpactTransSignificance[0]   < 2.0  ) h_leadingMuonImpactTransSig_0to2_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
-                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 2. && event.muonPF2PATImpactTransSignificance[mu1] < 4.0  ) h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                    if (event.muonPF2PATImpactTransSignificance[0]   >= 2. && event.muonPF2PATImpactTransSignificance[0]   < 4.0  ) h_leadingMuonImpactTransSig_2to4_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
-                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 4. && event.muonPF2PATImpactTransSignificance[mu1] < 6.0  ) h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                    if (event.muonPF2PATImpactTransSignificance[0]   >= 4. && event.muonPF2PATImpactTransSignificance[0]   < 6.0  ) h_leadingMuonImpactTransSig_4to6_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
-                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 6. && event.muonPF2PATImpactTransSignificance[mu1] < 8.0  ) h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                    if (event.muonPF2PATImpactTransSignificance[0]   >= 6. && event.muonPF2PATImpactTransSignificance[0]   < 8.0  ) h_leadingMuonImpactTransSig_6to8_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
-                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 8. && event.muonPF2PATImpactTransSignificance[mu1] < 10.0 ) h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                    if (event.muonPF2PATImpactTransSignificance[0]   >= 8. && event.muonPF2PATImpactTransSignificance[0]   < 10.0 ) h_leadingMuonImpactTransSig_8to10_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
-                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 0. && event.muonPF2PATImpactTransSignificance[mu1] < 10.0 ) h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                    if (event.muonPF2PATImpactTransSignificance[0]   >= 0. && event.muonPF2PATImpactTransSignificance[0]   < 10.0 ) h_leadingMuonImpactTransSig_0to10_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
-                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 10. && event.muonPF2PATImpactTransSignificance[mu1] < 20.0) h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                    if (event.muonPF2PATImpactTransSignificance[0]   >= 10. && event.muonPF2PATImpactTransSignificance[0]   < 20.0) h_leadingMuonImpactTransSig_10to20_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
-                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 20. && event.muonPF2PATImpactTransSignificance[mu1] < 30.0) h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[mu1]);
-                    if (event.muonPF2PATImpactTransSignificance[0]   >= 20. && event.muonPF2PATImpactTransSignificance[0]   < 30.0) h_leadingMuonImpactTransSig_20to30_bParkingTrig->Fill(event.muonPF2PATImpactTransSignificance[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 0. && event.muonPF2PATImpactTransSignificance[mu1] < 2.0  ) h_leadingMuonImpactTransSig_0to2_truth_bParkingTrig->Fill(event.muonPF2PATPt[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 0. && event.muonPF2PATImpactTransSignificance[0]   < 2.0  ) h_leadingMuonImpactTransSig_0to2_bParkingTrig->Fill(event.muonPF2PATPt[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 2. && event.muonPF2PATImpactTransSignificance[mu1] < 4.0  ) h_leadingMuonImpactTransSig_2to4_truth_bParkingTrig->Fill(event.muonPF2PATPt[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 2. && event.muonPF2PATImpactTransSignificance[0]   < 4.0  ) h_leadingMuonImpactTransSig_2to4_bParkingTrig->Fill(event.muonPF2PATPt[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 4. && event.muonPF2PATImpactTransSignificance[mu1] < 6.0  ) h_leadingMuonImpactTransSig_4to6_truth_bParkingTrig->Fill(event.muonPF2PATPt[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 4. && event.muonPF2PATImpactTransSignificance[0]   < 6.0  ) h_leadingMuonImpactTransSig_4to6_bParkingTrig->Fill(event.muonPF2PATPt[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 6. && event.muonPF2PATImpactTransSignificance[mu1] < 8.0  ) h_leadingMuonImpactTransSig_6to8_truth_bParkingTrig->Fill(event.muonPF2PATPt[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 6. && event.muonPF2PATImpactTransSignificance[0]   < 8.0  ) h_leadingMuonImpactTransSig_6to8_bParkingTrig->Fill(event.muonPF2PATPt[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 8. && event.muonPF2PATImpactTransSignificance[mu1] < 10.0 ) h_leadingMuonImpactTransSig_8to10_truth_bParkingTrig->Fill(event.muonPF2PATPt[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 8. && event.muonPF2PATImpactTransSignificance[0]   < 10.0 ) h_leadingMuonImpactTransSig_8to10_bParkingTrig->Fill(event.muonPF2PATPt[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 0. && event.muonPF2PATImpactTransSignificance[mu1] < 10.0 ) h_leadingMuonImpactTransSig_0to10_truth_bParkingTrig->Fill(event.muonPF2PATPt[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 0. && event.muonPF2PATImpactTransSignificance[0]   < 10.0 ) h_leadingMuonImpactTransSig_0to10_bParkingTrig->Fill(event.muonPF2PATPt[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 10. && event.muonPF2PATImpactTransSignificance[mu1] < 20.0) h_leadingMuonImpactTransSig_10to20_truth_bParkingTrig->Fill(event.muonPF2PATPt[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 10. && event.muonPF2PATImpactTransSignificance[0]   < 20.0) h_leadingMuonImpactTransSig_10to20_bParkingTrig->Fill(event.muonPF2PATPt[0]);
+                    if (event.muonPF2PATImpactTransSignificance[mu1] >= 20. && event.muonPF2PATImpactTransSignificance[mu1] < 30.0) h_leadingMuonImpactTransSig_20to30_truth_bParkingTrig->Fill(event.muonPF2PATPt[mu1]);
+                    if (event.muonPF2PATImpactTransSignificance[0]   >= 20. && event.muonPF2PATImpactTransSignificance[0]   < 30.0) h_leadingMuonImpactTransSig_20to30_bParkingTrig->Fill(event.muonPF2PATPt[0]);
                 }
             }
 
