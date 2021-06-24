@@ -52,6 +52,7 @@ SimpleAnalysis::SimpleAnalysis()
 , higgsMassWindow_{3.0}      // Define Standard Higgs mass +/ window here rather than in multiple locations
 , higgsMassWideWindow_{20.0} // Define wider Standard Higgs mass +/ window here rather than in multiple locations
 , statWindow_{0.15} 
+, mass_range_{2.0}              // 1 or 2 GeV sample run
 , debug_{false}              // Set to true to enable debug couts
 {}
 SimpleAnalysis::~SimpleAnalysis() {}
@@ -131,8 +132,8 @@ void SimpleAnalysis::runMainAnalysis() {
   Float_t Nbg1=0; //sideband 105-122
   Float_t Nbg2=0; //sideband 128-145
   Float_t Obs=0; //Observation
-  Float_t rate_signal=0; Float_t rate_QCD=0;
-  Float_t stat_signal=0; Float_t stat_QCD=0;
+  Float_t rate_signal=0; 
+  Float_t stat_signal=0; 
 
   Float_t QCD_scalar=0; Float_t QCD_Pantiscalar=0; Float_t QCD_Kantiscalar=0;
   Float_t QCD_20scalar=0; Float_t QCD_20Pantiscalar=0; Float_t QCD_20Kantiscalar=0;
@@ -212,7 +213,7 @@ void SimpleAnalysis::runMainAnalysis() {
       if( !event.metFilters() ) continue;
 
       // Get physics objects
-      std::pair<int, int> patMuons = getPatMuonPair(event); // Get PAT muons inidices
+      std::pair<int, int> patMuons = getPatMuonPair(event); // Get PAT muons indices
       // This function needs a pair of selected muons, but also looks at all muons and different triggers within this, so no blanket trigger application and no skip event if no incompatible muon pair is found
       //fillMuonReconstructionPlots(event, eventWeight, patMuons.first, patMuons.second);
 
@@ -227,27 +228,19 @@ void SimpleAnalysis::runMainAnalysis() {
 
       // Fill other plots now!
       // All of	these plots use	packed PF muons, so the ones corresponding to the PAT muons are provided
-      fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, Obs, rate_signal, rate_QCD, stat_signal, stat_QCD, QCD_Kantiscalar, QCD_Pantiscalar, QCD_20Kantiscalar, QCD_20Pantiscalar, QCD_scalar, QCD_20scalar, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
+      fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, Obs, rate_signal, stat_signal, QCD_Kantiscalar, QCD_Pantiscalar, QCD_20Kantiscalar, QCD_20Pantiscalar, QCD_scalar, QCD_20scalar, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
       //fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
 
     } // End loop over all events
 
     Float_t Nbg;
-    Nbg=exp((log(Nbg1)+log(Nbg2))*6/34);
-    std::cout<<"Number of expected background events "<<Nbg<<std::endl;
-    
-    std::cout<<"Number of observed events "<<Obs<<std::endl;
-    std::cout<<"Rate of signal events "<<rate_signal<<std::endl;
-    std::cout<<"Rate of QCD events "<<rate_QCD<<std::endl;
-    std::cout<<"Uncertainty on signal events "<<stat_signal<<std::endl;
-    std::cout<<"Uncertainty on QCD events "<<stat_QCD<<std::endl;
-	  
-    Float_t corr_QCD_scalar;
-    corr_QCD_scalar=QCD_scalar/QCD_20scalar;
-    Float_t corr_QCD_Pantiscalar;
-    corr_QCD_Pantiscalar=QCD_Pantiscalar/QCD_20Pantiscalar;
-    Float_t corr_QCD_Kantiscalar;
-    corr_QCD_Kantiscalar=QCD_Kantiscalar/QCD_20Kantiscalar;
+    Nbg=(Nbg1+Nbg2)*6/54;
+    std::cout<<"Background estimate: "<<Nbg<<std::endl;
+    std::cout<<"Sideband left: "<<Nbg1<<std::endl; std::cout<<"Sideband right: "<<Nbg2<<std::endl;
+    std::cout<<"Observation: "<<Obs<<std::endl;
+    std::cout<<"   "<<std::endl;
+    std::cout<<"Rate: "<<rate_signal<<std::endl;
+    std::cout<<"Statistical uncertainty: "<<stat_signal<<std::endl;
 	  
   } // End loop over all datatsets
 
@@ -326,7 +319,7 @@ std::pair<int, int> SimpleAnalysis::getDihadronPair(const AnalysisEvent& event, 
 
     //Find the hadrons (pions)
 
-    if(std::abs(packedId)==211 && event.packedCandsPseudoTrkPt[k]>5){//Selection of pions (charged hadrons)
+    if(std::abs(packedId)==211 && event.packedCandsPseudoTrkPt[k]>1){//Selection of pions (charged hadrons)
       if(event.packedCandsPseudoTrkPt[k]>chspt1){
 	chspt2=chspt1;
 	chspt1=event.packedCandsPseudoTrkPt[k];
@@ -729,7 +722,7 @@ void SimpleAnalysis::fillMuonReconstructionPlots(const AnalysisEvent& event, dou
   //END Muon Reconstruction function
 }
 
-void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double& eventWeight, Float_t& Nbg1, Float_t& Nbg2, Float_t& Obs, Float_t& rate_signal, Float_t& rate_QCD, Float_t& stat_signal, Float_t& stat_QCD, Float_t& QCD_Kantiscalar, Float_t& QCD_Pantiscalar, Float_t& QCD_20Kantiscalar, Float_t& QCD_20Pantiscalar, Float_t& QCD_scalar, Float_t& QCD_20scalar, const int& patMuIndex1, const int& patMuIndex2, const int& muIndex1, const int& muIndex2, const int& chsIndex1, const int& chsIndex2) const {
+void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double& eventWeight, Float_t& Nbg1, Float_t& Nbg2, Float_t& Obs, Float_t& rate_signal, Float_t& stat_signal, Float_t& QCD_Kantiscalar, Float_t& QCD_Pantiscalar, Float_t& QCD_20Kantiscalar, Float_t& QCD_20Pantiscalar, Float_t& QCD_scalar, Float_t& QCD_20scalar, const int& patMuIndex1, const int& patMuIndex2, const int& muIndex1, const int& muIndex2, const int& chsIndex1, const int& chsIndex2) const {
 
   //BEGIN Packed candidates
 
@@ -990,7 +983,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
        h_kNentries->SetBinContent(3,eventWeight);
 
        //if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
-       if(std::abs((Kantiscalar).M()-1)<statWindow_){
+       if(std::abs((Kantiscalar).M()-mass_range_)<statWindow_){
          h_KantiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
 	 QCD_Kantiscalar+=eventWeight;    
 
@@ -1000,7 +993,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	  
      if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
       //if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
-      if(std::abs((Kantiscalar).M()-1)<statWindow_){
+      if(std::abs((Kantiscalar).M()-mass_range_)<statWindow_){
           h_K20antiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
 	  QCD_20Kantiscalar+=eventWeight;
       }
@@ -1029,12 +1022,12 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   //Kaon refitted and wider window	
   if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){	    
     if(std::abs((refkaon+refitmuon).M()-higgsMass_)<higgsMassWindow_){
-      if(std::abs((refkaon).M()-1)<statWindow_){   
+      if(std::abs((refkaon).M()-mass_range_)<statWindow_){   
 	h_Rkaonre12InvMass->Fill((refkaon).M(), eventWeight);
       }
     }
     if(std::abs((refkaon+refitmuon).M()-higgsMass_)<higgsMassWideWindow_){
-      if(std::abs((refkaon).M()-1)<statWindow_){
+      if(std::abs((refkaon).M()-mass_range_)<statWindow_){
 	h_widekaonRInvMass->Fill((refkaon).M(), eventWeight);
       }
     }    
@@ -1060,7 +1053,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       h_pNentries->SetBinContent(3,eventWeight);
 	    
       //if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
-      if(std::abs((Pantiscalar).M()-1)<statWindow_){
+      if(std::abs((Pantiscalar).M()-mass_range_)<statWindow_){
         h_PantiscalarInvMass->Fill(Pantiscalar.M(), eventWeight);
 	QCD_Pantiscalar+=eventWeight;
 
@@ -1081,7 +1074,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){  
       h_mNentries->SetBinContent(3,eventWeight);
 	    
-      if(std::abs((scalarLVec).M()-1)<statWindow_){
+      if(std::abs((scalarLVec).M()-mass_range_)<statWindow_){
         h_PscalarInvMass->Fill(scalarLVec.M(), eventWeight);
 	QCD_scalar+=eventWeight;
 	      
@@ -1094,7 +1087,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   //Muon,pion wider	
   if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
     if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-      if(std::abs((Pantiscalar).M()-1)<statWindow_){
+      if(std::abs((Pantiscalar).M()-mass_range_)<statWindow_){
         h_P20antiscalarInvMass->Fill(Pantiscalar.M(), eventWeight);
 	QCD_20Pantiscalar+=eventWeight;
       } 
@@ -1102,7 +1095,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
   if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
     if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
-      if(std::abs((scalarLVec).M()-1)<statWindow_){
+      if(std::abs((scalarLVec).M()-mass_range_)<statWindow_){
         h_P20scalarInvMass->Fill(scalarLVec.M(), eventWeight);
 	QCD_20scalar+=eventWeight;
       }	  
@@ -1116,11 +1109,10 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
          // h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(scalarLVec), eventWeight);
          // h_Pinvmass->Fill(Phadroninv,muoninv, eventWeight);
 	h_PhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
-	Obs+=eventWeight;
+	      
+	Obs+=1;
 	rate_signal+=eventWeight;
-	rate_QCD+=eventWeight;
 	stat_signal+=1;
-	stat_QCD+=1;  
       }
     }
     if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWideWindow_){
@@ -1135,7 +1127,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
     if((Pantiscalar+scalarLVec).M()>105 && (Pantiscalar+scalarLVec).M()<122){
       if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
-        Nbg1+=eventWeight;
+        Nbg1+=1;//eventWeight;
       }
     }
   }
@@ -1143,7 +1135,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
     if((Pantiscalar+scalarLVec).M()>128 && (Pantiscalar+scalarLVec).M()<145){
       if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
-        Nbg2+=eventWeight;
+        Nbg2+=1;//eventWeight;
       }
     }
   }	
@@ -1152,12 +1144,12 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   //Pion refitted and wider window
   if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){	    
     if(std::abs((refpion+refitmuon).M()-higgsMass_)<higgsMassWindow_){
-      if(std::abs((refpion).M()-1)<statWindow_){   
+      if(std::abs((refpion).M()-mass_range_)<statWindow_){   
 	h_Rpionre12InvMass->Fill((refpion).M(), eventWeight);
       }
     }
     if(std::abs((refpion+refitmuon).M()-higgsMass_)<higgsMassWideWindow_){
-      if(std::abs((refpion).M()-1)<statWindow_){
+      if(std::abs((refpion).M()-mass_range_)<statWindow_){
 	h_widepionRInvMass->Fill((refpion).M(), eventWeight);
       }
     }    
@@ -1166,12 +1158,12 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   //Muon refitted and wider window	
   if(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){
     if(std::abs((refpion+refitmuon).M()-higgsMass_)<higgsMassWindow_){
-      if(std::abs((refitmuon).M()-1)<statWindow_){
+      if(std::abs((refitmuon).M()-mass_range_)<statWindow_){
 	  h_Rrefit12InvMass->Fill(refitmuon.M(), eventWeight);
       }
     }
     if(std::abs((refpion+refitmuon).M()-higgsMass_)<higgsMassWideWindow_){
-      if(std::abs((refitmuon).M()-1)<statWindow_){
+      if(std::abs((refitmuon).M()-mass_range_)<statWindow_){
         h_widemuonRInvMass->Fill((refitmuon).M(), eventWeight);
 	}
       }
@@ -1187,7 +1179,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       }
     }
     if(std::abs((refpion+refitmuon).M()-higgsMass_)<higgsMassWideWindow_){
-      if(std::abs((refpion).M()+(refitmuon).M())<statWindow_){
+      if(std::abs((refpion).M()-(refitmuon).M())<statWindow_){
         h_PhiggsR20InvMass->Fill((refpion+refitmuon).M(), eventWeight);
       }
     }
