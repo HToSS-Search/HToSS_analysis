@@ -970,10 +970,12 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	      
 	      
   //Kaon 
-  h_kNentries->SetBinContent(1,eventWeight);   
+  h_kNentries->SetBinContent(1,eventWeight); 
 	
-  h_KIsoSum1->Fill(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1], eventWeight);
-  h_KIsoSum2->Fill(KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
+  if(kaonLVec1.DeltaR(kaonLVec2)<packedCandKaonDeltaR_){
+    h_KIsoSum1->Fill(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1], eventWeight);
+    h_KIsoSum2->Fill(KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
+  }
   h_KIso2->Fill(KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2],event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
   
   if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1){
@@ -1036,13 +1038,18 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 
   //Pion,muon 
 	
+  if(pionLVec1.DeltaR(pionLVec2)<packedCandPionDeltaR_){	
   h_PIsoSum1->Fill(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1], eventWeight);
   h_PIsoSum2->Fill(PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
+  }
+	
   h_PIso2->Fill(PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2],event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
 
+  if(mm1.DeltaR(mm2)<packedCandMuonDeltaR_){
   h_MuonIsoSum1->Fill(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1], eventWeight);
   h_MuonIsoSum2->Fill(MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2], eventWeight);
-
+  }
+	
   h_pNentries->SetBinContent(1,eventWeight);
   h_mNentries->SetBinContent(1,eventWeight);
 	
