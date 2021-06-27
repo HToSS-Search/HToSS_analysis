@@ -917,6 +917,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   // muon bit
   if(mm1.DeltaR(mm2)<packedCandMuonDeltaR_){
 		   
+    h_PATmuonEta->Fill(event.muonPF2PATEta[muIndex1]); h_PATmuonEta->Fill(event.muonPF2PATEta[muIndex2]);  
+	  
     TLorentzVector lmuon1 {event.packedCandsPseudoTrkPx[muIndex1], event.packedCandsPseudoTrkPy[muIndex1], event.packedCandsPseudoTrkPz[muIndex1], event.packedCandsE[muIndex1]};
     TLorentzVector lmuon2 {event.packedCandsPseudoTrkPx[muIndex2], event.packedCandsPseudoTrkPy[muIndex2], event.packedCandsPseudoTrkPz[muIndex2], event.packedCandsE[muIndex2]};
                         
@@ -1391,7 +1393,7 @@ void SimpleAnalysis::setupPlots() {
   h_muonDivDoubleL = new TH1F("h_muonDivDoubleL", "Turn-on Double #mu^{#pm} trigger leading p_{T}", 300, 0., 200.);
   h_muonCutDoubleS = new TH1F("h_muonCutDoubleS", "Double #mu^{#pm} trigger subleading p_{T}", 1000, 0., 200.);
   h_muonDivDoubleS = new TH1F("h_muonDivDoubleS", "Turn-on Double #mu^{#pm} trigger subleading p_{T}", 300, 0., 200.);
-   	
+  h_PATmuonEta = new TH1F("h_PATmuonEta", "#mu^{#pm} reconstruction #eta", 200, -2.5, 2.5);
 	
   //Packed candidates
   h_packedCDxy = new TH1F("h_packedCDxy", "Packed Candidate Dxy", 500, -200., 200.);
@@ -1719,6 +1721,8 @@ void SimpleAnalysis::savePlots() {
   h_muonDivDoubleS->GetXaxis()->SetTitle("Subleading muon p_{T} (GeV)");
   h_muonDivDoubleS->GetYaxis()->SetTitle("Trigger efficiency");
   h_muonDivDoubleS->Write();
+
+  h_PATmuonEta->Write();
 	
   /*
   //Packed Candidates
