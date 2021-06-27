@@ -10,7 +10,7 @@
  #include "TLatex.h"
  #include "TPRegexp.h"
 
-  void PATmuonEta() {  
+  void PatmuonEta() {  
  
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_PATmuonEta_ctau10    = (TH1F*)inFile10.Get("h_PATmuonEta");
