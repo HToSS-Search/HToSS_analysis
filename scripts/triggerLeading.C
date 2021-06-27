@@ -10,27 +10,12 @@
  #include "TLatex.h"
  #include "TPRegexp.h"
 
-  void trigger() {  
+  void triggerLeading() {  
   
      TFile inFile0("ggH_MS2_ctau0.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
      TH1F* h_pt_ctau0    = (TH1F*)inFile0.Get("h_genParScalarMuonPtL");
      TH1F* h_ptcut_ctau0    = (TH1F*)inFile0.Get("h_genParScalarMuonCutPtSL;1");
      TH1F* h_ptcut2_ctau0    = (TH1F*)inFile0.Get("h_genParScalarMuonCutPtDL;1");
-   
-     TFile inFile10("ggH_MS2_ctau10.root"); 
-     TH1F* h_pt_ctau10    = (TH1F*)inFile10.Get("h_genParScalarMuonPtL");
-     TH1F* h_ptcut_ctau10    = (TH1F*)inFile10.Get("h_genParScalarMuonCutPtSL;1");
-   
-   
-     TFile inFile100("ggH_MS2_ctau100.root"); 
-     TH1F* h_pt_ctau100    = (TH1F*)inFile100.Get("h_genParScalarMuonPtL");
-     TH1F* h_ptcut_ctau100    = (TH1F*)inFile100.Get("h_genParScalarMuonCutPtSL;1");
-   
-    
-    /*TFile inFile100O("ggH_MS2_ctau1000.root"); 
-     TH1F* h_pt_ctau1000    = (TH1F*)inFile1000.Get("h_genParScalarMuonPtL");
-     TH1F* h_ptcut_ctau1000    = (TH1F*)inFile1000.Get("h_genParScalarMuonCutPtSL;1");*/
-   
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
@@ -82,6 +67,6 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("trigger.gif"); // .pdf and other formats work too! 
+     canv1->SaveAs("triggerLeading.png"); // .pdf and other formats work too! 
    
   }
