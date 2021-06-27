@@ -887,8 +887,9 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       KE=std::sqrt(event.packedCandsE[chsIndex1]*event.packedCandsE[chsIndex1]-std::pow(0.1396,2)+std::pow(0.494,2))+std::sqrt(event.packedCandsE[chsIndex2]*event.packedCandsE[chsIndex2]-std::pow(0.1396,2)+std::pow(0.494,2));
 		
       Kantiscalar.SetPxPyPzE(Kpx,Kpy,Kpz,KE);
+      h_TestKantiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
     }
-    //h_KantiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
+   
   } // End Kaon delR if
 	
 
@@ -910,8 +911,9 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       PE=event.packedCandsE[chsIndex1]+event.packedCandsE[chsIndex2];//std::sqrt(event.packedCandsE[chsIndex1]*event.packedCandsE[chsIndex1]-std::pow(0.1396,2)+std::pow(0.494,2))+std::sqrt(event.packedCandsE[chsIndex2]*event.packedCandsE[chsIndex2]-std::pow(0.1396,2)+std::pow(0.494,2));
 
       Pantiscalar.SetPxPyPzE(Ppx,Ppy,Ppz,PE);
+      h_TestPantiscalarInvMass->Fill(Pantiscalar.M(), eventWeight);
     }
-    //h_PantiscalarInvMass->Fill(Pantiscalar.M(), eventWeight);
+   
   } // End pion delR if
 
   // muon bit
@@ -932,7 +934,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       KME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
 	      
       scalarLVec.SetPxPyPzE(KMpx,KMpy,KMpz,KME);
-      //h_KscalarInvMass->Fill(scalarLVec.M(), eventWeight);
+      h_TestscalarInvMass->Fill(scalarLVec.M(), eventWeight);
     }
 		   
   }
@@ -1449,6 +1451,9 @@ void SimpleAnalysis::setupPlots() {
   
   h_PantiscalarInvMass = new TH1F("h_PantiscalarInvMass", "Dihadron (pion) invariant mass", 200, 0.,5.);
   h_PscalarInvMass = new TH1F("h_PscalarInvMass", "Dimuon invariant mass", 200, 0.,5.);
+  h_TestPantiscalarInvMass = new TH1F("h_TestPantiscalarInvMass", "Dihadron (pion) invariant mass", 200, 0.,5.);
+  h_TestKantiscalarInvMass = new TH1F("h_TestKantiscalarInvMass", "Dihadron (kaon) invariant mass", 200, 0.,5.);
+  h_TestscalarInvMass = new TH1F("h_TestscalarInvMass", "Dimuon invariant mass", 200, 0.,5.);
   Gaussian3 = new TF1("Gaussian3","gaus",1.,3.);
   h_PhiggsInvMass = new TH1F("h_PhiggsInvMass", "Higgs invariant mass", 500, 0., 200.);
   h_PhiggsRInvMass = new TH1F("h_PhiggsRInvMass", "Higgs invariant mass", 500, 0., 200.);
@@ -1773,6 +1778,8 @@ void SimpleAnalysis::savePlots() {
 
   h_KantiscalarInvMass->GetXaxis()->SetTitle("GeV");
   h_KantiscalarInvMass->Write();
+  h_TestKantiscalarInvMass->GetXaxis()->SetTitle("GeV");
+  h_TestKantiscalarInvMass->Write();
   h_KscalarInvMass->GetXaxis()->SetTitle("GeV");
   h_KscalarInvMass->Write();
   h_KhiggsInvMass->GetXaxis()->SetTitle("GeV");
@@ -1834,10 +1841,14 @@ void SimpleAnalysis::savePlots() {
 
   h_pNentries->GetXaxis()->SetBinLabel(1,"Number of dihadrons"); h_pNentries->GetXaxis()->SetBinLabel(2,"Relative isolation"); h_pNentries->GetXaxis()->SetBinLabel(3,"Higgs mass window: #pm 3 GeV"); h_pNentries->GetXaxis()->SetBinLabel(4,"Scalar mass window: #pm 150 MeV");
   h_pNentries->Write();	
-	
+  
+  h_TestPantiscalarInvMass->GetXaxis()->SetTitle("GeV");
+  h_TestPantiscalarInvMass->Write();
   h_PantiscalarInvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
   h_PantiscalarInvMass->GetYaxis()->SetTitle("Events");
   h_PantiscalarInvMass->Write();
+  h_TestscalarInvMass->GetXaxis()->SetTitle("GeV");
+  h_TestscalarInvMass->Write();
   h_PscalarInvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
   h_PscalarInvMass->GetYaxis()->SetTitle("Events");
   h_PscalarInvMass->Write();
