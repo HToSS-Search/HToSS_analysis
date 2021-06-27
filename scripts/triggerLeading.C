@@ -51,11 +51,11 @@
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_ptcut_ctau10","Leading, single muon trigger","L");
+     legenda=legend1->AddEntry("h_ptcut_ctau10","Single muon trigger","L");
      legenda->SetLineColor(2);
      legenda->SetMarkerColor(2);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_ptcut2_ctau10","Leading, double muon trigger","L");
+     legenda=legend1->AddEntry("h_ptcut2_ctau10","Double muon trigger","L");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
