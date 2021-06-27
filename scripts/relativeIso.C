@@ -113,7 +113,7 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("h_PIsoSum1.gif"); // .pdf and other formats work too! 
+     canv1->SaveAs("h_PIsoSum1.png"); // .pdf and other formats work too! 
    
    
      TCanvas* canv2 = new TCanvas ("canv2", "canv2", 50, 50, 800, 600); // Canvas to draw histogram on
