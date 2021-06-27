@@ -1,4 +1,4 @@
-#include "TFile.h"
+ #include "TFile.h"
 
  #include "TCanvas.h"
  #include "TROOT.h"
@@ -10,7 +10,7 @@
  #include "TLatex.h"
  #include "TPRegexp.h"
 
-  void eff() {  
+  void efficiency_SL() {  
   
      TFile inFile0("ggH_MS2_ctau0.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
      TH1F* h_ptdiv_ctau0    = (TH1F*)inFile0.Get("h_genParScalarMuonCutPtSL;2");
@@ -32,7 +32,6 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     h_ptdiv_ctau0->GetYaxis()->SetTitle("Efficiency");
      h_ptdiv_ctau0->GetXaxis()->SetRangeUser(0.0,100);
      h_ptdiv_ctau0->GetYaxis()->SetRangeUser(0.0,1);
      h_ptdiv_ctau0->GetXaxis()->SetTitle("p_{T} (GeV)");
@@ -40,28 +39,24 @@
      h_ptdiv_ctau0->SetLineColor(4);
      h_ptdiv_ctau0->Draw("HIST");
    
-     h_ptdiv_ctau1->GetYaxis()->SetTitle("Efficiency");
      h_ptdiv_ctau1->GetXaxis()->SetRangeUser(0.0,100); 
      h_ptdiv_ctau1->GetXaxis()->SetTitle("p_{T} (GeV)");
      h_ptdiv_ctau1->SetMarkerColor(2);
      h_ptdiv_ctau1->SetLineColor(2);
      h_ptdiv_ctau1->Draw("HIST same");
  
-     h_ptdiv_ctau10->GetYaxis()->SetTitle("Efficiency");
      h_ptdiv_ctau10->GetXaxis()->SetRangeUser(0.0,100); 
      h_ptdiv_ctau10->GetXaxis()->SetTitle("p_{T} (GeV)");
      h_ptdiv_ctau10->SetMarkerColor(3);
      h_ptdiv_ctau10->SetLineColor(3);
      h_ptdiv_ctau10->Draw("HIST same");
-   
-     h_ptdiv_ctau100->GetYaxis()->SetTitle("Efficiency");
+
      h_ptdiv_ctau100->GetXaxis()->SetRangeUser(0.0,100); 
      h_ptdiv_ctau100->GetXaxis()->SetTitle("p_{T} (GeV)");
      h_ptdiv_ctau100->SetMarkerColor(6);
      h_ptdiv_ctau100->SetLineColor(6);
      h_ptdiv_ctau100->Draw("HIST same");
-    
-     h_ptdiv_ctau1000->GetYaxis()->SetTitle("Efficiency");
+
      h_ptdiv_ctau1000->GetXaxis()->SetRangeUser(0.0,100); 
      h_ptdiv_ctau1000->GetXaxis()->SetTitle("p_{T} (GeV)");
      h_ptdiv_ctau1000->SetMarkerColor(94);
@@ -99,6 +94,6 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("eff.gif"); // .pdf and other formats work too! 
+     canv1->SaveAs("efficiency_SL.png"); // .pdf and other formats work too! 
    
   }
