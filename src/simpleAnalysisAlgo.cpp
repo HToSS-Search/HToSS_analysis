@@ -443,6 +443,7 @@ void SimpleAnalysis::fillGeneratorPlots(const AnalysisEvent& event) const {
 	h_VertexPosRZ->Fill(std::abs(genParVz),std::sqrt(genParVx*genParVx+genParVy*genParVy));
 	h_VertexPosR->Fill(std::sqrt(genParVx*genParVx+genParVy*genParVy));
        
+	//Sort leading and subleading
 	if(event.genParPt[k]>gen1){
 	  gen2=gen1;
 	  gen1=event.genParPt[k];
@@ -450,17 +451,9 @@ void SimpleAnalysis::fillGeneratorPlots(const AnalysisEvent& event) const {
 	else if(event.genParPt[k]>gen2){
 	  gen2=event.genParPt[k];
 	}
-           
-	if(event.muTrig()){
-	  if(event.genParPt[k]>genpt1){
-	    genpt2=genpt1;
-	    genpt1=event.genParPt[k];
-	  }
-	  else if(event.genParPt[k]>genpt2){
-	    genpt2=event.genParPt[k];
-	  }
-	}
+    
       }
+	    
       //Charged kaon from scalar decay
       if(pdgId==321){
 	nrofKaon.emplace_back(k);
@@ -509,18 +502,17 @@ void SimpleAnalysis::fillGeneratorPlots(const AnalysisEvent& event) const {
             
   }//end for-loop
         
-  if(genpt1!=0 && genpt2!=0){
-    if(event.muTrig()){
-      h_genParScalarMuonCutPtSL->Fill(genpt1); //leading momenta for the event
-    }
-    if(event.mumuTrig()){
-      h_genParScalarMuonCutPtDL->Fill(genpt1);
-      h_genParScalarMuonCutPtDS->Fill(genpt2);
-    }
-  }
   if(gen1!=0 && gen2!=0){
     h_genParScalarMuonPtL->Fill(gen1);
     h_genParScalarMuonPtS->Fill(gen2);
+	  
+    if(event.muTrig()){
+      h_genParScalarMuonCutPtSL->Fill(gen1); //leading momenta for the event
+    }
+    if(event.mumuTrig()){
+      h_genParScalarMuonCutPtDL->Fill(gen1);
+      h_genParScalarMuonCutPtDS->Fill(gen2);
+    }
   } 
            
           
