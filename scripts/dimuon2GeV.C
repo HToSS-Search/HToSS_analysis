@@ -11,7 +11,7 @@
  #include "TLatex.h"
  #include "TPRegexp.h"
 
-  void dimuon() {  
+  void dimuon2GeV() {  
   
      TFile inFile0("ggH_MS2_ctau0.root"); 
      TH1F* h_scalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_TestscalarInvMass");
@@ -59,6 +59,6 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("h_dimuon.png"); // .pdf and other formats work too! 
+     canv1->SaveAs("h_dimuon2GeV.png"); // .pdf and other formats work too! 
    
   }
