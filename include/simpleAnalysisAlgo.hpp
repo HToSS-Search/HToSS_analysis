@@ -169,7 +169,7 @@ class SimpleAnalysis
     TH1F* h_muonDivDoubleL;
     TH1F* h_muonCutDoubleS;
     TH1F* h_muonDivDoubleS;
-
+    TH1F* h_PATmuonEta;
 
     //Packed candidates
     TH1F* h_packedCDxy;
