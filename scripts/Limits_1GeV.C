@@ -14,7 +14,7 @@
   
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      canv1->SetGrid();
-     //gPad->SetLogx(1);
+     gPad->SetLogx(1); gPad->SetLogy(1);
    
      double x1[4] = {0, 1, 10, 100};
     
