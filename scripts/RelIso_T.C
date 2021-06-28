@@ -35,6 +35,7 @@
      canv1->SetLogy();
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
+     canv1->SetTitle(0);
    
      //h_PIsoSum1_ctau0->SetTitle("Leading pion, relative isolation");
      h_PIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
@@ -82,6 +83,7 @@
      canv2->SetLogy();
      canv2->SetLineColor(0);
      canv2->SetFillColor(0);
+     canv2->SetTitle(0);
    
      h_KIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
      h_KIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
@@ -128,6 +130,7 @@
      canv3->SetLogy();
      canv3->SetLineColor(0);
      canv3->SetFillColor(0);
+     canv3->SetTitle(0);
    
      h_MuonIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
      h_MuonIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
