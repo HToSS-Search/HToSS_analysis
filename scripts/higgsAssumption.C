@@ -15,7 +15,8 @@
      TCanvas* canv2 = new TCanvas ("canv2", "canv2", 50, 50, 800, 600); // Canvas to draw histogram on
    
      gStyle->SetOptStat(0);
-     
+   
+     h_higgsassump->SetTitle("");
      h_higgsassump->GetXaxis()->SetTitle("Pion mass assumption"); // set a title for the x-axis
      h_higgsassump->GetXaxis()->SetRangeUser(0., 200.); // change the x-axis range to 0-200
      h_higgsassump->GetYaxis()->SetTitle("Kaon mass assumption"); 
@@ -25,5 +26,5 @@
      canv2->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv2->SaveAs(" h_higgsassump.png"); 
+     canv2->SaveAs("h_higgsassump.png"); 
      }
