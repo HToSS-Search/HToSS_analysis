@@ -941,7 +941,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
  
   h_TestPhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
   h_TestKhiggsInvMass->Fill((Kantiscalar+scalarLVec).M(), eventWeight);
-	
+  h_higgsassump->Fill((Pantiscalar+scalarLVec).M(),(Kantiscalar+scalarLVec).M(), eventWeight);
 	
   //Refitted objects
   TLorentzVector refkaon; TLorentzVector refpion; TLorentzVector refitmuon;	   
@@ -1481,7 +1481,7 @@ void SimpleAnalysis::setupPlots() {
 	
   h_massassump = new TH2F("h_massassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 500, 0.,7.,1000,0.,7.);
   h_pmassassump = new TH2F("h_pmassassump", "Invariant mass: charged hadrons (pions) vs charged hadrons (kaons)", 500, 0.,7.,1000,0.,7.);
-  h_higgsassump = new TH2F("h_higgsassump", "Invariant mass: h_0 (pions-muons) vs h_0 (kaons-muons)", 500, 0.,200.,1000,0.,200.);
+  h_higgsassump = new TH2F("h_higgsassump", "Higgs invariant mass: pion vs. kaon assumption", 500, 0.,200.,1000,0.,200.);
 	
 	
   //Comparison muon momenta
