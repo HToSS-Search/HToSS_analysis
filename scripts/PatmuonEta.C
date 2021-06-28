@@ -21,7 +21,7 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     //h_PIsoSum1_ctau0->SetTitle("Leading pion, relative isolation");
+     h_PATmuonEta_ctau10->SetTitle("");
      h_PATmuonEta_ctau10->GetYaxis()->SetTitle("Events");
      h_PATmuonEta_ctau10->GetXaxis()->SetRangeUser(-2.5, 2.5); 
      h_PATmuonEta_ctau10->GetXaxis()->SetTitle("#eta");
