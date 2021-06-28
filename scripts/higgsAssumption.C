@@ -21,7 +21,7 @@
      h_higgsassump->GetYaxis()->SetTitle("Kaon mass assumption"); 
      h_higgsassump->GetYaxis()->SetRangeUser(0., 200.); //
  
-     h_VertexPosXY->Draw("colz"); // draw histo on canvas
+     h_higgsassump->Draw("colz"); // draw histo on canvas
      canv2->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
