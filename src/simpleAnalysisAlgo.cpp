@@ -919,7 +919,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   // muon bit
   if(mm1.DeltaR(mm2)<packedCandMuonDeltaR_){
 		   
-    h_PATmuonEta->Fill(event.muonPF2PATEta[muIndex1]); h_PATmuonEta->Fill(event.muonPF2PATEta[muIndex2]);  
+    h_PATmuonEta->Fill(event.muonPF2PATEta[patMuIndex1]); h_PATmuonEta->Fill(event.muonPF2PATEta[patMuIndex2]);  
 	  
     TLorentzVector lmuon1 {event.packedCandsPseudoTrkPx[muIndex1], event.packedCandsPseudoTrkPy[muIndex1], event.packedCandsPseudoTrkPz[muIndex1], event.packedCandsE[muIndex1]};
     TLorentzVector lmuon2 {event.packedCandsPseudoTrkPx[muIndex2], event.packedCandsPseudoTrkPy[muIndex2], event.packedCandsPseudoTrkPz[muIndex2], event.packedCandsE[muIndex2]};
