@@ -23,4 +23,4 @@ muon_mom_bkg   lnN    -                                       1.06
 rate_sig       lnN    1.0838         	       	       	      -
 rate_bkg       lnN    -                                       1.047568792792418
 stat_unc_sig   lnN    1.035668818750321                       -            
-stat_unc_bkg   lnN    -                                       1.2280082272
+stat_unc_bkg   lnN    -                                       1.048066079
