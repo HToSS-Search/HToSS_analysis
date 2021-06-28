@@ -370,7 +370,7 @@ class AnalysisEvent
     Float_t tauPF2PATPhi[NTAUSMAX];
     Float_t tauPF2PATEta[NTAUSMAX];
 */
-
+/*
     static constexpr size_t NPHOTONSMAX{30};
     Int_t numPhoPF2PAT;
     Float_t phoPF2PATE[NPHOTONSMAX];
@@ -433,7 +433,7 @@ class AnalysisEvent
     Int_t genPhoPF2PATIsJet[NPHOTONSMAX];
     Int_t genPhoPF2PATScalarAncestor[NPHOTONSMAX];
     Int_t genPhoPF2PATDirectScalarAncestor[NPHOTONSMAX];
-
+*/
 /*
     static constexpr size_t NOOTPHOTONSMAX{30};
     Int_t numPhoOOT_PF2PAT;
