@@ -6,13 +6,13 @@ All @ 95% CL
 
 Observed limit: r < 0.0369502 +/- 0.00708996
 Expected (median) limit: r < 0.0290654 +/- 0.00549035
-Upper 1 sigma band: r < 0.0430875 +/- 0.00563796 
+Upper 1 sigma band: r < 0.0430875 +/- 0.00563796
 , max: 0.04872546 , mid: 0.03444700 +/- 0.01427847
 Lower 1 sigma band: r < 0.0229137 +/- 0.00274517 
 , min: 0.02016853
 Upper 2 sigma band: r < 0.0601469 +/- 0.00188506 
 , max: 0.06203196 , mid: 0.03863480 +/- 0.02339717
-Lower 2 sigma band: r < 0.0179828 +/- 0.00274517 
+Lower 2 sigma band: r < 0.0179828 +/- 0.00274517
 , min: 0.01523763
 
 -- 2 GeV --
