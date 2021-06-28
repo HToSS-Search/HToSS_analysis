@@ -939,6 +939,10 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 		   
   }
  
+  h_TestPhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
+  h_TestKhiggsInvMass->Fill((Kantiscalar+scalarLVec).M(), eventWeight);
+	
+	
   //Refitted objects
   TLorentzVector refkaon; TLorentzVector refpion; TLorentzVector refitmuon;	   
   for(Int_t k{0}; k<event.numChsTrackPairs;k++){
@@ -1454,6 +1458,8 @@ void SimpleAnalysis::setupPlots() {
   h_TestPantiscalarInvMass = new TH1F("h_TestPantiscalarInvMass", "Dihadron (pion) invariant mass", 200, 0.,5.);
   h_TestKantiscalarInvMass = new TH1F("h_TestKantiscalarInvMass", "Dihadron (kaon) invariant mass", 200, 0.,5.);
   h_TestscalarInvMass = new TH1F("h_TestscalarInvMass", "Dimuon invariant mass", 200, 0.,5.);
+  h_TestPhiggsInvMass = new TH1F("h_TestPhiggsInvMass", "Higgs invariant mass (pion)", 500, 0.,200.);
+  h_TestKhiggsInvMass = new TH1F("h_TestKhiggsInvMass", "Higgs invariant mass (kaon)", 500, 0.,200.);
   Gaussian3 = new TF1("Gaussian3","gaus",1.,3.);
   h_PhiggsInvMass = new TH1F("h_PhiggsInvMass", "Higgs invariant mass", 500, 0., 200.);
   h_PhiggsRInvMass = new TH1F("h_PhiggsRInvMass", "Higgs invariant mass", 500, 0., 200.);
@@ -1780,6 +1786,8 @@ void SimpleAnalysis::savePlots() {
   h_KantiscalarInvMass->Write();
   h_TestKantiscalarInvMass->GetXaxis()->SetTitle("GeV");
   h_TestKantiscalarInvMass->Write();
+  h_TestKhiggsInvMass->GetXaxis()->SetTitle("GeV");
+  h_TestKhiggsInvMass->Write();
   h_KscalarInvMass->GetXaxis()->SetTitle("GeV");
   h_KscalarInvMass->Write();
   h_KhiggsInvMass->GetXaxis()->SetTitle("GeV");
@@ -1844,6 +1852,8 @@ void SimpleAnalysis::savePlots() {
   
   h_TestPantiscalarInvMass->GetXaxis()->SetTitle("GeV");
   h_TestPantiscalarInvMass->Write();
+  h_TestPhiggsInvMass->GetXaxis()->SetTitle("GeV");
+  h_TestPhiggsInvMass->Write();
   h_PantiscalarInvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
   h_PantiscalarInvMass->GetYaxis()->SetTitle("Events");
   h_PantiscalarInvMass->Write();
