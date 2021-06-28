@@ -2893,7 +2893,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
    fChain->SetBranchAddress("tauPF2PATPhi", tauPF2PATPhi, &b_tauPF2PATPhi);
    fChain->SetBranchAddress("tauPF2PATEta", tauPF2PATEta, &b_tauPF2PATEta);
 */
-   fChain->SetBranchAddress("numPhoPF2PAT", &numPhoPF2PAT, &b_numPhoPF2PAT);
+  /* fChain->SetBranchAddress("numPhoPF2PAT", &numPhoPF2PAT, &b_numPhoPF2PAT);
    fChain->SetBranchAddress("phoPF2PATE", phoPF2PATE, &b_phoPF2PATE);
    fChain->SetBranchAddress("phoPF2PATSigmaE", phoPF2PATSigmaE, &b_phoPF2PATSigmaE);
    fChain->SetBranchAddress("phoPF2PATET", phoPF2PATET, &b_phoPF2PATET);
@@ -2955,7 +2955,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
       fChain->SetBranchAddress("genPhoPF2PATIsJet", genPhoPF2PATIsJet, &b_genPhoPF2PATIsJet);
       fChain->SetBranchAddress("genPhoPF2PATScalarAncestor", genPhoPF2PATScalarAncestor, &b_genPhoPF2PATScalarAncestor);
       fChain->SetBranchAddress("genPhoPF2PATDirectScalarAncestor", genPhoPF2PATDirectScalarAncestor, &b_genPhoPF2PATDirectScalarAncestor);
-   }
+   }*/
 
 /*
    fChain->SetBranchAddress("numPhoOOT_PF2PAT", &numPhoOOT_PF2PAT, &b_numPhoOOT_PF2PAT);
