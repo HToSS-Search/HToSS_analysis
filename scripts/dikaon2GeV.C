@@ -21,11 +21,12 @@
  
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
-     //canv1->SetLogy();
+     canv1->SetLogy();
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
 
-     //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
+     //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.);
+     h_antiscalarInvMass_ctau0->SetTitle("");
      h_antiscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_antiscalarInvMass_ctau0->GetXaxis()->SetRangeUser(1,3);  
      h_antiscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{KK} (GeV/c^{2})");
@@ -33,6 +34,7 @@
      h_antiscalarInvMass_ctau0->SetLineColor(4);
      h_antiscalarInvMass_ctau0->Draw("HIST");
  
+     h_antiscalarInvMass_ctau10->SetTitle("");
      h_antiscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_antiscalarInvMass_ctau10->GetXaxis()->SetRangeUser(1,3); 
      h_antiscalarInvMass_ctau10->GetXaxis()->SetTitle("m_{KK} (GeV/c^{2})");
