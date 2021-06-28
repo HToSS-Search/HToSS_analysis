@@ -36,7 +36,7 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     h_PIsoSum1_ctau0->SetTitle(" ");
+     h_PIsoSum1_ctau10->SetTitle(" ");
      h_PIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
      h_PIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum1_ctau10->GetXaxis()->SetTitle("Relative isolation");
@@ -44,7 +44,7 @@
      h_PIsoSum1_ctau10->SetLineColor(4);
      h_PIsoSum1_ctau10->Draw("HIST");
  
-     h_PIsoSum2_ctau0->SetTitle(" ");
+     h_PIsoSum2_ctau10->SetTitle(" ");
      h_PIsoSum2_ctau10->GetYaxis()->SetTitle("Events");
      h_PIsoSum2_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_PIsoSum2_ctau10->GetXaxis()->SetTitle("Relative isolation");
@@ -85,7 +85,7 @@
      canv2->SetFillColor(0);
 
    
-     h_KIsoSum1_ctau0->SetTitle(" ");
+     h_KIsoSum1_ctau10->SetTitle(" ");
      h_KIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
      h_KIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_KIsoSum1_ctau10->GetXaxis()->SetTitle("Relative isolation");
@@ -93,7 +93,7 @@
      h_KIsoSum1_ctau10->SetLineColor(4);
      h_KIsoSum1_ctau10->Draw("HIST");
  
-     h_KIsoSum2_ctau0->SetTitle(" ");
+     h_KIsoSum2_ctau10->SetTitle(" ");
      h_KIsoSum2_ctau10->GetYaxis()->SetTitle("Events");
      h_KIsoSum2_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_KIsoSum2_ctau10->GetXaxis()->SetTitle("Relative isolation");
@@ -134,7 +134,7 @@
      canv3->SetFillColor(0);
 
    
-     h_MuonIsoSum1_ctau0->SetTitle(" ");
+     h_MuonIsoSum1_ctau10->SetTitle(" ");
      h_MuonIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
      h_MuonIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_MuonIsoSum1_ctau10->GetXaxis()->SetTitle("Relative isolation");
@@ -142,7 +142,7 @@
      h_MuonIsoSum1_ctau10->SetLineColor(4);
      h_MuonIsoSum1_ctau10->Draw("HIST");
      
-     h_MuonIsoSum2_ctau0->SetTitle(" ");
+     h_MuonIsoSum2_ctau10->SetTitle(" ");
      h_MuonIsoSum2_ctau10->GetYaxis()->SetTitle("Events");
      h_MuonIsoSum2_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
      h_MuonIsoSum2_ctau10->GetXaxis()->SetTitle("Relative isolation");
