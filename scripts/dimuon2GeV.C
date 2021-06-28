@@ -28,7 +28,7 @@
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.);
      h_scalarInvMass_ctau0->SetTitle("");
      h_scalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
-     h_scalarInvMass_ctau0->GetXaxis()->SetRangeUser(1.5,2.5);  
+     h_scalarInvMass_ctau0->GetXaxis()->SetRangeUser(0,3);  
      h_scalarInvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_scalarInvMass_ctau0->SetMarkerColor(4);
      h_scalarInvMass_ctau0->SetLineColor(4);
@@ -36,7 +36,7 @@
  
      h_scalarInvMass_ctau10->SetTitle("");
      h_scalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
-     h_scalarInvMass_ctau10->GetXaxis()->SetRangeUser(1.5,2.5); 
+     h_scalarInvMass_ctau10->GetXaxis()->SetRangeUser(0,3); 
      h_scalarInvMass_ctau10->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_scalarInvMass_ctau10->SetMarkerColor(3);
      h_scalarInvMass_ctau10->SetLineColor(3);
