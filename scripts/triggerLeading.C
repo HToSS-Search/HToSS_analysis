@@ -37,6 +37,7 @@
      h_ptcut_ctau0->SetLineColor(2);
      h_ptcut_ctau0->Draw("HIST same");
    
+     h_ptcut2_ctau0->SetTitle("");
      h_ptcut2_ctau0->GetYaxis()->SetTitle("Events");
      h_ptcut2_ctau0->GetXaxis()->SetRangeUser(0.0,100); 
      h_ptcut2_ctau0->GetXaxis()->SetTitle("p_{T} (GeV)");
