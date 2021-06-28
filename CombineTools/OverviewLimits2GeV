@@ -23,7 +23,7 @@ Observed limit:  r < 0.0479211 +/- 0.00871479
 Expected (median) limit: r < 0.0383966 +/- 0.000545785
 Upper 1 sigma band: r < 0.0544542 +/- 0.00716384 
 , max: 0.06161804 , mid: 0.04362106 +/- 0.01799699
-Lower 1 sigma band: r < 0.0291152 +/- 0.00349113 
+Lower 1 sigma band: r < 0.0291152 +/- 0.00349113
 , min: 0.02562407
 Upper 2 sigma band: r < 0.0763621 +/- 0.00234943 
 , max: 0.07871153 , mid: 0.04905365 +/- 0.02965788
