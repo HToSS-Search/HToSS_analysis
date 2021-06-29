@@ -175,6 +175,9 @@ int main(int argc, char* argv[])
     TH1F* h_packedCandVxy   {new TH1F("h_packedCandVxy", "Packed Candidate track vxy", 300,  -150., 150.)};
     TH1F* h_packedCandVz    {new TH1F("h_packedCandVz",  "Packed Candidate track vz",  1200, -600., 600.)};
 
+    TH1F* h_muonDR          {new TH1F("h_muonDR",         "#DeltaR between generator level muons", 100, 0., 10.)};
+    TH1F* h_pionDR          {new TH1F("h_pionDR",         "#DeltaR between generator level pions", 100, 0., 10.)};
+
     TH1F* h_scalarDR        {new TH1F("h_scalarDR",       "#DeltaR between generator level scalars" ,    100, 0., 10.)};
     TH1F* h_scalarDPhi      {new TH1F("h_scalarDPhi",     "#Delta#phi between generator level scalars",  100, -3.5, 3.5)};
     TH1F* h_scalarDrEtaPhi  {new TH1F("h_scalarDrEtaPhi", "#Deltar#eta#phi between generator level scalars", 100, 0., 7.)};
@@ -636,6 +639,8 @@ int main(int argc, char* argv[])
 ///
             int higgsIndex;
             std::vector< int > scalarIndex;
+            std::vector< int > muonIndex;
+            std::vector< int > pionIndex;
             std::vector< int > kaonIndex;
             std::vector< int > kShortIndex;
 
@@ -659,6 +664,9 @@ int main(int argc, char* argv[])
                 if ( pdgId == 25 ) higgsIndex = k;
 
                 const bool isScalarGrandparent{ scalarGrandparent(event, k, 9000006) };
+
+                if ( pdgId == 13  && isScalarGrandparent) muonIndex.emplace_back(k);
+                if ( pdgId == 211 && isScalarGrandparent) pionIndex.emplace_back(k);
 
 //                if ( motherId == 9000006 ) std::cout << "MOTHER IS SCALAR and has " << daughters << " daughters and status " << status << " and pdgId " << pdgId << std::endl;                
 	  
@@ -807,7 +815,20 @@ int main(int argc, char* argv[])
                 h_higgsPhi->Fill(event.genParPhi[higgsIndex], datasetWeight);
                 h_higgsMass->Fill(higgsVec.Pt(), datasetWeight);
             }
-
+            if ( muonIndex.size() == 2 ) {
+                const int index1 {muonIndex[0]}, index2 {muonIndex[1]};
+                TLorentzVector muon1, muon2;
+                muon1.SetPtEtaPhiE(event.genParPt[index1], event.genParEta[index1], event.genParPhi[index1], event.genParE[index1]);
+                muon2.SetPtEtaPhiE(event.genParPt[index2], event.genParEta[index2], event.genParPhi[index2], event.genParE[index2]);
+                h_muonDR->Fill(muon1.DeltaR(muon2));
+            }
+            if ( pionIndex.size() == 2 ) {
+                const int index1 {pionIndex[0]}, index2 {pionIndex[1]};
+                TLorentzVector pion1, pion2;
+                pion1.SetPtEtaPhiE(event.genParPt[index1], event.genParEta[index1], event.genParPhi[index1], event.genParE[index1]);
+                pion2.SetPtEtaPhiE(event.genParPt[index2], event.genParEta[index2], event.genParPhi[index2], event.genParE[index2]);
+                h_pionDR->Fill(pion1.DeltaR(pion2));
+            }
             if ( scalarIndex.size() == 2 ) {
                 const int index1 {scalarIndex[0]}, index2 {scalarIndex[1]};
                 TLorentzVector scalar1, scalar2;
@@ -1165,6 +1186,7 @@ int main(int argc, char* argv[])
     outFile->cd();
 
     h_pdgId->Write();
+
     h_pdgIdStatus1->Write();
     h_pdgIdStatus2->Write();
     h_pdgIdStatus23->Write();
@@ -1253,6 +1275,9 @@ int main(int argc, char* argv[])
     h_packedCandVy->Write();
     h_packedCandVxy->Write();
     h_packedCandVz->Write();
+
+    h_muonDR->Write();
+    h_pionDR->Write();
 
     h_scalarDR->Write();
     h_scalarDPhi->Write();
