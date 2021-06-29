@@ -403,6 +403,9 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
 
     if ( !event.metFilters() ) return false;
 
+    if (doPlots_) plotMap["trigSel"]->fillAllPlots(event, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(0.5, eventWeight);
+
     // Make lepton cuts. If the trigLabel contains d, we are in the ttbar CR so the Z mass cut is skipped
     ////  Do this outside original function because this is simpler for HToSS unlike in tZq
     ////  if (!makeLeptonCuts(event, eventWeight, plotMap, cutFlow, systToRun)) return false;
@@ -410,8 +413,14 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     event.muonIndexTight = getLooseMuons(event);
     if (event.muonIndexTight.size() < numTightMu_) return false;
 
+    if (doPlots_) plotMap["lepSel"]->fillAllPlots(event, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(1.5, eventWeight);
+
     const bool validDileptonCand = getDileptonCand(event, event.muonIndexTight);
     if ( !validDileptonCand ) return false;
+
+    if (doPlots_) plotMap["zCand"]->fillAllPlots(event, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(2.5, eventWeight);
 
     const double dileptonMass {(event.zPairLeptons.first + event.zPairLeptons.second).M()};
 
@@ -425,18 +434,17 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     event.chsIndex = getChargedHadronTracks(event);
     if ( event.chsIndex.size() < 2 ) return false;
 
+    if (doPlots_) plotMap["trackSel"]->fillAllPlots(event, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(3.5, eventWeight);
+
     const bool validDihadronCand = getDihadronCand(event, event.chsIndex);
 
     if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, systToRun, eventWeight, false);
-    if (doPlots_) plotMap["lepSel"]->fillAllPlots(event, eventWeight);
-    if (doPlots_ || fillCutFlow_) cutFlow.Fill(0.5, eventWeight);
 
     // If dilepton mass is greater than threshold value, return false
     if ( dileptonMass > scalarMassCut_ && !skipScalarMassCut_ ) return false;
 
     if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, systToRun, eventWeight, false);
-    if (doPlots_) plotMap["zMass"]->fillAllPlots(event, eventWeight);
-    if (doPlots_ || fillCutFlow_) cutFlow.Fill(1.5, eventWeight);
 
 /////
 
@@ -444,6 +452,9 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     event.bTagIndex = makeBCuts(event, event.jetIndex, systToRun);
 
     if (!validDihadronCand) return false;
+    if (doPlots_) plotMap["hadCand"]->fillAllPlots(event, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(4.5, eventWeight);
+
     if ( (event.chsPairVec.first + event.chsPairVec.second).M() > scalarMassCut_ && !skipScalarMassCut_ ) return false;
 
     //// Apply side band cut for data
@@ -452,9 +463,6 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
         if ( muScalarMass  < hadScalarMass*1.05 && muScalarMass  >= hadScalarMass*0.95 ) return false;
         else if ( hadScalarMass < muScalarMass*1.05  && hadScalarMass >= muScalarMass*0.83  ) return false;
     }
-
-    if (doPlots_ || fillCutFlow_) cutFlow.Fill(2.5, eventWeight);
-    if (doPlots_) plotMap["trackSel"]->fillAllPlots(event, eventWeight);
 
 //    if (event.jetIndex.size() < numJets_) return false;
 //    if (event.jetIndex.size() > maxJets_) return false;
@@ -467,7 +475,7 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
 //    if ( ((event.zPairLeptons.first + event.zPairLeptons.second + event.chsPairVec.first + event.chsPairVec.second).M() - 125.2) > higgsMassCut_ && !skipScalarMassCut_ ) return false;
 
 //    if (doPlots_) plotMap["higgsSel"]->fillAllPlots(event, eventWeight);
-//    if (doPlots_ || fillCutFlow_) cutFlow.Fill(3.5, eventWeight);
+//    if (doPlots_ || fillCutFlow_) cutFlow.Fill(5.5, eventWeight);
 
     return true;
 }
@@ -550,7 +558,7 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
 
     if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, syst, eventWeight, false);
     if (doPlots_) plotMap["lepSel"]->fillAllPlots(event, eventWeight);
-    if (doPlots_ || fillCutFlow_) cutFlow.Fill(0.5, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(1.5, eventWeight);
 
 
     if (isNPL_) { // if is NPL channel
@@ -572,8 +580,8 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
     if ( (event.zPairLeptons.first + event.zPairLeptons.second).M() > scalarMassCut_ && !skipScalarMassCut_ ) return false;
 
     if (doPlots_ || fillCutFlow_) std::tie(event.jetIndex, event.jetSmearValue) = makeJetCuts(event, syst, eventWeight, false);
-    if (doPlots_) plotMap["zMass"]->fillAllPlots(event, eventWeight);
-    if (doPlots_ || fillCutFlow_) cutFlow.Fill(1.5, eventWeight);
+    if (doPlots_) plotMap["zCand"]->fillAllPlots(event, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(2.5, eventWeight);
 
     return true;
 }
@@ -704,9 +712,9 @@ std::vector<int> Cuts::getLooseMuons(const AnalysisEvent& event) const {
     }
     else {
         for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-            if (event.muonPF2PATIsPFMuon[i] /*&& event.muonPF2PATLooseCutId[i]*/ /* && event.muonPF2PATPfIsoVeryLoose[i] */ ) {
+            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] /* && event.muonPF2PATPfIsoVeryLoose[i] */ ) {
 
-               if (muons.size() < 1 && event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
+                if (muons.size() < 1 && event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
                 else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= looseMuonPt_) continue;
 
                 if (muons.size() < 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEtaLeading_) continue;
@@ -1352,6 +1360,7 @@ bool Cuts::triggerCuts(const AnalysisEvent& event, double& eventWeight, const in
 //            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
             return true;
         }
+        else if (event.HLT_IsoMu27_v8 || event.HLT_IsoMu27_v9 || event.HLT_IsoMu27_v10 || event.HLT_IsoMu27_v11 || event.HLT_IsoMu27_v12 || event.HLT_IsoMu27_v13 || event.HLT_IsoMu27_v14 ) return true;
         else if (bParkingMu12IP6 && usingBparking_){
 //            if (isMC_) eventWeight *= twgt; // trigger weight should be unchanged for data anyway, but good practice to explicitly not apply it.
             return true;

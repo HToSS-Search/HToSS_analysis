@@ -373,11 +373,12 @@ void AnalysisAlgo::setupPlots()
 {
     // Do a little initialisation for the plots here. Will later on be done in a
     // config file. Initialise plot stage names.
-    stageNames.emplace_back(std::make_pair("lepSel", "Muon Cuts"));
-    stageNames.emplace_back(std::make_pair("zMass", "m_{#mu#mu} Cut"));
-    stageNames.emplace_back(std::make_pair("trackSel", "Charged Track Cuts"));
+    stageNames.emplace_back(std::make_pair("trigSel", "HLT cuts"));
+    stageNames.emplace_back(std::make_pair("lepSel", "Muon cuts"));
+    stageNames.emplace_back(std::make_pair("zCand", "m_{#mu#mu} cut"));
+    stageNames.emplace_back(std::make_pair("trackSel", "Charged track Cuts"));
+    stageNames.emplace_back(std::make_pair("hadCand", "m_{had had} Cut"));
 //    stageNames.emplace_back(std::make_pair("higgsSel", "m_{aa} Cut"));
-//    stageNames.emplace_back(std::make_pair("wMass", "W Mass Cuts"));
 }
 
 void AnalysisAlgo::runMainAnalysis() {
@@ -389,7 +390,8 @@ void AnalysisAlgo::runMainAnalysis() {
         else {
             if (is2016_) totalLumi = 16393.380531441;
             else if (is2016APV_) totalLumi = 19936.295040581;
-            else if (is2018_) totalLumi = 59819.714473511;
+            else if (is2018_ && !usingBparking_) totalLumi = 59819.714473511;
+            else if (is2018_ && usingBparking_) totalLumi = 34790.3414;
             else totalLumi = 41477.877399292;
         }
     }
