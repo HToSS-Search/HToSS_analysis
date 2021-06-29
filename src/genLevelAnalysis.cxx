@@ -112,45 +112,59 @@ int main(int argc, char* argv[])
     h_kaonsFromScalarDecays->GetXaxis()->SetBinLabel(6, "K_{L}^{0} K_{L}^{0}");
 
     // GenPar scalar decay product kinematics
-    TH1F* h_genParKaonPt  {new TH1F("h_genParKaonPt",  "genPar K from scalar decay p_{T}", 1000, 0., 1000.)};
+    TH1F* h_genParMuonPt  {new TH1F("h_genParMuonPt",  "genPar #mu from scalar decay p_{T}", 600, 0., 300.)};
+    TH1F* h_genParMuonEta {new TH1F("h_genParMuonEta", "genPar #mu from scalar decay #eta",  200, -7., 7.)}; 
+    TH1F* h_genParMuonPhi {new TH1F("h_genParMuonPhi", "genPar #mu from scalar decay #phi",  100, -3.5, 3.5)};
+    TH1F* h_genParMuonE   {new TH1F("h_genParMuonE",   "genPar #mu from scalar decay E",     1000, 0., 1000.)};
+    TH1F* h_genParMuonMass   {new TH1F("h_genParMuonMass",   "genPar #mu from scalar decay mass",     200, 0., 1.)};
+
+    TH1F* h_genParKaonPt  {new TH1F("h_genParKaonPt",  "genPar K from scalar decay p_{T}", 600, 0., 300.)};
     TH1F* h_genParKaonEta {new TH1F("h_genParKaonEta", "genPar K from scalar decay #eta",  200, -7., 7.)}; 
     TH1F* h_genParKaonPhi {new TH1F("h_genParKaonPhi", "genPar K from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParKaonE   {new TH1F("h_genParKaonE",   "genPar K from scalar decay E",     1000, 0., 1000.)};
+    TH1F* h_genParKaonMass   {new TH1F("h_genParKaonMass",   "genPar K from scalar decay mass",     200, 0., 1.)};
 
-    TH1F* h_genParChargedKaonPt  {new TH1F("h_genParChargedKaonPt",  "genPar K^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)};
+    TH1F* h_genParChargedKaonPt  {new TH1F("h_genParChargedKaonPt",  "genPar K^{#pm} from scalar decay p_{T}", 600, 0., 300.)};
     TH1F* h_genParChargedKaonEta {new TH1F("h_genParChargedKaonEta", "genPar K^{#pm} from scalar decay #eta",  200, -7., 7.)};
     TH1F* h_genParChargedKaonPhi {new TH1F("h_genParChargedKaonPhi", "genPar K^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParChargedKaonE   {new TH1F("h_genParChargedKaonE",   "genPar K^{#pm} from scalar decay E",     1000, 0., 1000.)};
+    TH1F* h_genParChargedKaonMass   {new TH1F("h_genParChargedKaonMass",   "genPar K^{#pm} from scalar decay mass",     200, 0., 1.)};
 
-    TH1F* h_genParNeutralKaonPt  {new TH1F("h_genParNeutralKaonPt",  "genPar K^{0} from scalar decay p_{T}", 1000, 0., 1000.)};
+    TH1F* h_genParNeutralKaonPt  {new TH1F("h_genParNeutralKaonPt",  "genPar K^{0} from scalar decay p_{T}", 600, 0., 300.)};
     TH1F* h_genParNeutralKaonEta {new TH1F("h_genParNeutralKaonEta", "genPar K^{0} from scalar decay #eta",  200, -7., 7.)};
     TH1F* h_genParNeutralKaonPhi {new TH1F("h_genParNeutralKaonPhi", "genPar K^{0} from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParNeutralKaonE   {new TH1F("h_genParNeutralKaonE",   "genPar K^{0} from scalar decay E",     1000, 0., 1000.)};
+    TH1F* h_genParNeutralKaonMass   {new TH1F("h_genParNeutralKaonMass",   "genPar K^{0} from scalar decay mass",     200, 0., 1.)};
 
-    TH1F* h_genParKshortPt  {new TH1F("h_genParKshortPt",  "genPar K^{0}_{S} from scalar decay p_{T}", 1000, 0., 1000.)};
+    TH1F* h_genParKshortPt  {new TH1F("h_genParKshortPt",  "genPar K^{0}_{S} from scalar decay p_{T}", 600, 0., 300.)};
     TH1F* h_genParKshortEta {new TH1F("h_genParKshortEta", "genPar K^{0}_{S} from scalar decay #eta",  200, -7., 7.)};
     TH1F* h_genParKshortPhi {new TH1F("h_genParKshortPhi", "genPar K^{0}_{S} from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParKshortE   {new TH1F("h_genParKshortE",   "genPar K^{0}_{S} from scalar decay E",     1000, 0., 1000.)};
+    TH1F* h_genParKshortMass   {new TH1F("h_genParKshortMass",   "genPar K^{0}_{S} from scalar decay mass",     200, 0., 1.)};
 
-    TH1F* h_genParKlongPt  {new TH1F("h_genParKlongPt",  "genPar K^{0}_{L} from scalar decay p_{T}", 1000, 0., 1000.)};
+    TH1F* h_genParKlongPt  {new TH1F("h_genParKlongPt",  "genPar K^{0}_{L} from scalar decay p_{T}", 600, 0., 300.)};
     TH1F* h_genParKlongEta {new TH1F("h_genParKlongEta", "genPar K^{0}_{L} from scalar decay #eta",  200, -7., 7.)};
     TH1F* h_genParKlongPhi {new TH1F("h_genParKlongPhi", "genPar K^{0}_{L} from scalar decay #phi",  100, -3.5, 3.5)}; 
     TH1F* h_genParKlongE   {new TH1F("h_genParKlongE",   "genPar K^{0}_{L} from scalar decay E",     1000, 0., 1000.)};
+    TH1F* h_genParKlongMass   {new TH1F("h_genParKlongMass",   "genPar K^{0}_{L} from scalar decay mass",     200, 0., 1.)};
 
-    TH1F* h_genParPionPt  {new TH1F("h_genParPionPt",  "genPar #pi from scalar decay p_{T}", 1000, 0., 1000.)};
+    TH1F* h_genParPionPt  {new TH1F("h_genParPionPt",  "genPar #pi from scalar decay p_{T}", 600, 0., 300.)};
     TH1F* h_genParPionEta {new TH1F("h_genParPionEta", "genPar #pi from scalar decay #eta",  200, -7., 7.)}; 
     TH1F* h_genParPionPhi {new TH1F("h_genParPionPhi", "genPar #pi from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParPionE   {new TH1F("h_genParPionE",   "genPar #pi from scalar decay E",     1000, 0., 1000.)};
+    TH1F* h_genParPionMass {new TH1F("h_genParPionMass",   "genPar #pi from scalar decay Mass",     200, 0., 1.)};
 
-    TH1F* h_genParChargedPionPt  {new TH1F("h_genParChargedPionPt",  "genPar #pi^{#pm} from scalar decay p_{T}", 1000, 0., 1000.)};
+    TH1F* h_genParChargedPionPt  {new TH1F("h_genParChargedPionPt",  "genPar #pi^{#pm} from scalar decay p_{T}", 600, 0., 300.)};
     TH1F* h_genParChargedPionEta {new TH1F("h_genParChargedPionEta", "genPar #pi^{#pm} from scalar decay #eta",  200, -7., 7.)};
     TH1F* h_genParChargedPionPhi {new TH1F("h_genParChargedPionPhi", "genPar #pi^{#pm} from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParChargedPionE   {new TH1F("h_genParChargedPionE",   "genPar #pi^{#pm} from scalar decay E",     1000, 0., 1000.)};
+    TH1F* h_genParChargedPionMass {new TH1F("h_genParChargedPionMass",   "genPar #pi^{#pm} from scalar decay Mass",     200, 0., 1.)};
 
-    TH1F* h_genParNeutralPionPt  {new TH1F("h_genParNeutralPionPt",  "genPar #pi^{0} from scalar decay p_{T}", 1000, 0., 1000.)};
+    TH1F* h_genParNeutralPionPt  {new TH1F("h_genParNeutralPionPt",  "genPar #pi^{0} from scalar decay p_{T}", 600, 0., 300.)};
     TH1F* h_genParNeutralPionEta {new TH1F("h_genParNeutralPionEta", "genPar #pi^{0} from scalar decay #eta",  200, -7., 7.)};
     TH1F* h_genParNeutralPionPhi {new TH1F("h_genParNeutralPionPhi", "genPar #pi^{0} from scalar decay #phi",  100, -3.5, 3.5)};
     TH1F* h_genParNeutralPionE   {new TH1F("h_genParNeutralPionE",   "genPar #pi^{0} from scalar decay E",     1000, 0., 1000.)};
+    TH1F* h_genParNeutralPionMass {new TH1F("h_genParNeutralPionMass",   "genPar #pi^{0} from scalar decay Mass",     200, 0., 1.)};
 
     //
 
@@ -164,6 +178,16 @@ int main(int argc, char* argv[])
     TH1F* h_scalarDR        {new TH1F("h_scalarDR",       "#DeltaR between generator level scalars" ,    100, 0., 10.)};
     TH1F* h_scalarDPhi      {new TH1F("h_scalarDPhi",     "#Delta#phi between generator level scalars",  100, -3.5, 3.5)};
     TH1F* h_scalarDrEtaPhi  {new TH1F("h_scalarDrEtaPhi", "#Deltar#eta#phi between generator level scalars", 100, 0., 7.)};
+
+    TH1F* h_scalarPt      {new TH1F("h_scalarPt",     "gen scalar p_{T}", 600, 0., 300.)};
+    TH1F* h_scalarEta      {new TH1F("h_scalarEta",     "gen scalar #eta", 200, -7., 7.)};
+    TH1F* h_scalarPhi      {new TH1F("h_scalarPhi",     "gen scalar #eta", 100,-3.5, 3.5)};
+    TH1F* h_scalarMass      {new TH1F("h_scalarMass",     "gen scalar mass", 200, 0., 4.)};
+
+    TH1F* h_higgsPt      {new TH1F("h_higgsPt",     "gen higgs p_{T}", 600, 0., 300.)};
+    TH1F* h_higgsEta      {new TH1F("h_higgsEta",     "gen higgs #eta", 200, -7., 7.)};
+    TH1F* h_higgsPhi      {new TH1F("h_higgsPhi",     "gen higgs #eta", 100,-3.5, 3.5)};
+    TH1F* h_higgsMass      {new TH1F("h_higgsMass",     "gen higgs mass", 400, 0., 200.)};
 
     TH1F* h_genParKaonDR        {new TH1F("h_genParKaonDR",       "#DeltaR between genParticle kaons from scalar decays" ,    100, 0., 10.)};
     TH1F* h_genParKaonDPhi      {new TH1F("h_genParKaonDPhi",     "#Delta#phi between genParticle kaons from scalar decays",  100, -3.5, 3.5)};
@@ -610,6 +634,7 @@ int main(int argc, char* argv[])
             //////// GENERATOR PARTICLE STUFF
 
 ///
+            int higgsIndex;
             std::vector< int > scalarIndex;
             std::vector< int > kaonIndex;
             std::vector< int > kShortIndex;
@@ -626,8 +651,12 @@ int main(int argc, char* argv[])
                 const Float_t genParEta { event.genParEta[k] };
                 const Float_t genParPhi { event.genParPhi[k] };
                 const Float_t genParE   { event.genParE[k] };
+                TLorentzVector genParVec;
+                genParVec.SetPtEtaPhiE(genParPt, genParEta, genParPhi, genParE);
+                const Float_t genParMass {Float_t( genParVec.M() )};
 
                 if ( pdgId == 9000006 ) scalarIndex.emplace_back(k);
+                if ( pdgId == 25 ) higgsIndex = k;
 
                 const bool isScalarGrandparent{ scalarGrandparent(event, k, 9000006) };
 
@@ -692,17 +721,26 @@ int main(int argc, char* argv[])
                     if ( pdgId == 310 ) kShortIndex.emplace_back(k);
 
                     // kaon and pion distributions in pT, eta, phi
-                    if ( (pdgId == 130 || pdgId == 310 || pdgId == 311 || pdgId == 321) ) {
+                    if (pdgId == 13) {
+                        h_genParMuonPt->Fill(genParPt, datasetWeight);
+                        h_genParMuonEta->Fill(genParEta, datasetWeight);
+                        h_genParMuonPhi->Fill(genParPhi, datasetWeight);
+                        h_genParMuonE->Fill(genParE, datasetWeight);
+                        h_genParMuonMass->Fill(genParMass, datasetWeight);
+                    }
+                    else if ( (pdgId == 130 || pdgId == 310 || pdgId == 311 || pdgId == 321) ) {
                         h_genParKaonPt->Fill(genParPt, datasetWeight);
                         h_genParKaonEta->Fill(genParEta, datasetWeight);
                         h_genParKaonPhi->Fill(genParPhi, datasetWeight);
                         h_genParKaonE->Fill(genParE, datasetWeight);
+                        h_genParKaonMass->Fill(genParMass, datasetWeight);
                         // If charged kaon
                         if ( pdgId == 321 ) {
                             h_genParChargedKaonPt->Fill(genParPt, datasetWeight);
                             h_genParChargedKaonEta->Fill(genParEta, datasetWeight);
                             h_genParChargedKaonPhi->Fill(genParPhi, datasetWeight);
                             h_genParChargedKaonE->Fill(genParE, datasetWeight);
+                            h_genParChargedKaonMass->Fill(genParMass, datasetWeight);
                         }
                         // If neutral kaon
                         if ( pdgId == 311 ) {
@@ -710,6 +748,7 @@ int main(int argc, char* argv[])
                             h_genParNeutralKaonEta->Fill(genParEta, datasetWeight);
                             h_genParNeutralKaonPhi->Fill(genParPhi, datasetWeight);
                             h_genParNeutralKaonE->Fill(genParE, datasetWeight);
+                            h_genParNeutralKaonMass->Fill(genParMass, datasetWeight);
                         }
                         // If kShort
                         if ( pdgId == 310 ) {
@@ -717,6 +756,7 @@ int main(int argc, char* argv[])
                             h_genParKshortEta->Fill(genParEta, datasetWeight);
                             h_genParKshortPhi->Fill(genParPhi, datasetWeight);
                             h_genParKshortE->Fill(genParE, datasetWeight);
+                            h_genParKshortMass->Fill(genParMass, datasetWeight);
                         }
                         // If kLong
                         if ( pdgId == 130 ) {
@@ -724,19 +764,22 @@ int main(int argc, char* argv[])
                             h_genParKlongEta->Fill(genParEta, datasetWeight);
                             h_genParKlongPhi->Fill(genParPhi, datasetWeight);
                             h_genParKlongE->Fill(genParE, datasetWeight);
+                            h_genParKlongMass->Fill(genParMass, datasetWeight);
                         }
                     }
-                    if ( pdgId == 111 || pdgId == 211 ) {
+                    else if ( pdgId == 111 || pdgId == 211 ) {
                         h_genParPionPt->Fill(genParPt, datasetWeight);
                         h_genParPionEta->Fill(genParEta, datasetWeight);
                         h_genParPionPhi->Fill(genParPhi, datasetWeight);
                         h_genParPionE->Fill(genParE, datasetWeight);
+                        h_genParPionMass->Fill(genParMass, datasetWeight);
                         // If charged pion
                         if ( pdgId == 211 ) {
                             h_genParChargedPionPt->Fill(genParPt, datasetWeight);
                             h_genParChargedPionEta->Fill(genParEta, datasetWeight);
                             h_genParChargedPionPhi->Fill(genParPhi, datasetWeight);
                             h_genParChargedPionE->Fill(genParE, datasetWeight);
+                            h_genParChargedPionMass->Fill(genParMass, datasetWeight);
                         }
                         // If neutral pion
                         if ( pdgId == 111 ) {
@@ -744,6 +787,7 @@ int main(int argc, char* argv[])
                             h_genParNeutralPionEta->Fill(genParEta, datasetWeight);
                             h_genParNeutralPionPhi->Fill(genParPhi, datasetWeight);
                             h_genParNeutralPionE->Fill(genParE, datasetWeight);
+                            h_genParNeutralPionMass->Fill(genParMass, datasetWeight);
                         }
                     }
                  }
@@ -755,6 +799,15 @@ int main(int argc, char* argv[])
 //              }
 	    } ///
 
+            if ( higgsIndex > -1 ) {
+                TLorentzVector higgsVec;
+                higgsVec.SetPtEtaPhiE(event.genParPt[higgsIndex], event.genParEta[higgsIndex], event.genParPhi[higgsIndex], event.genParE[higgsIndex]);
+                h_higgsPt->Fill(event.genParPt[higgsIndex], datasetWeight);
+                h_higgsEta->Fill(event.genParEta[higgsIndex], datasetWeight);
+                h_higgsPhi->Fill(event.genParPhi[higgsIndex], datasetWeight);
+                h_higgsMass->Fill(higgsVec.Pt(), datasetWeight);
+            }
+
             if ( scalarIndex.size() == 2 ) {
                 const int index1 {scalarIndex[0]}, index2 {scalarIndex[1]};
                 TLorentzVector scalar1, scalar2;
@@ -763,6 +816,14 @@ int main(int argc, char* argv[])
                 h_scalarDR->Fill(scalar1.DeltaR(scalar2), datasetWeight);
                 h_scalarDPhi->Fill(scalar1.DeltaPhi(scalar2), datasetWeight);
                 h_scalarDrEtaPhi->Fill(scalar1.DrEtaPhi(scalar2), datasetWeight);
+                h_scalarPt->Fill(scalar1.Pt(), datasetWeight);
+                h_scalarPt->Fill(scalar2.Pt(), datasetWeight);
+                h_scalarEta->Fill(scalar1.Eta(), datasetWeight);
+                h_scalarEta->Fill(scalar2.Eta(), datasetWeight);
+                h_scalarPhi->Fill(scalar1.Phi(), datasetWeight);
+                h_scalarPhi->Fill(scalar2.Phi(), datasetWeight);
+                h_scalarMass->Fill(scalar1.M(), datasetWeight);
+                h_scalarMass->Fill(scalar2.M(), datasetWeight);
             }
 
             if ( kaonIndex.size() == 2 ) {
@@ -1140,38 +1201,51 @@ int main(int argc, char* argv[])
     h_pidsFromScalarDecays->Write();
     h_kaonsFromScalarDecays->Write();
 
+    h_genParMuonPt->Write();
+    h_genParMuonEta->Write();
+    h_genParMuonPhi->Write();
+    h_genParMuonE->Write();
+    h_genParMuonMass->Write();
     h_genParKaonPt->Write();
     h_genParKaonEta->Write();
     h_genParKaonPhi->Write();
     h_genParKaonE->Write();
+    h_genParKaonMass->Write();
     h_genParChargedKaonPt->Write();
     h_genParChargedKaonEta->Write();
     h_genParChargedKaonPhi->Write();
     h_genParChargedKaonE->Write();
+    h_genParChargedKaonMass->Write();
     h_genParNeutralKaonPt->Write();
     h_genParNeutralKaonEta->Write();
     h_genParNeutralKaonPhi->Write();
     h_genParNeutralKaonE->Write();
+    h_genParNeutralKaonMass->Write();
     h_genParKshortPt->Write();
     h_genParKshortEta->Write();
     h_genParKshortPhi->Write();
     h_genParKshortE->Write();
+    h_genParKshortMass->Write();
     h_genParKlongPt->Write();
     h_genParKlongEta->Write();
     h_genParKlongPhi->Write();
     h_genParKlongE->Write();
+    h_genParKlongMass->Write();
     h_genParPionPt->Write();
     h_genParPionEta->Write();
     h_genParPionPhi->Write();
     h_genParPionE->Write();
+    h_genParPionMass->Write();
     h_genParChargedPionPt->Write();
     h_genParChargedPionEta->Write();
     h_genParChargedPionPhi->Write();
     h_genParChargedPionE->Write();
+    h_genParChargedPionMass->Write();
     h_genParNeutralPionPt->Write();
     h_genParNeutralPionEta->Write();
     h_genParNeutralPionPhi->Write();
     h_genParNeutralPionE->Write();
+    h_genParNeutralPionMass->Write();
 
     h_packedCandDxy->Write();
     h_packedCandDz->Write();
@@ -1183,6 +1257,15 @@ int main(int argc, char* argv[])
     h_scalarDR->Write();
     h_scalarDPhi->Write();
     h_scalarDrEtaPhi->Write();
+    h_scalarPt->Write();
+    h_scalarEta->Write();
+    h_scalarPhi->Write();
+    h_scalarMass->Write();
+
+    h_higgsPt->Write();
+    h_higgsEta->Write();
+    h_higgsPhi->Write();
+    h_higgsMass->Write();
 
     h_genParKaonDR->Write();
     h_genParKaonDPhi->Write();
