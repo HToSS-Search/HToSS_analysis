@@ -397,6 +397,9 @@ void Cuts::parse_config(const std::string confName)
 
 bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::string, std::shared_ptr<Plots>>& plotMap, TH1D& cutFlow, const int systToRun) {
 
+    if (doPlots_) plotMap["noSel"]->fillAllPlots(event, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(0.5, eventWeight);
+
     if (!skipTrigger_) {
         if (!triggerCuts(event, eventWeight, systToRun))  return false; // Do trigger cuts
     }
@@ -404,7 +407,7 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     if ( !event.metFilters() ) return false;
 
     if (doPlots_) plotMap["trigSel"]->fillAllPlots(event, eventWeight);
-    if (doPlots_ || fillCutFlow_) cutFlow.Fill(0.5, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(1.5, eventWeight);
 
     // Make lepton cuts. If the trigLabel contains d, we are in the ttbar CR so the Z mass cut is skipped
     ////  Do this outside original function because this is simpler for HToSS unlike in tZq
@@ -414,13 +417,13 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     if (event.muonIndexTight.size() < numTightMu_) return false;
 
     if (doPlots_) plotMap["lepSel"]->fillAllPlots(event, eventWeight);
-    if (doPlots_ || fillCutFlow_) cutFlow.Fill(1.5, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(2.5, eventWeight);
 
     const bool validDileptonCand = getDileptonCand(event, event.muonIndexTight);
     if ( !validDileptonCand ) return false;
 
     if (doPlots_) plotMap["zCand"]->fillAllPlots(event, eventWeight);
-    if (doPlots_ || fillCutFlow_) cutFlow.Fill(2.5, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(3.5, eventWeight);
 
     const double dileptonMass {(event.zPairLeptons.first + event.zPairLeptons.second).M()};
 
@@ -435,7 +438,7 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     if ( event.chsIndex.size() < 2 ) return false;
 
     if (doPlots_) plotMap["trackSel"]->fillAllPlots(event, eventWeight);
-    if (doPlots_ || fillCutFlow_) cutFlow.Fill(3.5, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(4.5, eventWeight);
 
     const bool validDihadronCand = getDihadronCand(event, event.chsIndex);
 
@@ -453,7 +456,7 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
 
     if (!validDihadronCand) return false;
     if (doPlots_) plotMap["hadCand"]->fillAllPlots(event, eventWeight);
-    if (doPlots_ || fillCutFlow_) cutFlow.Fill(4.5, eventWeight);
+    if (doPlots_ || fillCutFlow_) cutFlow.Fill(5.5, eventWeight);
 
     if ( (event.chsPairVec.first + event.chsPairVec.second).M() > scalarMassCut_ && !skipScalarMassCut_ ) return false;
 
@@ -475,7 +478,7 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
 //    if ( ((event.zPairLeptons.first + event.zPairLeptons.second + event.chsPairVec.first + event.chsPairVec.second).M() - 125.2) > higgsMassCut_ && !skipScalarMassCut_ ) return false;
 
 //    if (doPlots_) plotMap["higgsSel"]->fillAllPlots(event, eventWeight);
-//    if (doPlots_ || fillCutFlow_) cutFlow.Fill(5.5, eventWeight);
+//    if (doPlots_ || fillCutFlow_) cutFlow.Fill(6.5, eventWeight);
 
     return true;
 }

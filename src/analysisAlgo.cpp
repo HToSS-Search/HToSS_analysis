@@ -171,6 +171,11 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
 
         po::notify(vm);
 
+        if ( is2016_ && !is2016APV_ && !is2018_) std::cout << "Running in 2016 mode" << std::endl; 
+        if ( is2016APV_ && !is2016_ && !is2018_) std::cout << "Running in 2016 APV mode" << std::endl; 
+        if ( !is2016_ && !is2018_ && !is2016APV_ ) std::cout << "Running in 2017 mode" << std::endl; 
+        if ( is2018_ && !is2016_ && !is2016APV_) std::cout << "Running in 2018 mode" << std::endl; 
+
         if ( (is2016_ || is2016APV_) && is2018_ ) {
             throw std::logic_error(
                 "Default condition is to use 2017. One cannot set "
@@ -373,6 +378,7 @@ void AnalysisAlgo::setupPlots()
 {
     // Do a little initialisation for the plots here. Will later on be done in a
     // config file. Initialise plot stage names.
+    stageNames.emplace_back(std::make_pair("noSel", "pre-cuts"));
     stageNames.emplace_back(std::make_pair("trigSel", "HLT cuts"));
     stageNames.emplace_back(std::make_pair("lepSel", "Muon cuts"));
     stageNames.emplace_back(std::make_pair("zCand", "m_{#mu#mu} cut"));
@@ -1047,6 +1053,8 @@ void AnalysisAlgo::savePlots() {
     // Now test out the histogram plotter class I just wrote.
     // Make the plotting object.
     if (plots) {
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+std::cout << is2018_ << std::endl;
         HistogramPlotter plotObj = HistogramPlotter(legOrder, plotOrder, datasetInfos, (is2016_ || is2016APV_), is2018_, noData_);
 
         // If either making or reading in histos, then set the correct read in

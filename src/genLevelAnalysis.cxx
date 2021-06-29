@@ -192,7 +192,7 @@ int main(int argc, char* argv[])
     TH1F* h_higgsPhi      {new TH1F("h_higgsPhi",     "gen higgs #phi", 100,-3.5, 3.5)};
     TH1F* h_higgsMass      {new TH1F("h_higgsMass",     "gen higgs mass", 400, 0., 200.)};
 
-    TH1F* h_genParKaonDR        {new TH1F("h_genParKaonDR",       "#DeltaR between genParticle kaons from scalar decays" ,    100, 0., 10.)};
+    TH1F* h_genParKaonDR        {new TH1F("h_genParKaonDR",       "#DeltaR between genParticle kaons from scalar decays" ,    300, 0., 3.)};
     TH1F* h_genParKaonDPhi      {new TH1F("h_genParKaonDPhi",     "#Delta#phi between genParticle kaons from scalar decays",  100, -3.5, 3.5)};
     TH1F* h_genParKaonDrEtaPhi  {new TH1F("h_genParKaonDrEtaPhi", "#Deltar#eta#phi between genParticle kaons from scalar decays", 100, 0., 7.)};
     TH1F* h_genJetKaonDR        {new TH1F("h_genJetKaonDR",       "#DeltaR between genJet kaons from scalar decays" ,    100, 0., 10.)};
