@@ -175,8 +175,8 @@ int main(int argc, char* argv[])
     TH1F* h_packedCandVxy   {new TH1F("h_packedCandVxy", "Packed Candidate track vxy", 300,  -150., 150.)};
     TH1F* h_packedCandVz    {new TH1F("h_packedCandVz",  "Packed Candidate track vz",  1200, -600., 600.)};
 
-    TH1F* h_muonDR          {new TH1F("h_muonDR",         "#DeltaR between generator level muons", 100, 0., 10.)};
-    TH1F* h_pionDR          {new TH1F("h_pionDR",         "#DeltaR between generator level pions", 100, 0., 10.)};
+    TH1F* h_muonDR          {new TH1F("h_muonDR",         "#DeltaR between generator level muons", 300, 0., 3.0)};
+    TH1F* h_pionDR          {new TH1F("h_pionDR",         "#DeltaR between generator level pions", 300, 0., 3.)};
 
     TH1F* h_scalarDR        {new TH1F("h_scalarDR",       "#DeltaR between generator level scalars" ,    100, 0., 10.)};
     TH1F* h_scalarDPhi      {new TH1F("h_scalarDPhi",     "#Delta#phi between generator level scalars",  100, -3.5, 3.5)};
@@ -184,12 +184,12 @@ int main(int argc, char* argv[])
 
     TH1F* h_scalarPt      {new TH1F("h_scalarPt",     "gen scalar p_{T}", 600, 0., 300.)};
     TH1F* h_scalarEta      {new TH1F("h_scalarEta",     "gen scalar #eta", 200, -7., 7.)};
-    TH1F* h_scalarPhi      {new TH1F("h_scalarPhi",     "gen scalar #eta", 100,-3.5, 3.5)};
+    TH1F* h_scalarPhi      {new TH1F("h_scalarPhi",     "gen scalar #phi", 100,-3.5, 3.5)};
     TH1F* h_scalarMass      {new TH1F("h_scalarMass",     "gen scalar mass", 200, 0., 4.)};
 
     TH1F* h_higgsPt      {new TH1F("h_higgsPt",     "gen higgs p_{T}", 600, 0., 300.)};
     TH1F* h_higgsEta      {new TH1F("h_higgsEta",     "gen higgs #eta", 200, -7., 7.)};
-    TH1F* h_higgsPhi      {new TH1F("h_higgsPhi",     "gen higgs #eta", 100,-3.5, 3.5)};
+    TH1F* h_higgsPhi      {new TH1F("h_higgsPhi",     "gen higgs #phi", 100,-3.5, 3.5)};
     TH1F* h_higgsMass      {new TH1F("h_higgsMass",     "gen higgs mass", 400, 0., 200.)};
 
     TH1F* h_genParKaonDR        {new TH1F("h_genParKaonDR",       "#DeltaR between genParticle kaons from scalar decays" ,    100, 0., 10.)};
@@ -813,7 +813,7 @@ int main(int argc, char* argv[])
                 h_higgsPt->Fill(event.genParPt[higgsIndex], datasetWeight);
                 h_higgsEta->Fill(event.genParEta[higgsIndex], datasetWeight);
                 h_higgsPhi->Fill(event.genParPhi[higgsIndex], datasetWeight);
-                h_higgsMass->Fill(higgsVec.Pt(), datasetWeight);
+                h_higgsMass->Fill(higgsVec.M(), datasetWeight);
             }
             if ( muonIndex.size() == 2 ) {
                 const int index1 {muonIndex[0]}, index2 {muonIndex[1]};
