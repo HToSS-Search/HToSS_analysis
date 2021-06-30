@@ -37,14 +37,10 @@ Lower 2 sigma band: r < 0.1759 +/- 0.00242982 , min: 0.173470180
 
 100 mm
 
-Observed limit: r < 37.8765 +/- 0.438288 
-Expected (median) limit: r < 29.1891 +/- 0.380725 
-Upper 1 sigma band: r < 45.4132 +/- 0.518629 
-, max: 45.931829 , mid: 33.41256250 +/- 12.51926650
-Lower 1 sigma band: r < 21.1543 +/- 0.261004 
-, min: 20.893296
-Upper 2 sigma band: r < 66.2607 +/- 0.447755 
-, max: 66.708455 , mid: 41.79250050 +/- 24.91595490
-Lower 2 sigma band: r < 17.5331 +/- 0.656554 
-, min: 16.876546
+Observed limit: r < 31.9294 +/- 0.417699
+Expected (median) limit: r < 24.1002 +/- 0.418686
+Upper 1 sigma band: r < 35.5662 +/- 0.229398 , max: 35.79559800 , mid: 26.1537925 +/- 9.6418055
+Lower 1 sigma band: r < 16.8322 +/- 0.320213 , min: 16.51198700
+Upper 2 sigma band: r < 55.2495 +/- 0.342525 , max: 55.59202500 , mid: 34.8710790 +/- 20.720946
+Lower 2 sigma band: r < 14.3954 +/- 0.245267 , min: 14.15013300
 
