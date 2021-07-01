@@ -26,8 +26,9 @@ Lower 2 sigma band: r < 0.256196 +/- 0.00155769 , min: 0.254638310
 
 10 mm
 
-Observed limit: r < 7.29339 +/- 0.0460924
-Expected (median) limit: r < 5.74471 +/- 0.0670599
+Observed limit: r < 13.2164 +/- 0.115317
+Expected (median) limit:  r < 9.96573 +/- 0.13246
+
 Upper 1 sigma band: r < 8.23022 +/- 0.0667533 , max: 8.29697330 , mid: 6.22543725 +/- 2.07153605
 Lower 1 sigma band: r < 4.20798 +/- 0.0540788 , min: 4.15390120
 Upper 2 sigma band: r < 11.2661 +/- 0.0510973 , max: 11.3171973 , mid: 7.25217465 +/- 4.06502265
