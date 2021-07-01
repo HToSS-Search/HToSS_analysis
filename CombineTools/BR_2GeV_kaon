@@ -4,42 +4,34 @@ All @ 95% CL
 
 0 mm
 
-Observed:
-Expected (median):
-Upper 1 sigma:
-Lower 1 sigma:
-Upper 2 sigma:
-Lower 2 sigma:
+Observed: 0.0300532887029289 +/- 0.00618065606694561
+Expected (median): 0.0465816401673640 +/- 0.0123613305439331
+1 sigma: 0.0539706393305439 +/- 0.0301413255230126
+2 sigma: 0.0621227899581590 +/- 0.0456802661087866
 
 -- 2 GeV --
 
 1 mm
 
-Observed:
-Expected (median):
-Upper 1 sigma:
-Lower 1 sigma:
-Upper 2 sigma:
-Lower 2 sigma:
+Observed: 0.0351891380753138 +/- 0.00723691380753138
+Expected (median): 0.0545237322175732 +/- 0.0144738092050209
+1 sigma: 0.0634198602510460 +/- 0.0354458200836820
+2 sigma: 0.0731655104602511 +/- 0.0539085330543933
 
 -- 2 GeV --
 
 10 mm
 
-Observed:
-Expected (median):
-Upper 1 sigma:
-Lower 1 sigma:
-Upper 2 sigma:
-Lower 2 sigma:
+Observed: 0.294939916317992 +/- 0.00571501087866109
+Expected (median): 0.486295732217573 +/- 0.00349510962343096
+1 sigma: 0.527548061087866 +/- 0.186635490376569
+2 sigma: 0.613412772384937 +/- 0.359541148953975
 
 -- 2 GeV --
 
 100 mm
 
-Observed:
-Expected (median):
-Upper 1 sigma:
-Lower 1 sigma:
-Upper 2 sigma:
-Lower 2 sigma:
+Observed: 14.0607430962343 +/- 0.101220435146444
+Expected (median): 23.5898912133891 +/- 0.246882343096234
+1 sigma: 25.8321100418410 +/- 9.82042719665272
+2 sigma:
