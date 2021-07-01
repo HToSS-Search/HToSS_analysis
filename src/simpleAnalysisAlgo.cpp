@@ -52,7 +52,7 @@ SimpleAnalysis::SimpleAnalysis()
 , higgsMassWindow_{3.0}      // Define Standard Higgs mass +/ window here rather than in multiple locations
 , higgsMassWideWindow_{20.0} // Define wider Standard Higgs mass +/ window here rather than in multiple locations
 , statWindow_{0.15} 
-, mass_range_{2.0}              // 1 or 2 GeV sample run
+, mass_range_{1.0}              // 1 or 2 GeV sample run
 , debug_{false}              // Set to true to enable debug couts
 {}
 SimpleAnalysis::~SimpleAnalysis() {}
@@ -1110,9 +1110,9 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
 
   //Higgs mass and wider window
-  if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
-    if(std::abs((Kantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
-      if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
+  if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
+    if(std::abs((Pantiscalar+scalarLVec).M()-higgsMass_)<higgsMassWindow_){
+      if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
          // h_PhiggsDeltaR->Fill(Pantiscalar.DeltaR(scalarLVec), eventWeight);
          // h_Pinvmass->Fill(Phadroninv,muoninv, eventWeight);
 	h_PhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
