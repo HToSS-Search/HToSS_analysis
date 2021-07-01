@@ -19,31 +19,31 @@
      double x1[4] = {0, 1, 10, 100};
     
      //2 sigma band
-     double y3[4] = {0.03302487, 0.040334925, 0.391258110,34.8710790}; 
+     double y3[4] = {0.958830035207674,1.17106706424125,11.3596216241453,1012.43208240637}; 
      double ex3[4] = {0., 0., 0., 0.};
-     double ey3[4] = {0.022193300, 0.026558595, 0.217787930,20.720946};
+     double ey3[4] = {0.644350836820084,0.771090955964894,6.32316216807837,601.603136748648};
      auto sigma2 = new TGraphErrors(4, x1, y3, ex3, ey3);
      sigma2->SetFillColor(5);
      sigma2->SetFillStyle(3001);
      sigma2->GetXaxis()->SetTitle("c#tau (mm)");
-     sigma2->GetYaxis()->SetTitle("Signal strength (r)");
+     sigma2->GetYaxis()->SetTitle("BR(H#rightarrow a#bar{a})");
      sigma2->GetXaxis()->SetRangeUser(0,100);
      sigma2->SetTitle(" ");
      sigma2->Draw("a3");
      
      //1 sigma band
-     double y4[4] = {0.026208540,0.033313180,0.336718185,26.1537925};
+     double y4[4] = {0.760927607919175,0.967200705173997,9.77613262909480,759.338092279824};
      double ex4[4] = {0., 0., 0., 0.};
-     double ey4[4] = {0.013461130,0.017291220,0.113697275,9.6418055};
+     double ey4[4] = {0.390824725482192,0.502025930196959,3.301038344473935,279.936081717522};
      auto sigma1 = new TGraphErrors(4, x1, y4, ex4, ey4);
      sigma1->SetFillColor(8);
      sigma1->SetFillStyle(3001);
      sigma1->Draw("3 same");
    
      //observed
-     double y1[4] = {0.0331661, 0.0422023, 0.41498,31.9294}; //value
+     double y1[4] = {0.962930446984386, 1.22528363608531,12.0483528931524,927.024624961731}; //value
      double ex1[4] = {0., 0., 0., 0.};
-     double ey1[4] = {0.00487419, 0.00619934, 0.00333368,0.417699}; //error
+     double ey1[4] = {0.141515160220431,0.179989001938973,0.0967886478212062,12.1272951831820}; //error
      auto obs = new TGraphErrors(4, x1, y1, ex1, ey1);
      obs->SetMarkerColor(4); //blue
      obs->SetMarkerStyle(21); //square
@@ -51,9 +51,9 @@
      obs->Draw("lp same");
    
      //expected (median)
-     double y2[4] = {0.0238466,0.0303149,0.303639,24.1002}; //value
+     double y2[4] = {0.692352046127156,0.880149918359016,8.81572563526890,699.714960710277}; //value
      double ex2[4] = {0., 0., 0., 0.};
-     double ey2[4] = {0.00487419,0.00619934,0.00301919,0.418686}; //error
+     double ey2[4] = {0.141515160220431,0.179989001938973,0.0876578788651903,12.1559513215634}; //error
      auto exp = new TGraphErrors(4, x1, y2, ex2, ey2);
      exp->SetMarkerColor(1); //black
      exp->SetMarkerStyle(21);
