@@ -19,9 +19,9 @@
      double x1[4] = {0, 1, 10, 100};
     
      //2 sigma band
-     double y3[4] = {0.03863480, 0.04905365, 0.49274297,41.79250050}; 
+     double y3[4] = {0.03302487, 0.040334925, 0.391258110,34.8710790}; 
      double ex3[4] = {0., 0., 0., 0.};
-     double ey3[4] = {0.02339717, 0.02965788, 0.27229374,24.91595490};
+     double ey3[4] = {0.022193300, 0.026558595, 0.217787930,20.720946};
      auto sigma2 = new TGraphErrors(4, x1, y3, ex3, ey3);
      sigma2->SetFillColor(5);
      sigma2->SetFillStyle(3001);
@@ -32,18 +32,18 @@
      sigma2->Draw("a3");
      
      //1 sigma band
-     double y4[4] = {0.03444700,0.04362106,0.41502756,33.41256250};
+     double y4[4] = {0.026208540,0.033313180,0.336718185,26.1537925};
      double ex4[4] = {0., 0., 0., 0.};
-     double ey4[4] = {0.01427847,0.01799699,0.14057155,12.51926650};
+     double ey4[4] = {0.013461130,0.017291220,0.113697275,9.6418055};
      auto sigma1 = new TGraphErrors(4, x1, y4, ex4, ey4);
      sigma1->SetFillColor(8);
      sigma1->SetFillStyle(3001);
      sigma1->Draw("3 same");
    
      //observed
-     double y1[4] = {0.0369502, 0.0479211, 0.477744,37.8765 }; //value
+     double y1[4] = {0.0331661, 0.0422023, 0.41498,31.9294}; //value
      double ex1[4] = {0., 0., 0., 0.};
-     double ey1[4] = {0.00708996, 0.00871479, 0.00552663,0.438288  }; //error
+     double ey1[4] = {0.00487419, 0.00619934, 0.00333368,0.417699}; //error
      auto obs = new TGraphErrors(4, x1, y1, ex1, ey1);
      obs->SetMarkerColor(4); //blue
      obs->SetMarkerStyle(21); //square
@@ -51,9 +51,9 @@
      obs->Draw("lp same");
    
      //expected (median)
-     double y2[4] = {0.0290654, 0.0383966, 0.383998,29.1891}; //value
+     double y2[4] = {0.0238466,0.0303149,0.303639,24.1002}; //value
      double ex2[4] = {0., 0., 0., 0.};
-     double ey2[4] = {0.00549035, 0.000545785, 0.00417906,0.380725}; //error
+     double ey2[4] = {0.00487419,0.00619934,0.00301919,0.418686}; //error
      auto exp = new TGraphErrors(4, x1, y2, ex2, ey2);
      exp->SetMarkerColor(1); //black
      exp->SetMarkerStyle(21);
