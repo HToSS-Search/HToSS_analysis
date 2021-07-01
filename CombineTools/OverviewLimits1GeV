@@ -37,9 +37,9 @@ Lower 2 sigma band: r < 5.2697 +/- 0.161435 , min: 5.108265
 
 100 mm
 
-Observed limit: 
-Expected (median) limit: 
-Upper 1 sigma band:  , max: , mid:  +/- 
-Lower 1 sigma band: , min: 
+Observed limit: r < 1575.32 +/- 13.4214
+Expected (median) limit: r < 1151 +/- 8.65517
+Upper 1 sigma band: r < 1648.31 +/- 56.9809 , max: 1705.2909 , mid: 1256.0484 +/- 449.2425
+Lower 1 sigma band: r < 817.275 +/- 10.4691 , min: 806.80590
 Upper 2 sigma band:, max:  , mid: +/- 
 Lower 2 sigma band:  , min: 
