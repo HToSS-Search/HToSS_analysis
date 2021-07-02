@@ -6,6 +6,7 @@
  #include "TLegendEntry.h"
  #include "TStyle.h"
  #include "TString.h"
+ #include "TLine.h"
  #include "TLatex.h"
  #include "TPRegexp.h"
  #include "TAttLine.h"
@@ -60,6 +61,12 @@
      exp->SetLineStyle(9);
      exp->SetLineColor(1); 
      exp->Draw("lp same");
+   
+     TLine *l=new TLine(0,0.34,100,0.34);
+     l->SetLineColor(2);
+     l->SetLineStyle(1);
+     l->SetLineWidth(3);
+     l->Draw("same");
      
      TLegend *legend1 = new TLegend(0.1,0.7,0.3,0.9);
      legend1->SetBorderSize(1);
