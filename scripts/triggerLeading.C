@@ -23,13 +23,15 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
+     h_pt_ctau0->SetTitle("");
      h_pt_ctau0->GetYaxis()->SetTitle("Events");
      h_pt_ctau0->GetXaxis()->SetRangeUser(0.0,100); 
      h_pt_ctau0->GetXaxis()->SetTitle("p_{T} (GeV)");
      h_pt_ctau0->SetMarkerColor(4);
      h_pt_ctau0->SetLineColor(4);
      h_pt_ctau0->Draw("HIST");
- 
+  
+     h_ptcut_ctau0->SetTitle("");
      h_ptcut_ctau0->GetYaxis()->SetTitle("Events");
      h_ptcut_ctau0->GetXaxis()->SetRangeUser(0.0,100); 
      h_ptcut_ctau0->GetXaxis()->SetTitle("p_{T} (GeV)");
