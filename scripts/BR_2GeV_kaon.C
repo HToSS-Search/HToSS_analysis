@@ -65,7 +65,7 @@
      TLine *l=new TLine(0,0.34,100,0.34);
      l->SetLineColor(2);
      l->SetLineStyle(1);
-     l->SetLineWidth(3);
+     l->SetLineWidth(2);
      l->Draw("same");
      
      TLegend *legend1 = new TLegend(0.1,0.7,0.3,0.9);
