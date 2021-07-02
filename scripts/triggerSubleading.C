@@ -41,11 +41,11 @@
     
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_pt_ctau10","Subleading p_T distribution","L");
+     TLegendEntry *legenda = legend1->AddEntry("h_pt_ctau10","Subleading p_{T}","L");
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_ptcut2_ctau10","Double muon trigger","L");
+     legenda=legend1->AddEntry("h_ptcut2_ctau10","Double trigger","L");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
