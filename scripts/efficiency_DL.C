@@ -32,6 +32,7 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
+     h_ptdiv_ctau0->SetTitle("");
      h_ptdiv_ctau0->GetXaxis()->SetRangeUser(0.0,100);
      h_ptdiv_ctau0->GetYaxis()->SetRangeUser(0.0,1);
      h_ptdiv_ctau0->GetXaxis()->SetTitle("p_{T} (GeV)");
@@ -39,24 +40,28 @@
      h_ptdiv_ctau0->SetLineColor(4);
      h_ptdiv_ctau0->Draw("HIST");
    
+     h_ptdiv_ctau1->SetTitle("");
      h_ptdiv_ctau1->GetXaxis()->SetRangeUser(0.0,100); 
      h_ptdiv_ctau1->GetXaxis()->SetTitle("p_{T} (GeV)");
      h_ptdiv_ctau1->SetMarkerColor(2);
      h_ptdiv_ctau1->SetLineColor(2);
      h_ptdiv_ctau1->Draw("HIST same");
  
+     h_ptdiv_ctau10->SetTitle("");
      h_ptdiv_ctau10->GetXaxis()->SetRangeUser(0.0,100); 
      h_ptdiv_ctau10->GetXaxis()->SetTitle("p_{T} (GeV)");
      h_ptdiv_ctau10->SetMarkerColor(3);
      h_ptdiv_ctau10->SetLineColor(3);
      h_ptdiv_ctau10->Draw("HIST same");
 
+     h_ptdiv_ctau100->SetTitle("");
      h_ptdiv_ctau100->GetXaxis()->SetRangeUser(0.0,100); 
      h_ptdiv_ctau100->GetXaxis()->SetTitle("p_{T} (GeV)");
      h_ptdiv_ctau100->SetMarkerColor(6);
      h_ptdiv_ctau100->SetLineColor(6);
      h_ptdiv_ctau100->Draw("HIST same");
 
+     h_ptdiv_ctau1000->SetTitle("");
      h_ptdiv_ctau1000->GetXaxis()->SetRangeUser(0.0,100); 
      h_ptdiv_ctau1000->GetXaxis()->SetTitle("p_{T} (GeV)");
      h_ptdiv_ctau1000->SetMarkerColor(94);
