@@ -35,7 +35,7 @@
      h_PIsoSum1_ctau10->SetTitle("");
      h_PIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
      h_PIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
-    // h_PIsoSum1_ctau10->GetYaxis()->SetRangeUser(0.1, 15.); 
+     h_PIsoSum1_ctau10->GetYaxis()->SetRangeUser(0.1, 50.); 
      h_PIsoSum1_ctau10->GetXaxis()->SetTitle("Relative isolation");
      h_PIsoSum1_ctau10->SetMarkerColor(4);
      h_PIsoSum1_ctau10->SetLineColor(4);
