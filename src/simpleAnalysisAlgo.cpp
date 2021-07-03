@@ -52,7 +52,7 @@ SimpleAnalysis::SimpleAnalysis()
 , higgsMassWindow_{3.0}      // Define Standard Higgs mass +/ window here rather than in multiple locations
 , higgsMassWideWindow_{20.0} // Define wider Standard Higgs mass +/ window here rather than in multiple locations
 , statWindow_{0.15} 
-, mass_range_{1.0}              // 1 or 2 GeV sample run
+, mass_range_{2.0}              // 1 or 2 GeV sample run
 , debug_{false}              // Set to true to enable debug couts
 {}
 SimpleAnalysis::~SimpleAnalysis() {}
@@ -71,8 +71,8 @@ void SimpleAnalysis::parseCommandLineArguements(int argc, char* argv[]){
   po::bool_switch(&is2016_),
   "Use 2016 conditions (SFs, et al.). NOT TO BE USED IN NORMAL CIRCUMSTANCES")(
   "lumi,l",
-  //po::value<double>(&usePreLumi)->default_value(4247.682053046), //4.25 inverse femtobarn
-  po::value<double>(&usePreLumi)->default_value(41528.0),
+  po::value<double>(&usePreLumi)->default_value(4247.682053046), //4.25 inverse femtobarn
+  //po::value<double>(&usePreLumi)->default_value(41528.0),
   "Lumi to scale MC plots to.")(
   "outfile,o",
   po::value<std::string>(&outFileString)->default_value("plots/distributions/output.root"),
@@ -207,7 +207,7 @@ void SimpleAnalysis::runMainAnalysis() {
       eventWeight *= datasetWeight;
 
       // Do functions that do not require met filters or triggers
-      fillGeneratorPlots(event); // Commented out currently by CB in main branch
+      //fillGeneratorPlots(event); // Commented out currently by CB in main branch
 
       // Do functions that have met filters applied
       if( !event.metFilters() ) continue;
@@ -228,13 +228,13 @@ void SimpleAnalysis::runMainAnalysis() {
 
       // Fill other plots now!
       // All of	these plots use	packed PF muons, so the ones corresponding to the PAT muons are provided
-      //fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, Obs, rate_signal, stat_signal, QCD_Kantiscalar, QCD_Pantiscalar, QCD_20Kantiscalar, QCD_20Pantiscalar, QCD_scalar, QCD_20scalar, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
+      fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, Obs, rate_signal, stat_signal, QCD_Kantiscalar, QCD_Pantiscalar, QCD_20Kantiscalar, QCD_20Pantiscalar, QCD_scalar, QCD_20scalar, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
       //fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
 
     } // End loop over all events
 
     Float_t Nbg;
-    Nbg=(Nbg1+Nbg2)*6/54;
+    Nbg=(Nbg1+Nbg2)*6/34;
     std::cout<<"Background estimate: "<<Nbg<<std::endl;
     std::cout<<"Sideband left: "<<Nbg1<<std::endl; std::cout<<"Sideband right: "<<Nbg2<<std::endl;
     std::cout<<"Observation: "<<Obs<<std::endl;
