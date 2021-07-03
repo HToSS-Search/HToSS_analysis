@@ -80,6 +80,7 @@
      h_MuonIsoSum1_ctau10->SetTitle("");
      h_MuonIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
      h_MuonIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
+     h_MuonIsoSum1_ctau10->GetYaxis()->SetRangeUser(0.05, 50.); 
      h_MuonIsoSum1_ctau10->GetXaxis()->SetTitle("Relative isolation");
      h_MuonIsoSum1_ctau10->SetMarkerColor(4);
      h_MuonIsoSum1_ctau10->SetLineColor(4);
