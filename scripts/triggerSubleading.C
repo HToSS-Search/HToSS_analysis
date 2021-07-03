@@ -45,7 +45,7 @@
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_ptcut2_ctau10","Double trigger","L");
+     legenda=legend1->AddEntry("h_ptcut2_ctau10","Double","L");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
