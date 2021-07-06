@@ -921,17 +921,17 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 		   
     h_PATmuonEta->Fill(event.muonPF2PATEta[patMuIndex1]); h_PATmuonEta->Fill(event.muonPF2PATEta[patMuIndex2]);  
 	  
-    TLorentzVector lmuon1 {event.packedCandsPseudoTrkPx[muIndex1], event.packedCandsPseudoTrkPy[muIndex1], event.packedCandsPseudoTrkPz[muIndex1], event.packedCandsE[muIndex1]};
-    TLorentzVector lmuon2 {event.packedCandsPseudoTrkPx[muIndex2], event.packedCandsPseudoTrkPy[muIndex2], event.packedCandsPseudoTrkPz[muIndex2], event.packedCandsE[muIndex2]};
+    TLorentzVector lmuon1 {event.packedCandsPseudoTrkPx[patMuIndex1], event.packedCandsPseudoTrkPy[patMuIndex1], event.packedCandsPseudoTrkPz[patMuIndex1], event.packedCandsE[patMuIndex1]};
+    TLorentzVector lmuon2 {event.packedCandsPseudoTrkPx[patMuIndex2], event.packedCandsPseudoTrkPy[patMuIndex2], event.packedCandsPseudoTrkPz[patMuIndex2], event.packedCandsE[patMuIndex2]};
                         
     muoninv=(lmuon1+lmuon2).M();
     h_KmuonsInvMass->Fill((lmuon1+lmuon2).M(), eventWeight);
 	
-    if(event.packedCandsPseudoTrkCharge[muIndex1]==-(event.packedCandsPseudoTrkCharge[muIndex2])){
-      KMpx=event.packedCandsPseudoTrkPx[muIndex1]+event.packedCandsPseudoTrkPx[muIndex2];
-      KMpy=event.packedCandsPseudoTrkPy[muIndex1]+event.packedCandsPseudoTrkPy[muIndex2];
-      KMpz=event.packedCandsPseudoTrkPz[muIndex1]+event.packedCandsPseudoTrkPz[muIndex2];
-      KME=event.packedCandsE[muIndex1]+event.packedCandsE[muIndex2];
+    if(event.packedCandsPseudoTrkCharge[patMuIndex1]==-(event.packedCandsPseudoTrkCharge[patMuIndex2])){
+      KMpx=event.packedCandsPseudoTrkPx[patMuIndex1]+event.packedCandsPseudoTrkPx[patMuIndex2];
+      KMpy=event.packedCandsPseudoTrkPy[patMuIndex1]+event.packedCandsPseudoTrkPy[patMuIndex2];
+      KMpz=event.packedCandsPseudoTrkPz[patMuIndex1]+event.packedCandsPseudoTrkPz[patMuIndex2];
+      KME=event.packedCandsE[patMuIndex1]+event.packedCandsE[patMuIndex2];
 	      
       scalarLVec.SetPxPyPzE(KMpx,KMpy,KMpz,KME);
       h_TestscalarInvMass->Fill(scalarLVec.M(), eventWeight);
