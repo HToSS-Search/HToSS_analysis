@@ -812,8 +812,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   h_PhadronDeltaR->Fill(pionLVec1.DeltaR(pionLVec2), eventWeight);
 
   // Setup LVecs for the muons for delR plotting
-  mm1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[patMuIndex1],event.packedCandsPseudoTrkEta[patMuIndex1],event.packedCandsPseudoTrkPhi[patMuIndex1],event.packedCandsE[patMuIndex1]);
-  mm2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[patMuIndex2],event.packedCandsPseudoTrkEta[patMuIndex2],event.packedCandsPseudoTrkPhi[patMuIndex2],event.packedCandsE[patMuIndex2]);
+  mm1.SetPtEtaPhiE(event.muonPF2PATPt[patMuIndex1],event.muonPF2PATEta[patMuIndex1],event.muonPF2PATPhi[patMuIndex1],event.muonPF2PATE[patMuIndex1]);
+  mm2.SetPtEtaPhiE(event.muonPF2PATPt[patMuIndex2],event.muonPF2PATEta[patMuIndex2],event.muonPF2PATPhi[patMuIndex2],event.muonPF2PATE[patMuIndex2]);
   
   Int_t muonTrkPairIndex = getMuonTrackPairIndex(event, patMuIndex1, patMuIndex2);
 	
@@ -834,9 +834,9 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
        if(pionLVec1.DeltaR(packedCandLVec)<isoConeSize_) PIsoSum1+=event.packedCandsPseudoTrkPt[k];
        if(pionLVec2.DeltaR(packedCandLVec)<isoConeSize_) PIsoSum2+=event.packedCandsPseudoTrkPt[k];
      }  
-     if(k!=muIndex1 && k!=muIndex2){      
-       if(mm1.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum1+=event.packedCandsPseudoTrkPt[k];
-       if(mm2.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum2+=event.packedCandsPseudoTrkPt[k];  
+     if(k!=patMuIndex1 && k!=patMuIndex2){      
+       if(mm1.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum1+=event.muonPF2PATPt[k]; //?????
+       if(mm2.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum2+=event.muonPF2PATPt[k];  
      }
   }
 	
@@ -921,17 +921,17 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 		   
     h_PATmuonEta->Fill(event.muonPF2PATEta[patMuIndex1]); h_PATmuonEta->Fill(event.muonPF2PATEta[patMuIndex2]);  
 	  
-    TLorentzVector lmuon1 {event.packedCandsPseudoTrkPx[patMuIndex1], event.packedCandsPseudoTrkPy[patMuIndex1], event.packedCandsPseudoTrkPz[patMuIndex1], event.packedCandsE[patMuIndex1]};
-    TLorentzVector lmuon2 {event.packedCandsPseudoTrkPx[patMuIndex2], event.packedCandsPseudoTrkPy[patMuIndex2], event.packedCandsPseudoTrkPz[patMuIndex2], event.packedCandsE[patMuIndex2]};
+    TLorentzVector lmuon1 {event.muonPF2PATPX[patMuIndex1], event.muonPF2PATPY[patMuIndex1], event.muonPF2PATPZ[patMuIndex1], event.muonPF2PATE[patMuIndex1]};
+    TLorentzVector lmuon2 {event.muonPF2PATPX[patMuIndex2], event.muonPF2PATPY[patMuIndex2], event.muonPF2PATPZ[patMuIndex2], event.muonPF2PATE[patMuIndex2]};
                         
     muoninv=(lmuon1+lmuon2).M();
     h_KmuonsInvMass->Fill((lmuon1+lmuon2).M(), eventWeight);
 	
-    if(event.packedCandsPseudoTrkCharge[patMuIndex1]==-(event.packedCandsPseudoTrkCharge[patMuIndex2])){
-      KMpx=event.packedCandsPseudoTrkPx[patMuIndex1]+event.packedCandsPseudoTrkPx[patMuIndex2];
-      KMpy=event.packedCandsPseudoTrkPy[patMuIndex1]+event.packedCandsPseudoTrkPy[patMuIndex2];
-      KMpz=event.packedCandsPseudoTrkPz[patMuIndex1]+event.packedCandsPseudoTrkPz[patMuIndex2];
-      KME=event.packedCandsE[patMuIndex1]+event.packedCandsE[patMuIndex2];
+    if(event.muonPF2PATCharge[patMuIndex1]==-(event.muonPF2PATCharge[patMuIndex2])){
+      KMpx=event.muonPF2PATPX[patMuIndex1]+event.muonPF2PATPX[patMuIndex2];
+      KMpy=event.muonPF2PATPY[patMuIndex1]+event.muonPF2PATPY[patMuIndex2];
+      KMpz=event.muonPF2PATPZ[patMuIndex1]+event.muonPF2PATPZ[patMuIndex2];
+      KME=event.muonPF2PATE[patMuIndex1]+event.muonPF2PATE[patMuIndex2];
 	      
       scalarLVec.SetPxPyPzE(KMpx,KMpy,KMpz,KME);
       h_TestscalarInvMass->Fill(scalarLVec.M(), eventWeight);
