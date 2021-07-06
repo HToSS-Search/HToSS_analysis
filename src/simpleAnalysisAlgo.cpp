@@ -939,10 +939,10 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 		   
   }
  
-  if(!scalarLVec{-1,-1,-1,-1} && !Pantiscalar{-1,-1,-1,-1}){
+  if(scalarLVec[0]!=-1 && scalarLVec[1]!=-1 && scalarLVec[2]!=-1 && scalarLVec[3]!=-1 && Pantiscalar[0]!=-1 && Pantiscalar[1]!=-1 && Pantiscalar[2]!=-1 && Pantiscalar[3]!=-1){
   h_TestPhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
   }
-  if(!scalarLVec{-1,-1,-1,-1} && !Kantiscalar{-1,-1,-1,-1}){
+  if(scalarLVec[0]!=-1 && scalarLVec[1]!=-1 && scalarLVec[2]!=-1 && scalarLVec[3]!=-1 && Kantiscalar[0]!=-1 && Kantiscalar[1]!=-1 && Kantiscalar[2]!=-1 && Kantiscalar[3]!=-1){
   h_TestKhiggsInvMass->Fill((Kantiscalar+scalarLVec).M(), eventWeight);
   }
 	
