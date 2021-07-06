@@ -25,7 +25,7 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
 
-     //h_higgsInvMass_ctau0->GetXaxis()->SetRangeUser(0, 5); 
+     h_higgsInvMass_ctau0->GetXaxis()->SetRangeUser(0, 5); 
      h_higgsInvMass_ctau0->SetTitle("");
      h_higgsInvMass_ctau0->GetYaxis()->SetTitle("Events");
      //h_higgsInvMass_ctau0->GetXaxis()->SetRangeUser(0,200);  
