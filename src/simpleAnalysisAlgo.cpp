@@ -781,7 +781,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   TLorentzVector RmuonLVec1; TLorentzVector RmuonLVec2;
   TLorentzVector R0packedCandLVec; TLorentzVector R1packedCandLVec; TLorentzVector R2packedCandLVec; TLorentzVector R3packedCandLVec; TLorentzVector R4packedCandLVec; TLorentzVector R5packedCandLVec;
 	
-  TLorentzVector scalarLVec, Kantiscalar, Pantiscalar;
+  TLorentzVector scalarLVec{-1,-1,-1,-1}, Kantiscalar{-1,-1,-1,-1}, Pantiscalar{-1,-1,-1,-1};
   TLorentzVector RscalarLVec, RKantiscalar, RPantiscalar;
 	
   Double_t knentries1; Double_t knentries2; Double_t knentries3; Double_t knentries4;
@@ -939,8 +939,13 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 		   
   }
  
+  if(scalarLVec!={-1,-1,-1,-1} && Pantiscalar!={-1,-1,-1,-1}){
   h_TestPhiggsInvMass->Fill((Pantiscalar+scalarLVec).M(), eventWeight);
+  }
+  if(scalarLVec!={-1,-1,-1,-1} && Kantiscalar!={-1,-1,-1,-1}){
   h_TestKhiggsInvMass->Fill((Kantiscalar+scalarLVec).M(), eventWeight);
+  }
+	
   h_higgsassump->Fill((Pantiscalar+scalarLVec).M(),(Kantiscalar+scalarLVec).M(), eventWeight);
 	
   //Refitted objects
