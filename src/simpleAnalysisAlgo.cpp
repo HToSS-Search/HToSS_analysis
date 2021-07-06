@@ -812,8 +812,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   h_PhadronDeltaR->Fill(pionLVec1.DeltaR(pionLVec2), eventWeight);
 
   // Setup LVecs for the muons for delR plotting
-  mm1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex1],event.packedCandsPseudoTrkEta[muIndex1],event.packedCandsPseudoTrkPhi[muIndex1],event.packedCandsE[muIndex1]);
-  mm2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[muIndex2],event.packedCandsPseudoTrkEta[muIndex2],event.packedCandsPseudoTrkPhi[muIndex2],event.packedCandsE[muIndex2]);
+  mm1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[patMuIndex1],event.packedCandsPseudoTrkEta[patMuIndex1],event.packedCandsPseudoTrkPhi[patMuIndex1],event.packedCandsE[patMuIndex1]);
+  mm2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[patMuIndex2],event.packedCandsPseudoTrkEta[patMuIndex2],event.packedCandsPseudoTrkPhi[patMuIndex2],event.packedCandsE[patMuIndex2]);
   
   Int_t muonTrkPairIndex = getMuonTrackPairIndex(event, patMuIndex1, patMuIndex2);
 	
