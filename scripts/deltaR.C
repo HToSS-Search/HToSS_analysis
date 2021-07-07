@@ -40,7 +40,7 @@
      h_muon_ctau10->GetXaxis()->SetTitle("#Delta R (radians)");
      h_muon_ctau10->SetMarkerColor(2);
      h_muon_ctau10->SetLineColor(2);
-     h_muon_ctau10->Draw("HIST");
+     h_muon_ctau10->Draw("HIST same");
   
    
      TLegend *legend1 = new TLegend(.1,.7,.3,.9);
