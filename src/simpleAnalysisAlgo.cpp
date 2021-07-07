@@ -799,17 +799,13 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 
  // RkaonLVec1.SetPtEtaPhiE(event.chsTkPairTk1Pt[chsIndex1],event.chsTkPairTk1Eta[chsIndex1],event.chsTkPairTk1Phi[chsIndex1],std::sqrt(event.chsTkPairTk1P2[chsIndex1]+std::pow(0.494,2)*std::pow(0.494,2)));
  // RkaonLVec2.SetPtEtaPhiE(event.chsTkPairTk2Pt[chsIndex2],event.chsTkPairTk2Eta[chsIndex2],event.chsTkPairTk2Phi[chsIndex2],std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.494,2)*std::pow(0.494,2)));
-
-  h_KhadronDeltaR->Fill(kaonLVec1.DeltaR(kaonLVec2), eventWeight);
-
+	
   // Setup LVecs for the charged pions for delR plotting
   pionLVec1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[chsIndex1],event.packedCandsPseudoTrkEta[chsIndex1],event.packedCandsPseudoTrkPhi[chsIndex1],event.packedCandsE[chsIndex1]);
   pionLVec2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[chsIndex2],event.packedCandsPseudoTrkEta[chsIndex2],event.packedCandsPseudoTrkPhi[chsIndex2],event.packedCandsE[chsIndex2]);
   
  // RpionLVec1.SetPtEtaPhiE(event.chsTkPairTk1Pt[chsIndex1],event.chsTkPairTk1Eta[chsIndex1],event.chsTkPairTk1Phi[chsIndex1],std::sqrt(event.chsTkPairTk1P2[chsIndex1]+std::pow(0.1396,2)*std::pow(0.1396,2)));
  // RpionLVec2.SetPtEtaPhiE(event.chsTkPairTk2Pt[chsIndex2],event.chsTkPairTk2Eta[chsIndex2],event.chsTkPairTk2Phi[chsIndex2],std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.1396,2)*std::pow(0.1396,2)));
-
-  h_PhadronDeltaR->Fill(pionLVec1.DeltaR(pionLVec2), eventWeight);
 
   // Setup LVecs for the muons for delR plotting
   mm1.SetPtEtaPhiE(event.muonPF2PATPt[patMuIndex1],event.muonPF2PATEta[patMuIndex1],event.muonPF2PATPhi[patMuIndex1],event.muonPF2PATE[patMuIndex1]);
@@ -819,9 +815,6 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	
  // Rmm1.SetPtEtaPhiE(event.muonTkPairPF2PATTk1Pt[muonTrkPairIndex],event.muonTkPairPF2PATTk1Eta[muonTrkPairIndex],event.muonTkPairPF2PATTk1Phi[muonTrkPairIndex],std::sqrt(event.chsTkPairTk1P2[muonTrkPairIndex]+std::pow(0.106,2)*std::pow(0.106,2)));
  // Rmm2.SetPtEtaPhiE(event.muonTkPairPF2PATTk2Pt[muonTrkPairIndex],event.muonTkPairPF2PATTk2Eta[muonTrkPairIndex],event.muonTkPairPF2PATTk2Phi[muonTrkPairIndex],std::sqrt(event.chsTkPairTk2P2[muonTrkPairIndex]+std::pow(0.106,2)*std::pow(0.106,2)));
-
-  h_KmuonsDeltaR->Fill(mm1.DeltaR(mm2), eventWeight);
-  h_PmuonsDeltaR->Fill(mm1.DeltaR(mm2), eventWeight); // Identical, but preserved
 
   for(Int_t k{0};k<event.numPackedCands;k++){
      packedCandLVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
@@ -888,6 +881,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 		
       Kantiscalar.SetPxPyPzE(Kpx,Kpy,Kpz,KE);
       h_TestKantiscalarInvMass->Fill(Kantiscalar.M(), eventWeight);
+	    
+      h_KhadronDeltaR->Fill(lhadron1.DeltaR(lhadron2), eventWeight);
     }
    
   } // End Kaon delR if
@@ -912,6 +907,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 
       Pantiscalar.SetPxPyPzE(Ppx,Ppy,Ppz,PE);
       h_TestPantiscalarInvMass->Fill(Pantiscalar.M(), eventWeight);
+	    
+      h_PhadronDeltaR->Fill(lhadron1.DeltaR(lhadron2), eventWeight);
     }
    
   } // End pion delR if
@@ -935,6 +932,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	      
       scalarLVec.SetPxPyPzE(KMpx,KMpy,KMpz,KME);
       h_TestscalarInvMass->Fill(scalarLVec.M(), eventWeight);
+	    
+      h_PmuonsDeltaR->Fill(lmuon1.DeltaR(lmuon2), eventWeight); // Identical, but preserved
     }
 		   
   }
