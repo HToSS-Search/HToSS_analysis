@@ -13,12 +13,12 @@
   void deltaR() {  
   
      TFile inFile0("ggH_MS2_ctau0.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
-     TH1F* h_muon_ctau0    = (TH1F*)inFile0.Get("h_PmuonsDeltaR");
+     TH1F* h_muon_ctau0    = (TH1F*)inFile0.Get("h_PhadronDeltaR");
      TH1F* h_kaon_ctau0    = (TH1F*)inFile0.Get("h_KhadronDeltaR");
      TH1F* h_pion_ctau0    = (TH1F*)inFile0.Get("h_PhadronDeltaR");
 
      TFile inFile10("ggH_MS2_ctau10.root"); 
-     TH1F* h_muon_ctau10    = (TH1F*)inFile10.Get("h_PmuonsDeltaR");
+     TH1F* h_muon_ctau10    = (TH1F*)inFile10.Get("h_PhadronDeltaR");
      TH1F* h_kaon_ctau10    = (TH1F*)inFile10.Get("h_KhadronDeltaR");
      TH1F* h_pion_ctau10    = (TH1F*)inFile10.Get("h_PhadronDeltaR");
    
