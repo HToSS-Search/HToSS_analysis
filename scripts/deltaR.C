@@ -24,10 +24,11 @@
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
-     canv1->SetLogy();
+     //canv1->SetLogy();
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
+     h_muon_ctau0->SetTitle("");
      h_muon_ctau0->GetYaxis()->SetTitle("Events");
      h_muon_ctau0->GetXaxis()->SetRangeUser(0.0,0.2); 
      h_muon_ctau0->GetXaxis()->SetTitle("#Delta R (radians)");
@@ -35,6 +36,7 @@
      h_muon_ctau0->SetLineColor(4);
      h_muon_ctau0->Draw("HIST");
      
+     h_muon_ctau10->SetTitle("");
      h_muon_ctau10->GetYaxis()->SetTitle("Events");
      h_muon_ctau10->GetXaxis()->SetRangeUser(0.0,0.2); 
      h_muon_ctau10->GetXaxis()->SetTitle("#Delta R (radians)");
@@ -43,7 +45,7 @@
      h_muon_ctau10->Draw("HIST same");
   
    
-     TLegend *legend1 = new TLegend(.1,.7,.3,.9);
+     TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
      TLegendEntry *legenda = legend1->AddEntry("h_muon_ctau0","c_{#tau}=0mm","L");
      legenda->SetLineColor(4);
