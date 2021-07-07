@@ -24,7 +24,7 @@
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
-     canv1->SetLogy();
+     //canv1->SetLogy();
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
@@ -49,7 +49,7 @@
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_muon_ctau10","c_{#tau}=1mm","L");
+     legenda=legend1->AddEntry("h_muon_ctau10","c_{#tau}=10mm","L");
      legenda->SetLineColor(2);
      legenda->SetMarkerColor(2);
      legenda->SetMarkerSize(2);
