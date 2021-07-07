@@ -13,8 +13,10 @@
      TH2I* h_higgsassump = (TH2I*)inFile.Get("h_higgsassump"); // Load in histogram
    
      TCanvas* canv2 = new TCanvas ("canv2", "canv2", 50, 50, 800, 600); // Canvas to draw histogram on
+     canv2->SetGrid();
    
      gStyle->SetOptStat(0);
+    
    
      h_higgsassump->SetTitle("");
      h_higgsassump->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2}) - Pion assumption"); // set a title for the x-axis
