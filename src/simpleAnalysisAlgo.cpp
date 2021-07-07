@@ -835,8 +835,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
        if(pionLVec2.DeltaR(packedCandLVec)<isoConeSize_) PIsoSum2+=event.packedCandsPseudoTrkPt[k];
      }  
      if(k!=patMuIndex1 && k!=patMuIndex2){      
-       if(mm1.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum1+=event.muonPF2PATPt[k]; //?????
-       if(mm2.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum2+=event.muonPF2PATPt[k];  
+       if(mm1.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum1+=event.packedCandsPseudoTrkPt[k]; //?????
+       if(mm2.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum2+=event.packedCandsPseudoTrkPt[k];  
      }
   }
 	
