@@ -50,7 +50,7 @@ SimpleAnalysis::SimpleAnalysis()
 , isoConeSize_{0.3}          // Isolation cone size of 0.3 is used repeatedly. Define once here for efficiency.
 , higgsMass_{125.35}         // Standard Higgs mass - define here rather than multiple locations
 , higgsMassWindow_{3.0}      // Define Standard Higgs mass +/ window here rather than in multiple locations
-, higgsMassWideWindow_{20.0} // Define wider Standard Higgs mass +/ window here rather than in multiple locations
+, higgsMassWideWindow_{30.0} // Define wider Standard Higgs mass +/ window here rather than in multiple locations
 , statWindow_{0.15} 
 , mass_range_{1.0}              // 1 or 2 GeV sample run
 , debug_{false}              // Set to true to enable debug couts
@@ -234,7 +234,7 @@ void SimpleAnalysis::runMainAnalysis() {
     } // End loop over all events
 
     Float_t Nbg;
-    Nbg=(Nbg1+Nbg2)*6/34;
+    Nbg=(Nbg1+Nbg2)*6/54;
     std::cout<<"Background estimate: "<<Nbg<<std::endl;
     std::cout<<"Sideband left: "<<Nbg1<<std::endl; std::cout<<"Sideband right: "<<Nbg2<<std::endl;
     std::cout<<"Observation: "<<Obs<<std::endl;
@@ -1187,7 +1187,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   
   if(mass_range_==1){
     if(RPIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && RPIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && RMuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && RMuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
-      if((refpion+refitmuon).M()>=105 && (refpion+refitmuon).M()<=122){
+      if((refpion+refitmuon).M()>=95 && (refpion+refitmuon).M()<=122){
         if(std::abs((refpion).M()-(refitmuon).M())<statWindow_){
           Nbg1+=1;//eventWeight;
 	}
@@ -1195,7 +1195,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     }
  
     if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2]<1){ 
-      if((refpion+refitmuon).M()>=128 && (refpion+refitmuon).M()<=145){
+      if((refpion+refitmuon).M()>=128 && (refpion+refitmuon).M()<=155){
         if(std::abs((refpion).M()-(refitmuon).M())<statWindow_){
           Nbg2+=1;//eventWeight;
 	}
