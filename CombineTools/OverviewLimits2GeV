@@ -4,12 +4,12 @@ All @ 95% CL
 
 0 mm
 
-Observed limit: r < 0.0331661 +/- 0.00487419
-Expected (median) limit: r < 0.0238466 +/- 0.00487419
-Upper 1 sigma band: r < 0.0299123 +/- 0.00974837 , max: 0.039669670 , mid: 0.026208540 +/- 0.013461130
-Lower 1 sigma band: r < 0.0176216 +/- 0.00487419 , min: 0.012747410
-Upper 2 sigma band: r < 0.0454698 +/- 0.00974837 , max: 0.055218170 , mid: 0.03302487 +/- 0.022193300
-Lower 2 sigma band: r < 0.0169243 +/- 0.00609273 , min: 0.010831570
+Observed limit: r < 0.110576 +/- 0.0034556
+Expected (median) limit: 
+Upper 1 sigma band: , max: , mid:  +/- 
+Lower 1 sigma band: , min: 
+Upper 2 sigma band: , max:  , mid:  +/- 
+Lower 2 sigma band:  , min:
 
 -- 2 GeV --
 
