@@ -11,7 +11,7 @@ observation    23
 bin                   a                                       a             
 process               signal                                  QCD           
 process               0                                       1             
-rate                  24.3946                                 19.23529412                                                  
+rate                  7.63326                                 19.23529412                                                  
 ----------------------------------------
 lumi           lnN    1.025                                   -             
 trigger_sig    lnN    1.025                                   -             
@@ -22,5 +22,5 @@ muon_mom_sig   lnN    1.06                                    -
 muon_mom_bkg   lnN    -                                       1.06
 rate_sig       lnN    1.0838         	       	       	      -
 rate_bkg       lnN    -                                       1.047568792792418
-stat_unc_sig   lnN    1.007466846138619                       -            
+stat_unc_sig   lnN    1.013349957                             -            
 stat_unc_bkg   lnN    -                                       1.048066079
