@@ -28,18 +28,18 @@ Lower 2 sigma band:  , min:
 
 Observed limit: 
 Expected (median) limit:  
-Upper 1 sigma band: r < 14.4044 +/- 0.118426 , max: 14.52282600 , mid: 10.83743650 +/- 3.6853895
-Lower 1 sigma band: r < 7.25808 +/- 0.106033 , min: 7.152047
-Upper 2 sigma band: r < 19.4988 +/- 0.763027 , max: 20.26182700 , mid: 12.685046 +/- 7.576781
-Lower 2 sigma band: r < 5.2697 +/- 0.161435 , min: 5.108265
+Upper 1 sigma band:  , max:  , mid:  +/- 
+Lower 1 sigma band:  , min:
+Upper 2 sigma band:  , max: , mid:  +/- 
+Lower 2 sigma band:  , min: 
 
 -- 1 GeV --
 
 100 mm
 
-Observed limit: r < 1575.32 +/- 13.4214
-Expected (median) limit: r < 1151 +/- 8.65517
-Upper 1 sigma band: r < 1648.31 +/- 56.9809 , max: 1705.2909 , mid: 1256.0484 +/- 449.2425
-Lower 1 sigma band: r < 817.275 +/- 10.4691 , min: 806.80590
-Upper 2 sigma band: r < 2784.94 +/- 48.7778 , max: 2833.7178 , mid: 1743.8842 +/- 1089.8336
-Lower 2 sigma band: r < 669.909 +/- 15.8584 , min: 654.0506 
+Observed limit: 
+Expected (median) limit: 
+Upper 1 sigma band:  , max:  , mid:  +/- 
+Lower 1 sigma band: , min:
+Upper 2 sigma band:  , max:  , mid: +/-
+Lower 2 sigma band:  , min: 
