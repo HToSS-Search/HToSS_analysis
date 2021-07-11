@@ -50,7 +50,7 @@ SimpleAnalysis::SimpleAnalysis()
 , isoConeSize_{0.3}          // Isolation cone size of 0.3 is used repeatedly. Define once here for efficiency.
 , higgsMass_{125.35}         // Standard Higgs mass - define here rather than multiple locations
 , higgsMassWindow_{3.0}      // Define Standard Higgs mass +/ window here rather than in multiple locations
-, higgsMassWideWindow_{20.0} // Define wider Standard Higgs mass +/ window here rather than in multiple locations
+, higgsMassWideWindow_{30.0} // Define wider Standard Higgs mass +/ window here rather than in multiple locations
 , statWindow_{0.15} 
 , mass_range_{2.0}              // 1 or 2 GeV sample run
 , debug_{false}              // Set to true to enable debug couts
