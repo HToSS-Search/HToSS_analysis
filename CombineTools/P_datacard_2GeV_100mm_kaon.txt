@@ -1,0 +1,26 @@
+imax 1 number of channels
+jmax 1 number of backgrounds
+kmax * number of nuisance parameters # * means figure it out from the rest of the datacard
+
+----------------------------------------
+
+bin            a
+observation    13
+	
+----------------------------------------
+bin                   a                                       a             
+process               signal                                  QCD           
+process               0                                       1             
+rate                  0.293432                                14.4706                                                         
+----------------------------------------
+lumi           lnN    1.025                                   -             
+trigger_sig    lnN    1.025                                   -             
+trigger_QCD    lnN    -                                       1.025         
+muon_ID_sig    lnN    1.01                                    -
+muon_ID_bkg    lnN    -                                       1.01
+muon_mom_sig   lnN    1.06                                    -
+muon_mom_bkg   lnN    -                                       1.06
+rate_sig       lnN    1.0838         	       	       	      -
+rate_bkg       lnN    -                                       1.119234862
+stat_unc_sig   lnN    1.301511345                             -            
+stat_unc_bkg   lnN    -                                       1.055430933
