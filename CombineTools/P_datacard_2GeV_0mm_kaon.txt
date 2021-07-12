@@ -5,13 +5,13 @@ kmax * number of nuisance parameters # * means figure it out from the rest of th
 ----------------------------------------
 
 bin            a
-observation    419
+observation    13
 	
 ----------------------------------------
 bin                   a                                       a             
 process               signal                                  QCD           
 process               0                                       1             
-rate                  2593.499622                             466.718595                                                         
+rate                  80.4114                                 14.4706                                                             
 ----------------------------------------
 lumi           lnN    1.025                                   -             
 trigger_sig    lnN    1.025                                   -             
