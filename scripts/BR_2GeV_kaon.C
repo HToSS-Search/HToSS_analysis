@@ -86,7 +86,7 @@
      legenda->SetFillStyle(3001);
      legenda->SetMarkerColor(5);
      legenda=legend1->AddEntry("l","Constraint BSM","L");
-     legenda->SetMarkerStyle(21);
+     legenda->SetMarkerStyle(1);
      legenda->SetMarkerColor(2);
      legend1->Draw();
    
