@@ -229,6 +229,11 @@ class SimpleAnalysis
     TH1F* h_TestscalarInvMass;
     TH1F* h_TestKhiggsInvMass;
     TH1F* h_TestPhiggsInvMass;
+    TH1F* h_RTestPantiscalarInvMass;
+    TH1F* h_RTestKantiscalarInvMass;
+    TH1F* h_RTestscalarInvMass;
+    TH1F* h_RTestKhiggsInvMass;
+    TH1F* h_RTestPhiggsInvMass;
     TF1* Gaussian3;
     TH1F* h_PhiggsInvMass;
     TH1F* h_PhiggsRInvMass;
