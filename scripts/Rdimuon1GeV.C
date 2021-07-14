@@ -61,6 +61,8 @@
      h_scalarInvMass_data->GetXaxis()->SetRangeUser(0,4); 
      h_scalarInvMass_data->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_scalarInvMass_data->SetMarkerColor(94);
+     h_scalarInvMass_data->SetMarkerStyle(21);
+     h_scalarInvMass_data->SetMarkerSize(0.25);
      h_scalarInvMass_data->SetLineColor(94);
      h_scalarInvMass_data->Draw("P same");
     
@@ -91,6 +93,6 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("h_Rdimuon1GeV.png"); // .pdf and other formats work too! 
+     canv1->SaveAs("h_Rdimuon1GeV.pdf"); // .pdf and other formats work too! 
    
   }
