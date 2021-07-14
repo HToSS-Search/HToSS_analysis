@@ -797,15 +797,15 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   kaonLVec1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[chsIndex1],event.packedCandsPseudoTrkEta[chsIndex1],event.packedCandsPseudoTrkPhi[chsIndex1],std::sqrt(event.packedCandsE[chsIndex1]*event.packedCandsE[chsIndex1]-std::pow(0.1396,2)+std::pow(0.494,2)));
   kaonLVec2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[chsIndex2],event.packedCandsPseudoTrkEta[chsIndex2],event.packedCandsPseudoTrkPhi[chsIndex2],std::sqrt(event.packedCandsE[chsIndex2]*event.packedCandsE[chsIndex2]-std::pow(0.1396,2)+std::pow(0.494,2)));
 
-  RkaonLVec1.SetPtEtaPhiE(event.chsTkPairTk1Pt[chsIndex1],event.chsTkPairTk1Eta[chsIndex1],event.chsTkPairTk1Phi[chsIndex1],std::sqrt(event.chsTkPairTk1P2[chsIndex1]+std::pow(0.494,2)*std::pow(0.494,2)));
-  RkaonLVec2.SetPtEtaPhiE(event.chsTkPairTk2Pt[chsIndex2],event.chsTkPairTk2Eta[chsIndex2],event.chsTkPairTk2Phi[chsIndex2],std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.494,2)*std::pow(0.494,2)));
+  RkaonLVec1.SetPtEtaPhiE(event.chsTkPairTk1Pt[chsIndex1],event.chsTkPairTk1Eta[chsIndex1],event.chsTkPairTk1Phi[chsIndex1],std::sqrt(event.chsTkPairTk1P2[chsIndex1]+std::pow(0.494,2)));
+  RkaonLVec2.SetPtEtaPhiE(event.chsTkPairTk2Pt[chsIndex2],event.chsTkPairTk2Eta[chsIndex2],event.chsTkPairTk2Phi[chsIndex2],std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.494,2)));
 	
   // Setup LVecs for the charged pions for delR plotting
   pionLVec1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[chsIndex1],event.packedCandsPseudoTrkEta[chsIndex1],event.packedCandsPseudoTrkPhi[chsIndex1],event.packedCandsE[chsIndex1]);
   pionLVec2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[chsIndex2],event.packedCandsPseudoTrkEta[chsIndex2],event.packedCandsPseudoTrkPhi[chsIndex2],event.packedCandsE[chsIndex2]);
   
-  RpionLVec1.SetPtEtaPhiE(event.chsTkPairTk1Pt[chsIndex1],event.chsTkPairTk1Eta[chsIndex1],event.chsTkPairTk1Phi[chsIndex1],std::sqrt(event.chsTkPairTk1P2[chsIndex1]+std::pow(0.1396,2)*std::pow(0.1396,2)));
-  RpionLVec2.SetPtEtaPhiE(event.chsTkPairTk2Pt[chsIndex2],event.chsTkPairTk2Eta[chsIndex2],event.chsTkPairTk2Phi[chsIndex2],std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.1396,2)*std::pow(0.1396,2)));
+  RpionLVec1.SetPtEtaPhiE(event.chsTkPairTk1Pt[chsIndex1],event.chsTkPairTk1Eta[chsIndex1],event.chsTkPairTk1Phi[chsIndex1],std::sqrt(event.chsTkPairTk1P2[chsIndex1]+std::pow(0.1396,2)));
+  RpionLVec2.SetPtEtaPhiE(event.chsTkPairTk2Pt[chsIndex2],event.chsTkPairTk2Eta[chsIndex2],event.chsTkPairTk2Phi[chsIndex2],std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.1396,2)));
 
   // Setup LVecs for the muons for delR plotting
   mm1.SetPtEtaPhiE(event.muonPF2PATPt[patMuIndex1],event.muonPF2PATEta[patMuIndex1],event.muonPF2PATPhi[patMuIndex1],event.muonPF2PATE[patMuIndex1]);
@@ -813,22 +813,22 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   
   Int_t muonTrkPairIndex = getMuonTrackPairIndex(event, patMuIndex1, patMuIndex2);
 	
-  Rmm1.SetPtEtaPhiE(event.muonTkPairPF2PATTk1Pt[muonTrkPairIndex],event.muonTkPairPF2PATTk1Eta[muonTrkPairIndex],event.muonTkPairPF2PATTk1Phi[muonTrkPairIndex],std::sqrt(event.chsTkPairTk1P2[muonTrkPairIndex]+std::pow(0.106,2)*std::pow(0.106,2)));
-  Rmm2.SetPtEtaPhiE(event.muonTkPairPF2PATTk2Pt[muonTrkPairIndex],event.muonTkPairPF2PATTk2Eta[muonTrkPairIndex],event.muonTkPairPF2PATTk2Phi[muonTrkPairIndex],std::sqrt(event.chsTkPairTk2P2[muonTrkPairIndex]+std::pow(0.106,2)*std::pow(0.106,2)));
+  Rmm1.SetPtEtaPhiE(event.muonTkPairPF2PATTk1Pt[muonTrkPairIndex],event.muonTkPairPF2PATTk1Eta[muonTrkPairIndex],event.muonTkPairPF2PATTk1Phi[muonTrkPairIndex],std::sqrt(event.chsTkPairTk1P2[muonTrkPairIndex]+std::pow(0.106,2)));
+  Rmm2.SetPtEtaPhiE(event.muonTkPairPF2PATTk2Pt[muonTrkPairIndex],event.muonTkPairPF2PATTk2Eta[muonTrkPairIndex],event.muonTkPairPF2PATTk2Phi[muonTrkPairIndex],std::sqrt(event.chsTkPairTk2P2[muonTrkPairIndex]+std::pow(0.106,2)));
 
 	
   //Isolation
 	
   for(Int_t k{0};k<event.numChsTrackPairs;k++){
-     R0packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk1Pt[k],event.chsTkPairTk1Eta[k],event.chsTkPairTk1Phi[k],std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2)*std::pow(0.494,2)));
-     R1packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk2Pt[k],event.chsTkPairTk2Eta[k],event.chsTkPairTk2Phi[k],std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2)*std::pow(0.494,2)));
+     R0packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk1Pt[k],event.chsTkPairTk1Eta[k],event.chsTkPairTk1Phi[k],std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2)));
+     R1packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk2Pt[k],event.chsTkPairTk2Eta[k],event.chsTkPairTk2Phi[k],std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2)));
     
-     R4packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk1Pt[k],event.chsTkPairTk1Eta[k],event.chsTkPairTk1Phi[k],std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2)*std::pow(0.1396,2)));
-     R5packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk2Pt[k],event.chsTkPairTk2Eta[k],event.chsTkPairTk2Phi[k],std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2)*std::pow(0.1396,2)));
+     R4packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk1Pt[k],event.chsTkPairTk1Eta[k],event.chsTkPairTk1Phi[k],std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2)));
+     R5packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk2Pt[k],event.chsTkPairTk2Eta[k],event.chsTkPairTk2Phi[k],std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2)));
   }
   for(Int_t k{0};k<event.numMuonTrackPairsPF2PAT;k++){
-     R2packedCandLVec.SetPtEtaPhiE(event.muonTkPairPF2PATTk1Pt[k],event.muonTkPairPF2PATTk1Eta[k],event.muonTkPairPF2PATTk1Phi[k],std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2)*std::pow(0.106,2)));
-     R3packedCandLVec.SetPtEtaPhiE(event.muonTkPairPF2PATTk2Pt[k],event.muonTkPairPF2PATTk2Eta[k],event.muonTkPairPF2PATTk2Phi[k],std::sqrt(event.muonTkPairPF2PATTk2P2[k]+std::pow(0.106,2)*std::pow(0.106,2)));
+     R2packedCandLVec.SetPtEtaPhiE(event.muonTkPairPF2PATTk1Pt[k],event.muonTkPairPF2PATTk1Eta[k],event.muonTkPairPF2PATTk1Phi[k],std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2)));
+     R3packedCandLVec.SetPtEtaPhiE(event.muonTkPairPF2PATTk2Pt[k],event.muonTkPairPF2PATTk2Eta[k],event.muonTkPairPF2PATTk2Phi[k],std::sqrt(event.muonTkPairPF2PATTk2P2[k]+std::pow(0.106,2)));
   }
 	
   for(Int_t k{0};k<event.numPackedCands;k++){
@@ -975,8 +975,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
        }
      }
   }
-  if(event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
-    if(Rmm1.DeltaR(Rmm2)<packedCandMuonDeltaR_){ 
+  if(Rmm1.DeltaR(Rmm2)<packedCandMuonDeltaR_){
+    if(event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
       TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
       TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
 	  
