@@ -73,9 +73,11 @@
      legenda=legend1->AddEntry("h_scalarInvMass_ctau10","c_{#tau}=10mm","L");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
+     legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_scalarInvMass_ctau10","QCD","L");
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
+     legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_scalarInvMass_ctau10","Observation","P");
      legenda->SetLineColor(94);
      legenda->SetMarkerColor(94);
