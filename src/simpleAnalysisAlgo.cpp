@@ -207,7 +207,7 @@ void SimpleAnalysis::runMainAnalysis() {
       eventWeight *= datasetWeight;
 
       // Do functions that do not require met filters or triggers
-      fillGeneratorPlots(event); // Commented out currently by CB in main branch
+      //fillGeneratorPlots(event); // Commented out currently by CB in main branch
 
       // Do functions that have met filters applied
       if( !event.metFilters() ) continue;
@@ -228,7 +228,7 @@ void SimpleAnalysis::runMainAnalysis() {
 
       // Fill other plots now!
       // All of	these plots use	packed PF muons, so the ones corresponding to the PAT muons are provided
-      //fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, Obs, rate_signal, stat_signal, QCD_Kantiscalar, QCD_Pantiscalar, QCD_20Kantiscalar, QCD_20Pantiscalar, QCD_scalar, QCD_20scalar, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
+      fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, Obs, rate_signal, stat_signal, QCD_Kantiscalar, QCD_Pantiscalar, QCD_20Kantiscalar, QCD_20Pantiscalar, QCD_scalar, QCD_20scalar, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
       //fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
 
     } // End loop over all events
@@ -951,7 +951,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
 	
   //Refitted objects
-  TLorentzVector refkaon; TLorentzVector refpion; TLorentzVector refitmuon;	   
+  TLorentzVector refkaon{-1,-1,-1,-1}, refpion{-1,-1,-1,-1}, refitmuon{-1,-1,-1,-1};	   
   for(Int_t k{0}; k<event.numChsTrackPairs;k++){
      if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
        if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
@@ -959,11 +959,13 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
          TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
 	 
 	 refkaon=ka1+ka2;
+	 h_RTestKantiscalarInvMass->Fill(refkaon.M(), eventWeight);
 	       
 	 TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
          TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
 	 
 	 refpion=pi1+pi2;
+	 h_RTestPantiscalarInvMass->Fill(refpion.M(), eventWeight);
        }
      }
   }
@@ -972,9 +974,15 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
 	  
     refitmuon=Mu1+Mu2;	
+    h_RTestscalarInvMass->Fill(refitmuon.M(), eventWeight);
   }
 	      
-	      
+  if(refitmuon[0]!=-1 && refitmuon[1]!=-1 && refitmuon[2]!=-1 && refitmuon[3]!=-1 && refpion[0]!=-1 && refpion[1]!=-1 && refpion[2]!=-1 && refpion[3]!=-1){
+  h_RTestPhiggsInvMass->Fill((refpion+refitmuon).M(), eventWeight);
+  }
+  if(refitmuon[0]!=-1 && refitmuon[1]!=-1 && refitmuon[2]!=-1 && refitmuon[3]!=-1 && refkaon[0]!=-1 && refkaon[1]!=-1 && refkaon[2]!=-1 && refkaon[3]!=-1){
+  h_RTestKhiggsInvMass->Fill((refkaon+refitmuon).M(), eventWeight);
+  }	      
 	      
   //Kaon 
   //h_kNentries->SetBinContent(1,eventWeight); 
@@ -1515,6 +1523,11 @@ void SimpleAnalysis::setupPlots() {
   h_TestscalarInvMass = new TH1F("h_TestscalarInvMass", "Dimuon invariant mass", 200, 0.,5.);
   h_TestPhiggsInvMass = new TH1F("h_TestPhiggsInvMass", "Higgs invariant mass (pion)", 500, 0.,200.);
   h_TestKhiggsInvMass = new TH1F("h_TestKhiggsInvMass", "Higgs invariant mass (kaon)", 500, 0.,200.);
+  h_RTestPantiscalarInvMass = new TH1F("h_RTestPantiscalarInvMass", "Dihadron (pion) invariant mass", 200, 0.,5.);
+  h_RTestKantiscalarInvMass = new TH1F("h_RTestKantiscalarInvMass", "Dihadron (kaon) invariant mass", 200, 0.,5.);
+  h_RTestscalarInvMass = new TH1F("h_RTestscalarInvMass", "Dimuon invariant mass", 200, 0.,5.);
+  h_RTestPhiggsInvMass = new TH1F("h_RTestPhiggsInvMass", "Higgs invariant mass (pion)", 500, 0.,200.);
+  h_RTestKhiggsInvMass = new TH1F("h_RTestKhiggsInvMass", "Higgs invariant mass (kaon)", 500, 0.,200.);
   Gaussian3 = new TF1("Gaussian3","gaus",1.,3.);
   h_PhiggsInvMass = new TH1F("h_PhiggsInvMass", "Higgs invariant mass", 500, 0., 200.);
   h_PhiggsRInvMass = new TH1F("h_PhiggsRInvMass", "Higgs invariant mass", 500, 0., 200.);
@@ -1843,6 +1856,10 @@ void SimpleAnalysis::savePlots() {
   h_TestKantiscalarInvMass->Write();
   h_TestKhiggsInvMass->GetXaxis()->SetTitle("GeV");
   h_TestKhiggsInvMass->Write();
+  h_RTestKantiscalarInvMass->GetXaxis()->SetTitle("GeV");
+  h_RTestKantiscalarInvMass->Write();
+  h_RTestKhiggsInvMass->GetXaxis()->SetTitle("GeV");
+  h_RTestKhiggsInvMass->Write();
   h_KscalarInvMass->GetXaxis()->SetTitle("GeV");
   h_KscalarInvMass->Write();
   h_KhiggsInvMass->GetXaxis()->SetTitle("GeV");
@@ -1909,11 +1926,17 @@ void SimpleAnalysis::savePlots() {
   h_TestPantiscalarInvMass->Write();
   h_TestPhiggsInvMass->GetXaxis()->SetTitle("GeV");
   h_TestPhiggsInvMass->Write();
+  h_RTestPantiscalarInvMass->GetXaxis()->SetTitle("GeV");
+  h_RTestPantiscalarInvMass->Write();
+  h_RTestPhiggsInvMass->GetXaxis()->SetTitle("GeV");
+  h_RTestPhiggsInvMass->Write();
   h_PantiscalarInvMass->GetXaxis()->SetTitle("m_{dihadron} (GeV/c^{2})");
   h_PantiscalarInvMass->GetYaxis()->SetTitle("Events");
   h_PantiscalarInvMass->Write();
   h_TestscalarInvMass->GetXaxis()->SetTitle("GeV");
   h_TestscalarInvMass->Write();
+  h_RTestscalarInvMass->GetXaxis()->SetTitle("GeV");
+  h_RTestscalarInvMass->Write();
   h_PscalarInvMass->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
   h_PscalarInvMass->GetYaxis()->SetTitle("Events");
   h_PscalarInvMass->Write();
