@@ -961,9 +961,9 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
            TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
 	 
 	   refkaon=ka1+ka2;
-	   if(ka1!=ka2){
-	     h_RTestKantiscalarInvMass->Fill(refkaon.M(), eventWeight);
-	   }
+	   
+	   h_RTestKantiscalarInvMass->Fill(refkaon.M(), eventWeight);
+	   
 	 }
 	       
 	 if(RpionLVec1.DeltaR(RpionLVec2)<packedCandPionDeltaR_){
@@ -971,9 +971,9 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
            TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
 	 
 	   refpion=pi1+pi2;
-	   if(pi1!=pi2){
-	     h_RTestPantiscalarInvMass->Fill(refpion.M(), eventWeight);
-	   }
+	  
+	   h_RTestPantiscalarInvMass->Fill(refpion.M(), eventWeight);
+	   
 	 }
 	       
        }
@@ -985,9 +985,9 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
 	  
       refitmuon=Mu1+Mu2;
-      if(Mu1!=Mu2){
-        h_RTestscalarInvMass->Fill(refitmuon.M(), eventWeight);
-      }
+     
+      h_RTestscalarInvMass->Fill(refitmuon.M(), eventWeight);
+      
     }
   }
 	      
