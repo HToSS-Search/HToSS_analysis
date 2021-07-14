@@ -796,17 +796,25 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   // Setup LVecs for the charged hadrons for delR plotting
   kaonLVec1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[chsIndex1],event.packedCandsPseudoTrkEta[chsIndex1],event.packedCandsPseudoTrkPhi[chsIndex1],std::sqrt(event.packedCandsE[chsIndex1]*event.packedCandsE[chsIndex1]-std::pow(0.1396,2)+std::pow(0.494,2)));
   kaonLVec2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[chsIndex2],event.packedCandsPseudoTrkEta[chsIndex2],event.packedCandsPseudoTrkPhi[chsIndex2],std::sqrt(event.packedCandsE[chsIndex2]*event.packedCandsE[chsIndex2]-std::pow(0.1396,2)+std::pow(0.494,2)));
-
-  RkaonLVec1.SetPtEtaPhiE(event.chsTkPairTk1Pt[chsIndex1],event.chsTkPairTk1Eta[chsIndex1],event.chsTkPairTk1Phi[chsIndex1],std::sqrt(event.chsTkPairTk1P2[chsIndex1]+std::pow(0.494,2)));
-  RkaonLVec2.SetPtEtaPhiE(event.chsTkPairTk2Pt[chsIndex2],event.chsTkPairTk2Eta[chsIndex2],event.chsTkPairTk2Phi[chsIndex2],std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.494,2)));
+  
+  for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+     if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
+       RkaonLVec1.SetPtEtaPhiE(event.chsTkPairTk1Pt[k],event.chsTkPairTk1Eta[k],event.chsTkPairTk1Phi[k],std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2)));
+       RkaonLVec2.SetPtEtaPhiE(event.chsTkPairTk2Pt[k],event.chsTkPairTk2Eta[k],event.chsTkPairTk2Phi[k],std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2)));
+     }
+  }
 	
   // Setup LVecs for the charged pions for delR plotting
   pionLVec1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[chsIndex1],event.packedCandsPseudoTrkEta[chsIndex1],event.packedCandsPseudoTrkPhi[chsIndex1],event.packedCandsE[chsIndex1]);
   pionLVec2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[chsIndex2],event.packedCandsPseudoTrkEta[chsIndex2],event.packedCandsPseudoTrkPhi[chsIndex2],event.packedCandsE[chsIndex2]);
   
-  RpionLVec1.SetPtEtaPhiE(event.chsTkPairTk1Pt[chsIndex1],event.chsTkPairTk1Eta[chsIndex1],event.chsTkPairTk1Phi[chsIndex1],std::sqrt(event.chsTkPairTk1P2[chsIndex1]+std::pow(0.1396,2)));
-  RpionLVec2.SetPtEtaPhiE(event.chsTkPairTk2Pt[chsIndex2],event.chsTkPairTk2Eta[chsIndex2],event.chsTkPairTk2Phi[chsIndex2],std::sqrt(event.chsTkPairTk2P2[chsIndex2]+std::pow(0.1396,2)));
-
+  for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+     if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
+       RpionLVec1.SetPtEtaPhiE(event.chsTkPairTk1Pt[k],event.chsTkPairTk1Eta[k],event.chsTkPairTk1Phi[k],std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2)));
+       RpionLVec2.SetPtEtaPhiE(event.chsTkPairTk2Pt[k],event.chsTkPairTk2Eta[k],event.chsTkPairTk2Phi[k],std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2)));
+     }
+  }
+	
   // Setup LVecs for the muons for delR plotting
   mm1.SetPtEtaPhiE(event.muonPF2PATPt[patMuIndex1],event.muonPF2PATEta[patMuIndex1],event.muonPF2PATPhi[patMuIndex1],event.muonPF2PATE[patMuIndex1]);
   mm2.SetPtEtaPhiE(event.muonPF2PATPt[patMuIndex2],event.muonPF2PATEta[patMuIndex2],event.muonPF2PATPhi[patMuIndex2],event.muonPF2PATE[patMuIndex2]);
@@ -951,12 +959,12 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
 	
   //Refitted objects
-  TLorentzVector refkaon{-1,-1,-1,-1}, refpion{-1,-1,-1,-1}, refitmuon{-1,-1,-1,-1};	   
-  for(Int_t k{0}; k<event.numChsTrackPairs;k++){
-     if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
-       if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
-	      
-	 if(RkaonLVec1.DeltaR(RkaonLVec2)<packedCandKaonDeltaR_){
+  TLorentzVector refkaon{-1,-1,-1,-1}, refpion{-1,-1,-1,-1}, refitmuon{-1,-1,-1,-1};
+  if(RkaonLVec1.DeltaR(RkaonLVec2)<packedCandKaonDeltaR_){
+    for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+       if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
+         if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
+	  
 	   TLorentzVector ka1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2))};
            TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
 	 
@@ -965,8 +973,14 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	   h_RTestKantiscalarInvMass->Fill(refkaon.M(), eventWeight);
 	   
 	 }
-	       
-	 if(RpionLVec1.DeltaR(RpionLVec2)<packedCandPionDeltaR_){
+       }
+    }
+  }
+  if(RpionLVec1.DeltaR(RpionLVec2)<packedCandPionDeltaR_){
+    for(Int_t k{0}; k<event.numChsTrackPairs;k++){
+       if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
+         if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){	       
+	 
 	   TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
            TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
 	 
@@ -974,8 +988,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	  
 	   h_RTestPantiscalarInvMass->Fill(refpion.M(), eventWeight);
 	   
-	 }
-	       
+	 }      
        }
      }
   }
