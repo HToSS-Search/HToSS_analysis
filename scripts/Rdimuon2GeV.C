@@ -62,7 +62,7 @@
      h_scalarInvMass_data->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_scalarInvMass_data->SetMarkerColor(94);
      h_scalarInvMass_data->SetMarkerStyle(21);
-     h_scalarInvMass_data->SetMarkerSize(0.2);
+     h_scalarInvMass_data->SetMarkerSize(0.25);
      h_scalarInvMass_data->SetLineColor(94);
      h_scalarInvMass_data->Draw("P same");
     
