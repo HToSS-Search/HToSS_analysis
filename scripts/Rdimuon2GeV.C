@@ -80,6 +80,7 @@
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_scalarInvMass_ctau10","Observation","P");
      legenda->SetLineColor(94);
+     legenda->SetMarkerStyle(21);
      legenda->SetMarkerColor(94);
      legenda->SetMarkerSize(2);
 
