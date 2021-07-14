@@ -955,26 +955,34 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   for(Int_t k{0}; k<event.numChsTrackPairs;k++){
      if(event.chsTkPairIndex1[k]==chsIndex1 && event.chsTkPairIndex2[k]==chsIndex2){
        if(event.chsTkPairTk1Charge[k]==-(event.chsTkPairTk2Charge[k])){
-	 TLorentzVector ka1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2))};
-         TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
+	      
+	 if(RkaonLVec1.DeltaR(RkaonLVec2)<packedCandKaonDeltaR_){
+	   TLorentzVector ka1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2))};
+           TLorentzVector ka2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2))};
 	 
-	 refkaon=ka1+ka2;
-	 h_RTestKantiscalarInvMass->Fill(refkaon.M(), eventWeight);
+	   refkaon=ka1+ka2;
+	   h_RTestKantiscalarInvMass->Fill(refkaon.M(), eventWeight);
+	 }
 	       
-	 TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
-         TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
+	 if(RpionLVec1.DeltaR(RpionLVec2)<packedCandPionDeltaR_){
+	   TLorentzVector pi1 {event.chsTkPairTk1Px[k], event.chsTkPairTk1Py[k], event.chsTkPairTk1Pz[k], std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.1396,2))};
+           TLorentzVector pi2 {event.chsTkPairTk2Px[k], event.chsTkPairTk2Py[k], event.chsTkPairTk2Pz[k], std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.1396,2))};
 	 
-	 refpion=pi1+pi2;
-	 h_RTestPantiscalarInvMass->Fill(refpion.M(), eventWeight);
+	   refpion=pi1+pi2;
+	   h_RTestPantiscalarInvMass->Fill(refpion.M(), eventWeight);
+	 }
+	       
        }
      }
   }
   if(event.muonTkPairPF2PATTk1Charge[muonTrkPairIndex]==-(event.muonTkPairPF2PATTk2Charge[muonTrkPairIndex])){
-    TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
-    TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
+    if(Rmm1.DeltaR(Rmm2)<packedCandMuonDeltaR_){ 
+      TLorentzVector Mu1 {event.muonTkPairPF2PATTk1Px[muonTrkPairIndex], event.muonTkPairPF2PATTk1Py[muonTrkPairIndex], event.muonTkPairPF2PATTk1Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex]+std::pow(0.106,2))};
+      TLorentzVector Mu2 {event.muonTkPairPF2PATTk2Px[muonTrkPairIndex], event.muonTkPairPF2PATTk2Py[muonTrkPairIndex], event.muonTkPairPF2PATTk2Pz[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex]+std::pow(0.106,2))};
 	  
-    refitmuon=Mu1+Mu2;	
-    h_RTestscalarInvMass->Fill(refitmuon.M(), eventWeight);
+      refitmuon=Mu1+Mu2;	
+      h_RTestscalarInvMass->Fill(refitmuon.M(), eventWeight);
+    }
   }
 	      
   if(refitmuon[0]!=-1 && refitmuon[1]!=-1 && refitmuon[2]!=-1 && refitmuon[3]!=-1 && refpion[0]!=-1 && refpion[1]!=-1 && refpion[2]!=-1 && refpion[3]!=-1){
