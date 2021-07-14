@@ -61,6 +61,7 @@
      h_scalarInvMass_data->GetXaxis()->SetRangeUser(0,4); 
      h_scalarInvMass_data->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
      h_scalarInvMass_data->SetMarkerColor(94);
+     h_scalarInvMass_data->SetMarkerSize(2);
      h_scalarInvMass_data->SetLineColor(94);
      h_scalarInvMass_data->Draw("P same");
     
@@ -80,9 +81,8 @@
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_scalarInvMass_ctau10","Observation","P");
      legenda->SetLineColor(94);
-     legenda->SetMarkerStyle(21);
      legenda->SetMarkerColor(94);
-     legenda->SetMarkerSize(5);
+     legenda->SetMarkerSize(2);
 
      legend1->Draw();
    
