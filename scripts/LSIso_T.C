@@ -67,7 +67,7 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("h_LIso.png"); // .pdf and other formats work too! 
+     canv1->SaveAs("h_LIso.pdf"); // .pdf and other formats work too! 
    
      
      TCanvas* canv3 = new TCanvas ("canv3", "canv3", 50, 50, 800, 600); // Canvas to draw histogram on
@@ -112,6 +112,6 @@
      canv3->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv3->SaveAs("h_SIso.png"); // .pdf and other formats work too! 
+     canv3->SaveAs("h_SIso.pdf"); // .pdf and other formats work too! 
     
   }
