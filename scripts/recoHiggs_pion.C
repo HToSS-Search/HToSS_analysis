@@ -13,10 +13,10 @@
 
   void recoHiggs_pion() {  
   
-     TFile inFile0("ggH_MS2_ctau0.root"); 
+     TFile inFile0("ggH_MS1_ctau0.root"); 
      TH1F* h_higgsInvMass_ctau0    = (TH1F*)inFile0.Get("h_TestPhiggsInvMass");
      
-     TFile inFile10("ggH_MS2_ctau10.root"); 
+     TFile inFile10("ggH_MS1_ctau10.root"); 
      TH1F* h_higgsInvMass_ctau10    = (TH1F*)inFile10.Get("h_TestPhiggsInvMass");
  
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
