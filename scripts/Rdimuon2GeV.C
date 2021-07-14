@@ -31,7 +31,7 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
 
-     h_scalarInvMass_ctau0->GetYaxis()->SetRangeUser(0.01, 35000.);
+     h_scalarInvMass_ctau0->GetYaxis()->SetRangeUser(0.01, 15000.);
      h_scalarInvMass_ctau0->SetTitle("");
      h_scalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_scalarInvMass_ctau0->GetXaxis()->SetRangeUser(0,4);  
@@ -93,6 +93,6 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("h_Rdimuon2GeV.png"); // .pdf and other formats work too! 
+     canv1->SaveAs("h_Rdimuon2GeV.pdf"); // .pdf and other formats work too! 
    
   }
