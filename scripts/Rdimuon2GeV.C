@@ -82,7 +82,7 @@
      legenda->SetLineColor(94);
      legenda->SetMarkerStyle(21);
      legenda->SetMarkerColor(94);
-     legenda->SetMarkerSize(2);
+     legenda->SetMarkerSize(5);
 
      legend1->Draw();
    
