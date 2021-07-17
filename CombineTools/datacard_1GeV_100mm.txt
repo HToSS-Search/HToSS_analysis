@@ -16,11 +16,7 @@ rate                  0.00953628                              17.2941
 lumi           lnN    1.025                                   -             
 trigger_sig    lnN    1.025                                   -             
 trigger_QCD    lnN    -                                       1.025         
-muon_ID_sig    lnN    1.01                                    -
-muon_ID_bkg    lnN    -                                       1.01
-muon_mom_sig   lnN    1.06                                    -
-muon_mom_bkg   lnN    -                                       1.06
 rate_sig       lnN    1.0838         	       	       	      -
 rate_bkg       lnN    -                                       1.021163287
 stat_unc_sig   lnN    1.377964473                             -            
-stat_unc_bkg   lnN    -                                       1.050451706
+stat_unc_bkg   lnN    -                                       1.013907831
