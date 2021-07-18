@@ -9,7 +9,7 @@ Expected (median) limit: r < 0.640295 +/- 0.00563871
 Upper 1 sigma band: r < 0.900897 +/- 0.00715519 , max: 0.90805219 , mid: 0.68121678 +/- 0.22683541
 Lower 1 sigma band: r < 0.460422 +/- 0.00604063 , min: 0.45438137
 Upper 2 sigma band: r < 1.2578 +/- 0.0072238 , max: 1.2650238  , mid: +/- 
-Lower 2 sigma band:  , min: WAIT
+Lower 2 sigma band:  , min: 
 
 -- 1 GeV --
 
@@ -20,7 +20,7 @@ Expected (median) limit: r < 0.984329 +/- 0.0128735
 Upper 1 sigma band: r < 1.42548 +/- 0.0111262 , max: 1.4366062 , mid: 1.08071015 +/- 0.355896050
 Lower 1 sigma band: r < 0.736313 +/- 0.0114989  , min: 0.7248141
 Upper 2 sigma band: r < 1.96828 +/- 0.0107148 , max: 1.9789948 , mid:  +/- 
-Lower 2 sigma band: , min:  WAIT
+Lower 2 sigma band: , min:  
 
 -- 1 GeV --
 
