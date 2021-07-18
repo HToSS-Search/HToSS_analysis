@@ -32,7 +32,7 @@ Expected (median) limit: r < 0.832988 +/- 0.00743976
 Upper 1 sigma band:  r < 1.20417 +/- 0.00603182 , max: 1.21020182 , mid: 0.907046505  +/- 0.303155315
 Lower 1 sigma band:  r < 0.611214 +/- 0.00732281, min: 0.603891190
 Upper 2 sigma band: r < 1.64043 +/- 0.00972898 , max: 1.65015898 , mid: +/- 
-Lower 2 sigma band:  , min:
+Lower 2 sigma band: r < 0.469017 +/- 0.00411781 , min:
 
 
 -- 2 GeV --
