@@ -6,8 +6,8 @@ All @ 95% CL
 
 Observed limit: r < 0.70191 +/- 0.00518932
 Expected (median) limit: r < 0.640295 +/- 0.00563871
-Upper 1 sigma band: r < 0.900897 +/- 0.00715519 , max:  , mid:  +/- 
-Lower 1 sigma band: r < 0.460422 +/- 0.00604063 , min: 
+Upper 1 sigma band: r < 0.900897 +/- 0.00715519 , max: 0.90805219 , mid: 0.68121678 +/- 0.22683541
+Lower 1 sigma band: r < 0.460422 +/- 0.00604063 , min: 0.45438137
 Upper 2 sigma band: r < 1.2578 +/- 0.0072238 , max:  , mid: +/- 
 Lower 2 sigma band:  , min: WAIT
 
