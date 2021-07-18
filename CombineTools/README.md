@@ -52,7 +52,7 @@ cmsenv
 Copy over appropriate datacard
 
 ```
-cp ~/HToSS_analysis/CombineTools/P_datacard_2GeV_0mm_kaon.txt .
+cp ~/HToSS_analysis/CombineTools/datacard_2GeV_0mm_kaon.txt .
 ```
 ***
 
@@ -65,32 +65,32 @@ These six commands cover the observed limit, expected limit, and the upper and l
 
 Observed limit:
 ```
-combine P_datacard_2GeV_0mm_kaon.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+combine datacard_2GeV_0mm_kaon.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
 
 Expected (median) limit:
 ```
-combine P_datacard_2GeV_0mm_kaon.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.5 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+combine datacard_2GeV_0mm_kaon.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.5 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
 
 Upper 1 sigma band
 ```
-combine P_datacard_2GeV_0mm_kaon.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.84 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+combine datacard_2GeV_0mm_kaon.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.84 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
 
 Lower 1 sigma band
 ```
-combine P_datacard_2GeV_0mm_kaon.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.16 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+combine datacard_2GeV_0mm_kaon.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.16 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
 
 Upper 2 sigma band
 ```
-combine P_datacard_2GeV_0mm_kaon.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.975 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+combine datacard_2GeV_0mm_kaon.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.975 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
 
 Lower 2 sigma band
 ```
-combine P_datacard_2GeV_0mm_kaon.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.025 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+combine datacard_2GeV_0mm_kaon.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.025 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
 
 ## Updating the datacard.
