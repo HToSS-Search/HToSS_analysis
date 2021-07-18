@@ -111,10 +111,10 @@
      legenda=legend1->AddEntry("l","Constraint BSM","L");
      legenda->SetLineWidth(2);
      legenda->SetLineColor(2);
-     legenda=legend1->AddEntry("l","Unphysical area","F");
+     legenda=legend1->AddEntry("l2","Unphysical area","F");
      legenda->SetFillColor(14);
      legenda->SetFillStyle(3244);
-     legenda->SetMarkerColor(14)
+     legenda->SetMarkerColor(14);
      legend1->Draw();
    
      canv1->Modified();
