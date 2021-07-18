@@ -29,6 +29,7 @@
      sigma2->GetXaxis()->SetTitle("c#tau (mm)");
      sigma2->GetYaxis()->SetTitle("BR(H#rightarrow a#bar{a})");
      sigma2->GetXaxis()->SetRangeUser(0,100);
+     sigma2->GetYaxis()->SetRangeUser(0,195585);
      sigma2->SetTitle(" ");
      sigma2->Draw("a3");
      
@@ -69,9 +70,9 @@
      l->Draw("same");
    
      //unphysical area
-     double y5[4] = {58897,58897,58897,58897}; 
+     double y5[4] = {97793,97793,97793,97793}; 
      double ex5[4] = {0., 0., 0., 0.};
-     double ey5[4] = {58896,58896,58896,58896};
+     double ey5[4] = {97792,97792,97792,97792};
      auto sigma3 = new TGraphErrors(4, x1, y5, ex5, ey5);
      sigma3->SetFillColor(14);
      sigma3->SetFillStyle(3244);
