@@ -67,6 +67,22 @@
      l->SetLineStyle(1);
      l->SetLineWidth(2);
      l->Draw("same");
+   
+     //unphysical area
+     double y4[4] = {58897,58897,58897,58897}; 
+     double ex4[4] = {0., 0., 0., 0.};
+     double ey4[4] = {58896,58896,58896,58896};
+     auto sigma3 = new TGraphErrors(4, x1, y4, ex4, ey4);
+     sigma3->SetFillColor(14);
+     sigma3->SetFillStyle(3244);
+     sigma3->SetTitle(" ");
+     sigma3->Draw("3 same");
+   
+     TLine *l2=new TLine(0,1,100,1);
+     l2->SetLineColor(14);
+     l2->SetLineStyle(1);
+     l2->SetLineWidth(0.5);
+     l2->Draw("same");
      
      TLegend *legend1 = new TLegend(0.1,0.7,0.3,0.9);
      legend1->SetBorderSize(1);
