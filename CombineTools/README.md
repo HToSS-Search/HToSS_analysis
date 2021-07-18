@@ -52,7 +52,7 @@ cmsenv
 Copy over appropriate datacard
 
 ```
-cp ~/HToSS_analysis/CombineTools/datacard_1GeV_100mm.txt .
+cp ~/HToSS_analysis/CombineTools/datacard_1GeV_1mm.txt .
 ```
 ***
 
