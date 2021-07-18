@@ -29,7 +29,7 @@
      sigma2->GetXaxis()->SetTitle("c#tau (mm)");
      sigma2->GetYaxis()->SetTitle("BR(H#rightarrow a#bar{a})");
      sigma2->GetXaxis()->SetRangeUser(0,100);
-     //sigma2->GetYaxis()->SetRangeUser(0,195585);
+     sigma2->GetYaxis()->SetRangeUser(0,195585);
      sigma2->SetTitle(" ");
      sigma2->Draw("a3");
      
@@ -72,16 +72,7 @@
      l->SetLineWidth(2);
      //l->GetYaxis()->SetRangeUser(0,195585);
      l->Draw("same");
-   
-     
-   
-     TLine *l2=new TLine(0,1,100,1);
-     l2->SetLineColor(14);
-     l2->SetLineStyle(1);
-     l2->SetLineWidth(1);
-     //l2->GetYaxis()->SetRangeUser(0,195585);
-     l2->Draw("same");
-    
+  
      //unphysical area
      double y5[4] = {97793,97793,97793,97793}; 
      double ex5[4] = {0., 0., 0., 0.};
@@ -93,6 +84,13 @@
      //sigma3->GetYaxis()->SetRangeUser(0,195585);
      sigma3->Draw("3 same");
      
+     TLine *l2=new TLine(0,1,100,1);
+     l2->SetLineColor(14);
+     l2->SetLineStyle(1);
+     l2->SetLineWidth(1);
+     //l2->GetYaxis()->SetRangeUser(0,195585);
+     l2->Draw("same");
+   
      TLegend *legend1 = new TLegend(0.1,0.7,0.3,0.9);
      legend1->SetBorderSize(1);
      TLegendEntry *legenda = legend1->AddEntry("obs","Observed","LP");
@@ -113,6 +111,10 @@
      legenda=legend1->AddEntry("l","Constraint BSM","L");
      legenda->SetLineWidth(2);
      legenda->SetLineColor(2);
+     legenda=legend1->AddEntry("l","Unphysical area","F");
+     legenda->SetFillColor(14);
+     legenda->SetFillStyle(3244);
+     legenda->SetMarkerColor(14)
      legend1->Draw();
    
      canv1->Modified();
