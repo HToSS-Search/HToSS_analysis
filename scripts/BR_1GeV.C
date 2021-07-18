@@ -116,6 +116,7 @@
      canv1->Modified();
      canv1->cd();
      canv1->SetSelected(canv1);
+     canv1->SetMinimum(0);
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
