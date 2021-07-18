@@ -29,7 +29,7 @@
      sigma2->GetXaxis()->SetTitle("c#tau (mm)");
      sigma2->GetYaxis()->SetTitle("BR(H#rightarrow a#bar{a})");
      sigma2->GetXaxis()->SetRangeUser(0,100);
-     sigma2->GetYaxis()->SetRangeUser(0,195585);
+     //sigma2->GetYaxis()->SetRangeUser(0,195585);
      sigma2->SetTitle(" ");
      sigma2->Draw("a3");
      
@@ -40,7 +40,7 @@
      auto sigma1 = new TGraphErrors(4, x1, y4, ex4, ey4);
      sigma1->SetFillColor(8);
      sigma1->SetFillStyle(3001);
-     sigma1->GetYaxis()->SetRangeUser(0,195585);
+     //sigma1->GetYaxis()->SetRangeUser(0,195585);
      sigma1->Draw("3 same");
    
      //observed
@@ -51,7 +51,7 @@
      obs->SetMarkerColor(4); //blue
      obs->SetMarkerStyle(21); //square
      obs->SetLineColor(4);
-     obs->GetYaxis()->SetRangeUser(0,195585);
+     //obs->GetYaxis()->SetRangeUser(0,195585);
      obs->Draw("lp same");
    
      //expected (median)
@@ -63,7 +63,7 @@
      exp->SetMarkerStyle(21);
      exp->SetLineStyle(9);
      exp->SetLineColor(1);
-     exp->GetYaxis()->SetRangeUser(0,195585);
+     //exp->GetYaxis()->SetRangeUser(0,195585);
      exp->Draw("lp same");
    
      TLine *l=new TLine(0,0.34,100,0.34);
@@ -90,7 +90,7 @@
      sigma3->SetFillColor(14);
      sigma3->SetFillStyle(3244);
      sigma3->SetTitle(" ");
-     sigma3->GetYaxis()->SetRangeUser(0,195585);
+     //sigma3->GetYaxis()->SetRangeUser(0,195585);
      sigma3->Draw("3 same");
      
      TLegend *legend1 = new TLegend(0.1,0.7,0.3,0.9);
