@@ -70,7 +70,7 @@
      l->SetLineColor(2);
      l->SetLineStyle(1);
      l->SetLineWidth(2);
-     l->GetYaxis()->SetRangeUser(0,195585);
+     //l->GetYaxis()->SetRangeUser(0,195585);
      l->Draw("same");
    
      //unphysical area
@@ -88,7 +88,7 @@
      l2->SetLineColor(14);
      l2->SetLineStyle(1);
      l2->SetLineWidth(1);
-     l2->GetYaxis()->SetRangeUser(0,195585);
+     //l2->GetYaxis()->SetRangeUser(0,195585);
      l2->Draw("same");
      
      TLegend *legend1 = new TLegend(0.1,0.7,0.3,0.9);
