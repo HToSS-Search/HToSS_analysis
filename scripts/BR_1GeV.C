@@ -73,6 +73,15 @@
      //l->GetYaxis()->SetRangeUser(0,195585);
      l->Draw("same");
    
+     
+   
+     TLine *l2=new TLine(0,1,100,1);
+     l2->SetLineColor(14);
+     l2->SetLineStyle(1);
+     l2->SetLineWidth(1);
+     //l2->GetYaxis()->SetRangeUser(0,195585);
+     l2->Draw("same");
+    
      //unphysical area
      double y5[4] = {97793,97793,97793,97793}; 
      double ex5[4] = {0., 0., 0., 0.};
@@ -83,13 +92,6 @@
      sigma3->SetTitle(" ");
      sigma3->GetYaxis()->SetRangeUser(0,195585);
      sigma3->Draw("3 same");
-   
-     TLine *l2=new TLine(0,1,100,1);
-     l2->SetLineColor(14);
-     l2->SetLineStyle(1);
-     l2->SetLineWidth(1);
-     //l2->GetYaxis()->SetRangeUser(0,195585);
-     l2->Draw("same");
      
      TLegend *legend1 = new TLegend(0.1,0.7,0.3,0.9);
      legend1->SetBorderSize(1);
@@ -116,7 +118,6 @@
      canv1->Modified();
      canv1->cd();
      canv1->SetSelected(canv1);
-     canv1->SetMinimum(0);
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
