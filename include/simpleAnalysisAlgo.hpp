@@ -191,6 +191,10 @@ class SimpleAnalysis
     TH2F* h_KIso2;
     TH1F* h_MuonIsoSum1;
     TH1F* h_MuonIsoSum2;
+    TH1F* h_RKIsoSum1;
+    TH1F* h_RKIsoSum2;
+    TH1F* h_RMuonIsoSum1;
+    TH1F* h_RMuonIsoSum2;
     TH1F* h_KhadronInvMass;
     TH1F* h_KhadronInvMass2;
     TH1F* h_KmuonsInvMass;
@@ -210,6 +214,8 @@ class SimpleAnalysis
     TH1F* h_PmuonsDeltaR;
     TH1F* h_PIsoSum1;
     TH1F* h_PIsoSum2;
+    TH1F* h_RPIsoSum1;
+    TH1F* h_RPIsoSum2;
     TH2F* h_PIso2;
     TH1F* h_PIsoSum3;
     TH1F* h_PIsoSum4;
