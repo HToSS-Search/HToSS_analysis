@@ -234,7 +234,9 @@ void SimpleAnalysis::runMainAnalysis() {
     } // End loop over all events
 
     Float_t Nbg;
-    Nbg=(Nbg1+Nbg2)*6/34;
+    if(higgsMassWideWindow_==20) Nbg=(Nbg1+Nbg2)*6/34;
+    if(higgsMassWideWindow_==30) Nbg=(Nbg1+Nbg2)*6/54;
+    
     std::cout<<"Background estimate: "<<Nbg<<std::endl;
     std::cout<<"Sideband left: "<<Nbg1<<std::endl; std::cout<<"Sideband right: "<<Nbg2<<std::endl;
     std::cout<<"Observation: "<<Obs<<std::endl;
