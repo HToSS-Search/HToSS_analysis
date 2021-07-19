@@ -32,22 +32,22 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
    
-     h_PIsoSum1_ctau10->SetTitle("");
-     h_PIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
-     h_PIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
-     h_PIsoSum1_ctau10->GetYaxis()->SetRangeUser(0.05, 50.); 
-     h_PIsoSum1_ctau10->GetXaxis()->SetTitle("Relative isolation");
-     h_PIsoSum1_ctau10->SetMarkerColor(4);
-     h_PIsoSum1_ctau10->SetLineColor(4);
-     h_PIsoSum1_ctau10->Draw("HIST");
+     h_PIsoSum1_ctau0->SetTitle("");
+     h_PIsoSum1_ctau0->GetYaxis()->SetTitle("Events");
+     h_PIsoSum1_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
+     h_PIsoSum1_ctau0->GetYaxis()->SetRangeUser(0.05, 50.); 
+     h_PIsoSum1_ctau0->GetXaxis()->SetTitle("Relative isolation");
+     h_PIsoSum1_ctau0->SetMarkerColor(4);
+     h_PIsoSum1_ctau0->SetLineColor(4);
+     h_PIsoSum1_ctau0->Draw("HIST");
  
-     h_PIsoSum2_ctau10->SetTitle("");
-     h_PIsoSum2_ctau10->GetYaxis()->SetTitle("Events");
-     h_PIsoSum2_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
-     h_PIsoSum2_ctau10->GetXaxis()->SetTitle("Relative isolation");
-     h_PIsoSum2_ctau10->SetMarkerColor(2);
-     h_PIsoSum2_ctau10->SetLineColor(2);
-     h_PIsoSum2_ctau10->Draw("HIST same");
+     h_PIsoSum2_ctau0->SetTitle("");
+     h_PIsoSum2_ctau0->GetYaxis()->SetTitle("Events");
+     h_PIsoSum2_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
+     h_PIsoSum2_ctau0->GetXaxis()->SetTitle("Relative isolation");
+     h_PIsoSum2_ctau0->SetMarkerColor(2);
+     h_PIsoSum2_ctau0->SetLineColor(2);
+     h_PIsoSum2_ctau0->Draw("HIST same");
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
@@ -77,22 +77,22 @@
      canv3->SetFillColor(0);
 
    
-     h_MuonIsoSum1_ctau10->SetTitle("");
-     h_MuonIsoSum1_ctau10->GetYaxis()->SetTitle("Events");
-     h_MuonIsoSum1_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
-     h_MuonIsoSum1_ctau10->GetYaxis()->SetRangeUser(0.05, 50.); 
-     h_MuonIsoSum1_ctau10->GetXaxis()->SetTitle("Relative isolation");
-     h_MuonIsoSum1_ctau10->SetMarkerColor(4);
-     h_MuonIsoSum1_ctau10->SetLineColor(4);
-     h_MuonIsoSum1_ctau10->Draw("HIST");
+     h_MuonIsoSum1_ctau0->SetTitle("");
+     h_MuonIsoSum1_ctau0->GetYaxis()->SetTitle("Events");
+     h_MuonIsoSum1_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
+     h_MuonIsoSum1_ctau0->GetYaxis()->SetRangeUser(0.05, 50.); 
+     h_MuonIsoSum1_ctau0->GetXaxis()->SetTitle("Relative isolation");
+     h_MuonIsoSum1_ctau0->SetMarkerColor(4);
+     h_MuonIsoSum1_ctau0->SetLineColor(4);
+     h_MuonIsoSum1_ctau0->Draw("HIST");
      
-     h_MuonIsoSum2_ctau10->SetTitle("");
-     h_MuonIsoSum2_ctau10->GetYaxis()->SetTitle("Events");
-     h_MuonIsoSum2_ctau10->GetXaxis()->SetRangeUser(0.0, 2.); 
-     h_MuonIsoSum2_ctau10->GetXaxis()->SetTitle("Relative isolation");
-     h_MuonIsoSum2_ctau10->SetMarkerColor(2);
-     h_MuonIsoSum2_ctau10->SetLineColor(2);
-     h_MuonIsoSum2_ctau10->Draw("HIST same");
+     h_MuonIsoSum2_ctau0->SetTitle("");
+     h_MuonIsoSum2_ctau0->GetYaxis()->SetTitle("Events");
+     h_MuonIsoSum2_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
+     h_MuonIsoSum2_ctau0->GetXaxis()->SetTitle("Relative isolation");
+     h_MuonIsoSum2_ctau0->SetMarkerColor(2);
+     h_MuonIsoSum2_ctau0->SetLineColor(2);
+     h_MuonIsoSum2_ctau0->Draw("HIST same");
    
      TLegend *legend3 = new TLegend(0.7,0.7,0.9,0.9);
      legend3->SetBorderSize(1);
