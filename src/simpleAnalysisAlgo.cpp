@@ -1547,8 +1547,8 @@ void SimpleAnalysis::setupPlots() {
   h_PmuonsDeltaR = new TH1F("h_PmuonsDeltaR", "Two muons #DeltaR",2500, -10., 10.);
   h_PIsoSum1 = new TH1F("h_PIsoSum1", "Leading pion relative isolation", 1000, 0., 5.);
   h_PIsoSum2 = new TH1F("h_PIsoSum2", "Subleading pion relative isolation", 1000, 0., 5.);
-  h_RPIsoSum1 = new TH1F("h_PIsoSum1", "Leading pion relative isolation", 1000, 0., 5.);
-  h_RPIsoSum2 = new TH1F("h_PIsoSum2", "Subleading pion relative isolation", 1000, 0., 5.);
+  h_RPIsoSum1 = new TH1F("h_RPIsoSum1", "Leading pion relative isolation", 1000, 0., 5.);
+  h_RPIsoSum2 = new TH1F("h_RPIsoSum2", "Subleading pion relative isolation", 1000, 0., 5.);
   h_PIso2 = new TH2F("h_PIso2", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.);
   h_PIsoSum3 = new TH1F("h_PIsoSum3", "Leading muon relative isolation", 1000, 0., 50.);
   h_PIsoSum4 = new TH1F("h_PIsoSum4", "Subleading muon relative isolation", 1000, 0., 50.);
