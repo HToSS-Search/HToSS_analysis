@@ -1518,9 +1518,13 @@ void SimpleAnalysis::setupPlots() {
   h_KmuonsDeltaR = new TH1F("h_KmuonsDeltaR", "Two muons #DeltaR",2500, -10., 10.);
   h_KIsoSum1 = new TH1F("h_KIsoSum1", "0.3 p_{T} Cone construction kaon 1", 1000, 0., 5.);
   h_KIsoSum2 = new TH1F("h_KIsoSum2", "0.3 p_{T} Cone construction kaon 2", 1000, 0., 5.);
+  h_RKIsoSum1 = new TH1F("h_RKIsoSum1", "0.3 p_{T} Cone construction kaon 1", 1000, 0., 5.);
+  h_RKIsoSum2 = new TH1F("h_RKIsoSum2", "0.3 p_{T} Cone construction kaon 2", 1000, 0., 5.);
   h_KIso2 = new TH2F("h_KIso2", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.);
   h_MuonIsoSum1 = new TH1F("h_MuonIsoSum1", "0.3 p_{T} Cone construction muon 1", 1000, 0., 5.);
   h_MuonIsoSum2 = new TH1F("h_MuonIsoSum2", "0.3 p_{T} Cone construction muon 2", 1000, 0., 5.);
+  h_RMuonIsoSum1 = new TH1F("h_RMuonIsoSum1", "0.3 p_{T} Cone construction muon 1", 1000, 0., 5.);
+  h_RMuonIsoSum2 = new TH1F("h_RMuonIsoSum2", "0.3 p_{T} Cone construction muon 2", 1000, 0., 5.);
   h_KhadronInvMass = new TH1F("h_KhadronInvMass", "Two hadrons (kaons) - Invariant mass",200, 0., 7.);
   h_KhadronInvMass2 = new TH1F("h_KhadronInvMass2", "Two hadrons (kaons) - Invariant mass, smaller binning",100, 0., 7.);
   h_KmuonsInvMass = new TH1F("h_KmuonsInvMass", "Two muons - Invariant mass",1000, 0., 7.);
@@ -1543,6 +1547,8 @@ void SimpleAnalysis::setupPlots() {
   h_PmuonsDeltaR = new TH1F("h_PmuonsDeltaR", "Two muons #DeltaR",2500, -10., 10.);
   h_PIsoSum1 = new TH1F("h_PIsoSum1", "Leading pion relative isolation", 1000, 0., 5.);
   h_PIsoSum2 = new TH1F("h_PIsoSum2", "Subleading pion relative isolation", 1000, 0., 5.);
+  h_RPIsoSum1 = new TH1F("h_PIsoSum1", "Leading pion relative isolation", 1000, 0., 5.);
+  h_RPIsoSum2 = new TH1F("h_PIsoSum2", "Subleading pion relative isolation", 1000, 0., 5.);
   h_PIso2 = new TH2F("h_PIso2", "Relative isolatium sum vs. particle momentum", 1000, 0.,50.,1000,0.,500.);
   h_PIsoSum3 = new TH1F("h_PIsoSum3", "Leading muon relative isolation", 1000, 0., 50.);
   h_PIsoSum4 = new TH1F("h_PIsoSum4", "Subleading muon relative isolation", 1000, 0., 50.);
@@ -1871,11 +1877,15 @@ void SimpleAnalysis::savePlots() {
   h_KmuonsDeltaR->Write();
   h_KIsoSum1->Write();
   h_KIsoSum2->Write();
+  h_RKIsoSum1->Write();
+  h_RKIsoSum2->Write();
   h_KIso2->GetXaxis()->SetTitle("Relative isolation sum");
   h_KIso2->GetYaxis()->SetTitle("Particle momentum");
   h_KIso2->Write();
   h_MuonIsoSum1->Write();
   h_MuonIsoSum2->Write();
+  h_RMuonIsoSum1->Write();
+  h_RMuonIsoSum2->Write();
   h_KmuonsInvMass->GetXaxis()->SetTitle("GeV");
   h_KmuonsInvMass->Write();
   h_KhadronInvMass->GetXaxis()->SetTitle("GeV");
@@ -1929,6 +1939,14 @@ void SimpleAnalysis::savePlots() {
   h_PIsoSum2->GetYaxis()->SetTitle("Events");
   h_PIsoSum2->GetXaxis()->SetTitle("Rel. iso");
   h_PIsoSum2->Write();
+  h_RPIsoSum1->GetYaxis()->SetTitle("Events");
+  h_RPIsoSum1->GetXaxis()->SetTitle("Rel. iso");
+  h_RPIsoSum1->Write();
+
+  //h_PIsoSum2->SetTitle("Subleading pion relative isolation");
+  h_RPIsoSum2->GetYaxis()->SetTitle("Events");
+  h_RPIsoSum2->GetXaxis()->SetTitle("Rel. iso");
+  h_RPIsoSum2->Write();
   h_PIso2->GetXaxis()->SetTitle("Relative isolation sum");
   h_PIso2->GetYaxis()->SetTitle("Particle momentum");
   h_PIso2->Write();
