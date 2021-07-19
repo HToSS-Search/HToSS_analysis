@@ -821,8 +821,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   
   Int_t muonTrkPairIndex = getMuonTrackPairIndex(event, patMuIndex1, patMuIndex2);
 	
-  Rmm1.SetPtEtaPhiE(event.muonTkPairPF2PATTk1Pt[muonTrkPairIndex],event.muonTkPairPF2PATTk1Eta[muonTrkPairIndex],event.muonTkPairPF2PATTk1Phi[muonTrkPairIndex],std::sqrt(event.chsTkPairTk1P2[muonTrkPairIndex]+std::pow(0.106,2)));
-  Rmm2.SetPtEtaPhiE(event.muonTkPairPF2PATTk2Pt[muonTrkPairIndex],event.muonTkPairPF2PATTk2Eta[muonTrkPairIndex],event.muonTkPairPF2PATTk2Phi[muonTrkPairIndex],std::sqrt(event.chsTkPairTk2P2[muonTrkPairIndex]+std::pow(0.106,2)));
+  Rmm1.SetPtEtaPhiE( event.muonTkPairPF2PATTk1Pt[muonTrkPairIndex], event.muonTkPairPF2PATTk1Eta[muonTrkPairIndex], event.muonTkPairPF2PATTk1Phi[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[muonTrkPairIndex] + std::pow(0.106, 2)) );
+  Rmm2.SetPtEtaPhiE( event.muonTkPairPF2PATTk2Pt[muonTrkPairIndex], event.muonTkPairPF2PATTk2Eta[muonTrkPairIndex], event.muonTkPairPF2PATTk2Phi[muonTrkPairIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[muonTrkPairIndex] + std::pow(0.106, 2)) );
 
 	
   //Isolation
