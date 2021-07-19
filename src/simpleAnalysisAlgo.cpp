@@ -779,14 +779,14 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   TLorentzVector RkaonLVec1; TLorentzVector RkaonLVec2;
   TLorentzVector RpionLVec1; TLorentzVector RpionLVec2;
   TLorentzVector RmuonLVec1; TLorentzVector RmuonLVec2;
-  TLorentzVector R0packedCandLVec; TLorentzVector R1packedCandLVec; TLorentzVector R2packedCandLVec; TLorentzVector R3packedCandLVec; TLorentzVector R4packedCandLVec; TLorentzVector R5packedCandLVec;
+  //TLorentzVector R0packedCandLVec; TLorentzVector R1packedCandLVec; TLorentzVector R2packedCandLVec; TLorentzVector R3packedCandLVec; TLorentzVector R4packedCandLVec; TLorentzVector R5packedCandLVec;
 	
   TLorentzVector scalarLVec{-1,-1,-1,-1}, Kantiscalar{-1,-1,-1,-1}, Pantiscalar{-1,-1,-1,-1};
   TLorentzVector RscalarLVec, RKantiscalar, RPantiscalar;
 	
-  Double_t knentries1; Double_t knentries2; Double_t knentries3; Double_t knentries4;
-  Double_t pnentries1; Double_t pnentries2; Double_t pnentries3; Double_t pnentries4;
-  Double_t mnentries1; Double_t mnentries2; Double_t mnentries3; Double_t mnentries4;
+  //Double_t knentries1; Double_t knentries2; Double_t knentries3; Double_t knentries4;
+  //Double_t pnentries1; Double_t pnentries2; Double_t pnentries3; Double_t pnentries4;
+  //Double_t mnentries1; Double_t mnentries2; Double_t mnentries3; Double_t mnentries4;
   
   Float_t Khiggs{0}, Phiggs{0};     	
 
@@ -827,7 +827,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	
   //Isolation
 	
-  for(Int_t k{0};k<event.numChsTrackPairs;k++){
+  /*for(Int_t k{0};k<event.numChsTrackPairs;k++){
      R0packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk1Pt[k],event.chsTkPairTk1Eta[k],event.chsTkPairTk1Phi[k],std::sqrt(event.chsTkPairTk1P2[k]+std::pow(0.494,2)));
      R1packedCandLVec.SetPtEtaPhiE(event.chsTkPairTk2Pt[k],event.chsTkPairTk2Eta[k],event.chsTkPairTk2Phi[k],std::sqrt(event.chsTkPairTk2P2[k]+std::pow(0.494,2)));
     
@@ -837,7 +837,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   for(Int_t k{0};k<event.numMuonTrackPairsPF2PAT;k++){
      R2packedCandLVec.SetPtEtaPhiE(event.muonTkPairPF2PATTk1Pt[k],event.muonTkPairPF2PATTk1Eta[k],event.muonTkPairPF2PATTk1Phi[k],std::sqrt(event.muonTkPairPF2PATTk1P2[k]+std::pow(0.106,2)));
      R3packedCandLVec.SetPtEtaPhiE(event.muonTkPairPF2PATTk2Pt[k],event.muonTkPairPF2PATTk2Eta[k],event.muonTkPairPF2PATTk2Phi[k],std::sqrt(event.muonTkPairPF2PATTk2P2[k]+std::pow(0.106,2)));
-  }
+  }*/
 	
   for(Int_t k{0};k<event.numPackedCands;k++){
      packedCandLVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k],event.packedCandsPseudoTrkEta[k],event.packedCandsPseudoTrkPhi[k],event.packedCandsE[k]);
@@ -849,11 +849,11 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
        if(pionLVec1.DeltaR(packedCandLVec)<isoConeSize_) PIsoSum1+=event.packedCandsPseudoTrkPt[k];
        if(pionLVec2.DeltaR(packedCandLVec)<isoConeSize_) PIsoSum2+=event.packedCandsPseudoTrkPt[k];
 	     
-       if(RkaonLVec1.DeltaR(R0packedCandLVec)<isoConeSize_) RKIsoSum1+=event.packedCandsPseudoTrkPt[k];
-       if(RkaonLVec2.DeltaR(R1packedCandLVec)<isoConeSize_) RKIsoSum2+=event.packedCandsPseudoTrkPt[k];
+       if(RkaonLVec1.DeltaR(packedCandLVec)<isoConeSize_) RKIsoSum1+=event.packedCandsPseudoTrkPt[k];
+       if(RkaonLVec2.DeltaR(packedCandLVec)<isoConeSize_) RKIsoSum2+=event.packedCandsPseudoTrkPt[k];
 	     
-       if(RpionLVec1.DeltaR(R4packedCandLVec)<isoConeSize_) RPIsoSum1+=event.packedCandsPseudoTrkPt[k];
-       if(RpionLVec2.DeltaR(R5packedCandLVec)<isoConeSize_) RPIsoSum2+=event.packedCandsPseudoTrkPt[k];
+       if(RpionLVec1.DeltaR(packedCandLVec)<isoConeSize_) RPIsoSum1+=event.packedCandsPseudoTrkPt[k];
+       if(RpionLVec2.DeltaR(packedCandLVec)<isoConeSize_) RPIsoSum2+=event.packedCandsPseudoTrkPt[k];
      }  
 	  
      if(k!=muIndex1 && k!=muIndex2){      
@@ -861,8 +861,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
        if(mm2.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum2+=event.packedCandsPseudoTrkPt[k];  
      }
      if(k!=muIndex1 && k!=muIndex2){      
-       if(Rmm1.DeltaR(R2packedCandLVec)<isoConeSize_) RMuonIsoSum1+=event.packedCandsPseudoTrkPt[k];
-       if(Rmm2.DeltaR(R3packedCandLVec)<isoConeSize_) RMuonIsoSum2+=event.packedCandsPseudoTrkPt[k];  
+       if(Rmm1.DeltaR(packedCandLVec)<isoConeSize_) RMuonIsoSum1+=event.packedCandsPseudoTrkPt[k];
+       if(Rmm2.DeltaR(packedCandLVec)<isoConeSize_) RMuonIsoSum2+=event.packedCandsPseudoTrkPt[k];  
      }  
 	 
   }
