@@ -13,11 +13,11 @@
   void LSIso_T() {  
   
      TFile inFile0("ggH_MS2_ctau0.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
-     TH1F* h_PIsoSum2_ctau0    = (TH1F*)inFile0.Get("h_PIsoSum1");
-     TH1F* h_PIsoSum1_ctau0    = (TH1F*)inFile0.Get("h_MuonIsoSum1");
+     TH1F* h_PIsoSum2_ctau0    = (TH1F*)inFile0.Get("h_RPIsoSum1");
+     TH1F* h_PIsoSum1_ctau0    = (TH1F*)inFile0.Get("h_RMuonIsoSum1");
 
-     TH1F* h_MuonIsoSum2_ctau0    = (TH1F*)inFile0.Get("h_PIsoSum2");
-     TH1F* h_MuonIsoSum1_ctau0    = (TH1F*)inFile0.Get("h_MuonIsoSum2");
+     TH1F* h_MuonIsoSum2_ctau0    = (TH1F*)inFile0.Get("h_RPIsoSum2");
+     TH1F* h_MuonIsoSum1_ctau0    = (TH1F*)inFile0.Get("h_RMuonIsoSum2");
      
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_PIsoSum2_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum1");
