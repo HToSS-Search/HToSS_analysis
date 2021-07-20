@@ -29,7 +29,7 @@
      h_higgsInvMass_ctau0->SetTitle("");
      h_higgsInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_higgsInvMass_ctau0->GetXaxis()->SetRangeUser(0,200);  
-     h_higgsInvMass_ctau0->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
+     h_higgsInvMass_ctau0->GetXaxis()->SetTitle("m_{Higgs} (GeV)");
      h_higgsInvMass_ctau0->SetMarkerColor(4);
      h_higgsInvMass_ctau0->SetLineColor(4);
      h_higgsInvMass_ctau0->Draw("HIST");
@@ -37,7 +37,7 @@
      h_higgsInvMass_ctau10->SetTitle("");
      h_higgsInvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_higgsInvMass_ctau10->GetXaxis()->SetRangeUser(0,200); 
-     h_higgsInvMass_ctau10->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2})");
+     h_higgsInvMass_ctau10->GetXaxis()->SetTitle("m_{Higgs} (GeV)");
      h_higgsInvMass_ctau10->SetMarkerColor(3);
      h_higgsInvMass_ctau10->SetLineColor(3);
      h_higgsInvMass_ctau10->Draw("HIST same");
