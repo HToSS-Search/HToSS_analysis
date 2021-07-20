@@ -13,12 +13,12 @@
   void deltaR() {  
   
      TFile inFile0("ggH_MS2_ctau0.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
-     TH1F* h_muon_ctau0    = (TH1F*)inFile0.Get("h_PhadronDeltaR");
+     TH1F* h_muon_ctau0    = (TH1F*)inFile0.Get("h_TestKhiggsDeltaR");
      //TH1F* h_kaon_ctau0    = (TH1F*)inFile0.Get("h_KhadronDeltaR");
      //TH1F* h_pion_ctau0    = (TH1F*)inFile0.Get("h_PhadronDeltaR");
 
      TFile inFile10("ggH_MS2_ctau10.root"); 
-     TH1F* h_muon_ctau10    = (TH1F*)inFile10.Get("h_PhadronDeltaR");
+     TH1F* h_muon_ctau10    = (TH1F*)inFile10.Get("h_TestKhiggsDeltaR");
      //TH1F* h_kaon_ctau10    = (TH1F*)inFile10.Get("h_KhadronDeltaR");
      //TH1F* h_pion_ctau10    = (TH1F*)inFile10.Get("h_PhadronDeltaR");
    
@@ -47,11 +47,11 @@
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_muon_ctau0","c{#tau} = 0 mm","L");
+     TLegendEntry *legenda = legend1->AddEntry("h_muon_ctau0","c#tau = 0 mm","L");
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_muon_ctau10","c{#tau} = 10 mm","L");
+     legenda=legend1->AddEntry("h_muon_ctau10","c#tau = 10 mm","L");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
