@@ -40,8 +40,8 @@
      h_muon_ctau10->GetYaxis()->SetTitle("Events");
      h_muon_ctau10->GetXaxis()->SetRangeUser(0.0,0.2); 
      h_muon_ctau10->GetXaxis()->SetTitle("#Delta R (radians)");
-     h_muon_ctau10->SetMarkerColor(2);
-     h_muon_ctau10->SetLineColor(2);
+     h_muon_ctau10->SetMarkerColor(3);
+     h_muon_ctau10->SetLineColor(3);
      h_muon_ctau10->Draw("HIST same");
   
    
@@ -52,8 +52,8 @@
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
      legenda=legend1->AddEntry("h_muon_ctau10","c_{#tau}=10mm","L");
-     legenda->SetLineColor(2);
-     legenda->SetMarkerColor(2);
+     legenda->SetLineColor(3);
+     legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
      legend1->Draw();
   
@@ -63,6 +63,6 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("dhadron.png"); // .pdf and other formats work too! 
+     canv1->SaveAs("dhadron.pdf"); // .pdf and other formats work too! 
    
   }
