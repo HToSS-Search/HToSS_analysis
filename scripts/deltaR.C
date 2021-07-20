@@ -30,7 +30,7 @@
    
      h_muon_ctau0->SetTitle("");
      h_muon_ctau0->GetYaxis()->SetTitle("Events");
-     h_muon_ctau0->GetXaxis()->SetRangeUser(0.0,0.2); 
+     h_muon_ctau0->GetXaxis()->SetRangeUser(0.0,4); 
      h_muon_ctau0->GetXaxis()->SetTitle("#Delta R (radians)");
      h_muon_ctau0->SetMarkerColor(4);
      h_muon_ctau0->SetLineColor(4);
@@ -38,7 +38,7 @@
      
      h_muon_ctau10->SetTitle("");
      h_muon_ctau10->GetYaxis()->SetTitle("Events");
-     h_muon_ctau10->GetXaxis()->SetRangeUser(0.0,0.2); 
+     h_muon_ctau10->GetXaxis()->SetRangeUser(0.0,4); 
      h_muon_ctau10->GetXaxis()->SetTitle("#Delta R (radians)");
      h_muon_ctau10->SetMarkerColor(3);
      h_muon_ctau10->SetLineColor(3);
