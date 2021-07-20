@@ -938,6 +938,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
   if(scalarLVec[0]!=-1 && scalarLVec[1]!=-1 && scalarLVec[2]!=-1 && scalarLVec[3]!=-1 && Kantiscalar[0]!=-1 && Kantiscalar[1]!=-1 && Kantiscalar[2]!=-1 && Kantiscalar[3]!=-1){
   h_TestKhiggsInvMass->Fill((Kantiscalar+scalarLVec).M(), eventWeight);
+  h_TestKhiggsDeltaR->Fill(Kantiscalar.DeltaR(scalarLVec),eventWeight);
   }
 
   if(scalarLVec[0]!=-1 && scalarLVec[1]!=-1 && scalarLVec[2]!=-1 && scalarLVec[3]!=-1 && Pantiscalar[0]!=-1 && Pantiscalar[1]!=-1 && Pantiscalar[2]!=-1 && Pantiscalar[3]!=-1 && Kantiscalar[0]!=-1 && Kantiscalar[1]!=-1 && Kantiscalar[2]!=-1 && Kantiscalar[3]!=-1){
@@ -1552,6 +1553,7 @@ void SimpleAnalysis::setupPlots() {
   h_TestscalarInvMass = new TH1F("h_TestscalarInvMass", "Dimuon invariant mass", 200, 0.,5.);
   h_TestPhiggsInvMass = new TH1F("h_TestPhiggsInvMass", "Higgs invariant mass (pion)", 500, 0.,200.);
   h_TestKhiggsInvMass = new TH1F("h_TestKhiggsInvMass", "Higgs invariant mass (kaon)", 500, 0.,200.);
+  h_TestKhiggsDeltaR = new TH1F("h_TestKhiggsDeltaR", "Higgs invariant mass (kaon)", 2500, -10., 10.);
   h_RTestPantiscalarInvMass = new TH1F("h_RTestPantiscalarInvMass", "Dihadron (pion) invariant mass", 200, 0.,5.);
   h_RTestKantiscalarInvMass = new TH1F("h_RTestKantiscalarInvMass", "Dihadron (kaon) invariant mass", 200, 0.,5.);
   h_RTestscalarInvMass = new TH1F("h_RTestscalarInvMass", "Dimuon invariant mass", 200, 0.,5.);
@@ -1889,6 +1891,7 @@ void SimpleAnalysis::savePlots() {
   h_TestKantiscalarInvMass->Write();
   h_TestKhiggsInvMass->GetXaxis()->SetTitle("GeV");
   h_TestKhiggsInvMass->Write();
+  h_TestKhiggsDeltaR->Write();
   h_RTestKantiscalarInvMass->GetXaxis()->SetTitle("GeV");
   h_RTestKantiscalarInvMass->Write();
   h_RTestKhiggsInvMass->GetXaxis()->SetTitle("GeV");
