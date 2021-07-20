@@ -18,14 +18,14 @@
      gStyle->SetOptStat(0);
    
      h_higgsassump->SetTitle("");
-     h_higgsassump->GetXaxis()->SetTitle("m_{Higgs} (GeV/c^{2}) - Pion assumption"); // set a title for the x-axis
+     h_higgsassump->GetXaxis()->SetTitle("m_{Higgs} (GeV) - Pion assumption"); // set a title for the x-axis
      h_higgsassump->GetXaxis()->SetRangeUser(100., 150.); // change the x-axis range to 0-200
-     h_higgsassump->GetYaxis()->SetTitle("m_{Higgs} (GeV/c^{2}) - Kaon assumption"); 
+     h_higgsassump->GetYaxis()->SetTitle("m_{Higgs} (GeV) - Kaon assumption"); 
      h_higgsassump->GetYaxis()->SetRangeUser(100., 150.); //
  
      h_higgsassump->Draw("colz"); // draw histo on canvas
      canv2->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv2->SaveAs("h_higgsassump.png"); 
+     canv2->SaveAs("h_higgsassump.pdf"); 
      }
