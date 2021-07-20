@@ -29,7 +29,7 @@
      h_scalarInvMass_ctau0->SetTitle("");
      h_scalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_scalarInvMass_ctau0->GetXaxis()->SetRangeUser(0,3);  
-     h_scalarInvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_scalarInvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
      h_scalarInvMass_ctau0->SetMarkerColor(4);
      h_scalarInvMass_ctau0->SetLineColor(4);
      h_scalarInvMass_ctau0->Draw("HIST");
@@ -37,7 +37,7 @@
      h_scalarInvMass_ctau10->SetTitle("");
      h_scalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_scalarInvMass_ctau10->GetXaxis()->SetRangeUser(0,3); 
-     h_scalarInvMass_ctau10->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_scalarInvMass_ctau10->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
      h_scalarInvMass_ctau10->SetMarkerColor(3);
      h_scalarInvMass_ctau10->SetLineColor(3);
      h_scalarInvMass_ctau10->Draw("HIST same");
