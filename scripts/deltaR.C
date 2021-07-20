@@ -30,7 +30,7 @@
    
      h_muon_ctau0->SetTitle("");
      h_muon_ctau0->GetYaxis()->SetTitle("Events");
-     h_muon_ctau0->GetXaxis()->SetRangeUser(0.5,4); 
+     h_muon_ctau0->GetXaxis()->SetRangeUser(0.5,4.5); 
      h_muon_ctau0->GetXaxis()->SetTitle("#Delta R (radians)");
      h_muon_ctau0->SetMarkerColor(4);
      h_muon_ctau0->SetLineColor(4);
@@ -38,14 +38,14 @@
      
      h_muon_ctau10->SetTitle("");
      h_muon_ctau10->GetYaxis()->SetTitle("Events");
-     h_muon_ctau10->GetXaxis()->SetRangeUser(0.5,4); 
+     h_muon_ctau10->GetXaxis()->SetRangeUser(0.5,4.5); 
      h_muon_ctau10->GetXaxis()->SetTitle("#Delta R (radians)");
      h_muon_ctau10->SetMarkerColor(3);
      h_muon_ctau10->SetLineColor(3);
      h_muon_ctau10->Draw("HIST same");
   
    
-     TLegend *legend1 = new TLegend(0.,0.7,0.2,0.9);
+     TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
      TLegendEntry *legenda = legend1->AddEntry("h_muon_ctau0","c#tau = 0 mm","L");
      legenda->SetLineColor(4);
