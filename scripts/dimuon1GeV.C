@@ -44,11 +44,11 @@
     
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_scalarInvMass_ctau0","c_{#tau}=0mm","L");
+     TLegendEntry *legenda = legend1->AddEntry("h_scalarInvMass_ctau0","c#tau = 0 mm","L");
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_scalarInvMass_ctau10","c_{#tau}=10mm","L");
+     legenda=legend1->AddEntry("h_scalarInvMass_ctau10","c#tau = 10 mm","L");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
@@ -61,6 +61,6 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("h_dimuon1GeV.png"); // .pdf and other formats work too! 
+     canv1->SaveAs("h_dimuon1GeV.pdf"); // .pdf and other formats work too! 
    
   }
