@@ -45,7 +45,7 @@
      h_muon_ctau10->Draw("HIST same");
   
    
-     TLegend *legend1 = new TLegend(0.7,0.,0.2,0.9);
+     TLegend *legend1 = new TLegend(0.,0.7,0.2,0.9);
      legend1->SetBorderSize(1);
      TLegendEntry *legenda = legend1->AddEntry("h_muon_ctau0","c#tau = 0 mm","L");
      legenda->SetLineColor(4);
