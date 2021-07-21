@@ -109,7 +109,7 @@
      canv3->Modified();
      canv3->cd();
      canv3->SetSelected(canv3);
-     canv3->DrawNormalized(); // draw canvas!
+     canv3->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
      canv3->SaveAs("h_SIso.pdf"); // .pdf and other formats work too! 
