@@ -250,14 +250,12 @@ void SimpleAnalysis::runMainAnalysis() {
     std::cout<<"Background estimate: "<<Nbg<<std::endl;
     std::cout<<"Sideband left: "<<Nbg1<<std::endl; std::cout<<"Sideband right: "<<Nbg2<<std::endl;
     std::cout<<"Observation: "<<Obs<<std::endl;
-    std::cout<<"   "<<std::endl;
     std::cout<<"Rate: "<<rate_signal<<std::endl;
     std::cout<<"Statistical uncertainty: "<<stat_signal<<std::endl;
-	  
+    std::cout<<"   "<<std::endl;  
     std::cout<<"Refitted background estimate: "<<RNbg<<std::endl;
     std::cout<<"Refitted sideband left: "<<RNbg1<<std::endl; std::cout<<"Refitted sideband right: "<<RNbg2<<std::endl;
     std::cout<<"Refitted observation: "<<RObs<<std::endl;
-    std::cout<<"   "<<std::endl;
     std::cout<<"Refitted rate: "<<Rrate_signal<<std::endl;
     std::cout<<"Refitted statistical uncertainty: "<<Rstat_signal<<std::endl;
 	  
