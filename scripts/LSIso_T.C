@@ -35,7 +35,7 @@
      h_PIsoSum1_ctau0->SetTitle("");
      h_PIsoSum1_ctau0->GetYaxis()->SetTitle("Events");
      h_PIsoSum1_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
-     h_PIsoSum1_ctau0->GetYaxis()->SetRangeUser(0.1, 1.); 
+     //h_PIsoSum1_ctau0->GetYaxis()->SetRangeUser(0.1, 1.); 
      h_PIsoSum1_ctau0->GetXaxis()->SetTitle("Relative isolation");
      h_PIsoSum1_ctau0->SetMarkerColor(4);
      h_PIsoSum1_ctau0->SetLineColor(4);
@@ -80,7 +80,7 @@
      h_MuonIsoSum1_ctau0->SetTitle("");
      h_MuonIsoSum1_ctau0->GetYaxis()->SetTitle("Events");
      h_MuonIsoSum1_ctau0->GetXaxis()->SetRangeUser(0.0, 2.); 
-     h_MuonIsoSum1_ctau0->GetYaxis()->SetRangeUser(0.1, 1.); 
+     //h_MuonIsoSum1_ctau0->GetYaxis()->SetRangeUser(0.1, 1.); 
      h_MuonIsoSum1_ctau0->GetXaxis()->SetTitle("Relative isolation");
      h_MuonIsoSum1_ctau0->SetMarkerColor(4);
      h_MuonIsoSum1_ctau0->SetLineColor(4);
