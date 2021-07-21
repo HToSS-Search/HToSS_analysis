@@ -70,7 +70,7 @@ combine datacard_2GeV_10mm_refit.txt -M HybridNew -H ProfileLikelihood --frequen
 
 Expected (median) limit:
 ```
-combine datacard_2GeV_10mm_kaon.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.5 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
+combine datacard_2GeV_10mm_refit.txt -M HybridNew -H ProfileLikelihood --frequentist --testStat LHC --expectedFromGrid=0.5 --fork 4  -T 5000 --rAbsAcc=0.01 --name output_name
 ```
 
 Upper 1 sigma band
