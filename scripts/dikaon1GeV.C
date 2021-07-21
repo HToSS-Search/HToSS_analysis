@@ -28,27 +28,27 @@
      //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
      h_antiscalarInvMass_ctau0->SetTitle("");
      h_antiscalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
-     h_antiscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0,5);  
-     h_antiscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{KK} (GeV/c^{2})");
+     h_antiscalarInvMass_ctau0->GetXaxis()->SetRangeUser(0,3);  
+     h_antiscalarInvMass_ctau0->GetXaxis()->SetTitle("m_{KK} (GeV)");
      h_antiscalarInvMass_ctau0->SetMarkerColor(4);
      h_antiscalarInvMass_ctau0->SetLineColor(4);
      h_antiscalarInvMass_ctau0->Draw("HIST");
  
      h_antiscalarInvMass_ctau10->SetTitle("");
      h_antiscalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
-     h_antiscalarInvMass_ctau10->GetXaxis()->SetRangeUser(0,5); 
-     h_antiscalarInvMass_ctau10->GetXaxis()->SetTitle("m_{KK} (GeV/c^{2})");
+     h_antiscalarInvMass_ctau10->GetXaxis()->SetRangeUser(0,3); 
+     h_antiscalarInvMass_ctau10->GetXaxis()->SetTitle("m_{KK} (GeV)");
      h_antiscalarInvMass_ctau10->SetMarkerColor(3);
      h_antiscalarInvMass_ctau10->SetLineColor(3);
      h_antiscalarInvMass_ctau10->Draw("HIST same");
     
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_antiscalarInvMass_ctau0","c_{#tau}=0mm","L");
+     TLegendEntry *legenda = legend1->AddEntry("h_antiscalarInvMass_ctau0","c#tau = 0 mm","L");
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_antiscalarInvMass_ctau10","c_{#tau}=10mm","L");
+     legenda=legend1->AddEntry("h_antiscalarInvMass_ctau10","c#tau = 10 mm","L");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
@@ -61,6 +61,6 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("h_dikaon1GeV.png"); // .pdf and other formats work too! 
+     canv1->SaveAs("h_dikaon1GeV.pdf"); // .pdf and other formats work too! 
    
   }
