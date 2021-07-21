@@ -8,7 +8,7 @@ Observed limit: r < 0.451296 +/- 0.00222214
 Expected (median) limit: r < 0.290669 +/- 0.00383532
 Upper 1 sigma band: r < 0.425631 +/- 0.00277501 , max:  , mid:  +/- 
 Lower 1 sigma band: r < 0.214292 +/- 0.00255069 , min:
-Upper 2 sigma band:  , max: , mid: +/- 
+Upper 2 sigma band: r < 0.570717 +/- 0.00290443 , max: , mid: +/- 
 Lower 2 sigma band:  , min: WAIT
 
 --  GeV --
