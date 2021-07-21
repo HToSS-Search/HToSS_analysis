@@ -29,9 +29,9 @@ Lower 2 sigma band:  , min: WAIT
 
 Observed limit: r < 0.190567 +/- 0.00582153
 Expected (median) limit: r < 0.25792 +/- 0.00472066
-Upper 1 sigma band:  , max:  , mid:  +/- 
-Lower 1 sigma band:  , min: 
-Upper 2 sigma band:  , max:  , mid: +/-
+Upper 1 sigma band: r < 0.369242 +/- 0.00230242 , max:  , mid:  +/- 
+Lower 1 sigma band: r < 0.189948 +/- 0.00753123 , min: 
+Upper 2 sigma band: r < 0.515345 +/- 0.00377524 , max:  , mid: +/-
 Lower 2 sigma band:  , min: WAIT
 
 
@@ -39,10 +39,10 @@ Lower 2 sigma band:  , min: WAIT
 
 100 mm
 
-Observed limit: 
-Expected (median) limit: 
-Upper 1 sigma band:  , max: , mid:  +/- 
-Lower 1 sigma band: r < 24.2428 +/- 0.333776 , min: 23.909024
-Upper 2 sigma band: r < 64.3906 +/- 0.366235 , max: 64.756835 , mid: 41.6272825  +/- 23.1295525
+Observed limit: r < 12.4642 +/- 0.194525 
+Expected (median) limit: r < 16.8171 +/- 0.15008
+Upper 1 sigma band: r < 25.7292 +/- 0.461637 , max: , mid:  +/- 
+Lower 1 sigma band:  , min: 
+Upper 2 sigma band:  , max:  , mid:   +/- 
 Lower 2 sigma band: , min: WAIT
 
