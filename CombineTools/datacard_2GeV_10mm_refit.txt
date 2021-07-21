@@ -19,4 +19,4 @@ trigger_QCD    lnN    -                                       1.025
 rate_sig       lnN    1.0838         	       	       	      -
 rate_bkg       lnN    -                                       1.026603942
 stat_unc_sig   lnN    1.031053505                             -            
-stat_unc_bkg   lnN    -                                       1.018811828
+stat_unc_bkg   lnN    -                                       1.026603942
