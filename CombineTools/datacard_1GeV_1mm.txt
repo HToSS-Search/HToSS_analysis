@@ -11,12 +11,12 @@ observation    3
 bin                   a                                       a             
 process               signal                                  QCD           
 process               0                                       1             
-rate                  9.86776                                 6.22222                                 
+rate                  12.1538                                 6.22222                                 
 ----------------------------------------
 lumi           lnN    1.025                                   -             
 trigger_sig    lnN    1.025                                   -             
 trigger_QCD    lnN    -                                       1.025         
 rate_sig       lnN    1.0838         	       	       	      -
 rate_bkg       lnN    -                                       1.012344444
-stat_unc_sig   lnN    1.011741166                             -            
+stat_unc_sig   lnN    1.010579197                             -            
 stat_unc_bkg   lnN    -                                       1.023581874
