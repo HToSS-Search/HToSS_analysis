@@ -39,7 +39,7 @@
      h_PIsoSum1_ctau0->GetXaxis()->SetTitle("Relative isolation");
      h_PIsoSum1_ctau0->SetMarkerColor(4);
      h_PIsoSum1_ctau0->SetLineColor(4);
-     h_PIsoSum1_ctau0->Draw("HIST");
+     h_PIsoSum1_ctau0->DrawNormalized("HIST");
  
      h_PIsoSum2_ctau0->SetTitle("");
      h_PIsoSum2_ctau0->GetYaxis()->SetTitle("Events");
@@ -47,7 +47,7 @@
      h_PIsoSum2_ctau0->GetXaxis()->SetTitle("Relative isolation");
      h_PIsoSum2_ctau0->SetMarkerColor(2);
      h_PIsoSum2_ctau0->SetLineColor(2);
-     h_PIsoSum2_ctau0->Draw("HIST same");
+     h_PIsoSum2_ctau0->DrawNormalized("HIST same");
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
@@ -64,7 +64,7 @@
      canv1->Modified();
      canv1->cd();
      canv1->SetSelected(canv1);
-     canv1->DrawNormalized(); // draw canvas!
+     canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
      canv1->SaveAs("h_LIso.pdf"); // .pdf and other formats work too! 
@@ -84,7 +84,7 @@
      h_MuonIsoSum1_ctau0->GetXaxis()->SetTitle("Relative isolation");
      h_MuonIsoSum1_ctau0->SetMarkerColor(4);
      h_MuonIsoSum1_ctau0->SetLineColor(4);
-     h_MuonIsoSum1_ctau0->Draw("HIST");
+     h_MuonIsoSum1_ctau0->DrawNormalized("HIST");
      
      h_MuonIsoSum2_ctau0->SetTitle("");
      h_MuonIsoSum2_ctau0->GetYaxis()->SetTitle("Events");
@@ -92,7 +92,7 @@
      h_MuonIsoSum2_ctau0->GetXaxis()->SetTitle("Relative isolation");
      h_MuonIsoSum2_ctau0->SetMarkerColor(2);
      h_MuonIsoSum2_ctau0->SetLineColor(2);
-     h_MuonIsoSum2_ctau0->Draw("HIST same");
+     h_MuonIsoSum2_ctau0->DrawNormalized("HIST same");
    
      TLegend *legend3 = new TLegend(0.7,0.7,0.9,0.9);
      legend3->SetBorderSize(1);
