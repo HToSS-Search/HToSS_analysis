@@ -39,7 +39,7 @@
      h_PIsoSum1_ctau0->GetXaxis()->SetTitle("Relative isolation");
      h_PIsoSum1_ctau0->SetMarkerColor(4);
      h_PIsoSum1_ctau0->SetLineColor(4);
-     h_PIsoSum1_ctau0->DrawNormalized("HIST");
+     h_PIsoSum1_ctau0->DrawNormalized("HIST",1);
  
      h_PIsoSum2_ctau0->SetTitle("");
      h_PIsoSum2_ctau0->GetYaxis()->SetTitle("Events");
@@ -47,7 +47,7 @@
      h_PIsoSum2_ctau0->GetXaxis()->SetTitle("Relative isolation");
      h_PIsoSum2_ctau0->SetMarkerColor(2);
      h_PIsoSum2_ctau0->SetLineColor(2);
-     h_PIsoSum2_ctau0->DrawNormalized("HIST same");
+     h_PIsoSum2_ctau0->DrawNormalized("HIST same",1);
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
@@ -84,7 +84,7 @@
      h_MuonIsoSum1_ctau0->GetXaxis()->SetTitle("Relative isolation");
      h_MuonIsoSum1_ctau0->SetMarkerColor(4);
      h_MuonIsoSum1_ctau0->SetLineColor(4);
-     h_MuonIsoSum1_ctau0->DrawNormalized("HIST");
+     h_MuonIsoSum1_ctau0->DrawNormalized("HIST",1);
      
      h_MuonIsoSum2_ctau0->SetTitle("");
      h_MuonIsoSum2_ctau0->GetYaxis()->SetTitle("Events");
@@ -92,7 +92,7 @@
      h_MuonIsoSum2_ctau0->GetXaxis()->SetTitle("Relative isolation");
      h_MuonIsoSum2_ctau0->SetMarkerColor(2);
      h_MuonIsoSum2_ctau0->SetLineColor(2);
-     h_MuonIsoSum2_ctau0->DrawNormalized("HIST same");
+     h_MuonIsoSum2_ctau0->DrawNormalized("HIST same",1);
    
      TLegend *legend3 = new TLegend(0.7,0.7,0.9,0.9);
      legend3->SetBorderSize(1);
