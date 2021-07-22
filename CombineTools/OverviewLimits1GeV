@@ -37,9 +37,9 @@ Lower 2 sigma band:  , min: WAIT
 
 100 mm
 
-Observed limit: 
-Expected (median) limit: 
-Upper 1 sigma band:  , max:  , mid: +/- 
-Lower 1 sigma band:  , min: 
-Upper 2 sigma band:  , max: , mid: +/- 
+Observed limit: r < 2085.78 +/- 21.7003
+Expected (median) limit: r < 1533.93 +/- 19.1064
+Upper 1 sigma band: r < 2500.05 +/- 21.3943 , max:  , mid: +/- 
+Lower 1 sigma band: r < 1047.94 +/- 14.4866 , min: 
+Upper 2 sigma band: r < 4177.27 +/- 28.628 , max: , mid: +/- 
 Lower 2 sigma band:  , min: WAIT
