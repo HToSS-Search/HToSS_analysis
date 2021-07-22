@@ -5,7 +5,7 @@ All @ 95% CL
 0 mm
 
 Observed limit:  r < 0.431207 +/- 0.00336207
-Expected (median) limit: 
+Expected (median) limit: r < 0.322327 +/- 0.0037339
 Upper 1 sigma band:  , max:  , mid:  +/- 
 Lower 1 sigma band:  , min:
 Upper 2 sigma band:  , max:   , mid:  +/- 
@@ -17,7 +17,7 @@ Lower 2 sigma band:  , min: WAIT
 
 Observed limit: 
 Expected (median) limit: 
-Upper 1 sigma band: r < 1.42548 +/- 0.0111262 , max:  , mid:  +/- 
+Upper 1 sigma band:  , max:  , mid:  +/- 
 Lower 1 sigma band: r < 0.736313 +/- 0.0114989  , min: 
 Upper 2 sigma band: r < 1.96828 +/- 0.0107148 , max:  , mid:  +/- 
 Lower 2 sigma band: , min: WAIT
