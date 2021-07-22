@@ -4,19 +4,19 @@ All @ 95% CL
 
 0 mm
 
-Observed limit: r < 0.70191 +/- 0.00518932
-Expected (median) limit: r < 0.640295 +/- 0.00563871
-Upper 1 sigma band: r < 0.900897 +/- 0.00715519 , max:  , mid:  +/- 
-Lower 1 sigma band: r < 0.460422 +/- 0.00604063 , min:
-Upper 2 sigma band: r < 1.2578 +/- 0.0072238 , max:   , mid:  +/- 
+Observed limit:  r < 0.431207 +/- 0.00336207
+Expected (median) limit: 
+Upper 1 sigma band:  , max:  , mid:  +/- 
+Lower 1 sigma band:  , min:
+Upper 2 sigma band:  , max:   , mid:  +/- 
 Lower 2 sigma band:  , min: WAIT
 
 -- 1 GeV --
 
 1 mm
 
-Observed limit: r < 1.10816 +/- 0.00698422
-Expected (median) limit: r < 0.984329 +/- 0.0128735
+Observed limit: 
+Expected (median) limit: 
 Upper 1 sigma band: r < 1.42548 +/- 0.0111262 , max:  , mid:  +/- 
 Lower 1 sigma band: r < 0.736313 +/- 0.0114989  , min: 
 Upper 2 sigma band: r < 1.96828 +/- 0.0107148 , max:  , mid:  +/- 
