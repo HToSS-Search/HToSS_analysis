@@ -43,6 +43,6 @@ Observed limit: r < 12.4642 +/- 0.194525
 Expected (median) limit: r < 16.8171 +/- 0.15008
 Upper 1 sigma band: r < 25.7292 +/- 0.461637 , max: 26.19057 , mid: 18.728544  +/- 7.462026
 Lower 1 sigma band: r < 11.4452 +/- 0.178682 , min: 11.266518
-Upper 2 sigma band: r < 37.2154 +/- 1.39228 , max: 38.60768 , mid:   +/- 
-Lower 2 sigma band: , min: WAIT
+Upper 2 sigma band: r < 37.2154 +/- 1.39228 , max: 38.60768 , mid: 23.5839075  +/- 15.0237725
+Lower 2 sigma band: r < 8.70134 +/- 0.141205 , min: 
 
