@@ -9,7 +9,7 @@ Expected (median) limit: r < 0.290669 +/- 0.00383532
 Upper 1 sigma band: r < 0.425631 +/- 0.00277501 , max: 0.424840601 , mid: 0.32007366 +/- 0.10833235
 Lower 1 sigma band: r < 0.214292 +/- 0.00255069 , min: 0.21174131
 Upper 2 sigma band: r < 0.570717 +/- 0.00290443 , max: 0.57362143 , mid: +/- 
-Lower 2 sigma band:  , min: WAIT
+Lower 2 sigma band: r < 0.167413 +/- 0.00273505 , min: 
 
 --  GeV --
 
