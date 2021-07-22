@@ -27,12 +27,12 @@ Lower 2 sigma band:  , min: WAIT
 
 10 mm
 
-Observed limit: 
-Expected (median) limit: 
-Upper 1 sigma band: , max:  , mid:  +/- 
+Observed limit: r < 9.46314 +/- 0.0736864
+Expected (median) limit: r < 6.13231 +/- 0.0565202
+Upper 1 sigma band: r < 8.77718 +/- 0.0541623 , max:  , mid:  +/- 
 Lower 1 sigma band:  , min:
 Upper 2 sigma band:  , max: , mid: +/- 
-Lower 2 sigma band:  , min: 
+Lower 2 sigma band:  , min: WAIT
 
 
 --  GeV --
@@ -44,4 +44,4 @@ Expected (median) limit:
 Upper 1 sigma band: , max:  , mid:  +/- 
 Lower 1 sigma band:  , min:
 Upper 2 sigma band:  , max: , mid: +/- 
-Lower 2 sigma band:  , min: 
+Lower 2 sigma band:  , min: WAIT
