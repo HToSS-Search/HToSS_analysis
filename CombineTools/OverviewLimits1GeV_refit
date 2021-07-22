@@ -8,7 +8,7 @@ Observed limit: r < 0.451296 +/- 0.00222214
 Expected (median) limit: r < 0.290669 +/- 0.00383532
 Upper 1 sigma band: r < 0.425631 +/- 0.00277501 , max: 0.424840601 , mid: 0.32007366 +/- 0.10833235
 Lower 1 sigma band: r < 0.214292 +/- 0.00255069 , min: 0.21174131
-Upper 2 sigma band: r < 0.570717 +/- 0.00290443 , max: 0.57362143 , mid: +/- 
+Upper 2 sigma band: r < 0.570717 +/- 0.00290443 , max: 0.57362143 , mid: 0.36914969 +/- 0.20447174
 Lower 2 sigma band: r < 0.167413 +/- 0.00273505 , min: 
 
 --  GeV --
@@ -19,7 +19,7 @@ Observed limit: r < 0.691491 +/- 0.00349611
 Expected (median) limit: r < 0.447104 +/- 0.00314323
 Upper 1 sigma band: r < 0.650014 +/- 0.00434613 , max:  , mid: 0.491028305 +/- 0.163331825
 Lower 1 sigma band: r < 0.33145 +/- 0.00375352 , min:
-Upper 2 sigma band: r < 0.885857 +/- 0.00468005 , max: 0.890537050 , mid: +/- 
+Upper 2 sigma band: r < 0.885857 +/- 0.00468005 , max: 0.890537050 , mid: 0.57027018 +/- 0.32026687
 Lower 2 sigma band: r < 0.25779 +/- 0.00778669 , min: 
 
 
@@ -31,7 +31,7 @@ Observed limit: r < 9.46314 +/- 0.0736864
 Expected (median) limit: r < 6.13231 +/- 0.0565202
 Upper 1 sigma band: r < 8.77718 +/- 0.0541623 , max:  , mid: 6.64135465 +/- 2.18998765
 Lower 1 sigma band: r < 4.54419 +/- 0.092823 , min:
-Upper 2 sigma band: r < 12.2047 +/- 0.0766319 , max: 12.2813319 , mid: +/- 
+Upper 2 sigma band: r < 12.2047 +/- 0.0766319 , max: 12.2813319 , mid: 7.8853045 +/- 4.3960274
 Lower 2 sigma band: r < 3.55356 +/- 0.0642829 , min: 
 
 
@@ -43,5 +43,5 @@ Observed limit: r < 765.758 +/- 5.25539
 Expected (median) limit: r < 472.324 +/- 4.7324
 Upper 1 sigma band: r < 709.971 +/- 5.68629 , max:  , mid: 531.104785  +/- 184.552505
 Lower 1 sigma band: r < 353.045 +/- 6.49272 , min:
-Upper 2 sigma band: r < 1116.48 +/- 50.9067 , max: 1167.3867 , mid: +/- 
+Upper 2 sigma band: r < 1116.48 +/- 50.9067 , max: 1167.3867 , mid: 722.461315 +/- 444.925385
 Lower 2 sigma band: r < 281.273 +/- 3.73707 , min: 
