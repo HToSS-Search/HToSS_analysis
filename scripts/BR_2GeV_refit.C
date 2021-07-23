@@ -76,7 +76,7 @@
      sigma3->SetFillColor(14);
      sigma3->SetFillStyle(3244);
      sigma3->SetTitle(" ");
-     sigma3->GetYaxis()->SetRangeUser(0,120);
+     //sigma3->GetYaxis()->SetRangeUser(0,120);
      sigma3->Draw("3 same");
    
      TLine *l2=new TLine(0,1,100,1);
