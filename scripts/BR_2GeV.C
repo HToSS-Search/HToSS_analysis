@@ -67,6 +67,24 @@
      l->SetLineStyle(1);
      l->SetLineWidth(2);
      l->Draw("same");
+   
+     //unphysical area
+     double y5[4] = {60.5,60.5,60.5,60.5}; 
+     double ex5[4] = {0., 0., 0., 0.};
+     double ey5[4] = {59.5,59.5,59.5,59.5};
+     auto sigma3 = new TGraphErrors(4, x1, y5, ex5, ey5);
+     sigma3->SetFillColor(14);
+     sigma3->SetFillStyle(3244);
+     sigma3->SetTitle(" ");
+     //sigma3->GetYaxis()->SetRangeUser(0,120);
+     sigma3->Draw("3 same");
+   
+     TLine *l2=new TLine(0,1,100,1);
+     l2->SetLineColor(14);
+     l2->SetLineStyle(1);
+     l2->SetLineWidth(1);
+     //l2->GetYaxis()->SetRangeUser(0,195585);
+     l2->Draw("same");
      
      TLegend *legend1 = new TLegend(0.1,0.7,0.3,0.9);
      legend1->SetBorderSize(1);
@@ -85,6 +103,13 @@
      legenda->SetFillColor(5);
      legenda->SetFillStyle(3001);
      legenda->SetMarkerColor(5);
+     legenda=legend1->AddEntry("l","Constraint BSM","L");
+     legenda->SetLineWidth(2);
+     legenda->SetLineColor(2);
+     legenda=legend1->AddEntry("l2","Unphysical area","F");
+     legenda->SetFillColor(14);
+     legenda->SetFillStyle(3244);
+     legenda->SetMarkerColor(14);
      legend1->Draw();
    
      canv1->Modified();
