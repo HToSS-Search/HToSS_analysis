@@ -11,7 +11,7 @@
  #include "TPRegexp.h"
  #include "TAttLine.h"
 
-  void BR_2GeV_kaon() {  
+  void BR_2GeV_refit() {  
   
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      canv1->SetGrid();
@@ -20,9 +20,9 @@
      double x1[4] = {0, 1, 10, 100};
     
      //2 sigma band
-     double y3[4] = {0.278155849372385,0.336421174058577,1.94691547029289,76.6360012552301}; 
+     double y3[4] = {0.0999721606694561,0.107075923849372,0.609330364016737,43.4180723849372}; 
      double ex3[4] = {0., 0., 0., 0.};
-     double ey3[4] = {0.155959730543933,0.184943110460251,1.09103411631799,42.5816029288703};
+     double ey3[4] = {0.0616906528870293,0.0598650726359833,0.346372169874477,27.6588280334728};
      auto sigma2 = new TGraphErrors(4, x1, y3, ex3, ey3);
      sigma2->SetFillColor(5);
      sigma2->SetFillStyle(3001);
@@ -33,18 +33,18 @@
      sigma2->Draw("a3");
      
      //1 sigma band
-     double y4[4] = {0.239683122008368,0.287853802845188,1.66987641087866,65.2315096234310};
+     double y4[4] = {0.0753267205020921,0.0924090853556486,0.509922434309624,34.4793278661088};
      double ex4[4] = {0., 0., 0., 0.};
-     double ey4[4] = {0.0787887454393306,0.0946232187447699,0.558110203347280,22.6499066945607};
+     double ey4[4] = {0.0302175707112971,0.0370679841004184,0.174092397489540,13.7376210878661};
      auto sigma1 = new TGraphErrors(4, x1, y4, ex4, ey4);
      sigma1->SetFillColor(8);
      sigma1->SetFillStyle(3001);
      sigma1->Draw("3 same");
    
      //observed
-     double y1[4] = {0.199310794979080,0.239369205020921,1.40171481171548,55.2722845188285}; //value
+     double y1[4] = {0.0557526025104603,0.0683938577405858,0.350834644351464,22.9466443514644}; //value
      double ex1[4] = {0., 0., 0., 0.};
-     double ey1[4] = {0.00188058577405858,0.00225854393305439,0.0114651849372385,0.645030794979080}; //error
+     double ey1[4] = {0.0115223481171548,0.0141348987447699,0.0107174610878661,0.358121338912134}; //error
      auto obs = new TGraphErrors(4, x1, y1, ex1, ey1);
      obs->SetMarkerColor(4); //blue
      obs->SetMarkerStyle(21); //square
@@ -52,9 +52,9 @@
      obs->Draw("lp same");
    
      //expected (median)
-     double y2[4] = {0.223566025104603,0.262930376569038,1.53353439330544,61.3234811715481}; //value
+     double y2[4] = {0.0715835815899582,0.0878705774058578,0.474831799163180,30.9603514644352}; //value
      double ex2[4] = {0., 0., 0., 0.};
-     double ey2[4] = {0.0174364635983264,0.00234834811715481,0.0136966292887029,0.528800836820084}; //error
+     double ey2[4] = {0.0124326326359833,0.0152392803347280,0.00869075481171548,0.276297907949791}; //error
      auto exp = new TGraphErrors(4, x1, y2, ex2, ey2);
      exp->SetMarkerColor(1); //black
      exp->SetMarkerStyle(21);
@@ -118,5 +118,5 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("BR_2GeV_kaon.png"); // .pdf and other formats work too! 
+     canv1->SaveAs("BR_2GeV_refit.pdf"); // .pdf and other formats work too! 
   }
