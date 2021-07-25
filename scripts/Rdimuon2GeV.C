@@ -22,7 +22,7 @@
      TFile inFileQCD("ggH_MC_QCD.root"); 
      TH1F* h_scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_RTestscalarInvMass");
        
-     TFile inFileData("dataRunD_2GeV20.root"); 
+     TFile inFileData("dataRunD_2GeV_20.root"); 
      TH1F* h_scalarInvMass_data    = (TH1F*)inFileData.Get("h_RTestscalarInvMass");
   
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
