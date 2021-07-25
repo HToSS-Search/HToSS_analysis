@@ -22,7 +22,7 @@
      TFile inFileQCD("ggH_MC_QCD.root"); 
      TH1F* h_scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_RTestscalarInvMass");
        
-     TFile inFileData("dataRunD.root"); 
+     TFile inFileData("dataRunD_2GeV20.root"); 
      TH1F* h_scalarInvMass_data    = (TH1F*)inFileData.Get("h_RTestscalarInvMass");
   
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
@@ -35,7 +35,7 @@
      h_scalarInvMass_ctau0->SetTitle("");
      h_scalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_scalarInvMass_ctau0->GetXaxis()->SetRangeUser(0,4);  
-     h_scalarInvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_scalarInvMass_ctau0->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
      h_scalarInvMass_ctau0->SetMarkerColor(4);
      h_scalarInvMass_ctau0->SetLineColor(4);
      h_scalarInvMass_ctau0->Draw("HIST");
@@ -43,7 +43,7 @@
      h_scalarInvMass_ctau10->SetTitle("");
      h_scalarInvMass_ctau10->GetYaxis()->SetTitle("Events");
      h_scalarInvMass_ctau10->GetXaxis()->SetRangeUser(0,4); 
-     h_scalarInvMass_ctau10->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_scalarInvMass_ctau10->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
      h_scalarInvMass_ctau10->SetMarkerColor(3);
      h_scalarInvMass_ctau10->SetLineColor(3);
      h_scalarInvMass_ctau10->Draw("HIST same");
@@ -51,7 +51,7 @@
      h_scalarInvMass_QCD->SetTitle("");
      h_scalarInvMass_QCD->GetYaxis()->SetTitle("Events");
      h_scalarInvMass_QCD->GetXaxis()->SetRangeUser(0,4); 
-     h_scalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_scalarInvMass_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
      h_scalarInvMass_QCD->SetMarkerColor(6);
      h_scalarInvMass_QCD->SetLineColor(6);
      h_scalarInvMass_QCD->Draw("HIST same");
@@ -59,7 +59,7 @@
      h_scalarInvMass_data->SetTitle("");
      h_scalarInvMass_data->GetYaxis()->SetTitle("Events");
      h_scalarInvMass_data->GetXaxis()->SetRangeUser(0,4); 
-     h_scalarInvMass_data->GetXaxis()->SetTitle("m_{#mu#mu} (GeV/c^{2})");
+     h_scalarInvMass_data->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
      h_scalarInvMass_data->SetMarkerColor(94);
      h_scalarInvMass_data->SetMarkerStyle(21);
      h_scalarInvMass_data->SetMarkerSize(0.25);
@@ -68,11 +68,11 @@
     
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_scalarInvMass_ctau0","c_{#tau}=0mm","L");
+     TLegendEntry *legenda = legend1->AddEntry("h_scalarInvMass_ctau0","c#tau=0mm","L");
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_scalarInvMass_ctau10","c_{#tau}=10mm","L");
+     legenda=legend1->AddEntry("h_scalarInvMass_ctau10","c#tau=10mm","L");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
