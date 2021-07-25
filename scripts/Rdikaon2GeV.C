@@ -11,7 +11,7 @@
  #include "TLatex.h"
  #include "TPRegexp.h"
 
-  void Rdimuon2GeV() {  
+  void Rdikaon2GeV() {  
   
      TFile inFile0("ggH_MS2_ctau10.root"); 
      TH1F* h_scalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_TestKantiscalarInvMass");
