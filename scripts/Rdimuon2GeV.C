@@ -13,8 +13,8 @@
 
   void Rdimuon2GeV() {  
   
-     TFile inFile0("ggH_MS2_ctau0.root"); 
-     TH1F* h_scalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_RTestscalarInvMass");
+     TFile inFile0("ggH_MS2_ctau10.root"); 
+     TH1F* h_scalarInvMass_ctau0    = (TH1F*)inFile0.Get("h_TestscalarInvMass");
      
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_scalarInvMass_ctau10    = (TH1F*)inFile10.Get("h_RTestscalarInvMass");
@@ -68,11 +68,11 @@
     
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_scalarInvMass_ctau0","c#tau=0mm","L");
+     TLegendEntry *legenda = legend1->AddEntry("h_scalarInvMass_ctau0","c#tau=10mm","L");
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_scalarInvMass_ctau10","c#tau=10mm","L");
+     legenda=legend1->AddEntry("h_scalarInvMass_ctau10","c#tau=10mm (refitted)","L");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
