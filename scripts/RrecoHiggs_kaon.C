@@ -20,10 +20,10 @@
      TH1F* h_higgsInvMass_ctau10    = (TH1F*)inFile10.Get("h_RTestKhiggsInvMass");
  
      TFile inFileQCD("ggH_MC_QCD.root"); 
-     TH1F* h_scalarInvMass_QCD    = (TH1F*)inFileQCD.Get("h_RTestKhiggsInvMass");
+     TH1F* h_higgsInvMass_QCD    = (TH1F*)inFileQCD.Get("h_RTestKhiggsInvMass");
        
      TFile inFileData("dataRunD_2GeV20.root"); 
-     TH1F* h_scalarInvMass_data    = (TH1F*)inFileData.Get("h_RTestKhiggsInvMass");
+     TH1F* h_higgsInvMass_data    = (TH1F*)inFileData.Get("h_RTestKhiggsInvMass");
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
