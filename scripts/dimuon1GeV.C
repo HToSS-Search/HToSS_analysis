@@ -25,7 +25,7 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
 
-     //h_refit12InvMass_ctau0->GetYaxis()->SetRangeUser(1.0, 65000.); 
+     h_scalarInvMass_ctau0->GetYaxis()->SetRangeUser(0.01, 100.); 
      h_scalarInvMass_ctau0->SetTitle("");
      h_scalarInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_scalarInvMass_ctau0->GetXaxis()->SetRangeUser(0,3);  
