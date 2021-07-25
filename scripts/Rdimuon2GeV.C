@@ -66,7 +66,7 @@
      h_scalarInvMass_data->SetLineColor(94);
      h_scalarInvMass_data->Draw("P same");
     
-     TLegend *legend1 = new TLegend(0.7,0.3,0.9,0.5);
+     TLegend *legend1 = new TLegend(0.7,0.35,0.9,0.55);
      legend1->SetBorderSize(1);
      TLegendEntry *legenda = legend1->AddEntry("h_scalarInvMass_ctau0","c#tau=10mm","L");
      legenda->SetLineColor(4);
