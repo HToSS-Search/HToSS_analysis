@@ -31,14 +31,14 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
 
-     h_higgsInvMass_ctau0->GetYaxis()->SetRangeUser(0.01, 1500.);
+     /*h_higgsInvMass_ctau0->GetYaxis()->SetRangeUser(0.01, 1500.);
      h_higgsInvMass_ctau0->SetTitle("");
      h_higgsInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_higgsInvMass_ctau0->GetXaxis()->SetRangeUser(120,130);  
      h_higgsInvMass_ctau0->GetXaxis()->SetTitle("m_{Higgs} (GeV)");
      h_higgsInvMass_ctau0->SetMarkerColor(4);
      h_higgsInvMass_ctau0->SetLineColor(4);
-     h_higgsInvMass_ctau0->Draw("HIST");
+     h_higgsInvMass_ctau0->Draw("HIST");*/
  
      h_higgsInvMass_ctau10->SetTitle("");
      h_higgsInvMass_ctau10->GetYaxis()->SetTitle("Events");
@@ -46,7 +46,7 @@
      h_higgsInvMass_ctau10->GetXaxis()->SetTitle("m_{Higgs} (GeV)");
      h_higgsInvMass_ctau10->SetMarkerColor(3);
      h_higgsInvMass_ctau10->SetLineColor(3);
-     h_higgsInvMass_ctau10->Draw("HIST same");
+     h_higgsInvMass_ctau10->Draw("HIST");
     
      h_higgsInvMass_QCD->SetTitle("");
      h_higgsInvMass_QCD->GetYaxis()->SetTitle("Events");
@@ -68,19 +68,19 @@
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_higgsInvMass_ctau0","c_{#tau}=10mm","L");
-     legenda->SetLineColor(4);
+     TLegendEntry *legenda = legend1->AddEntry("h_higgsInvMass_ctau10","c_{#tau}=10mm (refitted)","L");
+     /*legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
-     legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_higgsInvMass_ctau10","c_{#tau}=10mm (refitted)","L");
+     legenda->SetMarkerSize(2);*/
+     //legenda=legend1->AddEntry("h_higgsInvMass_ctau10","c_{#tau}=10mm (refitted)","L");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_higgsInvMass_ctau10","QCD","L");
+     legenda=legend1->AddEntry("h_higgsInvMass_QCD","QCD","L");
      legenda->SetLineColor(6);
      legenda->SetMarkerColor(6);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_higgsInvMass_ctau10","Observation","P");
+     legenda=legend1->AddEntry("h_higgsInvMass_data","Observation","P");
      legenda->SetLineColor(94);
      legenda->SetMarkerColor(94);
      legenda->SetMarkerSize(2);
