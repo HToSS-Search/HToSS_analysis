@@ -31,8 +31,8 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
 
-     /*h_higgsInvMass_ctau0->GetYaxis()->SetRangeUser(0.01, 1500.);
-     h_higgsInvMass_ctau0->SetTitle("");
+     h_higgsInvMass_ctau10->GetYaxis()->SetRangeUser(0.01, 80.);
+     /*h_higgsInvMass_ctau0->SetTitle("");
      h_higgsInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_higgsInvMass_ctau0->GetXaxis()->SetRangeUser(120,130);  
      h_higgsInvMass_ctau0->GetXaxis()->SetTitle("m_{Higgs} (GeV)");
