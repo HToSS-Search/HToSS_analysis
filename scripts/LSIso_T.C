@@ -26,6 +26,22 @@
      TH1F* h_MuonIsoSum2_ctau10    = (TH1F*)inFile10.Get("h_PIsoSum2");
      TH1F* h_MuonIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_MuonIsoSum2");
    
+     TFile inFileQCD("ggH_MC_QCD.root"); 
+     TH1F* h_PIsoSum2_ctau0    = (TH1F*)inFileQCD.Get("h_PIsoSum1");
+     TH1F* h_PIsoSum1_ctau0    = (TH1F*)inFileQCD.Get("h_MuonIsoSum1");
+
+     TH1F* h_MuonIsoSum2_ctau0    = (TH1F*)inFileQCD.Get("h_PIsoSum2");
+     TH1F* h_MuonIsoSum1_ctau0    = (TH1F*)inFileQCD.Get("h_MuonIsoSum2");
+     
+     TFile inFileData("dataRunD_2GeV20.root"); 
+     TH1F* h_PIsoSum2_ctau0    = (TH1F*)inFileData.Get("h_PIsoSum1");
+     TH1F* h_PIsoSum1_ctau0    = (TH1F*)inFileData.Get("h_MuonIsoSum1");
+
+     TH1F* h_MuonIsoSum2_ctau0    = (TH1F*)inFileData.Get("h_PIsoSum2");
+     TH1F* h_MuonIsoSum1_ctau0    = (TH1F*)inFileData.Get("h_MuonIsoSum2");
+     
+   
+
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
      canv1->SetLogy();
@@ -39,7 +55,7 @@
      h_PIsoSum1_ctau0->GetXaxis()->SetTitle("Relative isolation");
      h_PIsoSum1_ctau0->SetMarkerColor(4);
      h_PIsoSum1_ctau0->SetLineColor(4);
-     h_PIsoSum1_ctau0->DrawNormalized("HIST",1);
+     h_PIsoSum1_ctau0->Draw("HIST");
  
      h_PIsoSum2_ctau0->SetTitle("");
      h_PIsoSum2_ctau0->GetYaxis()->SetTitle("Events");
@@ -47,7 +63,41 @@
      h_PIsoSum2_ctau0->GetXaxis()->SetTitle("Relative isolation");
      h_PIsoSum2_ctau0->SetMarkerColor(2);
      h_PIsoSum2_ctau0->SetLineColor(2);
-     h_PIsoSum2_ctau0->DrawNormalized("HIST same",1);
+     h_PIsoSum2_ctau0->Draw("HIST same");
+   
+     h_PIsoSum1_QCD->SetTitle("");
+     h_PIsoSum1_QCD->GetYaxis()->SetTitle("Events");
+     h_PIsoSum1_QCD->GetXaxis()->SetRangeUser(0,2); 
+     //h_PIsoSum1_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
+     h_PIsoSum1_QCD->SetMarkerColor(6);
+     h_PIsoSum1_QCD->SetLineColor(6);
+     h_PIsoSum1_QCD->Draw("HIST same");
+   
+     h_PIsoSum2_QCD->SetTitle("");
+     h_PIsoSum2_QCD->GetYaxis()->SetTitle("Events");
+     h_PIsoSum2_QCD->GetXaxis()->SetRangeUser(0,2); 
+     //h_PIsoSum1_QCD->GetXaxis()->SetTitle("m_{#mu#mu} (GeV)");
+     h_PIsoSum2_QCD->SetMarkerColor(6);
+     h_PIsoSum2_QCD->SetLineColor(6);
+     h_PIsoSum2_QCD->Draw("HIST same");
+   
+     h_PIsoSum1_data->SetTitle("");
+     h_PIsoSum1_data->GetYaxis()->SetTitle("Events");
+     h_PIsoSum1_data->GetXaxis()->SetRangeUser(0,2); 
+     h_PIsoSum1_data->SetMarkerColor(94);
+     h_PIsoSum1_data->SetMarkerStyle(21);
+     h_PIsoSum1_data->SetMarkerSize(0.25);
+     h_PIsoSum1_data->SetLineColor(94);
+     h_PIsoSum1_data->Draw("P same");
+   
+     h_PIsoSum2_data->SetTitle("");
+     h_PIsoSum2_data->GetYaxis()->SetTitle("Events");
+     h_PIsoSum2_data->GetXaxis()->SetRangeUser(0,2); 
+     h_PIsoSum2_data->SetMarkerColor(94);
+     h_PIsoSum2_data->SetMarkerStyle(21);
+     h_PIsoSum2_data->SetMarkerSize(0.25);
+     h_PIsoSum2_data->SetLineColor(94);
+     h_PIsoSum2_data->Draw("P same");
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
@@ -58,6 +108,22 @@
      legenda=legend1->AddEntry("h_PIsoSum2_ctau10","Hadron","L");
      legenda->SetLineColor(2);
      legenda->SetMarkerColor(2);
+     legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("h_PIsoSum1_QCD","QCD","L");
+     legenda->SetLineColor(6);
+     legenda->SetMarkerColor(6);
+     legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("h_PIsoSum2_QCD","QCD","L");
+     legenda->SetLineColor(6);
+     legenda->SetMarkerColor(6);
+     legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("h_PIsoSum1_data","Observation","P");
+     legenda->SetLineColor(94);
+     legenda->SetMarkerColor(94);
+     legenda->SetMarkerSize(2);
+     legenda=legend1->AddEntry("h_PIsoSum2_data","Observation","P");
+     legenda->SetLineColor(94);
+     legenda->SetMarkerColor(94);
      legenda->SetMarkerSize(2);
      legend1->Draw();
    
@@ -84,7 +150,7 @@
      h_MuonIsoSum1_ctau0->GetXaxis()->SetTitle("Relative isolation");
      h_MuonIsoSum1_ctau0->SetMarkerColor(4);
      h_MuonIsoSum1_ctau0->SetLineColor(4);
-     h_MuonIsoSum1_ctau0->DrawNormalized("HIST",1);
+     h_MuonIsoSum1_ctau0->Draw("HIST");
      
      h_MuonIsoSum2_ctau0->SetTitle("");
      h_MuonIsoSum2_ctau0->GetYaxis()->SetTitle("Events");
@@ -92,7 +158,7 @@
      h_MuonIsoSum2_ctau0->GetXaxis()->SetTitle("Relative isolation");
      h_MuonIsoSum2_ctau0->SetMarkerColor(2);
      h_MuonIsoSum2_ctau0->SetLineColor(2);
-     h_MuonIsoSum2_ctau0->DrawNormalized("HIST same",1);
+     h_MuonIsoSum2_ctau0->Draw("HIST same");
    
      TLegend *legend3 = new TLegend(0.7,0.7,0.9,0.9);
      legend3->SetBorderSize(1);
