@@ -27,18 +27,18 @@
      TH1F* h_MuonIsoSum1_ctau10    = (TH1F*)inFile10.Get("h_MuonIsoSum2");
    
      TFile inFileQCD("ggH_MC_QCD.root"); 
-     TH1F* h_PIsoSum2_ctau0    = (TH1F*)inFileQCD.Get("h_PIsoSum1");
-     TH1F* h_PIsoSum1_ctau0    = (TH1F*)inFileQCD.Get("h_MuonIsoSum1");
+     TH1F* h_PIsoSum2_QCD    = (TH1F*)inFileQCD.Get("h_PIsoSum1");
+     TH1F* h_PIsoSum1_QCD    = (TH1F*)inFileQCD.Get("h_MuonIsoSum1");
 
-     TH1F* h_MuonIsoSum2_ctau0    = (TH1F*)inFileQCD.Get("h_PIsoSum2");
-     TH1F* h_MuonIsoSum1_ctau0    = (TH1F*)inFileQCD.Get("h_MuonIsoSum2");
+     TH1F* h_MuonIsoSum2_QCD   = (TH1F*)inFileQCD.Get("h_PIsoSum2");
+     TH1F* h_MuonIsoSum1_QCD   = (TH1F*)inFileQCD.Get("h_MuonIsoSum2");
      
      TFile inFileData("dataRunD_2GeV20.root"); 
-     TH1F* h_PIsoSum2_ctau0    = (TH1F*)inFileData.Get("h_PIsoSum1");
-     TH1F* h_PIsoSum1_ctau0    = (TH1F*)inFileData.Get("h_MuonIsoSum1");
+     TH1F* h_PIsoSum2_data    = (TH1F*)inFileData.Get("h_PIsoSum1");
+     TH1F* h_PIsoSum1_data    = (TH1F*)inFileData.Get("h_MuonIsoSum1");
 
-     TH1F* h_MuonIsoSum2_ctau0    = (TH1F*)inFileData.Get("h_PIsoSum2");
-     TH1F* h_MuonIsoSum1_ctau0    = (TH1F*)inFileData.Get("h_MuonIsoSum2");
+     TH1F* h_MuonIsoSum2_data    = (TH1F*)inFileData.Get("h_PIsoSum2");
+     TH1F* h_MuonIsoSum1_data    = (TH1F*)inFileData.Get("h_MuonIsoSum2");
      
    
 
