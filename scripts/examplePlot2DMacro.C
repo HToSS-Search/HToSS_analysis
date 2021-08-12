@@ -11,7 +11,7 @@
 
   void examplePlot2DMacro() {  
   
-     TFile inFile("ggH_MS2_ctau10.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
+     TFile inFile("ggH_MS2_ctau10_GEN.root"); // read in file. Exercise: can this be done through a command line arguement? That way you don't have to edit code for each new histogram ...
      TH2I* h_VertexPosXY = (TH2I*)inFile.Get("h_VertexPosXY"); // Load in histogram
    
      TCanvas* canv2 = new TCanvas ("canv2", "canv2", 50, 50, 800, 600); // Canvas to draw histogram on
@@ -28,5 +28,5 @@
      canv2->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv2->SaveAs(" h_VertexPosXY.png"); // .pdf and other formats work too! 
+     canv2->SaveAs(" h_VertexPosXY.pdf"); // .pdf and other formats work too! 
      }
