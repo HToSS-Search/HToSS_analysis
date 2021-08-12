@@ -99,6 +99,6 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("efficiency_SL.png"); // .pdf and other formats work too! 
+     canv1->SaveAs("efficiency_SL.pdf"); // .pdf and other formats work too! 
    
   }
