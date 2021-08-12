@@ -25,7 +25,7 @@
      h_pt_ctau0->SetTitle("");
      h_pt_ctau0->GetYaxis()->SetTitle("Events");
      h_pt_ctau0->GetXaxis()->SetRangeUser(0.0,100); 
-     h_pt_ctau0->GetXaxis()->SetTitle("p_{T} (GeV)");
+     h_pt_ctau0->GetXaxis()->SetTitle("Subleading #mu p_{T} (GeV)");
      h_pt_ctau0->SetMarkerColor(4);
      h_pt_ctau0->SetLineColor(4);
      h_pt_ctau0->Draw("HIST");
@@ -33,7 +33,7 @@
      h_ptcut2_ctau0->SetTitle("");
      h_ptcut2_ctau0->GetYaxis()->SetTitle("Events");
      h_ptcut2_ctau0->GetXaxis()->SetRangeUser(0.0,100); 
-     h_ptcut2_ctau0->GetXaxis()->SetTitle("p_{T} (GeV)");
+     h_ptcut2_ctau0->GetXaxis()->SetTitle("Subleading #mu p_{T} (GeV)");
      h_ptcut2_ctau0->SetMarkerColor(3);
      h_ptcut2_ctau0->SetLineColor(3);
      h_ptcut2_ctau0->Draw("HIST same");
@@ -45,7 +45,7 @@
      legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_ptcut2_ctau10","Double muon trigger","L");
+     legenda=legend1->AddEntry("h_ptcut2_ctau10","Double #mu trigger","L");
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
