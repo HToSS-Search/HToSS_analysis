@@ -28,5 +28,5 @@
      canv2->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv2->SaveAs(" h_VertexPosXY.pdf"); // .pdf and other formats work too! 
+     canv2->SaveAs("h_VertexPosXY.pdf"); // .pdf and other formats work too! 
      }
