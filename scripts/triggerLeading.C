@@ -70,6 +70,6 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("triggerLeading.png"); // .pdf and other formats work too! 
+     canv1->SaveAs("triggerLeading.pdf"); // .pdf and other formats work too! 
    
   }
