@@ -16,7 +16,7 @@ rate                  16.9249                                 7.05882
 lumi           lnN    1.025                                   -             
 trigger_sig    lnN    1.025                                   -             
 trigger_QCD    lnN    -                                       1.025         
-rate_sig       lnN    1.0838         	       	       	      -
+rate_sig       lnN    1.067         	       	       	      -
 rate_bkg       lnN    -                                       1.118518393
 stat_unc_sig   lnN    1.039809371                             -            
 stat_unc_bkg   lnN    -                                       1.027902450
