@@ -42,6 +42,6 @@ Lower 2 sigma band: r < 3.51434 +/- 0.0515856 , min:
 Observed limit: r < 757.789 +/- 5.71804
 Expected (median) limit: r < 477.198 +/- 4.38515
 Upper 1 sigma band: r < 708.186 +/- 5.47931 , max:  , mid: 531.104785  +/- 184.552505
-Lower 1 sigma band:  , min:
-Upper 2 sigma band:  , max: 1167.3867 , mid: 722.461315 +/- 444.925385
-Lower 2 sigma band:  , min: 
+Lower 1 sigma band: r < 348.236 +/- 6.30626 , min:
+Upper 2 sigma band: r < 1104.87 +/- 49.9194 , max: 1167.3867 , mid: 722.461315 +/- 444.925385
+Lower 2 sigma band: r < 278.757 +/- 2.57762 , min: 
