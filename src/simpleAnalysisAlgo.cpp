@@ -50,7 +50,7 @@ SimpleAnalysis::SimpleAnalysis()
 , isoConeSize_{0.3}          // Isolation cone size of 0.3 is used repeatedly. Define once here for efficiency.
 , higgsMass_{125.35}         // Standard Higgs mass - define here rather than multiple locations
 , higgsMassWindow_{3.0}      // Define Standard Higgs mass +/ window here rather than in multiple locations
-, higgsMassWideWindow_{20.0} // Define wider Standard Higgs mass +/ window here rather than in multiple locations
+, higgsMassWideWindow_{30.0} // Define wider Standard Higgs mass +/ window here rather than in multiple locations
 , statWindow_{0.15} 
 , mass_range_{2.0}              // 1 or 2 GeV sample run
 , debug_{false}              // Set to true to enable debug couts
@@ -1198,7 +1198,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   //Background estimate
     if(mass_range_==2){
     if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2]<1){ 
-      if((Pantiscalar+scalarLVec).M()>=105 && (Pantiscalar+scalarLVec).M()<=122){
+      if((Pantiscalar+scalarLVec).M()>=95 && (Pantiscalar+scalarLVec).M()<=122){
         if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
           Nbg1+=1;//eventWeight;
 	}
@@ -1206,7 +1206,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     }
  
     if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2]<1){ 
-      if((Pantiscalar+scalarLVec).M()>=128 && (Pantiscalar+scalarLVec).M()<=145){
+      if((Pantiscalar+scalarLVec).M()>=128 && (Pantiscalar+scalarLVec).M()<=155){
         if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
           Nbg2+=1;
 	}
@@ -1216,7 +1216,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	
   if(mass_range_==1){
     if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2]<1){ 
-      if((Kantiscalar+scalarLVec).M()>=105 && (Kantiscalar+scalarLVec).M()<=122){
+      if((Kantiscalar+scalarLVec).M()>=95 && (Kantiscalar+scalarLVec).M()<=122){
         if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
           Nbg1+=1;
 	}
@@ -1224,7 +1224,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     }
  
     if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2]<1){ 
-      if((Kantiscalar+scalarLVec).M()>=128 && (Kantiscalar+scalarLVec).M()<=145){
+      if((Kantiscalar+scalarLVec).M()>=128 && (Kantiscalar+scalarLVec).M()<=155){
         if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
           Nbg2+=1;
 	}
@@ -1263,7 +1263,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   
   if(mass_range_==2){
     if(RPIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && RPIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && RMuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1]<0.4 && RMuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2]<1){ 
-      if((refpion+refitmuon).M()>=105 && (refpion+refitmuon).M()<=122){
+      if((refpion+refitmuon).M()>=95 && (refpion+refitmuon).M()<=122){
         if(std::abs((refpion).M()-(refitmuon).M())<statWindow_){
           RNbg1+=1;//eventWeight;
 	}
@@ -1271,7 +1271,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     }
  
     if(RPIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && RPIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && RMuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1]<0.4 && RMuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2]<1){ 
-      if((refpion+refitmuon).M()>=128 && (refpion+refitmuon).M()<=145){
+      if((refpion+refitmuon).M()>=128 && (refpion+refitmuon).M()<=155){
         if(std::abs((refpion).M()-(refitmuon).M())<statWindow_){
           RNbg2+=1;
 	}
@@ -1281,7 +1281,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
 	
   if(mass_range_==1){
     if(RKIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && RKIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && RMuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1]<0.4 && RMuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2]<1){ 
-      if((refkaon+refitmuon).M()>=105 && (refkaon+refitmuon).M()<=122){
+      if((refkaon+refitmuon).M()>=95 && (refkaon+refitmuon).M()<=122){
         if(std::abs((refkaon).M()-(refitmuon).M())<statWindow_){
           RNbg1+=1;
 	}
@@ -1289,7 +1289,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     }
  
     if(RPIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && RPIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && RMuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1]<0.4 && RMuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2]<1){ 
-      if((refkaon+refitmuon).M()>=128 && (refkaon+refitmuon).M()<=145){
+      if((refkaon+refitmuon).M()>=128 && (refkaon+refitmuon).M()<=155){
         if(std::abs((refkaon).M()-(refitmuon).M())<statWindow_){
           RNbg2+=1;
 	}
