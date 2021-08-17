@@ -13,7 +13,7 @@ process               signal                                  QCD
 process               0                                       1             
 rate                  156.043                                 7.76471                                      
 ----------------------------------------
-lumi           lnN    1.025                                   -             
+lumi           lnN    1.023                                   -             
 trigger_sig    lnN    1.025                                   -             
 trigger_QCD    lnN    -                                       1.025         
 rate_sig       lnN    1.067         	       	       	      -
