@@ -4,8 +4,8 @@ All @ 95% CL
 
 0 mm
 
-Observed limit: 
-Expected (median) limit: 
+Observed limit: 0,829094376977242 +/- 0,181224670884784
+Expected (median) limit: 1,06124393815695 +/- 0,222647743137055 
 Upper 1 sigma band: , max:  , mid:  +/- 
 Lower 1 sigma band:  , min:
 Upper 2 sigma band:  , max: , mid: +/- 
@@ -15,8 +15,8 @@ Lower 2 sigma band:  , min:
 
 1 mm
 
-Observed limit: 
-Expected (median) limit: 
+Observed limit: 1,01931074599449 +/- 0,222304275946525
+Expected (median) limit: 1,26100073987142 +/- 0,289474322379835
 Upper 1 sigma band: , max:  , mid:  +/- 
 Lower 1 sigma band:  , min:
 Upper 2 sigma band:  , max: , mid: +/- 
@@ -27,8 +27,8 @@ Lower 2 sigma band:  , min:
 
 10 mm
 
-Observed limit: 
-Expected (median) limit: 
+Observed limit: 5,55815853658537 +/- 0,0857068226349627
+Expected (median) limit: 7,40695851617512 +/- 0,0711508398816206
 Upper 1 sigma band: , max:  , mid:  +/- 
 Lower 1 sigma band:  , min:
 Upper 2 sigma band:  , max: , mid: +/- 
@@ -39,8 +39,8 @@ Lower 2 sigma band:  , min:
 
 100 mm
 
-Observed limit: 
-Expected (median) limit: 
+Observed limit: 361,842540055108 +/- 6,04557419124400
+Expected (median) limit: 478,058133483008 +/- 4,08177222165527
 Upper 1 sigma band: , max:  , mid:  +/- 
 Lower 1 sigma band:  , min:
 Upper 2 sigma band:  , max: , mid: +/- 
