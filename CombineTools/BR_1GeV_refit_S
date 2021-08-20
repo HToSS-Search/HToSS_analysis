@@ -4,22 +4,22 @@ All @ 95% CL
 
 0 mm
 
-Observed limit: 89,8015740000000 +/- 0,735280110000000
-Expected (median) limit: 60,0077460000000 +/- 1,08819390000000
-Upper 1 sigma band: , max:  , mid:  +/- 
+Observed limit: 91,4485680000000 +/- 0,551222400000000
+Expected (median) limit: 59,4232380000000 +/- 0,940020720000000
+Upper 1 sigma band: , max:  , mid: 64,1267847300000 +/- 21,1419840000000
 Lower 1 sigma band:  , min:
-Upper 2 sigma band:  , max: , mid: +/- 
+Upper 2 sigma band:  , max: , mid: 74,1762751950000 +/- 40,5844657650000
 Lower 2 sigma band:  , min: 
 
 --  GeV --
 
 1 mm
 
-Observed limit: 137,841378000000 +/- 0,742582440000000
-Expected (median) limit: 87,7779060000000 +/- 3,64698420000000
-Upper 1 sigma band: , max:  , mid:  +/- 
+Observed limit: 137,753943000000 +/- 0,746536110000000
+Expected (median) limit: 86,8432560000000 +/- 3,70338480000000
+Upper 1 sigma band: , max:  , mid: 98,4864674250000 +/- 32,6148680250000
 Lower 1 sigma band:  , min:
-Upper 2 sigma band:  , max: , mid: +/- 
+Upper 2 sigma band:  , max: , mid: 112,904262750000 +/- 61,5565434600000
 Lower 2 sigma band:  , min: 
 
 
@@ -27,11 +27,11 @@ Lower 2 sigma band:  , min:
 
 10 mm
 
-Observed limit: 1902,67203000000 +/- 14,1580581000000
-Expected (median) limit: 1235,16309000000 +/- 11,2611255000000
-Upper 1 sigma band: , max:  , mid:  +/- 
+Observed limit: 1879,07664000000 +/- 10,3937502000000
+Expected (median) limit: 1246,82913000000 +/- 15,3296469000000
+Upper 1 sigma band: , max:  , mid: 1336,61678475000 +/- 455,208689850000
 Lower 1 sigma band:  , min:
-Upper 2 sigma band:  , max: , mid: +/- 
+Upper 2 sigma band:  , max: , mid: 1559,12740275000 +/- 852,048919350000
 Lower 2 sigma band:  , min: 
 
 
@@ -39,9 +39,9 @@ Lower 2 sigma band:  , min:
 
 100 mm
 
-Observed limit: 152315,589000000 +/- 1149,32604000000
-Expected (median) limit: 95916,7980000000 +/- 881,415150000000
-Upper 1 sigma band: , max:  , mid:  +/- 
+Observed limit: 152038,209000000 +/- 1418,87910000000
+Expected (median) limit: 95824,1370000000 +/- 904,021620000000
+Upper 1 sigma band: , max:  , mid: 106420,763535000 +/- 36735,1750650000
 Lower 1 sigma band:  , min:
-Upper 2 sigma band:  , max: , mid: +/- 
+Upper 2 sigma band:  , max: , mid: 142477,268130000 +/- 87078,4400700000
 Lower 2 sigma band:  , min: 
