@@ -4,44 +4,44 @@ All @ 95% CL
 
 0 mm
 
-Observed limit: r < 0.446774 +/- 0.00365811
-Expected (median) limit: r < 0.298546 +/- 0.0054139
-Upper 1 sigma band: r < 0.416032 +/- 0.00328637 , max: 0.424840601 , mid: 0.315785255000000 +/- 0.103533115000000
-Lower 1 sigma band: r < 0.214798 +/- 0.00254586 , min: 0.21174131
-Upper 2 sigma band: r < 0.566022 +/- 0.00286877 , max: 0.57362143 , mid: 0.366749560000000 +/- 0.202141210000000
-Lower 2 sigma band: r < 0.166843 +/- 0.00223465 , min: 
+Observed limit: r < 0.454968 +/- 0.0027424
+Expected (median) limit: r < 0.295638 +/- 0.00467672
+Upper 1 sigma band: r < 0.421111 +/- 0.00311173 , max: 0.424840601 , mid: 0.315785255000000 +/- 0.103533115000000
+Lower 1 sigma band: r < 0.216478 +/- 0.00262327 , min: 0.21174131
+Upper 2 sigma band: r < 0.567403 +/- 0.00354596 , max: 0.57362143 , mid: 0.366749560000000 +/- 0.202141210000000
+Lower 2 sigma band: r < 0.171212 +/- 0.00408857 , min: 
 
 --  GeV --
 
 1 mm
 
-Observed limit: r < 0.685778 +/- 0.00369444
-Expected (median) limit: r < 0.436706 +/- 0.0181442
-Upper 1 sigma band: r < 0.647234 +/- 0.00581817 , max:  , mid: 0.489384935000000 +/- 0.163667235000000
-Lower 1 sigma band: r < 0.329963 +/- 0.0042453 , min:
-Upper 2 sigma band: r < 0.869954 +/- 0.00468436 , max: 0.890537050 , mid: 0.565023870000000 +/- 0.309614490000000
-Lower 2 sigma band: r < 0.258558 +/- 0.00314862 , min: 
+Observed limit: r < 0.685343 +/- 0.00371411
+Expected (median) limit: r < 0.432056 +/- 0.0184248
+Upper 1 sigma band: r < 0.647724 +/- 0.00452145 , max:  , mid: 0.489384935000000 +/- 0.163667235000000
+Lower 1 sigma band: r < 0.332167 +/- 0.0044476 , min:
+Upper 2 sigma band: r < 0.861646 +/- 0.00631821 , max: 0.890537050 , mid: 0.565023870000000 +/- 0.309614490000000
+Lower 2 sigma band: r < 0.258371 +/- 0.00290971 , min: 
 
 
 --  GeV --
 
 10 mm
 
-Observed limit: r < 9.46603 +/- 0.0704381
-Expected (median) limit: r < 6.14509 +/- 0.0560255
-Upper 1 sigma band: r < 8.88615 +/- 0.0408238 , max:  , mid: 6.70797995000000 +/- 2.21899385000000
-Lower 1 sigma band: r < 4.54644 +/- 0.0574539 , min:
-Upper 2 sigma band: r < 11.9847 +/- 0.0594348 , max: 12.2813319 , mid: 7.75344460000000 +/- 4.29069020000000
-Lower 2 sigma band: r < 3.51434 +/- 0.0515856 , min: 
+Observed limit: r < 9.34864 +/- 0.0517102
+Expected (median) limit: r < 6.20313 +/- 0.0762669
+Upper 1 sigma band: r < 8.87908 +/- 0.0354746 , max:  , mid: 6.70797995000000 +/- 2.21899385000000
+Lower 1 sigma band: r < 4.44948 +/- 0.0643651 , min:
+Upper 2 sigma band: r < 11.922 +/- 0.0739021 , max: 12.2813319 , mid: 7.75344460000000 +/- 4.29069020000000
+Lower 2 sigma band: r < 3.59386 +/- 0.0760566 , min: 
 
 
 --  GeV --
 
 100 mm
 
-Observed limit: r < 757.789 +/- 5.71804
-Expected (median) limit: r < 477.198 +/- 4.38515
-Upper 1 sigma band: r < 708.186 +/- 5.47931 , max:  , mid: 527.797525000000  +/- 185.867785000000
-Lower 1 sigma band: r < 348.236 +/- 6.30626 , min:
-Upper 2 sigma band: r < 1104.87 +/- 49.9194 , max: 1167.3867 , mid: 715.484390000000 +/- 439.305010000000
-Lower 2 sigma band: r < 278.757 +/- 2.57762 , min: 
+Observed limit: r < 756.409 +/- 7.0591
+Expected (median) limit: r < 476.737 +/- 4.49762
+Upper 1 sigma band: r < 707.682 +/- 4.5366 , max:  , mid: 527.797525000000  +/- 185.867785000000
+Lower 1 sigma band: r < 352.3 +/- 5.60553 , min:
+Upper 2 sigma band: r < 1093.56 +/- 48.5082 , max: 1167.3867 , mid: 715.484390000000 +/- 439.305010000000
+Lower 2 sigma band: r < 278.225 +/- 2.60894 , min: 
