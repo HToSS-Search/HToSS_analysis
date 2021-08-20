@@ -63,6 +63,6 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("h_dimuon2GeV.pdf"); // .pdf and other formats work too! 
+     canv1->SaveAs("h_dimuon2GeV.png"); // .pdf and other formats work too! 
    
   }
