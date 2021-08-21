@@ -6,9 +6,9 @@ All @ 95% CL
 
 Observed limit: 0,885361445045413 +/- 0,277057243086029
 Expected (median) limit: 1,07677980406164 +/- 0,277057243086029
-Upper 1 sigma band: 1,59432650270436 +/- , max: 1,60184358556996 , mid: 1,10484265585774 +/- 0,494581590953158 
+Upper 1 sigma band: 1,59432650270436 +/- , max: 1,60184358556996 , mid: 1.10484265585774 +/- 0.494581590953158 
 Lower 1 sigma band:  , min: 
-Upper 2 sigma band:  , max: , mid: 1,44339067328299 +/- 0,955319440504133
+Upper 2 sigma band:  , max: , mid: 1.44339067328299 +/- 0.955319440504133
 Lower 2 sigma band:  , min: 
 
 --  GeV --
@@ -17,9 +17,9 @@ Lower 2 sigma band:  , min:
 
 Observed limit: 0,927532712521686 +/- 0,176214346872130
 Expected (median) limit: 1,35219810184713 +/- 0,112766695070926
-Upper 1 sigma band: , max: 1,99505922594142 , mid: 1,43383383661598 +/- 0,497081860802123
+Upper 1 sigma band: , max: 1,99505922594142 , mid: 1.43383383661598 +/- 0.497081860802123
 Lower 1 sigma band:  , min: 0,987915725329115
-Upper 2 sigma band:  , max: , mid: 1,74482958669252 +/- 1,15518497295642
+Upper 2 sigma band:  , max: , mid: 1.74482958669252 +/- 1.15518497295642
 Lower 2 sigma band:  , min: 
 
 
@@ -29,9 +29,9 @@ Lower 2 sigma band:  , min:
 
 Observed limit: 7,07336274109603 +/- 0,0725101918563119
 Expected (median) limit: 11,4448610062251 +/- 0,0921839228492703
-Upper 1 sigma band: , max:  , mid: 12,4830652058884 +/- 4,17950808985611
+Upper 1 sigma band: , max:  , mid: 12.4830652058884 +/- 4.17950808985611
 Lower 1 sigma band:  , min:
-Upper 2 sigma band:  , max: , mid: 14,5645523032963 +/- 8,52251294979079 
+Upper 2 sigma band:  , max: , mid: 14.5645523032963 +/- 8.52251294979079 
 Lower 2 sigma band:  , min: 
 
 
@@ -41,7 +41,7 @@ Lower 2 sigma band:  , min:
 
 Observed limit: 333,955791407286 +/- 6,45886712929891
 Expected (median) limit: 552,598933564649 +/- 7,76921042963568
-Upper 1 sigma band: , max:  , mid: 608,692351821615 +/- 246,466307276253
+Upper 1 sigma band: , max:  , mid: 608.692351821615 +/- 246.466307276253
 Lower 1 sigma band:  , min:
-Upper 2 sigma band:  , max: , mid: 795,718627768140 +/- 528,616532962547
+Upper 2 sigma band:  , max: , mid: 795.718627768140 +/- 528.616532962547
 Lower 2 sigma band:  , min: 
