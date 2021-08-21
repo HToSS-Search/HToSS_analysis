@@ -6,9 +6,9 @@ All @ 95% CL
 
 Observed limit: 0,853003525869987 +/- 0,181203766710889
 Expected (median) limit: 1,04315021430758 +/- 0,228514557607919
-Upper 1 sigma band: , max:  , mid: 1,15370469614246 +/- 0,471650278344729
+Upper 1 sigma band: , max:  , mid: 1.15370469614246 +/- 0.471650278344729
 Lower 1 sigma band:  , min:
-Upper 2 sigma band:  , max: , mid: 1,36668633475355 +/- 0,758614198157975
+Upper 2 sigma band:  , max: , mid: 1.36668633475355 +/- 0.758614198157975
 Lower 2 sigma band:  , min: 
 
 --  GeV --
@@ -17,9 +17,9 @@ Lower 2 sigma band:  , min:
 
 Observed limit: 1,01920041841004 +/- 0,222280178079396
 Expected (median) limit: 1,26039974487193 +/- 0,289296056230228
-Upper 1 sigma band: , max:  , mid: 1,40300758368201 +/- 0,577143772578835
+Upper 1 sigma band: , max:  , mid: 1.40300758368201 +/- 0.577143772578835
 Lower 1 sigma band:  , min:
-Upper 2 sigma band:  , max: , mid: 1,68148044581080 +/- 0,940638816613940
+Upper 2 sigma band:  , max: , mid: 1.68148044581080 +/- 0.940638816613940
 Lower 2 sigma band:  , min: 
 
 
@@ -29,9 +29,9 @@ Lower 2 sigma band:  , min:
 
 Observed limit: 5,60760271456271 +/- 0,0682233845290336
 Expected (median) limit: 7,44789585672007 +/- 0,0796042555362792
-Upper 1 sigma band: , max:  , mid: 7,93573728875395 +/- 2,88593051765486
+Upper 1 sigma band: , max:  , mid: 7.93573728875395 +/- 2.88593051765486
 Lower 1 sigma band:  , min:
-Upper 2 sigma band:  , max: , mid: 9,41380856720073 +/- 5,33558657107868
+Upper 2 sigma band:  , max: , mid: 9.41380856720073 +/- 5.33558657107868
 Lower 2 sigma band:  , min: 
 
 
@@ -41,7 +41,7 @@ Lower 2 sigma band:  , min:
 
 Observed limit: 365,840463312583 +/- 4,80915037248699
 Expected (median) limit: 479,768211041943 +/- 4,03287968160016
-Upper 1 sigma band: , max:  , mid: 536,569129612716 +/- 203,996012850801
+Upper 1 sigma band: , max:  , mid: 536.569129612716 +/- 203.996012850801
 Lower 1 sigma band:  , min:
-Upper 2 sigma band:  , max: , mid: 668,589574854577 +/- 414,905433768752
+Upper 2 sigma band:  , max: , mid: 668.589574854577 +/- 414.905433768752
 Lower 2 sigma band:  , min: 
