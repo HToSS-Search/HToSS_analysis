@@ -13,8 +13,8 @@
 
   void RrecoHiggs_kaon() {  
   
-     TFile inFile0("ggH_MS2_ctau10.root"); 
-     TH1F* h_higgsInvMass_ctau0    = (TH1F*)inFile0.Get("h_KhiggsRInvMass");
+     //TFile inFile0("ggH_MS2_ctau10.root"); 
+     //TH1F* h_higgsInvMass_ctau0    = (TH1F*)inFile0.Get("h_KhiggsRInvMass");
      
      TFile inFile10("ggH_MS2_ctau10.root"); 
      TH1F* h_higgsInvMass_ctau10    = (TH1F*)inFile10.Get("h_KhiggsRInvMass");
@@ -68,7 +68,7 @@
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_higgsInvMass_ctau10","c_{#tau}=10mm (refitted)","L");
+     TLegendEntry *legenda = legend1->AddEntry("h_higgsInvMass_ctau10","c#tau=10mm (refitted)","L");
      /*legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);*/
@@ -83,7 +83,7 @@
      legenda=legend1->AddEntry("h_higgsInvMass_data","Observation","P");
      legenda->SetLineColor(94);
      legenda->SetMarkerColor(94);
-     legenda->SetMarkerSize(2);
+     legenda->SetMarkerSize(4);
 
      legend1->Draw();
    
