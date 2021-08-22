@@ -11,7 +11,7 @@
  #include "TPRegexp.h"
  #include "TAttLine.h"
 
-  void BR_1GeV() {  
+  void BR_1GeV_S() {  
   
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      canv1->SetGrid();
