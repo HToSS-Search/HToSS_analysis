@@ -48,7 +48,7 @@
      h_higgsInvMass_ctau10->GetXaxis()->SetTitle("m_{Higgs} (GeV)");
      h_higgsInvMass_ctau10->SetMarkerColor(3);
      h_higgsInvMass_ctau10->SetLineColor(3);
-     h_higgsInvMass_ctau10->Draw("HIST");
+     h_higgsInvMass_ctau10->Draw("HIST same");
     
      h_higgsInvMass_QCD->SetTitle("");
      h_higgsInvMass_QCD->GetYaxis()->SetRangeUser(0.01,1300);
