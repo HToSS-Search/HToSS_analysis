@@ -62,7 +62,7 @@
      h_higgsInvMass_data->GetXaxis()->SetTitle("m_{Higgs} (GeV)");
      h_higgsInvMass_data->SetMarkerColor(94);
      h_higgsInvMass_data->SetMarkerStyle(21);
-     h_higgsInvMass_data->SetMarkerSize(0.25);
+     h_higgsInvMass_data->SetMarkerSize(0.5);
      h_higgsInvMass_data->SetLineColor(94);
      h_higgsInvMass_data->Draw("P same");
    
@@ -83,7 +83,7 @@
      legenda=legend1->AddEntry("h_higgsInvMass_data","Observation","P");
      legenda->SetLineColor(94);
      legenda->SetMarkerColor(94);
-     legenda->SetMarkerSize(4);
+     legenda->SetMarkerSize(2);
 
      legend1->Draw();
    
