@@ -50,9 +50,9 @@ SimpleAnalysis::SimpleAnalysis()
 , isoConeSize_{0.3}          // Isolation cone size of 0.3 is used repeatedly. Define once here for efficiency.
 , higgsMass_{125.35}         // Standard Higgs mass - define here rather than multiple locations
 , higgsMassWindow_{3.0}      // Define Standard Higgs mass +/ window here rather than in multiple locations
-, higgsMassWideWindow_{30.0} // Define wider Standard Higgs mass +/ window here rather than in multiple locations
+, higgsMassWideWindow_{20.0} // Define wider Standard Higgs mass +/ window here rather than in multiple locations
 , statWindow_{0.15} 
-, mass_range_{1.0}              // 1 or 2 GeV sample run
+, mass_range_{2.0}              // 1 or 2 GeV sample run
 , debug_{false}              // Set to true to enable debug couts
 {}
 SimpleAnalysis::~SimpleAnalysis() {}
@@ -213,7 +213,7 @@ void SimpleAnalysis::runMainAnalysis() {
       eventWeight *= datasetWeight;
 
       // Do functions that do not require met filters or triggers
-      fillGeneratorPlots(event); // Commented out currently by CB in main branch
+      //fillGeneratorPlots(event); // Commented out currently by CB in main branch
 
       // Do functions that have met filters applied
       if( !event.metFilters() ) continue;
@@ -234,7 +234,7 @@ void SimpleAnalysis::runMainAnalysis() {
 
       // Fill other plots now!
       // All of	these plots use	packed PF muons, so the ones corresponding to the PAT muons are provided
-      //fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, Obs, rate_signal, stat_signal, RNbg1, RNbg2, RObs, Rrate_signal, Rstat_signal, QCD_Kantiscalar, QCD_Pantiscalar, QCD_20Kantiscalar, QCD_20Pantiscalar, QCD_scalar, QCD_20scalar, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
+      fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, Obs, rate_signal, stat_signal, RNbg1, RNbg2, RObs, Rrate_signal, Rstat_signal, QCD_Kantiscalar, QCD_Pantiscalar, QCD_20Kantiscalar, QCD_20Pantiscalar, QCD_scalar, QCD_20scalar, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
       //fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
 
     } // End loop over all events
@@ -1196,7 +1196,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   
 	
   //Background estimate
-    if(mass_range_==2){
+    if(mass_range_==1){
     if(PIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2]<1){ 
       if((Pantiscalar+scalarLVec).M()>=95 && (Pantiscalar+scalarLVec).M()<=122){
         if(std::abs((Pantiscalar).M()-(scalarLVec).M())<statWindow_){
@@ -1214,11 +1214,13 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     }
   }
 	
-  if(mass_range_==1){
+  if(mass_range_==2){
     if(KIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && KIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && MuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1]<0.4 && MuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2]<1){ 
       if((Kantiscalar+scalarLVec).M()>=95 && (Kantiscalar+scalarLVec).M()<=122){
         if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
           Nbg1+=1;
+		
+	  h_fig->Fill(Kantiscalar.M(),eventWeight);
 	}
       }
     }
@@ -1227,6 +1229,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       if((Kantiscalar+scalarLVec).M()>=128 && (Kantiscalar+scalarLVec).M()<=155){
         if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
           Nbg2+=1;
+		
+	  h_fig->Fill(Kantiscalar.M(),eventWeight);
 	}
       }
     }
@@ -1566,6 +1570,7 @@ void SimpleAnalysis::setupPlots() {
   h_KhiggsInvMass = new TH1F("h_KhiggsInvMass", "Higgs invariant mass", 500, 0., 200.);
   h_K20higgsInvMass = new TH1F("h_K20higgsInvMass", "Higgs invariant mass", 500, 0., 200.);
   h_KhiggsRInvMass = new TH1F("h_KhiggsRInvMass", "Higgs invariant mass", 500, 0., 200.);
+  h_fig = new TH1F("h_fig", "Higgs invariant mass", 500, 0., 200.);
   h_KhiggsR20InvMass = new TH1F("h_KhiggsR20InvMass", "Higgs invariant mass", 500, 0., 200.);
   h_KhiggsDeltaR = new TH1F("h_KhiggsDeltaR", "Scalar-Antiscalar #DeltaR",2500, 0., 15.);
 	
@@ -1765,7 +1770,7 @@ void SimpleAnalysis::savePlots() {
   h_MuonInvMass->GetYaxis()->SetTitle("Events");
   h_MuonInvMass->Write();
   h_Muon3DAngle->Write();
- 
+  h_fig->Write();
   h_genParScalarCKaonPt->GetXaxis()->SetTitle("GeV");
   h_genParScalarCKaonPt->Write();
   h_genParScalarCKaonEta->Write();
