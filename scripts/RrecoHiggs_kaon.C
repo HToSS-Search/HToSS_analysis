@@ -16,14 +16,14 @@
      //TFile inFile0("ggH_MS2_ctau10.root"); 
      
      
-     TFile inFile10("ggH_MS2_ctau10.root"); 
+     TFile inFile10("ggH_MS2_ctau10F.root"); 
      //TH1F* h_higgsInvMass_ctau0    = (TH1F*)inFile10.Get("h_fig");
      TH1F* h_higgsInvMass_ctau10    = (TH1F*)inFile10.Get("h_fig");
  
-     TFile inFileQCD("ggH_MC_QCD.root"); 
+     TFile inFileQCD("ggH_MC_QCDF.root"); 
      TH1F* h_higgsInvMass_QCD    = (TH1F*)inFileQCD.Get("h_fig");
        
-     TFile inFileData("dataRunD_2GeV20.root"); 
+     TFile inFileData("dataRunD_1GeV20F.root"); 
      TH1F* h_higgsInvMass_data    = (TH1F*)inFileData.Get("h_fig");
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
@@ -41,28 +41,28 @@
      h_higgsInvMass_ctau0->SetLineColor(4);
      h_higgsInvMass_ctau0->Draw("HIST");*/
  
-     h_higgsInvMass_ctau10->GetYaxis()->SetRangeUser(0.01,2500);
+     //h_higgsInvMass_ctau10->GetYaxis()->SetRangeUser(0.01,2500);
      h_higgsInvMass_ctau10->SetTitle("");
      h_higgsInvMass_ctau10->GetYaxis()->SetTitle("Events");
-     h_higgsInvMass_ctau10->GetXaxis()->SetRangeUser(80,170); 
+     h_higgsInvMass_ctau10->GetXaxis()->SetRangeUser(90,150); 
      h_higgsInvMass_ctau10->GetXaxis()->SetTitle("m_{Higgs} (GeV)");
      h_higgsInvMass_ctau10->SetMarkerColor(3);
      h_higgsInvMass_ctau10->SetLineColor(3);
      h_higgsInvMass_ctau10->Draw("HIST");
     
      h_higgsInvMass_QCD->SetTitle("");
-     h_higgsInvMass_QCD->GetYaxis()->SetRangeUser(0.01,2500);
+     //h_higgsInvMass_QCD->GetYaxis()->SetRangeUser(0.01,2500);
      h_higgsInvMass_QCD->GetYaxis()->SetTitle("Events");
-     h_higgsInvMass_QCD->GetXaxis()->SetRangeUser(80,170); 
+     h_higgsInvMass_QCD->GetXaxis()->SetRangeUser(90,150); 
      h_higgsInvMass_QCD->GetXaxis()->SetTitle("m_{Higgs} (GeV)");
      h_higgsInvMass_QCD->SetMarkerColor(6);
      h_higgsInvMass_QCD->SetLineColor(6);
      h_higgsInvMass_QCD->Draw("HIST same");
    
      h_higgsInvMass_data->SetTitle("");
-     h_higgsInvMass_data->GetYaxis()->SetRangeUser(0.01,2500);
+     //h_higgsInvMass_data->GetYaxis()->SetRangeUser(0.01,2500);
      h_higgsInvMass_data->GetYaxis()->SetTitle("Events");
-     h_higgsInvMass_data->GetXaxis()->SetRangeUser(80,170); 
+     h_higgsInvMass_data->GetXaxis()->SetRangeUser(90,150); 
      h_higgsInvMass_data->GetXaxis()->SetTitle("m_{Higgs} (GeV)");
      h_higgsInvMass_data->SetMarkerColor(94);
      h_higgsInvMass_data->SetMarkerStyle(21);
