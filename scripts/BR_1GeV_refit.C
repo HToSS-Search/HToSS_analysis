@@ -29,6 +29,7 @@
      sigma2->GetXaxis()->SetTitle("c#tau (mm)");
      sigma2->GetYaxis()->SetTitle("BR(H#rightarrow a#bar{a})");
      sigma2->GetXaxis()->SetRangeUser(0,100);
+     sigma2->GetYaxis()->SetRangeUser(10,500000);
      //sigma2->GetYaxis()->SetRangeUser(-10,195585);
      sigma2->SetTitle(" ");
      sigma2->Draw("a3");
