@@ -17,14 +17,14 @@
      
      
      TFile inFile10("ggH_MS2_ctau10.root"); 
-     TH1F* h_higgsInvMass_ctau0    = (TH1F*)inFile10.Get("h_TestKhiggsInvMass");
-     TH1F* h_higgsInvMass_ctau10    = (TH1F*)inFile10.Get("h_RTestKhiggsInvMass");
+     //TH1F* h_higgsInvMass_ctau0    = (TH1F*)inFile10.Get("h_fig");
+     TH1F* h_higgsInvMass_ctau10    = (TH1F*)inFile10.Get("h_fig");
  
      TFile inFileQCD("ggH_MC_QCD.root"); 
-     TH1F* h_higgsInvMass_QCD    = (TH1F*)inFileQCD.Get("h_RTestKhiggsInvMass");
+     TH1F* h_higgsInvMass_QCD    = (TH1F*)inFileQCD.Get("h_fig");
        
      TFile inFileData("dataRunD_2GeV20.root"); 
-     TH1F* h_higgsInvMass_data    = (TH1F*)inFileData.Get("h_RTestKhiggsInvMass");
+     TH1F* h_higgsInvMass_data    = (TH1F*)inFileData.Get("h_fig");
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
      gStyle->SetOptStat(0);
@@ -32,14 +32,14 @@
      canv1->SetLineColor(0);
      canv1->SetFillColor(0);
 
-     h_higgsInvMass_ctau0->GetYaxis()->SetRangeUser(0.01,2500);
+     /*h_higgsInvMass_ctau0->GetYaxis()->SetRangeUser(0.01,2500);
      h_higgsInvMass_ctau0->SetTitle("");
      h_higgsInvMass_ctau0->GetYaxis()->SetTitle("Events");
      h_higgsInvMass_ctau0->GetXaxis()->SetRangeUser(80,170);  
      h_higgsInvMass_ctau0->GetXaxis()->SetTitle("m_{Higgs} (GeV)");
      h_higgsInvMass_ctau0->SetMarkerColor(4);
      h_higgsInvMass_ctau0->SetLineColor(4);
-     h_higgsInvMass_ctau0->Draw("HIST");
+     h_higgsInvMass_ctau0->Draw("HIST");*/
  
      h_higgsInvMass_ctau10->GetYaxis()->SetRangeUser(0.01,2500);
      h_higgsInvMass_ctau10->SetTitle("");
@@ -48,7 +48,7 @@
      h_higgsInvMass_ctau10->GetXaxis()->SetTitle("m_{Higgs} (GeV)");
      h_higgsInvMass_ctau10->SetMarkerColor(3);
      h_higgsInvMass_ctau10->SetLineColor(3);
-     h_higgsInvMass_ctau10->Draw("HIST same");
+     h_higgsInvMass_ctau10->Draw("HIST");
     
      h_higgsInvMass_QCD->SetTitle("");
      h_higgsInvMass_QCD->GetYaxis()->SetRangeUser(0.01,2500);
@@ -72,11 +72,11 @@
    
      TLegend *legend1 = new TLegend(0.7,0.7,0.9,0.9);
      legend1->SetBorderSize(1);
-     TLegendEntry *legenda = legend1->AddEntry("h_higgsInvMass_ctau0","c#tau=10mm","L");
-     legenda->SetLineColor(4);
+     TLegendEntry *legenda = legend1->AddEntry("h_higgsInvMass_ctau10","c#tau=10mm (refitted)","L");
+     /*legenda->SetLineColor(4);
      legenda->SetMarkerColor(4);
      legenda->SetMarkerSize(2);
-     legenda=legend1->AddEntry("h_higgsInvMass_ctau10","c#tau=10mm (refitted)","L");
+     legenda=legend1->AddEntry("h_higgsInvMass_ctau10","c#tau=10mm (refitted)","L");*/
      legenda->SetLineColor(3);
      legenda->SetMarkerColor(3);
      legenda->SetMarkerSize(2);
@@ -97,7 +97,7 @@
      canv1->Draw(); // draw canvas!
 
      // save canvas with drawn histogram
-     canv1->SaveAs("h_RrecoHiggs_kaon.pdf"); // .pdf and other formats work too! 
+     canv1->SaveAs("h_sideband.pdf"); // .pdf and other formats work too! 
    
   }
 
