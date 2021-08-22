@@ -240,6 +240,7 @@ class SimpleAnalysis
     TH1F* h_RTestKantiscalarInvMass;
     TH1F* h_RTestscalarInvMass;
     TH1F* h_RTestKhiggsInvMass;
+    TH1F* h_fig;
     TH1F* h_RTestPhiggsInvMass;
     TF1* Gaussian3;
     TH1F* h_PhiggsInvMass;
