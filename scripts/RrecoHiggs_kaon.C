@@ -23,7 +23,7 @@
      TFile inFileQCD("ggH_MC_QCDF.root"); 
      TH1F* h_higgsInvMass_QCD    = (TH1F*)inFileQCD.Get("h_fig");
        
-     TFile inFileData("dataRunD_1GeV20F.root"); 
+     TFile inFileData("dataRunD_1GeVF.root"); 
      TH1F* h_higgsInvMass_data    = (TH1F*)inFileData.Get("h_fig");
    
      TCanvas* canv1 = new TCanvas ("canv1", "canv1", 50, 50, 800, 600); // Canvas to draw histogram on
