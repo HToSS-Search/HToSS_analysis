@@ -1220,7 +1220,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
         if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
           Nbg1+=1;
 		
-	  h_fig->Fill(Kantiscalar.M(),eventWeight);
+	  
 	}
       }
     }
@@ -1230,7 +1230,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
         if(std::abs((Kantiscalar).M()-(scalarLVec).M())<statWindow_){
           Nbg2+=1;
 		
-	  h_fig->Fill(Kantiscalar.M(),eventWeight);
+	 
 	}
       }
     }
@@ -1283,11 +1283,13 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
     }
   }
 	
-  if(mass_range_==1){
+  if(mass_range_==2){
     if(RKIsoSum1/event.packedCandsPseudoTrkPt[chsIndex1]<0.4 && RKIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2]<1 && RMuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1]<0.4 && RMuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2]<1){ 
       if((refkaon+refitmuon).M()>=95 && (refkaon+refitmuon).M()<=122){
         if(std::abs((refkaon).M()-(refitmuon).M())<statWindow_){
           RNbg1+=1;
+		
+		h_fig->Fill((refkaon+refitmuon).M(),eventWeight);
 	}
       }
     }
@@ -1296,6 +1298,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
       if((refkaon+refitmuon).M()>=128 && (refkaon+refitmuon).M()<=155){
         if(std::abs((refkaon).M()-(refitmuon).M())<statWindow_){
           RNbg2+=1;
+		
+		h_fig->Fill((refkaon+refitmuon).M(),eventWeight);
 	}
       }
     }
