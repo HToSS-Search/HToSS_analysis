@@ -70,9 +70,9 @@
      l->Draw("same");
      
      //unphysical area
-     double y5[4] = {100,100,100,100}; 
+     double y5[4] = {101,101,101,101}; 
      double ex5[4] = {0., 0., 0., 0.};
-     double ey5[4] = {99,99,99,99};
+     double ey5[4] = {100,100,100,100};
      auto sigma3 = new TGraphErrors(4, x1, y5, ex5, ey5);
      sigma3->SetFillColor(14);
      sigma3->SetFillStyle(3244);
