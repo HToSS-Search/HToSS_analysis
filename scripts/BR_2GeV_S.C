@@ -28,7 +28,7 @@
      sigma2->SetFillStyle(3001);
      sigma2->GetXaxis()->SetTitle("c#tau (mm)");
      sigma2->GetYaxis()->SetTitle("BR(H#rightarrow a#bar{a})");
-     sigma2->GetXaxis()->SetRangeUser(0,0.1);
+     sigma2->GetXaxis()->SetRangeUser(0,100);
      sigma2->GetYaxis()->SetRangeUser(0.10,1500);
      //sigma2->GetYaxis()->SetRangeUser(-10,195585);
      sigma2->SetTitle(" ");
