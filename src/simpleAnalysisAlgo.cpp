@@ -71,8 +71,8 @@ void SimpleAnalysis::parseCommandLineArguements(int argc, char* argv[]){
   po::bool_switch(&is2016_),
   "Use 2016 conditions (SFs, et al.). NOT TO BE USED IN NORMAL CIRCUMSTANCES")(
   "lumi,l",
-  //po::value<double>(&usePreLumi)->default_value(4247.682053046), //4.25 inverse femtobarn
-  po::value<double>(&usePreLumi)->default_value(41528.0),
+  po::value<double>(&usePreLumi)->default_value(4247.682053046), //4.25 inverse femtobarn
+  //po::value<double>(&usePreLumi)->default_value(41528.0),
   "Lumi to scale MC plots to.")(
   "outfile,o",
   po::value<std::string>(&outFileString)->default_value("plots/distributions/output.root"),
