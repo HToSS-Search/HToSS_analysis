@@ -60,7 +60,8 @@ class Cuts
     // set to true to fill in histograms/spit out other info
     bool doPlots_;
     bool fillCutFlow_; // Fill cut flows
-    bool invertLepCut_; // For background estimation
+    bool invertLepCharge_; // For background estimation
+    bool invertLepIso_; // For background estimation
     bool makeEventDump_;
     const bool is2016_;
     const bool is2016APV_;
@@ -230,7 +231,7 @@ class Cuts
     double minMuonHltPt_;
 
     public:
-    Cuts(const bool doPlots, const bool fillCutFlows, const bool invertLepCut, const bool is2016, const bool is2016APV, const bool is2018);
+    Cuts(const bool doPlots, const bool fillCutFlows, const bool invertLepCharge, const bool invertLepIso, const bool is2016, const bool is2016APV, const bool is2018);
     ~Cuts();
     bool makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::string, std::shared_ptr<Plots>>& plotMap, TH1D& cutFlow, const int systToRun);
     void setMC(bool isMC) {
@@ -248,8 +249,11 @@ class Cuts
     void setCutConfTrigLabel(std::string newLabel) {
         cutConfTrigLabel_ = newLabel;
     }
-    void setInvLepCut(bool invLep) {
-        invertLepCut_ = invLep;
+    void setInvLepCharge(bool invLepCharge) {
+        invertLepCharge_ = invLepCharge;
+    }
+    void setInvLepIso(bool invLepIso) {
+        invertLepIso_ = invLepIso;
     }
     void setTriggerFlag(std::string triggerFlag) {
         triggerFlag_ = triggerFlag;

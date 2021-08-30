@@ -96,10 +96,13 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         "Override the cut configuration given in the config file.")(
         "plotConf",
         po::value<std::string>(&plotConfName),
-        "Override the plot configuration given in the config file. Sets "
-        "--allPlots.")("invert,i",
-                       po::bool_switch(&invertLepCut),
-                       "Inverts the different charge cut for leptons.")(
+        "Override the plot configuration given in the config file. Sets --allPlots.")(
+        "invertCharge,i",
+        po::bool_switch(&invertLepCharge),
+        "Inverts the charge requirement for leptons.")(
+        "invertIso,j",
+        po::bool_switch(&invertLepIso),
+        "Inverts the iso requirement for leptons.")(
         "MC,m", po::bool_switch(&skipData), "Monte Carlo only mode. Ignores all data in the config file.")(
         "data,d", po::bool_switch(&skipMC), "Data only mode. Ignores all data in the config file.")(
         "bTag,t", po::bool_switch(&usebTagWeight), "Use b-tagging efficiencies to reweight the Monte Carlo. Currently requires -u.")(
@@ -340,18 +343,15 @@ void AnalysisAlgo::setupSystematics()
     systDownFile->Close();
 }
 
-void AnalysisAlgo::setupCuts()
-{
+void AnalysisAlgo::setupCuts() {
     // Make cuts object. The methods in it should perhaps just be i nthe
     // AnalysisEvent class....
-    cutObj = new Cuts{plots, plots, invertLepCut, is2016_, is2016APV_, is2018_};
+    cutObj = new Cuts{plots, plots, invertLepCharge, invertLepIso, is2016_, is2016APV_, is2018_};
 
-    try
-    {
+    try {
         cutObj->parse_config(cutConfName);
     }
-    catch (const std::exception)
-    {
+    catch (const std::exception) {
         std::cerr << "ERROR parsing cut configuration file" << std::endl;
         throw;
     }
@@ -359,8 +359,7 @@ void AnalysisAlgo::setupCuts()
     // For studying some trigger things. Default is false.
     cutObj->setSkipTrig(skipTrig);
     cutObj->setSkipScalarCut(skipScalarCut);
-    if (customJetRegion)
-    {
+    if (customJetRegion) {
         cutObj->setJetRegion(
             jetRegVars[0], jetRegVars[1], jetRegVars[2], jetRegVars[3]);
     }
@@ -374,11 +373,10 @@ void AnalysisAlgo::setupCuts()
     if (usingBparking_) cutObj->setBparking(true);
 }
 
-void AnalysisAlgo::setupPlots()
-{
+void AnalysisAlgo::setupPlots() {
     // Do a little initialisation for the plots here. Will later on be done in a
     // config file. Initialise plot stage names.
-    stageNames.emplace_back(std::make_pair("noSel", "pre-cuts"));
+    stageNames.emplace_back(std::make_pair("noSel", "Pre-cuts"));
     stageNames.emplace_back(std::make_pair("trigSel", "HLT cuts"));
     stageNames.emplace_back(std::make_pair("lepSel", "Muon cuts"));
     stageNames.emplace_back(std::make_pair("zCand", "m_{#mu#mu} cut"));
@@ -444,35 +442,20 @@ void AnalysisAlgo::runMainAnalysis() {
             if (plots) { // Initialise a load of stuff that's required by the plotting macro.
 
                 // Gather all variables for plotting to make it easier to follow
-                std::string histoName{dataset->getFillHisto()},
-                    plotLabel{dataset->getPlotLabel()},
-                    plotType{dataset->getPlotType()};
+                std::string histoName{dataset->getFillHisto()}, plotLabel{dataset->getPlotLabel()}, plotType{dataset->getPlotType()};
                 int plotColour{dataset->getColour()};
 
                 int systMask{1};
-                for (unsigned systInd{0}; systInd < systNames.size(); systInd++)
-                {
-                    if (systInd > 0 && !(systToRun & systMask))
-                    {
+                for (unsigned systInd{0}; systInd < systNames.size(); systInd++) {
+                    if (systInd > 0 && !(systToRun & systMask)) {
                         systMask = systMask << 1;
                         continue;
                     }
-                    if (cutFlowMap.find(histoName + systNames[systInd])
-                        == cutFlowMap.end())
+                    if (cutFlowMap.find(histoName + systNames[systInd]) == cutFlowMap.end())
                     {
                         const size_t numCutFlowBins{stageNames.size()};
-                        cutFlowMap[histoName] = new TH1D{
-                            (histoName + systNames[systInd] + "cutFlow")
-                                .c_str(),
-                            (histoName + systNames[systInd] + "cutFlow")
-                                .c_str(),
-                            boost::numeric_cast<int>(numCutFlowBins),
-                            0,
-                            boost::numeric_cast<double>(numCutFlowBins)};
-                        if (systInd == 0
-                            && datasetInfos.find(histoName)
-                                   == datasetInfos.end())
-                        {
+                        cutFlowMap[histoName] = new TH1D{(histoName + systNames[systInd] + "cutFlow").c_str(), (histoName + systNames[systInd] + "cutFlow").c_str(), boost::numeric_cast<int>(numCutFlowBins), 0, boost::numeric_cast<double>(numCutFlowBins)};
+                        if (systInd == 0 && datasetInfos.find(histoName) == datasetInfos.end()) {
                             legOrder.emplace_back(histoName);
                             plotOrder.emplace_back(histoName);
                             datasetInfos[histoName] = datasetInfo();
@@ -487,8 +470,7 @@ void AnalysisAlgo::runMainAnalysis() {
                             }
                             plotsMap[systNames[systInd] + channel][(histoName)] = {};
                             for (unsigned j{0}; j < stageNames.size(); j++) {
-                                plotsMap[systNames[systInd] + channel] [histoName][stageNames[j].first] = std::make_shared<Plots>(
-                                                plotTitles, plotNames, xMin, xMax, nBins, fillExp, xAxisLabels, cutStage, j, histoName + "_" + stageNames[j].first + systNames[systInd] + "_" + channel);
+                                plotsMap[systNames[systInd] + channel] [histoName][stageNames[j].first] = std::make_shared<Plots>(plotTitles, plotNames, xMin, xMax, nBins, fillExp, xAxisLabels, cutStage, j, histoName + "_" + stageNames[j].first + systNames[systInd] + "_" + channel);
                             }
                         }
                     } // end cutFlow find loop
@@ -508,8 +490,7 @@ void AnalysisAlgo::runMainAnalysis() {
             if (!usePostLepTree) {
                 if (!datasetFilled) {
                     if (!dataset->fillChain(datasetChain)) {
-                        std::cerr
-                            << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
+                        std::cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
                         continue;
                     }
                     datasetFilled = true;
@@ -518,68 +499,45 @@ void AnalysisAlgo::runMainAnalysis() {
             else {
                 std::string inputPostfix{};
                 inputPostfix += postfix;
-                if (invertLepCut)
-                    inputPostfix += "invLep";
+
+                if (invertLepCharge && !invertLepIso) inputPostfix += "invLepCharge";
+                else if (invertLepIso && !invertLepCharge) inputPostfix += "invLepIso";
+                else if (invertLepCharge && invertLepIso) inputPostfix  += "invLepChargeIso";
+
                 if (doNPLs_ && dataset->getPlotLabel() == "NPL") {
-                    inputPostfix +=
-                        "invLep"; // If plotting non-prompt leptons for this
-                                  // dataset, be sure to read in the same sign
-                                  // lepton post lepton skim!
-                    // If making plots which include non-prompt leptons, then
-                    // when running over "non-prompt" samples (as determined by
-                    // their label), set the cutClass object NPL flag to true
-                    // and invert charge seletion criteria, i.e. choose same
-                    // sign leptons
+                    inputPostfix += "invLepCharge"; // If plotting non-prompt leptons for this dataset, be sure to read in the same sign lepton post lepton skim!
+                    // If making plots which include non-prompt leptons, then when running over "non-prompt" samples (as determined by their label), set the cutClass object NPL flag to true and invert charge seletion criteria, i.e. choose same sign leptons
                     cutObj->setNplFlag(true);
-                    cutObj->setInvLepCut(true);
+                    cutObj->setInvLepCharge(true);
                 }
                 else if (doNPLs_ && dataset->getPlotLabel() != "NPL") {
                     cutObj->setNplFlag(false);
-                    cutObj->setInvLepCut(false);
+                    cutObj->setInvLepCharge(false);
                 }
-                std::cout << postLepSelSkimInputDir + dataset->name() + inputPostfix
-                                 + "SmallSkim.root"
-                          << std::endl;
-                datasetChain->Add((postLepSelSkimInputDir + dataset->name()
-                                   + inputPostfix + "SmallSkim.root")
-                                      .c_str());
+
+                std::cout << postLepSelSkimInputDir + dataset->name() + inputPostfix + "SmallSkim.root" << std::endl;
+                datasetChain->Add((postLepSelSkimInputDir + dataset->name() + inputPostfix + "SmallSkim.root").c_str());
             }
 
             cutObj->setMC(dataset->isMC());
             cutObj->setTriggerFlag(dataset->getTriggerFlag());
-            std::cout << "Trigger flag: " << dataset->getTriggerFlag()
-                      << std::endl;
+            std::cout << "Trigger flag: " << dataset->getTriggerFlag() << std::endl;
 
             // Here we will initialise the b-tag eff plots if we are doing b-tag
             // efficiencies
             std::vector<TH2D*> bTagEffPlots;
             std::vector<std::string> denomNum{"Denom", "Num"};
             std::vector<std::string> typesOfEff{"b", "c", "uds", "g"};
-            if (makePostLepTree && dataset->isMC())
-            {
+            if (makePostLepTree && dataset->isMC()) {
                 int ptBins{4};
                 int etaBins{4};
                 float ptMin{0};
                 float ptMax{200};
                 float etaMin{0};
                 float etaMax{2.4};
-                for (unsigned denNum{0}; denNum < denomNum.size(); denNum++)
-                {
-                    for (unsigned type{0}; type < typesOfEff.size(); type++)
-                    {
-                        bTagEffPlots.emplace_back(
-                            new TH2D{("bTagEff_" + denomNum[denNum] + "_"
-                                      + typesOfEff[type])
-                                         .c_str(),
-                                     ("bTagEff_" + denomNum[denNum] + "_"
-                                      + typesOfEff[type])
-                                         .c_str(),
-                                     ptBins,
-                                     ptMin,
-                                     ptMax,
-                                     etaBins,
-                                     etaMin,
-                                     etaMax});
+                for (unsigned denNum{0}; denNum < denomNum.size(); denNum++) {
+                    for (unsigned type{0}; type < typesOfEff.size(); type++) {
+                        bTagEffPlots.emplace_back(new TH2D{("bTagEff_" + denomNum[denNum] + "_" + typesOfEff[type]).c_str(), ("bTagEff_" + denomNum[denNum] + "_" + typesOfEff[type]).c_str(), ptBins, ptMin, ptMax, etaBins, etaMin, etaMax});
                     }
                 }
                 cutObj->setBTagPlots(bTagEffPlots, true);
@@ -590,23 +548,17 @@ void AnalysisAlgo::runMainAnalysis() {
                 std::string inputPostfix{};
                 inputPostfix += postfix;
                 if (doNPLs_ && dataset->getPlotLabel() == "NPL") {
-                    inputPostfix +=
-                        "invLep"; // If plotting non-prompt leptons for this
-                                  // dataset, be sure to read in the same sign
-                                  // lepton post lepton $
+                    inputPostfix += "invLepCharge"; // If plotting non-prompt leptons for this dataset, be sure to read in the same signlepton post lepton
                 }
-                if (invertLepCut)
-                    inputPostfix += "invLep";
+                if (invertLepCharge && !invertLepIso) inputPostfix += "invLepCharge";
+                else if (!invertLepCharge && invertLepIso) inputPostfix += "invLepIso";
+                else if (invertLepCharge && invertLepIso)  inputPostfix += "invLepChargeIso";
+
                 TFile* datasetFileForHists;
                 datasetFileForHists = new TFile((postLepSelSkimInputDir + dataset->name() + inputPostfix + "SmallSkim.root").c_str(), "READ");
                 for (unsigned denNum{0}; denNum < denomNum.size(); denNum++) {
                     for (unsigned eff{0}; eff < typesOfEff.size(); eff++) {
-                        bTagEffPlots.emplace_back(dynamic_cast<TH2D*>(
-                            datasetFileForHists
-                                ->Get(("bTagEff_" + denomNum[denNum] + "_"
-                                       + typesOfEff[eff])
-                                          .c_str())
-                                ->Clone()));
+                        bTagEffPlots.emplace_back(dynamic_cast<TH2D*>(datasetFileForHists->Get(("bTagEff_" + denomNum[denNum] + "_" + typesOfEff[eff]).c_str())->Clone()));
                     }
                 }
                 for (unsigned plotIt{0}; plotIt < bTagEffPlots.size(); plotIt++) {
@@ -622,11 +574,11 @@ void AnalysisAlgo::runMainAnalysis() {
                 if (usePostLepTree) {
                     std::string inputPostfix{};
                     inputPostfix += postfix;
-                    if (invertLepCut)
-                        inputPostfix += "invLep";
+                    if (invertLepCharge & !invertLepIso) inputPostfix += "invLepCharge";
+                    else if (!invertLepCharge && invertLepIso) inputPostfix += "invLepIso";
+                    else if (invertLepCharge && invertLepIso)  inputPostfix += "invLepChargeIso";
 
-                    if (doNPLs_ && dataset->getPlotLabel() == "NPL")
-                        inputPostfix += "invLep"; // If plotting non-prompt leptons for this dataset, be sure to read in the same sign lepton post lepton
+                    if (doNPLs_ && dataset->getPlotLabel() == "NPL") inputPostfix += "invLepCharge"; // If plotting non-prompt leptons for this dataset, be sure to read in the same sign lepton post lepton
  
                     TFile* datasetFileForHists;
                     datasetFileForHists = new TFile((postLepSelSkimInputDir + dataset->name()  + inputPostfix + "SmallSkim.root").c_str(), "READ");
@@ -642,8 +594,8 @@ void AnalysisAlgo::runMainAnalysis() {
 
             // extract the dataset weight. MC =
             // (lumi*crossSection)/(totalEvents), data = 1.0
-            float datasetWeight{dataset->getDatasetWeight(totalLumi)};
-
+//            float datasetWeight{dataset->getDatasetWeight(totalLumi)};
+            float datasetWeight = 1.;
             std::cout << datasetChain->GetEntries()
                       << " number of items in tree. Dataset weight: "
                       << datasetWeight << std::endl;
@@ -662,11 +614,10 @@ void AnalysisAlgo::runMainAnalysis() {
             // If we're making the post lepton selection trees, set them up
             // here.
             if (makePostLepTree) {
-                std::string invPostFix;
-                if (invertLepCut)
-                    invPostFix = "invLep";
+                std::string invChargePostFix;
+                if (invertLepCharge) invChargePostFix = "invLepCharge";
 
-                outFile1 = new TFile{(postLepSelSkimOutputDir + dataset->name() + postfix + invPostFix + "SmallSkim.root").c_str(), "RECREATE"};
+                outFile1 = new TFile{(postLepSelSkimOutputDir + dataset->name() + postfix + invChargePostFix + "SmallSkim.root").c_str(), "RECREATE"};
                 cloneTree = datasetChain->CloneTree(0);
                 cloneTree->SetDirectory(outFile1);
                 cutObj->setCloneTree(cloneTree);
@@ -693,68 +644,42 @@ void AnalysisAlgo::runMainAnalysis() {
 
             if (makeMVATree) {
                 boost::filesystem::create_directories(mvaDir);
-                std::string invPostFix{};
-                if (invertLepCut)
-                {
-                    invPostFix = "invLep";
-                }
-                mvaOutFile = new TFile{(mvaDir + dataset->name() + postfix
-                                        + (invertLepCut ? invPostFix : "")
-                                        + "mvaOut.root")
-                                           .c_str(),
-                                       "RECREATE"};
+                std::string invChargePostFix{};
+                if (invertLepCharge) invChargePostFix = "invLepCharge";
+
+                mvaOutFile = new TFile{(mvaDir + dataset->name() + postfix + (invertLepCharge ? invChargePostFix : "") + "mvaOut.root").c_str(), "RECREATE"};
                 mvaOutFile->SetCompressionSettings(ROOT::CompressionSettings(ROOT::kLZ4, 4));
-                if (!mvaOutFile->IsOpen())
-                {
-                    throw std::runtime_error(
-                        "MVA Tree TFile could not be opened!");
-                }
+                if (!mvaOutFile->IsOpen()) throw std::runtime_error("MVA Tree TFile could not be opened!");
+
                 int systMask{1};
-                // std::cout << "Making systematic trees for " <<
-                // dataset->name() << ": ";
-                for (unsigned systIn{0}; systIn < systNames.size(); systIn++)
-                {
+                // std::cout << "Making systematic trees for " << dataset->name() << ": ";
+                for (unsigned systIn{0}; systIn < systNames.size(); systIn++) {
                     // std::cout << systNames[systIn] << " ";
-                    //  	std::cout << "Making systs: " << systMask << " " <<
-                    //  systToRun << " " << systIn << " " << (systMask &
-                    //  systToRun) << std::endl;
+                    //  	std::cout << "Making systs: " << systMask << " " << systToRun << " " << systIn << " " << (systMask & systToRun) << std::endl;
                     /*  	if (systIn > 0 && !(systMask & systToRun)){
                       if (systIn > 0) systMask = systMask << 1;
                       continue;
                       }*/
                     mvaTree.emplace_back(datasetChain->CloneTree(0));
                     mvaTree[systIn]->SetDirectory(mvaOutFile);
-                    mvaTree[systIn]->SetName(
-                        (mvaTree[systIn]->GetName() + systNames[systIn])
-                            .c_str());
+                    mvaTree[systIn]->SetName((mvaTree[systIn]->GetName() + systNames[systIn]).c_str());
                     mvaTree[systIn]->Branch("eventWeight", &eventWeight, "eventWeight/D");
-                    mvaTree[systIn]->Branch(
-                        "zLep1Index", &zLep1Index, "zLep1Index/I");
-                    mvaTree[systIn]->Branch(
-                        "zLep2Index", &zLep2Index, "zLep2Index/I");
-                    mvaTree[systIn]->Branch(
-                        "wQuark1Index", &wQuark1Index, "wQuark1Index/I");
-                    mvaTree[systIn]->Branch(
-                        "wQuark2Index", &wQuark2Index, "wQuark2Index/I");
+                    mvaTree[systIn]->Branch("zLep1Index", &zLep1Index, "zLep1Index/I");
+                    mvaTree[systIn]->Branch("zLep2Index", &zLep2Index, "zLep2Index/I");
+                    mvaTree[systIn]->Branch("wQuark1Index", &wQuark1Index, "wQuark1Index/I");
+                    mvaTree[systIn]->Branch("wQuark2Index", &wQuark2Index, "wQuark2Index/I");
                     mvaTree[systIn]->Branch("jetInd", &jetInd, "jetInd[15]/I");
-                    mvaTree[systIn]->Branch(
-                        "jetSmearValue", &jetSmearValue, "jetSmearValue[15]/F");
-                    mvaTree[systIn]->Branch(
-                        "muonMomentumSF", &muonMomentumSF, "muonMomentumSF[2]/F");
-                    mvaTree[systIn]->Branch(
-                        "bJetInd", &bJetInd, "bJetInd[10]/I");
+                    mvaTree[systIn]->Branch("jetSmearValue", &jetSmearValue, "jetSmearValue[15]/F");
+                    mvaTree[systIn]->Branch("muonMomentumSF", &muonMomentumSF, "muonMomentumSF[2]/F");
+                    mvaTree[systIn]->Branch("bJetInd", &bJetInd, "bJetInd[10]/I");
                     mvaTree[systIn]->Branch("isMC", &isMC, "isMC/I");
-                    if (systIn > 0)
-                    {
-                        systMask = systMask << 1;
-                    }
+                    if (systIn > 0) systMask = systMask << 1;
                 }
                 std::cout << std::endl;
             }
 
             long long numberOfEvents{datasetChain->GetEntries()};
-            if (nEvents && nEvents < numberOfEvents)
-            {
+            if (nEvents && nEvents < numberOfEvents) {
                 numberOfEvents = nEvents;
             }
             //    datasetChain->Draw("numElePF2PAT","numMuonPF2PAT > 2");
@@ -822,7 +747,7 @@ void AnalysisAlgo::runMainAnalysis() {
                         continue;
                     }
 
-                    eventWeight = 1;
+                    eventWeight = 1.;
 
                     // apply generator weights here.
                     double generatorWeight{1.0};
@@ -872,7 +797,7 @@ void AnalysisAlgo::runMainAnalysis() {
 
                     // apply negative weighting for SameSign MC lepton samples
                     // so that further downstream
-                    if (dataset->isMC() && invertLepCut && !plots)
+                    if (dataset->isMC() && invertLepCharge && !plots)
                     {
                         eventWeight *= -1.0; // Should NOT be done when plotting non-prompts - separate code for that
                     }
@@ -998,10 +923,10 @@ void AnalysisAlgo::runMainAnalysis() {
 
             // Save mva outputs
             if (makeMVATree) {
-                std::string invPostFix{};
-                if (invertLepCut) invPostFix = "invLep";
+                std::string invChargePostFix{};
+                if (invertLepCharge) invChargePostFix = "invLepCharge";
 
-                std::cout << (mvaDir + dataset->name() + postfix + (invertLepCut ? invPostFix : "") + "mvaOut.root") << std::endl;
+                std::cout << (mvaDir + dataset->name() + postfix + (invertLepCharge ? invChargePostFix : "") + "mvaOut.root") << std::endl;
                 mvaOutFile->cd();
                 std::cout << std::endl;
                 int systMask{1};
@@ -1127,13 +1052,13 @@ std::string AnalysisAlgo::channelSetup(unsigned channelInd) {
             chanName += "mumu";
         }
         if (channelInd & 3) { // nominal samples
-            cutObj->setInvLepCut(false);
-            invertLepCut = false;
+            cutObj->setInvLepCharge(false);
+            invertLepCharge = false;
             chanName += "nom";
         }
         if (channelInd & 12) { // same sign samples
-            cutObj->setInvLepCut(true);
-            invertLepCut = true;
+            cutObj->setInvLepCharge(true);
+            invertLepCharge = true;
             chanName += "inv";
         }
         if (channelInd & 16) { // emu channel for ttbar background estimation
@@ -1148,8 +1073,8 @@ std::string AnalysisAlgo::channelSetup(unsigned channelInd) {
             cutObj->setCutConfTrigLabel("d");
             channel = "emu";
             postfix = "emu";
-            cutObj->setInvLepCut(true);
-            invertLepCut = true;
+            cutObj->setInvLepCharge(true);
+            invertLepCharge = true;
             chanName += "invemu";
         }
     }

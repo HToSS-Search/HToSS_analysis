@@ -49,7 +49,7 @@ const float looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {30.}, l
 const float invZMassCut_ {4.0}, chsMass_{0.13957018};
 
 // Diparticle cuts
-const double maxDileptonDeltaR_ {99999999.}, maxChsDeltaR_ {99999999.};
+const double maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4};
 const double scalarMassCut_{4.0}, higgsTolerence_ {10.};
 
 // debug flag
@@ -661,7 +661,9 @@ int main(int argc, char* argv[]) {
             std::vector<int> genMuonSortedIndex;
             std::vector<int> genPionIndex;
             std::vector<int> genKaonIndex;
+            std::vector<int> genChargedKaonIndex;
             std::vector<int> genKshortIndex;
+            std::vector<int> genKlongIndex;
 
             // gen particle loop
             for ( Int_t k = 0; k < event.nGenPar; k++ ) {
@@ -679,17 +681,29 @@ int main(int argc, char* argv[]) {
                     if ( hasScalarGrandparent ) genPionIndex.emplace_back(k);
                 }
                 else if ( pid == 321 && (motherId < 6 || motherId == 21 || motherId == 9000006 ) && motherId > 0 ) {
-                    if ( hasScalarGrandparent ) genKaonIndex.emplace_back(k);
+                    if ( hasScalarGrandparent ) {
+                        genChargedKaonIndex.emplace_back(k);
+                        genKaonIndex.emplace_back(k);
+                    }
+                }
+                else if ( pid == 130 && (motherId < 6 || motherId == 21 || motherId == 311 || motherId == 130 || motherId == 9000006 ) && motherId > 0 ) {
+                    if ( hasScalarGrandparent ) {
+                        genKlongIndex.emplace_back(k);
+                        genKaonIndex.emplace_back(k);
+                    }
                 }
                 else if ( pid == 310 && (motherId < 6 || motherId == 21 || motherId == 311 || motherId == 130 || motherId == 9000006) && motherId > 0 ) {
-                    if ( hasScalarGrandparent ) genKshortIndex.emplace_back(k);
+                    if ( hasScalarGrandparent ) {
+                        genKshortIndex.emplace_back(k);
+                        genKaonIndex.emplace_back(k);
+                    }
                 }
             }
 
             p_genHadronicDecayFractions->Fill(1.0, bool (genPionIndex.size() >= 2) );
-            p_genHadronicDecayFractions->Fill(2.0, bool (genKaonIndex.size() >= 2 || genKshortIndex.size() >= 2) );
+            p_genHadronicDecayFractions->Fill(2.0, bool (genKaonIndex.size() >= 2 ) );
             p_genHadronicDecayFractions->Fill(3.0, bool (genKshortIndex.size() >= 2) );
-            p_genHadronicDecayFractions->Fill(4.0, bool (genKaonIndex.size() >= 2) );
+            p_genHadronicDecayFractions->Fill(4.0, bool (genChargedKaonIndex.size() >= 2) );
 
 
             TLorentzVector genMuon1, genMuon2;

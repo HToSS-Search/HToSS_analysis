@@ -19,13 +19,15 @@
 
 Cuts::Cuts(const bool doPlots,
            const bool fillCutFlows,
-           const bool invertLepCut,
+           const bool invertLepCharge,
+           const bool invertLepIso,
            const bool is2016,
            const bool is2016APV,
            const bool is2018)
     : doPlots_{doPlots}
     , fillCutFlow_{fillCutFlows}
-    , invertLepCut_{invertLepCut}
+    , invertLepCharge_{invertLepCharge}
+    , invertLepIso_{invertLepIso}
     , is2016_{is2016}
     , is2016APV_{is2016APV}
     , is2018_{is2018}
@@ -749,7 +751,12 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
 
-            if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
+            if ( !invertLepCharge_ ) {
+                if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
+            }
+            else {
+                if (! (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) ) continue;
+            }
 
             TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
             TLorentzVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
@@ -762,8 +769,14 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                 event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
                 event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
 
-                if (!event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
-                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] > 1.0) continue;
+                if ( !invertLepIso_ ) {
+                    if (!event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
+                    if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] > 1.0) continue;
+                }
+                else {
+                    if (event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
+                    if (! (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] > 1.0) ) continue;
+                }
 
                 // pf quantities
                 float neutral_iso {0.0}, neutral_iso1 {0.0}, neutral_iso2 {0.0};

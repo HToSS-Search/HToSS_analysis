@@ -43,9 +43,9 @@ class AnalysisAlgo
     std::string histoDir;
     std::string postfix;
     std::string channel;
-    bool invertLepCut; // For z+jets background estimation
-    bool skipData; // utility stuff. True if flags are set and will skip either
-                   // data or mc.
+    bool invertLepCharge; // For background estimation
+    bool invertLepIso; // For background estimation
+    bool skipData; // utility stuff. True if flags are set and will skip either data or mc.
     bool skipMC;
     std::string cutConfName;
     std::string plotConfName;
