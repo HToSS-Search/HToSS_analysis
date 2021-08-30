@@ -357,7 +357,7 @@ void HistogramPlotter::makePlot(std::map<std::string, TH1D*> plotMap,
     if (writeExtraText) canvasName += "-prelim";
     if (is2016_) canvasName += "_2016";
     if (is2016APV_) canvasName += "_2016 APV";
-    else if (is2018_) canvasName += "_2018";
+    if (is2018_) canvasName += "_2017";
     else canvasName += "_2017";
 
     TCanvas* canvy = new TCanvas((canvasName).c_str(), (canvasName).c_str(), 50, 50, W, H);
@@ -602,7 +602,8 @@ void HistogramPlotter::CMS_lumi(TPad* pad, int posX)
     TString lumi_2016 = "16.8 fb^{-1}";
     TString lumi_2016APV = "19.5 fb^{-1}";
     TString lumi_2017 = "41.48 fb^{-1}";
-    TString lumi_2018 = "59.83 fb^{-1}";
+//    TString lumi_2018 = "59.83 fb^{-1}";
+    TString lumi_2018 = "41.48 fb^{-1}";
 
     bool drawLogo = false;
 
@@ -661,7 +662,7 @@ void HistogramPlotter::CMS_lumi(TPad* pad, int posX)
         lumiText += " (13 TeV)";
     }
     else if (is2018_) {
-        lumiText += lumi_2018;
+        lumiText += lumi_2017;
         lumiText += " (13 TeV)";
     }
     else {
@@ -901,3 +902,4 @@ void HistogramPlotter::setTDRStyle()
 
     tdrStyle->cd();
 }
+
