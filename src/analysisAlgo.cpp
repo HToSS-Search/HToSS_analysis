@@ -37,7 +37,7 @@ AnalysisAlgo::AnalysisAlgo()
     , is2016APV_{false}
     , is2018_{false}
     , usingBparking_{false}
-    , doNPLs_{false}
+    , doABCD_{false}
     , doZplusCR_{false}
     , noData_ {true}
     , unblind_ {false}
@@ -107,7 +107,7 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         "data,d", po::bool_switch(&skipMC), "Data only mode. Ignores all data in the config file.")(
         "bTag,t", po::bool_switch(&usebTagWeight), "Use b-tagging efficiencies to reweight the Monte Carlo. Currently requires -u.")(
         "Bparking,b", po::bool_switch(&usingBparking_), "Use B-parking")(
-        "NPLs", po::bool_switch(&doNPLs_), "Make or use NPL shapes")(
+        "ABCD", po::bool_switch(&doABCD_), "Make or use ABCD background estimation shapes")(
         "zPlus",po::bool_switch(&doZplusCR_), "Use Z+jets CR for dilepton channel. Region mwCut and metCut set by "
         "--mwCut and --metCut.")(
         "events,e",
@@ -179,6 +179,9 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         if ( !is2016_ && !is2018_ && !is2016APV_ ) std::cout << "Running in 2017 mode" << std::endl; 
         if ( is2018_ && !is2016_ && !is2016APV_) std::cout << "Running in 2018 mode" << std::endl; 
 
+        if ( invertLepCharge ) std::cout << "Inverting lepton charge requirement" << std::endl;
+        if ( invertLepIso ) std::cout << "Inverting lepton isolation requirement" << std::endl;
+
         if ( (is2016_ || is2016APV_) && is2018_ ) {
             throw std::logic_error(
                 "Default condition is to use 2017. One cannot set "
@@ -225,7 +228,7 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
     totalLumi = 0;
 
     try {
-        Parser::parse_config(config, datasets, totalLumi, plotTitles, plotNames, xMin, xMax, nBins, fillExp, xAxisLabels, cutStage, cutConfName, plotConfName, outFolder, postfix, channel, usePostLepTree,  doNPLs_);
+        Parser::parse_config(config, datasets, totalLumi, plotTitles, plotNames, xMin, xMax, nBins, fillExp, xAxisLabels, cutStage, cutConfName, plotConfName, outFolder, postfix, channel, usePostLepTree,  doABCD_);
     }
     catch (const std::exception)  {
         std::cerr << "ERROR Problem with a confugration file, see previous "
@@ -504,15 +507,29 @@ void AnalysisAlgo::runMainAnalysis() {
                 else if (invertLepIso && !invertLepCharge) inputPostfix += "invLepIso";
                 else if (invertLepCharge && invertLepIso) inputPostfix  += "invLepChargeIso";
 
-                if (doNPLs_ && dataset->getPlotLabel() == "NPL") {
-                    inputPostfix += "invLepCharge"; // If plotting non-prompt leptons for this dataset, be sure to read in the same sign lepton post lepton skim!
-                    // If making plots which include non-prompt leptons, then when running over "non-prompt" samples (as determined by their label), set the cutClass object NPL flag to true and invert charge seletion criteria, i.e. choose same sign leptons
-                    cutObj->setNplFlag(true);
+                if (doABCD_ && dataset->getPlotLabel() == "invLepCharge") {
+                    inputPostfix += "invLepCharge"; // If plotting data driven bkg estimate for this dataset, be sure to read in the correct skim (same sign or opposite iso)!
+                    // If making plots which include data driven bkg estimate, then when running over "non-prompt" samples (as determined by their label), set the cutClass object ABCD flag to true and invert charge seletion criteria, i.e. choose same sign leptons
+                    cutObj->setAbcdFlag(true);
+                    cutObj->setInvLepIso(false);
                     cutObj->setInvLepCharge(true);
                 }
-                else if (doNPLs_ && dataset->getPlotLabel() != "NPL") {
-                    cutObj->setNplFlag(false);
+                else if (doABCD_ && dataset->getPlotLabel() == "invLepIso") {
+                    inputPostfix += "invLepIso";
+                    cutObj->setAbcdFlag(true);
                     cutObj->setInvLepCharge(false);
+                    cutObj->setInvLepIso(true);
+                }
+      	       	else if (doABCD_ && dataset->getPlotLabel() == "invLepChargeIso") {
+                    inputPostfix += "invLepChargeIso";    
+                    cutObj->setAbcdFlag(true);
+                    cutObj->setInvLepCharge(true);
+                    cutObj->setInvLepIso(true);
+                }
+                else {
+                    cutObj->setAbcdFlag(false);
+                    cutObj->setInvLepCharge(false);
+                    cutObj->setInvLepIso(false);
                 }
 
                 std::cout << postLepSelSkimInputDir + dataset->name() + inputPostfix + "SmallSkim.root" << std::endl;
@@ -543,13 +560,21 @@ void AnalysisAlgo::runMainAnalysis() {
                 cutObj->setBTagPlots(bTagEffPlots, true);
             } // end btag eff plots.
             if (usePostLepTree && usebTagWeight && dataset->isMC()) {
-                // Get efficiency plots from the file. Will have to be from
-                // post-lep sel trees I guess.
+                // Get efficiency plots from the file. Will have to be from post-lep sel trees I guess.
+
                 std::string inputPostfix{};
                 inputPostfix += postfix;
-                if (doNPLs_ && dataset->getPlotLabel() == "NPL") {
+
+                if (doABCD_ && dataset->getPlotLabel() == "invLepCharge") {
                     inputPostfix += "invLepCharge"; // If plotting non-prompt leptons for this dataset, be sure to read in the same signlepton post lepton
                 }
+                else if (doABCD_ && dataset->getPlotLabel() == "invLepIso") {
+                    inputPostfix += "invLepIso"; // If plotting non-prompt leptons for this dataset, be sure to read in the same signlepton post lepton
+                }
+                else if	(doABCD_ && dataset->getPlotLabel() == "invLepChargeIso") {
+                    inputPostfix += "invLepChargeIso"; // If plotting non-prompt leptons for this dataset, be sure to read in the same signlepton post lepton
+       	       	}
+
                 if (invertLepCharge && !invertLepIso) inputPostfix += "invLepCharge";
                 else if (!invertLepCharge && invertLepIso) inputPostfix += "invLepIso";
                 else if (invertLepCharge && invertLepIso)  inputPostfix += "invLepChargeIso";
@@ -578,8 +603,10 @@ void AnalysisAlgo::runMainAnalysis() {
                     else if (!invertLepCharge && invertLepIso) inputPostfix += "invLepIso";
                     else if (invertLepCharge && invertLepIso)  inputPostfix += "invLepChargeIso";
 
-                    if (doNPLs_ && dataset->getPlotLabel() == "NPL") inputPostfix += "invLepCharge"; // If plotting non-prompt leptons for this dataset, be sure to read in the same sign lepton post lepton
- 
+                    if (doABCD_ && dataset->getPlotLabel() == "invLepCharge") inputPostfix += "invLepCharge"; // If plotting non-prompt leptons for this dataset, be sure to read in the same sign lepton post lepton
+                    else if (doABCD_ && dataset->getPlotLabel() == "invLepIso") inputPostfix += "invLepIso";
+                    else if (doABCD_ && dataset->getPlotLabel() == "invLepChargeIso") inputPostfix += "invLepChargeIso";
+
                     TFile* datasetFileForHists;
                     datasetFileForHists = new TFile((postLepSelSkimInputDir + dataset->name()  + inputPostfix + "SmallSkim.root").c_str(), "READ");
                     generatorWeightPlot = dynamic_cast<TH1I*>(datasetFileForHists->Get("weightHisto")->Clone());
@@ -614,10 +641,14 @@ void AnalysisAlgo::runMainAnalysis() {
             // If we're making the post lepton selection trees, set them up
             // here.
             if (makePostLepTree) {
-                std::string invChargePostFix;
-                if (invertLepCharge) invChargePostFix = "invLepCharge";
+                std::string invPostFix;
+                if (invertLepCharge && !invertLepIso) invPostFix = "invLepCharge";
+                else if (!invertLepCharge && invertLepIso) invPostFix = "invLepIso";
+                else if (invertLepCharge && invertLepIso)  invPostFix = "invLepChargeIso";
 
-                outFile1 = new TFile{(postLepSelSkimOutputDir + dataset->name() + postfix + invChargePostFix + "SmallSkim.root").c_str(), "RECREATE"};
+std::cout << "DEBUG: " << (postLepSelSkimOutputDir + dataset->name() + postfix + invPostFix + "SmallSkim.root").c_str() << std::endl;
+
+                outFile1 = new TFile{(postLepSelSkimOutputDir + dataset->name() + postfix + invPostFix + "SmallSkim.root").c_str(), "RECREATE"};
                 cloneTree = datasetChain->CloneTree(0);
                 cloneTree->SetDirectory(outFile1);
                 cutObj->setCloneTree(cloneTree);
@@ -626,11 +657,9 @@ void AnalysisAlgo::runMainAnalysis() {
             // If we're making the MVA tree, set it up here.
             TFile* mvaOutFile{nullptr};
             std::vector<TTree*> mvaTree;
-            // Add a few variables into the MVA tree for easy access of stuff
-            // like lepton index etc
+            // Add a few variables into the MVA tree for easy access of stuff like lepton index etc
             double eventWeight{0.};
-            int zLep1Index{
-                -1}; // Addresses in elePF2PATWhatever of the z lepton
+            int zLep1Index{-1}; // Addresses in elePF2PATWhatever of the z lepton
             int zLep2Index{-1};
             int wQuark1Index{-1};
             int wQuark2Index{-1};
@@ -644,10 +673,12 @@ void AnalysisAlgo::runMainAnalysis() {
 
             if (makeMVATree) {
                 boost::filesystem::create_directories(mvaDir);
-                std::string invChargePostFix{};
-                if (invertLepCharge) invChargePostFix = "invLepCharge";
+                std::string invPostFix{};
+                if (invertLepCharge && !invertLepIso) invPostFix = "invLepCharge";
+                else if (!invertLepCharge && invertLepIso) invPostFix = "invLepIso";   
+                else if (invertLepCharge && invertLepIso)  invPostFix = "invLepChargeIso";
 
-                mvaOutFile = new TFile{(mvaDir + dataset->name() + postfix + (invertLepCharge ? invChargePostFix : "") + "mvaOut.root").c_str(), "RECREATE"};
+                mvaOutFile = new TFile{(mvaDir + dataset->name() + postfix + invPostFix + "mvaOut.root").c_str(), "RECREATE"};
                 mvaOutFile->SetCompressionSettings(ROOT::CompressionSettings(ROOT::kLZ4, 4));
                 if (!mvaOutFile->IsOpen()) throw std::runtime_error("MVA Tree TFile could not be opened!");
 
@@ -797,16 +828,15 @@ void AnalysisAlgo::runMainAnalysis() {
 
                     // apply negative weighting for SameSign MC lepton samples
                     // so that further downstream
-                    if (dataset->isMC() && invertLepCharge && !plots)
-                    {
-                        eventWeight *= -1.0; // Should NOT be done when plotting non-prompts - separate code for that
-                    }
+//                    if (dataset->isMC() && invertLepCharge && !plots) {
+//                        eventWeight *= -1.0; // Should NOT be done when plotting non-prompts - separate code for that
+//                    }
 
                     // Apply in cutClass, as the RATIO weight of OS/SS
                     // non-prompts cannot be applied before charge cuts (Z cand
                     // cuts) are applied If NPLs shape (for plotting purposes)
                     // apply OS/SS ratio SF
-                    // if ( plots && doNpls_ && dataset->getPlotLabel() == "NPL"
+                    // if ( plots && doABCD_ && dataset->getPlotLabel() == "NPL"
                     // && !trileptonChannel_ ) { if ( channel == "ee" )
                     // eventWeight *= 1.24806; if ( channel == "mumu" )
                     // eventWeight *= 1.03226; if ( dataset->isMC() )
@@ -923,10 +953,12 @@ void AnalysisAlgo::runMainAnalysis() {
 
             // Save mva outputs
             if (makeMVATree) {
-                std::string invChargePostFix{};
-                if (invertLepCharge) invChargePostFix = "invLepCharge";
+                std::string invPostFix{};
+                if (invertLepCharge && !invertLepIso) invPostFix = "invLepCharge";
+                else if (!invertLepCharge && invertLepIso) invPostFix = "invLepIso";
+                else if (invertLepCharge && invertLepIso)  invPostFix = "invLepChargeIso";
 
-                std::cout << (mvaDir + dataset->name() + postfix + (invertLepCharge ? invChargePostFix : "") + "mvaOut.root") << std::endl;
+                std::cout << (mvaDir + dataset->name() + postfix + invPostFix + "mvaOut.root") << std::endl;
                 mvaOutFile->cd();
                 std::cout << std::endl;
                 int systMask{1};
@@ -978,8 +1010,6 @@ void AnalysisAlgo::savePlots() {
     // Now test out the histogram plotter class I just wrote.
     // Make the plotting object.
     if (plots) {
-std::cout << __LINE__ << " : " << __FILE__ << std::endl;
-std::cout << is2018_ << std::endl;
         HistogramPlotter plotObj = HistogramPlotter(legOrder, plotOrder, datasetInfos, (is2016_ || is2016APV_), is2018_, noData_);
 
         // If either making or reading in histos, then set the correct read in

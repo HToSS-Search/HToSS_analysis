@@ -89,7 +89,7 @@ Cuts::Cuts(const bool doPlots,
 
     , isMC_{true}
 
-    , isNPL_{false}
+    , isABCD_{false}
     , isZplusCR_{false}
 
     , postLepSelTree_{nullptr}
@@ -566,7 +566,7 @@ bool Cuts::makeLeptonCuts( AnalysisEvent& event, double& eventWeight, std::map<s
     if (doPlots_ || fillCutFlow_) cutFlow.Fill(1.5, eventWeight);
 
 
-    if (isNPL_) { // if is NPL channel
+    if (isABCD_) { // if is ABCD channel
         double eeWeight{1.0};
         double mumuWeight{1.0};
         double emuWeight{1.0};

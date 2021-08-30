@@ -68,7 +68,7 @@ class AnalysisAlgo
     bool is2016APV_;
     bool is2018_;
     bool usingBparking_;
-    bool doNPLs_;
+    bool doABCD_;
     bool doZplusCR_;
     bool noData_;
     bool unblind_;

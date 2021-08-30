@@ -153,9 +153,8 @@ class Cuts
     bool isMC_;
     std::string triggerFlag_;
     std::string postfixName_;
-    // Set the flag used to reject non-prompt leptons when making the NPL shapes
-    // for plotting purposes
-    bool isNPL_;
+    // Set the flag used to reject non-prompt leptons when making the ABCD shapes for plotting purposes
+    bool isABCD_;
     // Set the flag used to use the Z+jets CR
     bool isZplusCR_;
 
@@ -297,8 +296,8 @@ class Cuts
     void setBparking(bool usingBparking) {
         usingBparking_ = usingBparking;
     }
-    void setNplFlag(bool isNPL) {
-        isNPL_ = isNPL;
+    void setAbcdFlag(bool isABCD) {
+        isABCD_ = isABCD;
     }
     void setZplusControlRegionFlag(bool isZplusCR) {
         isZplusCR_ = isZplusCR;
