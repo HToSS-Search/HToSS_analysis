@@ -234,7 +234,7 @@ void SimpleAnalysis::runMainAnalysis() {
 
       // Fill other plots now!
       // All of	these plots use	packed PF muons, so the ones corresponding to the PAT muons are provided
-      fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, Obs, rate_signal, stat_signal, RNbg1, RNbg2, RObs, Rrate_signal, Rstat_signal, QCD_Kantiscalar, QCD_Pantiscalar, QCD_20Kantiscalar, QCD_20Pantiscalar, QCD_scalar, QCD_20scalar, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
+      fillPackedCandidatePlots(event, eventWeight, Nbg1, Nbg2, Obs, rate_signal, stat_signal, RNbg1, RNbg2, RObs, Rrate_signal, Rstat_signal, QCD_Kantiscalar, QCD_Pantiscalar, QCD_20Kantiscalar, QCD_20Pantiscalar, QCD_scalar, QCD_20scalar, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second,muIndex1,muIndex2);
       //fillMuonMomentumComparisonPlots(event, eventWeight, patMuons.first, patMuons.second, packedCandMuons.first, packedCandMuons.second, packedCandHadrons.first, packedCandHadrons.second);
 
     } // End loop over all events
@@ -731,7 +731,7 @@ void SimpleAnalysis::fillMuonReconstructionPlots(const AnalysisEvent& event, dou
   //END Muon Reconstruction function
 }
 
-void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double& eventWeight, Float_t& Nbg1, Float_t& Nbg2, Float_t& Obs, Float_t& rate_signal, Float_t& stat_signal, Float_t& RNbg1, Float_t& RNbg2, Float_t& RObs, Float_t& Rrate_signal, Float_t& Rstat_signal, Float_t& QCD_Kantiscalar, Float_t& QCD_Pantiscalar, Float_t& QCD_20Kantiscalar, Float_t& QCD_20Pantiscalar, Float_t& QCD_scalar, Float_t& QCD_20scalar, const int& patMuIndex1, const int& patMuIndex2, const int& muIndex1, const int& muIndex2, const int& chsIndex1, const int& chsIndex2) const {
+void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double& eventWeight, Float_t& Nbg1, Float_t& Nbg2, Float_t& Obs, Float_t& rate_signal, Float_t& stat_signal, Float_t& RNbg1, Float_t& RNbg2, Float_t& RObs, Float_t& Rrate_signal, Float_t& Rstat_signal, Float_t& QCD_Kantiscalar, Float_t& QCD_Pantiscalar, Float_t& QCD_20Kantiscalar, Float_t& QCD_20Pantiscalar, Float_t& QCD_scalar, Float_t& QCD_20scalar, const int& patMuIndex1, const int& patMuIndex2, const int& muIndex1, const int& muIndex2, const int& chsIndex1, const int& chsIndex2, const int& muIndex1, const int& muIndex2) const {
 
   //BEGIN Packed candidates
 
@@ -830,8 +830,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
 	
   // Setup LVecs for the muons for delR plotting
-  mm1.SetPtEtaPhiE(event.muonPF2PATPt[patMuIndex1],event.muonPF2PATEta[patMuIndex1],event.muonPF2PATPhi[patMuIndex1],event.muonPF2PATE[patMuIndex1]);
-  mm2.SetPtEtaPhiE(event.muonPF2PATPt[patMuIndex2],event.muonPF2PATEta[patMuIndex2],event.muonPF2PATPhi[patMuIndex2],event.muonPF2PATE[patMuIndex2]);
+  mm1.SetPtEtaPhiE(event.muonPF2PATPt[muIndex1],event.muonPF2PATEta[muIndex1],event.muonPF2PATPhi[muIndex1],event.muonPF2PATE[muIndex1]);
+  mm2.SetPtEtaPhiE(event.muonPF2PATPt[muIndex2],event.muonPF2PATEta[muIndex2],event.muonPF2PATPhi[muIndex2],event.muonPF2PATE[muIndex2]);
   
   Int_t muonTrkPairIndex = getMuonTrackPairIndex(event, patMuIndex1, patMuIndex2);
 	
@@ -858,7 +858,7 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
        if(RpionLVec2.DeltaR(packedCandLVec)<isoConeSize_) RPIsoSum2+=event.packedCandsPseudoTrkPt[k];
      }  
 	  
-     if(k!=patMuIndex1 && k!=patMuIndex2){      
+     if(k!=muIndex1 && k!=muIndex2){      
        if(mm1.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum1+=event.packedCandsPseudoTrkPt[k]; 
        if(mm2.DeltaR(packedCandLVec)<isoConeSize_) MuonIsoSum2+=event.packedCandsPseudoTrkPt[k];  
        
@@ -1098,8 +1098,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   //h_PIso2->Fill(PIsoSum2/event.packedCandsPseudoTrkPt[chsIndex2],event.packedCandsPseudoTrkPt[chsIndex2], eventWeight);
 
   if(mm1.DeltaR(mm2)<packedCandMuonDeltaR_){
-  h_MuonIsoSum1->Fill(MuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1], eventWeight);
-  h_MuonIsoSum2->Fill(MuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2], eventWeight);
+  h_MuonIsoSum1->Fill(MuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1], eventWeight);
+  h_MuonIsoSum2->Fill(MuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2], eventWeight);
   }
 
   if(RpionLVec1.DeltaR(RpionLVec2)<packedCandPionDeltaR_){	
@@ -1108,8 +1108,8 @@ void SimpleAnalysis::fillPackedCandidatePlots(const AnalysisEvent& event, double
   }
 
   if(Rmm1.DeltaR(Rmm2)<packedCandMuonDeltaR_){
-  h_RMuonIsoSum1->Fill(RMuonIsoSum1/event.packedCandsPseudoTrkPt[patMuIndex1], eventWeight);
-  h_RMuonIsoSum2->Fill(RMuonIsoSum2/event.packedCandsPseudoTrkPt[patMuIndex2], eventWeight);
+  h_RMuonIsoSum1->Fill(RMuonIsoSum1/event.packedCandsPseudoTrkPt[muIndex1], eventWeight);
+  h_RMuonIsoSum2->Fill(RMuonIsoSum2/event.packedCandsPseudoTrkPt[muIndex2], eventWeight);
   }
 	
   //h_pNentries->SetBinContent(1,eventWeight);
