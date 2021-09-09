@@ -39,7 +39,7 @@ class SimpleAnalysis
 
     void fillGeneratorPlots(const AnalysisEvent& event) const;
     void fillMuonReconstructionPlots(const AnalysisEvent& event, double& eventWeight, const int& muIndex1, const int& muIndex2) const;
-    void fillPackedCandidatePlots(const AnalysisEvent& event, double& eventWeight, Float_t& Nbg1, Float_t& Nbg2, Float_t& Obs, Float_t& rate_signal, Float_t& stat_signal, Float_t& RNbg1, Float_t& RNbg2, Float_t& RObs, Float_t& Rrate_signal, Float_t& Rstat_signal, Float_t& QCD_Kantiscalar, Float_t& QCD_Pantiscalar, Float_t& QCD_20Kantiscalar, Float_t& QCD_20Pantiscalar, Float_t& QCD_scalar, Float_t& QCD_20scalar, const int& patMuIndex1, const int& patMuIndex2, const int& muIndex1, const int& muIndex2, const int& pionIndex1, const int& pionIndex2, const int& muIndex1, const int& muIndex2) const;
+    void fillPackedCandidatePlots(const AnalysisEvent& event, double& eventWeight, Float_t& Nbg1, Float_t& Nbg2, Float_t& Obs, Float_t& rate_signal, Float_t& stat_signal, Float_t& RNbg1, Float_t& RNbg2, Float_t& RObs, Float_t& Rrate_signal, Float_t& Rstat_signal, Float_t& QCD_Kantiscalar, Float_t& QCD_Pantiscalar, Float_t& QCD_20Kantiscalar, Float_t& QCD_20Pantiscalar, Float_t& QCD_scalar, Float_t& QCD_20scalar, const int& patMuIndex1, const int& patMuIndex2, const int& packedmuIndex1, const int& packedmuIndex2, const int& pionIndex1, const int& pionIndex2, const int& muIndex1, const int& muIndex2) const;
 
     void fillMuonMomentumComparisonPlots(const AnalysisEvent& event, double& eventWeight, const int& patMuonIndex1, const int& patMuonIndex2, const int& packedMuonIndex1, const int& packedMuonIndex2, const int& pionIndex1, const int& pionIndex2) const;
 
