@@ -1,6 +1,6 @@
 name: "ZZZ"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VVV/ZZZ/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VVV/ZZZ/"
 cross_section: 0.01398
 mc: true
 histogram: "VVV"

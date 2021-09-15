@@ -1,6 +1,6 @@
 name: "WWZ"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VVV/WWZ/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VVV/WWZ/"
 cross_section: 0.1651
 mc: true
 histogram: "VVV"

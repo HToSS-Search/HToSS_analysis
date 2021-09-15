@@ -1,6 +1,6 @@
 name: "ttW2q"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ttV/ttW_qq/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/ttV/ttW_qq/"
 cross_section: 0.4316
 mc: true
 histogram: "ttV"

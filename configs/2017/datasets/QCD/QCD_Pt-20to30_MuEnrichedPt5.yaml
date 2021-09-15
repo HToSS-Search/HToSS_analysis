@@ -1,6 +1,6 @@
 name: "QCD_Pt-20to30_MuEnrichedPt5"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/QCD/QCD_Pt-20to30_MuEnrichedPt5/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/QCD/QCD_Pt-20to30_MuEnrichedPt5/"
 cross_section: 2526000.0
 mc: true
 histogram: "QCD"
