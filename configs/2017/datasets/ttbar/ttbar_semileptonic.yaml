@@ -1,6 +1,6 @@
 name: "ttbar_semileptonic"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ttbar/ttbar_semileptonic/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/ttbar/ttbar_semileptonic/"
 cross_section: 365.34
 mc: true
 histogram: "ttbar"

@@ -1,6 +1,6 @@
 name: "ZG_lnug"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VV/ZG_llg"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VV/ZG_llg"
 cross_section: 51.5
 mc: true
 histogram: "VV"
