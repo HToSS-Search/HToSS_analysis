@@ -1,9 +1,0 @@
-name: "ttjets"
-locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ttbar/ttjets/"
-cross_section: 722.8
-mc: true
-histogram: "ttjets"
-colour: "#ffff33"
-label: "ttjets"
-plot_type: "f"

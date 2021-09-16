@@ -1,6 +1,6 @@
 name: "ttbar_2l2nu"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ttbar/ttbar_2l2nu/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/ttbar/ttbar_2l2nu/"
 cross_section: 88.29
 mc: true
 histogram: "ttbar"

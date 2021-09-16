@@ -1,0 +1,9 @@
+name: "wPlusJets_v2"
+locations:
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/Wjets/Wjets/"
+mc: true
+cross_section: 52940.0
+histogram: "wJets"
+colour: "#ffff33"
+label: "W+jets"
+plot_type: "f"

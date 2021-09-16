@@ -1,9 +1,0 @@
-name: "ttbar_2l2nu_hdampUp"
-locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ttbar/ttbar_2l2nu_hdampUP/"
-cross_section: 88.29
-mc: true
-histogram: "ttbar"
-colour: "#8aefff"
-label: "t#bar{t}"
-plot_type: "f"

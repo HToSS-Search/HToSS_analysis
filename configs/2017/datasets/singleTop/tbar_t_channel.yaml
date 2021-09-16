@@ -1,6 +1,6 @@
 name: "tbar_t_channel"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/singleTop/tbar_t_channel/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/singleTop/tbar_t_channel/"
 cross_section: 67.91
 mc: true
 histogram: "SingleTop"
