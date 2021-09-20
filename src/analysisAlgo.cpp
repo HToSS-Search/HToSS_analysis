@@ -412,8 +412,8 @@ void AnalysisAlgo::runMainAnalysis() {
     else if (is2016APV_) era = "2016APV";
     else if (is2018_) era = "2018";
     else era = "2017";
-    const std::string postLepSelSkimOutputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "/"};
-    const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "/"};
+    const std::string postLepSelSkimOutputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "_legacy/"};
+    const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "_legacy/"};
 
     // Begin to loop over all datasets
     for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset) {
@@ -425,7 +425,7 @@ void AnalysisAlgo::runMainAnalysis() {
         const std::hash<std::string> hasher;
         srand(hasher(dataset->name()));
 
-        channelIndMax = 64;
+        channelIndMax = 8;
         for (unsigned channelInd{1}; channelInd != channelIndMax; channelInd = channelInd << 1) {
             if (!(channelInd & channelsToRun) && channelsToRun) {
                 continue;
@@ -599,6 +599,7 @@ void AnalysisAlgo::runMainAnalysis() {
                 if (usePostLepTree) {
                     std::string inputPostfix{};
                     inputPostfix += postfix;
+
                     if (invertLepCharge & !invertLepIso) inputPostfix += "invLepCharge";
                     else if (!invertLepCharge && invertLepIso) inputPostfix += "invLepIso";
                     else if (invertLepCharge && invertLepIso)  inputPostfix += "invLepChargeIso";
@@ -642,11 +643,10 @@ void AnalysisAlgo::runMainAnalysis() {
             // here.
             if (makePostLepTree) {
                 std::string invPostFix;
+
                 if (invertLepCharge && !invertLepIso) invPostFix = "invLepCharge";
                 else if (!invertLepCharge && invertLepIso) invPostFix = "invLepIso";
                 else if (invertLepCharge && invertLepIso)  invPostFix = "invLepChargeIso";
-
-std::cout << "DEBUG: " << (postLepSelSkimOutputDir + dataset->name() + postfix + invPostFix + "SmallSkim.root").c_str() << std::endl;
 
                 outFile1 = new TFile{(postLepSelSkimOutputDir + dataset->name() + postfix + invPostFix + "SmallSkim.root").c_str(), "RECREATE"};
                 cloneTree = datasetChain->CloneTree(0);
@@ -674,6 +674,7 @@ std::cout << "DEBUG: " << (postLepSelSkimOutputDir + dataset->name() + postfix +
             if (makeMVATree) {
                 boost::filesystem::create_directories(mvaDir);
                 std::string invPostFix{};
+
                 if (invertLepCharge && !invertLepIso) invPostFix = "invLepCharge";
                 else if (!invertLepCharge && invertLepIso) invPostFix = "invLepIso";   
                 else if (invertLepCharge && invertLepIso)  invPostFix = "invLepChargeIso";
@@ -954,6 +955,7 @@ std::cout << "DEBUG: " << (postLepSelSkimOutputDir + dataset->name() + postfix +
             // Save mva outputs
             if (makeMVATree) {
                 std::string invPostFix{};
+
                 if (invertLepCharge && !invertLepIso) invPostFix = "invLepCharge";
                 else if (!invertLepCharge && invertLepIso) invPostFix = "invLepIso";
                 else if (invertLepCharge && invertLepIso)  invPostFix = "invLepChargeIso";
@@ -1067,45 +1069,26 @@ std::string AnalysisAlgo::channelSetup(unsigned channelInd) {
     std::string chanName{};
 
     if (channelsToRun) {
-        if (channelInd & 5) { // ee channels
+        if (channelInd & 1) { // ee channels
             cutObj->setNumLeps(0, 0, 2, 2);
             cutObj->setCutConfTrigLabel("e");
             channel = "ee";
             postfix = "ee";
             chanName += "ee";
         }
-        if (channelInd & 10) { // mumu channels
+        if (channelInd & 2) { // mumu channels
             cutObj->setNumLeps(2, 2, 0, 0);
             cutObj->setCutConfTrigLabel("m");
             channel = "mumu";
             postfix = "mumu";
             chanName += "mumu";
         }
-        if (channelInd & 3) { // nominal samples
-            cutObj->setInvLepCharge(false);
-            invertLepCharge = false;
-            chanName += "nom";
-        }
-        if (channelInd & 12) { // same sign samples
-            cutObj->setInvLepCharge(true);
-            invertLepCharge = true;
-            chanName += "inv";
-        }
-        if (channelInd & 16) { // emu channel for ttbar background estimation
+        if (channelInd & 4) { // emu channel for ttbar background estimation
             cutObj->setNumLeps(1, 1, 1, 1);
             cutObj->setCutConfTrigLabel("d");
             channel = "emu";
             postfix = "emu";
             chanName += "emu";
-        }
-        if (channelInd & 32) { // same signemu channel for NPL ttbar background estimation
-            cutObj->setNumLeps(1, 1, 1, 1);
-            cutObj->setCutConfTrigLabel("d");
-            channel = "emu";
-            postfix = "emu";
-            cutObj->setInvLepCharge(true);
-            invertLepCharge = true;
-            chanName += "invemu";
         }
     }
     return chanName;
