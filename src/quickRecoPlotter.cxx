@@ -678,7 +678,7 @@ std::vector<int> getLooseMuons(const AnalysisEvent& event) {
             else if (muons.size() >= 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEta_) continue;
 
         //    if (event.genMuonPF2PATMotherId[i] != 9000006) continue;
-        //    muons.emplace_back(i);
+            muons.emplace_back(i);
 
         } //
     }
