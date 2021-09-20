@@ -1,7 +1,7 @@
 name: "mumuRun2017C"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/SingleMuon/Run2017C"
-luminosity: 8000.356169928
+luminosity: 9572.498263748
 mc: false
 histogram: "data"
 label: "Data"
