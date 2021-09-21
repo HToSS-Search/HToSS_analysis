@@ -42,8 +42,8 @@ int getMuonTrackPairIndex(const AnalysisEvent& event);
 int getChsTrackPairIndex(const AnalysisEvent& event);
 float deltaR(float eta1, float phi1, float eta2, float phi2);
 
-    bool is2016_;
-    bool is2018_;
+bool is2016_;
+bool is2018_;
 
 namespace fs = boost::filesystem;
 
@@ -212,6 +212,8 @@ int main(int argc, char* argv[]) {
 
             float eventWeight = 1.;
 
+            eventWeight *= datasetWeight;
+
             // Trigger + met filters
             if (!event.muTrig()) continue;
             if (!event.metFilters()) continue;
@@ -222,18 +224,47 @@ int main(int argc, char* argv[]) {
             if ( looseMuonIndex.size() < 2 ) continue;
 
 //            getDileptonCand( event, looseMuonIndex, invertCharge, invertDimuonIso, invertLeadingIso, invertSubleadingIso);
+
             getDileptonCand( event, looseMuonIndex, false, false, false, false );
             const TLorentzVector muon1Vec {event.zPairLeptons.first}, muon2Vec {event.zPairLeptons.second};
+            const float muRelIso1 {event.zPairNewRelIso.first}, muRelIso2 {event.zPairNewRelIso.second}, mumuRelIso {event.zRelIso};
+
+//            getDileptonCand( event, looseMuonIndex, true, false, false, false );
+//            const TLorentzVector muon1VecAlt {event.zPairLeptons.first}, muon2VecAlt {event.zPairLeptons.second};
+//            const float muRelIso1Alt {event.zPairNewRelIso.first}, muRelIso2Alt {event.zPairNewRelIso.second}, mumuRelIsoAlt {event.zRelIso};
 
             // Get CHS
             std::vector<int> chsIndex = getChargedHadronTracks(event);
             if ( chsIndex.size() < 2 ) continue;
 //            getDihadronCand(event, chsIndex, invertCharge, invertDihadronIso, invertLeadingIso, invertSubleadingIso);
-            getDihadronCand(event, chsIndex, false, false, false, false );
 
-            const TLorentzVector chs1Vec{event.chsPairVec.first}, chs2Vec{event.chsPairVec.second};
+            getDihadronCand(event, chsIndex, false, false, false, false );
+            const TLorentzVector chs1Vec {event.chsPairVec.first}, chs2Vec {event.chsPairVec.second};
+            const float chsRelIso1 {event.chsPairRelIso.first}, chsRelIso2 {event.chsPairRelIso.second}, dichsRelIso {event.chsRelIso};
+
+//            getDihadronCand(event, chsIndex, true, false, false, false );
+//            const TLorentzVector chs1VecAlt {event.chsPairVec.first}, chs2VecAlt {event.chsPairVec.second};
+//            const float chsRelIso1Alt {event.chsPairRelIso.first}, chsRelIso2Alt {event.chsPairRelIso.second}, dichsRelIsoAlt {event.chsRelIso};
 
             // Fill plots
+//            h_qMuonOverQhadrons->Fill();
+//            h_qMuonOverRelIsoMuMu->Fill();
+//            h_qMuonOverRelIsoQq->Fill();
+//            h_qMuonOverRelIsoMu1->Fill();
+//            h_qMuonOverRelIsoMu2->Fill();
+//            h_qMuonOverRelIsoQ1->Fill();
+//            h_qMuonOverRelIsoQ2->Fill();
+//            h_qHadronsOverRelIsoMuMu->Fill();
+//            h_qHadronsOverRelIsoQq->Fill();
+//            h_qHadronsOverRelIsoMu1->Fill();
+//            h_qHadronsOverRelIsoMu2->Fill();
+//            h_qHadronsOverRelIsoQ1->Fill();
+//            h_qHadronsOverRelIsoQ2->Fill();
+            h_relIsoMuMuOverRelIsoQq->Fill(mumuRelIso, dichsRelIso, eventWeight);
+            h_relIsoMuMuOverRelIsoQ1->Fill(mumuRelIso, chsRelIso1, eventWeight);
+            h_relIsoMuMuOverRelIsoQ2->Fill(mumuRelIso, chsRelIso2, eventWeight);
+            h_relIsoQqOverRelIsoMu1->Fill(dichsRelIso, muRelIso1, eventWeight);
+            h_relIsoQqOverRelIsoMu2->Fill(dichsRelIso, muRelIso2, eventWeight);
 
         } // end event loop
     } // end dataset loop
@@ -323,7 +354,12 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const 
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
 
-            if (! (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) ) continue;
+            if ( !invertCharge ) {
+                if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
+            }
+            else {
+                if (! (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) ) continue;
+            }
 
             TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
             TLorentzVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
@@ -439,7 +475,12 @@ bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs, const bo
             if ( event.packedCandsMuonIndex[chs[j]] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
 
 
-            if (! (event.packedCandsCharge[chs[i]] * event.packedCandsCharge[chs[j]] >= 0) ) continue;
+            if ( !invertCharge ) {
+                if (event.packedCandsCharge[chs[i]] * event.packedCandsCharge[chs[j]] >= 0) continue;
+            }
+            else {
+                if (! (event.packedCandsCharge[chs[i]] * event.packedCandsCharge[chs[j]] >= 0) ) continue;
+            }
 
             TLorentzVector chs1 {event.packedCandsPx[chs[i]], event.packedCandsPy[chs[i]], event.packedCandsPz[chs[i]], event.packedCandsE[chs[i]]};
             TLorentzVector chs2 {event.packedCandsPx[chs[j]], event.packedCandsPy[chs[j]], event.packedCandsPz[chs[j]], event.packedCandsE[chs[j]]};
