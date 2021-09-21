@@ -35,13 +35,15 @@
 
 std::vector<int> getLooseMuons(const AnalysisEvent& event);
 std::vector<int> getChargedHadronTracks(const AnalysisEvent& event);
-std::vector<int> getPromptMuons(const AnalysisEvent& event, const std::vector<int>& muonIndex, const bool getPrompt );
 
-bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool mcTruth = false);
-bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chsIndex, bool mcTruth = false);
+bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons);
+bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chsIndex);
 int getMuonTrackPairIndex(const AnalysisEvent& event);
 int getChsTrackPairIndex(const AnalysisEvent& event);
 float deltaR(float eta1, float phi1, float eta2, float phi2);
+
+    bool is2016_;
+    bool is2018_;
 
 namespace fs = boost::filesystem;
 
@@ -64,8 +66,6 @@ int main(int argc, char* argv[]) {
     bool mcTruth_ {false};
    
     std::string outFileString{"plots/distributions/output.root"};
-    bool is2016_;
-    bool is2018_;
     Long64_t nEvents;
     Long64_t totalEvents {0};
     const std::regex mask{".*\\.root"};
@@ -116,12 +116,10 @@ int main(int argc, char* argv[]) {
         "2018", po::bool_switch(&is2018_), "Use 2018 conditions (SFs, et al.).");
     po::variables_map vm;
 
-    try
-    {
+    try {
         po::store(po::parse_command_line(argc, argv, desc), vm);
 
-        if (vm.count("help"))
-        {
+        if (vm.count("help")) {
             std::cout << desc;
             return 0;
         }
@@ -134,8 +132,7 @@ int main(int argc, char* argv[]) {
                 " one or none!");
         }
     }
-    catch (po::error& e)
-    {
+    catch (po::error& e) {
         std::cerr << "ERROR: " << e.what() << std::endl;
         return 1;
     }
@@ -143,15 +140,13 @@ int main(int argc, char* argv[]) {
     // Some vectors that will be filled in the parsing
     totalLumi = 0;
 
-    try
-    {
+    try {
         Parser::parse_config(config,
                              datasets,
                              totalLumi,
                              usePostLepTree);
     }
-    catch (const std::exception)
-    {
+    catch (const std::exception) {
         std::cerr << "ERROR Problem with a confugration file, see previous "
                      "errors for more details. If this is the only error, the "
                      "problem is with the main configuration file."
@@ -159,8 +154,7 @@ int main(int argc, char* argv[]) {
         throw;
     }
 
-    if (totalLumi == 0.)
-    {
+    if (totalLumi == 0.) {
         totalLumi = usePreLumi;
     }
     std::cout << "Using lumi: " << totalLumi << std::endl;
@@ -223,7 +217,7 @@ int main(int argc, char* argv[]) {
 
             if ( looseMuonIndex.size() < 2 ) continue;
 
-            getDileptonCand( event, looseMuonIndex, false);
+            getDileptonCand( event, looseMuonIndex);
 	
             if (!event.metFilters()) continue;
 
@@ -272,9 +266,32 @@ int main(int argc, char* argv[]) {
 
 std::vector<int> getLooseMuons(const AnalysisEvent& event) {
     std::vector<int> muons;
-    for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-       if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && event.muonPF2PATPfIsoVeryLoose[i] && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
-           if (event.muonPF2PATPt[i] >= (muons.empty() ? looseMuonPtLeading_ : looseMuonPt_)) muons.emplace_back(i);
+    if (is2016_) {
+        for (int i{0}; i < event.numMuonPF2PAT; i++) {
+            if (!event.muonPF2PATIsPFMuon[i]) continue;
+
+            if (muons.size() < 1 && event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
+            else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= looseMuonPt_) continue;
+
+            if (muons.size() < 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEta_) continue;
+            else if (muons.size() >= 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEta_) continue;
+
+            if (event.muonPF2PATComRelIsodBeta[i] >= looseMuonRelIso_)  continue;
+            if (event.muonPF2PATGlobalID[i] || event.muonPF2PATTrackID[i])  muons.emplace_back(i);
+        }
+    }
+    else {
+        for (int i{0}; i < event.numMuonPF2PAT; i++)  {
+            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] /* && event.muonPF2PATPfIsoVeryLoose[i] */ ) {
+
+                if (muons.size() < 1 && event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
+                else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= looseMuonPt_) continue;
+
+                if (muons.size() < 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEta_) continue;
+                else if (muons.size() >= 1 && std::abs(event.muonPF2PATEta[i]) >= looseMuonEta_) continue;
+
+                muons.emplace_back(i);
+            }
         }
     }
     return muons;
@@ -294,19 +311,12 @@ std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) {
     return chs;
 }
 
-std::vector<int> getPromptMuons(const AnalysisEvent& event, const std::vector<int>& muonIndex, const bool getPrompt ) {
-    std::vector<int> muons;
-    for ( auto it = muonIndex.begin(); it!= muonIndex.end(); it++ ) {
-        if ( event.genMuonPF2PATHardProcess[*it] == getPrompt ) muons.push_back(*it);
-    }
-    return muons;
-}
+bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) {    // Check if there are at least two electrons first. Otherwise use muons.
 
-bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool mcTruth) {
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
 
-            if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
+            if (! (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) ) continue;
 
             TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
             TLorentzVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
@@ -409,7 +419,8 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
     return false;
 }
 
-bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth ) {
+bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) {
+
     for ( unsigned int i{0}; i < chs.size(); i++ ) {
 
         if ( event.packedCandsMuonIndex[chs[i]] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
@@ -420,7 +431,8 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
             if ( event.packedCandsMuonIndex[chs[j]] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
             if ( event.packedCandsMuonIndex[chs[j]] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
 
-            if (event.packedCandsCharge[chs[i]] * event.packedCandsCharge[chs[j]] >= 0) continue;
+
+            if (! (event.packedCandsCharge[chs[i]] * event.packedCandsCharge[chs[j]] >= 0) ) continue;
 
             TLorentzVector chs1 {event.packedCandsPx[chs[i]], event.packedCandsPy[chs[i]], event.packedCandsPz[chs[i]], event.packedCandsE[chs[i]]};
             TLorentzVector chs2 {event.packedCandsPx[chs[j]], event.packedCandsPy[chs[j]], event.packedCandsPz[chs[j]], event.packedCandsE[chs[j]]};
