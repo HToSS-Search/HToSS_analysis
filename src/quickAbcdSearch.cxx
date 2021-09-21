@@ -36,8 +36,8 @@
 std::vector<int> getLooseMuons(const AnalysisEvent& event);
 std::vector<int> getChargedHadronTracks(const AnalysisEvent& event);
 
-bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons);
-bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chsIndex);
+bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const bool invertCharge, const bool invertDimuonIso, const bool invertLeadingIso, const bool invertSubleadingIso);
+bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chsIndex, const bool invertCharge, const bool invertDihadronIso, const bool invertLeadingIso, const bool invertSubleadingIso);
 int getMuonTrackPairIndex(const AnalysisEvent& event);
 int getChsTrackPairIndex(const AnalysisEvent& event);
 float deltaR(float eta1, float phi1, float eta2, float phi2);
@@ -212,40 +212,28 @@ int main(int argc, char* argv[]) {
 
             float eventWeight = 1.;
 
+            // Trigger + met filters
+            if (!event.muTrig()) continue;
+            if (!event.metFilters()) continue;
+
             // Get muons
             std::vector<int> looseMuonIndex = getLooseMuons(event);
 
             if ( looseMuonIndex.size() < 2 ) continue;
 
-            getDileptonCand( event, looseMuonIndex);
-	
-            if (!event.metFilters()) continue;
-
-            const bool passSingleMuonTrigger {event.muTrig()}, passDimuonTrigger {event.mumuTrig()};
-            const bool passL2MuonTrigger {event.mumuL2Trig()}, passDimuonNoVtxTrigger {event.mumuNoVtxTrig()};
-
-            const bool passTriggers ( event.muTrig() );
-
-//            const int index1 {event.zPairIndex.first}, index2 {event.zPairIndex.second};
+//            getDileptonCand( event, looseMuonIndex, invertCharge, invertDimuonIso, invertLeadingIso, invertSubleadingIso);
+            getDileptonCand( event, looseMuonIndex, false, false, false, false );
             const TLorentzVector muon1Vec {event.zPairLeptons.first}, muon2Vec {event.zPairLeptons.second};
 
-             int idx1 {event.muonPF2PATPackedCandIndex[event.zPairIndex.first]};
-             int idx2 {event.muonPF2PATPackedCandIndex[event.zPairIndex.second]};
-
-            TLorentzVector muon1VecNew{event.packedCandsPseudoTrkPx[idx1], event.packedCandsPseudoTrkPy[idx1], event.packedCandsPseudoTrkPz[idx1], event.packedCandsE[idx1]};
-            TLorentzVector muon2VecNew{event.packedCandsPseudoTrkPx[idx2], event.packedCandsPseudoTrkPy[idx2], event.packedCandsPseudoTrkPz[idx2], event.packedCandsE[idx2]};
-
             // Get CHS
-
             std::vector<int> chsIndex = getChargedHadronTracks(event);
             if ( chsIndex.size() < 2 ) continue;
-            if (!getDihadronCand(event, chsIndex)) continue;
-
-//            float muScalarMass ( (event.zPairLeptons.first + event.zPairLeptons.second).M() ), hadScalarMass ( (event.chsTrkPairVec.first + event.chsTrkPairVec.second).M() );
-//            if ( muScalarMass  < hadScalarMass*1.25 && muScalarMass  >= hadScalarMass*.75 ) return false;
-//            if ( hadScalarMass < muScalarMass*1.25  && hadScalarMass >= muScalarMass*.75  ) return false;
+//            getDihadronCand(event, chsIndex, invertCharge, invertDihadronIso, invertLeadingIso, invertSubleadingIso);
+            getDihadronCand(event, chsIndex, false, false, false, false );
 
             const TLorentzVector chs1Vec{event.chsPairVec.first}, chs2Vec{event.chsPairVec.second};
+
+            // Fill plots
 
         } // end event loop
     } // end dataset loop
@@ -254,6 +242,25 @@ int main(int argc, char* argv[]) {
     outFile->cd();
 
     // Write out histos
+
+    h_qMuonOverQhadrons->Write();
+    h_qMuonOverRelIsoMuMu->Write();
+    h_qMuonOverRelIsoQq->Write();
+    h_qMuonOverRelIsoMu1->Write();
+    h_qMuonOverRelIsoMu2->Write();
+    h_qMuonOverRelIsoQ1->Write();
+    h_qMuonOverRelIsoQ2->Write();
+    h_qHadronsOverRelIsoMuMu->Write();
+    h_qHadronsOverRelIsoQq->Write();
+    h_qHadronsOverRelIsoMu1->Write();
+    h_qHadronsOverRelIsoMu2->Write();
+    h_qHadronsOverRelIsoQ1->Write();
+    h_qHadronsOverRelIsoQ2->Write();
+    h_relIsoMuMuOverRelIsoQq->Write();
+    h_relIsoMuMuOverRelIsoQ1->Write();
+    h_relIsoMuMuOverRelIsoQ2->Write();
+    h_relIsoQqOverRelIsoMu1->Write();
+    h_relIsoQqOverRelIsoMu2->Write();
 
     outFile->Close();
 
@@ -311,7 +318,7 @@ std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) {
     return chs;
 }
 
-bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) {    // Check if there are at least two electrons first. Otherwise use muons.
+bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const bool invertCharge = false, const bool invertDimuonIso = false, const bool invertLeadingIso = false, const bool invertSubleadingIso = false) { 
 
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
@@ -419,7 +426,7 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) {    /
     return false;
 }
 
-bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) {
+bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs, const bool invertCharge = false, const bool invertDihadronIso = false, const bool invertLeadingIso = false, const bool invertSubleadingIso = false) {
 
     for ( unsigned int i{0}; i < chs.size(); i++ ) {
 
