@@ -36,8 +36,8 @@
 std::vector<int> getLooseMuons(const AnalysisEvent& event);
 std::vector<int> getChargedHadronTracks(const AnalysisEvent& event);
 
-bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const bool invertCharge, const bool invertDimuonIso, const bool invertLeadingIso, const bool invertSubleadingIso);
-bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chsIndex, const bool invertCharge, const bool invertDihadronIso, const bool invertLeadingIso, const bool invertSubleadingIso);
+bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const bool invertCharge);
+bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chsIndex, const bool invertCharge);
 int getMuonTrackPairIndex(const AnalysisEvent& event);
 int getChsTrackPairIndex(const AnalysisEvent& event);
 float deltaR(float eta1, float phi1, float eta2, float phi2);
@@ -220,51 +220,73 @@ int main(int argc, char* argv[]) {
 
             // Get muons
             std::vector<int> looseMuonIndex = getLooseMuons(event);
-
             if ( looseMuonIndex.size() < 2 ) continue;
-
-//            getDileptonCand( event, looseMuonIndex, invertCharge, invertDimuonIso, invertLeadingIso, invertSubleadingIso);
-
-            getDileptonCand( event, looseMuonIndex, false, false, false, false );
-            const TLorentzVector muon1Vec {event.zPairLeptons.first}, muon2Vec {event.zPairLeptons.second};
-            const float muRelIso1 {event.zPairNewRelIso.first}, muRelIso2 {event.zPairNewRelIso.second}, mumuRelIso {event.zRelIso};
-
-//            getDileptonCand( event, looseMuonIndex, true, false, false, false );
-//            const TLorentzVector muon1VecAlt {event.zPairLeptons.first}, muon2VecAlt {event.zPairLeptons.second};
-//            const float muRelIso1Alt {event.zPairNewRelIso.first}, muRelIso2Alt {event.zPairNewRelIso.second}, mumuRelIsoAlt {event.zRelIso};
 
             // Get CHS
             std::vector<int> chsIndex = getChargedHadronTracks(event);
             if ( chsIndex.size() < 2 ) continue;
-//            getDihadronCand(event, chsIndex, invertCharge, invertDihadronIso, invertLeadingIso, invertSubleadingIso);
 
-            getDihadronCand(event, chsIndex, false, false, false, false );
-            const TLorentzVector chs1Vec {event.chsPairVec.first}, chs2Vec {event.chsPairVec.second};
+            // Nominal muon + hadron charges
+            const bool dimuonFound = getDileptonCand( event, looseMuonIndex, false);
+            const float muRelIso1 {event.zPairNewRelIso.first}, muRelIso2 {event.zPairNewRelIso.second}, mumuRelIso {event.zRelIso};
+            const bool dihadronFound = getDihadronCand(event, chsIndex, false);
             const float chsRelIso1 {event.chsPairRelIso.first}, chsRelIso2 {event.chsPairRelIso.second}, dichsRelIso {event.chsRelIso};
 
-//            getDihadronCand(event, chsIndex, true, false, false, false );
-//            const TLorentzVector chs1VecAlt {event.chsPairVec.first}, chs2VecAlt {event.chsPairVec.second};
-//            const float chsRelIso1Alt {event.chsPairRelIso.first}, chsRelIso2Alt {event.chsPairRelIso.second}, dichsRelIsoAlt {event.chsRelIso};
+            // Nominal muon + same sign hadron charges
+            const bool dihadronFound_ssh = getDihadronCand(event, chsIndex, true);
+            const float chsRelIso1_ssh {event.chsPairRelIso.first}, chsRelIso2_ssh {event.chsPairRelIso.second}, dichsRelIso_ssh {event.chsRelIso};
 
-            // Fill plots
-//            h_qMuonOverQhadrons->Fill();
-//            h_qMuonOverRelIsoMuMu->Fill();
-//            h_qMuonOverRelIsoQq->Fill();
-//            h_qMuonOverRelIsoMu1->Fill();
-//            h_qMuonOverRelIsoMu2->Fill();
-//            h_qMuonOverRelIsoQ1->Fill();
-//            h_qMuonOverRelIsoQ2->Fill();
-//            h_qHadronsOverRelIsoMuMu->Fill();
-//            h_qHadronsOverRelIsoQq->Fill();
-//            h_qHadronsOverRelIsoMu1->Fill();
-//            h_qHadronsOverRelIsoMu2->Fill();
-//            h_qHadronsOverRelIsoQ1->Fill();
-//            h_qHadronsOverRelIsoQ2->Fill();
-            h_relIsoMuMuOverRelIsoQq->Fill(mumuRelIso, dichsRelIso, eventWeight);
-            h_relIsoMuMuOverRelIsoQ1->Fill(mumuRelIso, chsRelIso1, eventWeight);
-            h_relIsoMuMuOverRelIsoQ2->Fill(mumuRelIso, chsRelIso2, eventWeight);
-            h_relIsoQqOverRelIsoMu1->Fill(dichsRelIso, muRelIso1, eventWeight);
-            h_relIsoQqOverRelIsoMu2->Fill(dichsRelIso, muRelIso2, eventWeight);
+	    // Same charge muons + nominal hadron charges
+            const bool dimuonFound_ssm = getDileptonCand( event, looseMuonIndex, true);
+            const float muRelIso1_ssm {event.zPairNewRelIso.first}, muRelIso2_ssm {event.zPairNewRelIso.second}, mumuRelIso_ssm {event.zRelIso};
+            const bool dihadronFound_ssm = getDihadronCand(event, chsIndex, false);
+            const float chsRelIso1_ssm {event.chsPairRelIso.first}, chsRelIso2_ssm {event.chsPairRelIso.second}, dichsRelIso_ssm {event.chsRelIso};
+
+            // Same charge muons + hadron charges
+            const bool dihadronFound_ssmh = getDihadronCand(event, chsIndex, true);
+            const float chsRelIso1_ssmh {event.chsPairRelIso.first}, chsRelIso2_ssmh {event.chsPairRelIso.second}, dichsRelIso_ssmh {event.chsRelIso};
+
+            if ( dimuonFound && dihadronFound )            h_qMuonOverQhadrons->Fill( -1, -1, eventWeight );
+            if ( dimuonFound && dihadronFound_ssh )        h_qMuonOverQhadrons->Fill( -1,  1, eventWeight );
+            if ( dimuonFound_ssm && dihadronFound_ssm )    h_qMuonOverQhadrons->Fill(  1, -1, eventWeight );
+            if ( dimuonFound_ssm &&  dihadronFound_ssmh )  h_qMuonOverQhadrons->Fill(  1,  1, eventWeight );
+
+            // Muon charge vs iso
+            if ( dimuonFound )        h_qMuonOverRelIsoMuMu->Fill( -1, mumuRelIso, eventWeight );
+            if ( dimuonFound_ssm )    h_qMuonOverRelIsoMuMu->Fill(  1, mumuRelIso_ssm, eventWeight );
+            if ( dimuonFound )        h_qMuonOverRelIsoMu1->Fill(  -1, muRelIso1, eventWeight );
+            if ( dimuonFound_ssm )    h_qMuonOverRelIsoMu1->Fill(   1, muRelIso1_ssm, eventWeight );
+            if ( dimuonFound )        h_qMuonOverRelIsoMu2->Fill(  -1, muRelIso2, eventWeight );
+            if ( dimuonFound_ssm )    h_qMuonOverRelIsoMu2->Fill(   1, muRelIso2_ssm, eventWeight );
+            if ( dimuonFound && dihadronFound)             h_qMuonOverRelIsoQq->Fill(   -1, dichsRelIso, eventWeight );
+            if ( dimuonFound_ssm && dihadronFound_ssm )    h_qMuonOverRelIsoQq->Fill(    1, dichsRelIso_ssm, eventWeight );
+            if ( dimuonFound && dihadronFound )            h_qMuonOverRelIsoQ1->Fill(   -1, chsRelIso1, eventWeight );
+            if ( dimuonFound_ssm && dihadronFound_ssm )    h_qMuonOverRelIsoQ1->Fill(    1, chsRelIso1_ssm, eventWeight );
+            if ( dimuonFound && dihadronFound)             h_qMuonOverRelIsoQ2->Fill(   -1, chsRelIso2, eventWeight );
+            if ( dimuonFound_ssm && dihadronFound_ssm)     h_qMuonOverRelIsoQ2->Fill(    1, chsRelIso2_ssm, eventWeight );
+
+            // Hadron charge vs iso
+            if ( dihadronFound )      h_qHadronsOverRelIsoMuMu->Fill( -1, mumuRelIso, eventWeight );
+            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoMuMu->Fill(  1, mumuRelIso, eventWeight );
+            if ( dihadronFound )      h_qHadronsOverRelIsoQq->Fill(   -1, dichsRelIso, eventWeight );
+            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoQq->Fill(    1, dichsRelIso_ssh, eventWeight );
+            if ( dihadronFound )      h_qHadronsOverRelIsoMu1->Fill(  -1, muRelIso1, eventWeight );
+            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoMu1->Fill(   1, muRelIso1, eventWeight );
+            if ( dihadronFound )      h_qHadronsOverRelIsoMu2->Fill(  -1, muRelIso2, eventWeight );
+            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoMu2->Fill(   1, muRelIso2, eventWeight );
+            if ( dihadronFound )      h_qHadronsOverRelIsoQ1->Fill(   -1, chsRelIso1, eventWeight );
+            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoQ1->Fill(    1, chsRelIso1_ssh, eventWeight );
+            if ( dihadronFound )      h_qHadronsOverRelIsoQ2->Fill(   -1, chsRelIso2, eventWeight );
+            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoQ2->Fill(    1, chsRelIso2_ssh, eventWeight );
+
+            // No charge inversion
+            if ( dimuonFound && dihadronFound ) {
+                h_relIsoMuMuOverRelIsoQq->Fill( mumuRelIso, dichsRelIso, eventWeight );
+                h_relIsoMuMuOverRelIsoQ1->Fill( mumuRelIso, chsRelIso1, eventWeight );
+                h_relIsoMuMuOverRelIsoQ2->Fill( mumuRelIso, chsRelIso2, eventWeight );
+                h_relIsoQqOverRelIsoMu1->Fill(  dichsRelIso, muRelIso1, eventWeight );
+                h_relIsoQqOverRelIsoMu2->Fill(  dichsRelIso, muRelIso2, eventWeight );
+            }
 
         } // end event loop
     } // end dataset loop
@@ -349,7 +371,7 @@ std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) {
     return chs;
 }
 
-bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const bool invertCharge = false, const bool invertDimuonIso = false, const bool invertLeadingIso = false, const bool invertSubleadingIso = false) { 
+bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const bool invertCharge = false) {
 
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
@@ -462,7 +484,7 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const 
     return false;
 }
 
-bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs, const bool invertCharge = false, const bool invertDihadronIso = false, const bool invertLeadingIso = false, const bool invertSubleadingIso = false) {
+bool getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs, const bool invertCharge = false) {
 
     for ( unsigned int i{0}; i < chs.size(); i++ ) {
 
