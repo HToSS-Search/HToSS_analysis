@@ -622,11 +622,9 @@ void AnalysisAlgo::runMainAnalysis() {
 
             // extract the dataset weight. MC =
             // (lumi*crossSection)/(totalEvents), data = 1.0
-//            float datasetWeight{dataset->getDatasetWeight(totalLumi)};
-            float datasetWeight = 1.;
-            std::cout << datasetChain->GetEntries()
-                      << " number of items in tree. Dataset weight: "
-                      << datasetWeight << std::endl;
+            float datasetWeight{dataset->getDatasetWeight(totalLumi)};
+//            float datasetWeight = 1.;
+            std::cout << datasetChain->GetEntries() << " number of items in tree. Dataset weight: " << datasetWeight << std::endl;
             if (datasetChain->GetEntries() == 0) {
                 std::cout << "No entries in tree, skipping..." << std::endl;
                 continue;

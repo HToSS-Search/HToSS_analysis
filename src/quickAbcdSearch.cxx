@@ -90,6 +90,15 @@ int main(int argc, char* argv[]) {
     TH2F* h_relIsoMuMuOverRelIsoQ2 {new TH2F("h_relIsoMuMuOverRelIsoQ2",  "", 500, 0., 5., 500, 0., 5.)};
     TH2F* h_relIsoQqOverRelIsoMu1  {new TH2F("h_relIsoQqOverRelIsoMu1",   "", 500, 0., 5., 500, 0., 5.)};
     TH2F* h_relIsoQqOverRelIsoMu2  {new TH2F("h_relIsoQqOverRelIsoMu2",   "", 500, 0., 5., 500, 0., 5.)};
+    TH2F* h_relIsoMu1OverRelIsoQ1  {new TH2F("h_relIsoMu1OverRelIsoQ1",   "", 500, 0., 5., 500, 0., 5.)};
+    TH2F* h_relIsoMu1OverRelIsoQ2  {new TH2F("h_relIsoMu1OverRelIsoQ2",   "", 500, 0., 5., 500, 0., 5.)};
+    TH2F* h_relIsoMu2OverRelIsoQ1  {new TH2F("h_relIsoMu2OverRelIsoQ1",   "", 500, 0., 5., 500, 0., 5.)};
+    TH2F* h_relIsoMu2OverRelIsoQ2  {new TH2F("h_relIsoMu2OverRelIsoQ2",   "", 500, 0., 5., 500, 0., 5.)};
+
+    h_qMuonOverQhadrons->GetXaxis()->SetBinLabel(1, "OS #mu#mu");
+    h_qMuonOverQhadrons->GetXaxis()->SetBinLabel(2, "SS #mu#mu");
+    h_qMuonOverQhadrons->GetYaxis()->SetBinLabel(1, "OS qq");
+    h_qMuonOverQhadrons->GetYaxis()->SetBinLabel(2, "SS qq");
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
@@ -245,39 +254,48 @@ int main(int argc, char* argv[]) {
             // Same charge muons + hadron charges
             const bool dihadronFound_ssmh = getDihadronCand(event, chsIndex, true);
             const float chsRelIso1_ssmh {event.chsPairRelIso.first}, chsRelIso2_ssmh {event.chsPairRelIso.second}, dichsRelIso_ssmh {event.chsRelIso};
-
-            if ( dimuonFound && dihadronFound )            h_qMuonOverQhadrons->Fill( -1, -1, eventWeight );
-            if ( dimuonFound && dihadronFound_ssh )        h_qMuonOverQhadrons->Fill( -1,  1, eventWeight );
-            if ( dimuonFound_ssm && dihadronFound_ssm )    h_qMuonOverQhadrons->Fill(  1, -1, eventWeight );
-            if ( dimuonFound_ssm &&  dihadronFound_ssmh )  h_qMuonOverQhadrons->Fill(  1,  1, eventWeight );
+/*
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+std::cout << "dimuonFound = " << dimuonFound << std::endl;
+std::cout << "dimuonFound_ssm = " << dimuonFound_ssm << std::endl;
+std::cout << "dihadronFound = " << dihadronFound << std::endl;
+std::cout << "dihadronFound_ssh = " << dihadronFound_ssh << std::endl;
+std::cout << "dihadronFound_ssm = " << dihadronFound_ssm << std::endl;
+std::cout << "dihadronFound_ssmh = " << dihadronFound_ssmh << std::endl;
+std::cout << __LINE__ << " : " << __FILE__ << std::endl;
+*/
+            if ( dimuonFound && dihadronFound )            h_qMuonOverQhadrons->Fill( -0.5, -0.5, eventWeight );
+            if ( dimuonFound && dihadronFound_ssh )        h_qMuonOverQhadrons->Fill( -0.5,  0.5, eventWeight );
+            if ( dimuonFound_ssm && dihadronFound_ssm )    h_qMuonOverQhadrons->Fill(  0.5, -0.5, eventWeight );
+            if ( dimuonFound_ssm &&  dihadronFound_ssmh )  h_qMuonOverQhadrons->Fill(  0.5,  0.5, eventWeight );
 
             // Muon charge vs iso
-            if ( dimuonFound )        h_qMuonOverRelIsoMuMu->Fill( -1, mumuRelIso, eventWeight );
-            if ( dimuonFound_ssm )    h_qMuonOverRelIsoMuMu->Fill(  1, mumuRelIso_ssm, eventWeight );
-            if ( dimuonFound )        h_qMuonOverRelIsoMu1->Fill(  -1, muRelIso1, eventWeight );
-            if ( dimuonFound_ssm )    h_qMuonOverRelIsoMu1->Fill(   1, muRelIso1_ssm, eventWeight );
-            if ( dimuonFound )        h_qMuonOverRelIsoMu2->Fill(  -1, muRelIso2, eventWeight );
-            if ( dimuonFound_ssm )    h_qMuonOverRelIsoMu2->Fill(   1, muRelIso2_ssm, eventWeight );
-            if ( dimuonFound && dihadronFound)             h_qMuonOverRelIsoQq->Fill(   -1, dichsRelIso, eventWeight );
-            if ( dimuonFound_ssm && dihadronFound_ssm )    h_qMuonOverRelIsoQq->Fill(    1, dichsRelIso_ssm, eventWeight );
-            if ( dimuonFound && dihadronFound )            h_qMuonOverRelIsoQ1->Fill(   -1, chsRelIso1, eventWeight );
-            if ( dimuonFound_ssm && dihadronFound_ssm )    h_qMuonOverRelIsoQ1->Fill(    1, chsRelIso1_ssm, eventWeight );
-            if ( dimuonFound && dihadronFound)             h_qMuonOverRelIsoQ2->Fill(   -1, chsRelIso2, eventWeight );
-            if ( dimuonFound_ssm && dihadronFound_ssm)     h_qMuonOverRelIsoQ2->Fill(    1, chsRelIso2_ssm, eventWeight );
+            if ( dimuonFound )        h_qMuonOverRelIsoMuMu->Fill( -0.5, mumuRelIso, eventWeight );
+            if ( dimuonFound_ssm )    h_qMuonOverRelIsoMuMu->Fill(  0.5, mumuRelIso_ssm, eventWeight );
+            if ( dimuonFound )        h_qMuonOverRelIsoMu1->Fill(  -0.5, muRelIso1, eventWeight );
+            if ( dimuonFound_ssm )    h_qMuonOverRelIsoMu1->Fill(   0.5, muRelIso1_ssm, eventWeight );
+            if ( dimuonFound )        h_qMuonOverRelIsoMu2->Fill(  -0.5, muRelIso2, eventWeight );
+            if ( dimuonFound_ssm )    h_qMuonOverRelIsoMu2->Fill(   0.5, muRelIso2_ssm, eventWeight );
+            if ( dimuonFound && dihadronFound)             h_qMuonOverRelIsoQq->Fill(   -0.5, dichsRelIso, eventWeight );
+            if ( dimuonFound_ssm && dihadronFound_ssm )    h_qMuonOverRelIsoQq->Fill(    0.5, dichsRelIso_ssm, eventWeight );
+            if ( dimuonFound && dihadronFound )            h_qMuonOverRelIsoQ1->Fill(   -0.5, chsRelIso1, eventWeight );
+            if ( dimuonFound_ssm && dihadronFound_ssm )    h_qMuonOverRelIsoQ1->Fill(    0.5, chsRelIso1_ssm, eventWeight );
+            if ( dimuonFound && dihadronFound)             h_qMuonOverRelIsoQ2->Fill(   -0.5, chsRelIso2, eventWeight );
+            if ( dimuonFound_ssm && dihadronFound_ssm)     h_qMuonOverRelIsoQ2->Fill(    0.5, chsRelIso2_ssm, eventWeight );
 
             // Hadron charge vs iso
-            if ( dihadronFound )      h_qHadronsOverRelIsoMuMu->Fill( -1, mumuRelIso, eventWeight );
-            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoMuMu->Fill(  1, mumuRelIso, eventWeight );
-            if ( dihadronFound )      h_qHadronsOverRelIsoQq->Fill(   -1, dichsRelIso, eventWeight );
-            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoQq->Fill(    1, dichsRelIso_ssh, eventWeight );
-            if ( dihadronFound )      h_qHadronsOverRelIsoMu1->Fill(  -1, muRelIso1, eventWeight );
-            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoMu1->Fill(   1, muRelIso1, eventWeight );
-            if ( dihadronFound )      h_qHadronsOverRelIsoMu2->Fill(  -1, muRelIso2, eventWeight );
-            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoMu2->Fill(   1, muRelIso2, eventWeight );
-            if ( dihadronFound )      h_qHadronsOverRelIsoQ1->Fill(   -1, chsRelIso1, eventWeight );
-            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoQ1->Fill(    1, chsRelIso1_ssh, eventWeight );
-            if ( dihadronFound )      h_qHadronsOverRelIsoQ2->Fill(   -1, chsRelIso2, eventWeight );
-            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoQ2->Fill(    1, chsRelIso2_ssh, eventWeight );
+            if ( dihadronFound )      h_qHadronsOverRelIsoMuMu->Fill( -0.5, mumuRelIso, eventWeight );
+            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoMuMu->Fill(  0.5, mumuRelIso, eventWeight );
+            if ( dihadronFound )      h_qHadronsOverRelIsoQq->Fill(   -0.5, dichsRelIso, eventWeight );
+            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoQq->Fill(    0.5, dichsRelIso_ssh, eventWeight );
+            if ( dihadronFound )      h_qHadronsOverRelIsoMu1->Fill(  -0.5, muRelIso1, eventWeight );
+            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoMu1->Fill(   0.5, muRelIso1, eventWeight );
+            if ( dihadronFound )      h_qHadronsOverRelIsoMu2->Fill(  -0.5, muRelIso2, eventWeight );
+            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoMu2->Fill(   0.5, muRelIso2, eventWeight );
+            if ( dihadronFound )      h_qHadronsOverRelIsoQ1->Fill(   -0.5, chsRelIso1, eventWeight );
+            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoQ1->Fill(    0.5, chsRelIso1_ssh, eventWeight );
+            if ( dihadronFound )      h_qHadronsOverRelIsoQ2->Fill(   -0.5, chsRelIso2, eventWeight );
+            if ( dihadronFound_ssh )  h_qHadronsOverRelIsoQ2->Fill(    0.5, chsRelIso2_ssh, eventWeight );
 
             // No charge inversion
             if ( dimuonFound && dihadronFound ) {
@@ -286,6 +304,10 @@ int main(int argc, char* argv[]) {
                 h_relIsoMuMuOverRelIsoQ2->Fill( mumuRelIso, chsRelIso2, eventWeight );
                 h_relIsoQqOverRelIsoMu1->Fill(  dichsRelIso, muRelIso1, eventWeight );
                 h_relIsoQqOverRelIsoMu2->Fill(  dichsRelIso, muRelIso2, eventWeight );
+                h_relIsoMu1OverRelIsoQ1->Fill(  muRelIso1, chsRelIso1, eventWeight );
+                h_relIsoMu1OverRelIsoQ2->Fill(  muRelIso1, chsRelIso2, eventWeight );
+                h_relIsoMu2OverRelIsoQ1->Fill(  muRelIso2, chsRelIso1, eventWeight );
+                h_relIsoMu2OverRelIsoQ2->Fill(  muRelIso2, chsRelIso2, eventWeight );
             }
 
         } // end event loop
@@ -314,6 +336,10 @@ int main(int argc, char* argv[]) {
     h_relIsoMuMuOverRelIsoQ2->Write();
     h_relIsoQqOverRelIsoMu1->Write();
     h_relIsoQqOverRelIsoMu2->Write();
+    h_relIsoMu1OverRelIsoQ1->Write();
+    h_relIsoMu1OverRelIsoQ2->Write();
+    h_relIsoMu2OverRelIsoQ1->Write();
+    h_relIsoMu2OverRelIsoQ2->Write();
 
     outFile->Close();
 
