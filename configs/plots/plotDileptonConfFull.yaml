@@ -311,6 +311,206 @@ plots:
     fillExp: "met"
     xAxisLabel: "E_{T}^{miss}"
     cutStage: 2
+  - title: "Number of Tight Jets"
+    name: "numbJets"
+    xMax: 20.5
+    xMin: -0.5
+    nBins: 21
+    fillExp: "numbJets"
+    xAxisLabel: "Number of tight jets"
+    cutStage: 2
+  - title: "Total Jet p_{T}"
+    name: "totalJetPt"
+    xMax: 300.
+    xMin: 0.
+    nBins: 300
+    fillExp: "totalJetPt"
+    xAxisLabel: "p_{T} total jets (GeV/c)"
+    cutStage: 2
+  - title: "Total Jet Phi"
+    name: "totalJetPhi"
+    xMax: 3.2
+    xMin: -3.2
+    nBins: 40
+    fillExp: "totalJetPhi"
+    xAxisLabel: "#phi of the jets"
+    cutStage: 2
+  - title: "Leading Jet p_{T}"
+    name: "leadingJetPt"
+    xMax: 300.
+    xMin: 0.
+    nBins: 35
+    fillExp: "leadingJetPt"
+    xAxisLabel: "p_{T} leading jet (GeV/c)"
+    cutStage: 2
+  - title: "Leading Jet #eta"
+    name: "leadingJetEta"
+    xMin: 0.
+    xMax: 5.
+    nBins: 25
+    fillExp: "leadingJetEta"
+    xAxisLabel: "#eta leading jet"
+    cutStage: 2
+  - title: "Min #Delta R with lepton"
+    name: "leadingJetDeltaRLep"
+    xMin: 0.
+    xMax: 1.
+    nBins: 50
+    fillExp: "leadingJetDeltaRLep"
+    xAxisLabel: "text"
+    cutStage: 3
+  - title: "Second Jet p_{T}"
+    name: "secondJetPt"
+    xMin: 0.
+    xMax: 300.
+    nBins: 35
+    fillExp: "secondJetPt"
+    xAxisLabel: "p_{T} second jet (GeV/c)"
+    cutStage: 2
+  - title: "Second Jet #eta"
+    name: "secondJetEta"
+    xMin: 0.
+    xMax: 5.
+    nBins: 25
+    fillExp: "secondJetEta"
+    xAxisLabel: "#eta second jet"
+    cutStage: 2
+  - title: "Min #Delta R with lepton"
+    name: "secondJetDeltaRLep"
+    xMin: 0.
+    xMax: 1.
+    nBins: 50
+    fillExp: "secondJetDeltaRLep"
+    xAxisLabel: "text"
+    cutStage: 3
+  - title: "Third Jet p_{T}"
+    name: "thirdJetPt"
+    xMin: 0.
+    xMax: 300.
+    nBins: 35
+    fillExp: "thirdJetPt"
+    xAxisLabel: "p_{T} third jet (GeV/c)"
+    cutStage: 2
+  - title: "Third Jet #eta"
+    name: "thirdJetEta"
+    xMin: 0.
+    xMax: 5.
+    nBins: 25
+    fillExp: "thirdJetEta"
+    xAxisLabel: "#eta third jet"
+    cutStage: 2
+  - title: "Min #Delta R with lepton"
+    name: "thirdJetDeltaRLep"
+    xMin: 0.
+    xMax: 1.
+    nBins: 50
+    fillExp: "thirdJetDeltaRLep"
+    xAxisLabel: "text"
+    cutStage: 3
+  - title: "Fourth Jet p_{T}"
+    name: "fourthJetPt"
+    xMin: 0.
+    xMax: 300.
+    nBins: 35
+    fillExp: "fourthJetPt"
+    xAxisLabel: "p_{T} fourth jet (GeV/c)"
+    cutStage: 2
+  - title: "Fourth Jet #eta"
+    name: "fourthJetEta"
+    xMin: 0.
+    xMax: 5.
+    nBins: 25
+    fillExp: "fourthJetEta"
+    xAxisLabel: "#eta fourth jet"
+    cutStage: 2
+  - title: "Min #Delta R with lepton"
+    name: "fourthJetDeltaRLep"
+    xMin: 0.
+    xMax: 1.
+    nBins: 50
+    fillExp: "fourthJetDeltaRLep"
+    xAxisLabel: "text"
+    cutStage: 3
+  - title: "Leading Jet #phi"
+    name: "leadingJetPhi"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 25
+    fillExp: "leadingJetPhi"
+    xAxisLabel: "#phi leading jet"
+    cutStage: 2
+  - title: "Second Jet #phi"
+    name: "secondJetPhi"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 25
+    fillExp: "secondJetPhi"
+    xAxisLabel: "#phi second jet"
+    cutStage: 2
+  - title: "Third Jet #phi"
+    name: "thirdJetPhi"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 25
+    fillExp: "thirdJetPhi"
+    xAxisLabel: "#phi third jet"
+    cutStage: 2
+  - title: "Fourth Jet #phi"
+    name: "fourthJetPhi"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 25
+    fillExp: "fourthJetPhi"
+    xAxisLabel: "#phi fourth jet"
+    cutStage: 2
+  - title: "Leading Jet bTag Discriminator"
+    name: "leadingJetBDisc"
+    xMin: 0.
+    xMax: 1.2
+    nBins: 50
+    fillExp: "leadingJetBDisc"
+    xAxisLabel: "leading jet bDisc"
+    cutStage: 2
+  - title: "Second Jet bTag Discriminator"
+    name: "secondJetBDisc"
+    xMin: 0.
+    xMax: 1.2
+    nBins: 50
+    fillExp: "secondJetBDisc"
+    xAxisLabel: "second jet bDisc"
+    cutStage: 2
+  - title: "Third Jet bTag Discriminator"
+    name: "thirdJetBDisc"
+    xMin: 0.
+    xMax: 1.2
+    nBins: 50
+    fillExp: "thirdJetBDisc"
+    xAxisLabel: "third jet bDisc"
+    cutStage: 2
+  - title: "Fourth Jet bTag Discriminator"
+    name: "fourthJetBDisc"
+    xMin: 0.
+    xMax: 1.2
+    nBins: 50
+    fillExp: "fourthJetBDisc"
+    xAxisLabel: "fourth jet bDisc"
+    cutStage: 2
+  - title: "Number of b-tagged Jets"
+    name: "numbBJets"
+    xMin: -0.5
+    xMax: 20.5
+    nBins: 21
+    fillExp: "numbBJets"
+    xAxisLabel: "Number of b tags"
+    cutStage: 4
+  - title: "b-tag Discriminator Distribution"
+    name: "bTagDisc"
+    xMin: 0.
+    xMax: 1.
+    nBins: 50
+    fillExp: "bTagDisc"
+    xAxisLabel: "bTag Discriminators"
+    cutStage: 4
   - title: "Leading Z Lepton p_{T}"
     name: "zLepton1Pt"
     xMin: 0.

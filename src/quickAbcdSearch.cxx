@@ -95,10 +95,36 @@ int main(int argc, char* argv[]) {
     TH2F* h_relIsoMu2OverRelIsoQ1  {new TH2F("h_relIsoMu2OverRelIsoQ1",   "", 500, 0., 5., 500, 0., 5.)};
     TH2F* h_relIsoMu2OverRelIsoQ2  {new TH2F("h_relIsoMu2OverRelIsoQ2",   "", 500, 0., 5., 500, 0., 5.)};
 
+    // Set bin labels for charge
+
     h_qMuonOverQhadrons->GetXaxis()->SetBinLabel(1, "OS #mu#mu");
     h_qMuonOverQhadrons->GetXaxis()->SetBinLabel(2, "SS #mu#mu");
     h_qMuonOverQhadrons->GetYaxis()->SetBinLabel(1, "OS qq");
     h_qMuonOverQhadrons->GetYaxis()->SetBinLabel(2, "SS qq");
+
+    h_qMuonOverRelIsoMuMu->GetXaxis()->SetBinLabel(1, "OS #mu#mu");
+    h_qMuonOverRelIsoMuMu->GetXaxis()->SetBinLabel(2, "SS #mu#mu");
+    h_qMuonOverRelIsoMu1->GetXaxis()->SetBinLabel(1, "OS #mu#mu");
+    h_qMuonOverRelIsoMu1->GetXaxis()->SetBinLabel(2, "SS #mu#mu");
+    h_qMuonOverRelIsoMu2->GetXaxis()->SetBinLabel(1, "OS #mu#mu");
+    h_qMuonOverRelIsoMu2->GetXaxis()->SetBinLabel(2, "SS #mu#mu");
+    h_qMuonOverRelIsoQ1->GetXaxis()->SetBinLabel(1, "OS #mu#mu");
+    h_qMuonOverRelIsoQ1->GetXaxis()->SetBinLabel(2, "SS #mu#mu");
+    h_qMuonOverRelIsoQ2->GetXaxis()->SetBinLabel(1, "OS #mu#mu");
+    h_qMuonOverRelIsoQ2->GetXaxis()->SetBinLabel(2, "SS #mu#mu");
+
+    h_qHadronsOverRelIsoMuMu->GetXaxis()->SetBinLabel(1, "OS qq");
+    h_qHadronsOverRelIsoMuMu->GetXaxis()->SetBinLabel(2, "SS qq");
+    h_qHadronsOverRelIsoQq->GetXaxis()->SetBinLabel(1, "OS qq");
+    h_qHadronsOverRelIsoQq->GetXaxis()->SetBinLabel(2, "SS qq");
+    h_qHadronsOverRelIsoMu1->GetXaxis()->SetBinLabel(1, "OS qq");
+    h_qHadronsOverRelIsoMu1->GetXaxis()->SetBinLabel(2, "SS qq");
+    h_qHadronsOverRelIsoMu2->GetXaxis()->SetBinLabel(1, "OS qq");
+    h_qHadronsOverRelIsoMu2->GetXaxis()->SetBinLabel(2, "SS qq");
+    h_qHadronsOverRelIsoQ1->GetXaxis()->SetBinLabel(1, "OS qq");
+    h_qHadronsOverRelIsoQ1->GetXaxis()->SetBinLabel(2, "SS qq");
+    h_qHadronsOverRelIsoQ2->GetXaxis()->SetBinLabel(1, "OS qq");
+    h_qHadronsOverRelIsoQ2->GetXaxis()->SetBinLabel(2, "SS qq");
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
