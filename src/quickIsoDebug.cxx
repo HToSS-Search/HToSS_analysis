@@ -78,6 +78,9 @@ int main(int argc, char* argv[]) {
     TH1F* h_leadingMuonRelIso      {new TH1F("h_leadingMuonRelIso", "", 1000, 0., 5.)};
     TH1F* h_subleadingMuonRelIso   {new TH1F("h_subleadingMuonRelIso", "", 1000, 0., 5.)};
 
+    TH1F* h_leadingMuonNewRelIso      {new TH1F("h_leadingMuonNewRelIso", "", 1000, 0., 5.)};
+    TH1F* h_subleadingMuonNewRelIso   {new TH1F("h_subleadingMuonNewRelIso", "", 1000, 0., 5.)};
+
     TH1F* h_zeroIso_CHS            {new TH1F("h_zeroIso_CHS", "; #sum_{p_{T}}^{#mu1/2} charged hadrons; ", 500, 0., 250.)};
     TH1F* h_zeroIso_NHS            {new	TH1F("h_zeroIso_NHS", "; #sum_{E_{T}}^{#mu1/2} neutral hadrons; ", 500, 0., 250.)};
     TH1F* h_zeroIso_Pho            {new	TH1F("h_zeroIso_Pho", "; #sum_{E_{T}}^{#mu1/2} photons; ", 500, 0., 250.)};
@@ -92,6 +95,21 @@ int main(int argc, char* argv[]) {
     TH1F* h_zeroIso_NHS_mu2        {new	TH1F("h_zeroIso_NHS_mu2", "; #sum_{E_{T}}^{#mu2} neutral hadrons; ", 500, 0., 250.)};
     TH1F* h_zeroIso_Pho_mu2        {new	TH1F("h_zeroIso_Pho_mu2", "; #sum_{E_{T}}^{#mu2} photons; ", 500, 0., 250.)};
     TH1F* h_zeroIso_PU_mu2         {new	TH1F("h_zeroIso_PU_mu2",  "; #frac{1}{2}#times#sum_{p_{T}}^{#mu2} PU; ", 500, 0., 250.)};
+
+    TH1F* h_zeroNewIso_CHS            {new TH1F("h_zeroNewIso_CHS", "; #sum_{p_{T}}^{#mu1/2} charged hadrons; ", 500, 0., 250.)};
+    TH1F* h_zeroNewIso_NHS            {new TH1F("h_zeroNewIso_NHS", "; #sum_{E_{T}}^{#mu1/2} neutral hadrons; ", 500, 0., 250.)};
+    TH1F* h_zeroNewIso_Pho            {new TH1F("h_zeroNewIso_Pho", "; #sum_{E_{T}}^{#mu1/2} photons; ", 500, 0., 250.)};
+    TH1F* h_zeroNewIso_PU             {new TH1F("h_zeroNewIso_PU",  "; #frac{1}{2}#times#sum_{p_{T}}^{#mu1/2} PU; ", 500, 0., 250.)};
+
+    TH1F* h_zeroNewIso_CHS_mu1        {new TH1F("h_zeroNewIso_CHS_mu1", "; #sum_{p_{T}}^{#mu1} charged hadrons; ", 500, 0., 250.)};
+    TH1F* h_zeroNewIso_NHS_mu1        {new TH1F("h_zeroNewIso_NHS_mu1", "; #sum_{E_{T}}^{#mu1} neutral hadrons; ", 500, 0., 250.)};
+    TH1F* h_zeroNewIso_Pho_mu1        {new TH1F("h_zeroNewIso_Pho_mu1", "; #sum_{E_{T}}^{#mu1} photons; ", 500, 0., 250.)};
+    TH1F* h_zeroNewIso_PU_mu1         {new TH1F("h_zeroNewIso_PU_mu1",  "; #frac{1}{2}#times#sum_{p_{T}}^{#mu1} PU; ", 500, 0., 250.)};
+
+    TH1F* h_zeroNewIso_CHS_mu2        {new TH1F("h_zeroNewIso_CHS_mu2", "; #sum_{p_{T}}^{#mu2} charged hadrons; ", 500, 0., 250.)};
+    TH1F* h_zeroNewIso_NHS_mu2        {new TH1F("h_zeroNewIso_NHS_mu2", "; #sum_{E_{T}}^{#mu2} neutral hadrons; ", 500, 0., 250.)};
+    TH1F* h_zeroNewIso_Pho_mu2        {new TH1F("h_zeroNewIso_Pho_mu2", "; #sum_{E_{T}}^{#mu2} photons; ", 500, 0., 250.)};
+    TH1F* h_zeroNewIso_PU_mu2         {new TH1F("h_zeroNewIso_PU_mu2",  "; #frac{1}{2}#times#sum_{p_{T}}^{#mu2} PU; ", 500, 0., 250.)};
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
@@ -227,7 +245,10 @@ int main(int argc, char* argv[]) {
 
             h_leadingMuonRelIso->Fill (event.zPairRelIso.first, eventWeight);
             h_subleadingMuonRelIso->Fill (event.zPairRelIso.second, eventWeight);
+            h_leadingMuonNewRelIso->Fill (event.zPairNewRelIso.first, eventWeight);
+            h_subleadingMuonNewRelIso->Fill (event.zPairNewRelIso.second, eventWeight);
 
+            // pf iso loop
             if ( event.zPairRelIso.first == 0.0 || event.zPairRelIso.second == 0.0 ) {
 //                const int packedMuon1 {event.muonPF2PATPackedCandIndex(event.zPairIndex.first)}, packedMuon2{event.muonPF2PATPackedCandIndex(event.zPairIndex.second)};
 
@@ -316,23 +337,108 @@ int main(int argc, char* argv[]) {
                     h_zeroIso_Pho->Fill(gamma_iso, eventWeight);
                     h_zeroIso_PU->Fill(pu_iso, eventWeight);
 
-                    h_zeroIso_CHS_mu1->Fill(ch_iso, eventWeight);
-                    h_zeroIso_NHS_mu1->Fill(neutral_iso, eventWeight);
-                    h_zeroIso_Pho_mu1->Fill(gamma_iso, eventWeight);
-                    h_zeroIso_PU_mu1->Fill(pu_iso, eventWeight);
-
-                    h_zeroIso_CHS->Fill(ch_iso, eventWeight);
-                    h_zeroIso_NHS->Fill(neutral_iso, eventWeight);
-                    h_zeroIso_Pho->Fill(gamma_iso, eventWeight);
-                    h_zeroIso_PU->Fill(pu_iso, eventWeight);
-
                     h_zeroIso_CHS_mu2->Fill(ch_iso, eventWeight);
                     h_zeroIso_NHS_mu2->Fill(neutral_iso, eventWeight);
                     h_zeroIso_Pho_mu2->Fill(gamma_iso, eventWeight);
                     h_zeroIso_PU_mu2->Fill(pu_iso, eventWeight);
                	}
 
-            }
+            } // End rel iso loop
+
+            // pf new iso loop
+            if ( event.zPairNewRelIso.first == 0.0 || event.zPairNewRelIso.second == 0.0 ) {
+
+                if ( event.zPairNewRelIso.first == 0.0 ) {
+                    // pf quantities
+                    float neutral_iso {0.0}, ch_iso {0.0}, gamma_iso {0.0}, pu_iso {0.0};
+
+                    for (int k = 0; k < event.numPackedCands; k++) {
+                        if ( k == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || k == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
+
+                        TLorentzVector packedCandVec, packedCandTrkVec;
+                        packedCandVec.SetPxPyPzE      (event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]);
+                        const int pid = event.packedCandsPdgId[k];
+
+                        // Charge hadron contributions have to have pT > 0.5
+                        if ( event.packedCandsCharge[k] == 0 ) {
+                            if ( packedCandVec.Pt() >= 0.5 ) {
+                                if ( pid == 130 ) { // neutral hadrons
+                                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)   < 0.4 )  neutral_iso += packedCandVec.Et();
+                                }
+                                else if ( pid == 22 ) { // gammas
+                                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)   < 0.4 )  gamma_iso += packedCandVec.Et();
+                                }
+                            }
+                        }
+                        else {
+                            if ( event.packedCandsFromPV[k] >= 2 ) {
+                                if ( event.zPairLeptons.first.DeltaR(packedCandVec)   < 0.4 )  ch_iso += packedCandVec.Pt();
+                            }
+                            else {
+                                if ( packedCandVec.Pt() >= 0.5 ) {
+                                    if ( event.zPairLeptons.first.DeltaR(packedCandVec)   < 0.4 )  pu_iso += packedCandVec.Pt();
+                                }
+                            }
+                        } 
+
+                    } // End PF cands loop
+                    h_zeroNewIso_CHS->Fill(ch_iso, eventWeight);
+                    h_zeroNewIso_NHS->Fill(neutral_iso, eventWeight);
+                    h_zeroNewIso_Pho->Fill(gamma_iso, eventWeight);
+                    h_zeroNewIso_PU->Fill(pu_iso, eventWeight);
+
+                    h_zeroNewIso_CHS_mu1->Fill(ch_iso, eventWeight);
+                    h_zeroNewIso_NHS_mu1->Fill(neutral_iso, eventWeight);
+                    h_zeroNewIso_Pho_mu1->Fill(gamma_iso, eventWeight);
+                    h_zeroNewIso_PU_mu1->Fill(pu_iso, eventWeight);
+                }
+       	       	if ( event.zPairNewRelIso.second == 0.0 ) {
+                    // pf quantities
+                    float neutral_iso {0.0}, ch_iso {0.0}, gamma_iso {0.0}, pu_iso {0.0};
+
+                    for (int k = 0; k < event.numPackedCands; k++) {
+                        if ( k == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || k == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
+
+                        TLorentzVector packedCandVec, packedCandTrkVec;
+                        packedCandVec.SetPxPyPzE      (event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]);
+                        const int pid = event.packedCandsPdgId[k];
+
+                        // Charge hadron contributions have to have pT > 0.5
+                        if ( event.packedCandsCharge[k] == 0 ) {
+                            if ( packedCandVec.Pt() >= 0.5 ) {
+                                if ( pid == 130 ) { // neutral hadrons
+                                    if ( event.zPairLeptons.second.DeltaR(packedCandVec)   < 0.4 )  neutral_iso += packedCandVec.Et();
+                                }
+                                else if ( pid == 22 ) { // gammas
+                                    if ( event.zPairLeptons.second.DeltaR(packedCandVec)   < 0.4 )  gamma_iso += packedCandVec.Et();
+                                }
+                            }
+                        }
+                        else {
+                            if ( event.packedCandsFromPV[k] >= 2 ) {
+                                if ( event.zPairLeptons.second.DeltaR(packedCandVec)   < 0.4 )  ch_iso += packedCandVec.Pt();
+                            }
+                            else {
+                                if ( packedCandVec.Pt() >= 0.5 ) {
+                                    if ( event.zPairLeptons.second.DeltaR(packedCandVec)   < 0.4 )  pu_iso += packedCandVec.Pt();
+                                }
+                            }
+                        } 
+
+                    } // End PF cands loop
+
+                    h_zeroNewIso_CHS->Fill(ch_iso, eventWeight);
+                    h_zeroNewIso_NHS->Fill(neutral_iso, eventWeight);
+                    h_zeroNewIso_Pho->Fill(gamma_iso, eventWeight);
+                    h_zeroNewIso_PU->Fill(pu_iso, eventWeight);
+
+                    h_zeroNewIso_CHS_mu2->Fill(ch_iso, eventWeight);
+                    h_zeroNewIso_NHS_mu2->Fill(neutral_iso, eventWeight);
+                    h_zeroNewIso_Pho_mu2->Fill(gamma_iso, eventWeight);
+                    h_zeroNewIso_PU_mu2->Fill(pu_iso, eventWeight);
+               	}
+
+            } // End new iso loop
 
         } // end event loop
     } // end dataset loop
@@ -348,6 +454,9 @@ int main(int argc, char* argv[]) {
     h_leadingMuonRelIso->Write();
     h_subleadingMuonRelIso->Write();
 
+    h_leadingMuonNewRelIso->Write();
+    h_subleadingMuonNewRelIso->Write();
+
     h_zeroIso_CHS->Write();
     h_zeroIso_NHS->Write();
     h_zeroIso_Pho->Write();
@@ -362,6 +471,21 @@ int main(int argc, char* argv[]) {
     h_zeroIso_NHS_mu2->Write();
     h_zeroIso_Pho_mu2->Write();
     h_zeroIso_PU_mu2->Write();
+
+    h_zeroNewIso_CHS->Write();
+    h_zeroNewIso_NHS->Write();
+    h_zeroNewIso_Pho->Write();
+    h_zeroNewIso_PU->Write();
+
+    h_zeroNewIso_CHS_mu1->Write();
+    h_zeroNewIso_NHS_mu1->Write();
+    h_zeroNewIso_Pho_mu1->Write();
+    h_zeroNewIso_PU_mu1->Write();
+
+    h_zeroNewIso_CHS_mu2->Write();
+    h_zeroNewIso_NHS_mu2->Write();
+    h_zeroNewIso_Pho_mu2->Write();
+    h_zeroNewIso_PU_mu2->Write();
 
     outFile->Close();
 
@@ -424,6 +548,9 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const 
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
 
+            if (event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
+            if (event.muonPF2PATPt[j] <= looseMuonPt_) continue;
+
             if ( !invertCharge ) {
                 if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
             }
@@ -434,7 +561,8 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const 
             TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
             TLorentzVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
             const double delR { lepton1.DeltaR(lepton2) };
-            if ( delR < maxDileptonDeltaR_  ) {
+//            if ( delR < maxDileptonDeltaR_  ) {
+            if ( delR > -1.0  ) {
                 event.zPairLeptons.first  = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
                 event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
                 event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[i] : muons[j];
@@ -442,8 +570,8 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const 
                 event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
                 event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
 
-//                if (!event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
-//                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] > 1.0) continue;
+                if (!event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
+                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] > 1.0) continue;
 
 //                if (event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
 //                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] <= 1.0) continue;

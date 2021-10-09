@@ -696,6 +696,9 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
 
+            if (event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
+            if (event.muonPF2PATPt[j] <= looseMuonPt_) continue;
+
             if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
             if ( mcTruth && event.genMuonPF2PATMotherId[muons[i]] == 9000006 && event.genMuonPF2PATMotherId[muons[j]] == 9000006) continue;
 

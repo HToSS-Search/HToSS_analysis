@@ -717,7 +717,8 @@ std::vector<int> Cuts::getLooseMuons(const AnalysisEvent& event) const {
     }
     else {
         for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] /* && event.muonPF2PATPfIsoVeryLoose[i] */ ) {
+//            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATTightCutId[i] ) {
+            if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] ) {
 
                 if (muons.size() < 1 && event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
                 else if (muons.size() >= 1 && event.muonPF2PATPt[i] <= looseMuonPt_) continue;
@@ -751,6 +752,9 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
 
+            if (event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
+            if (event.muonPF2PATPt[j] <= looseMuonPt_) continue;
+
             if ( !invertLepCharge_ ) {
                 if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
             }
@@ -769,8 +773,8 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                 event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
                 event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
 
-                if (!event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
-                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] > 1.0) continue;
+//                if (!event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
+//                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] > 1.0) continue;
 
                 // pf quantities
                 float neutral_iso {0.0}, neutral_iso1 {0.0}, neutral_iso2 {0.0};

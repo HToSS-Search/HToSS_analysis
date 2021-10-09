@@ -1036,6 +1036,9 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) {
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
 
+            if (event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
+            if (event.muonPF2PATPt[j] <= looseMuonPt_) continue;
+
             if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
 
             TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
