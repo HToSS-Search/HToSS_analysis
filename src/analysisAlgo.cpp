@@ -757,7 +757,7 @@ void AnalysisAlgo::runMainAnalysis() {
             }
             TMVA::Timer* lEventTimer{new TMVA::Timer{boost::numeric_cast<int>(numberOfEvents), "Running over dataset ...", false}};
             lEventTimer->DrawProgressBar(0, "");
-            std::cout << "Numnber of events: " << numberOfEvents << std::endl;
+            std::cout << "Number of events: " << numberOfEvents << std::endl;
             for (int i{0}; i < numberOfEvents; i++) {
                 std::stringstream lSStrFoundEvents;
                 lSStrFoundEvents << foundEvents;
