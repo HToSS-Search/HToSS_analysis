@@ -72,28 +72,28 @@ int main(int argc, char* argv[]) {
 
     // Quick and dirty plots
 
-    TH2F* h_qMuonOverQhadrons      {new TH2F("h_qMuonOverQhadrons",       "", 2, -1.0, 1.0, 2, -1.0, 1.0)};
-    TH2F* h_qMuonOverRelIsoMuMu    {new TH2F("h_qMuonOverRelIsoMuMu",     "", 2, -1.0, 1.0, 500, 0., 5.)};
-    TH2F* h_qMuonOverRelIsoQq      {new TH2F("h_qMuonOverRelIsoQq",       "", 2, -1.0, 1.0, 500, 0., 5.)};
-    TH2F* h_qMuonOverRelIsoMu1     {new TH2F("h_qMuonOverRelIsoMu1",      "", 2, -1.0, 1.0, 500, 0., 5.)};
-    TH2F* h_qMuonOverRelIsoMu2     {new TH2F("h_qMuonOverRelIsoMu2",      "", 2, -1.0, 1.0, 500, 0., 5.)};
-    TH2F* h_qMuonOverRelIsoQ1      {new TH2F("h_qMuonOverRelIsoQ1",       "", 2, -1.0, 1.0, 500, 0., 5.)};
-    TH2F* h_qMuonOverRelIsoQ2      {new TH2F("h_qMuonOverRelIsoQ2",       "", 2, -1.0, 1.0, 500, 0., 5.)};
-    TH2F* h_qHadronsOverRelIsoMuMu {new TH2F("h_qHadronsOverRelIsoMuMu",  "", 2, -1.0, 1.0, 500, 0., 5.)};
-    TH2F* h_qHadronsOverRelIsoQq   {new TH2F("h_qHadronsOverRelIsoQq",    "", 2, -1.0, 1.0, 500, 0., 5.)};
-    TH2F* h_qHadronsOverRelIsoMu1  {new TH2F("h_qHadronsOverRelIsoMu1",   "", 2, -1.0, 1.0, 500, 0., 5.)};
-    TH2F* h_qHadronsOverRelIsoMu2  {new TH2F("h_qHadronsOverRelIsoMu2",   "", 2, -1.0, 1.0, 500, 0., 5.)};
-    TH2F* h_qHadronsOverRelIsoQ1   {new TH2F("h_qHadronsOverRelIsoQ1",    "", 2, -1.0, 1.0, 500, 0., 5.)};
-    TH2F* h_qHadronsOverRelIsoQ2   {new TH2F("h_qHadronsOverRelIsoQ2",    "", 2, -1.0, 1.0, 500, 0., 5.)};
-    TH2F* h_relIsoMuMuOverRelIsoQq {new TH2F("h_relIsoMuMuOverRelIsoQq",  "", 500, 0., 5., 500, 0., 5.)};
-    TH2F* h_relIsoMuMuOverRelIsoQ1 {new TH2F("h_relIsoMuMuOverRelIsoQ1",  "", 500, 0., 5., 500, 0., 5.)};
-    TH2F* h_relIsoMuMuOverRelIsoQ2 {new TH2F("h_relIsoMuMuOverRelIsoQ2",  "", 500, 0., 5., 500, 0., 5.)};
-    TH2F* h_relIsoQqOverRelIsoMu1  {new TH2F("h_relIsoQqOverRelIsoMu1",   "", 500, 0., 5., 500, 0., 5.)};
-    TH2F* h_relIsoQqOverRelIsoMu2  {new TH2F("h_relIsoQqOverRelIsoMu2",   "", 500, 0., 5., 500, 0., 5.)};
-    TH2F* h_relIsoMu1OverRelIsoQ1  {new TH2F("h_relIsoMu1OverRelIsoQ1",   "", 500, 0., 5., 500, 0., 5.)};
-    TH2F* h_relIsoMu1OverRelIsoQ2  {new TH2F("h_relIsoMu1OverRelIsoQ2",   "", 500, 0., 5., 500, 0., 5.)};
-    TH2F* h_relIsoMu2OverRelIsoQ1  {new TH2F("h_relIsoMu2OverRelIsoQ1",   "", 500, 0., 5., 500, 0., 5.)};
-    TH2F* h_relIsoMu2OverRelIsoQ2  {new TH2F("h_relIsoMu2OverRelIsoQ2",   "", 500, 0., 5., 500, 0., 5.)};
+    TH2F* h_qMuonOverQhadrons      {new TH2F("h_qMuonOverQhadrons",       "; Q_{#mu#mu}; Q_{qq}", 2, -1.0, 1.0, 2, -1.0, 1.0)};
+    TH2F* h_qMuonOverRelIsoMuMu    {new TH2F("h_qMuonOverRelIsoMuMu",     "; Q_{#mu#mu}; I^{rel}_{#mu#mu}", 2, -1.0, 1.0, 500, 0., 5.)};
+    TH2F* h_qMuonOverRelIsoQq      {new TH2F("h_qMuonOverRelIsoQq",       "; Q_{#mu#mu}; I^{rel}_{qq}", 2, -1.0, 1.0, 500, 0., 5.)};
+    TH2F* h_qMuonOverRelIsoMu1     {new TH2F("h_qMuonOverRelIsoMu1",      "; Q_{#mu#mu}; I^{rel}_{#mu1}", 2, -1.0, 1.0, 500, 0., 5.)};
+    TH2F* h_qMuonOverRelIsoMu2     {new TH2F("h_qMuonOverRelIsoMu2",      "; Q_{#mu#mu}; I^{rel}_{#mu2}", 2, -1.0, 1.0, 500, 0., 5.)};
+    TH2F* h_qMuonOverRelIsoQ1      {new TH2F("h_qMuonOverRelIsoQ1",       "; Q_{#mu#mu}; I^{rel}_{q1}", 2, -1.0, 1.0, 500, 0., 5.)};
+    TH2F* h_qMuonOverRelIsoQ2      {new TH2F("h_qMuonOverRelIsoQ2",       "; Q_{#mu#mu}; I^{rel}_{q2}", 2, -1.0, 1.0, 500, 0., 5.)};
+    TH2F* h_qHadronsOverRelIsoMuMu {new TH2F("h_qHadronsOverRelIsoMuMu",  "; Q_{qq}; I^{rel}_{#mu#mu}", 2, -1.0, 1.0, 500, 0., 5.)};
+    TH2F* h_qHadronsOverRelIsoQq   {new TH2F("h_qHadronsOverRelIsoQq",    "; Q_{qq}; I^{rel}_{qq}", 2, -1.0, 1.0, 500, 0., 5.)};
+    TH2F* h_qHadronsOverRelIsoMu1  {new TH2F("h_qHadronsOverRelIsoMu1",   "; Q_{qq}; I^{rel}_{#mu1}", 2, -1.0, 1.0, 500, 0., 5.)};
+    TH2F* h_qHadronsOverRelIsoMu2  {new TH2F("h_qHadronsOverRelIsoMu2",   "; Q_{qq}; I^{rel}_{#mu2}", 2, -1.0, 1.0, 500, 0., 5.)};
+    TH2F* h_qHadronsOverRelIsoQ1   {new TH2F("h_qHadronsOverRelIsoQ1",    "; Q_{qq}; I^{rel}_{q1}", 2, -1.0, 1.0, 500, 0., 5.)};
+    TH2F* h_qHadronsOverRelIsoQ2   {new TH2F("h_qHadronsOverRelIsoQ2",    "; Q_{qq}; I^{rel}_{q2}", 2, -1.0, 1.0, 500, 0., 5.)};
+    TH2F* h_relIsoMuMuOverRelIsoQq {new TH2F("h_relIsoMuMuOverRelIsoQq",  "; I^{rel}_{#mu#mu}; I^{rel}_{qq}", 500, 0., 5., 500, 0., 5.)};
+    TH2F* h_relIsoMuMuOverRelIsoQ1 {new TH2F("h_relIsoMuMuOverRelIsoQ1",  "; I^{rel}_{#mu#mu}; I^{rel}_{q1}", 500, 0., 5., 500, 0., 5.)};
+    TH2F* h_relIsoMuMuOverRelIsoQ2 {new TH2F("h_relIsoMuMuOverRelIsoQ2",  "; I^{rel}_{#mu#mu}; I^{rel}_{q2}", 500, 0., 5., 500, 0., 5.)};
+    TH2F* h_relIsoQqOverRelIsoMu1  {new TH2F("h_relIsoQqOverRelIsoMu1",   "; I^{rel}_{qq}; I^{rel}_{#mu1}", 500, 0., 5., 500, 0., 5.)};
+    TH2F* h_relIsoQqOverRelIsoMu2  {new TH2F("h_relIsoQqOverRelIsoMu2",   "; I^{rel}_{qq}; I^{rel}_{#mu2}", 500, 0., 5., 500, 0., 5.)};
+    TH2F* h_relIsoMu1OverRelIsoQ1  {new TH2F("h_relIsoMu1OverRelIsoQ1",   "; I^{rel}_{#mu1}; I^{rel}_{q1}", 500, 0., 5., 500, 0., 5.)};
+    TH2F* h_relIsoMu1OverRelIsoQ2  {new TH2F("h_relIsoMu1OverRelIsoQ2",   "; I^{rel}_{#mu1}; I^{rel}_{q2}", 500, 0., 5., 500, 0., 5.)};
+    TH2F* h_relIsoMu2OverRelIsoQ1  {new TH2F("h_relIsoMu2OverRelIsoQ1",   "; I^{rel}_{#mu2}; I^{rel}_{q1}", 500, 0., 5., 500, 0., 5.)};
+    TH2F* h_relIsoMu2OverRelIsoQ2  {new TH2F("h_relIsoMu2OverRelIsoQ2",   "; I^{rel}_{#mu2}; I^{rel}_{q2}", 500, 0., 5., 500, 0., 5.)};
 
     // Set bin labels for charge
 
@@ -448,6 +448,9 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const 
 
 //                if (!event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
 //                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] > 1.0) continue;
+
+                if (event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
+                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] <= 1.0) continue;
 
                 // pf quantities
                 float neutral_iso {0.0}, neutral_iso1 {0.0}, neutral_iso2 {0.0};

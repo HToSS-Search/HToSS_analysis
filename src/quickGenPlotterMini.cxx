@@ -160,7 +160,7 @@ int main(int argc, char* argv[]) {
     if (is2016_) era = "2016";
     else if (is2018_) era = "2018";
     else era = "2017";
-    const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "/"};
+    const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "_legacy/"};
 //    const std::string postLepSelSkimInputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "/"};
 
     // Begin to loop over all datasets
@@ -545,10 +545,10 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth )
                 event.chsPairTrkIso.second = trkiso2/(event.chsPairTrkVec.second.Pt() + 1.0e-06);
                 event.chsTrkIso = trkiso/((event.chsPairTrkVec.first+event.chsPairTrkVec.second).Pt() + 1.0e-06);
 
-                if ( event.chsPairTrkIso.first > 0.75  ) continue;
-                if ( event.chsPairTrkIso.second > 10.  ) continue;
+                if ( event.chsPairTrkIso.first > 0.30  ) continue;
+                if ( event.chsPairTrkIso.second > 1.0 ) continue;
 
-//                if ( event.chsTrkIso > 0.8 ) continue;
+//                if ( event.chsTrkIso > 0.10 ) continue;
 
                 event.chsPairTrkIndex = getChsTrackPairIndex(event);
 

@@ -2,8 +2,8 @@
 #include "TChain.h"
 
 #include "TFile.h"
-#include "TH1F.h"
-#include "TH2F.h"
+#include "TH1.h"
+#include "TH2.h"
 #include "TProfile.h"
 #include "TLegend.h"
 #include "TStyle.h"
@@ -71,6 +71,12 @@ int main(int argc, char* argv[]) {
     const std::regex mask{".*\\.root"};
 
     // Quick and dirty plots
+
+    TH1I* h_leadingMuonNgenJets    {new TH1I("h_leadingMuonNgenJets",    "", 10, -0.5, 9.5)};
+    TH1I* h_subleadingMuonNgenJets {new TH1I("h_subleadingMuonNgenJets", "", 10, -0.5, 9.5)};
+
+    TH1F* h_leadingMuonRelIso      {new TH1F("h_leadingMuonRelIso", "", 1000, 0., 5.)};
+    TH1F* h_subleadingMuonRelIso   {new TH1F("h_subleadingMuonRelIso", "", 1000, 0., 5.)};
 
     TH1F* h_zeroIso_CHS            {new TH1F("h_zeroIso_CHS", "; #sum_{p_{T}}^{#mu1/2} charged hadrons; ", 500, 0., 250.)};
     TH1F* h_zeroIso_NHS            {new	TH1F("h_zeroIso_NHS", "; #sum_{E_{T}}^{#mu1/2} neutral hadrons; ", 500, 0., 250.)};
@@ -219,7 +225,8 @@ int main(int argc, char* argv[]) {
             if ( looseMuonIndex.size() < 2 ) continue;
             if ( !getDileptonCand(event, looseMuonIndex, false) ) continue;
 
-
+            h_leadingMuonRelIso->Fill (event.zPairRelIso.first, eventWeight);
+            h_subleadingMuonRelIso->Fill (event.zPairRelIso.second, eventWeight);
 
             if ( event.zPairRelIso.first == 0.0 || event.zPairRelIso.second == 0.0 ) {
 //                const int packedMuon1 {event.muonPF2PATPackedCandIndex(event.zPairIndex.first)}, packedMuon2{event.muonPF2PATPackedCandIndex(event.zPairIndex.second)};
@@ -335,6 +342,12 @@ int main(int argc, char* argv[]) {
 
     // Write out histos
 
+    h_leadingMuonNgenJets->Write();
+    h_subleadingMuonNgenJets->Write();
+
+    h_leadingMuonRelIso->Write();
+    h_subleadingMuonRelIso->Write();
+
     h_zeroIso_CHS->Write();
     h_zeroIso_NHS->Write();
     h_zeroIso_Pho->Write();
@@ -432,8 +445,8 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const 
 //                if (!event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
 //                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] > 1.0) continue;
 
-                if (event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
-                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] <= 1.0) continue;
+//                if (event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
+//                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] <= 1.0) continue;
 
                 // pf quantities
                 float neutral_iso {0.0}, neutral_iso1 {0.0}, neutral_iso2 {0.0};
