@@ -191,17 +191,15 @@ int main(int argc, char* argv[]) {
 
             // Get muons
 
-            for (int k = 0; k < event.numMuonPF2PAT; i++) {
+            for (int k = 0; k < event.numMuonPF2PAT; k++) {
 
-//                if ( event.
-
+                if ( event.muonPF2PATComRelIsodBeta[k] == 0.0 ) {
+                    h_zeroIso_CHS->Fill( event.muonPF2PATChHadIso[k], eventWeight);
+                    h_zeroIso_NHS->Fill( event.muonPF2PATChHadIso[k], eventWeight);
+                    h_zeroIso_Pho->Fill( event.muonPF2PATChHadIso[k], eventWeight);
+                    h_zeroIso_PU->Fill( event.muonPF2PATChHadIso[k], eventWeight);
+                }
             }
-
-//            h_zeroIso_CHS->Fill(ch_iso, eventWeight);
-//            h_zeroIso_NHS->Fill(neutral_iso, eventWeight);
-//            h_zeroIso_Pho->Fill(gamma_iso, eventWeight);
-//            h_zeroIso_PU->Fill(pu_iso, eventWeight);
-
         } // end event loop
     } // end dataset loop
 
