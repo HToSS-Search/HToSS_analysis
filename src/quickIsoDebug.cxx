@@ -48,11 +48,11 @@ bool is2018_;
 namespace fs = boost::filesystem;
 
 // Lepton cut variables
-const float looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {30.}, looseMuonRelIso_ {100.};
+const float looseMuonEta_ {2.4}, looseMuonPt_ {10.}, looseMuonPtLeading_ {30.}, looseMuonRelIso_ {100.};
 const float invZMassCut_ {10.0}, chsMass_{0.13957018};
 
 // Diparticle cuts
-double maxDileptonDeltaR_ {0.2}, maxChsDeltaR_ {0.4};
+double maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4};
 double higgsTolerence_ {10.};
 
 int main(int argc, char* argv[]) {

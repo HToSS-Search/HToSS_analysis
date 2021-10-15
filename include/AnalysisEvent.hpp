@@ -190,6 +190,10 @@ class AnalysisEvent
     Float_t muonPF2PATHcalIso[NMUONSMAX];
     Float_t muonPF2PATComRelIso[NMUONSMAX];
     Float_t muonPF2PATComRelIsodBeta[NMUONSMAX];
+    Float_t muonPF2PATChHadIso[NMUONSMAX];
+    Float_t muonPF2PATNtHadIso[NMUONSMAX];
+    Float_t muonPF2PATGammaIso[NMUONSMAX];
+    Float_t muonPF2PATPuIso[NMUONSMAX];
     Int_t muonPF2PATIsPFMuon[NMUONSMAX];
     Int_t muonPF2PATNChambers[NMUONSMAX];
     Int_t muonPF2PATNMatches[NMUONSMAX];
@@ -1121,6 +1125,10 @@ class AnalysisEvent
     TBranch* b_muonPF2PATHcalIso; //!
     TBranch* b_muonPF2PATComRelIso; //!
     TBranch* b_muonPF2PATComRelIsodBeta; //!
+    TBranch* b_muonPF2PATChHadIso; //!
+    TBranch* b_muonPF2PATNtHadIso; //!
+    TBranch* b_muonPF2PATGammaIso; //!
+    TBranch* b_muonPF2PATPuIso; //!
     TBranch* b_muonPF2PATIsPFMuon; //!
     TBranch* b_muonPF2PATNChambers; //!
     TBranch* b_muonPF2PATNMatches; //!
@@ -2127,6 +2135,10 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
    fChain->SetBranchAddress("muonPF2PATHcalIso", muonPF2PATHcalIso, &b_muonPF2PATHcalIso);
    fChain->SetBranchAddress("muonPF2PATComRelIso", muonPF2PATComRelIso, &b_muonPF2PATComRelIso);
    fChain->SetBranchAddress("muonPF2PATComRelIsodBeta", muonPF2PATComRelIsodBeta, &b_muonPF2PATComRelIsodBeta);
+   fChain->SetBranchAddress("muonPF2PATChHadIso", muonPF2PATChHadIso, &b_muonPF2PATChHadIso);
+   fChain->SetBranchAddress("muonPF2PATNtHadIso", muonPF2PATNtHadIso, &b_muonPF2PATNtHadIso);
+   fChain->SetBranchAddress("muonPF2PATGammaIso", muonPF2PATGammaIso, &b_muonPF2PATGammaIso);
+   fChain->SetBranchAddress("muonPF2PATPuIso", muonPF2PATPuIso, &b_muonPF2PATPuIso);
    fChain->SetBranchAddress("muonPF2PATIsPFMuon", muonPF2PATIsPFMuon, &b_muonPF2PATIsPFMuon);
    fChain->SetBranchAddress("muonPF2PATNChambers", muonPF2PATNChambers, &b_muonPF2PATNChambers);
    fChain->SetBranchAddress("muonPF2PATNMatches", muonPF2PATNMatches, &b_muonPF2PATNMatches);
