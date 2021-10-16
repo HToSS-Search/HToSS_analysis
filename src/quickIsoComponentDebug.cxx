@@ -57,10 +57,17 @@ int main(int argc, char* argv[]) {
 
     // Quick and dirty plots
 
-    TH1F* h_zeroIso_CHS            {new TH1F("h_zeroIso_CHS", "; #sum_{p_{T}}^{#mu} charged hadrons; ", 500, 0., 250.)};
-    TH1F* h_zeroIso_NHS            {new	TH1F("h_zeroIso_NHS", "; #sum_{E_{T}}^{#mu} neutral hadrons; ", 500, 0., 250.)};
-    TH1F* h_zeroIso_Pho            {new	TH1F("h_zeroIso_Pho", "; #sum_{E_{T}}^{#mu} photons; ", 500, 0., 250.)};
-    TH1F* h_zeroIso_PU             {new	TH1F("h_zeroIso_PU",  "; #frac{1}{2}#times#sum_{p_{T}}^{#mu} PU; ", 500, 0., 250.)};
+    TH1F* h_iso                {new TH1F("h_iso",     "; rel iso;", 500, 0., 5.0)};
+
+    TH1F* h_iso_CHS            {new TH1F("h_iso_CHS", "; #sum_{p_{T}}^{#mu} charged hadrons; ", 100, 0., 50.)};
+    TH1F* h_iso_NHS            {new TH1F("h_iso_NHS", "; #sum_{E_{T}}^{#mu} neutral hadrons; ", 100, 0., 50.)};
+    TH1F* h_iso_Pho            {new TH1F("h_iso_Pho", "; #sum_{E_{T}}^{#mu} photons; ", 100, 0., 50.)};
+    TH1F* h_iso_PU             {new TH1F("h_iso_PU",  "; #frac{1}{2}#times#sum_{p_{T}}^{#mu} PU; ", 100, 0., 50.)};
+
+    TH1F* h_zeroIso_CHS        {new TH1F("h_zeroIso_CHS", "; #sum_{p_{T}}^{#mu} charged hadrons; ", 100, 0., 50.)};
+    TH1F* h_zeroIso_NHS        {new TH1F("h_zeroIso_NHS", "; #sum_{E_{T}}^{#mu} neutral hadrons; ", 100, 0., 50.)};
+    TH1F* h_zeroIso_Pho        {new TH1F("h_zeroIso_Pho", "; #sum_{E_{T}}^{#mu} photons; ", 100, 0., 50.)};
+    TH1F* h_zeroIso_PU         {new TH1F("h_zeroIso_PU",  "; #frac{1}{2}#times#sum_{p_{T}}^{#mu} PU; ", 100, 0., 50.)};
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
@@ -193,11 +200,21 @@ int main(int argc, char* argv[]) {
 
             for (int k = 0; k < event.numMuonPF2PAT; k++) {
 
+                if ( event.muonPF2PATPt[k] < 5.0 ) continue;
+                if ( !event.muonPF2PATLooseCutId[k] ) continue;
+
+                h_iso->Fill( event.muonPF2PATComRelIsodBeta[k], eventWeight);
+
+                h_iso_CHS->Fill( event.muonPF2PATChHadIso[k], eventWeight);
+                h_iso_NHS->Fill( event.muonPF2PATNtHadIso[k], eventWeight);
+                h_iso_Pho->Fill( event.muonPF2PATGammaIso[k], eventWeight);
+                h_iso_PU->Fill( 0.5*event.muonPF2PATPuIso[k], eventWeight);
+
                 if ( event.muonPF2PATComRelIsodBeta[k] == 0.0 ) {
                     h_zeroIso_CHS->Fill( event.muonPF2PATChHadIso[k], eventWeight);
-                    h_zeroIso_NHS->Fill( event.muonPF2PATChHadIso[k], eventWeight);
-                    h_zeroIso_Pho->Fill( event.muonPF2PATChHadIso[k], eventWeight);
-                    h_zeroIso_PU->Fill( event.muonPF2PATChHadIso[k], eventWeight);
+                    h_zeroIso_NHS->Fill( event.muonPF2PATNtHadIso[k], eventWeight);
+                    h_zeroIso_Pho->Fill( event.muonPF2PATGammaIso[k], eventWeight);
+                    h_zeroIso_PU->Fill( 0.5*event.muonPF2PATPuIso[k], eventWeight);
                 }
             }
         } // end event loop
@@ -207,6 +224,13 @@ int main(int argc, char* argv[]) {
     outFile->cd();
 
     // Write out histos
+
+    h_iso->Write();
+
+    h_iso_CHS->Write();
+    h_iso_NHS->Write();
+    h_iso_Pho->Write();
+    h_iso_PU->Write();
 
     h_zeroIso_CHS->Write();
     h_zeroIso_NHS->Write();

@@ -743,6 +743,7 @@ void AnalysisAlgo::runMainAnalysis() {
               || dataset->name() == "QCD_Pt-20toInf_MuEnrichedPt15"
               || dataset->name() == "QCD_Pt-1000toInf_MuEnrichedPt5"
               || dataset->name() == "QCD_Pt-120to170_MuEnrichedPt5"
+              || dataset->name() == "QCD_Pt-120to170_MuEnrichedPt5_raw"
               || dataset->name() == "QCD_Pt-15to20_MuEnrichedPt5"
               || dataset->name() == "QCD_Pt-170to300_MuEnrichedPt5"
               || dataset->name() == "QCD_Pt-20to30_MuEnrichedPt5"
@@ -752,6 +753,7 @@ void AnalysisAlgo::runMainAnalysis() {
               || dataset->name() == "QCD_Pt-50to80_MuEnrichedPt5"
               || dataset->name() == "QCD_Pt-600to800_MuEnrichedPt5"
               || dataset->name() == "QCD_Pt-800to1000_MuEnrichedPt5"
+              || dataset->name() == "QCD_Pt-80to120_MuEnrichedPt5_raw"
               || dataset->name() == "QCD_Pt-80to120_MuEnrichedPt5") {
                hasLHE = false;
             }
