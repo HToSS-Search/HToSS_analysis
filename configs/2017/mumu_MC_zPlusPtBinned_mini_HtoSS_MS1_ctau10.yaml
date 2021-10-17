@@ -29,6 +29,6 @@ datasets:
   - "configs/2017/datasets/ttbar/ttbar_hadronic.yaml"
   - "configs/2017/datasets/ttbar/ttbar_semileptonic.yaml"
 # W+jets
-  - "configs/2017/datasets/wPlusJets/wPlusJets_v2.yaml"
+  - "configs/2017/datasets/wPlusJets/wPlusJets.yaml"
 # HToSS
   - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS10.yaml"

@@ -52,7 +52,7 @@ datasets:
   - "configs/2017/datasets/singleTop/tWZ.yaml"
   - "configs/2017/datasets/singleTop/tZq.yaml"
 # W+jets
-  - "configs/2017/datasets/wPlusJets/wPlusJets_v2.yaml"
+  - "configs/2017/datasets/wPlusJets/wPlusJets.yaml"
 # ttV
   - "configs/2017/datasets/ttV/ttWTolnu.yaml"
   - "configs/2017/datasets/ttV/ttW2q.yaml"

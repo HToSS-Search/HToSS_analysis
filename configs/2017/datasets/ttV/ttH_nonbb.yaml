@@ -1,6 +1,6 @@
 name: "ttH_nonbb"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/ttV/ttH_nonbb/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/ttV/ttH_nonbb/"
 cross_section: 0.5638
 mc: true
 histogram: "ttV"

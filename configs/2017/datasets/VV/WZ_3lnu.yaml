@@ -1,6 +1,6 @@
 name: "WZ_3lnu"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VV/WZ_3lnu/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VV/WZ_3lnu/"
 cross_section: 5.052
 mc: true
 histogram: "VV"
