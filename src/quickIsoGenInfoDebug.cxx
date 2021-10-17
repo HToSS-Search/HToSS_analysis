@@ -73,23 +73,35 @@ int main(int argc, char* argv[]) {
 
     // Quick and dirty plots
 
-    TH1I* h_leadingMatchedGenMuonNgenJets    {new TH1I("h_leadingMatchedGenMuonNgenJets",    "", 10, -0.5, 9.5)};
-    TH1I* h_subleadingMatchedGenMuonNgenJets {new TH1I("h_subleadingMatchedGenMuonNgenJets", "", 10, -0.5, 9.5)};
+    TH1I* h_leadingMatchedGenMuonNgenJets         {new TH1I("h_leadingMatchedGenMuonNgenJets",       "", 10, -0.5, 9.5)};
+    TH1I* h_subleadingMatchedGenMuonNgenJets      {new TH1I("h_subleadingMatchedGenMuonNgenJets",    "", 10, -0.5, 9.5)};
 
     TH1I* h_leadingMatchedGenMuonNoIsoNgenJets    {new TH1I("h_leadingMatchedGenMuonIsoNgenJets",    "", 10, -0.5, 9.5)};
     TH1I* h_subleadingMatchedGenMuonNoIsoNgenJets {new TH1I("h_subleadingMatchedGenMuonIsoNgenJets", "", 10, -0.5, 9.5)};
 
-     TH1F* h_leadingMatchedGenMuonNoIsoJetMuEnergyFraction            {new TH1F("h_leadingMatchedGenMuonNoIsoJetMuEnergyFraction",            "", 100, 0., 1.)};
-     TH1F* h_leadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction {new TH1F("h_leadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction", "", 100, 0., 1.)};
-     TH1F* h_leadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction {new TH1F("h_leadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction", "", 100, 0., 1.)};
-     TH1F* h_leadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction     {new TH1F("h_leadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction",     "", 100, 0., 1.)};
-     TH1F* h_leadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction     {new TH1F("h_leadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction",     "", 100, 0., 1.)};
+     TH1F* h_leadingMatchedGenMuonNoIsoJetMuEnergyFraction               {new TH1F("h_leadingMatchedGenMuonNoIsoJetMuEnergyFraction",               "", 100, 0., 1.)};
+     TH1F* h_leadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction    {new TH1F("h_leadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction",    "", 100, 0., 1.)};
+     TH1F* h_leadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction    {new TH1F("h_leadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction",    "", 100, 0., 1.)};
+     TH1F* h_leadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction        {new TH1F("h_leadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction",        "", 100, 0., 1.)};
+     TH1F* h_leadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction        {new TH1F("h_leadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction",        "", 100, 0., 1.)};
 
      TH1F* h_subleadingMatchedGenMuonNoIsoJetMuEnergyFraction            {new TH1F("h_subleadingMatchedGenMuonNoIsoJetMuEnergyFraction",            "", 100, 0., 1.)};
      TH1F* h_subleadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction {new TH1F("h_subleadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction", "", 100, 0., 1.)};
      TH1F* h_subleadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction {new TH1F("h_subleadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction", "", 100, 0., 1.)};
      TH1F* h_subleadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction     {new TH1F("h_subleadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction",     "", 100, 0., 1.)};
      TH1F* h_subleadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction     {new TH1F("h_subleadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction",     "", 100, 0., 1.)};
+
+     TH1F* h_leadingMuonNoIsoLeadingGenJetPid                            {new TH1F("h_leadingMuonNoIsoLeadingGenJetPid",                            "", 100, 0., 50.)};
+     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandId                       {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandId",                       "", 100, 0., 50.)};
+     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution",      "", 100, 0., 50.)};
+     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",      "", 100, 0., 50.)};
+     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution           {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution",           "", 100, 0., 50.)};
+
+     TH1F* h_subleadingMuonNoIsoLeadingGenJetPid                         {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPid",                         "", 100, 0., 50.)};
+     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandId                    {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandId",                    "", 100, 0., 50.)};
+     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution",   "", 100, 0., 50.)};
+     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",   "", 100, 0., 50.)};
+     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution        {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution",        "", 100, 0., 50.)};
 
 //    TH1I* h_leadingGenMuonNgenJets    {new TH1I("h_leadingGenMuonNgenJets",    "", 10, -0.5, 9.5)};
 //    TH1I* h_subleadingGenMuonNgenJets {new TH1I("h_subleadingGenMuonNgenJets", "", 10, -0.5, 9.5)};
@@ -242,6 +254,19 @@ int main(int argc, char* argv[]) {
                     if ( jetLVec.DeltaR(muonVec1) < 0.4 ) {
                         nJets1++;
                         if ( event.zPairRelIso.first == 0.0 ) {
+
+                            if ( nJetsNoIso1 == 0 ) {
+                                h_leadingMuonNoIsoLeadingGenJetPid->Fill(event.genJetPF2PATPID[i], eventWeight);
+      	       	       	        for (unsigned int j{0}; j < event.numPackedCands; j++) {
+                                    if ( event.packedCandsJetIndex[j] != i ) continue;
+                                    h_leadingMuonNoIsoLeadingGenJetPfCandId->Fill(event.packedCandsPdgId[j], eventWeight);
+                                    TLorentzVector pfCandVec {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
+                                    if ( event.packedCandsCharge[j] != 0 && event.packedCandsFromPV[j] >= 2 ) h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution->Fill(pfCandVec.Pt(), eventWeight);
+                                    if ( event.packedCandsCharge[j] == 0 && pfCandVec.Pt() > 0.5 )            h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution->Fill(pfCandVec.Pt(), eventWeight);
+                                    if ( event.packedCandsCharge[j] != 0 && event.packedCandsFromPV[j] < 2 && pfCandVec.Pt() > 0.5 )  h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution->Fill(pfCandVec.Pt(), eventWeight);
+                                }
+                            }
+
                             nJetsNoIso1++;
                             h_leadingMatchedGenMuonNoIsoJetMuEnergyFraction->Fill(event.jetPF2PATMuonFractionCorr[i], eventWeight);
                             h_leadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction->Fill(event.jetPF2PATNeutralHadronEnergyFractionCorr[i], eventWeight);
@@ -252,6 +277,19 @@ int main(int argc, char* argv[]) {
                     if ( jetLVec.DeltaR(muonVec2) < 0.4 ) {
                         nJets2++;
                         if ( event.zPairRelIso.second == 0.0 ) {
+
+                            if ( nJetsNoIso2 == 0 ) {
+                                h_subleadingMuonNoIsoLeadingGenJetPid->Fill(event.genJetPF2PATPID[i], eventWeight);
+                                for (unsigned int j{0}; j < event.numPackedCands; j++) {
+                                    if ( event.packedCandsJetIndex[j] != i ) continue;
+                                    h_subleadingMuonNoIsoLeadingGenJetPfCandId->Fill(event.packedCandsPdgId[j], eventWeight);
+       	       	       	       	    TLorentzVector pfCandVec {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
+                                    if ( event.packedCandsCharge[j] != 0 && event.packedCandsFromPV[j] >= 2 ) h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution->Fill(pfCandVec.Pt(), eventWeight);
+                                    if ( event.packedCandsCharge[j] == 0 && pfCandVec.Pt() > 0.5 )            h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution->Fill(pfCandVec.Pt(), eventWeight);
+                                    if ( event.packedCandsCharge[j] != 0 && event.packedCandsFromPV[j] < 2 && pfCandVec.Pt() > 0.5 )  h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution->Fill(pfCandVec.Pt(), eventWeight);
+                                }
+                            }
+
                             nJetsNoIso2++;
                             h_subleadingMatchedGenMuonNoIsoJetMuEnergyFraction->Fill(event.jetPF2PATMuonFractionCorr[i], eventWeight);
                             h_subleadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction->Fill(event.jetPF2PATNeutralHadronEnergyFractionCorr[i], eventWeight);
@@ -261,15 +299,14 @@ int main(int argc, char* argv[]) {
                     }
                         }
                     }
-                }
+                } // end jet loop
 
                 h_leadingMatchedGenMuonNgenJets->Fill(nJets1, eventWeight);
                 h_subleadingMatchedGenMuonNgenJets->Fill(nJets2, eventWeight);
+                if ( event.zPairRelIso.first == 0.0 )  h_leadingMatchedGenMuonNoIsoNgenJets->Fill(nJetsNoIso1, eventWeight);
+                if ( event.zPairRelIso.second == 0.0 ) h_subleadingMatchedGenMuonNoIsoNgenJets->Fill(nJetsNoIso2, eventWeight);
 
-                h_leadingMatchedGenMuonNoIsoNgenJets->Fill(nJetsNoIso1, eventWeight);
-                h_subleadingMatchedGenMuonNoIsoNgenJets->Fill(nJetsNoIso2, eventWeight);
-
-            }
+            } // End dimuon bool
 /*
             // Use MC truth to get correct/genuine muons
             if ( getDileptonCand(event, looseMuonIndex, true) ) {
@@ -312,6 +349,18 @@ int main(int argc, char* argv[]) {
     h_subleadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction->Write();
     h_subleadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction->Write();
     h_subleadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction->Write();
+
+    h_leadingMuonNoIsoLeadingGenJetPid->Write();
+    h_leadingMuonNoIsoLeadingGenJetPfCandId->Write();
+    h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution->Write();
+    h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution->Write();
+    h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution->Write();
+
+    h_subleadingMuonNoIsoLeadingGenJetPid->Write();
+    h_subleadingMuonNoIsoLeadingGenJetPfCandId->Write();
+    h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution->Write();
+    h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution->Write();
+    h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution->Write();
 
 //    h_leadingGenMuonNgenJets->Write();
 //    h_subleadingGenMuonNgenJets->Write();
