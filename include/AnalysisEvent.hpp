@@ -1886,20 +1886,29 @@ class AnalysisEvent
     std::pair<float, float> zPairRelIso;
     std::pair<float, float> zPairNewRelIso;
     std::pair<float, float> zPairNewTrkIso;
+    std::pair<float, float> zPairRelIsoDbeta;
+    std::pair<float, float> zPairNewRelIsoDbeta;
+    std::pair<float, float> zPairNewTrkIsoDbeta;
     std::pair<int, int> zPairIndex;
     int mumuTrkIndex;
     float zRelIso;
     float zTrkIso;
+    float zRelIsoDbeta;
+    float zTrkIsoDbeta;
 
     std::pair<TLorentzVector, TLorentzVector> chsPairVec;
     std::pair<TLorentzVector, TLorentzVector> chsPairTrkVec;
     std::pair<TLorentzVector, TLorentzVector> chsPairTrkVecRefitted;
     std::pair<float, float> chsPairRelIso;
     std::pair<float, float> chsPairTrkIso;
+    std::pair<float, float> chsPairRelIsoDbeta;
+    std::pair<float, float> chsPairTrkIsoDbeta;
     std::pair<int, int> chsPairIndex;
     int chsPairTrkIndex;
     float chsRelIso;
     float chsTrkIso;
+    float chsRelIsoDbeta;
+    float chsTrkIsoDbeta;
 
     std::pair<TLorentzVector, TLorentzVector> wPairQuarks;
     std::pair<int, int> wPairIndex;

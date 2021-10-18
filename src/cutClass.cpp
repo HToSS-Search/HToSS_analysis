@@ -770,11 +770,11 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                 event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
                 event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[i] : muons[j];
                 event.zPairIndex.second  = lepton1.Pt() > lepton2.Pt() ? muons[j] : muons[i];
-                event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
-                event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
+                event.zPairRelIsoDbeta.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
+                event.zPairRelIsoDbeta.second = event.muonPF2PATComRelIsodBeta[muons[j]];
 
-                if (!event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
-                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] > 1.0) continue;
+//                if (!event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
+//                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] > 1.0) continue;
 
 //                if (event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first] != 0.0) continue;
 //                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] != 0.0 ) continue;
@@ -842,13 +842,13 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                 const float trkiso2 = ch_trkiso2 + std::max( float(0.0), neutral_trkiso2 - float(0.5*pu_trkiso2) );
                 const float trkiso  = ch_trkiso  + std::max( float(0.0), neutral_trkiso  - float(0.5*pu_trkiso)  );
 
-                event.zPairNewRelIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
-                event.zPairNewRelIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
-                event.zRelIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+                event.zPairNewRelIsoDbeta.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                event.zPairNewRelIsoDbeta.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                event.zRelIsoDbeta = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
 
-                event.zPairNewTrkIso.first  = trkiso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
-                event.zPairNewTrkIso.second = trkiso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
-                event.zTrkIso = trkiso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+                event.zPairNewTrkIsoDbeta.first  = trkiso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                event.zPairNewTrkIsoDbeta.second = trkiso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                event.zTrkIsoDbeta = trkiso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
 
 //                if ( event.zRelIso > 0.2 ) continue;
 
@@ -967,13 +967,13 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
                 const float trkiso2 = ch_trkiso2 + std::max( float(0.0), neutral_trkiso2 - float(0.5*pu_trkiso2) );
                 const float trkiso  = ch_trkiso  + std::max( float(0.0), neutral_trkiso  - float(0.5*pu_trkiso)  );
 
-                event.chsPairRelIso.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
-                event.chsPairRelIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
-                event.chsRelIso = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
+                event.chsPairRelIsoDbeta.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
+                event.chsPairRelIsoDbeta.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
+                event.chsRelIsoDbeta = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
 
-                event.chsPairTrkIso.first = trkiso1/(event.chsPairTrkVec.first.Pt() + 1.0e-06);
-                event.chsPairTrkIso.second = trkiso2/(event.chsPairTrkVec.second.Pt() + 1.0e-06);
-                event.chsTrkIso = trkiso/((event.chsPairTrkVec.first+event.chsPairTrkVec.second).Pt() + 1.0e-06);
+                event.chsPairTrkIsoDbeta.first = trkiso1/(event.chsPairTrkVec.first.Pt() + 1.0e-06);
+                event.chsPairTrkIsoDbeta.second = trkiso2/(event.chsPairTrkVec.second.Pt() + 1.0e-06);
+                event.chsTrkIsoDbeta = trkiso/((event.chsPairTrkVec.first+event.chsPairTrkVec.second).Pt() + 1.0e-06);
 
 //                if ( event.chsTrkIso > 0.4 ) continue;
 

@@ -819,7 +819,7 @@ void AnalysisAlgo::runMainAnalysis() {
                             pileupWeight = puSystDown->GetBinContent(
                                 puSystDown->GetXaxis()->FindBin(event.numVert));
                         }
-//                        eventWeight *= pileupWeight;
+                        eventWeight *= pileupWeight;
                         // std::cout << "pileupWeight: " <<  pileupWeight <<
                         // std::endl;
                     }
