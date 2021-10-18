@@ -93,14 +93,14 @@ int main(int argc, char* argv[]) {
 
      TH1F* h_leadingMuonNoIsoLeadingGenJetPid                            {new TH1F("h_leadingMuonNoIsoLeadingGenJetPid",                            "; genJet PID;", 1000, 0., 1000.)};
      TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandId                       {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandId",                       "; pfCand (assoc with genJet) PID;", 250, 0., 250.)};
-     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution",      ";sum_{p_{T}}^{#mu1} charged contribution;", 200, 0., 100.)};
-     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",      ";sum_{E_{T}}^{#mu1} neutral contribution;", 200, 0., 100.)};
+     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution",      ";#sum_{p_{T}}^{#mu1} charged contribution;", 200, 0., 100.)};
+     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",      ";#sum_{E_{T}}^{#mu1} neutral contribution;", 200, 0., 100.)};
      TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution           {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution",           ";#frac{1}{2}#times#sum_{p_{T}}^{#mu1} PU;", 200, 0., 100.)};
 
      TH1F* h_subleadingMuonNoIsoLeadingGenJetPid                         {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPid",                         "", 1000, 0., 1000.)};
      TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandId                    {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandId",                    "", 250, 0., 250.)};
-     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution",   ";sum_{p_{T}}^{#mu2} charged contribution;", 200, 0., 100.)};
-     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",   ";sum_{E_{T}}^{#mu2} neutral contribution;", 200, 0., 100.)};
+     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution",   ";#sum_{p_{T}}^{#mu2} charged contribution;", 200, 0., 100.)};
+     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",   ";#sum_{E_{T}}^{#mu2} neutral contribution;", 200, 0., 100.)};
      TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution        {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution",        ";#frac{1}{2}#times#sum_{p_{T}}^{#mu2} PU;", 200, 0., 100.)};
 
 //    TH1I* h_leadingGenMuonNgenJets    {new TH1I("h_leadingGenMuonNgenJets",    "", 10, -0.5, 9.5)};
@@ -258,6 +258,7 @@ int main(int argc, char* argv[]) {
                             if ( nJetsNoIso1 == 0 ) {
                                 h_leadingMuonNoIsoLeadingGenJetPid->Fill(std::abs(event.genJetPF2PATPID[i]), eventWeight);
       	       	       	        for (unsigned int j{0}; j < event.numPackedCands; j++) {
+                                    if ( j == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || j == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
                                     if ( event.packedCandsJetIndex[j] != i ) continue;
                                     h_leadingMuonNoIsoLeadingGenJetPfCandId->Fill(std::abs(event.packedCandsPdgId[j]), eventWeight);
                                     TLorentzVector pfCandVec {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
@@ -281,6 +282,7 @@ int main(int argc, char* argv[]) {
                             if ( nJetsNoIso2 == 0 ) {
                                 h_subleadingMuonNoIsoLeadingGenJetPid->Fill(std::abs(event.genJetPF2PATPID[i]), eventWeight);
                                 for (unsigned int j{0}; j < event.numPackedCands; j++) {
+                                    if ( j == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || j == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
                                     if ( event.packedCandsJetIndex[j] != i ) continue;
                                     h_subleadingMuonNoIsoLeadingGenJetPfCandId->Fill(std::abs(event.packedCandsPdgId[j]), eventWeight);
        	       	       	       	    TLorentzVector pfCandVec {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
