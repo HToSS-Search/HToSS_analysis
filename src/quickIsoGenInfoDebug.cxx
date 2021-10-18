@@ -91,17 +91,17 @@ int main(int argc, char* argv[]) {
      TH1F* h_subleadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction     {new TH1F("h_subleadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction",     "", 100, 0., 1.)};
      TH1F* h_subleadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction     {new TH1F("h_subleadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction",     "", 100, 0., 1.)};
 
-     TH1F* h_leadingMuonNoIsoLeadingGenJetPid                            {new TH1F("h_leadingMuonNoIsoLeadingGenJetPid",                            "", 100, 0., 50.)};
-     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandId                       {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandId",                       "", 100, 0., 50.)};
-     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution",      "", 500, 0., 250.)};
-     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",      "", 500, 0., 250.)};
-     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution           {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution",           "", 500, 0., 250.)};
+     TH1F* h_leadingMuonNoIsoLeadingGenJetPid                            {new TH1F("h_leadingMuonNoIsoLeadingGenJetPid",                            "; genJet PID;", 100, 0., 50.)};
+     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandId                       {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandId",                       "; pfCand (assoc with genJet) PID;", 100, 0., 50.)};
+     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution",      ";sum_{p_{T}}^{#mu1} charged contribution;", 200, 0., 100.)};
+     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",      ";sum_{E_{T}}^{#mu1} neutral contribution;", 200, 0., 100.)};
+     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution           {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution",           ";#frac{1}{2}#times#sum_{p_{T}}^{#mu1} PU;", 200, 0., 100.)};
 
      TH1F* h_subleadingMuonNoIsoLeadingGenJetPid                         {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPid",                         "", 100, 0., 50.)};
      TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandId                    {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandId",                    "", 100, 0., 50.)};
-     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution",   "", 500, 0., 250.)};
-     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",   "", 500, 0., 250.)};
-     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution        {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution",        "", 500, 0., 250.)};
+     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution",   ";sum_{p_{T}}^{#mu2} charged contribution;", 200, 0., 100.)};
+     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",   ";sum_{E_{T}}^{#mu2} neutral contribution;", 200, 0., 100.)};
+     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution        {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution",        ";#frac{1}{2}#times#sum_{p_{T}}^{#mu2} PU;", 200, 0., 100.)};
 
 //    TH1I* h_leadingGenMuonNgenJets    {new TH1I("h_leadingGenMuonNgenJets",    "", 10, -0.5, 9.5)};
 //    TH1I* h_subleadingGenMuonNgenJets {new TH1I("h_subleadingGenMuonNgenJets", "", 10, -0.5, 9.5)};
@@ -263,7 +263,7 @@ int main(int argc, char* argv[]) {
                                     TLorentzVector pfCandVec {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
                                     if ( event.packedCandsCharge[j] != 0 && event.packedCandsFromPV[j] >= 2 ) h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution->Fill(pfCandVec.Pt(), eventWeight);
                                     if ( event.packedCandsCharge[j] == 0 && pfCandVec.Pt() > 0.5 )            h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution->Fill(pfCandVec.Pt(), eventWeight);
-                                    if ( event.packedCandsCharge[j] != 0 && event.packedCandsFromPV[j] < 2 && pfCandVec.Pt() > 0.5 )  h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution->Fill(pfCandVec.Pt(), eventWeight);
+                                    if ( event.packedCandsCharge[j] != 0 && event.packedCandsFromPV[j] < 2 && pfCandVec.Pt() > 0.5 )  h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution->Fill(0.5*pfCandVec.Pt(), eventWeight);
                                 }
                             }
 
@@ -286,7 +286,7 @@ int main(int argc, char* argv[]) {
        	       	       	       	    TLorentzVector pfCandVec {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
                                     if ( event.packedCandsCharge[j] != 0 && event.packedCandsFromPV[j] >= 2 ) h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution->Fill(pfCandVec.Pt(), eventWeight);
                                     if ( event.packedCandsCharge[j] == 0 && pfCandVec.Pt() > 0.5 )            h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution->Fill(pfCandVec.Pt(), eventWeight);
-                                    if ( event.packedCandsCharge[j] != 0 && event.packedCandsFromPV[j] < 2 && pfCandVec.Pt() > 0.5 )  h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution->Fill(pfCandVec.Pt(), eventWeight);
+                                    if ( event.packedCandsCharge[j] != 0 && event.packedCandsFromPV[j] < 2 && pfCandVec.Pt() > 0.5 )  h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution->Fill(0.5*pfCandVec.Pt(), eventWeight);
                                 }
                             }
 
