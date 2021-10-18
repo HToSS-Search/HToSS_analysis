@@ -834,21 +834,37 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
                     }
                 }
 
-                const float iso1 = ch_iso1 + std::max( float(0.0), neutral_iso1 - float(0.5*pu_iso1) );
-                const float iso2 = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
-                const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
+                const float iso1 = ch_iso1 + neutral_iso1;
+                const float iso2 = ch_iso2 + neutral_iso2;
+                const float iso  = ch_iso + neutral_iso;
 
-                const float trkiso1 = ch_trkiso1 + std::max( float(0.0), neutral_trkiso1 - float(0.5*pu_trkiso1) );
-                const float trkiso2 = ch_trkiso2 + std::max( float(0.0), neutral_trkiso2 - float(0.5*pu_trkiso2) );
-                const float trkiso  = ch_trkiso  + std::max( float(0.0), neutral_trkiso  - float(0.5*pu_trkiso)  );
+                const float iso1_dBeta = ch_iso1 + std::max( float(0.0), neutral_iso1 - float(0.5*pu_iso1) );
+                const float iso2_dBeta = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
+                const float iso_dBeta  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
 
-                event.zPairNewRelIsoDbeta.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
-                event.zPairNewRelIsoDbeta.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
-                event.zRelIsoDbeta = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+                const float trkiso1 = ch_trkiso1 + neutral_trkiso1;
+                const float trkiso2 = ch_trkiso2 + neutral_trkiso2;
+                const float trkiso  = ch_trkiso  + neutral_trkiso;
 
-                event.zPairNewTrkIsoDbeta.first  = trkiso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
-                event.zPairNewTrkIsoDbeta.second = trkiso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
-                event.zTrkIsoDbeta = trkiso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+                const float trkiso1_dBeta = ch_trkiso1 + std::max( float(0.0), neutral_trkiso1 - float(0.5*pu_trkiso1) );
+                const float trkiso2_dBeta = ch_trkiso2 + std::max( float(0.0), neutral_trkiso2 - float(0.5*pu_trkiso2) );
+                const float trkiso_dBeta  = ch_trkiso  + std::max( float(0.0), neutral_trkiso  - float(0.5*pu_trkiso)  );
+
+                event.zPairNewRelIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                event.zPairNewRelIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                event.zRelIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+
+                event.zPairNewRelIsoDbeta.first  = iso1_dBeta/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                event.zPairNewRelIsoDbeta.second = iso2_dBeta/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                event.zRelIsoDbeta = iso_dBeta/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+
+                event.zPairNewTrkIso.first  = trkiso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                event.zPairNewTrkIso.second = trkiso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                event.zTrkIso = trkiso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+
+                event.zPairNewTrkIsoDbeta.first  = trkiso1_dBeta/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                event.zPairNewTrkIsoDbeta.second = trkiso2_dBeta/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                event.zTrkIsoDbeta = trkiso_dBeta/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
 
 //                if ( event.zRelIso > 0.2 ) continue;
 
@@ -959,21 +975,37 @@ bool Cuts::getDihadronCand(AnalysisEvent& event, const std::vector<int>& chs) co
                     }
                 }
 
-                const float iso1 = ch_iso1 + std::max( float(0.0), neutral_iso1 - float(0.5*pu_iso1) );
-                const float iso2 = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
-                const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
+                const float iso1 = ch_iso1 + neutral_iso1;
+                const float iso2 = ch_iso2 + neutral_iso2;
+                const float iso  = ch_iso  + neutral_iso;
 
-                const float trkiso1 = ch_trkiso1 + std::max( float(0.0), neutral_trkiso1 - float(0.5*pu_trkiso1) );
-                const float trkiso2 = ch_trkiso2 + std::max( float(0.0), neutral_trkiso2 - float(0.5*pu_trkiso2) );
-                const float trkiso  = ch_trkiso  + std::max( float(0.0), neutral_trkiso  - float(0.5*pu_trkiso)  );
+                const float iso1_dBeta = ch_iso1 + std::max( float(0.0), neutral_iso1 - float(0.5*pu_iso1) );
+                const float iso2_dBeta = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
+                const float iso_dBeta  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
 
-                event.chsPairRelIsoDbeta.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
-                event.chsPairRelIsoDbeta.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
-                event.chsRelIsoDbeta = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
+                const float trkiso1 = ch_trkiso1 + neutral_trkiso1;
+                const float trkiso2 = ch_trkiso2 + neutral_trkiso2;
+                const float trkiso  = ch_trkiso  + neutral_trkiso;
 
-                event.chsPairTrkIsoDbeta.first = trkiso1/(event.chsPairTrkVec.first.Pt() + 1.0e-06);
-                event.chsPairTrkIsoDbeta.second = trkiso2/(event.chsPairTrkVec.second.Pt() + 1.0e-06);
-                event.chsTrkIsoDbeta = trkiso/((event.chsPairTrkVec.first+event.chsPairTrkVec.second).Pt() + 1.0e-06);
+                const float trkiso1_dBeta = ch_trkiso1 + std::max( float(0.0), neutral_trkiso1 - float(0.5*pu_trkiso1) );
+                const float trkiso2_dBeta = ch_trkiso2 + std::max( float(0.0), neutral_trkiso2 - float(0.5*pu_trkiso2) );
+                const float trkiso_dBeta  = ch_trkiso  + std::max( float(0.0), neutral_trkiso  - float(0.5*pu_trkiso)  );
+
+                event.chsPairRelIso.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
+                event.chsPairRelIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
+                event.chsRelIso = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
+
+                event.chsPairRelIsoDbeta.first = iso1_dBeta/(event.chsPairVec.first.Pt() + 1.0e-06);
+                event.chsPairRelIsoDbeta.second = iso2_dBeta/(event.chsPairVec.second.Pt() + 1.0e-06);
+                event.chsRelIsoDbeta = iso_dBeta/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
+
+                event.chsPairTrkIso.first = trkiso1/(event.chsPairTrkVec.first.Pt() + 1.0e-06);
+                event.chsPairTrkIso.second = trkiso2/(event.chsPairTrkVec.second.Pt() + 1.0e-06);
+                event.chsTrkIso = trkiso/((event.chsPairTrkVec.first+event.chsPairTrkVec.second).Pt() + 1.0e-06);
+
+                event.chsPairTrkIsoDbeta.first = trkiso1_dBeta/(event.chsPairTrkVec.first.Pt() + 1.0e-06);
+                event.chsPairTrkIsoDbeta.second = trkiso2_dBeta/(event.chsPairTrkVec.second.Pt() + 1.0e-06);
+                event.chsTrkIsoDbeta = trkiso_dBeta/((event.chsPairTrkVec.first+event.chsPairTrkVec.second).Pt() + 1.0e-06);
 
 //                if ( event.chsTrkIso > 0.4 ) continue;
 
