@@ -1,6 +1,6 @@
 name: "ZZ_4l"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VV/ZZ_4l/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VV/ZZ_4l/"
 cross_section: 1.325
 mc: true
 histogram: "VV"

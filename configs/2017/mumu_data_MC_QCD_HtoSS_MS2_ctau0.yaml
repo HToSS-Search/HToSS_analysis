@@ -20,4 +20,4 @@ datasets:
 # HToSS
   - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS0.yaml"
 # Data
-  - "configs/2017/datasets/data/mumuRun2017DE.yaml"
+  - "configs/2017/datasets/data/mumuRun2017D.yaml"

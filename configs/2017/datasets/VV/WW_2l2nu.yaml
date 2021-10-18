@@ -1,6 +1,6 @@
 name: "WW_2l2nu"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VV/WW_2l2nu/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VV/WW_2l2nu/"
 cross_section: 11.08
 mc: true
 histogram: "VV"

@@ -1,6 +1,6 @@
 name: "tW"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/singleTop/tW/"
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/singleTop/tW/"
 cross_section: 34.91
 mc: true
 histogram: "SingleTop"
