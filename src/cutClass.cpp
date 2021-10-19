@@ -776,7 +776,7 @@ bool Cuts::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) 
 //                if (!event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first]) continue;
 //                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] > 1.0) continue;
 
-//                if (event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first] != 0.0) continue;
+//                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.first] != 0.0) continue;
 //                if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] != 0.0 ) continue;
 
                 // pf quantities
