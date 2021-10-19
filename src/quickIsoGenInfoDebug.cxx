@@ -93,12 +93,14 @@ int main(int argc, char* argv[]) {
 
      TH1F* h_leadingMuonNoIsoLeadingGenJetPid                            {new TH1F("h_leadingMuonNoIsoLeadingGenJetPid",                            "; genJet PID;", 1000, 0., 1000.)};
      TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandId                       {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandId",                       "; pfCand (assoc with genJet) PID;", 250, 0., 250.)};
+     TH1F* h_leadingMuonNoIsoLeadingGenJetPt                             {new TH1F("h_leadingMuonNoIsoLeadingGenJetPt",                             "; genJet p_{T};", 500, 0., 250.)};
      TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution",      ";#sum_{p_{T}}^{#mu1} charged contribution;", 200, 0., 100.)};
      TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",      ";#sum_{E_{T}}^{#mu1} neutral contribution;", 200, 0., 100.)};
      TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution           {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution",           ";#frac{1}{2}#times#sum_{p_{T}}^{#mu1} PU;", 200, 0., 100.)};
 
      TH1F* h_subleadingMuonNoIsoLeadingGenJetPid                         {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPid",                         "", 1000, 0., 1000.)};
      TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandId                    {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandId",                    "", 250, 0., 250.)};
+     TH1F* h_subleadingMuonNoIsoLeadingGenJetPt                          {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPt",                          "; genJet p_{T};", 500, 0., 250.)};
      TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution",   ";#sum_{p_{T}}^{#mu2} charged contribution;", 200, 0., 100.)};
      TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",   ";#sum_{E_{T}}^{#mu2} neutral contribution;", 200, 0., 100.)};
      TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution        {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution",        ";#frac{1}{2}#times#sum_{p_{T}}^{#mu2} PU;", 200, 0., 100.)};
@@ -256,6 +258,7 @@ int main(int argc, char* argv[]) {
                         if ( event.zPairRelIso.first == 0.0 ) {
 
                             if ( nJetsNoIso1 == 0 ) {
+                                h_leadingMuonNoIsoLeadingGenJetPt->Fill(jetLVec.Pt(), eventWeight);
                                 h_leadingMuonNoIsoLeadingGenJetPid->Fill(std::abs(event.genJetPF2PATPID[i]), eventWeight);
       	       	       	        for (unsigned int j{0}; j < event.numPackedCands; j++) {
                                     if ( j == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || j == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
@@ -280,6 +283,7 @@ int main(int argc, char* argv[]) {
                         if ( event.zPairRelIso.second == 0.0 ) {
 
                             if ( nJetsNoIso2 == 0 ) {
+                                h_subleadingMuonNoIsoLeadingGenJetPt->Fill(jetLVec.Pt(), eventWeight);
                                 h_subleadingMuonNoIsoLeadingGenJetPid->Fill(std::abs(event.genJetPF2PATPID[i]), eventWeight);
                                 for (unsigned int j{0}; j < event.numPackedCands; j++) {
                                     if ( j == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || j == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
@@ -354,12 +358,14 @@ int main(int argc, char* argv[]) {
 
     h_leadingMuonNoIsoLeadingGenJetPid->Write();
     h_leadingMuonNoIsoLeadingGenJetPfCandId->Write();
+    h_leadingMuonNoIsoLeadingGenJetPt->Write();
     h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution->Write();
     h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution->Write();
     h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution->Write();
 
     h_subleadingMuonNoIsoLeadingGenJetPid->Write();
     h_subleadingMuonNoIsoLeadingGenJetPfCandId->Write();
+    h_subleadingMuonNoIsoLeadingGenJetPt->Write();
     h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution->Write();
     h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution->Write();
     h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution->Write();
