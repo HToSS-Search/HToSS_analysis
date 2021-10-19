@@ -3,7 +3,7 @@ locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/QCD/QCD_Pt-20to30_MuEnrichedPt5/"
 cross_section: 2526000.0
 mc: true
-histogram: "QCD"
-colour: "#993399"
-label: "QCD"
+histogram: "QCD_20to30"
+colour: "#ff99cc"
+label: "QCD_20to30"
 plot_type: "f"
