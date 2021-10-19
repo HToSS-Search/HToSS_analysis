@@ -105,8 +105,13 @@ int main(int argc, char* argv[]) {
      TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",   ";#sum_{E_{T}}^{#mu2} neutral contribution;", 200, 0., 100.)};
      TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution        {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution",        ";#frac{1}{2}#times#sum_{p_{T}}^{#mu2} PU;", 200, 0., 100.)};
 
-//    TH1I* h_leadingGenMuonNgenJets    {new TH1I("h_leadingGenMuonNgenJets",    "", 10, -0.5, 9.5)};
-//    TH1I* h_subleadingGenMuonNgenJets {new TH1I("h_subleadingGenMuonNgenJets", "", 10, -0.5, 9.5)};
+    TProfile* p_numPromptMuons            {new TProfile ("p_numPromptMuons", "Muon flags for selected reco muons", 6, 0.5, 6.5, "ymax = 1.0")};
+    p_numPromptMuons->GetXaxis()->SetBinLabel(1, "Prompt Decayed");
+    p_numPromptMuons->GetXaxis()->SetBinLabel(2, "Prompt Final State");
+    p_numPromptMuons->GetXaxis()->SetBinLabel(3, "Hard Process");
+    p_numPromptMuons->GetXaxis()->SetBinLabel(4, "Likely Pythia6 Status 3");
+    p_numPromptMuons->GetXaxis()->SetBinLabel(5, "ScalarAncestor");
+    p_numPromptMuons->GetXaxis()->SetBinLabel(6, "DirectScalarAncestor");
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
@@ -245,6 +250,23 @@ int main(int argc, char* argv[]) {
 
             if ( getDileptonCand(event, looseMuonIndex, false) ) {
 
+                const bool muonFromScalar1 {event.genMuonPF2PATScalarAncestor[event.zPairIndex.first]}, muonFromScalar2 {event.genMuonPF2PATScalarAncestor[event.zPairIndex.second]};
+                const bool muonDirectFromScalar1 {event.genMuonPF2PATDirectScalarAncestor[event.zPairIndex.first]}, muonDirectFromScalar2 {event.genMuonPF2PATDirectScalarAncestor[event.zPairIndex.second]};
+
+                p_numPromptMuons->Fill( 1.0, event.genMuonPF2PATPromptDecayed[event.zPairIndex.first] );
+                p_numPromptMuons->Fill( 1.0, event.genMuonPF2PATPromptDecayed[event.zPairIndex.second] );
+                p_numPromptMuons->Fill( 2.0, event.genMuonPF2PATPromptFinalState[event.zPairIndex.first] );
+                p_numPromptMuons->Fill( 2.0, event.genMuonPF2PATPromptFinalState[event.zPairIndex.second] );
+                p_numPromptMuons->Fill( 3.0, event.genMuonPF2PATHardProcess[event.zPairIndex.first] );
+                p_numPromptMuons->Fill( 3.0, event.genMuonPF2PATHardProcess[event.zPairIndex.second] );
+                p_numPromptMuons->Fill( 4.0, event.genMuonPF2PATPythiaSixStatusThree[event.zPairIndex.first] );
+                p_numPromptMuons->Fill( 4.0, event.genMuonPF2PATPythiaSixStatusThree[event.zPairIndex.second] );
+                p_numPromptMuons->Fill( 5.0, int (muonFromScalar1) );
+                p_numPromptMuons->Fill( 5.0, int (muonFromScalar2) );
+                p_numPromptMuons->Fill( 6.0, int (muonDirectFromScalar1) );
+                p_numPromptMuons->Fill( 6.0, int (muonDirectFromScalar2) );
+
+
                 const unsigned int muIndex1 {event.zPairIndex.first}, muIndex2{event.zPairIndex.second};
                 TLorentzVector muonVec1 {event.genMuonPF2PATPX[muIndex1], event.genMuonPF2PATPY[muIndex1], event.genMuonPF2PATPZ[muIndex1], event.muonPF2PATE[muIndex1]};
                 TLorentzVector muonVec2 {event.genMuonPF2PATPX[muIndex2], event.genMuonPF2PATPY[muIndex2], event.genMuonPF2PATPZ[muIndex2], event.muonPF2PATE[muIndex2]};	
@@ -313,23 +335,7 @@ int main(int argc, char* argv[]) {
                 if ( event.zPairRelIso.second == 0.0 ) h_subleadingMatchedGenMuonNoIsoNgenJets->Fill(nJetsNoIso2, eventWeight);
 
             } // End dimuon bool
-/*
-            // Use MC truth to get correct/genuine muons
-            if ( getDileptonCand(event, looseMuonIndex, true) ) {
-                const unsigned int genMuIndex1 {event.zPairIndex.first}, genMuIndex2{event.zPairIndex.second};
-                TLorentzVector genMuonVec1 {event.genMuonPF2PATPX[genMuIndex1], event.genMuonPF2PATPY[genMuIndex1], event.genMuonPF2PATPZ[genMuIndex1], event.muonPF2PATE[genMuIndex1]};
-                TLorentzVector genMuonVec2 {event.genMuonPF2PATPX[genMuIndex2], event.genMuonPF2PATPY[genMuIndex2], event.genMuonPF2PATPZ[genMuIndex2], event.muonPF2PATE[genMuIndex2]};
 
-                unsigned int nJets1 {0}, nJets2 {0};
-                for (unsigned int i{0}; i < event.numJetPF2PAT; i++) {
-                    TLorentzVector jetLVec {event.genJetPF2PATPX[i], event.genJetPF2PATPY[i], event.genJetPF2PATPZ[i], event.genJetPF2PATE[i]};
-                    if ( jetLVec.DeltaR(genMuonVec1) < 0.4 ) nJets1++;
-                    if ( jetLVec.DeltaR(genMuonVec2) < 0.4 ) nJets2++;
-                }
-                h_leadingGenMuonNgenJets->Fill(nJets1, eventWeight);
-                h_subleadingGenMuonNgenJets->Fill(nJets2, eventWeight);
-            }
-*/
         } // end event loop
     } // end dataset loop
 
@@ -337,6 +343,8 @@ int main(int argc, char* argv[]) {
     outFile->cd();
 
     // Write out histos
+
+    p_numPromptMuons->Write();
 
     h_leadingMatchedGenMuonNgenJets->Write();
     h_subleadingMatchedGenMuonNgenJets->Write();
@@ -369,9 +377,6 @@ int main(int argc, char* argv[]) {
     h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution->Write();
     h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution->Write();
     h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution->Write();
-
-//    h_leadingGenMuonNgenJets->Write();
-//    h_subleadingGenMuonNgenJets->Write();
 
     outFile->Close();
 
@@ -704,4 +709,3 @@ float deltaR(float eta1, float phi1, float eta2, float phi2){
   //  if(singleEventInfoDump_)  std::cout << eta1 << " " << eta2 << " phi " << phi1 << " " << phi2 << " ds: " << eta1-eta2 << " " << phi1-phi2 << " dR: " << std::sqrt((dEta*dEta)+(dPhi*dPhi)) << std::endl;
   return std::sqrt((dEta*dEta)+(dPhi*dPhi));
 }
-
