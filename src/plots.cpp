@@ -107,7 +107,7 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
              else {
                  TLorentzVector tempVec{event.muonPF2PATPX[event.muonIndexTight[0]], event.muonPF2PATPY[event.muonIndexTight[0]], event.muonPF2PATPZ[event.muonIndexTight[0]], event.muonPF2PATE[event.muonIndexTight[0]]};
 //                 tempVec *= event.muonMomentumSF[0];
-                 return { ( ( event.muonPF2PATChHadIso[event.muonIndexTight[0]], event.muonPF2PATNtHadIso[event.muonIndexTight[0]], event.muonPF2PATGammaIso[event.muonIndexTight[0]] ) / tempVec.Pt() ) };
+                 return { ( ( event.muonPF2PATChHadIso[event.muonIndexTight[0]] + event.muonPF2PATNtHadIso[event.muonIndexTight[0]] + event.muonPF2PATGammaIso[event.muonIndexTight[0]] ) / tempVec.Pt() ) };
              }
          }},
         {"lep2RelIso",
@@ -119,7 +119,7 @@ std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisE
              else {
                  TLorentzVector tempVec{event.muonPF2PATPX[event.muonIndexTight[1]], event.muonPF2PATPY[event.muonIndexTight[1]], event.muonPF2PATPZ[event.muonIndexTight[1]], event.muonPF2PATE[event.muonIndexTight[1]]};
 //                 tempVec *= event.muonMomentumSF[1];
-                 return { ( ( event.muonPF2PATChHadIso[event.muonIndexTight[1]], event.muonPF2PATNtHadIso[event.muonIndexTight[1]], event.muonPF2PATGammaIso[event.muonIndexTight[1]] ) / tempVec.Pt() ) };
+                 return { ( ( event.muonPF2PATChHadIso[event.muonIndexTight[1]] + event.muonPF2PATNtHadIso[event.muonIndexTight[1]] + event.muonPF2PATGammaIso[event.muonIndexTight[1]] ) / tempVec.Pt() ) };
              }
          }},
         {"lep1RelIsoDbeta",
