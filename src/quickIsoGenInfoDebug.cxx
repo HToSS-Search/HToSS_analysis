@@ -52,7 +52,7 @@ const float looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {30.}, l
 const float invZMassCut_ {10.0}, chsMass_{0.13957018};
 
 // Diparticle cuts
-double maxDileptonDeltaR_ {0.2}, maxChsDeltaR_ {0.4};
+double maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4};
 double higgsTolerence_ {10.};
 
 int main(int argc, char* argv[]) {
@@ -79,31 +79,51 @@ int main(int argc, char* argv[]) {
     TH1I* h_leadingMatchedGenMuonNoIsoNgenJets    {new TH1I("h_leadingMatchedGenMuonIsoNgenJets",    "", 10, -0.5, 9.5)};
     TH1I* h_subleadingMatchedGenMuonNoIsoNgenJets {new TH1I("h_subleadingMatchedGenMuonIsoNgenJets", "", 10, -0.5, 9.5)};
 
-     TH1F* h_leadingMatchedGenMuonNoIsoJetMuEnergyFraction               {new TH1F("h_leadingMatchedGenMuonNoIsoJetMuEnergyFraction",               "", 100, 0., 1.)};
-     TH1F* h_leadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction    {new TH1F("h_leadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction",    "", 100, 0., 1.)};
-     TH1F* h_leadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction    {new TH1F("h_leadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction",    "", 100, 0., 1.)};
-     TH1F* h_leadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction        {new TH1F("h_leadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction",        "", 100, 0., 1.)};
-     TH1F* h_leadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction        {new TH1F("h_leadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction",        "", 100, 0., 1.)};
+    TH1F* h_leadingMatchedGenMuonNoIsoJetMuEnergyFraction               {new TH1F("h_leadingMatchedGenMuonNoIsoJetMuEnergyFraction",               "", 100, 0., 1.)};
+    TH1F* h_leadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction    {new TH1F("h_leadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction",    "", 100, 0., 1.)};
+    TH1F* h_leadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction    {new TH1F("h_leadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction",    "", 100, 0., 1.)};
+    TH1F* h_leadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction        {new TH1F("h_leadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction",        "", 100, 0., 1.)};
+    TH1F* h_leadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction        {new TH1F("h_leadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction",        "", 100, 0., 1.)};
 
-     TH1F* h_subleadingMatchedGenMuonNoIsoJetMuEnergyFraction            {new TH1F("h_subleadingMatchedGenMuonNoIsoJetMuEnergyFraction",            "", 100, 0., 1.)};
-     TH1F* h_subleadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction {new TH1F("h_subleadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction", "", 100, 0., 1.)};
-     TH1F* h_subleadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction {new TH1F("h_subleadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction", "", 100, 0., 1.)};
-     TH1F* h_subleadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction     {new TH1F("h_subleadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction",     "", 100, 0., 1.)};
-     TH1F* h_subleadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction     {new TH1F("h_subleadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction",     "", 100, 0., 1.)};
+    TH1F* h_subleadingMatchedGenMuonNoIsoJetMuEnergyFraction            {new TH1F("h_subleadingMatchedGenMuonNoIsoJetMuEnergyFraction",            "", 100, 0., 1.)};
+    TH1F* h_subleadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction {new TH1F("h_subleadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction", "", 100, 0., 1.)};
+    TH1F* h_subleadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction {new TH1F("h_subleadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction", "", 100, 0., 1.)};
+    TH1F* h_subleadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction     {new TH1F("h_subleadingMatchedGenMuonNoIsoJetNeutralEmEnergyFraction",     "", 100, 0., 1.)};
+    TH1F* h_subleadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction     {new TH1F("h_subleadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction",     "", 100, 0., 1.)};
 
-     TH1F* h_leadingMuonNoIsoLeadingGenJetPid                            {new TH1F("h_leadingMuonNoIsoLeadingGenJetPid",                            "; genJet PID;", 1000, 0., 1000.)};
-     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandId                       {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandId",                       "; pfCand (assoc with genJet) PID;", 250, 0., 250.)};
-     TH1F* h_leadingMuonNoIsoLeadingGenJetPt                             {new TH1F("h_leadingMuonNoIsoLeadingGenJetPt",                             "; genJet p_{T};", 500, 0., 250.)};
-     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution",      ";#sum_{p_{T}}^{#mu1} charged contribution;", 200, 0., 100.)};
-     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",      ";#sum_{E_{T}}^{#mu1} neutral contribution;", 200, 0., 100.)};
-     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution           {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution",           ";#frac{1}{2}#times#sum_{p_{T}}^{#mu1} PU;", 200, 0., 100.)};
+    TH1F* h_leadingMuonNoIsoLeadingGenJetPid                            {new TH1F("h_leadingMuonNoIsoLeadingGenJetPid",                            "; genJet PID;", 1000, 0., 1000.)};
+    TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandId                       {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandId",                       "; pfCand (assoc with genJet) PID;", 250, 0., 250.)};
+    TH1F* h_leadingMuonNoIsoLeadingGenJetPt                             {new TH1F("h_leadingMuonNoIsoLeadingGenJetPt",                             "; genJet p_{T};", 500, 0., 250.)};
+    TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution",      ";#sum_{p_{T}}^{#mu1} charged contribution;", 200, 0., 100.)};
+    TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",      ";#sum_{E_{T}}^{#mu1} neutral contribution;", 200, 0., 100.)};
+    TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution           {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution",           ";#frac{1}{2}#times#sum_{p_{T}}^{#mu1} PU;", 200, 0., 100.)};
 
-     TH1F* h_subleadingMuonNoIsoLeadingGenJetPid                         {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPid",                         "", 1000, 0., 1000.)};
-     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandId                    {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandId",                    "", 250, 0., 250.)};
-     TH1F* h_subleadingMuonNoIsoLeadingGenJetPt                          {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPt",                          "; genJet p_{T};", 500, 0., 250.)};
-     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution",   ";#sum_{p_{T}}^{#mu2} charged contribution;", 200, 0., 100.)};
-     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",   ";#sum_{E_{T}}^{#mu2} neutral contribution;", 200, 0., 100.)};
-     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution        {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution",        ";#frac{1}{2}#times#sum_{p_{T}}^{#mu2} PU;", 200, 0., 100.)};
+    TH1F* h_subleadingMuonNoIsoLeadingGenJetPid                         {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPid",                         "", 1000, 0., 1000.)};
+    TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandId                    {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandId",                    "", 250, 0., 250.)};
+    TH1F* h_subleadingMuonNoIsoLeadingGenJetPt                          {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPt",                          "; genJet p_{T};", 500, 0., 250.)};
+    TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution",   ";#sum_{p_{T}}^{#mu2} charged contribution;", 200, 0., 100.)};
+    TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",   ";#sum_{E_{T}}^{#mu2} neutral contribution;", 200, 0., 100.)};
+    TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution        {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution",        ";#frac{1}{2}#times#sum_{p_{T}}^{#mu2} PU;", 200, 0., 100.)};
+
+    TProfile* p_leadingMuonIso            {new TProfile ("p_leadingMuonIso", "Leading muon iso cuts", 8, 0.5, 8.5, "ymax = 1.0")};
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(1, "PF Iso Very Loose (40%)");
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(2, "PF Iso Loose (25%)");
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(3, "PF Iso Medium (20%)");
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(4, "PF Iso Tight (15%)");
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(5, "PF Iso Very Tight (10%)");
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(6, "PF Iso Very Very Tight (5%)");
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(7, "Tk Iso Loose (10%)");
+    p_leadingMuonIso->GetXaxis()->SetBinLabel(8, "Tk Iso Tight (5%)");
+
+    TProfile* p_subleadingMuonIso         {new TProfile ("p_subleadingMuonIso", "Subleading muon iso cuts", 8, 0.5, 8.5, "ymax = 1.0")};
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(1, "PF Iso Very Loose (40%)");
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(2, "PF Iso Loose (25%)");
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(3, "PF Iso Medium (20%)");
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(4, "PF Iso Tight (15%)");
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(5, "PF Iso Very Tight (10%)");
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(6, "PF Iso Very Very Tight (5%)");
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(7, "Tk Iso Loose (10%)");
+    p_subleadingMuonIso->GetXaxis()->SetBinLabel(8, "Tk Iso Tight (5%)");
 
     TProfile* p_numPromptMuons            {new TProfile ("p_numPromptMuons", "Muon flags for selected reco muons", 6, 0.5, 6.5, "ymax = 1.0")};
     p_numPromptMuons->GetXaxis()->SetBinLabel(1, "Prompt Decayed");
@@ -266,6 +286,27 @@ int main(int argc, char* argv[]) {
                 p_numPromptMuons->Fill( 6.0, int (muonDirectFromScalar1) );
                 p_numPromptMuons->Fill( 6.0, int (muonDirectFromScalar2) );
 
+                bool leadingVeryVeryTightIso {event.muonPF2PATComRelIsodBeta[event.zPairIndex.first] < 0.05 ? true : false};
+                bool subleadingVeryVeryTightIso {event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] < 0.05 ? true : false};
+
+                p_leadingMuonIso->Fill( 1.0, event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.first] );
+                p_leadingMuonIso->Fill( 2.0, event.muonPF2PATPfIsoLoose[event.zPairIndex.first] );
+                p_leadingMuonIso->Fill( 3.0, event.muonPF2PATPfIsoMedium[event.zPairIndex.first] );
+                p_leadingMuonIso->Fill( 4.0, event.muonPF2PATPfIsoTight[event.zPairIndex.first] );
+                p_leadingMuonIso->Fill( 5.0, event.muonPF2PATPfIsoVeryTight[event.zPairIndex.first] );
+                p_leadingMuonIso->Fill( 6.0, int(leadingVeryVeryTightIso) );
+                p_leadingMuonIso->Fill( 7.0, event.muonPF2PATTkIsoLoose[event.zPairIndex.first] );
+                p_leadingMuonIso->Fill( 8.0, event.muonPF2PATTkIsoTight[event.zPairIndex.first] );
+
+                p_subleadingMuonIso->Fill( 1.0, event.muonPF2PATPfIsoVeryLoose[event.zPairIndex.second] );
+                p_subleadingMuonIso->Fill( 2.0, event.muonPF2PATPfIsoLoose[event.zPairIndex.second] );
+                p_subleadingMuonIso->Fill( 3.0, event.muonPF2PATPfIsoMedium[event.zPairIndex.second] );
+                p_subleadingMuonIso->Fill( 4.0, event.muonPF2PATPfIsoTight[event.zPairIndex.second] );
+                p_subleadingMuonIso->Fill( 5.0, event.muonPF2PATPfIsoVeryTight[event.zPairIndex.second] );
+                p_subleadingMuonIso->Fill( 6.0, int(subleadingVeryVeryTightIso) );
+                p_subleadingMuonIso->Fill( 7.0, event.muonPF2PATTkIsoLoose[event.zPairIndex.second] );
+                p_subleadingMuonIso->Fill( 8.0, event.muonPF2PATTkIsoTight[event.zPairIndex.second] );
+
 
                 const unsigned int muIndex1 {event.zPairIndex.first}, muIndex2{event.zPairIndex.second};
                 TLorentzVector muonVec1 {event.genMuonPF2PATPX[muIndex1], event.genMuonPF2PATPY[muIndex1], event.genMuonPF2PATPZ[muIndex1], event.muonPF2PATE[muIndex1]};
@@ -345,6 +386,9 @@ int main(int argc, char* argv[]) {
     // Write out histos
 
     p_numPromptMuons->Write();
+
+    p_leadingMuonIso->Write();
+    p_subleadingMuonIso->Write();
 
     h_leadingMatchedGenMuonNgenJets->Write();
     h_subleadingMatchedGenMuonNgenJets->Write();
@@ -453,7 +497,8 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, const 
             TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
             TLorentzVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
             const double delR { lepton1.DeltaR(lepton2) };
-            if ( delR < maxDileptonDeltaR_  ) {
+//            if ( delR < maxDileptonDeltaR_  ) {
+            if ( delR > -1.0  ) {
                 event.zPairLeptons.first  = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
                 event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
                 event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[i] : muons[j];

@@ -601,7 +601,8 @@ void HistogramPlotter::CMS_lumi(TPad* pad, int posX)
 
     TString lumi_2016 = "16.8 fb^{-1}";
     TString lumi_2016APV = "19.5 fb^{-1}";
-    TString lumi_2017 = "41.48 fb^{-1}";
+    TString lumi_2017 = "4.2 fb^{-1}";
+//    TString lumi_2017 = "41.48 fb^{-1}";
 //    TString lumi_2018 = "59.83 fb^{-1}";
     TString lumi_2018 = "41.48 fb^{-1}";
 
