@@ -989,7 +989,7 @@ plots:
     xMax: 0.4
     nBins: 40
     fillExp: "zLepDelR"
-    xAxisLabel: "#Delta(R) (cm)"
+    xAxisLabel: "#Delta(R)"
     cutStage: 2
   - title: "#Delta(#phi) between the leptons"
     name: "zLepDelPhi"
@@ -1005,7 +1005,7 @@ plots:
     xMax: 3.2
     nBins: 100
     fillExp: "zLepDelZ"
-    xAxisLabel: "#Deltaz (cm)"
+    xAxisLabel: "#Deltaz"
     cutStage: 2
   - title: "#Delta(R) between the refitted leptons"
     name: "zLepDelRRefit"
@@ -1013,7 +1013,7 @@ plots:
     xMax: 0.4
     nBins: 40
     fillExp: "zLepDelRRefit"
-    xAxisLabel: "#Delta(R) (cm)"
+    xAxisLabel: "#Delta(R)"
     cutStage: 2
   - title: "#Delta(#phi) between the refitted leptons"
     name: "zLepDelPhiRefit"
@@ -1029,7 +1029,7 @@ plots:
     xMax: 3.2
     nBins: 100
     fillExp: "zLepDelZRefit"
-    xAxisLabel: "#Deltaz (cm)"
+    xAxisLabel: "#Deltaz"
     cutStage: 2
   - title: "#Delta(R) between Leading Z Lepton and b-Jet"
     name: "zLep1BjetDelR"
