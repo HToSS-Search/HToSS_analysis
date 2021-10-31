@@ -42,6 +42,8 @@ int getMuonTrackPairIndex(const AnalysisEvent& event);
 int getChsTrackPairIndex(const AnalysisEvent& event);
 float deltaR(float eta1, float phi1, float eta2, float phi2);
 
+std::string pdgIdCode (const Int_t status, const bool unicode = false);
+
 bool is2016_;
 bool is2018_;
 
@@ -73,6 +75,8 @@ int main(int argc, char* argv[]) {
 
     // Quick and dirty plots
 
+    std::map<int, int> pdgIdMap;
+
     TH1I* h_leadingMatchedGenMuonNgenJets         {new TH1I("h_leadingMatchedGenMuonNgenJets",       "", 10, -0.5, 9.5)};
     TH1I* h_subleadingMatchedGenMuonNgenJets      {new TH1I("h_subleadingMatchedGenMuonNgenJets",    "", 10, -0.5, 9.5)};
 
@@ -92,18 +96,38 @@ int main(int argc, char* argv[]) {
     TH1F* h_subleadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction     {new TH1F("h_subleadingMatchedGenMuonNoIsoJetChargedEmEnergyFraction",     "", 100, 0., 1.)};
 
     TH1F* h_leadingMuonNoIsoLeadingGenJetPid                            {new TH1F("h_leadingMuonNoIsoLeadingGenJetPid",                            "; genJet PID;", 1000, 0., 1000.)};
-    TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandId                       {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandId",                       "; pfCand (assoc with genJet) PID;", 250, 0., 250.)};
     TH1F* h_leadingMuonNoIsoLeadingGenJetPt                             {new TH1F("h_leadingMuonNoIsoLeadingGenJetPt",                             "; genJet p_{T};", 500, 0., 250.)};
     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution",      ";#sum_{p_{T}}^{#mu1} charged contribution;", 200, 0., 100.)};
     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution      {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",      ";#sum_{E_{T}}^{#mu1} neutral contribution;", 200, 0., 100.)};
     TH1F* h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution           {new TH1F("h_leadingMuonNoIsoLeadingGenJetPfCandPuContribution",           ";#frac{1}{2}#times#sum_{p_{T}}^{#mu1} PU;", 200, 0., 100.)};
 
-    TH1F* h_subleadingMuonNoIsoLeadingGenJetPid                         {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPid",                         "", 1000, 0., 1000.)};
-    TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandId                    {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandId",                    "", 250, 0., 250.)};
+    TH1F* h_subleadingMuonNoIsoLeadingGenJetPid                         {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPid",                         "; genJet PID;", 1000, 0., 1000.)};
     TH1F* h_subleadingMuonNoIsoLeadingGenJetPt                          {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPt",                          "; genJet p_{T};", 500, 0., 250.)};
     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution",   ";#sum_{p_{T}}^{#mu2} charged contribution;", 200, 0., 100.)};
     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution   {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution",   ";#sum_{E_{T}}^{#mu2} neutral contribution;", 200, 0., 100.)};
     TH1F* h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution        {new TH1F("h_subleadingMuonNoIsoLeadingGenJetPfCandPuContribution",        ";#frac{1}{2}#times#sum_{p_{T}}^{#mu2} PU;", 200, 0., 100.)};
+
+    TH1I* h_leadingMuonNoIsoLeadingGenJetPfCandId                       {new TH1I("h_leadingMuonNoIsoLeadingGenJetPfCandId",                       "; pfCand (assoc with genJet) PID;", 8, 0., 8)};
+    TH1I* h_subleadingMuonNoIsoLeadingGenJetPfCandId                    {new TH1I("h_subleadingMuonNoIsoLeadingGenJetPfCandId",                    "; pfCand (assoc with genJet) PID;", 8, 0., 8)};
+
+    h_leadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(1, "Unknown");
+    h_leadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(2, "ele");
+    h_leadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(3, "mu");
+    h_leadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(4, "gamma");
+    h_leadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(5, "charged hadrons");
+    h_leadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(6, "neutral hadrons");
+    h_leadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(7, "hadronic HF");
+    h_leadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(8, "em HF");
+
+    h_subleadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(1, "Unknown");
+    h_subleadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(2, "ele");
+    h_subleadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(3, "mu");
+    h_subleadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(4, "gamma");
+    h_subleadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(5, "charged hadrons");
+    h_subleadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(6, "neutral hadrons");
+    h_subleadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(7, "hadronic HF");
+    h_subleadingMuonNoIsoLeadingGenJetPfCandId->GetXaxis()->SetBinLabel(8, "em HF");
+
 
     TProfile* p_leadingMuonIso            {new TProfile ("p_leadingMuonIso", "Leading muon iso cuts", 8, 0.5, 8.5, "ymax = 1.0")};
     p_leadingMuonIso->GetXaxis()->SetBinLabel(1, "PF Iso Very Loose (40%)");
@@ -132,6 +156,8 @@ int main(int argc, char* argv[]) {
     p_numPromptMuons->GetXaxis()->SetBinLabel(4, "Likely Pythia6 Status 3");
     p_numPromptMuons->GetXaxis()->SetBinLabel(5, "ScalarAncestor");
     p_numPromptMuons->GetXaxis()->SetBinLabel(6, "DirectScalarAncestor");
+
+    TH1F* h_promptMuonMotherId            {new TH1F("h_promptMuonMotherId", "; Prompt Final State Muon Mothers' PID;", 1000, 0., 1000.)};
 
     namespace po = boost::program_options;
     po::options_description desc("Options");
@@ -286,6 +312,9 @@ int main(int argc, char* argv[]) {
                 p_numPromptMuons->Fill( 6.0, int (muonDirectFromScalar1) );
                 p_numPromptMuons->Fill( 6.0, int (muonDirectFromScalar2) );
 
+                if ( event.genMuonPF2PATPromptFinalState[event.zPairIndex.first] )  h_promptMuonMotherId->Fill( std::abs( event.genMuonPF2PATMotherId[event.zPairIndex.first] ) );
+                if ( event.genMuonPF2PATPromptFinalState[event.zPairIndex.second] ) h_promptMuonMotherId->Fill( std::abs( event.genMuonPF2PATMotherId[event.zPairIndex.second] ) );
+
                 bool leadingVeryVeryTightIso {event.muonPF2PATComRelIsodBeta[event.zPairIndex.first] < 0.05 ? true : false};
                 bool subleadingVeryVeryTightIso {event.muonPF2PATComRelIsodBeta[event.zPairIndex.second] < 0.05 ? true : false};
 
@@ -308,7 +337,7 @@ int main(int argc, char* argv[]) {
                 p_subleadingMuonIso->Fill( 8.0, event.muonPF2PATTkIsoTight[event.zPairIndex.second] );
 
 
-                const unsigned int muIndex1 {event.zPairIndex.first}, muIndex2{event.zPairIndex.second};
+                const int muIndex1 {event.zPairIndex.first}, muIndex2{event.zPairIndex.second};
                 TLorentzVector muonVec1 {event.genMuonPF2PATPX[muIndex1], event.genMuonPF2PATPY[muIndex1], event.genMuonPF2PATPZ[muIndex1], event.muonPF2PATE[muIndex1]};
                 TLorentzVector muonVec2 {event.genMuonPF2PATPX[muIndex2], event.genMuonPF2PATPY[muIndex2], event.genMuonPF2PATPZ[muIndex2], event.muonPF2PATE[muIndex2]};	
 
@@ -322,11 +351,23 @@ int main(int argc, char* argv[]) {
 
                             if ( nJetsNoIso1 == 0 ) {
                                 h_leadingMuonNoIsoLeadingGenJetPt->Fill(jetLVec.Pt(), eventWeight);
+
                                 h_leadingMuonNoIsoLeadingGenJetPid->Fill(std::abs(event.genJetPF2PATPID[i]), eventWeight);
+
       	       	       	        for (unsigned int j{0}; j < event.numPackedCands; j++) {
                                     if ( j == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || j == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
                                     if ( event.packedCandsJetIndex[j] != i ) continue;
-                                    h_leadingMuonNoIsoLeadingGenJetPfCandId->Fill(std::abs(event.packedCandsPdgId[j]), eventWeight);
+
+                                    const int pfPid {std::abs(event.packedCandsPdgId[j])};
+                                    if ( pfPid == 11 )       h_leadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(2, eventWeight);
+                                    else if ( pfPid == 13 )  h_leadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(3, eventWeight);
+                                    else if ( pfPid == 22 )  h_leadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(4, eventWeight);
+                                    else if ( pfPid == 211 ) h_leadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(5, eventWeight);
+                                    else if ( pfPid == 130 ) h_leadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(6, eventWeight);
+                                    else if ( pfPid == 1 )   h_leadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(7, eventWeight);
+                                    else if ( pfPid == 2 )   h_leadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(8, eventWeight);
+                                    else h_leadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(1, eventWeight);
+
                                     TLorentzVector pfCandVec {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
                                     if ( event.packedCandsCharge[j] != 0 && event.packedCandsFromPV[j] >= 2 ) h_leadingMuonNoIsoLeadingGenJetPfCandChargedContribution->Fill(pfCandVec.Pt(), eventWeight);
                                     if ( event.packedCandsCharge[j] == 0 && pfCandVec.Pt() > 0.5 )            h_leadingMuonNoIsoLeadingGenJetPfCandNeutralContribution->Fill(pfCandVec.Pt(), eventWeight);
@@ -335,6 +376,7 @@ int main(int argc, char* argv[]) {
                             }
 
                             nJetsNoIso1++;
+
                             h_leadingMatchedGenMuonNoIsoJetMuEnergyFraction->Fill(event.jetPF2PATMuonFractionCorr[i], eventWeight);
                             h_leadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction->Fill(event.jetPF2PATNeutralHadronEnergyFractionCorr[i], eventWeight);
                             h_leadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction->Fill(event.jetPF2PATChargedHadronEnergyFractionCorr[i], eventWeight);
@@ -351,7 +393,17 @@ int main(int argc, char* argv[]) {
                                 for (unsigned int j{0}; j < event.numPackedCands; j++) {
                                     if ( j == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || j == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
                                     if ( event.packedCandsJetIndex[j] != i ) continue;
-                                    h_subleadingMuonNoIsoLeadingGenJetPfCandId->Fill(std::abs(event.packedCandsPdgId[j]), eventWeight);
+                                    const int pfPid {std::abs(event.packedCandsPdgId[j])};
+
+                                    if ( pfPid == 11 )       h_subleadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(2, eventWeight);
+                                    else if ( pfPid == 13 )  h_subleadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(3, eventWeight);
+                                    else if ( pfPid == 22 )  h_subleadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(4, eventWeight);
+                                    else if ( pfPid == 211 ) h_subleadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(5, eventWeight);
+                                    else if ( pfPid == 130 ) h_subleadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(6, eventWeight);
+                                    else if ( pfPid == 1 )   h_subleadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(7, eventWeight);
+                                    else if ( pfPid == 2 )   h_subleadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(8, eventWeight);
+                                    else h_leadingMuonNoIsoLeadingGenJetPfCandId->AddBinContent(1, eventWeight);
+
        	       	       	       	    TLorentzVector pfCandVec {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
                                     if ( event.packedCandsCharge[j] != 0 && event.packedCandsFromPV[j] >= 2 ) h_subleadingMuonNoIsoLeadingGenJetPfCandChargedContribution->Fill(pfCandVec.Pt(), eventWeight);
                                     if ( event.packedCandsCharge[j] == 0 && pfCandVec.Pt() > 0.5 )            h_subleadingMuonNoIsoLeadingGenJetPfCandNeutralContribution->Fill(pfCandVec.Pt(), eventWeight);
@@ -360,6 +412,7 @@ int main(int argc, char* argv[]) {
                             }
 
                             nJetsNoIso2++;
+
                             h_subleadingMatchedGenMuonNoIsoJetMuEnergyFraction->Fill(event.jetPF2PATMuonFractionCorr[i], eventWeight);
                             h_subleadingMatchedGenMuonNoIsoJetNeutralHadronEnergyFraction->Fill(event.jetPF2PATNeutralHadronEnergyFractionCorr[i], eventWeight);
                             h_subleadingMatchedGenMuonNoIsoJetChargedHadronEnergyFraction->Fill(event.jetPF2PATChargedHadronEnergyFractionCorr[i], eventWeight);
@@ -386,6 +439,7 @@ int main(int argc, char* argv[]) {
     // Write out histos
 
     p_numPromptMuons->Write();
+    h_promptMuonMotherId->Write();
 
     p_leadingMuonIso->Write();
     p_subleadingMuonIso->Write();
@@ -754,3 +808,127 @@ float deltaR(float eta1, float phi1, float eta2, float phi2){
   //  if(singleEventInfoDump_)  std::cout << eta1 << " " << eta2 << " phi " << phi1 << " " << phi2 << " ds: " << eta1-eta2 << " " << phi1-phi2 << " dR: " << std::sqrt((dEta*dEta)+(dPhi*dPhi)) << std::endl;
   return std::sqrt((dEta*dEta)+(dPhi*dPhi));
 }
+
+std::string pdgIdCode (const Int_t parId, const bool unicode) {
+
+   std::string particle;
+   int id = std::abs(parId);
+
+   switch (id) {
+      case 0 : particle += "-"; break;
+      case 1 : particle += "d"; break;
+      case 2 : particle += "u"; break;
+      case 3 : particle += "s"; break;
+      case 4 : particle += "c"; break;
+      case 5 : particle += "b"; break;
+      case 6 : particle += "t"; break;
+      case 9 : particle += "g"; break;
+
+      case 11 : particle += "e"; break;
+      case 12 : particle += unicode ? "\u03BD_e" : "#nu_{e}" ; break;
+      case 13 : particle += unicode ? "\u03BC" : "#mu"; break;
+      case 14 : particle += unicode ? "\u03BD_\u03BC" : "#nu_{#mu}"; break;
+      case 15 : particle += unicode ? "\u03C4" : "#tau"; break;
+      case 16 : particle += unicode ? "\u03BD_\u03C4" : "#nu_{#tau}"; break;
+
+      case 21 : particle += "g"; break;
+      case 22 : particle += unicode ? "Y" : "#gamma"; break;
+      case 23 : particle += "Z_{0}"; break;
+      case 24 : particle += "W"; break;
+      case 25 : particle += "h_{0}"; break;
+
+      case 111 : particle += unicode ? "\u03C00" : "#pi^{0}"; break;
+      case 211 : particle += unicode ? "\u03C0" : "#pi^{+}"; break;
+      case 113 : particle += unicode ? "\u03C1" : "#rho(770)^{0}"; break;
+      case 213 : particle += unicode ? "\u03C1" : "#rho(770)^{+}"; break;
+      case 225 : particle += unicode ? "f2(1270)" : "f_{2}(1270)"; break;
+
+      case 130 : particle += unicode ? "K0_L" : "K_{L}^{0}"; break;
+      case 310 : particle += unicode ? "K0_S" : "K_{S}^{0}"; break;
+      case 311 : particle += unicode ? "K0" : "K^{0}"; break;
+      case 321 : particle += unicode ? "K" : "K^{+}"; break;
+
+      case 313 : particle += unicode ? "K*0" : "K^{*}(892)^{0}"; break;
+      case 315 : particle += unicode ? "K*0_2" : "K^{*}_{2}(1430)"; break;
+      case 323 : particle += unicode ? "K*" : "K^{*}(892)^{+}"; break;
+
+      case 10311 : particle += unicode ? "K0*_0(1430)" : "K^{*}_{0}(1430)"; break;
+
+      case 221 : particle += unicode ? "\u03B7" : "#eta"; break;
+      case 331 : particle += unicode ? "\u03B7\'" : "#eta'"; break;
+      case 223 : particle += unicode ? "\u03C9" : "#omega"; break;
+      case 333 : particle += unicode ? "\u03C6" : "#phi"; break;
+
+      case 411 : particle += unicode ? "D" : "D^{+}"; break;
+      case 421 : particle += unicode ? "D0" : "D^{0}"; break;
+      case 413 : particle += unicode ? "D*" : "D^{*} 2010)^{+}"; break;
+      case 423 : particle += unicode ? "D*0" : "D^{*}(2007)^{0}"; break;
+      case 431 : particle += unicode ? "D_S" : "D_{s}^{+}"; break;
+      case 433 : particle += unicode ? "D*_S" : "D_{s}^{*+}"; break;
+      case 443 : particle += unicode ? "J/\u03C8" : "J/#psi"; break;
+      case 445 : particle += unicode ? "\u03C7_c2(1P)" : "#chi_{c2}(1P)"; break;
+ 
+      case 511 : particle += unicode ? "B0" : "B^{0}"; break;
+      case 521 : particle += unicode ? "B" : "B^{+}"; break;
+      case 513 : particle += unicode ? "B*0" : "B^{*0}"; break;
+      case 523 : particle += unicode ? "B*" : "B^{*+}"; break;
+      case 531 : particle += unicode ? "B0_S" : "B^{0}_{s}"; break;
+      case 533 : particle += unicode ? "B*0_S" : "B^{*0}_{s}"; break;
+
+      case 1101 : particle += unicode ? "(dd)0" : "(dd)_{0}"; break;
+      case 2101 : particle += unicode ? "(ud)0" : "(ud)_{0}"; break;
+      case 2103 : particle += unicode ? "(ud)1" : "(ud)_{1}"; break;
+      case 2203 : particle += unicode ? "(uu)1" : "(uu)_{1}"; break;
+
+      case 2212 : particle += "p"; break;
+      case 2112 : particle += "n"; break;
+      case 2224 : particle += unicode ? "\u0394++" : "#Delta^{++}"; break;
+      case 2214 : particle += unicode ? "\u0394+" : "#Delta^{+}"; break;
+      case 2114 : particle += unicode ? "\u03940" : "#Delta^{0}"; break;
+      case 1114 : particle += unicode ? "\u0394-" : "#Delta^{-}"; break;
+
+      case 3122 : particle += unicode ? "\u0394" : "#Lambda"; break;
+      case 3222 : particle += unicode ? "\u03A3" : "#Sigma^{+}"; break;
+      case 3224 : particle += unicode ? "\u03A3*" : "#Sigma^{*+}"; break;
+      case 3212 : particle += unicode ? "\u03A30" : "#Sigma^{0}"; break;
+      case 3322 : particle += unicode ? "\u03A30" : "#Xi^{0}"; break;
+      case 3312 : particle += unicode ? "\u03A3-" : "#Xi^{-}"; break;
+      case 3112 : particle += unicode ? "\u03A3-" : "#Sigma_{-}"; break;
+
+      case 3324 : particle += unicode ? "\u039E*0" : "#Xi^{*0}"; break;
+      case 3334 : particle += unicode ? "\u03A9-" : "#Omega^{-}"; break;
+
+      case 4214 : particle += unicode ? "\u03A3*_C" : "#Sigma_{c}^{*+}"; break;
+      case 4222 : particle += unicode ? "\u03A3_C" : "#Sigma_{c}^{++}"; break;
+      case 4122 : particle += unicode ? "\u039BC" : "#Lambda_{c}^{+}"; break;
+      case 4114 : particle += unicode ? "\u03A3*0_C" : "#Sigma_{c}^{*0}"; break;
+      case 4224 : particle += unicode ? "\u03A3+C" : "#Sigma_{c}^{*++}"; break;
+
+      case 5122 : particle += unicode ? "\u039B0_b" : "#Lambda^{0}_{b}"; break;
+      case 5212 : particle += unicode ? "\u03A30_b" : "#Sigma_{b}^{0}"; break;
+      case 5232 : particle += unicode ? "\u039E0_b" : "#Xi_{b}^{0}"; break;
+
+      case 10313: particle += unicode ? "K0_1 (1270)" : "K_{1} (1270)^{0}"; break;
+      case 10441: particle += unicode ? "\u03C7_c0(1P)" : "#chi_{c0}(1P)"; break;
+      case 10551: particle += unicode ? "\u03C7_b0(1P)" : "#chi_{b0}(1P)"; break;
+      case 20443: particle += unicode ? "\u03C7_c1(1P)" : "#chi_{c1}(1P)"; break;
+      case 20313: particle += unicode ? "K0_1 (1400)" : "K_{1}(1400)^0}"; break;
+      case 20213: particle += unicode ? "a1" : "a_{1} (1260)^{+}"; break;
+
+      case 9000006 : particle += unicode ? "Scalar" : "SCALAR"; break;
+      case 9010221 : particle += unicode ? "f0(980)" : "f_{0}(980)"; break;
+
+      default : {particle += std::to_string(std::abs(parId)); /*std::cout << "UNKNOWN PID: " << parId << std::endl;*/}
+   }
+
+   if ( unicode && (parId == 211 || parId == 213 || parId == 321 || parId == 323 || parId == 411 || parId == 431 || parId == 433 || parId == 521 || parId == 4122 || parId == 20213 || parId == 4214 || parId == 523
+   || parId == 3224 || parId == 3222
+))  particle += "+";
+
+   if ( unicode && parId < 0) particle += "-";
+   if ( unicode && (parId == -4222 || parId == -4224) ) particle += "-";
+   if ( unicode && (parId == 4222  || parId == 4222) ) particle += "+";
+
+   return particle;
+}
+

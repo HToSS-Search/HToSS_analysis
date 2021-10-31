@@ -150,6 +150,9 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
         "msCut",
         po::value<float>(&msCut)->default_value(4.),
         "Apply an mScalar cut.")(
+        "dileptonDelR",
+        po::value<float>(&dileptonDelR)->default_value(0.4),
+        "Apply a max delR requirement on the dimuon pair.")(
         "chsMass",
         po::value<float>(&chsMass)->default_value(139.57018),
         "Set charged hadron candidate assumed mass (MeV).")(
@@ -369,6 +372,7 @@ void AnalysisAlgo::setupCuts() {
     cutObj->setMetCut(metCut);
     cutObj->setMWCut(mwCut);
     cutObj->setScalarCut(msCut);
+    cutObj->setMaxDileptonDeltaR(dileptonDelR);
     cutObj->setHiggsCut(mhCut);
     cutObj->setChsCandidateMass(chsMass);
     cutObj->setBlindingFlag(unblind_);

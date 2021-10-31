@@ -1,5 +1,5 @@
-#ifndef _analysisAlgo_hpp_
-#define _analysisAlgo_hpp_
+#ifndef _MuonDebugAlgo_hpp_
+#define _MuonDebugAlgo_hpp_
 
 #include "cutClass.hpp"
 #include "dataset.hpp"
@@ -14,17 +14,15 @@ class TFile;
 class TChain;
 class TTree;
 
-class AnalysisAlgo
+class MuonDebugAlgo
 {
     public:
     // Constructor
-    AnalysisAlgo();
-    ~AnalysisAlgo();
+    MuonDebugAlgo();
+    ~MuonDebugAlgo();
 
     void parseCommandLineArguements(int argc, char* argv[]);
-    void setupSystematics();
-    void setupCuts();
-    void setupPlots();
+    void setup();
     void runMainAnalysis();
     void savePlots();
 
@@ -106,7 +104,6 @@ class AnalysisAlgo
 
     // Systematic Stuff
     // Making a vector of strings that will give systematics name.
-    std::vector<std::string> systNames;
     TFile* dataPileupFile;
     TH1D* dataPU;
     TFile* mcPileupFile;

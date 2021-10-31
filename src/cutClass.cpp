@@ -91,6 +91,7 @@ Cuts::Cuts(const bool doPlots,
 
     , isABCD_{false}
     , isZplusCR_{false}
+    , isMuonDebug_{false}
 
     , postLepSelTree_{nullptr}
 
@@ -426,6 +427,8 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
 
     if (doPlots_) plotMap["zCand"]->fillAllPlots(event, eventWeight);
     if (doPlots_ || fillCutFlow_) cutFlow.Fill(3.5, eventWeight);
+
+    if ( isMuonDebug_ ) return true;
 
     const double dileptonMass {(event.zPairLeptons.first + event.zPairLeptons.second).M()};
 

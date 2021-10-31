@@ -1,0 +1,1602 @@
+plots:
+  - title: "Leading Lepton p_{T}"
+    name: "lep1Pt"
+    xMax: 200.
+    xMin: 0.
+    nBins: 200
+    fillExp: "lep1Pt"
+    xAxisLabel: "p_{T} lepton 1 (GeV/c)"
+    cutStage: 2
+  - title: "Second Lepton p_{T}"
+    name: "lep2Pt"
+    xMax: 200.
+    xMin: 0.
+    nBins: 200
+    fillExp: "lep2Pt"
+    xAxisLabel: "p_{T} lepton 2 (GeV/c)"
+    cutStage: 2
+  - title: "Leading Lepton #phi"
+    name: "lep1Phi"
+    xMax: 3.2
+    xMin: -3.2
+    nBins: 300
+    fillExp: "lep1Phi"
+    xAxisLabel: "#phi lepton 1"
+    cutStage: 2
+  - title: "Second Lepton #phi"
+    name: "lep2Phi"
+    xMax: 3.2
+    xMin: -3.2
+    nBins: 300
+    fillExp: "lep2Phi"
+    xAxisLabel: "#phi_{T} lepton 2"
+    cutStage: 2
+  - title: "Leading Lepton #eta"
+    name: "lep1Eta"
+    xMax: 3.
+    xMin: 0.
+    nBins: 120
+    fillExp: "lep1Eta"
+    xAxisLabel: "#eta lepton 1"
+    cutStage: 2
+  - title: "Second Lepton #eta"
+    name: "lep2Eta"
+    xMax: 3.
+    xMin: 0.
+    nBins: 120
+    fillExp: "lep2Eta"
+    xAxisLabel: "#eta lepton 2"
+    cutStage: 2
+  - title: "Leading Lepton Relative Isolation"
+    name: "lep1RelIso"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep1RelIso"
+    xAxisLabel: "I^{rel} lepton 1"
+    cutStage: 2
+  - title: "Leading Lepton Relative Isolation (PU corrected)"
+    name: "lep1RelIsoDbeta"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep1RelIsoDbeta"
+    xAxisLabel: "I^{rel}_{PU corr} lepton 1"
+    cutStage: 2
+  - title: "Second Lepton Relative Isolation"
+    name: "lep2RelIso"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep2RelIso"
+    xAxisLabel: "I^{rel} lepton 2"
+    cutStage: 2
+  - title: "Second Lepton Relative Isolation (PU corrected)"
+    name: "lep2RelIsoDbeta"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep2RelIsoDbeta"
+    xAxisLabel: "I^{rel}_{PU corr} lepton 2"
+    cutStage: 2
+  - title: "Leading Lepton d_{0}"
+    name: "lep1D0"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep1D0"
+    xAxisLabel: "lepton 1 d_{0}"
+    cutStage: 2
+  - title: "Leading Lepton d_{0} Significance"
+    name: "lep1D0Sig"
+    xMax: 50.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep1D0Sig"
+    xAxisLabel: "lepton 1 d_{0} significance"
+    cutStage: 2
+  - title: "Second Lepton d_{0}"
+    name: "lep2D0"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep2D0"
+    xAxisLabel: "lepton 2 D0"
+    cutStage: 2
+  - title: "Second Lepton d_{0} Significance"
+    name: "lep2D0Sig"
+    xMax: 50.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep2D0Sig"
+    xAxisLabel: "lepton 2 d_{0} significance"
+    cutStage: 2
+  - title: "Leading Lepton d_{Z}"
+    name: "lep1DZ"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep1DZ"
+    xAxisLabel: "lepton 1 d_{Z}"
+    cutStage: 2
+  - title: "Leading Lepton d_{Z} Significance"
+    name: "lep1DZSig"
+    xMax: 50.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep1DZSig"
+    xAxisLabel: "lepton 1 d_{Z} significance"
+    cutStage: 2
+  - title: "Second Lepton d_{Z}"
+    name: "lep2DZ"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep2DZ"
+    xAxisLabel: "lepton 2 d_{z}"
+    cutStage: 2
+  - title: "Second Lepton d_{Z} Significance"
+    name: "lep2DZSig"
+    xMax: 50.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "lep2DZSig"
+    xAxisLabel: "lepton 2 d_{Z} significance"
+    cutStage: 2
+  - title: "Leading lepton Transverse IP"
+    name: "lep1ImpactTransDist"
+    xMax: 100.0
+    xMin: 0.
+    nBins: 400
+    fillExp: "lep1ImpactTransDist"
+    xAxisLabel: "lepton 1 IP_{trans}"
+    cutStage: 2
+  - title: "Leading lepton Transverse IP Error"
+    name: "lep1ImpactTransError"
+    xMax: 100.0
+    xMin: 0.
+    nBins: 400
+    fillExp: "lep1ImpactTransError"
+    xAxisLabel:	"lepton	1 IP_{trans} Error"
+    cutStage: 2
+  - title: "Leading lepton IP Transverse Sigificance"
+    name: "lep1ImpactTransSig"
+    xMax: 100.0
+    xMin: 0.
+    nBins: 400
+    fillExp: "lep1ImpactTransSig"
+    xAxisLabel:	"lepton	1 IP_{trans} Sig"
+    cutStage: 2
+  - title: "Second lepton Transverse IP"
+    name: "lep2ImpactTransDist"
+    xMax: 100.0
+    xMin: 0.
+    nBins: 400
+    fillExp: "lep2ImpactTransDist"
+    xAxisLabel: "lepton 2 IP_{trans}"
+    cutStage: 2
+  - title: "Second lepton Transverse IP Error"
+    name: "lep2ImpactTransError"
+    xMax: 100.0
+    xMin: 0.
+    nBins: 400
+    fillExp: "lep2ImpactTransError"
+    xAxisLabel: "lepton 2 IP_{trans} Error"
+    cutStage: 2
+  - title: "Second lepton IP Transverse Sigificance"
+    name: "lep2ImpactTransSig"
+    xMax: 100.0
+    xMin: 0.
+    nBins: 400
+    fillExp: "lep2ImpactTransSig"
+    xAxisLabel:	"lepton	2 IP_{trans} Sig"
+    cutStage: 2
+  - title: "Leading charged hadron pf cand p_{T}"
+    name: "chs1Pt"
+    xMax: 200.
+    xMin: 0.
+    nBins: 200
+    fillExp: "chs1Pt"
+    xAxisLabel: "p_{T} (GeV/c)"
+    cutStage: 2
+  - title: "Leading charged hadron pf cand #eta"
+    name: "chs1Eta"
+    xMax: 3.
+    xMin: 0.
+    nBins: 120
+    fillExp: "chs1Eta"
+    xAxisLabel: "#eta"
+    cutStage: 2
+  - title: "Leading charged hadron pf cand #phi"
+    name: "chs1Phi"
+    xMax: 3.2
+    xMin: -3.2
+    nBins: 300
+    fillExp: "chs1Phi"
+    xAxisLabel: "#phi"
+    cutStage: 2
+  - title: "Leading charged hadron pf isolation"
+    name: "chs1RelIso"
+    xMax: 10.0
+    xMin: 0.0
+    nBins: 200
+    fillExp: "chs1RelIso"
+    xAxisLabel: "I^{rel} hadron 1"
+    cutStage: 2
+  - title: "Leading charged hadron pf isolation (PU corrected)"
+    name: "chs1RelIsoDbeta"
+    xMax: 10.0
+    xMin: 0.0
+    nBins: 200
+    fillExp: "chs1RelIsoDbeta"
+    xAxisLabel: "I^{rel}_{PU corr} hadron 1"
+    cutStage: 2
+  - title: "Subleading charged hadron pf cand p_{T}"
+    name: "chs2Pt"
+    xMax: 200.
+    xMin: 0.
+    nBins: 200
+    fillExp: "chs2Pt"
+    xAxisLabel: "p_{T} (GeV/c)"
+    cutStage: 2
+  - title: "Subleading charged hadron pf cand #eta"
+    name: "chs2Eta"
+    xMax: 3.
+    xMin: 0.
+    nBins: 120
+    fillExp: "chs2Eta"
+    xAxisLabel: "#eta"
+    cutStage: 2
+  - title: "Leading charged hadron pf cand #phi"
+    name: "chs2Phi"
+    xMax: 3.2
+    xMin: -3.2
+    nBins: 300
+    fillExp: "chs2Phi"
+    xAxisLabel: "#phi"
+    cutStage: 2
+  - title: "Subleading charged hadron pf isolation"
+    name: "chs2RelIso"
+    xMax: 10.0
+    xMin: 0.0
+    nBins: 200
+    fillExp: "chs2RelIso"
+    xAxisLabel: "I^{rel} hadron 2"
+    cutStage: 2
+  - title: "Subleading charged hadron pf isolation (PU corrected)"
+    name: "chs2RelIsoDbeta"
+    xMax: 10.0
+    xMin: 0.0
+    nBins: 200
+    fillExp: "chs2RelIsoDbeta"
+    xAxisLabel: "I^{rel}_{PU corr} hadron 2"
+    cutStage: 2
+  - title: "Leading charged hadron track p_{T}"
+    name: "chs1TrkPt"
+    xMax: 200.
+    xMin: 0.
+    nBins: 200
+    fillExp: "chs1TrkPt"
+    xAxisLabel: "track p_{T} (GeV/c)"
+    cutStage: 2
+  - title: "Leading charged hadron track #eta"
+    name: "chs1TrkEta"
+    xMax: 3.
+    xMin: 0.
+    nBins: 120
+    fillExp: "chs1TrkEta"
+    xAxisLabel: "track #eta"
+    cutStage: 2
+  - title: "Leading charged hadron track #phi"
+    name: "chs1TrkPhi"
+    xMax: 3.2
+    xMin: -3.2
+    nBins: 300
+    fillExp: "chs1TrkPhi"
+    xAxisLabel: "track #phi"
+    cutStage: 2
+  - title: "Leading charged hadron relative isolation"
+    name: "chs1TrkIso"
+    xMax: 10.0
+    xMin: 0.0
+    nBins: 200
+    fillExp: "chs1TrkIso"
+    xAxisLabel: "I^{rel}"
+    cutStage: 2
+  - title: "Leading charged hadron relative isolation (PU corrected)"
+    name: "chs1TrkIsoDbeta"
+    xMax: 10.0
+    xMin: 0.0
+    nBins: 200
+    fillExp: "chs1TrkIsoDbeta"
+    xAxisLabel: "I^{rel}_{PU corr}"
+    cutStage: 2
+  - title: "Subleading charged hadron track p_{T}"
+    name: "chs2TrkPt"
+    xMax: 200.
+    xMin: 0.
+    nBins: 200
+    fillExp: "chs2TrkPt"
+    xAxisLabel: "track p_{T} (GeV/c)"
+    cutStage: 2
+  - title: "Subleading charged hadron track #eta"
+    name: "chs2TrkEta"
+    xMax: 3.
+    xMin: 0.
+    nBins: 120
+    fillExp: "chs2TrkEta"
+    xAxisLabel: "track #eta"
+    cutStage: 2
+  - title: "Leading charged hadron track #phi"
+    name: "chs2TrkPhi"
+    xMax: 3.2
+    xMin: -3.2
+    nBins: 300
+    fillExp: "chs2TrkPhi"
+    xAxisLabel: "track #phi"
+    cutStage: 2
+  - title: "Subleading charged hadron track relaive isolation"
+    name: "chs2TrkIso"
+    xMax: 10.0
+    xMin: 0.0
+    nBins: 200
+    fillExp: "chs2TrkIso"
+    xAxisLabel: "I^{rel}"
+    cutStage: 2
+  - title: "Subleading charged hadron track relaive isolation (PU corrected)"
+    name: "chs2TrkIsoDbeta"
+    xMax: 10.0
+    xMin: 0.0
+    nBins: 200
+    fillExp: "chs2TrkIsoDbeta"
+    xAxisLabel: "I^{rel}_{PU corr}"
+    cutStage: 2
+  - title: "E_{T}^{miss}"
+    name: "met"
+    xMax: 200.
+    xMin: 0.
+    nBins: 50
+    fillExp: "met"
+    xAxisLabel: "E_{T}^{miss}"
+    cutStage: 2
+  - title: "Leading Z Lepton p_{T}"
+    name: "zLepton1Pt"
+    xMin: 0.
+    xMax: 200.
+    nBins: 50
+    fillExp: "zLepton1Pt"
+    xAxisLabel: "p_{T} leading Z lepton (GeV/c)"
+    cutStage: 2
+  - title: "Second Z Lepton p_{T}"
+    name: "zLepton2Pt"
+    xMin: 0.
+    xMax: 200.
+    nBins: 50
+    fillExp: "zLepton2Pt"
+    xAxisLabel: "p_{T} second Z lepton (GeV/c)"
+    cutStage: 2
+  - title: "Leading Z Lepton #eta"
+    name: "zLepton1Eta"
+    xMin: 0.
+    xMax: 3.
+    nBins: 30
+    fillExp: "zLepton1Eta"
+    xAxisLabel: "#eta leading Z lepton"
+    cutStage: 2
+  - title: "Second Z Lepton #eta"
+    name: "zLepton2Eta"
+    xMin: 0.
+    xMax: 3.
+    nBins: 30
+    fillExp: "zLepton2Eta"
+    xAxisLabel: "#eta second Z lepton"
+    cutStage: 2
+  - title: "Leading Z Lepton #phi"
+    name: "zLepton1Phi"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 40
+    fillExp: "zLepton1Phi"
+    xAxisLabel: "#phi leading Z lepton"
+    cutStage: 2
+  - title: "Second Z Lepton #phi"
+    name: "zLepton2Phi"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 40
+    fillExp: "zLepton2Phi"
+    xAxisLabel: "#phi second Z lepton"
+    cutStage: 2
+  - title: "Leading lepton relative isolation"
+    name: "zLepton1RelIso"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton1RelIso"
+    xAxisLabel: "I^{rel}"
+    cutStage: 2
+  - title: "Leading lepton relative isolation (PU corrected)"
+    name: "zLepton1RelIsoDbeta"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton1RelIsoDbeta"
+    xAxisLabel: "I^{rel}_{PU corr}"
+    cutStage: 2
+  - title: "Subleading lepton relative isolation"
+    name: "zLepton2RelIso"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton2RelIso"
+    xAxisLabel: "I^{rel}"
+    cutStage: 2
+  - title: "Subleading lepton relative isolation (PU corrected)"
+    name: "zLepton2RelIsoDbeta"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton2RelIsoDbeta"
+    xAxisLabel: "I^{rel}_{PU corr}"
+    cutStage: 2
+  - title: "Leading lepton relative isolation (recalculated)"
+    name: "zLepton1NewRelIso"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton1NewRelIso"
+    xAxisLabel: "I^{rel} (recalculated)"
+    cutStage: 2
+  - title: "Leading lepton relative isolation (PU corrected) (recalculated)"
+    name: "zLepton1NewRelIsoDbeta"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton1NewRelIsoDbeta"
+    xAxisLabel: "I^{rel}_{PU corr} (recalculated)"
+    cutStage: 2
+  - title: "Subleading lepton relative isolation (recalculated)"
+    name: "zLepton2NewRelIso"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton2NewRelIso"
+    xAxisLabel: "I^{rel} (recalculated)"
+    cutStage: 2
+  - title: "Subleading lepton relative isolation (PU corrected) (recalculated)"
+    name: "zLepton2NewRelIsoDbeta"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton2NewRelIsoDbeta"
+    xAxisLabel: "I^{rel}_{PU corr} (recalculated)"
+    cutStage: 2
+  - title: "Leading lepton track relative isolation (recalculated)"
+    name: "zLepton1NewTrkIso"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton1NewTrkIso"
+    xAxisLabel: "Track I^{rel} (recalculated)"
+    cutStage: 2
+  - title: "Leading lepton track relative isolation (PU corrected) (recalculated)"
+    name: "zLepton1NewTrkIsoDbeta"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton1NewTrkIsoDbeta"
+    xAxisLabel: "Track I^{rel}_{PU corr} (recalculated)"
+    cutStage: 2
+  - title: "Subleading lepton track relative isolation (recalculated)"
+    name: "zLepton2NewTrkIso"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton2NewTrkIso"
+    xAxisLabel: "Track I^{rel} (recalculated)"
+    cutStage: 2
+  - title: "Subleading lepton track relative isolation (PU corrected) (recalculated)"
+    name: "zLepton2NewTrkIsoDbeta"
+    xMax: 1.0
+    xMin: 0.
+    nBins: 500
+    fillExp: "zLepton2NewTrkIsoDbeta"
+    xAxisLabel: "Track I^{rel}_{PU corr} (recalculated)"
+    cutStage: 2
+  - title: "Dilepton Invariant Mass"
+    name: "zPairMass"
+    xMin: 0.
+    xMax: 4.
+    nBins: 400
+    fillExp: "zPairMass"
+    xAxisLabel: "m_{ll} (GeV/c^{2})"
+    cutStage: 2
+  - title: "Dilepton p_{T}"
+    name: "zPairPt"
+    xMin: 0.
+    xMax: 400.
+    nBins: 40
+    fillExp: "zPairPt"
+    xAxisLabel: "p_{T} dilepton (GeV/c)"
+    cutStage: 2
+  - title: "Dilepton #eta"
+    name: "zPairEta"
+    xMin: 0.
+    xMax: 5.
+    nBins: 60
+    fillExp: "zPairEta"
+    xAxisLabel: "#eta dilepton"
+    cutStage: 2
+  - title: "Z #phi"
+    name: "zPairPhi"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 80
+    fillExp: "zPairPhi"
+    xAxisLabel: "#phi dilepton"
+    cutStage: 2
+  - title: "Dilepton relative isolation)"
+    name: "zPairRelIso"
+    xMin: 0.0
+    xMax: 1.0
+    nBins: 500
+    fillExp: "zPairRelIso"
+    xAxisLabel: "I^{rel} Dilepton"
+    cutStage: 2
+  - title: "Dilepton relative isolation (PU corrected)"
+    name: "zPairRelIsoDbeta"
+    xMin: 0.0
+    xMax: 1.0
+    nBins: 500
+    fillExp: "zPairRelIsoDbeta"
+    xAxisLabel: "I^{rel}_{PU corr} Dilepton"
+    cutStage: 2
+  - title: "Dilepton track relative isolation"
+    name: "zPairTrkIso"
+    xMin: 0.0
+    xMax: 1.0
+    nBins: 500
+    fillExp: "zPairTrkIso"
+    xAxisLabel: "I^{rel} Dilepton track"
+    cutStage: 2
+  - title: "Dilepton track relative isolation (PU corrected)"
+    name: "zPairTrkIsoDbeta"
+    xMin: 0.0
+    xMax: 1.0
+    nBins: 500
+    fillExp: "zPairTrkIsoDbeta"
+    xAxisLabel: "I^{rel}_{PU corr} Dilepton track"
+    cutStage: 2
+  - title: "Dilepton Invariant Mass (Refitted)"
+    name: "zPairMassRefit"
+    xMin: 0.
+    xMax: 4.
+    nBins: 400
+    fillExp: "zPairMassRefit"
+    xAxisLabel: "m_{ll} (GeV/c^{2})"
+    cutStage: 2
+  - title: "Dilepton p_{T} (Refitted)"
+    name: "zPairPtRefit"
+    xMin: 0.
+    xMax: 400.
+    nBins: 40
+    fillExp: "zPairPtRefit"
+    xAxisLabel: "p_{T} dilepton (GeV/c)"
+    cutStage: 2
+  - title: "Dilepton #eta (Refitted)"
+    name: "zPairEtaRefit"
+    xMin: 0.
+    xMax: 5.
+    nBins: 60
+    fillExp: "zPairEtaRefit"
+    xAxisLabel: "#eta dilepton"
+    cutStage: 2
+  - title: "Z #phi (Refitted)"
+    name: "zPairPhiRefit"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 80
+    fillExp: "zPairPhiRefit"
+    xAxisLabel: "#phi dilepton"
+    cutStage: 2
+  - title: "Dihadron Invariant Mass"
+    name: "chsPairMass"
+    xMin: 0.
+    xMax: 10.
+    nBins: 500
+    fillExp: "chsPairMass"
+    xAxisLabel: "m_{dihadron} (GeV/c^{2})"
+    cutStage: 2
+  - title: "Dihadron p_{T}"
+    name: "chsPairPt"
+    xMin: 0.
+    xMax: 400.
+    nBins: 40
+    fillExp: "chsPairPt"
+    xAxisLabel: "p_{T} dihadron (GeV/c)"
+    cutStage: 2
+  - title: "Dihadron #eta"
+    name: "chsPairEta"
+    xMin: 0.
+    xMax: 5.
+    nBins: 60
+    fillExp: "chsPairEta"
+    xAxisLabel: "#eta dihadron"
+    cutStage: 2
+  - title: "Dihadron #phi"
+    name: "chsPairPhi"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 80
+    fillExp: "chsPairPhi"
+    xAxisLabel: "#phi dihadron"
+    cutStage: 2
+  - title: "Dihadron relative isolation"
+    name: "chsPairRelIso"
+    xMin: 0.0
+    xMax: 1.0
+    nBins: 500
+    fillExp: "chsPairRelIso"
+    xAxisLabel: "I^{rel} Dihadron"
+    cutStage: 2
+  - title: "Dihadron relative isolation (PU corrected)"
+    name: "chsPairRelIsoDbeta"
+    xMin: 0.0
+    xMax: 1.0
+    nBins: 500
+    fillExp: "chsPairRelIsoDbeta"
+    xAxisLabel: "I^{rel}_{PU corr} Dihadron"
+    cutStage: 2
+  - title: "#DeltaR between charged hadron pf cands"
+    name: "chsPairDeltaR"
+    xMin: 0.
+    xMax: 0.4
+    nBins: 40
+    fillExp: "chsPairDeltaR"
+    xAxisLabel: "#Deltar"
+    cutStage: 2
+  - title: "#Delta#phi between charged hadron pf cands"
+    name: "chsPairDeltaPhi"
+    xMin: 0.
+    xMax: 3.2
+    nBins: 100
+    fillExp: "chsPairDeltaPhi"
+    xAxisLabel: "#Delta#phi"
+    cutStage: 2
+  - title: "#Deltaz between charged hadron pf cands"
+    name: "chsPairDeltaZ"
+    xMin: 0.
+    xMax: 20.
+    nBins: 600
+    fillExp: "chsPairDeltaZ"
+    xAxisLabel: "#Deltaz (cm)"
+    cutStage: 2
+  - title: "Dihadron (tracks) Invariant Mass"
+    name: "chsTrkPairMass"
+    xMin: 0.
+    xMax: 10.
+    nBins: 500
+    fillExp: "chsTrkPairMass"
+    xAxisLabel: "m_{dihadron tracks} (GeV/c^{2})"
+    cutStage: 2
+  - title: "Dihadron (tracks) p_{T}"
+    name: "chsTrkPairPt"
+    xMin: 0.
+    xMax: 400.
+    nBins: 40
+    fillExp: "chsTrkPairPt"
+    xAxisLabel: "dihadron tracks p_{T} (GeV/c)"
+    cutStage: 2
+  - title: "Dihadron (tracks) #eta"
+    name: "chsTrkPairEta"
+    xMin: 0.
+    xMax: 5.
+    nBins: 60
+    fillExp: "chsTrkPairEta"
+    xAxisLabel: "dihadron tracks #eta"
+    cutStage: 2
+  - title: "Dihadron (tracks) #phi"
+    name: "chsTrkPairPhi"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 80
+    fillExp: "chsTrkPairPhi"
+    xAxisLabel: "dihadron track #phi"
+    cutStage: 2
+  - title: "Dihadron track relative isolation"
+    name: "chsTrkPairTrkIso"
+    xMin: 0.0
+    xMax: 1.0
+    nBins: 500
+    fillExp: "chsTrkPairTrkIso"
+    xAxisLabel: "I^{rel} dihadron track"
+    cutStage: 2
+  - title: "Dihadron track relative isolation (PU corrected)"
+    name: "chsTrkPairTrkIsoDbeta"
+    xMin: 0.0
+    xMax: 1.0
+    nBins: 500
+    fillExp: "chsTrkPairTrkIsoDbeta"
+    xAxisLabel: "I^{rel}_{PU corr} dihadron track"
+    cutStage: 2
+  - title: "#DeltaR between charged hadron tracks"
+    name: "chsTrkPairDeltaR"
+    xMin: 0.
+    xMax: 0.4
+    nBins: 40
+    fillExp: "chsTrkPairDeltaR"
+    xAxisLabel: "#Deltar"
+    cutStage: 2
+  - title: "#Delta#phi between charged hadron tracks"
+    name: "chsTrkPairDeltaPhi"
+    xMin: 0.
+    xMax: 3.2
+    nBins: 100
+    fillExp: "chsTrkPairDeltaPhi"
+    xAxisLabel: "#Delta#phi"
+    cutStage: 2
+  - title: "#Deltaz between charged hadron tracks"
+    name: "chsTrkPairDeltaZ"
+    xMin: 0.
+    xMax: 20.
+    nBins: 600
+    fillExp: "chsTrkPairDeltaZ"
+    xAxisLabel: "#Deltaz (cm)"
+    cutStage: 2
+  - title: "Refitted dihadron tracks Invariant Mass"
+    name: "chsTrkPairMassRefit"
+    xMin: 0.
+    xMax: 10.
+    nBins: 500
+    fillExp: "chsTrkPairMassRefit"
+    xAxisLabel: "m_{dihadron} (GeV/c^{2})"
+    cutStage: 2
+  - title: "Refitted dihadron tracks p_{T}"
+    name: "chsTrkPairPtRefit"
+    xMin: 0.
+    xMax: 400.
+    nBins: 40
+    fillExp: "chsTrkPairPtRefit"
+    xAxisLabel: "dihadron p_{T} (GeV/c)"
+    cutStage: 2
+  - title: "Refitted dihadron tracks #eta"
+    name: "chsTrkPairEtaRefit"
+    xMin: 0.
+    xMax: 5.
+    nBins: 60
+    fillExp: "chsTrkPairEtaRefit"
+    xAxisLabel: "dihadron #eta"
+    cutStage: 2
+  - title: "Refitted dihadron tracks #phi"
+    name: "chsTrkPairPhiRefit"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 80
+    fillExp: "chsTrkPairPhiRefit"
+    xAxisLabel: "dihadron #phi"
+    cutStage: 2
+  - title: "#DeltaR between refitted charged hadron tracks"
+    name: "chsTrkPairDeltaRRefit"
+    xMin: 0.
+    xMax: 0.4
+    nBins: 40
+    fillExp: "chsTrkPairDeltaRRefit"
+    xAxisLabel: "#Deltar"
+    cutStage: 2
+  - title: "#Delta#phi between refitted charged hadron tracks"
+    name: "chsTrkPairDeltaPhiRefit"
+    xMin: 0.
+    xMax: 3.2
+    nBins: 100
+    fillExp: "chsTrkPairDeltaPhiRefit"
+    xAxisLabel: "#Delta#phi"
+    cutStage: 2
+  - title: "#Deltaz between refitted charged hadron tracks"
+    name: "chsTrkPairDeltaZRefit"
+    xMin: 0.
+    xMax: 20.
+    nBins: 600
+    fillExp: "chsTrkPairDeltaZRefit"
+    xAxisLabel: "#Deltaz (cm)"
+    cutStage: 2
+  - title: "Higgs candidiate mass"
+    name: "discalarMass"
+    xMin: 100.0
+    xMax: 150.0
+    nBins: 200
+    fillExp: "discalarMass"
+    xAxisLabel: "m_{h} (GeV/c)"
+    cutStage: 2
+  - title: "Higgs candidiate mass"
+    name: "discalarMassNew"
+    xMin: 100.0
+    xMax: 150.0
+    nBins: 200
+    fillExp: "discalarMassNew"
+    xAxisLabel: "m_{h} (GeV/c)"
+    cutStage: 2
+  - title: "#Delta (m_{a1}, m_{a2})"
+    name: "discalarDeltaMassNew"
+    xMin: -20.
+    xMax: 20.0
+    nBins: 400
+    fillExp: "discalarDeltaMassNew"
+    xAxisLabel: "m_{a1} - m_{a2} (GeV/c)"
+    cutStage: 2
+  - title: "#Delta (m_{a1}, m_{a2})"
+    name: "discalarDeltaMass"
+    xMin: -20.
+    xMax: 20.0
+    nBins: 400
+    fillExp: "discalarDeltaMass"
+    xAxisLabel: "m_{a1} - m_{a2} (GeV/c)"
+    cutStage: 2
+  - title: "Higgs candidiate p_{T}"
+    name: "discalarPt"
+    xMin: 0.
+    xMax: 200.0
+    nBins: 400
+    fillExp: "discalarPt"
+    xAxisLabel: "p_{T}_{h} (GeV/c)"
+    cutStage: 2
+  - title: "Higgs candidiate #eta"
+    name: "discalarEta"
+    xMin: 0.
+    xMax: 8.0
+    nBins: 200
+    fillExp: "discalarEta"
+    xAxisLabel: "#eta higgs"
+    cutStage: 2
+  - title: "Higgs candidiate #phi"
+    name: "discalarPhi"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 200
+    fillExp: "discalarPhi"
+    xAxisLabel: "#phi higgs"
+    cutStage: 2
+  - title: "#DeltaR between scalars"
+    name: "discalarDeltaR"
+    xMin: 0.
+    xMax: 5.
+    nBins: 500
+    fillExp: "discalarDeltaR"
+    xAxisLabel: "#Deltar"
+    cutStage: 2
+  - title: "#DeltaR between scalars"
+    name: "discalarDeltaRNew"
+    xMin: 0.
+    xMax: 5.
+    nBins: 500
+    fillExp: "discalarDeltaRNew"
+    xAxisLabel: "#Deltar"
+    cutStage: 2
+  - title: "#Delta#phi between scalars"
+    name: "discalarDeltaPhi"
+    xMin: 0.
+    xMax: 3.2
+    nBins: 100
+    fillExp: "discalarDeltaPhi"
+    xAxisLabel: "#Delta#phi"
+    cutStage: 2
+  - title: "#Deltaz between scalars"
+    name: "discalarDeltaZ"
+    xMin: 0.
+    xMax: 20.
+    nBins: 600
+    fillExp: "discalarDeltaZ"
+    xAxisLabel: "#Deltaz (cm)"
+    cutStage: 2
+  - title: "Refitted higgs candidiate mass"
+    name: "discalarMassRefit"
+    xMin: 75.0
+    xMax: 175.0
+    nBins: 2000
+    fillExp: "discalarMassRefit"
+    xAxisLabel: "m_{h} (GeV/c)"
+    cutStage: 2
+  - title: "Refitted #Delta (m_{a1}, m_{a2})"
+    name: "discalarDeltaMassRefit"
+    xMin: -20.
+    xMax: 20.0
+    nBins: 400
+    fillExp: "discalarDeltaMassRefit"
+    xAxisLabel: "m_{a1} - m_{a2} (GeV/c)"
+    cutStage: 2
+  - title: "Refitted higgs candidiate p_{T}"
+    name: "discalarPtRefit"
+    xMin: 0.
+    xMax: 200.0
+    nBins: 400
+    fillExp: "discalarPtRefit"
+    xAxisLabel: "p_{T}_{h} (GeV/c)"
+    cutStage: 2
+  - title: "Refitted higgs candidiate #eta"
+    name: "discalarEtaRefit"
+    xMin: 0.
+    xMax: 8.0
+    nBins: 200
+    fillExp: "discalarEtaRefit"
+    xAxisLabel: "#eta higgs"
+    cutStage: 2
+  - title: "Refitted higgs candidiate #phi"
+    name: "discalarPhiRefit"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 200
+    fillExp: "discalarPhiRefit"
+    xAxisLabel: "#phi higgs"
+    cutStage: 2
+  - title: "#DeltaR between refitted scalars"
+    name: "discalarDeltaRRefit"
+    xMin: 0.
+    xMax: 5.
+    nBins: 500
+    fillExp: "discalarDeltaRRefit"
+    xAxisLabel: "#Deltar"
+    cutStage: 2
+  - title: "#Delta#phi between refitted scalars"
+    name: "discalarDeltaPhiRefit"
+    xMin: 0.
+    xMax: 3.2
+    nBins: 100
+    fillExp: "discalarDeltaPhiRefit"
+    xAxisLabel: "#Delta#phi"
+    cutStage: 2
+  - title: "#Deltaz between refitted scalars"
+    name: "discalarDeltaZRefit"
+    xMin: 0.
+    xMax: 20.
+    nBins: 600
+    fillExp: "discalarDeltaZRefit"
+    xAxisLabel: "#Deltaz (cm)"
+    cutStage: 2
+  - title: "#DeltaR between Leading Jets"
+    name: "jjDelR"
+    xMin: 0.
+    xMax: 8.5
+    nBins: 100
+    fillExp: "jjDelR"
+    xAxisLabel: "jjDelR"
+    cutStage: 3
+  - title: "#Delta(#phi) between Leading Jets"
+    name: "jjDelPhi"
+    xMin: -3.2
+    xMax: 3.2
+    nBins: 100
+    fillExp: "jjDelPhi"
+    xAxisLabel: "jjDelPhi"
+    cutStage: 3
+  - title: "#Delta(R) between W Jets"
+    name: "wwDelR"
+    xMin: 0.
+    xMax: 8.5
+    nBins: 100
+    fillExp: "wwDelR"
+    xAxisLabel: "wwDelR"
+    cutStage: 5
+  - title: "#Delta(#phi) between W Jets"
+    name: "wwDelPhi"
+    xMin: 0.
+    xMax: 3.2
+    nBins: 100
+    fillExp: "wwDelPhi"
+    xAxisLabel: "wwDelPhi"
+    cutStage: 5
+  - title: "#Delta(R) between the leptons"
+    name: "zLepDelR"
+    xMin: 0.
+    xMax: 0.4
+    nBins: 40
+    fillExp: "zLepDelR"
+    xAxisLabel: "#Delta(R)"
+    cutStage: 2
+  - title: "#Delta(#phi) between the leptons"
+    name: "zLepDelPhi"
+    xMin: 0.
+    xMax: 3.2
+    nBins: 100
+    fillExp: "zLepDelPhi"
+    xAxisLabel: "#Delta#phi"
+    cutStage: 2
+  - title: "#Delta(Z) between the leptons"
+    name: "zLepDelZ"
+    xMin: 0.
+    xMax: 3.2
+    nBins: 100
+    fillExp: "zLepDelZ"
+    xAxisLabel: "#Deltaz"
+    cutStage: 2
+  - title: "#Delta(R) between the refitted leptons"
+    name: "zLepDelRRefit"
+    xMin: 0.
+    xMax: 0.4
+    nBins: 40
+    fillExp: "zLepDelRRefit"
+    xAxisLabel: "#Delta(R)"
+    cutStage: 2
+  - title: "#Delta(#phi) between the refitted leptons"
+    name: "zLepDelPhiRefit"
+    xMin: 0.
+    xMax: 3.2
+    nBins: 100
+    fillExp: "zLepDelPhiRefit"
+    xAxisLabel: "#Delta#phi"
+    cutStage: 2
+  - title: "#DeltaZ between the refitted leptons"
+    name: "zLepDelZRefit"
+    xMin: 0.
+    xMax: 3.2
+    nBins: 100
+    fillExp: "zLepDelZRefit"
+    xAxisLabel: "#Deltaz"
+    cutStage: 2
+  - title: "#Delta(R) between Leading Z Lepton and b-Jet"
+    name: "zLep1BjetDelR"
+    xMin: 0.
+    xMax: 8.5
+    nBins: 100
+    fillExp: "zLep1BjetDelR"
+    xAxisLabel: "zLep1BjetDelR"
+    cutStage: 5
+  - title: "#Delta(#phi) between Leading Z Lepton and b-Jet"
+    name: "zLep1BjetDelPhi"
+    xMin: 0.
+    xMax: 3.2
+    nBins: 100
+    fillExp: "zLep1BjetDelPhi"
+    xAxisLabel: "zLep1BjetDelPhi"
+    cutStage: 5
+  - title: "#Delta(R) between Second Z Lepton and b-Jet"
+    name: "zLep2BjetDelR"
+    xMin: 0.
+    xMax: 8.5
+    nBins: 100
+    fillExp: "zLep2BjetDelR"
+    xAxisLabel: "zSecond Lepton BjetDelR"
+    cutStage: 5
+  - title: "#Delta(#phi) between Second Z Lepton and b-Jet"
+    name: "zLep2BjetDelPhi"
+    xMin: 0.
+    xMax: 3.2
+    nBins: 100
+    fillExp: "zLep2BjetDelPhi"
+    xAxisLabel: "zLep2BjetDelPhi"
+    cutStage: 5
+  - title: "lepton H_{T}"
+    name: "lepHt"
+    xMin: 0.
+    xMax: 250.
+    nBins: 100
+    fillExp: "lepHt"
+    xAxisLabel: "lepton H_{T}"
+    cutStage: 2
+  - title: "W Jets H_{T}"
+    name: "wQuarkHt"
+    xMin: 0.
+    xMax: 250.
+    nBins: 100
+    fillExp: "wQuarkHt"
+    xAxisLabel: "w boson quark H_{T}"
+    cutStage: 5
+  - title: "Jet H_{T}"
+    name: "jetHt"
+    xMin: 0.
+    xMax: 1000.
+    nBins: 250
+    fillExp: "jetHt"
+    xAxisLabel: "jet H_{T}"
+    cutStage: 4
+  - title: "Total H_{T}"
+    name: "totHt"
+    xMin: 0.
+    xMax: 1250.
+    nBins: 300
+    fillExp: "totHt"
+    xAxisLabel: "total H_{T}"
+    cutStage: 4
+  - title: "Total H_{T}/p_{T}"
+    name: "totHtOverPt"
+    xMin: 0.
+    xMax: 500
+    nBins: 100
+    fillExp: "totHtOverPt"
+    xAxisLabel: "Total H_{T}/p_{T}"
+    cutStage: 4
+  - title: "Total p_{T}"
+    name: "totPt"
+    xMin: 0.
+    xMax: 400.
+    nBins: 100
+    fillExp: "totPt"
+    xAxisLabel: "total p_{T} (GeV/c)"
+    cutStage: 4
+  - title: "Total #eta"
+    name: "totEta"
+    xMin: 0.
+    xMax: 5.
+    nBins: 30
+    fillExp: "totEta"
+    xAxisLabel: "total #eta"
+    cutStage: 4
+  - title: "Total Invariant Mass"
+    name: "totM"
+    xMin: 0.
+    xMax: 5000.
+    nBins: 50
+    fillExp: "totM"
+    xAxisLabel: "mass_{total} (GeV/c^{2})"
+    cutStage: 4
+  - title: "#eta of all jets"
+    name: "allJetEta"
+    xMin: -5.
+    xMax: 5.
+    nBins: 100
+    fillExp: "allJetEta"
+    xAxisLabel: "#eta"
+    cutStage: 2
+  - title: "#phi of all jets"
+    name: "allJetPhi"
+    xMin: -3.141592
+    xMax: 3.141592
+    nBins: 20
+    fillExp: "allJetPhi"
+    xAxisLabel: "#phi"
+    cutStage: 2
+  - title: "p_{T} of all jets"
+    name: "allJetPt"
+    xMin: 0.
+    xMax: 500.
+    nBins: 50
+    fillExp: "allJetPt"
+    xAxisLabel: "p_{T} (GeV/c)"
+    cutStage: 2
+  - title: "Min #Delta R with lepton"
+    name: "allJetDeltaRLep"
+    xMin: 0.
+    xMax: 0.4
+    nBins: 40
+    fillExp: "allJetDeltaRLep"
+    xAxisLabel: "#Delta R"
+    cutStage: 3
+  - title: "bTag Discriminator of all jets"
+    name: "allJetBDisc"
+    xMin: 0.
+    xMax: 1.
+    nBins: 50
+    fillExp: "allJetBDisc"
+    xAxisLabel: "bDisc"
+    cutStage: 3
+  - title: "Muon Track Vertex p_{x}"
+    name: "mumuVtxPx"
+    xMin: -300.
+    xMax: 300.
+    nBins: 1000
+    fillExp: "mumuVtxPx"
+    xAxisLabel: "Vertex p_{x} (GeV/c)"
+    cutStage: 3
+  - title: "Muon Track Vertex p_{y}"
+    name: "mumuVtxPy"
+    xMin: -300.
+    xMax: 300.
+    nBins: 1000
+    fillExp: "mumuVtxPy"
+    xAxisLabel: "Vertex p_{y} (GeV/c)"
+    cutStage: 3
+  - title: "Muon Track Vertex p_{z}"
+    name: "mumuVtxPz"
+    xMin: -300.
+    xMax: 300.
+    nBins: 1000
+    fillExp: "mumuVtxPz"
+    xAxisLabel: "Vertex p_{z} (GeV/c)"
+    cutStage: 3
+  - title: "Muon Track Vertex p"
+    name: "mumuVtxP"
+    xMin: 0.
+    xMax: 400.
+    nBins: 800
+    fillExp: "mumuVtxP"
+    xAxisLabel: "Vertex momentum (GeV/c)"
+    cutStage: 3
+  - title: "Muon Track Vertex x Displacement"
+    name: "mumuVx"
+    xMin: -100.
+    xMax: 100.
+    nBins: 400
+    fillExp: "mumuVx"
+    xAxisLabel: "v_{x} (cm)"
+    cutStage: 3
+  - title: "Muon Track Vertex y Displacement"
+    name: "mumuVy"
+    xMin: -100.
+    xMax: 100.
+    nBins: 400
+    fillExp: "mumuVy"
+    xAxisLabel: "v_{y} (cm)"
+    cutStage: 3
+  - title: "Muon Track Vertex z Displacement"
+    name: "mumuVz"
+    xMin: -100.
+    xMax: 100.
+    nBins: 400
+    fillExp: "mumuVz"
+    xAxisLabel: "v_{z} (cm)"
+    cutStage: 3
+  - title: "Muon Track Vertex Displacement (xy)"
+    name: "mumuVxy"
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "mumuVxy"
+    xAxisLabel: "v_{xy} (cm)"
+    cutStage: 3
+  - title: "Muon Track Vertex Displacement (xyz)"
+    name: "mumuVabs"
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "mumuVabs"
+    xAxisLabel: "v_{xyz} (cm)"
+    cutStage: 3
+  - title: "Muon Track Vertex #chi^{2}/N_{dof}"
+    name: "mumuVtxChi2Ndof"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "mumuVtxChi2Ndof"
+    xAxisLabel: "#chi^{2}/N_{dof}"
+    cutStage: 3
+  - title: "Muon Vertex 2D Angle"
+    name: "mumuVtxAngleXY"
+    xMin: -1.5
+    xMax: 1.5
+    nBins: 120
+    fillExp: "mumuVtxAngleXY"
+    xAxisLabel: "vertex xy angle"
+    cutStage: 3
+  - title: "Muon Vertex 3D Angle"
+    name: "mumuVtxAngleXYZ"
+    xMin: -1.5
+    xMax: 1.5
+    nBins: 120
+    fillExp: "mumuVtxAngleXY"
+    xAxisLabel: "vertex xyz angle"
+    cutStage: 3
+  - title: "Muon Vertex XY Signifiance"
+    name: "mumuVtxSigXY"
+    xMin: 0.
+    xMax: 300.
+    nBins: 600
+    fillExp: "mumuVtxSigXY"
+    xAxisLabel: "vertex xy significance"
+    cutStage: 3
+  - title: "Muon Vertex XYZ Signifiance"
+    name: "mumuVtxSigXYZ"
+    xMin: 0.  
+    xMax: 300.
+    nBins: 600
+    fillExp: "mumuVtxSigXYZ"
+    xAxisLabel: "vertex xyz significance"
+    cutStage: 3
+  - title: "Closest distance of approach between muons pre-vertex fit"
+    name: "mumuVtxDca"
+    xMin: 0.
+    xMax: 50.
+    nBins: 100
+    fillExp: "mumuVtxDca"
+    xAxisLabel: "Distance of closest approach (cm)"
+    cutStage: 3
+  - title: "Pre-refit leading muon track p_{T}"
+    name: "mumuTrkInnerPtOld1"
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "mumuTrkInnerPtOld1"
+    xAxisLabel: "muon track p_{T} (GeV/c)"
+    cutStage: 3
+  - title: "Pre-refit leading muon track #eta"
+    name: "mumuTrkInnerEtaOld1"
+    xMin: -3.
+    xMax: 3.
+    nBins: 600
+    fillExp: "mumuTrkInnerEtaOld1"
+    xAxisLabel: "muon track #eta"
+    cutStage: 3
+  - title: "Pre-refit leading muon track #chi^{2}/N_{dof}"
+    name: "mumuTrkInnerChi2NdofOld1"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "mumuTrkInnerChi2NdofOld1"
+    xAxisLabel: "muon track #chi^{2}/N_{dof}"
+    cutStage: 3
+  - title: "Pre-refit subleading muon track p_{T}"
+    name: "mumuTrkInnerPtOld2"
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "mumuTrkInnerPtOld2"
+    xAxisLabel: "muon track p_{T} (GeV/c)"
+    cutStage: 3
+  - title: "Pre-refit subleading muon track #eta"
+    name: "mumuTrkInnerEtaOld2"
+    xMin: -3.
+    xMax: 3.
+    nBins: 600
+    fillExp: "mumuTrkInnerEtaOld2"
+    xAxisLabel: "muon track #eta"
+    cutStage: 3
+  - title: "Pre-refit subleading muon track #chi^{2}/N_{dof}"
+    name: "mumuTrkInnerChi2NdofOld2"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "mumuTrkInnerChi2NdofOld2"
+    xAxisLabel: "muon track #chi^{2}/N_{dof}"
+    cutStage: 3
+  - title: "Refitted leading muon track p_{T}"
+    name: "mumuTrkInnerPtNew1"
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "mumuTrkInnerPtNew1"
+    xAxisLabel: "muon track p_{T} (GeV/c)"
+    cutStage: 3
+  - title: "Refitted leading muon track #eta"
+    name: "mumuTrkInnerEtaNew1"
+    xMin: -3.
+    xMax: 3.
+    nBins: 600
+    fillExp: "mumuTrkInnerEtaNew1"
+    xAxisLabel: "muon track #eta"
+    cutStage: 3
+  - title: "Refitted leading muon track #chi^{2}/N_{dof}"
+    name: "mumuTrkInnerChi2NdofNew1"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "mumuTrkInnerChi2NdofNew1"
+    xAxisLabel: "muon track #chi^{2}/N_{dof}"
+    cutStage: 3
+  - title: "Refitted subleading muon track p_{T}"
+    name: "mumuTrkInnerPtNew2"
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "mumuTrkInnerPtNew2"
+    xAxisLabel: "muon track p_{T} (GeV/c)"
+    cutStage: 3
+  - title: "Refitted subleading muon track #eta"
+    name: "mumuTrkInnerEtaNew2"
+    xMin: -3.
+    xMax: 3.
+    nBins: 600
+    fillExp: "mumuTrkInnerEtaNew2"
+    xAxisLabel: "muon track #eta"
+    cutStage: 3
+  - title: "Refitted subleading muon track #chi^{2}/N_{dof}"
+    name: "mumuTrkInnerChi2NdofNew2"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "mumuTrkInnerChi2NdofNew2"
+    xAxisLabel: "muon track #chi^{2}/N_{dof}"
+    cutStage: 3
+  - title: "Charged Hadron Track Vertex p_{x}"
+    name: "dichsVtxPx"
+    xMin: -300.
+    xMax: 300.
+    nBins: 1000
+    fillExp: "dichsVtxPx"
+    xAxisLabel: "Vertex p_{x} (GeV/c)"
+    cutStage: 3
+  - title: "Charged Hadron Track Vertex p_{y}"
+    name: "dichsVtxPy"
+    xMin: -300.
+    xMax: 300.
+    nBins: 1000
+    fillExp: "dichsVtxPy"
+    xAxisLabel: "Vertex p_{y} (GeV/c)"
+    cutStage: 3
+  - title: "Charged Hadron Track Vertex p_{z}"
+    name: "dichsVtxPz"
+    xMin: -300.
+    xMax: 300.
+    nBins: 1000
+    fillExp: "dichsVtxPz"
+    xAxisLabel: "Vertex p_{z} (GeV/c)"
+    cutStage: 3
+  - title: "Charged Hadron Track Vertex p"
+    name: "dichsVtxP"
+    xMin: 0.
+    xMax: 400.
+    nBins: 800
+    fillExp: "dichsVtxP"
+    xAxisLabel: "Vertex momentum (GeV/c)"
+    cutStage: 3
+  - title: "Charged Hadron Track Vertex x Displacement"
+    name: "dichsVx"
+    xMin: -100.
+    xMax: 100.
+    nBins: 400
+    fillExp: "dichsVx"
+    xAxisLabel: "v_{x} (cm)"
+    cutStage: 3
+  - title: "Charged Hadron Track Vertex y Displacement"
+    name: "dichsVy"
+    xMin: -100.
+    xMax: 100.
+    nBins: 400
+    fillExp: "dichsVy"
+    xAxisLabel: "v_{y} (cm)"
+    cutStage: 3
+  - title: "Charged Hadron Track Vertex z Displacement"
+    name: "dichsVz"
+    xMin: -100.
+    xMax: 100.
+    nBins: 400
+    fillExp: "dichsVz"
+    xAxisLabel: "v_{z} (cm)"
+    cutStage: 3
+  - title: "Charged Hadron Track Vertex Displacement (xy)"
+    name: "dichsVxy"
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "dichsVxy"
+    xAxisLabel: "v_{xy} (cm)"
+    cutStage: 3
+  - title: "Charged Hadron Track Vertex Displacement (xyz)"
+    name: "dichsVabs"
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "dichsVabs"
+    xAxisLabel: "v_{xyz} (cm)"
+    cutStage: 3
+  - title: "Charged Hadron Track Vertex #chi^{2}/N_{dof}"
+    name: "dichsVtxChi2Ndof"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "dichsVtxChi2Ndof"
+    xAxisLabel: "#chi^{2}/N_{dof}"
+    cutStage: 3
+  - title: "Charged Hadron Vertex 2D Angle"
+    name: "dichsVtxAngleXY"
+    xMin: -1.5
+    xMax: 1.5
+    nBins: 120
+    fillExp: "dichsVtxAngleXY"
+    xAxisLabel: "vertex xy angle"
+    cutStage: 3
+  - title: "Charged Hadron Vertex 3D Angle"
+    name: "dichsVtxAngleXYZ"
+    xMin: -1.5
+    xMax: 1.5
+    nBins: 120
+    fillExp: "dichsVtxAngleXY"
+    xAxisLabel: "vertex xyz angle"
+    cutStage: 3
+  - title: "Charged Hadron Vertex XY Signifiance"
+    name: "dichsVtxSigXY"
+    xMin: 0.
+    xMax: 300.
+    nBins: 600
+    fillExp: "dichsVtxSigXY"
+    xAxisLabel: "vertex xy significance"
+    cutStage: 3
+  - title: "Charged Hadron Vertex XYZ Signifiance"
+    name: "dichsVtxSigXYZ"
+    xMin: 0.  
+    xMax: 300.
+    nBins: 600
+    fillExp: "dichsVtxSigXYZ"
+    xAxisLabel: "vertex xyz significance"
+    cutStage: 3
+  - title: "Closest distance of approach between charged hadrons pre-vertex fit"
+    name: "dichsVtxDca"
+    xMin: 0.
+    xMax: 50.
+    nBins: 100
+    fillExp: "dichsVtxDca"
+    xAxisLabel: "Distance of closest approach (cm)"
+    cutStage: 3
+  - title: "Pre-refit leading charged hadron track p_{T}"
+    name: "dichsTrkInnerPtOld1"
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "dichsTrkInnerPtOld1"
+    xAxisLabel: "Charged Hadron track p_{T} (GeV/c)"
+    cutStage: 3
+  - title: "Pre-refit leading charged hadron track #eta"
+    name: "dichsTrkInnerEtaOld1"
+    xMin: -3.
+    xMax: 3.
+    nBins: 600
+    fillExp: "dichsTrkInnerEtaOld1"
+    xAxisLabel: "Charged Hadron track #eta"
+    cutStage: 3
+  - title: "Pre-refit leading charged hadron track #chi^{2}/N_{dof}"
+    name: "dichsTrkInnerChi2NdofOld1"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "dichsTrkInnerChi2NdofOld1"
+    xAxisLabel: "Charged Hadron track #chi^{2}/N_{dof}"
+    cutStage: 3
+  - title: "Pre-refit subleading charged hadron track p_{T}"
+    name: "dichsTrkInnerPtOld2"
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "dichsTrkInnerPtOld2"
+    xAxisLabel: "Charged Hadron track p_{T} (GeV/c)"
+    cutStage: 3
+  - title: "Pre-refit subleading charged hadron track #eta"
+    name: "dichsTrkInnerEtaOld2"
+    xMin: -3.
+    xMax: 3.
+    nBins: 600
+    fillExp: "dichsTrkInnerEtaOld2"
+    xAxisLabel: "Charged Hadron track #eta"
+    cutStage: 3
+  - title: "Pre-refit subleading charged hadron track #chi^{2}/N_{dof}"
+    name: "dichsTrkInnerChi2NdofOld2"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "dichsTrkInnerChi2NdofOld2"
+    xAxisLabel: "Charged Hadron track #chi^{2}/N_{dof}"
+    cutStage: 3
+  - title: "Refitted leading charged hadron track p_{T}"
+    name: "dichsTrkInnerPtNew1"
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "dichsTrkInnerPtNew1"
+    xAxisLabel: "Charged Hadron track p_{T} (GeV/c)"
+    cutStage: 3
+  - title: "Refitted leading charged hadron track #eta"
+    name: "dichsTrkInnerEtaNew1"
+    xMin: -3.
+    xMax: 3.
+    nBins: 600
+    fillExp: "dichsTrkInnerEtaNew1"
+    xAxisLabel: "Charged Hadron track #eta"
+    cutStage: 3
+  - title: "Refitted leading charged hadron track #chi^{2}/N_{dof}"
+    name: "dichsTrkInnerChi2NdofNew1"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "dichsTrkInnerChi2NdofNew1"
+    xAxisLabel: "Charged Hadron track #chi^{2}/N_{dof}"
+    cutStage: 3
+  - title: "Refitted subleading charged hadron track p_{T}"
+    name: "dichsTrkInnerPtNew2"
+    xMin: 0.
+    xMax: 200.
+    nBins: 400
+    fillExp: "dichsTrkInnerPtNew2"
+    xAxisLabel: "Charged Hadron track p_{T} (GeV/c)"
+    cutStage: 3
+  - title: "Refitted subleading charged hadron track #eta"
+    name: "dichsTrkInnerEtaNew2"
+    xMin: -3.
+    xMax: 3.
+    nBins: 600
+    fillExp: "dichsTrkInnerEtaNew2"
+    xAxisLabel: "Charged Hadron track #eta"
+    cutStage: 3
+  - title: "Refitted subleading charged hadron track #chi^{2}/N_{dof}"
+    name: "dichsTrkInnerChi2NdofNew2"
+    xMin: 0.
+    xMax: 100.
+    nBins: 500
+    fillExp: "dichsTrkInnerChi2NdofNew2"
+    xAxisLabel: "Charged Hadron track #chi^{2}/N_{dof}"
+    cutStage: 3
+
