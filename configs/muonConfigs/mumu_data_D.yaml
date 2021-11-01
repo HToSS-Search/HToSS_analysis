@@ -1,9 +1,0 @@
-cuts: "configs/2017/cuts/SRCuts.yaml"
-plots: "configs/plots/plotDileptonConfMini.yaml"
-outputFolder: "plots/2017/mumu/"
-outputPostfix: "mumu"
-channelName: "mumu"
-datasets:
-# Data
-  - "configs/2017/datasets/data/mumuRun2017D.yaml"
-

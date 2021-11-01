@@ -1,9 +1,0 @@
-name: "QCD_Pt-470to600_MuEnrichedPt5"
-locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/miniNtuples/QCD/QCD_Pt-470to600_MuEnrichedPt5/"
-cross_section: 59.24
-mc: true
-histogram: "QCD_470to600"
-colour: "#ffff33"
-label: "QCD_470to600"
-plot_type: "f"
