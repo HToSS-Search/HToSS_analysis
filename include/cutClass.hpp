@@ -157,8 +157,6 @@ class Cuts
     bool isABCD_;
     // Set the flag used to use the Z+jets CR
     bool isZplusCR_;
-    // Set the flag for debug mode
-    bool isMuonDebug_;
 
     // For producing post-lepsel skims
     TTree* postLepSelTree_;
@@ -306,10 +304,6 @@ class Cuts
     }
     void setZplusControlRegionFlag(bool isZplusCR) {
         isZplusCR_ = isZplusCR;
-    }
-
-    void setMiniMuonDebugFlag(bool flag) {
-        isMuonDebug_ = flag;
     }
 
     // Simple deltaR function, because the reco namespace doesn't work or

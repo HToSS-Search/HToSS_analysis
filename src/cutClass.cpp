@@ -91,7 +91,6 @@ Cuts::Cuts(const bool doPlots,
 
     , isABCD_{false}
     , isZplusCR_{false}
-    , isMuonDebug_{false}
 
     , postLepSelTree_{nullptr}
 
@@ -425,12 +424,8 @@ bool Cuts::makeCuts(AnalysisEvent& event, double& eventWeight, std::map<std::str
     const bool validDileptonCand = getDileptonCand(event, event.muonIndexTight);
     if ( !validDileptonCand ) return false;
 
-    if (doPlots_) plotMap["zCand"]->fillAllPlots(event, eventWeight);
-    if (doPlots_ || fillCutFlow_) cutFlow.Fill(3.5, eventWeight);
-
-    if ( isMuonDebug_ ) return true;
-
     const double dileptonMass {(event.zPairLeptons.first + event.zPairLeptons.second).M()};
+//    if ( dileptonMass > 110. || dileptonMass < 70. ) return false;
 
     // This is to make some skims for faster running. Do lepSel and save some files. If flag is true, scalar mass cuts are applied, and dilepton mass <= threshold, fill tree
     if (postLepSelTree_ && dileptonMass <= scalarMassCut_ && !skipScalarMassCut_) postLepSelTree_->Fill();
