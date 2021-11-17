@@ -7,5 +7,5 @@ datasets:
 # HToSS
   - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS0p6_ctauS0.yaml"
   - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS0p6_ctauS1.yaml"
-  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS0p6_ctauS10.yaml"
-  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS0p6_ctauS100.yaml"
+#  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS0p6_ctauS10.yaml"
+#  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS0p6_ctauS100.yaml"

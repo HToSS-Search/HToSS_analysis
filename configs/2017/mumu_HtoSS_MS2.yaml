@@ -8,4 +8,4 @@ datasets:
   - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS0.yaml"
   - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS1.yaml"
   - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS10.yaml"
-  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS100.yaml"
+#  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS2_ctauS100.yaml"
