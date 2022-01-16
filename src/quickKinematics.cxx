@@ -21,6 +21,7 @@
 #include <boost/range/iterator_range.hpp>
 
 #include <algorithm> 
+#include <numeric>
 #include <chrono> 
 #include <fstream>
 #include <iostream>
@@ -32,13 +33,17 @@
 #include <vector>
 #include <map>
 
-std::vector<int> getLooseMuons(const AnalysisEvent& event);
-std::vector<int> getPromptMuons(const AnalysisEvent& event, const std::vector<int>& muonIndex, const bool getPrompt );
+using namespace std;
+vector<int> getLooseMuons(const AnalysisEvent& event);
+vector<int> getPromptMuons(const AnalysisEvent& event, const vector<int>& muonIndex, const bool getPrompt );
 
-bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool mcTruth = false);
+bool getDileptonCand(AnalysisEvent& event, const vector<int>& muons, bool mcTruth = false);
 int getMuonTrackPairIndex(const AnalysisEvent& event);
 float deltaR(float eta1, float phi1, float eta2, float phi2);
 void SetStyle(Bool_t graypalette=kTRUE);
+
+pair<int, int> FindGen(const AnalysisEvent& event, int numGenMuons, vector<size_t>& idx);
+pair<bool, unsigned> MatchReco(const TLorentzVector& reco_mu, const AnalysisEvent& event, const double& dr_max, const int charge);
 namespace fs = boost::filesystem;
 
 // Lepton cut variables
@@ -50,23 +55,24 @@ double maxDileptonDeltaR_ {0.2};
 int main(int argc, char* argv[])
 {
     //SetStyle();
-    auto timerStart = std::chrono::high_resolution_clock::now(); 
+    auto timerStart = chrono::high_resolution_clock::now(); 
 
-    std::string config;
-    std::vector<Dataset> datasets;
+    string config;
+    vector<Dataset> datasets;
     double totalLumi;
     double usePreLumi;
     bool usePostLepTree {false};
    
-    std::string outFileString{"plots/distributions/output.root"};
+    string outFileString{"plots/distributions/output.root"};
     bool is2016_;
     bool is2018_;
     Long64_t nEvents;
     Long64_t totalEvents {0};
-    const std::regex mask{".*\\.root"};
+    const regex mask{".*\\.root"};
 
     // Quick and dirty trigger plots
     // denom
+    TH1F* h_numMuon_truth                        {new TH1F("h_numMuon_truth",            "", 10, 0., 10.)};
     TH1F* h_leadingMuonPt_truth                  {new TH1F("h_leadingMuonPt_truth",      "", 200, 0., 100.)};
     TH1F* h_subLeadingMuonPt_truth               {new TH1F("h_subLeadingMuonPt_truth",   "", 200, 0., 100.)};
     TH1F* h_leadingMuonPt                        {new TH1F("h_leadingMuonPt",            "", 200, 0., 100.)};
@@ -100,19 +106,19 @@ int main(int argc, char* argv[])
     TH1F* h_delR_truth_muTrig_fail                    {new TH1F("h_delR_truth_muTrig_fail",               "Trigger turn-on for signal; #Delta R; #mu trigger #epsilon", 100, 0., 1.0)};
     TH1F* h_diMuonMass_truth_muTrig_fail              {new TH1F("h_diMuonMass_truth_muTrig_fail",         "Trigger turn-on for signal; m_{#mu#mu}; #mu trigger #epsilon", 200, 0., 100.)};
     
-    
+
     namespace po = boost::program_options;
 
     po::options_description desc("Options");
     desc.add_options()("help,h", "Print this message.")(
         "config,c",
-        po::value<std::string>(&config)->required(),
+        po::value<string>(&config)->required(),
         "The configuration file to be used.")(
         "lumi,l",
         po::value<double>(&usePreLumi)->default_value(41528.0),
         "Lumi to scale MC plots to.")(
         "outfile,o",
-        po::value<std::string>(&outFileString)->default_value(outFileString),
+        po::value<string>(&outFileString)->default_value(outFileString),
         "Output file for plots.")(
         ",n",
         po::value<Long64_t>(&nEvents)->default_value(0),
@@ -130,13 +136,13 @@ int main(int argc, char* argv[])
 
         if (vm.count("help"))
         {
-            std::cout << desc;
+            cout << desc;
             return 0;
         }
 
         po::notify(vm);
         if ( is2016_ && is2018_ ) {
-            throw std::logic_error(
+            throw logic_error(
                 "Default condition is to use 2017. One cannot set "
                 "condition to be BOTH 2016 AND 2018! Chose only "
                 " one or none!");
@@ -144,7 +150,7 @@ int main(int argc, char* argv[])
     }
     catch (po::error& e)
     {
-        std::cerr << "ERROR: " << e.what() << std::endl;
+        cerr << "ERROR: " << e.what() << endl;
         return 1;
     }
 
@@ -158,12 +164,12 @@ int main(int argc, char* argv[])
                              totalLumi,
                              usePostLepTree);
     }
-    catch (const std::exception)
+    catch (const exception)
     {
-        std::cerr << "ERROR Problem with a confugration file, see previous "
+        cerr << "ERROR Problem with a confugration file, see previous "
                      "errors for more details. If this is the only error, the "
                      "problem is with the main configuration file."
-                  << std::endl;
+                  << endl;
         throw;
     }
 
@@ -171,15 +177,15 @@ int main(int argc, char* argv[])
     {
         totalLumi = usePreLumi;
     }
-    std::cout << "Using lumi: " << totalLumi << std::endl;
+    cout << "Using lumi: " << totalLumi << endl;
 
     bool datasetFilled{false};
-    std::string era {""};
+    string era {""};
     if (is2016_) era = "2016";
     else if (is2018_) era = "2018";
     else era = "2017";
-    const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "_legacy/"};
-//    const std::string postLepSelSkimInputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "/"};
+    const string postLepSelSkimInputDir{string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "_legacy/"};
+//    const string postLepSelSkimInputDir{string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "/"};
 
     // Begin to loop over all datasets
     for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset)
@@ -188,26 +194,26 @@ int main(int argc, char* argv[])
         TChain* datasetChain{new TChain{dataset->treeName().c_str()}};
         datasetChain->SetAutoSave(0);
 
-        std::cerr << "Processing dataset " << dataset->name() << std::endl;
+        cerr << "Processing dataset " << dataset->name() << endl;
         if (!usePostLepTree) {
             if (!datasetFilled) {
                 if (!dataset->fillChain(datasetChain)) {
-                    std::cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
+                    cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
                     continue;
                 }
                 datasetFilled=true;
             }
         }
         else {
-            std::cout << postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root" << std::endl;
+            cout << postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root" << endl;
             datasetChain->Add((postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root").c_str());
         }
 
         // extract the dataset weight. MC = (lumi*crossSection)/(totalEvents), data = 1.0
         float datasetWeight{dataset->getDatasetWeight(totalLumi)};
-        std::cout << datasetChain->GetEntries() << " number of items in tree. Dataset weight: " << datasetWeight << std::endl;
+        cout << datasetChain->GetEntries() << " number of items in tree. Dataset weight: " << datasetWeight << endl;
         if (datasetChain->GetEntries() == 0) {
-            std::cout << "No entries in tree, skipping..." << std::endl;
+            cout << "No entries in tree, skipping..." << endl;
             continue;
         }
 
@@ -222,7 +228,7 @@ int main(int argc, char* argv[])
         TH1I* generatorWeightPlot{nullptr};
         if (dataset->isMC()) {
             if (usePostLepTree) {
-                std::string inputPostfix{"mumu"};
+                string inputPostfix{"mumu"};
                 TFile* datasetFileForHists;
                 datasetFileForHists = new TFile((postLepSelSkimInputDir + dataset->name()  + inputPostfix + "SmallSkim.root").c_str(), "READ");
                 generatorWeightPlot = dynamic_cast<TH1I*>(datasetFileForHists->Get("weightHisto")->Clone());
@@ -260,15 +266,54 @@ int main(int argc, char* argv[])
                 // fill muon pT plots pre-triggers
                 //// ID requirements PF muon? no pT cut
                 //// reco pT 
+                
                 int mu1 {-1}, mu2{-1};
                 for ( Int_t k{0}; k < event.numMuonPF2PAT; k++ ) {
                     if ( event.genMuonPF2PATScalarAncestor[k] && mu1 < 0 ) mu1 = k;
                     else if ( event.genMuonPF2PATScalarAncestor[k] && mu2 < 0 ) mu2 = k;
                     else if (mu1 >= 0 && mu2 > 0) break;
                 }
-
+                //cout<<"NGenMuons="<<(sizeof(event.genMuonPF2PATPX)/sizeof(event.genMuonPF2PATPX[0]))<<endl;
+                
+                
+                int numGenMuons=0;
+                for (int k=0;k<20;k++) {// 20 is max nmuons
+                    if (event.genMuonPF2PATPromptFinalState[k]==1) numGenMuons+=1;
+                }
+                
+                
+                //pT ordering genmuons
+                vector<double> genMuonPt(event.genMuonPF2PATPT, event.genMuonPF2PATPT+numGenMuons);
+                vector<size_t> idx(numGenMuons); 
+                iota(idx.begin(), idx.end(), 0);
+                sort(idx.begin(), idx.end(), [&genMuonPt](size_t i1, size_t i2) {return genMuonPt[i1] > genMuonPt[i2];});
+                            
+                //idx contains pT-ordered genMuon indices
+                
+                auto gen_mu_ind = FindGen(event, numGenMuons, idx);
+                //cout<<"NGenMuons="<<numGenMuons<<endl;
+                
+                TLorentzVector gen_mu1, gen_mu2;
+                double mu_mass=0.105; //in GeV
+                gen_mu1.SetPtEtaPhiM(event.genMuonPF2PATPT[gen_mu_ind.first], event.genMuonPF2PATEta[gen_mu_ind.first], event.genMuonPF2PATPhi[gen_mu_ind.first], mu_mass);
+                gen_mu2.SetPtEtaPhiM(event.genMuonPF2PATPT[gen_mu_ind.second], event.genMuonPF2PATEta[gen_mu_ind.second], event.genMuonPF2PATPhi[gen_mu_ind.second], mu_mass);
+                
+                //if (numGenMuons>2) cout<<"YO SOMETHING IS UP"<<endl;
+                
+                cout<<"Muon #0"<<"- index:"<<gen_mu_ind.first<<", Charge:"<<event.genMuonPF2PATCharge[gen_mu_ind.first]<<", Pt:"<<gen_mu1.Pt()<<endl;    
+                cout<<"Muon #1"<<"- index:"<<gen_mu_ind.second<<", Charge:"<<event.genMuonPF2PATCharge[gen_mu_ind.second]<<", Pt:"<<gen_mu2.Pt()<<endl;
+                
+                continue;
+                /*int mu1{-1}, mu2{-1};
+                for (int k=0;k<event.numMuonPF2PAT;k++) {
+                    TLorentzVector reco_mu {event.muonPF2PATPX[k], event.muonPF2PATPY[k], event.muonPF2PATPZ[k], event.muonPF2PATE[k]};
+                    MatchReco();
+                */
+                h_numMuon_truth->Fill(numGenMuons);
+                if ((mu1<0) || (mu2<0)) continue;
+                
                 const TLorentzVector muon1_truth {event.muonPF2PATPX[mu1], event.muonPF2PATPY[mu1], event.muonPF2PATPZ[mu1], event.muonPF2PATE[mu1]};
-                const TLorentzVector muon2_truth {event.muonPF2PATPX[mu2], event.muonPF2PATPY[mu2], event.muonPF2PATPZ[mu2], event.muonPF2PATE[mu2]}; 
+                const TLorentzVector muon2_truth {event.muonPF2PATPX[mu2], event.muonPF2PATPY[mu2], event.muonPF2PATPZ[mu2], event.muonPF2PATE[mu2]};
                 const TLorentzVector muon1 {event.muonPF2PATPX[0], event.muonPF2PATPY[0], event.muonPF2PATPZ[0], event.muonPF2PATE[0]};
                 const TLorentzVector muon2 {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]}; 
 	
@@ -276,28 +321,32 @@ int main(int argc, char* argv[])
                 const float delR       = deltaR(event.muonPF2PATEta[0], event.muonPF2PATPhi[0], event.muonPF2PATEta[1], event.muonPF2PATPhi[1]);
                 const float mass_truth = (muon1_truth + muon2_truth).M();
                 const float mass       = (muon1 + muon2).M();
-
+                
+                
+                double eventWeight = 1;
+                eventWeight *= (sumPositiveWeights_) / (sumNegativeWeights_) * (event.origWeightForNorm / abs(event.origWeightForNorm));
+                eventWeight *= datasetWeight;
+                
+                //if ((event.muonPF2PATLooseCutId[mu1]!=1) || ( event.muonPF2PATLooseCutId[mu2]!=1)) continue;
                 // Fill general pT/dR (with and without scalar parentage)
-                h_leadingMuonPt_truth->Fill(event.muonPF2PATPt[mu1]);
-                h_subLeadingMuonPt_truth->Fill(event.muonPF2PATPt[mu2]);
-                h_leadingMuonPt->Fill(event.muonPF2PATPt[0]);
-                h_subLeadingMuonPt->Fill(event.muonPF2PATPt[1]);
-                h_leadingMuonEta_truth->Fill(event.muonPF2PATEta[mu1]);
-                h_subLeadingMuonEta_truth->Fill(event.muonPF2PATEta[mu2]);
-                h_leadingMuonEta->Fill(event.muonPF2PATEta[0]);
-                h_subLeadingMuonEta->Fill(event.muonPF2PATEta[1]);
-                h_delR_truth->Fill(delR_truth);
-                h_delR->Fill(delR);
-                h_diMuonMass_truth->Fill(mass_truth);
-                h_diMuonMass->Fill(mass);
+                h_leadingMuonPt_truth->Fill(event.muonPF2PATPt[mu1] );
+                h_subLeadingMuonPt_truth->Fill(event.muonPF2PATPt[mu2] );
+                h_leadingMuonPt->Fill(event.muonPF2PATPt[0] );
+                h_subLeadingMuonPt->Fill(event.muonPF2PATPt[1] );
+                h_leadingMuonEta_truth->Fill(event.muonPF2PATEta[mu1] );
+                h_subLeadingMuonEta_truth->Fill(event.muonPF2PATEta[mu2] );
+                h_leadingMuonEta->Fill(event.muonPF2PATEta[0] );
+                h_subLeadingMuonEta->Fill(event.muonPF2PATEta[1] );
+                h_delR_truth->Fill(delR_truth );
+                h_delR->Fill(delR );
+                h_diMuonMass_truth->Fill(mass_truth );
+                h_diMuonMass->Fill(mass );
 
                 // Fill pT post trigger (with and without scalar parentage)
                 if (passSingleMuonTrigger) {
 
-                    double eventWeight = 1;
 
-                    eventWeight *= (sumPositiveWeights_) / (sumNegativeWeights_) * (event.origWeightForNorm / std::abs(event.origWeightForNorm));
-                    eventWeight *= datasetWeight;
+                    
 
                     foundEvents++;
                     foundEventsNorm += eventWeight;
@@ -318,7 +367,7 @@ int main(int argc, char* argv[])
                 else {
                     /*double eventWeight = 1;
 
-                    eventWeight *= (sumPositiveWeights_) / (sumNegativeWeights_) * (event.origWeightForNorm / std::abs(event.origWeightForNorm));
+                    eventWeight *= (sumPositiveWeights_) / (sumNegativeWeights_) * (event.origWeightForNorm / abs(event.origWeightForNorm));
                     eventWeight *= datasetWeight;*/
                     
                     h_leadingMuonPt_truth_muTrig_fail->Fill(event.muonPF2PATPt[mu1]);
@@ -333,15 +382,15 @@ int main(int argc, char* argv[])
 
 //            if (! ( passDimuonTrigger || passSingleMuonTrigger ) ) continue;
 
-//            std::vector<int> looseMuonIndex = getLooseMuons(event);
-//            std::vector<int> promptLooseMuonIndex     = getPromptMuons(event, looseMuonIndex, true);
-//            std::vector<int> nonpromptLooseMuonIndex  = getPromptMuons(event, looseMuonIndex, false);
+//            vector<int> looseMuonIndex = getLooseMuons(event);
+//            vector<int> promptLooseMuonIndex     = getPromptMuons(event, looseMuonIndex, true);
+//            vector<int> nonpromptLooseMuonIndex  = getPromptMuons(event, looseMuonIndex, false);
 
 
         } // end event loop
-        std::cerr << "\nFound " << foundEvents << " that pass single muon trigger in " << dataset->name() << std::endl;
-        std::cerr << "Found " << foundEventsNorm << " after normalisation that pass single muon trigger in " << dataset->name() << std::endl;
-        std::cerr << "\n\n";
+        cerr << "\nFound " << foundEvents << " that pass single muon trigger in " << dataset->name() << endl;
+        cerr << "Found " << foundEventsNorm << " after normalisation that pass single muon trigger in " << dataset->name() << endl;
+        cerr << "\n\n";
     } // end dataset loop
 
     TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
@@ -450,6 +499,7 @@ int main(int argc, char* argv[])
     h_delR->Write();   
     h_diMuonMass_truth->Write();  
     h_diMuonMass->Write();  
+    h_numMuon_truth->Write();
     // numerator - single mu
     h_leadingMuonPt_truth_muTrig->Write();
     h_subLeadingMuonPt_truth_muTrig->Write(); 
@@ -473,32 +523,70 @@ int main(int argc, char* argv[])
      
     outFile->Close();
 
-//    std::cout << "Max nGenPar: " << maxGenPars << std::endl;    
-    auto timerStop = std::chrono::high_resolution_clock::now(); 
-    auto duration  = std::chrono::duration_cast<std::chrono::seconds>(timerStop - timerStart);
+//    cout << "Max nGenPar: " << maxGenPars << endl;    
+    auto timerStop = chrono::high_resolution_clock::now(); 
+    auto duration  = chrono::duration_cast<chrono::seconds>(timerStop - timerStart);
 
-    std::cout << "\nFinished. Took " << duration.count() << " seconds" <<std::endl;
+    cout << "\nFinished. Took " << duration.count() << " seconds" <<endl;
 }
 
-std::vector<int> getLooseMuons(const AnalysisEvent& event) {
-    std::vector<int> muons;
+pair<int,int> FindGen(const AnalysisEvent& event, int numGenMuons, vector<size_t>& idx) {
+    int charge_mu1, charge_mu2;
+    // Sort by Pt and store sorted index
+    // Choose top 2 muons, if charge same, go next until different charges
+    int mu1_ind, mu2_ind;
+    mu1_ind=idx[0];
+    charge_mu1 = event.genMuonPF2PATCharge[mu1_ind];
+    for (int k=1;k<idx.size();k++) {
+        charge_mu2 = event.genMuonPF2PATCharge[idx[k]];
+        if (charge_mu1!=charge_mu2) {
+            mu2_ind=idx[k];
+            break;
+        }
+    }
+    return make_pair(mu1_ind, mu2_ind);
+}
+
+pair<bool, unsigned> MatchReco(const TLorentzVector& reco_mu, const AnalysisEvent& event, const double& dr_max, const int charge) {
+    double minDR = 100;
+    unsigned idx = 0;
+    double tmpDR;
+    for (int j=0; j<sizeof(event.genMuonPF2PATPX)/sizeof(event.genMuonPF2PATPX[0]); j++) {
+        //TLorentzVector gen_mu{event.genMuonPF2PATPX[j], event.genMuonPF2PATPY[j], event.genMuonPF2PATPZ[j], event.genMuonPF2PATE[j]};
+        TLorentzVector gen_mu(0.,0.,0.,0.);
+        gen_mu.SetPtEtaPhiM(event.genMuonPF2PATPT[j], event.genMuonPF2PATEta[j], event.genMuonPF2PATPhi[j], 0.105);
+        tmpDR=gen_mu.DeltaR(gen_mu);
+        if (charge != event.genMuonPF2PATCharge[j]) continue;
+        if (minDR < tmpDR) continue;
+        
+        minDR = tmpDR;
+        idx = j;    
+    }
+    if (minDR < dr_max) 
+        return make_pair(true, idx);
+    else
+        return make_pair(false, -1);
+}
+
+vector<int> getLooseMuons(const AnalysisEvent& event) {
+    vector<int> muons;
     for (int i{0}; i < event.numMuonPF2PAT; i++)  {   
-       if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] /*&& event.muonPF2PATPfIsoLoose[i]*/ && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
+       if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] /*&& event.muonPF2PATPfIsoLoose[i]*/ && abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
            if (event.muonPF2PATPt[i] >= (muons.empty() ? looseMuonPtLeading_ : looseMuonPt_)) muons.emplace_back(i);
         }
     }
     return muons;
 }
 
-std::vector<int> getPromptMuons(const AnalysisEvent& event, const std::vector<int>& muonIndex, const bool getPrompt ) {
-    std::vector<int> muons;
+vector<int> getPromptMuons(const AnalysisEvent& event, const vector<int>& muonIndex, const bool getPrompt ) {
+    vector<int> muons;
     for ( auto it = muonIndex.begin(); it!= muonIndex.end(); it++ ) {
         if ( event.genMuonPF2PATHardProcess[*it] == getPrompt ) muons.push_back(*it);
     }
     return muons;
 }
 
-bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool mcTruth) {
+bool getDileptonCand(AnalysisEvent& event, const vector<int>& muons, bool mcTruth) {
     for ( unsigned int i{0}; i < muons.size(); i++ ) {
         for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
 
@@ -576,13 +664,13 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
                     }
                 }
 
-                const float iso1 = ch_iso1 + std::max( float(0.0), neutral_iso1 - float(0.5*pu_iso1) );
-                const float iso2 = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
-                const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
+                const float iso1 = ch_iso1 + max( float(0.0), neutral_iso1 - float(0.5*pu_iso1) );
+                const float iso2 = ch_iso2 + max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
+                const float iso  = ch_iso  + max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
 
-                const float trkiso1 = ch_trkiso1 + std::max( float(0.0), neutral_trkiso1 - float(0.5*pu_trkiso1) );
-                const float trkiso2 = ch_trkiso2 + std::max( float(0.0), neutral_trkiso2 - float(0.5*pu_trkiso2) );
-                const float trkiso  = ch_trkiso  + std::max( float(0.0), neutral_trkiso  - float(0.5*pu_trkiso)  );
+                const float trkiso1 = ch_trkiso1 + max( float(0.0), neutral_trkiso1 - float(0.5*pu_trkiso1) );
+                const float trkiso2 = ch_trkiso2 + max( float(0.0), neutral_trkiso2 - float(0.5*pu_trkiso2) );
+                const float trkiso  = ch_trkiso  + max( float(0.0), neutral_trkiso  - float(0.5*pu_trkiso)  );
 
                 event.zPairNewRelIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
                 event.zPairNewRelIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
@@ -598,8 +686,8 @@ bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool m
 
 //                if ( (event.muonTkPairPF2PATTkVtxChi2[event.mumuTrkIndex])/(event.muonTkPairPF2PATTkVtxNdof[event.mumuTrkIndex]+1.0e-06) > 10. ) continue;
 
-                event.zPairLeptonsRefitted.first  = TLorentzVector{event.muonTkPairPF2PATTk1Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
-                event.zPairLeptonsRefitted.second = TLorentzVector{event.muonTkPairPF2PATTk2Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
+                event.zPairLeptonsRefitted.first  = TLorentzVector{event.muonTkPairPF2PATTk1Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Pz[event.mumuTrkIndex], sqrt(event.muonTkPairPF2PATTk1P2[event.mumuTrkIndex]+pow(0.1057,2))};
+                event.zPairLeptonsRefitted.second = TLorentzVector{event.muonTkPairPF2PATTk2Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Pz[event.mumuTrkIndex], sqrt(event.muonTkPairPF2PATTk2P2[event.mumuTrkIndex]+pow(0.1057,2))};
 
                 return true;
             }
@@ -623,8 +711,8 @@ float deltaR(float eta1, float phi1, float eta2, float phi2){
   while (fabs(dPhi) > 3.14159265359){
     dPhi += (dPhi > 0.? -2*3.14159265359:2*3.14159265359);
   }
-  //  if(singleEventInfoDump_)  std::cout << eta1 << " " << eta2 << " phi " << phi1 << " " << phi2 << " ds: " << eta1-eta2 << " " << phi1-phi2 << " dR: " << std::sqrt((dEta*dEta)+(dPhi*dPhi)) << std::endl;
-  return std::sqrt((dEta*dEta)+(dPhi*dPhi));
+  //  if(singleEventInfoDump_)  cout << eta1 << " " << eta2 << " phi " << phi1 << " " << phi2 << " ds: " << eta1-eta2 << " " << phi1-phi2 << " dR: " << sqrt((dEta*dEta)+(dPhi*dPhi)) << endl;
+  return sqrt((dEta*dEta)+(dPhi*dPhi));
 }
 
 void SetStyle(Bool_t graypalette) {
