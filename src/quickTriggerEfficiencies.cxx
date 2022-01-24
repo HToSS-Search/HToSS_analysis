@@ -485,6 +485,8 @@ int main(int argc, char* argv[])
 
     TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
     outFile->cd();
+    
+       
 
     h_leadingMuonPt_truth_muTrig->Divide(h_leadingMuonPt_truth);
     h_subLeadingMuonPt_truth_muTrig->Divide(h_subLeadingMuonPt_truth);
@@ -576,6 +578,20 @@ int main(int argc, char* argv[])
     h_delR_ORTrig->Divide(h_delR);
     h_diMuonMass_truth_ORTrig->Divide(h_diMuonMass_truth);
     h_diMuonMass_ORTrig->Divide(h_diMuonMass);
+
+    h_leadingMuonPt_truth->Write();
+    h_subLeadingMuonPt_truth->Write();
+    h_leadingMuonPt->Write();
+    h_subLeadingMuonPt->Write();
+    h_leadingMuonEta_truth->Write();
+    h_subLeadingMuonEta_truth->Write();
+    h_leadingMuonEta->Write();
+    h_subLeadingMuonEta->Write();
+    h_delR_truth->Write();
+    h_delR->Write();
+    h_diMuonMass_truth->Write(); 
+    h_diMuonMass->Write();
+
 
     h_leadingMuonPt_truth_muTrig->Write();
     h_subLeadingMuonPt_truth_muTrig->Write();

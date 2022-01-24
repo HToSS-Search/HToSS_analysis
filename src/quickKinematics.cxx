@@ -43,7 +43,7 @@ float deltaR(float eta1, float phi1, float eta2, float phi2);
 void SetStyle(Bool_t graypalette=kTRUE);
 
 pair<int, int> FindGen(const AnalysisEvent& event, int numGenMuons, vector<size_t>& idx);
-pair<bool, unsigned> MatchReco(const TLorentzVector& reco_mu, const AnalysisEvent& event, const double& dr_max, const int charge);
+int MatchReco(int gen_ind, const AnalysisEvent& event, double dr_max);
 namespace fs = boost::filesystem;
 
 // Lepton cut variables
@@ -71,20 +71,35 @@ int main(int argc, char* argv[])
     const regex mask{".*\\.root"};
 
     // Quick and dirty trigger plots
+    //genLevel plots
+    TH1F* h_leadingMuonPt_gen                    {new TH1F("h_leadingMuonPt_gen",         "Leading GenMuon; p_{T} (GeV); Events",        200, 0., 100.)};
+    TH1F* h_subleadingMuonPt_gen                 {new TH1F("h_subleadingMuonPt_gen",      "SubLeading GenMuon; p_{T} (GeV); Events",     200, 0., 100.)}; 
+    TH1F* h_delR_gen                             {new TH1F("h_delR_gen",                  "#DeltaR GenLevel; #DeltaR; Events",         100, 0., 1.)};
+    TH1F* h_diMuonMass_gen                       {new TH1F("h_diMuonMass_gen",            "Mass dist. GenLevel; m_{#mu#mu}; Events",    200, 0., 100.)};
+    TH1F* h_numMuon_gen                          {new TH1F("h_numMuon_gen",               "No. of GenLevel muons; numMuon; Events",      10, 0., 10.)};
+    
     // denom
-    TH1F* h_numMuon_truth                        {new TH1F("h_numMuon_truth",            "", 10, 0., 10.)};
-    TH1F* h_leadingMuonPt_truth                  {new TH1F("h_leadingMuonPt_truth",      "", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_truth               {new TH1F("h_subLeadingMuonPt_truth",   "", 200, 0., 100.)};
-    TH1F* h_leadingMuonPt                        {new TH1F("h_leadingMuonPt",            "", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt                     {new TH1F("h_subLeadingMuonPt",         "", 200, 0., 100.)};
-    TH1F* h_leadingMuonEta_truth                 {new TH1F("h_leadingMuonEta_truth",     "", 300, -3., 3.)};
-    TH1F* h_subLeadingMuonEta_truth              {new TH1F("h_subLeadingMuonEta_truth",  "", 300, -3., 3.)};
-    TH1F* h_leadingMuonEta                       {new TH1F("h_leadingMuonEta",           "", 300, -3., 3.)};
-    TH1F* h_subLeadingMuonEta                    {new TH1F("h_subLeadingMuonEta",        "", 300, -3., 3.)};
-    TH1F* h_delR_truth                           {new TH1F("h_delR_truth",               "", 100, 0., 1.0)};
-    TH1F* h_delR                                 {new TH1F("h_delR",                     "", 100, 0., 1.0)};
-    TH1F* h_diMuonMass_truth                     {new TH1F("h_diMuonMass_truth",         "", 200, 0., 100.)}; 
-    TH1F* h_diMuonMass                           {new TH1F("h_diMuonMass",               "", 200, 0., 100.)};
+    TH1F* h_leadingMuonPt_truth                  {new TH1F("h_leadingMuonPt_truth",     "Leading truth reco #mu; p_{T} (GeV); Events", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_truth               {new TH1F("h_subLeadingMuonPt_truth", "SubLeading truth reco #mu; p_{T} (GeV); Events", 200, 0., 100.)};
+    TH1F* h_leadingMuonPt                        {new TH1F("h_leadingMuonPt",            "Leading PAT reco #mu; p_{T} (GeV); Events", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt                     {new TH1F("h_subLeadingMuonPt",         "SubLeading PAT reco #mu; p_{T} (GeV); Events", 200, 0., 100.)};
+    TH1F* h_leadingMuonEta_truth                 {new TH1F("h_leadingMuonEta_truth",     "Leading truth reco #mu; #eta; Events",       300, -3., 3.)};
+    TH1F* h_subLeadingMuonEta_truth              {new TH1F("h_subLeadingMuonEta_truth",  "SubLeading truth reco #mu; #eta; Events",    300, -3., 3.)};
+    TH1F* h_leadingMuonEta                       {new TH1F("h_leadingMuonEta",           "Leading PAT reco #mu; #eta; Events",        300, -3., 3.)};
+    TH1F* h_subLeadingMuonEta                    {new TH1F("h_subLeadingMuonEta",        "SubLeading PAT reco #mu; #eta; Events",      300, -3., 3.)};
+    TH1F* h_delR_truth                           {new TH1F("h_delR_truth",               "#DeltaR truth reco; #DeltaR; Events",      100, 0., 1.0)};
+    TH1F* h_delR                                 {new TH1F("h_delR",                     "#DeltaR PAT reco; #DeltaR; Events",         100, 0., 1.0)};
+    TH1F* h_diMuonMass_truth                     {new TH1F("h_diMuonMass_truth",         "Mass dist. truth reco; m_{#mu#mu}; Events", 100, 0., 10.)}; 
+    TH1F* h_diMuonMass                           {new TH1F("h_diMuonMass",               "Mass dist. PAT reco; m_{#mu#mu}; Events",   100, 0., 10.)};
+    
+    TH1F* h_leadingMuon_pfIso_truth              {new TH1F("h_leadingMuon_pfIso_truth",  "Leading truth reco #mu; PFIsolation; Events", 100, 0., 1.)};
+    TH1F* h_subLeadingMuon_pfIso_truth           {new TH1F("h_subLeading_pfIso_truth", "SubLeading truth reco #mu; PFIsolation; Events", 100, 0., 1.)};
+    
+    TH2F* h_leadingMuon_pfIso_subLeadingMuon_pfIso_truth {new TH2F("h_leadingMuon_pfIso_subLeadingMuon_pfIso_truth", "PFIsolation truth reco; Leading #mu PFIsolation; Subleading #mu PFIsolation", 100, 0.0, 1.0, 100, 0., 1.0)};
+    TH2F* h_leadingMuon_Pt_subLeadingMuon_Pt_truth {new TH2F("h_leadingMuon_Pt_subLeadingMuon_Pt_truth", "p_{T} truth reco; Leading #mu p_{T} (GeV); SubLeading #mu p_{T} (GeV)", 200, 0.0, 100, 200, 0., 100)};
+    TH2F* h_leadingMuon_Pt_delR_truth {new TH2F("h_leadingMuon_Pt_delR_truth", "Truth reco; Leading #mu p_{T} (GeV); #DeltaR",       200, 0.0, 100, 100, 0., 1.)};
+    TH2F* h_subLeadingMuon_Pt_delR_truth {new TH2F("h_subLeadingMuon_Pt_delR_truth", "Truth reco; SubLeading #mu p_{T} (GeV); #DeltaR", 200, 0.0, 100, 100, 0., 1.)};
+    
     // numerator - single mu
     TH1F* h_leadingMuonPt_truth_muTrig           {new TH1F("h_leadingMuonPt_truth_muTrig",      "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
     TH1F* h_subLeadingMuonPt_truth_muTrig        {new TH1F("h_subLeadingMuonPt_truth_muTrig",   "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
@@ -96,15 +111,16 @@ int main(int argc, char* argv[])
     TH1F* h_subLeadingMuonEta_muTrig             {new TH1F("h_subLeadingMuonEta_muTrig",        "Trigger turn-on for signal; #eta; #mu trigger #epsilon", 300, -3., 3.)};
     TH1F* h_delR_truth_muTrig                    {new TH1F("h_delR_truth_muTrig",               "Trigger turn-on for signal; #Delta R; #mu trigger #epsilon", 100, 0., 1.0)};
     TH1F* h_delR_muTrig                          {new TH1F("h_delR_muTrig",                     "Trigger turn-on for signal; #Delta R; #mu trigger #epsilon", 100, 0., 1.0)};
-    TH1F* h_diMuonMass_truth_muTrig              {new TH1F("h_diMuonMass_truth_muTrig",         "Trigger turn-on for signal; m_{#mu#mu}; #mu trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_diMuonMass_muTrig                    {new TH1F("h_diMuonMass_muTrig",               "Trigger turn-on for signal; m_{#mu#mu}; #mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_diMuonMass_truth_muTrig              {new TH1F("h_diMuonMass_truth_muTrig",         "Trigger turn-on for signal; m_{#mu#mu}; #mu trigger #epsilon", 100, 0., 10.)};
+    TH1F* h_diMuonMass_muTrig                    {new TH1F("h_diMuonMass_muTrig",               "Trigger turn-on for signal; m_{#mu#mu}; #mu trigger #epsilon", 100, 0., 10.)};
+    
     // Failing single mu trigger
     TH1F* h_leadingMuonPt_truth_muTrig_fail           {new TH1F("h_leadingMuonPt_truth_muTrig_fail",      "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
     TH1F* h_subLeadingMuonPt_truth_muTrig_fail        {new TH1F("h_subLeadingMuonPt_truth_muTrig_fail",   "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
     TH1F* h_leadingMuonEta_truth_muTrig_fail          {new TH1F("h_leadingMuonEta_truth_muTrig_fail",     "Trigger turn-on for signal; #eta; #mu trigger #epsilon", 300, -3., 3.)};
     TH1F* h_subLeadingMuonEta_truth_muTrig_fail       {new TH1F("h_subLeadingMuonEta_truth_muTrig_fail",  "Trigger turn-on for signal; #eta; #mu trigger #epsilon", 300, -3., 3.)};
     TH1F* h_delR_truth_muTrig_fail                    {new TH1F("h_delR_truth_muTrig_fail",               "Trigger turn-on for signal; #Delta R; #mu trigger #epsilon", 100, 0., 1.0)};
-    TH1F* h_diMuonMass_truth_muTrig_fail              {new TH1F("h_diMuonMass_truth_muTrig_fail",         "Trigger turn-on for signal; m_{#mu#mu}; #mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_diMuonMass_truth_muTrig_fail              {new TH1F("h_diMuonMass_truth_muTrig_fail",         "Trigger turn-on for signal; m_{#mu#mu}; #mu trigger #epsilon", 100, 0., 10.)};
     
 
     namespace po = boost::program_options;
@@ -253,7 +269,7 @@ int main(int argc, char* argv[])
             lEventTimer->DrawProgressBar(i,"");
 
             event.GetEntry(i);
-
+            //if (i>0) event.Show(i);
             float eventWeight = 1.;
 
             if (!event.metFilters()) continue;
@@ -261,56 +277,95 @@ int main(int argc, char* argv[])
             const bool passSingleMuonTrigger {event.muTrig()}, passDimuonTrigger {event.mumuTrig()};
             const bool passL2MuonTrigger {event.mumuL2Trig()}, passDimuonNoVtxTrigger {event.mumuNoVtxTrig()};
             const bool passDiMuonNoMassCutTrigger {event.mumuTrig_noMassCut()}, passDiMuonMassCutTrigger {event.mumuTrig_massCut()};
-
+            
             if ( event.numMuonPF2PAT > 1 ) {
                 // fill muon pT plots pre-triggers
                 //// ID requirements PF muon? no pT cut
                 //// reco pT 
                 
-                int mu1 {-1}, mu2{-1};
+                /*int mu1_old {-1}, mu2_old{-1};
                 for ( Int_t k{0}; k < event.numMuonPF2PAT; k++ ) {
-                    if ( event.genMuonPF2PATScalarAncestor[k] && mu1 < 0 ) mu1 = k;
-                    else if ( event.genMuonPF2PATScalarAncestor[k] && mu2 < 0 ) mu2 = k;
-                    else if (mu1 >= 0 && mu2 > 0) break;
+                    if ( event.genMuonPF2PATScalarAncestor[k] && mu1_old < 0 ) mu1_old = k;
+                    else if ( event.genMuonPF2PATScalarAncestor[k] && mu2_old < 0 ) mu2_old = k;
+                    else if (mu1_old >= 0 && mu2_old > 0) break;
                 }
                 //cout<<"NGenMuons="<<(sizeof(event.genMuonPF2PATPX)/sizeof(event.genMuonPF2PATPX[0]))<<endl;
-                
-                
+                if ((mu1_old<0)||(mu2_old<0)) {
+                    cout<<"Event found with old technique: "<<i<<endl;
+                    continue;
+                }*/
                 int numGenMuons=0;
+                /*cout<<"Muon no. - PromptDecayed, PromptFinalState, HardProcess, MotherId, PDG, Charge, Pt"<<endl;
                 for (int k=0;k<20;k++) {// 20 is max nmuons
                     if (event.genMuonPF2PATPromptFinalState[k]==1) numGenMuons+=1;
+                    cout<<"Muon #"<<k<<", "<<event.genMuonPF2PATPromptDecayed[k]<<", "<<event.genMuonPF2PATPromptFinalState[k]<<", "<<event.genMuonPF2PATHardProcess[k]<<", "<<event.genMuonPF2PATMotherId[k]<<", "<<event.genMuonPF2PATPdgId[k]<<", "<<event.genMuonPF2PATCharge[k]<<", "<<event.genMuonPF2PATPT[k]<<endl;
+                }*/
+                //cout<<"Event no. - "<<i<<endl;
+                //cout<<"Particle no. - Charge, MotherId, DaughterId1, DaughterId2, Pt"<<endl;
+                vector<int> gen_mu_ind;
+                for (int k=0;k<event.nGenPar;k++) {
+                    if (event.genParStatus[k]!=1) continue; //final state
+                    if (abs(event.genParId[k])!=13) continue; //Muon PDG ID
+                    if ((abs(event.genParMotherId[k])==13) || (abs(event.genParMotherId[k])==9000006)) {
+                        numGenMuons++;
+                        //cout<<"Particle #"<<k<<", "<<event.genParCharge[k]<<", "<<event.genParMotherId[k]<<", "<<event.genParDaughterId1[k]<<", "<<event.genParDaughterId2[k]<<", "<<event.genParPt[k]<<endl;
+                        gen_mu_ind.push_back(k);
+                    }
                 }
+                //cout<<"number of GenMuons:"<<numGenMuons<<" and "<<gen_mu_ind.size()<<endl;
+                if (numGenMuons!=2) cout<<"YO SOMETHING IS UP HERE : "<<i<<endl;
+                if (numGenMuons!=2) continue; //strict condition to only select events with 2 genMuons
                 
+                //continue;
                 
                 //pT ordering genmuons
-                vector<double> genMuonPt(event.genMuonPF2PATPT, event.genMuonPF2PATPT+numGenMuons);
+                /*vector<double> genMuonPt(event.genMuonPF2PATPT, event.genMuonPF2PATPT+numGenMuons);
                 vector<size_t> idx(numGenMuons); 
                 iota(idx.begin(), idx.end(), 0);
                 sort(idx.begin(), idx.end(), [&genMuonPt](size_t i1, size_t i2) {return genMuonPt[i1] > genMuonPt[i2];});
+                          
                             
+                
                 //idx contains pT-ordered genMuon indices
                 
-                auto gen_mu_ind = FindGen(event, numGenMuons, idx);
+                auto gen_mu_ind = FindGen(event, numGenMuons, idx);*/
                 //cout<<"NGenMuons="<<numGenMuons<<endl;
+                int tmp1;
+                if (event.genParPt[gen_mu_ind[1]]>event.genParPt[gen_mu_ind[0]]) {
+                    /*gen_mu_ind[0]=gen_mu_ind[0]+gen_mu_ind[1];
+                    gen_mu_ind[1]=gen_mu_ind[0]-gen_mu_ind[1];
+                    gen_mu_ind[0]=gen_mu_ind[0]-gen_mu_ind[1];*/
+                    tmp1=gen_mu_ind[0];
+                    gen_mu_ind[0]=gen_mu_ind[1];
+                    gen_mu_ind[1]=tmp1;
+                }
                 
                 TLorentzVector gen_mu1, gen_mu2;
-                double mu_mass=0.105; //in GeV
-                gen_mu1.SetPtEtaPhiM(event.genMuonPF2PATPT[gen_mu_ind.first], event.genMuonPF2PATEta[gen_mu_ind.first], event.genMuonPF2PATPhi[gen_mu_ind.first], mu_mass);
-                gen_mu2.SetPtEtaPhiM(event.genMuonPF2PATPT[gen_mu_ind.second], event.genMuonPF2PATEta[gen_mu_ind.second], event.genMuonPF2PATPhi[gen_mu_ind.second], mu_mass);
+                double mu_mass=0.10565837; //in GeV
+                gen_mu1.SetPtEtaPhiM(event.genParPt[gen_mu_ind[0]], event.genParEta[gen_mu_ind[0]], event.genParPhi[gen_mu_ind[0]], mu_mass);
+                gen_mu2.SetPtEtaPhiM(event.genParPt[gen_mu_ind[1]], event.genParEta[gen_mu_ind[1]], event.genParPhi[gen_mu_ind[1]], mu_mass);       
                 
                 //if (numGenMuons>2) cout<<"YO SOMETHING IS UP"<<endl;
                 
-                cout<<"Muon #0"<<"- index:"<<gen_mu_ind.first<<", Charge:"<<event.genMuonPF2PATCharge[gen_mu_ind.first]<<", Pt:"<<gen_mu1.Pt()<<endl;    
-                cout<<"Muon #1"<<"- index:"<<gen_mu_ind.second<<", Charge:"<<event.genMuonPF2PATCharge[gen_mu_ind.second]<<", Pt:"<<gen_mu2.Pt()<<endl;
+                double match_dR = 0.03; //0.03 taken from MuonAnalyzer code used by MuonPOG
+                //int mu1=-99, mu2=-99;
+                int mu1 = MatchReco(gen_mu_ind[0], event, match_dR);
+                int mu2 = MatchReco(gen_mu_ind[1], event, match_dR);
                 
-                continue;
-                /*int mu1{-1}, mu2{-1};
-                for (int k=0;k<event.numMuonPF2PAT;k++) {
-                    TLorentzVector reco_mu {event.muonPF2PATPX[k], event.muonPF2PATPY[k], event.muonPF2PATPZ[k], event.muonPF2PATE[k]};
-                    MatchReco();
-                */
-                h_numMuon_truth->Fill(numGenMuons);
-                if ((mu1<0) || (mu2<0)) continue;
+                if ((mu1==mu2) && (mu1!=-99)) {
+                    cout<<"SOMETHING IS UP HERE TOO"<<endl;
+                    cout<<"Indices-"<<gen_mu_ind[0]<<", "<<gen_mu_ind[1]<<endl;
+                    cout<<"Pt of gen-"<<event.genParPt[gen_mu_ind[0]]<<", "<<event.genParPt[gen_mu_ind[1]]<<endl;
+                    cout<<"mu1, mu2"<<mu1<<", "<<mu2<<endl;
+                }
+         
+                if ((mu1<0)||(mu2<0)) {
+                    //cout<<"reaches this"<<endl;
+                    continue;
+                }
+                //continue;
+                //int mu1 = reco_match_genmu1.second;
+                //int mu2 = reco_match_genmu2.second;
                 
                 const TLorentzVector muon1_truth {event.muonPF2PATPX[mu1], event.muonPF2PATPY[mu1], event.muonPF2PATPZ[mu1], event.muonPF2PATE[mu1]};
                 const TLorentzVector muon2_truth {event.muonPF2PATPX[mu2], event.muonPF2PATPY[mu2], event.muonPF2PATPZ[mu2], event.muonPF2PATE[mu2]};
@@ -322,10 +377,23 @@ int main(int argc, char* argv[])
                 const float mass_truth = (muon1_truth + muon2_truth).M();
                 const float mass       = (muon1 + muon2).M();
                 
+                //testing area
+                //if (i>350) 
+                //    cout<<"EventNo.:"<<i<<"dR:"<<muon1_truth.DeltaR(gen_mu1)<<", "<<muon2_truth.DeltaR(gen_mu2)<<", mass_gen:"<<(gen_mu1+gen_mu2).M()<<", "<<mass_truth<<endl;             
+                //continue;
+                
+                //continue;
                 
                 double eventWeight = 1;
                 eventWeight *= (sumPositiveWeights_) / (sumNegativeWeights_) * (event.origWeightForNorm / abs(event.origWeightForNorm));
                 eventWeight *= datasetWeight;
+                
+                // Fill gen level stuff
+                h_numMuon_gen->Fill(numGenMuons);
+                h_leadingMuonPt_gen->Fill(gen_mu1.Pt());
+                h_subleadingMuonPt_gen->Fill(gen_mu2.Pt()); 
+                h_delR_gen->Fill(gen_mu1.DeltaR(gen_mu2));
+                h_diMuonMass_gen->Fill((gen_mu1+gen_mu2).M()); 
                 
                 //if ((event.muonPF2PATLooseCutId[mu1]!=1) || ( event.muonPF2PATLooseCutId[mu2]!=1)) continue;
                 // Fill general pT/dR (with and without scalar parentage)
@@ -341,6 +409,7 @@ int main(int argc, char* argv[])
                 h_delR->Fill(delR );
                 h_diMuonMass_truth->Fill(mass_truth );
                 h_diMuonMass->Fill(mass );
+                
 
                 // Fill pT post trigger (with and without scalar parentage)
                 if (passSingleMuonTrigger) {
@@ -487,6 +556,13 @@ int main(int argc, char* argv[])
     h_diMuonMass_truth_ORTrig->Divide(h_diMuonMass_truth);
     h_diMuonMass_ORTrig->Divide(h_diMuonMass);
     */
+    // Gen Level plots
+    h_leadingMuonPt_gen->Write();
+    h_subleadingMuonPt_gen->Write(); 
+    h_delR_gen->Write();
+    h_diMuonMass_gen->Write(); 
+    h_numMuon_gen->Write();
+    // Matched muon plots
     h_leadingMuonPt_truth->Write();
     h_subLeadingMuonPt_truth->Write();
     h_leadingMuonPt->Write();
@@ -499,7 +575,6 @@ int main(int argc, char* argv[])
     h_delR->Write();   
     h_diMuonMass_truth->Write();  
     h_diMuonMass->Write();  
-    h_numMuon_truth->Write();
     // numerator - single mu
     h_leadingMuonPt_truth_muTrig->Write();
     h_subLeadingMuonPt_truth_muTrig->Write(); 
@@ -530,7 +605,7 @@ int main(int argc, char* argv[])
     cout << "\nFinished. Took " << duration.count() << " seconds" <<endl;
 }
 
-pair<int,int> FindGen(const AnalysisEvent& event, int numGenMuons, vector<size_t>& idx) {
+pair<int,int> FindGen(const AnalysisEvent& event, int numGenMuons, vector<size_t>& idx) { //causes seg fault, don't use
     int charge_mu1, charge_mu2;
     // Sort by Pt and store sorted index
     // Choose top 2 muons, if charge same, go next until different charges
@@ -547,25 +622,25 @@ pair<int,int> FindGen(const AnalysisEvent& event, int numGenMuons, vector<size_t
     return make_pair(mu1_ind, mu2_ind);
 }
 
-pair<bool, unsigned> MatchReco(const TLorentzVector& reco_mu, const AnalysisEvent& event, const double& dr_max, const int charge) {
+int MatchReco(int gen_ind, const AnalysisEvent& event, double dr_max) {
     double minDR = 100;
-    unsigned idx = 0;
+    unsigned index = 0;
     double tmpDR;
-    for (int j=0; j<sizeof(event.genMuonPF2PATPX)/sizeof(event.genMuonPF2PATPX[0]); j++) {
+    for (int j=0; j<event.numMuonPF2PAT; j++) {
         //TLorentzVector gen_mu{event.genMuonPF2PATPX[j], event.genMuonPF2PATPY[j], event.genMuonPF2PATPZ[j], event.genMuonPF2PATE[j]};
-        TLorentzVector gen_mu(0.,0.,0.,0.);
-        gen_mu.SetPtEtaPhiM(event.genMuonPF2PATPT[j], event.genMuonPF2PATEta[j], event.genMuonPF2PATPhi[j], 0.105);
-        tmpDR=gen_mu.DeltaR(gen_mu);
-        if (charge != event.genMuonPF2PATCharge[j]) continue;
+        //TLorentzVector reco_mu{event.muonPF2PATPX[j], event.muonPF2PATPY[j], event.muonPF2PATPZ[j], event.muonPF2PATE[j]};
+        //tmpDR=gen_mu.DeltaR(reco_mu);
+        tmpDR=deltaR(event.genParEta[gen_ind],event.genParPhi[gen_ind],event.muonPF2PATEta[j],event.muonPF2PATPhi[j]);
+        if (event.genParCharge[gen_ind]!= event.muonPF2PATCharge[j]) continue;
         if (minDR < tmpDR) continue;
         
         minDR = tmpDR;
-        idx = j;    
+        index = j;    
     }
     if (minDR < dr_max) 
-        return make_pair(true, idx);
+        return index;
     else
-        return make_pair(false, -1);
+        return -99;
 }
 
 vector<int> getLooseMuons(const AnalysisEvent& event) {
