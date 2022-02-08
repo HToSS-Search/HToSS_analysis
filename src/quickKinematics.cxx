@@ -62,6 +62,17 @@ int main(int argc, char* argv[])
     double totalLumi;
     double usePreLumi;
     bool usePostLepTree {false};
+    
+    
+    string plotConfig{"configs/plots/plotKinematics.yaml"};
+    std::vector<std::string> plotTitles;
+    std::vector<std::string> plotNames;
+    std::vector<float> xMin;
+    std::vector<float> xMax;
+    std::vector<int> nBins;
+    std::vector<std::string> fillExp;
+    std::vector<std::string> xAxisLabels;
+    std::vector<int> cutStage;
    
     string outFileString{"plots/distributions/output.root"};
     bool is2016_;
@@ -94,11 +105,20 @@ int main(int argc, char* argv[])
     
     TH1F* h_leadingMuon_pfIso_truth              {new TH1F("h_leadingMuon_pfIso_truth",  "Leading truth reco #mu; PFIsolation; Events", 100, 0., 1.)};
     TH1F* h_subLeadingMuon_pfIso_truth           {new TH1F("h_subLeading_pfIso_truth", "SubLeading truth reco #mu; PFIsolation; Events", 100, 0., 1.)};
+    TH1F* h_leadingMuon_trkIso_truth          {new TH1F("h_leadingMuon_trkIso_truth", "Leading truth reco #mu; TrkIsolation; Events", 200, 0., 10.)};
+    TH1F* h_subLeadingMuon_trkIso_truth       {new TH1F("h_subLeading_trkIso_truth", "SubLeading truth reco #mu; TrkIsolation; Events", 200, 0., 10.)};
+    TH1F* h_leadingMuon_trkIso_orig_truth          {new TH1F("h_leadingMuon_trkIso_orig_truth", "Leading truth reco #mu for Passing; TrkIsolation_original; Events", 500, 0., 100.)};
+    TH1F* h_subLeadingMuon_trkIso_orig_truth       {new TH1F("h_subLeading_trkIso_orig_truth", "SubLeading truth reco #mu for Passing; TrkIsolation_original; Events", 500, 0., 100.)};
     
     TH2F* h_leadingMuon_pfIso_subLeadingMuon_pfIso_truth {new TH2F("h_leadingMuon_pfIso_subLeadingMuon_pfIso_truth", "PFIsolation truth reco; Leading #mu PFIsolation; Subleading #mu PFIsolation", 100, 0.0, 1.0, 100, 0., 1.0)};
+    TH2F* h_leadingMuon_trkIso_subLeadingMuon_trkIso_truth {new TH2F("h_leadingMuon_trkIso_subLeadingMuon_trkIso_truth", "TrkIsolation truth reco; Leading #mu TrkIsolation; Subleading #mu TrkIsolation", 200, 0.0, 10.0, 200, 0., 10.0)};
+    TH2F* h_leadingMuon_trkIso_subLeadingMuon_trkIso_orig_truth {new TH2F("h_leadingMuon_trkIso_subLeadingMuon_trkIso_orig_truth", "TrkIsolation_original truth reco; Leading #mu TrkIsolation_original; Subleading #mu TrkIsolation_original", 500, 0., 100., 500, 0., 100.)};
     TH2F* h_leadingMuon_Pt_subLeadingMuon_Pt_truth {new TH2F("h_leadingMuon_Pt_subLeadingMuon_Pt_truth", "p_{T} truth reco; Leading #mu p_{T} (GeV); SubLeading #mu p_{T} (GeV)", 200, 0.0, 100, 200, 0., 100)};
     TH2F* h_leadingMuon_Pt_delR_truth {new TH2F("h_leadingMuon_Pt_delR_truth", "Truth reco; Leading #mu p_{T} (GeV); #DeltaR",       200, 0.0, 100, 100, 0., 1.)};
     TH2F* h_subLeadingMuon_Pt_delR_truth {new TH2F("h_subLeadingMuon_Pt_delR_truth", "Truth reco; SubLeading #mu p_{T} (GeV); #DeltaR", 200, 0.0, 100, 100, 0., 1.)};
+    TH2F* h_leadingMuon_Pt_leadingMuon_trkIso_truth {new TH2F("h_leadingMuon_Pt_leadingMuon_trkIso_truth", "Truth reco; Leading #mu p_{T} (GeV); TrkIsolation",       200, 0.0, 100, 200, 0., 10.)};
+    TH2F* h_subLeadingMuon_Pt_subLeadingMuon_trkIso_truth {new TH2F("h_subLeadingMuon_Pt_subLeadingMuon_trkIso_truth", "Truth reco; SubLeading #mu p_{T} (GeV); TrkIsolation", 200, 0.0, 100, 200, 0., 10.)};
+    
     
     // numerator - single mu
     TH1F* h_leadingMuonPt_truth_muTrig           {new TH1F("h_leadingMuonPt_truth_muTrig",      "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
@@ -114,14 +134,45 @@ int main(int argc, char* argv[])
     TH1F* h_diMuonMass_truth_muTrig              {new TH1F("h_diMuonMass_truth_muTrig",         "Trigger turn-on for signal; m_{#mu#mu}; #mu trigger #epsilon", 100, 0., 10.)};
     TH1F* h_diMuonMass_muTrig                    {new TH1F("h_diMuonMass_muTrig",               "Trigger turn-on for signal; m_{#mu#mu}; #mu trigger #epsilon", 100, 0., 10.)};
     
-    // Failing single mu trigger
-    TH1F* h_leadingMuonPt_truth_muTrig_fail           {new TH1F("h_leadingMuonPt_truth_muTrig_fail",      "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_subLeadingMuonPt_truth_muTrig_fail        {new TH1F("h_subLeadingMuonPt_truth_muTrig_fail",   "Trigger turn-on for signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
-    TH1F* h_leadingMuonEta_truth_muTrig_fail          {new TH1F("h_leadingMuonEta_truth_muTrig_fail",     "Trigger turn-on for signal; #eta; #mu trigger #epsilon", 300, -3., 3.)};
-    TH1F* h_subLeadingMuonEta_truth_muTrig_fail       {new TH1F("h_subLeadingMuonEta_truth_muTrig_fail",  "Trigger turn-on for signal; #eta; #mu trigger #epsilon", 300, -3., 3.)};
-    TH1F* h_delR_truth_muTrig_fail                    {new TH1F("h_delR_truth_muTrig_fail",               "Trigger turn-on for signal; #Delta R; #mu trigger #epsilon", 100, 0., 1.0)};
-    TH1F* h_diMuonMass_truth_muTrig_fail              {new TH1F("h_diMuonMass_truth_muTrig_fail",         "Trigger turn-on for signal; m_{#mu#mu}; #mu trigger #epsilon", 100, 0., 10.)};
+    TH1F* h_leadingMuon_pfIso_truth_muTrig              {new TH1F("h_leadingMuon_pfIso_truth_muTrig",  "Leading truth reco #mu for Passing; PFIsolation; Events", 100, 0., 1.)};
+    TH1F* h_subLeadingMuon_pfIso_truth_muTrig           {new TH1F("h_subLeading_pfIso_truth_muTrig", "SubLeading truth reco #mu for Passing; PFIsolation; Events", 100, 0., 1.)};
+    TH1F* h_leadingMuon_trkIso_truth_muTrig          {new TH1F("h_leadingMuon_trkIso_truth_muTrig", "Leading truth reco #mu for Passing; TrkIsolation; Events", 200, 0., 10.)};
+    TH1F* h_subLeadingMuon_trkIso_truth_muTrig       {new TH1F("h_subLeading_trkIso_truth_muTrig", "SubLeading truth reco #mu for Passing; TrkIsolation; Events", 200, 0., 10.)};
+    TH1F* h_leadingMuon_trkIso_orig_truth_muTrig          {new TH1F("h_leadingMuon_trkIso_orig_truth_muTrig", "Leading truth reco #mu for Passing; TrkIsolation_original; Events", 500, 0., 100.)};
+    TH1F* h_subLeadingMuon_trkIso_orig_truth_muTrig       {new TH1F("h_subLeading_trkIso_orig_truth_muTrig", "SubLeading truth reco #mu for Passing; TrkIsolation_original; Events", 500, 0., 100.)};
     
+    TH2F* h_leadingMuon_pfIso_subLeadingMuon_pfIso_truth_muTrig {new TH2F("h_leadingMuon_pfIso_subLeadingMuon_pfIso_truth_muTrig", "PFIsolation truth reco for Passing; Leading #mu PFIsolation; Subleading #mu PFIsolation", 100, 0.0, 1.0, 100, 0., 1.0)};
+    TH2F* h_leadingMuon_trkIso_subLeadingMuon_trkIso_truth_muTrig {new TH2F("h_leadingMuon_trkIso_subLeadingMuon_trkIso_truth_muTrig", "TrkIsolation truth reco for Passing; Leading #mu TrkIsolation; Subleading #mu TrkIsolation", 200, 0.0, 10.0, 200, 0., 10.0)};
+    TH2F* h_leadingMuon_trkIso_subLeadingMuon_trkIso_orig_truth_muTrig {new TH2F("h_leadingMuon_trkIso_subLeadingMuon_trkIso_orig_truth_muTrig", "TrkIsolation_original truth reco for Passing; Leading #mu TrkIsolation_original; Subleading #mu TrkIsolation_original", 500, 0., 100., 500, 0., 100.)};
+    TH2F* h_leadingMuon_Pt_subLeadingMuon_Pt_truth_muTrig {new TH2F("h_leadingMuon_Pt_subLeadingMuon_Pt_truth_muTrig", "p_{T} truth reco for Passing; Leading #mu p_{T} (GeV); SubLeading #mu p_{T} (GeV)", 200, 0.0, 100, 200, 0., 100)};
+    TH2F* h_leadingMuon_Pt_delR_truth_muTrig {new TH2F("h_leadingMuon_Pt_delR_truth_muTrig", "Truth reco for Passing; Leading #mu p_{T} (GeV); #DeltaR",       200, 0.0, 100, 100, 0., 1.)};
+    TH2F* h_subLeadingMuon_Pt_delR_truth_muTrig {new TH2F("h_subLeadingMuon_Pt_delR_truth_muTrig", "Truth reco for Passing; SubLeading #mu p_{T} (GeV); #DeltaR", 200, 0.0, 100, 100, 0., 1.)};
+    TH2F* h_leadingMuon_Pt_leadingMuon_trkIso_truth_muTrig {new TH2F("h_leadingMuon_Pt_leadingMuon_trkIso_truth_muTrig", "Truth reco for Passing; Leading #mu p_{T} (GeV); TrkIsolation",       200, 0.0, 100, 200, 0., 10.)};
+    TH2F* h_subLeadingMuon_Pt_subLeadingMuon_trkIso_truth_muTrig {new TH2F("h_subLeadingMuon_Pt_subLeadingMuon_trkIso_truth_muTrig", "Truth reco for Passing; SubLeading #mu p_{T} (GeV); TrkIsolation", 200, 0.0, 100, 200, 0., 10.)};
+    
+    // Failing single mu trigger
+    TH1F* h_leadingMuonPt_truth_muTrig_fail           {new TH1F("h_leadingMuonPt_truth_muTrig_fail",      "Failing signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_subLeadingMuonPt_truth_muTrig_fail        {new TH1F("h_subLeadingMuonPt_truth_muTrig_fail",   "Failing signal; p_{T} (GeV); #mu trigger #epsilon", 200, 0., 100.)};
+    TH1F* h_leadingMuonEta_truth_muTrig_fail          {new TH1F("h_leadingMuonEta_truth_muTrig_fail",     "Failing signal; #eta; #mu trigger #epsilon", 300, -3., 3.)};
+    TH1F* h_subLeadingMuonEta_truth_muTrig_fail       {new TH1F("h_subLeadingMuonEta_truth_muTrig_fail",  "Failing signal; #eta; #mu trigger #epsilon", 300, -3., 3.)};
+    TH1F* h_delR_truth_muTrig_fail                    {new TH1F("h_delR_truth_muTrig_fail",               "Failing signal; #Delta R; #mu trigger #epsilon", 100, 0., 1.0)};
+    TH1F* h_diMuonMass_truth_muTrig_fail              {new TH1F("h_diMuonMass_truth_muTrig_fail",         "Failing signal; m_{#mu#mu}; #mu trigger #epsilon", 100, 0., 10.)};
+    
+    TH1F* h_leadingMuon_pfIso_truth_muTrig_fail              {new TH1F("h_leadingMuon_pfIso_truth_muTrig_fail",  "Leading truth reco #mu for Failing; PFIsolation; Events", 100, 0., 1.)};
+    TH1F* h_subLeadingMuon_pfIso_truth_muTrig_fail           {new TH1F("h_subLeading_pfIso_truth_muTrig_fail", "SubLeading truth reco #mu for Failing; PFIsolation; Events", 100, 0., 1.)};
+    TH1F* h_leadingMuon_trkIso_truth_muTrig_fail          {new TH1F("h_leadingMuon_trkIso_truth_muTrig_fail", "Leading truth reco #mu for Failing; TrkIsolation; Events", 200, 0., 10.)};
+    TH1F* h_subLeadingMuon_trkIso_truth_muTrig_fail       {new TH1F("h_subLeading_trkIso_truth_muTrig_fail", "SubLeading truth reco #mu for Failing; TrkIsolation; Events", 200, 0., 10.)};
+    TH1F* h_leadingMuon_trkIso_orig_truth_muTrig_fail     {new TH1F("h_leadingMuon_trkIso_orig_truth_muTrig_fail", "Leading truth reco #mu for Passing; TrkIsolation_original; Events", 500, 0., 100.)};
+    TH1F* h_subLeadingMuon_trkIso_orig_truth_muTrig_fail  {new TH1F("h_subLeading_trkIso_orig_truth_muTrig_fail", "SubLeading truth reco #mu for Passing; TrkIsolation_original; Events", 500, 0., 100.)};
+    
+    TH2F* h_leadingMuon_pfIso_subLeadingMuon_pfIso_truth_muTrig_fail {new TH2F("h_leadingMuon_pfIso_subLeadingMuon_pfIso_truth_muTrig_fail", "PFIsolation truth reco for Failing; Leading #mu PFIsolation; Subleading #mu PFIsolation", 100, 0.0, 1.0, 100, 0., 1.0)};
+    TH2F* h_leadingMuon_trkIso_subLeadingMuon_trkIso_truth_muTrig_fail {new TH2F("h_leadingMuon_trkIso_subLeadingMuon_trkIso_truth_muTrig_fail", "TrkIsolation truth reco for Failing; Leading #mu TrkIsolation; Subleading #mu TrkIsolation", 200, 0.0, 10.0, 200, 0., 10.0)};
+    TH2F* h_leadingMuon_trkIso_subLeadingMuon_trkIso_orig_truth_muTrig_fail {new TH2F("h_leadingMuon_trkIso_subLeadingMuon_trkIso_orig_truth_muTrig_fail", "TrkIsolation_original truth reco for Failing; Leading #mu TrkIsolation_original; Subleading #mu TrkIsolation_original", 500, 0., 100., 500, 0., 100.)};
+    TH2F* h_leadingMuon_Pt_subLeadingMuon_Pt_truth_muTrig_fail {new TH2F("h_leadingMuon_Pt_subLeadingMuon_Pt_truth_muTrig_fail", "p_{T} truth reco for Failing; Leading #mu p_{T} (GeV); SubLeading #mu p_{T} (GeV)", 200, 0.0, 100, 200, 0., 100)};
+    TH2F* h_leadingMuon_Pt_delR_truth_muTrig_fail {new TH2F("h_leadingMuon_Pt_delR_truth_muTrig_fail", "Truth reco for Failing; Leading #mu p_{T} (GeV); #DeltaR",       200, 0.0, 100, 100, 0., 1.)};
+    TH2F* h_subLeadingMuon_Pt_delR_truth_muTrig_fail {new TH2F("h_subLeadingMuon_Pt_delR_truth_muTrig_fail", "Truth reco for Failing; SubLeading #mu p_{T} (GeV); #DeltaR", 200, 0.0, 100, 100, 0., 1.)};
+    TH2F* h_leadingMuon_Pt_leadingMuon_trkIso_truth_muTrig_fail {new TH2F("h_leadingMuon_Pt_leadingMuon_trkIso_truth_muTrig_fail", "Truth reco for Failing; Leading #mu p_{T} (GeV); TrkIsolation",       200, 0.0, 100, 200, 0., 10.)};
+    TH2F* h_subLeadingMuon_Pt_subLeadingMuon_trkIso_truth_muTrig_fail {new TH2F("h_subLeadingMuon_Pt_subLeadingMuon_trkIso_truth_muTrig_fail", "Truth reco for Failing; SubLeading #mu p_{T} (GeV); TrkIsolation", 200, 0.0, 100, 200, 0., 10.)};
 
     namespace po = boost::program_options;
 
@@ -376,6 +427,26 @@ int main(int argc, char* argv[])
                 const float delR       = deltaR(event.muonPF2PATEta[0], event.muonPF2PATPhi[0], event.muonPF2PATEta[1], event.muonPF2PATPhi[1]);
                 const float mass_truth = (muon1_truth + muon2_truth).M();
                 const float mass       = (muon1 + muon2).M();
+                //float muon1_truth_trkIso = (event.muonPF2PATTrackIso[mu1]-event.muonPF2PATPt[mu1])/event.muonPF2PATPt[mu1];
+                //float muon2_truth_trkIso = (event.muonPF2PATTrackIso[mu2]-event.muonPF2PATPt[mu2])/event.muonPF2PATPt[mu2]; 
+                float muon1_truth_trkIso = (event.muonPF2PATTrackIso[mu1]);
+                float muon2_truth_trkIso = (event.muonPF2PATTrackIso[mu2]); 
+                //float muon1_truth_pfIso_new = event.muonPF2PATComRelIsodBeta[mu1];
+                //float muon2_truth_pfIso_new = event.muonPF2PATComRelIsodBeta[mu2];
+                if (delR_truth<0.3) { //other muon within cone of dR=0.3   
+                    //muon1_truth_trkIso = muon1_truth_trkIso-(event.muonPF2PATPt[mu2]/event.muonPF2PATPt[mu1]);
+                    //muon2_truth_trkIso = muon2_truth_trkIso-(event.muonPF2PATPt[mu1]/event.muonPF2PATPt[mu2]);
+                    muon1_truth_trkIso = muon1_truth_trkIso-(event.muonPF2PATPt[mu2]);
+                    muon2_truth_trkIso = muon2_truth_trkIso-(event.muonPF2PATPt[mu1]);
+                }
+                /*if (delR_truth<0.4) { //other muon within cone of dR=0.4   
+                    muon1_truth_pfIso_new = muon1_truth_pfIso_new-(event.muonPF2PATPt[mu2]/event.muonPF2PATPt[mu1]);
+                    muon2_truth_pfIso_new = muon2_truth_pfIso_new-(event.muonPF2PATPt[mu1]/event.muonPF2PATPt[mu2]);
+                }*/
+                //cout<<"Pt vals: "<<muon1_truth.Pt()<<", "<<muon2_truth.Pt()<<endl;
+                //cout<<"PFIsolation new vals: "<<event.muonPF2PATComRelIsodBeta[mu1]<<", "<<event.muonPF2PATComRelIsodBeta[mu2]<<endl;
+                //cout<<"TrkIsolation new vals: "<<muon1_truth_trkIso<<", "<<muon2_truth_trkIso<<endl;
+
                 
                 //testing area
                 //if (i>350) 
@@ -410,6 +481,22 @@ int main(int argc, char* argv[])
                 h_diMuonMass_truth->Fill(mass_truth );
                 h_diMuonMass->Fill(mass );
                 
+                h_leadingMuon_pfIso_truth->Fill(event.muonPF2PATComRelIsodBeta[mu1]);
+                h_subLeadingMuon_pfIso_truth->Fill(event.muonPF2PATComRelIsodBeta[mu2]);
+                h_leadingMuon_trkIso_truth->Fill(muon1_truth_trkIso);
+                h_subLeadingMuon_trkIso_truth->Fill(muon2_truth_trkIso);
+                h_leadingMuon_trkIso_orig_truth->Fill(event.muonPF2PATTrackIso[mu1]);
+                h_subLeadingMuon_trkIso_orig_truth->Fill(event.muonPF2PATTrackIso[mu2]);
+                h_leadingMuon_pfIso_subLeadingMuon_pfIso_truth->Fill(event.muonPF2PATComRelIsodBeta[mu1], event.muonPF2PATComRelIsodBeta[mu2]);
+                h_leadingMuon_trkIso_subLeadingMuon_trkIso_truth->Fill(muon1_truth_trkIso, muon2_truth_trkIso);
+                h_leadingMuon_trkIso_subLeadingMuon_trkIso_orig_truth->Fill(event.muonPF2PATTrackIso[mu1], event.muonPF2PATTrackIso[mu2]);
+                h_leadingMuon_Pt_subLeadingMuon_Pt_truth->Fill(event.muonPF2PATPt[mu1],event.muonPF2PATPt[mu2]);
+                h_leadingMuon_Pt_delR_truth->Fill(event.muonPF2PATPt[mu1], delR_truth);
+                h_subLeadingMuon_Pt_delR_truth->Fill(event.muonPF2PATPt[mu2], delR_truth);
+                h_leadingMuon_Pt_leadingMuon_trkIso_truth->Fill(event.muonPF2PATPt[mu1], muon1_truth_trkIso);
+                h_subLeadingMuon_Pt_subLeadingMuon_trkIso_truth->Fill(event.muonPF2PATPt[mu2], muon2_truth_trkIso);
+                
+                
 
                 // Fill pT post trigger (with and without scalar parentage)
                 if (passSingleMuonTrigger) {
@@ -432,7 +519,23 @@ int main(int argc, char* argv[])
                     h_delR_muTrig->Fill(delR);
                     h_diMuonMass_truth_muTrig->Fill(mass_truth);
                     h_diMuonMass_muTrig->Fill(mass);
-                }
+                    
+                    
+                    h_leadingMuon_pfIso_truth_muTrig->Fill(event.muonPF2PATComRelIsodBeta[mu1]);
+                    h_subLeadingMuon_pfIso_truth_muTrig->Fill(event.muonPF2PATComRelIsodBeta[mu2]);
+                    h_leadingMuon_trkIso_truth_muTrig->Fill(muon1_truth_trkIso);
+                    h_subLeadingMuon_trkIso_truth_muTrig->Fill(muon2_truth_trkIso);
+                    h_leadingMuon_trkIso_orig_truth_muTrig->Fill(event.muonPF2PATTrackIso[mu1]);
+                    h_subLeadingMuon_trkIso_orig_truth_muTrig->Fill(event.muonPF2PATTrackIso[mu2]);
+                    h_leadingMuon_pfIso_subLeadingMuon_pfIso_truth_muTrig->Fill(event.muonPF2PATComRelIsodBeta[mu1], event.muonPF2PATComRelIsodBeta[mu2]);
+                    h_leadingMuon_trkIso_subLeadingMuon_trkIso_truth_muTrig->Fill(muon1_truth_trkIso, muon2_truth_trkIso);
+                    h_leadingMuon_trkIso_subLeadingMuon_trkIso_orig_truth_muTrig->Fill(event.muonPF2PATTrackIso[mu1], event.muonPF2PATTrackIso[mu2]);
+                    h_leadingMuon_Pt_subLeadingMuon_Pt_truth_muTrig->Fill(event.muonPF2PATPt[mu1],event.muonPF2PATPt[mu2]);
+                    h_leadingMuon_Pt_delR_truth_muTrig->Fill(event.muonPF2PATPt[mu1], delR_truth);
+                    h_subLeadingMuon_Pt_delR_truth_muTrig->Fill(event.muonPF2PATPt[mu2], delR_truth);
+                    h_leadingMuon_Pt_leadingMuon_trkIso_truth_muTrig->Fill(event.muonPF2PATPt[mu1], muon1_truth_trkIso);
+                    h_subLeadingMuon_Pt_subLeadingMuon_trkIso_truth_muTrig->Fill(event.muonPF2PATPt[mu2], muon2_truth_trkIso);
+                    }
                 else {
                     /*double eventWeight = 1;
 
@@ -445,6 +548,21 @@ int main(int argc, char* argv[])
                     h_subLeadingMuonEta_truth_muTrig_fail->Fill(event.muonPF2PATEta[mu2]);
                     h_delR_truth_muTrig_fail->Fill(delR_truth);
                     h_diMuonMass_truth_muTrig_fail->Fill(mass_truth);
+                    
+                    h_leadingMuon_pfIso_truth_muTrig_fail->Fill(event.muonPF2PATComRelIsodBeta[mu1]);
+                    h_subLeadingMuon_pfIso_truth_muTrig_fail->Fill(event.muonPF2PATComRelIsodBeta[mu2]);
+                    h_leadingMuon_trkIso_truth_muTrig_fail->Fill(muon1_truth_trkIso);
+                    h_subLeadingMuon_trkIso_truth_muTrig_fail->Fill(muon2_truth_trkIso);
+                    h_leadingMuon_trkIso_orig_truth_muTrig_fail->Fill(event.muonPF2PATComRelIsodBeta[mu1]);
+                    h_subLeadingMuon_trkIso_orig_truth_muTrig_fail->Fill(event.muonPF2PATComRelIsodBeta[mu2]);
+                    h_leadingMuon_pfIso_subLeadingMuon_pfIso_truth_muTrig_fail->Fill(event.muonPF2PATComRelIsodBeta[mu1], event.muonPF2PATComRelIsodBeta[mu2]);
+                    h_leadingMuon_trkIso_subLeadingMuon_trkIso_truth_muTrig_fail->Fill(muon1_truth_trkIso, muon2_truth_trkIso);
+                    h_leadingMuon_trkIso_subLeadingMuon_trkIso_orig_truth_muTrig_fail->Fill(event.muonPF2PATTrackIso[mu1], event.muonPF2PATTrackIso[mu2]);
+                    h_leadingMuon_Pt_subLeadingMuon_Pt_truth_muTrig_fail->Fill(event.muonPF2PATPt[mu1],event.muonPF2PATPt[mu2]);
+                    h_leadingMuon_Pt_delR_truth_muTrig_fail->Fill(event.muonPF2PATPt[mu1], delR_truth);
+                    h_subLeadingMuon_Pt_delR_truth_muTrig_fail->Fill(event.muonPF2PATPt[mu2], delR_truth);
+                    h_leadingMuon_Pt_leadingMuon_trkIso_truth_muTrig_fail->Fill(event.muonPF2PATPt[mu1], muon1_truth_trkIso);
+                    h_subLeadingMuon_Pt_subLeadingMuon_trkIso_truth_muTrig_fail->Fill(event.muonPF2PATPt[mu2], muon2_truth_trkIso);
                  }
                 
             }
@@ -575,6 +693,22 @@ int main(int argc, char* argv[])
     h_delR->Write();   
     h_diMuonMass_truth->Write();  
     h_diMuonMass->Write();  
+    
+    h_leadingMuon_pfIso_truth->Write();
+    h_subLeadingMuon_pfIso_truth->Write();
+  std::map<std::string,TH1F*> hists_1d_;
+    h_leadingMuon_trkIso_truth->Write();
+    h_subLeadingMuon_trkIso_truth->Write();
+    h_leadingMuon_trkIso_orig_truth->Write();
+    h_subLeadingMuon_trkIso_orig_truth->Write();
+    h_leadingMuon_pfIso_subLeadingMuon_pfIso_truth->Write();
+    h_leadingMuon_trkIso_subLeadingMuon_trkIso_truth->Write();
+    h_leadingMuon_trkIso_subLeadingMuon_trkIso_orig_truth->Write();
+    h_leadingMuon_Pt_subLeadingMuon_Pt_truth->Write();
+    h_leadingMuon_Pt_delR_truth->Write();
+    h_subLeadingMuon_Pt_delR_truth->Write();
+    h_leadingMuon_Pt_leadingMuon_trkIso_truth->Write();
+    h_subLeadingMuon_Pt_subLeadingMuon_trkIso_truth->Write();
     // numerator - single mu
     h_leadingMuonPt_truth_muTrig->Write();
     h_subLeadingMuonPt_truth_muTrig->Write(); 
@@ -588,6 +722,23 @@ int main(int argc, char* argv[])
     h_delR_muTrig->Write();               
     h_diMuonMass_truth_muTrig->Write(); 
     h_diMuonMass_muTrig->Write();  
+    
+    
+    h_leadingMuon_pfIso_truth_muTrig->Write();
+    h_subLeadingMuon_pfIso_truth_muTrig->Write();
+    h_leadingMuon_trkIso_truth_muTrig->Write();
+    h_subLeadingMuon_trkIso_truth_muTrig->Write();
+    h_leadingMuon_trkIso_orig_truth_muTrig->Write();
+    h_subLeadingMuon_trkIso_truth_muTrig->Write();
+    h_subLeadingMuon_trkIso_orig_truth_muTrig->Write();
+    h_leadingMuon_pfIso_subLeadingMuon_pfIso_truth_muTrig->Write();
+    h_leadingMuon_trkIso_subLeadingMuon_trkIso_truth_muTrig->Write();
+    h_leadingMuon_trkIso_subLeadingMuon_trkIso_orig_truth_muTrig->Write();
+    h_leadingMuon_Pt_subLeadingMuon_Pt_truth_muTrig->Write();
+    h_leadingMuon_Pt_delR_truth_muTrig->Write();
+    h_subLeadingMuon_Pt_delR_truth_muTrig->Write();
+    h_leadingMuon_Pt_leadingMuon_trkIso_truth_muTrig->Write();
+    h_subLeadingMuon_Pt_subLeadingMuon_trkIso_truth_muTrig->Write();
     // Failing single mu trigger
     h_leadingMuonPt_truth_muTrig_fail->Write(); 
     h_subLeadingMuonPt_truth_muTrig_fail->Write();  
@@ -596,6 +747,21 @@ int main(int argc, char* argv[])
     h_delR_truth_muTrig_fail->Write();              
     h_diMuonMass_truth_muTrig_fail->Write();       
      
+    
+    h_leadingMuon_pfIso_truth_muTrig_fail->Write();
+    h_subLeadingMuon_pfIso_truth_muTrig_fail->Write();
+    h_leadingMuon_trkIso_truth_muTrig_fail->Write();
+    h_subLeadingMuon_trkIso_truth_muTrig_fail->Write();
+    h_leadingMuon_trkIso_orig_truth_muTrig_fail->Write();
+    h_subLeadingMuon_trkIso_orig_truth_muTrig_fail->Write();
+    h_leadingMuon_pfIso_subLeadingMuon_pfIso_truth_muTrig_fail->Write();
+    h_leadingMuon_trkIso_subLeadingMuon_trkIso_truth_muTrig_fail->Write();
+    h_leadingMuon_trkIso_subLeadingMuon_trkIso_orig_truth_muTrig_fail->Write();
+    h_leadingMuon_Pt_subLeadingMuon_Pt_truth_muTrig_fail->Write();
+    h_leadingMuon_Pt_delR_truth_muTrig_fail->Write();
+    h_subLeadingMuon_Pt_delR_truth_muTrig_fail->Write();
+    h_leadingMuon_Pt_leadingMuon_trkIso_truth_muTrig_fail->Write();
+    h_subLeadingMuon_Pt_subLeadingMuon_trkIso_truth_muTrig_fail->Write();
     outFile->Close();
 
 //    cout << "Max nGenPar: " << maxGenPars << endl;    
@@ -603,6 +769,32 @@ int main(int argc, char* argv[])
     auto duration  = chrono::duration_cast<chrono::seconds>(timerStop - timerStart);
 
     cout << "\nFinished. Took " << duration.count() << " seconds" <<endl;
+}
+
+//____________________________________________________________________________
+void quickKinematics::bookHists(edm::Service<TFileService>& fs, const std::string& suffix) {
+
+  std::string suf(suffix);
+  if (suffix.size()) suf = "_"+suffix;
+
+  hists_1d_["h_pt"+suf] = fs->make<TH1F>(Form("h_pt%s",suf.c_str()) , "; p_{T} [GeV]" , 100 , 0. , 100. );
+  hists_1d_["h_eta"+suf] = fs->make<TH1F>(Form("h_eta%s",suf.c_str()) , "; #eta" , 100 , -3. , 3. );
+  hists_1d_["h_phi"+suf] = fs->make<TH1F>(Form("h_phi%s",suf.c_str()) , "; #phi" , 100 , -3.14 , 3.14 );
+
+  return;
+}
+
+//____________________________________________________________________________
+void quickKinematics::fillHists(const LorentzVector& lv, const std::string& suffix) {
+
+  std::string suf(suffix);
+  if (suffix.size()) suf = "_"+suffix;
+
+  hists_1d_["h_pt"+suf]->Fill(lv.pt());
+  hists_1d_["h_eta"+suf]->Fill(lv.eta());
+  hists_1d_["h_phi"+suf]->Fill(lv.phi());
+
+  return;
 }
 
 pair<int,int> FindGen(const AnalysisEvent& event, int numGenMuons, vector<size_t>& idx) { //causes seg fault, don't use
