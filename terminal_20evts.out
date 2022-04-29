@@ -1,0 +1,59 @@
+For dataset ggH_HToSS_MS2_ctauS0_raw trigger flag is 
+Using lumi: 41528
+10100 number of items in tree. Dataset weight: 12.0274
+Pt vals: 57.9848, 13.05
+PFIsolation new vals: 0.0923124, 0.41017
+TrkIsolation new vals: 0, 0.756474
+Pt vals: 71.144, 9.20923
+PFIsolation new vals: 0.0943509, 0.728889
+TrkIsolation new vals: 0.364151, 0.364151
+Pt vals: 47.9762, 12.2691
+PFIsolation new vals: 0.0282806, 0.110586
+TrkIsolation new vals: 0, 1.3568
+Pt vals: 36.0954, 22.7197
+PFIsolation new vals: 0.140508, 0
+TrkIsolation new vals: 0, 0
+Pt vals: 22.1596, 20.7346
+PFIsolation new vals: 0, 0
+TrkIsolation new vals: 0, 0
+Pt vals: 30.9742, 13.775
+PFIsolation new vals: 0.0118915, 0.026739
+TrkIsolation new vals: 0.36833, 0.36833
+Pt vals: 24.983, 15.6568
+PFIsolation new vals: 0.0520354, 0.0614367
+TrkIsolation new vals: 0.9619, 0.961899
+Pt vals: 7.49459, 5.62261
+PFIsolation new vals: 0.0303106, 0
+TrkIsolation new vals: 0.227166, 0
+Pt vals: 18.3929, 16.3425
+PFIsolation new vals: 0, 0
+TrkIsolation new vals: 0, 0
+Pt vals: 33.0839, 28.0708
+PFIsolation new vals: 0, 0
+TrkIsolation new vals: 0.387684, 0.387684
+Pt vals: 34.1207, 24.3928
+PFIsolation new vals: 0.122448, 0.182125
+TrkIsolation new vals: 2.66029, 3.36217
+Pt vals: 45.8658, 5.04184
+PFIsolation new vals: 0.0545632, 0.329631
+TrkIsolation new vals: 0.777534, 0.777534
+Pt vals: 30.2693, 17.9099
+PFIsolation new vals: 0.0374123, 0.0632301
+TrkIsolation new vals: 0.422798, 0.422798
+Pt vals: 54.9221, 11.6965
+PFIsolation new vals: 0, 0
+TrkIsolation new vals: 0, 0
+Pt vals: 38.2192, 30.8279
+PFIsolation new vals: 0.035109, 0.0435268
+TrkIsolation new vals: 0, 1.34184
+Pt vals: 49.8778, 14.5545
+PFIsolation new vals: 0.0422951, 0.0919375
+TrkIsolation new vals: 0, 0
+Pt vals: 38.4534, 34.8377
+PFIsolation new vals: 0.113072, 0.124808
+TrkIsolation new vals: 0.891785, 1.54099
+Pt vals: 26.7326, 14.5037
+PFIsolation new vals: 0.368017, 0.512825
+TrkIsolation new vals: 5.38906, 4.79674
+
+Finished. Took 8 seconds
