@@ -332,31 +332,26 @@ int main(int argc, char* argv[])
             const bool passL2MuonTrigger {event.mumuL2Trig()}, passDimuonNoVtxTrigger {event.mumuNoVtxTrig()};
             const bool passDiMuonNoMassCutTrigger {event.mumuTrig_noMassCut()}, passDiMuonMassCutTrigger {event.mumuTrig_massCut()};
 
-            if ( event.numMuonPF2PAT > 1 ) {
+            if ( event.numMuonPF2PAT >= 0 ) {
                 // fill muon pT plots pre-triggers
                 //// ID requirements PF muon? no pT cut
                 //// reco pT 
-                /*int mu1 {-1}, mu2{-1};
-                for ( Int_t k{0}; k < event.numMuonPF2PAT; k++ ) {
-                    if ( event.genMuonPF2PATScalarAncestor[k] && mu1 < 0 ) mu1 = k;
-                    else if ( event.genMuonPF2PATScalarAncestor[k] && mu2 < 0 ) mu2 = k;
-                    else if (mu1 >= 0 && mu2 > 0) break;
-                }*/
+                
 
                 int numGenMuons=0;
                 std::vector<int> gen_mu_ind;
                 for (int k=0;k<event.nGenPar;k++) {
                     if (event.genParStatus[k]!=1) continue; //final state
                     if (abs(event.genParId[k])!=13) continue; //Muon PDG ID
-                    if ((abs(event.genParMotherId[k])==13) || (abs(event.genParMotherId[k])==9000006)) {
+                    if ((abs(event.genParMotherId[k])==9000006)) {
                         numGenMuons++;
                         //std::cout<<"Particle #"<<k<<", "<<event.genParCharge[k]<<", "<<event.genParMotherId[k]<<", "<<event.genParDaughterId1[k]<<", "<<event.genParDaughterId2[k]<<", "<<event.genParPt[k]<<std::endl;
                         gen_mu_ind.push_back(k);
                     }
                 }
                 //std::cout<<"number of GenMuons:"<<numGenMuons<<" and "<<gen_mu_ind.size()<<std::endl;
-                if (numGenMuons!=2) std::cout<<"YO SOMETHING IS UP HERE : "<<i<<std::endl;
-                if (numGenMuons!=2) continue; //strict condition to only select events with 2 genMuons
+                //if (numGenMuons!=2) std::cout<<"ERROR: number of GenMuons:"<<numGenMuons<<" and "<<gen_mu_ind.size()<<std::endl;                 
+								if (numGenMuons!=2) continue; //strict condition to only select events with 2 genMuons
                 
                 int tmp1;
                 if (event.genParPt[gen_mu_ind[1]]>event.genParPt[gen_mu_ind[0]]) {
@@ -371,11 +366,11 @@ int main(int argc, char* argv[])
                 gen_mu2.SetPtEtaPhiM(event.genParPt[gen_mu_ind[1]], event.genParEta[gen_mu_ind[1]], event.genParPhi[gen_mu_ind[1]], mu_mass);       
                 
                 //if (numGenMuons>2) cout<<"YO SOMETHING IS UP"<<std::endl;
-                
-                double match_dR = 0.03; //0.03 taken from MuonAnalyzer code used by MuonPOG
+                /*
+                double match_dR = 0.05; //0.03 taken from MuonAnalyzer code used by MuonPOG
                 int mu1 = MatchReco(gen_mu_ind[0], event, match_dR);
                 int mu2 = MatchReco(gen_mu_ind[1], event, match_dR);
-                
+                bool flag = true; 
                 if ((mu1==mu2) && (mu1!=-99)) {
                     std::cout<<"SOMETHING IS UP HERE TOO"<<std::endl;
                     std::cout<<"Indices-"<<gen_mu_ind[0]<<", "<<gen_mu_ind[1]<<std::endl;
@@ -385,38 +380,38 @@ int main(int argc, char* argv[])
          
                 if ((mu1<0)||(mu2<0)) {
                     //std::cout<<"reaches this"<<std::endl;
-                    continue;
+                    //continue;
+                    flag=false;
                 }
-                
-                const TLorentzVector muon1_truth {event.muonPF2PATPX[mu1], event.muonPF2PATPY[mu1], event.muonPF2PATPZ[mu1], event.muonPF2PATE[mu1]};
-                const TLorentzVector muon2_truth {event.muonPF2PATPX[mu2], event.muonPF2PATPY[mu2], event.muonPF2PATPZ[mu2], event.muonPF2PATE[mu2]}; 
-                const TLorentzVector muon1 {event.muonPF2PATPX[0], event.muonPF2PATPY[0], event.muonPF2PATPZ[0], event.muonPF2PATE[0]};
-                const TLorentzVector muon2 {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]}; 
-	
-                const float delR_truth = deltaR(event.muonPF2PATEta[mu1], event.muonPF2PATPhi[mu1], event.muonPF2PATEta[mu2], event.muonPF2PATPhi[mu2]);
-                const float delR       = deltaR(event.muonPF2PATEta[0], event.muonPF2PATPhi[0], event.muonPF2PATEta[1], event.muonPF2PATPhi[1]);
-                const float mass_truth = (muon1_truth + muon2_truth).M();
-                const float mass       = (muon1 + muon2).M();
+                flag=true; 
+								if (flag) continue;*/
+                //const TLorentzVector muon1_truth {event.muonPF2PATPX[mu1], event.muonPF2PATPY[mu1], event.muonPF2PATPZ[mu1], event.muonPF2PATE[mu1]};
+                //const TLorentzVector muon2_truth {event.muonPF2PATPX[mu2], event.muonPF2PATPY[mu2], event.muonPF2PATPZ[mu2], event.muonPF2PATE[mu2]}; 
+                //const TLorentzVector muon1 {event.muonPF2PATPX[0], event.muonPF2PATPY[0], event.muonPF2PATPZ[0], event.muonPF2PATE[0]};
+                //const TLorentzVector muon2 {event.muonPF2PATPX[1], event.muonPF2PATPY[1], event.muonPF2PATPZ[1], event.muonPF2PATE[1]}; 
+								if (abs(gen_mu1.Eta()>2.4) || abs(gen_mu2.Eta()>2.4)) continue;	
+                const float delR_truth = deltaR(gen_mu1.Eta(), gen_mu1.Phi(), gen_mu2.Eta(), gen_mu2.Phi());
+                const float delR       = deltaR(gen_mu1.Eta(), gen_mu1.Phi(), gen_mu2.Eta(), gen_mu2.Phi());
+                const float mass_truth = (gen_mu1 + gen_mu2).M();
+                const float mass       = (gen_mu1 + gen_mu2).M();
 
                 // Fill general pT/dR (with and without scalar parentage)
-                h_leadingMuonPt_truth->Fill(event.muonPF2PATPt[mu1]);
-                h_subLeadingMuonPt_truth->Fill(event.muonPF2PATPt[mu2]);
-                if ((muon2_truth.Pt()>25)) h_leadingMuonPt_truth_subPtcut->Fill(event.muonPF2PATPt[mu1]);
-                if ((muon1_truth.Pt()>25)) h_subLeadingMuonPt_truth_Ptcut->Fill(event.muonPF2PATPt[mu2]);
-                h_leadingMuonPt->Fill(event.muonPF2PATPt[0]);
-                h_subLeadingMuonPt->Fill(event.muonPF2PATPt[1]);
-                h_leadingMuonPt_subLeadingMuonPt_truth->Fill(event.muonPF2PATPt[mu1],event.muonPF2PATPt[mu2]);
-                h_leadingMuonPt_subLeadingMuonPt->Fill(event.muonPF2PATPt[0],event.muonPF2PATPt[1]);
-                if ((muon1_truth.Pt()>30) && (muon2_truth.Pt()>30)) { //above pT threshold of L2Mu trigger
-                  h_leadingMuonEta_truth->Fill(event.muonPF2PATEta[mu1]);
-                  h_subLeadingMuonEta_truth->Fill(event.muonPF2PATEta[mu2]);
-                  h_leadingMuonEta->Fill(event.muonPF2PATEta[0]);
-                  h_subLeadingMuonEta->Fill(event.muonPF2PATEta[1]);
+                h_leadingMuonPt_truth->Fill(gen_mu1.Pt());
+                h_subLeadingMuonPt_truth->Fill(gen_mu2.Pt());
+                if ((gen_mu1.Pt()>=0)) h_leadingMuonPt_truth_subPtcut->Fill(gen_mu1.Pt());
+                if ((gen_mu2.Pt()>=0)) h_subLeadingMuonPt_truth_Ptcut->Fill(gen_mu1.Pt());
+                h_leadingMuonPt->Fill(gen_mu1.Pt());
+                h_subLeadingMuonPt->Fill(gen_mu2.Pt());
+                h_leadingMuonPt_subLeadingMuonPt_truth->Fill(gen_mu1.Pt(),gen_mu1.Pt());
+                h_leadingMuonPt_subLeadingMuonPt->Fill(gen_mu1.Pt(),gen_mu2.Pt());
+                  h_leadingMuonEta_truth->Fill(gen_mu1.Eta());
+                  h_subLeadingMuonEta_truth->Fill(gen_mu2.Eta());
+                  h_leadingMuonEta->Fill(gen_mu1.Eta());
+                  h_subLeadingMuonEta->Fill(gen_mu2.Eta());
                   h_delR_truth->Fill(delR_truth);
                   h_delR->Fill(delR);
                   h_diMuonMass_truth->Fill(mass_truth);
                   h_diMuonMass->Fill(mass);
-                }
                 // Fill pT post trigger (with and without scalar parentage)
                 if (passSingleMuonTrigger) {
 
@@ -428,118 +423,121 @@ int main(int argc, char* argv[])
                     foundEvents++;
                     foundEventsNorm += eventWeight;
 
-                    h_leadingMuonPt_truth_muTrig->Fill(event.muonPF2PATPt[mu1]);
-                    h_subLeadingMuonPt_truth_muTrig->Fill(event.muonPF2PATPt[mu2]);
-                    h_leadingMuonPt_muTrig->Fill(event.muonPF2PATPt[0]);
-                    h_subLeadingMuonPt_muTrig->Fill(event.muonPF2PATPt[1]);
-                    h_leadingMuonEta_truth_muTrig->Fill(event.muonPF2PATEta[mu1]);
-                    h_subLeadingMuonEta_truth_muTrig->Fill(event.muonPF2PATEta[mu2]);
-                    h_leadingMuonEta_muTrig->Fill(event.muonPF2PATEta[0]);
-                    h_subLeadingMuonEta_muTrig->Fill(event.muonPF2PATEta[1]);
+                    h_leadingMuonPt_truth_muTrig->Fill(gen_mu1.Pt());
+                    h_subLeadingMuonPt_truth_muTrig->Fill(gen_mu2.Pt());
+                    h_leadingMuonPt_muTrig->Fill(gen_mu1.Pt());
+                    h_subLeadingMuonPt_muTrig->Fill(gen_mu2.Pt());
+                    h_leadingMuonEta_truth_muTrig->Fill(gen_mu1.Eta());
+                    h_subLeadingMuonEta_truth_muTrig->Fill(gen_mu2.Eta());
+                    h_leadingMuonEta_muTrig->Fill(gen_mu1.Eta());
+                    h_subLeadingMuonEta_muTrig->Fill(gen_mu2.Eta());
                     h_delR_truth_muTrig->Fill(delR_truth);
                     h_delR_muTrig->Fill(delR);
                     h_diMuonMass_truth_muTrig->Fill(mass_truth);
                     h_diMuonMass_muTrig->Fill(mass);
                 }
                 if (passDimuonNoVtxTrigger) {
-		    if ((muon2_truth.Pt()>25)) h_leadingMuonPt_truth_mumuTrig->Fill(event.muonPF2PATPt[mu1]);
-                    if ((muon1_truth.Pt()>25)) h_subLeadingMuonPt_truth_mumuTrig->Fill(event.muonPF2PATPt[mu2]);
-                    h_leadingMuonPt_mumuTrig->Fill(event.muonPF2PATPt[0]);
-                    h_subLeadingMuonPt_mumuTrig->Fill(event.muonPF2PATPt[1]);
-                    if ((muon1_truth.Pt()>30) && (muon2_truth.Pt()>30)) { //above pT threshold of L2Mu trigger
-                      h_leadingMuonEta_truth_mumuTrig->Fill(event.muonPF2PATEta[mu1]);
-                      h_subLeadingMuonEta_truth_mumuTrig->Fill(event.muonPF2PATEta[mu2]);
-                      h_leadingMuonEta_mumuTrig->Fill(event.muonPF2PATEta[0]);
-                      h_subLeadingMuonEta_mumuTrig->Fill(event.muonPF2PATEta[1]);
-                      h_delR_truth_mumuTrig->Fill(delR_truth);
-                      h_delR_mumuTrig->Fill(delR);
-                      h_diMuonMass_truth_mumuTrig->Fill(mass_truth);
-                      h_diMuonMass_mumuTrig->Fill(mass);
-                    }
+										h_leadingMuonPt_truth_mumuTrig->Fill(gen_mu1.Pt());
+                    h_subLeadingMuonPt_truth_mumuTrig->Fill(gen_mu2.Pt());
+                    h_leadingMuonPt_mumuTrig->Fill(gen_mu1.Pt());
+                    h_subLeadingMuonPt_mumuTrig->Fill(gen_mu2.Pt());
+                    h_leadingMuonEta_truth_mumuTrig->Fill(gen_mu1.Eta());
+                    h_subLeadingMuonEta_truth_mumuTrig->Fill(gen_mu2.Eta());
+                    h_leadingMuonEta_mumuTrig->Fill(gen_mu1.Eta());
+                    h_subLeadingMuonEta_mumuTrig->Fill(gen_mu2.Eta());
+                    h_delR_truth_mumuTrig->Fill(delR_truth);
+                    h_delR_mumuTrig->Fill(delR);
+                    h_diMuonMass_truth_mumuTrig->Fill(mass_truth);
+                    h_diMuonMass_mumuTrig->Fill(mass);
+
                 }
                 if (passDiMuonNoMassCutTrigger) {
-                    h_leadingMuonPt_truth_mumuTrigNoMassCut->Fill(event.muonPF2PATPt[mu1]);
-                    h_subLeadingMuonPt_truth_mumuTrigNoMassCut->Fill(event.muonPF2PATPt[mu2]);
-                    h_leadingMuonPt_mumuTrigNoMassCut->Fill(event.muonPF2PATPt[0]);
-                    h_subLeadingMuonPt_mumuTrigNoMassCut->Fill(event.muonPF2PATPt[1]);
-                    h_leadingMuonEta_truth_mumuTrigNoMassCut->Fill(event.muonPF2PATEta[mu1]);
-                    h_subLeadingMuonEta_truth_mumuTrigNoMassCut->Fill(event.muonPF2PATEta[mu2]);
-                    h_leadingMuonEta_mumuTrigNoMassCut->Fill(event.muonPF2PATEta[0]);
-                    h_subLeadingMuonEta_mumuTrigNoMassCut->Fill(event.muonPF2PATEta[1]);
+										h_leadingMuonPt_truth_mumuTrigNoMassCut->Fill(gen_mu1.Pt());
+                    h_subLeadingMuonPt_truth_mumuTrigNoMassCut->Fill(gen_mu2.Pt());
+                    h_leadingMuonPt_mumuTrigNoMassCut->Fill(gen_mu1.Pt());
+                    h_subLeadingMuonPt_mumuTrigNoMassCut->Fill(gen_mu2.Pt());
+                    h_leadingMuonEta_truth_mumuTrigNoMassCut->Fill(gen_mu1.Eta());
+                    h_subLeadingMuonEta_truth_mumuTrigNoMassCut->Fill(gen_mu2.Eta());
+                    h_leadingMuonEta_mumuTrigNoMassCut->Fill(gen_mu1.Eta());
+                    h_subLeadingMuonEta_mumuTrigNoMassCut->Fill(gen_mu2.Eta());
                     h_delR_truth_mumuTrigNoMassCut->Fill(delR_truth);
                     h_delR_mumuTrigNoMassCut->Fill(delR);
                     h_diMuonMass_truth_mumuTrigNoMassCut->Fill(mass_truth);
                     h_diMuonMass_mumuTrigNoMassCut->Fill(mass);
-                }
+
+
+                } 
                 if (passDiMuonMassCutTrigger) {
-                    h_leadingMuonPt_truth_mumuTrigMassCut->Fill(event.muonPF2PATPt[mu1]);
-                    h_subLeadingMuonPt_truth_mumuTrigMassCut->Fill(event.muonPF2PATPt[mu2]);
-                    h_leadingMuonPt_mumuTrigMassCut->Fill(event.muonPF2PATPt[0]);
-                    h_subLeadingMuonPt_mumuTrigMassCut->Fill(event.muonPF2PATPt[1]);
-                    h_leadingMuonEta_truth_mumuTrigMassCut->Fill(event.muonPF2PATEta[mu1]);
-                    h_subLeadingMuonEta_truth_mumuTrigMassCut->Fill(event.muonPF2PATEta[mu2]);
-                    h_leadingMuonEta_mumuTrigMassCut->Fill(event.muonPF2PATEta[0]);
-                    h_subLeadingMuonEta_mumuTrigMassCut->Fill(event.muonPF2PATEta[1]);
+										h_leadingMuonPt_truth_mumuTrigMassCut->Fill(gen_mu1.Pt());
+                    h_subLeadingMuonPt_truth_mumuTrigMassCut->Fill(gen_mu2.Pt());
+                    h_leadingMuonPt_mumuTrigMassCut->Fill(gen_mu1.Pt());
+                    h_subLeadingMuonPt_mumuTrigMassCut->Fill(gen_mu2.Pt());
+                    h_leadingMuonEta_truth_mumuTrigMassCut->Fill(gen_mu1.Eta());
+                    h_subLeadingMuonEta_truth_mumuTrigMassCut->Fill(gen_mu2.Eta());
+                    h_leadingMuonEta_mumuTrigMassCut->Fill(gen_mu1.Eta());
+                    h_subLeadingMuonEta_mumuTrigMassCut->Fill(gen_mu2.Eta());
                     h_delR_truth_mumuTrigMassCut->Fill(delR_truth);
                     h_delR_mumuTrigMassCut->Fill(delR);
                     h_diMuonMass_truth_mumuTrigMassCut->Fill(mass_truth);
                     h_diMuonMass_mumuTrigMassCut->Fill(mass);
+
+
                 }
                 if (passL2MuonTrigger) {
-                    if ((muon2_truth.Pt()>25)) h_leadingMuonPt_truth_L2muTrig->Fill(event.muonPF2PATPt[mu1]);
-                    if ((muon1_truth.Pt()>25)) h_subLeadingMuonPt_truth_L2muTrig->Fill(event.muonPF2PATPt[mu2]);
-                    h_leadingMuonPt_L2muTrig->Fill(event.muonPF2PATPt[0]);
-                    h_subLeadingMuonPt_L2muTrig->Fill(event.muonPF2PATPt[1]);
-                    h_leadingMuonPt_subLeadingMuonPt_truth_L2muTrig->Fill(event.muonPF2PATPt[mu1],event.muonPF2PATPt[mu2]);
-                    h_leadingMuonPt_subLeadingMuonPt_L2muTrig->Fill(event.muonPF2PATPt[0],event.muonPF2PATPt[1]);
-                    if ((muon1_truth.Pt()>30) && (muon2_truth.Pt()>30)) {
-                      h_leadingMuonEta_truth_L2muTrig->Fill(event.muonPF2PATEta[mu1]);
-                      h_subLeadingMuonEta_truth_L2muTrig->Fill(event.muonPF2PATEta[mu2]);
-                      h_leadingMuonEta_L2muTrig->Fill(event.muonPF2PATEta[0]);
-                      h_subLeadingMuonEta_L2muTrig->Fill(event.muonPF2PATEta[1]);
-                      h_delR_truth_L2muTrig->Fill(delR_truth);
-                      h_delR_L2muTrig->Fill(delR);
-                      h_diMuonMass_truth_L2muTrig->Fill(mass_truth);
-                      h_diMuonMass_L2muTrig->Fill(mass);
-                    }
-                }
+  									h_leadingMuonPt_truth_L2muTrig->Fill(gen_mu1.Pt());
+                    h_subLeadingMuonPt_truth_L2muTrig->Fill(gen_mu2.Pt());
+                    h_leadingMuonPt_L2muTrig->Fill(gen_mu1.Pt());
+                    h_subLeadingMuonPt_L2muTrig->Fill(gen_mu2.Pt());
+                    h_leadingMuonEta_truth_L2muTrig->Fill(gen_mu1.Eta());
+                    h_subLeadingMuonEta_truth_L2muTrig->Fill(gen_mu2.Eta());
+                    h_leadingMuonEta_L2muTrig->Fill(gen_mu1.Eta());
+                    h_subLeadingMuonEta_L2muTrig->Fill(gen_mu2.Eta());
+                    h_delR_truth_L2muTrig->Fill(delR_truth);
+                    h_delR_L2muTrig->Fill(delR);
+                    h_diMuonMass_truth_L2muTrig->Fill(mass_truth);
+                    h_diMuonMass_L2muTrig->Fill(mass);
+
+              }
                 if (passSingleMuonTrigger || passL2MuonTrigger || passDimuonNoVtxTrigger) {
-                    h_leadingMuonPt_truth_muOrL2muTrig->Fill(event.muonPF2PATPt[mu1]);
-                    h_subLeadingMuonPt_truth_muOrL2muTrig->Fill(event.muonPF2PATPt[mu2]);
-                    h_leadingMuonPt_muOrL2muTrig->Fill(event.muonPF2PATPt[0]);
-                    h_subLeadingMuonPt_muOrL2muTrig->Fill(event.muonPF2PATPt[1]);
-                    h_leadingMuonEta_truth_muOrL2muTrig->Fill(event.muonPF2PATEta[mu1]);
-                    h_subLeadingMuonEta_truth_muOrL2muTrig->Fill(event.muonPF2PATEta[mu2]);
-                    h_leadingMuonEta_muOrL2muTrig->Fill(event.muonPF2PATEta[0]);
-                    h_subLeadingMuonEta_muOrL2muTrig->Fill(event.muonPF2PATEta[1]);
+                		h_leadingMuonPt_truth_muOrL2muTrig->Fill(gen_mu1.Pt());
+                    h_subLeadingMuonPt_truth_muOrL2muTrig->Fill(gen_mu2.Pt());
+                    h_leadingMuonPt_muOrL2muTrig->Fill(gen_mu1.Pt());
+                    h_subLeadingMuonPt_muOrL2muTrig->Fill(gen_mu2.Pt());
+                    h_leadingMuonEta_truth_muOrL2muTrig->Fill(gen_mu1.Eta());
+                    h_subLeadingMuonEta_truth_muOrL2muTrig->Fill(gen_mu2.Eta());
+                    h_leadingMuonEta_muOrL2muTrig->Fill(gen_mu1.Eta());
+                    h_subLeadingMuonEta_muOrL2muTrig->Fill(gen_mu2.Eta());
                     h_delR_truth_muOrL2muTrig->Fill(delR_truth);
                     h_delR_muOrL2muTrig->Fill(delR);
                     h_diMuonMass_truth_muOrL2muTrig->Fill(mass_truth);
                     h_diMuonMass_muOrL2muTrig->Fill(mass);
-                }
+
+
+								}
                 if (passSingleMuonTrigger || passDimuonTrigger || passL2MuonTrigger || passDimuonNoVtxTrigger) {
-                    h_leadingMuonPt_truth_ORTrig->Fill(event.muonPF2PATPt[mu1]);
-                    h_subLeadingMuonPt_truth_ORTrig->Fill(event.muonPF2PATPt[mu2]);
-                    h_leadingMuonPt_ORTrig->Fill(event.muonPF2PATPt[0]);
-                    h_subLeadingMuonPt_ORTrig->Fill(event.muonPF2PATPt[1]);
-                    h_leadingMuonEta_truth_ORTrig->Fill(event.muonPF2PATEta[mu1]);
-                    h_subLeadingMuonEta_truth_ORTrig->Fill(event.muonPF2PATEta[mu2]);
-                    h_leadingMuonEta_ORTrig->Fill(event.muonPF2PATEta[0]);
-                    h_subLeadingMuonEta_ORTrig->Fill(event.muonPF2PATEta[1]);
+                		h_leadingMuonPt_truth_ORTrig->Fill(gen_mu1.Pt());
+                    h_subLeadingMuonPt_truth_ORTrig->Fill(gen_mu2.Pt());
+                    h_leadingMuonPt_ORTrig->Fill(gen_mu1.Pt());
+                    h_subLeadingMuonPt_ORTrig->Fill(gen_mu2.Pt());
+                    h_leadingMuonEta_truth_ORTrig->Fill(gen_mu1.Eta());
+                    h_subLeadingMuonEta_truth_ORTrig->Fill(gen_mu2.Eta());
+                    h_leadingMuonEta_ORTrig->Fill(gen_mu1.Eta());
+                    h_subLeadingMuonEta_ORTrig->Fill(gen_mu2.Eta());
                     h_delR_truth_ORTrig->Fill(delR_truth);
                     h_delR_ORTrig->Fill(delR);
                     h_diMuonMass_truth_ORTrig->Fill(mass_truth);
                     h_diMuonMass_ORTrig->Fill(mass);
-                }
-            }
 
+
+								}
+						}
 //            if (! ( passDimuonTrigger || passSingleMuonTrigger ) ) continue;
 
 //            std::vector<int> looseMuonIndex = getLooseMuons(event);
 //            std::vector<int> promptLooseMuonIndex     = getPromptMuons(event, looseMuonIndex, true);
 //            std::vector<int> nonpromptLooseMuonIndex  = getPromptMuons(event, looseMuonIndex, false);
 
-
+        
         } // end event loop
         std::cerr << "\nFound " << foundEvents << " that pass single muon trigger in " << dataset->name() << std::endl;
         std::cerr << "Found " << foundEventsNorm << " after normalisation that pass single muon trigger in " << dataset->name() << std::endl;
@@ -549,7 +547,13 @@ int main(int argc, char* argv[])
     TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
     outFile->cd();
 
-    h_leadingMuonPt_truth_muTrig->Divide(h_leadingMuonPt_truth);
+		double eff_ORTrig, eff_SingleMu, eff_L2Mu;
+		eff_ORTrig = h_leadingMuonPt_truth_ORTrig->GetEntries()/h_leadingMuonPt_truth->GetEntries();
+		eff_SingleMu = h_leadingMuonPt_truth_muTrig->GetEntries()/h_leadingMuonPt_truth->GetEntries();
+		eff_L2Mu = h_leadingMuonPt_truth_L2muTrig->GetEntries()/h_leadingMuonPt_truth->GetEntries();
+		std::cout<<""<<eff_ORTrig<<", "<<eff_SingleMu<<", "<<eff_L2Mu<<std::endl;
+
+		h_leadingMuonPt_truth_muTrig->Divide(h_leadingMuonPt_truth);
     h_subLeadingMuonPt_truth_muTrig->Divide(h_subLeadingMuonPt_truth);
     h_leadingMuonPt_muTrig->Divide(h_leadingMuonPt);
     h_subLeadingMuonPt_muTrig->Divide(h_subLeadingMuonPt);
@@ -642,7 +646,8 @@ int main(int argc, char* argv[])
     h_delR_ORTrig->Divide(h_delR);
     h_diMuonMass_truth_ORTrig->Divide(h_diMuonMass_truth);
     h_diMuonMass_ORTrig->Divide(h_diMuonMass);
-
+		
+		
     h_leadingMuonPt_truth_muTrig->Write();
     h_subLeadingMuonPt_truth_muTrig->Write();
     h_leadingMuonPt_muTrig->Write();

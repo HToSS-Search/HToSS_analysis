@@ -70,9 +70,9 @@ void KinematicsPlotMacro() {
 
 }
 void SetStyle(Bool_t graypalette) {
-    //cout << "Setting style!" << endl;
-    gStyle->Reset("Plain");
-    gStyle->SetOptTitle(0);
+    cout << "Setting style!" << endl;
+    //gStyle->Reset("Plain");
+    //gStyle->SetOptTitle(0);
     gStyle->SetOptStat(0);
     if(graypalette) gStyle->SetPalette(8,0);
     else gStyle->SetPalette(1);
@@ -91,30 +91,32 @@ void SetStyle(Bool_t graypalette) {
     gStyle->SetPadGridY(true);
     gStyle->SetLabelFont(42,"xy");
     gStyle->SetTitleFont(42,"xy");
-    gStyle->SetLabelSize(10,"x");
-    gStyle->SetTitleSize(10,"x");
-    gStyle->SetTitleOffset(1.3,"xy");
-    gStyle->SetLabelSize(0.035,"y");
-    gStyle->SetTitleSize(0.035,"y");
+    gStyle->SetLabelSize(0.06,"x");
+    gStyle->SetTitleSize(0.06,"x");
+    gStyle->SetTitleSize(0.05,"pad");
+    gStyle->SetTitleOffset(1.,"y");
+    gStyle->SetTitleOffset(1.2,"x");
+    gStyle->SetLabelSize(0.06,"y");
+    gStyle->SetTitleSize(0.06,"y");
     gStyle->SetNdivisions(510,"xy");
-    gStyle->SetMarkerSize(1);
+    gStyle->SetMarkerSize(1.2);
     gStyle->SetLegendBorderSize(0);
-    gStyle->SetLegendTextSize(0.03);
+    gStyle->SetLegendTextSize(0.04);
     gStyle->SetLegendFillColor(0);
     gStyle->SetLegendFont(42);
     /*
-     gStyle->SetHistLineWidth(1);
+    gStyle->SetHistLineWidth(1);
     gStyle->SetHistLineColor(kRed);
     gStyle->SetFuncWidth(2);
     gStyle->SetFuncColor(kBlack);
     gStyle->SetLineWidth(2);
     gStyle->SetLabelSize(0.045,"xyz");
-    gStyle->SetLabelOffset(0.015,"y");
-    gStyle->SetLabelOffset(0.01,"x");
+    gStyle->SetLabelOffdset(0.015,"y");
+    gStyle->SetLabelOffdset(0.01,"x");
     gStyle->SetLabelColor(kBlack,"xyz");
     gStyle->SetTitleSize(0.05,"xyz");
-    gStyle->SetTitleOffset(1.81,"y");
-    gStyle->SetTitleOffset(1.25,"x");
+    gStyle->SetTitleOffdset(1.81,"y");
+    gStyle->SetTitleOffdset(1.25,"x");
     gStyle->SetTitleFillColor(kWhite);
     gStyle->SetTextSizePixels(26);
     gStyle->SetTextFont(42);

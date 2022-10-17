@@ -858,8 +858,10 @@ class AnalysisEvent
     Int_t HLT_DoubleMu40NoFiltersNoVtxDisplaced_v1;
     Int_t HLT_DoubleMu43NoFiltersNoVtx_v4; 
     Int_t HLT_DoubleMu48NoFiltersNoVtx_v4;
-
-    // 2018 b parking triggers
+		Int_t HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v1;
+		Int_t HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v2;
+    
+		// 2018 b parking triggers
     Int_t HLT_Mu12_IP6_part0_v2;
     Int_t HLT_Mu12_IP6_part1_v2;
     Int_t HLT_Mu12_IP6_part2_v2;
@@ -1761,7 +1763,9 @@ class AnalysisEvent
     TBranch* b_HLT_DoubleMu40NoFiltersNoVtxDisplaced_v1;
     TBranch* b_HLT_DoubleMu43NoFiltersNoVtx_v4; 
     TBranch* b_HLT_DoubleMu48NoFiltersNoVtx_v4;
-
+		TBranch* b_HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v1;
+		TBranch* b_HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v2;
+  
     TBranch* b_HLT_Mu12_IP6_part0_v2;
     TBranch* b_HLT_Mu12_IP6_part1_v2;
     TBranch* b_HLT_Mu12_IP6_part2_v2;
@@ -2773,6 +2777,9 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
        fChain->SetBranchAddress("HLT_DoubleL2Mu50_v2", &HLT_DoubleL2Mu50_v2, &b_HLT_DoubleL2Mu50_v2);
        fChain->SetBranchAddress("HLT_DoubleL2Mu23NoVtx_2Cha_v1", &HLT_DoubleL2Mu23NoVtx_2Cha_v1, &b_HLT_DoubleL2Mu23NoVtx_2Cha_v1);
        fChain->SetBranchAddress("HLT_DoubleL2Mu23NoVtx_2Cha_v2", &HLT_DoubleL2Mu23NoVtx_2Cha_v2, &b_HLT_DoubleL2Mu23NoVtx_2Cha_v2);
+			 fChain->SetBranchAddress("HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v1", &HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v1, &b_HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v1);
+       fChain->SetBranchAddress("HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v2", &HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v2, &b_HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v2);
+       
        fChain->SetBranchAddress("HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v1", &HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v1, &b_HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v1);
        fChain->SetBranchAddress("HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v2", &HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v2, &b_HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v2);
        fChain->SetBranchAddress("HLT_DoubleL2Mu25NoVtx_2Cha_v1", &HLT_DoubleL2Mu25NoVtx_2Cha_v1, &b_HLT_DoubleL2Mu25NoVtx_2Cha_v1);
@@ -3112,7 +3119,7 @@ inline bool AnalysisEvent::mumuL2Trig() const {
     }
     else if (is2018_) { // 2018
         if ( HLT_DoubleL2Mu50_v2 > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v1 > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v2 > 0 || HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v1 > 0 || HLT_DoubleL2Mu25NoVtx_2Cha_Eta2p4_v2 > 0
-          || HLT_DoubleL2Mu25NoVtx_2Cha_v1 > 0 || HLT_DoubleL2Mu25NoVtx_2Cha_v2 > 0 || HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v1 > 0 || HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v2 > 0 ) return true;
+          || HLT_DoubleL2Mu25NoVtx_2Cha_v1 > 0 || HLT_DoubleL2Mu25NoVtx_2Cha_v2 > 0 || HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v1 > 0 || HLT_DoubleL2Mu30NoVtx_2Cha_Eta2p4_v2 > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v1 > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v2 > 0 ) return true;
         else return false;
     }
     else { // 2017

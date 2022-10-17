@@ -14,11 +14,11 @@
 
 void triggerEfficiencyPlotMacro() {
     //_just_a_test
-    TFile* inFile0  =  new TFile ("/user/sdansana/HToSS-Search/HToSS_analysis/plots/triggerDistributions/postLepSkim_legacy/test_22_03_14/output_HtoSS_MS2_ctau0.root");
-    TFile* inFile1  =  new TFile ("/user/sdansana/HToSS-Search/HToSS_analysis/plots/triggerDistributions/postLepSkim_legacy/test_22_03_14/output_HtoSS_MS2_ctau1.root");
-    TFile* inFile2  =  new TFile ("/user/sdansana/HToSS-Search/HToSS_analysis/plots/triggerDistributions/postLepSkim_legacy/test_22_03_14/output_HtoSS_MS2_ctau10.root");
-    TFile* inFile3  =  new TFile ("/user/sdansana/HToSS-Search/HToSS_analysis/plots/triggerDistributions/postLepSkim_legacy/test_22_03_14/output_HtoSS_MS2_ctau100.root");
-    TFile* inFile4  =  new TFile ("/user/sdansana/HToSS-Search/HToSS_analysis/plots/triggerDistributions/postLepSkim_legacy/test_22_03_14/output_HtoSS_MS2_ctau1000.root");
+    TFile* inFile0  =  new TFile ("/user/sdansana/HToSS-Search/HToSS_analysis/plots/triggerDistributions/postLepSkim_legacy/output_HtoSS_MS2_ctau0.root");
+    TFile* inFile1  =  new TFile ("/user/sdansana/HToSS-Search/HToSS_analysis/plots/triggerDistributions/postLepSkim_legacy/output_HtoSS_MS2_ctau1.root");
+    TFile* inFile2  =  new TFile ("/user/sdansana/HToSS-Search/HToSS_analysis/plots/triggerDistributions/postLepSkim_legacy/output_HtoSS_MS2_ctau10.root");
+    TFile* inFile3  =  new TFile ("/user/sdansana/HToSS-Search/HToSS_analysis/plots/triggerDistributions/postLepSkim_legacy/output_HtoSS_MS2_ctau100.root");
+//    TFile* inFile4  =  new TFile ("/user/sdansana/HToSS-Search/HToSS_analysis/plots/triggerDistributions/postLepSkim_legacy/output_HtoSS_MS2_ctau1000.root");
 
     // pT
 
@@ -26,7 +26,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_leadingMuonPt_truth_muTrigPt_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonPt_truth_muTrig");
     TH1F* h_leadingMuonPt_truth_muTrigPt_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonPt_truth_muTrig");
     TH1F* h_leadingMuonPt_truth_muTrigPt_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonPt_truth_muTrig");
-    TH1F* h_leadingMuonPt_truth_muTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_truth_muTrig");
+//    TH1F* h_leadingMuonPt_truth_muTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_truth_muTrig");
 
     TCanvas *Canvas_truth_muTrigPt = new TCanvas("Canvas_truth_muTrigPt", "Canvas_truth_muTrigPt",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -83,11 +83,11 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonPt_truth_muTrigPt_ctau100->SetMarkerSize(1);
     h_leadingMuonPt_truth_muTrigPt_ctau100->Draw("HIST p same");
 
-    h_leadingMuonPt_truth_muTrigPt_ctau1000->SetLineColor(4);
-    h_leadingMuonPt_truth_muTrigPt_ctau1000->SetMarkerColor(4);
-    h_leadingMuonPt_truth_muTrigPt_ctau1000->SetMarkerStyle(3);
-    h_leadingMuonPt_truth_muTrigPt_ctau1000->SetMarkerSize(1);
-    h_leadingMuonPt_truth_muTrigPt_ctau1000->Draw("HIST p same");
+//    h_leadingMuonPt_truth_muTrigPt_ctau1000->SetLineColor(4);
+//    h_leadingMuonPt_truth_muTrigPt_ctau1000->SetMarkerColor(4);
+//    h_leadingMuonPt_truth_muTrigPt_ctau1000->SetMarkerStyle(3);
+//    h_leadingMuonPt_truth_muTrigPt_ctau1000->SetMarkerSize(1);
+//    h_leadingMuonPt_truth_muTrigPt_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_muTrigPt = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_muTrigPt->SetBorderSize(0);
@@ -117,11 +117,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_muTrigPt->SetMarkerStyle(2);
     entry_truth_muTrigPt->SetMarkerSize(2);
     entry_truth_muTrigPt->SetTextFont(42);
-    entry_truth_muTrigPt = leg_truth_muTrigPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_muTrigPt->SetMarkerColor(4);
-    entry_truth_muTrigPt->SetMarkerStyle(3);
-    entry_truth_muTrigPt->SetMarkerSize(2);
-    entry_truth_muTrigPt->SetTextFont(42);
+//    entry_truth_muTrigPt = leg_truth_muTrigPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_muTrigPt->SetMarkerColor(4);
+//    entry_truth_muTrigPt->SetMarkerStyle(3);
+//    entry_truth_muTrigPt->SetMarkerSize(2);
+//    entry_truth_muTrigPt->SetTextFont(42);
     leg_truth_muTrigPt->Draw("HIST");
 
     Canvas_truth_muTrigPt->Modified();
@@ -136,7 +136,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_leadingMuonPt_truth_mumuTrigPt_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonPt_truth_mumuTrig");
     TH1F* h_leadingMuonPt_truth_mumuTrigPt_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonPt_truth_mumuTrig");
     TH1F* h_leadingMuonPt_truth_mumuTrigPt_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonPt_truth_mumuTrig");
-    TH1F* h_leadingMuonPt_truth_mumuTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_truth_mumuTrig");
+//    TH1F* h_leadingMuonPt_truth_mumuTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_truth_mumuTrig");
 
     TCanvas *Canvas_truth_mumuTrigPt = new TCanvas("Canvas_truth_mumuTrigPt", "Canvas_truth_mumuTrigPt",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -193,11 +193,11 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonPt_truth_mumuTrigPt_ctau100->SetMarkerSize(1);
     h_leadingMuonPt_truth_mumuTrigPt_ctau100->Draw("HIST p same");
 
-    h_leadingMuonPt_truth_mumuTrigPt_ctau1000->SetLineColor(4);
-    h_leadingMuonPt_truth_mumuTrigPt_ctau1000->SetMarkerColor(4);
-    h_leadingMuonPt_truth_mumuTrigPt_ctau1000->SetMarkerStyle(3);
-    h_leadingMuonPt_truth_mumuTrigPt_ctau1000->SetMarkerSize(1);
-    h_leadingMuonPt_truth_mumuTrigPt_ctau1000->Draw("HIST p same");
+//    h_leadingMuonPt_truth_mumuTrigPt_ctau1000->SetLineColor(4);
+//    h_leadingMuonPt_truth_mumuTrigPt_ctau1000->SetMarkerColor(4);
+//    h_leadingMuonPt_truth_mumuTrigPt_ctau1000->SetMarkerStyle(3);
+//    h_leadingMuonPt_truth_mumuTrigPt_ctau1000->SetMarkerSize(1);
+//    h_leadingMuonPt_truth_mumuTrigPt_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_mumuTrigPt = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_mumuTrigPt->SetBorderSize(0);
@@ -227,11 +227,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_mumuTrigPt->SetMarkerStyle(2);
     entry_truth_mumuTrigPt->SetMarkerSize(2);
     entry_truth_mumuTrigPt->SetTextFont(42);
-    entry_truth_mumuTrigPt = leg_truth_mumuTrigPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_mumuTrigPt->SetMarkerColor(4);
-    entry_truth_mumuTrigPt->SetMarkerStyle(3);
-    entry_truth_mumuTrigPt->SetMarkerSize(2);
-    entry_truth_mumuTrigPt->SetTextFont(42);
+//    entry_truth_mumuTrigPt = leg_truth_mumuTrigPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_mumuTrigPt->SetMarkerColor(4);
+//    entry_truth_mumuTrigPt->SetMarkerStyle(3);
+//    entry_truth_mumuTrigPt->SetMarkerSize(2);
+//    entry_truth_mumuTrigPt->SetTextFont(42);
     leg_truth_mumuTrigPt->Draw("HIST");
 
     Canvas_truth_mumuTrigPt->Modified();
@@ -244,7 +244,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_subLeadingMuonPt_truth_mumuTrigPt_ctau1    = (TH1F*)inFile1->Get("h_subLeadingMuonPt_truth_mumuTrig");
     TH1F* h_subLeadingMuonPt_truth_mumuTrigPt_ctau10   = (TH1F*)inFile2->Get("h_subLeadingMuonPt_truth_mumuTrig");
     TH1F* h_subLeadingMuonPt_truth_mumuTrigPt_ctau100  = (TH1F*)inFile3->Get("h_subLeadingMuonPt_truth_mumuTrig");
-    TH1F* h_subLeadingMuonPt_truth_mumuTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_subLeadingMuonPt_truth_mumuTrig");
+//    TH1F* h_subLeadingMuonPt_truth_mumuTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_subLeadingMuonPt_truth_mumuTrig");
 
     TCanvas *Canvas_truth_mumuTrigPt_subLeading = new TCanvas("Canvas_truth_mumuTrigPt_subLeading", "Canvas_truth_mumuTrigPt_subLeading",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -301,11 +301,11 @@ void triggerEfficiencyPlotMacro() {
     h_subLeadingMuonPt_truth_mumuTrigPt_ctau100->SetMarkerSize(1);
     h_subLeadingMuonPt_truth_mumuTrigPt_ctau100->Draw("HIST p same");
 
-    h_subLeadingMuonPt_truth_mumuTrigPt_ctau1000->SetLineColor(4);
-    h_subLeadingMuonPt_truth_mumuTrigPt_ctau1000->SetMarkerColor(4);
-    h_subLeadingMuonPt_truth_mumuTrigPt_ctau1000->SetMarkerStyle(3);
-    h_subLeadingMuonPt_truth_mumuTrigPt_ctau1000->SetMarkerSize(1);
-    h_subLeadingMuonPt_truth_mumuTrigPt_ctau1000->Draw("HIST p same");
+//    h_subLeadingMuonPt_truth_mumuTrigPt_ctau1000->SetLineColor(4);
+//    h_subLeadingMuonPt_truth_mumuTrigPt_ctau1000->SetMarkerColor(4);
+//    h_subLeadingMuonPt_truth_mumuTrigPt_ctau1000->SetMarkerStyle(3);
+//    h_subLeadingMuonPt_truth_mumuTrigPt_ctau1000->SetMarkerSize(1);
+//    h_subLeadingMuonPt_truth_mumuTrigPt_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_mumuTrigPt_subleading = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_mumuTrigPt_subleading->SetBorderSize(0);
@@ -335,11 +335,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_mumuTrigPt_subleading->SetMarkerStyle(2);
     entry_truth_mumuTrigPt_subleading->SetMarkerSize(2);
     entry_truth_mumuTrigPt_subleading->SetTextFont(42);
-    entry_truth_mumuTrigPt = leg_truth_mumuTrigPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_mumuTrigPt->SetMarkerColor(4);
-    entry_truth_mumuTrigPt->SetMarkerStyle(3);
-    entry_truth_mumuTrigPt->SetMarkerSize(2);
-    entry_truth_mumuTrigPt->SetTextFont(42);
+//    entry_truth_mumuTrigPt = leg_truth_mumuTrigPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_mumuTrigPt->SetMarkerColor(4);
+//    entry_truth_mumuTrigPt->SetMarkerStyle(3);
+//    entry_truth_mumuTrigPt->SetMarkerSize(2);
+//    entry_truth_mumuTrigPt->SetTextFont(42);
     leg_truth_mumuTrigPt_subleading->Draw("HIST");
 
     Canvas_truth_mumuTrigPt_subLeading->Modified();
@@ -354,7 +354,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonPt_truth_mumuTrigMassCut");
     TH1F* h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonPt_truth_mumuTrigMassCut");
     TH1F* h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonPt_truth_mumuTrigMassCut");
-    TH1F* h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_truth_mumuTrigMassCut");
+//    TH1F* h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_truth_mumuTrigMassCut");
 
     TCanvas *Canvas_truth_mumuTrigMassCutPt = new TCanvas("Canvas_truth_mumuTrigMassCutPt", "Canvas_truth_mumuTrigMassCutPt",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -411,11 +411,11 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau100->SetMarkerSize(1);
     h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau100->Draw("HIST p same");
 
-    h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau1000->SetLineColor(4);
-    h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau1000->SetMarkerColor(4);
-    h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau1000->SetMarkerStyle(3);
-    h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau1000->SetMarkerSize(1);
-    h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau1000->Draw("HIST p same");
+//    h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau1000->SetLineColor(4);
+//    h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau1000->SetMarkerColor(4);
+//    h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau1000->SetMarkerStyle(3);
+//    h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau1000->SetMarkerSize(1);
+//    h_leadingMuonPt_truth_mumuTrigMassCutPt_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_mumuTrigMassCutPt = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_mumuTrigMassCutPt->SetBorderSize(0);
@@ -445,11 +445,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_mumuTrigMassCutPt->SetMarkerStyle(2);
     entry_truth_mumuTrigMassCutPt->SetMarkerSize(2);
     entry_truth_mumuTrigMassCutPt->SetTextFont(42);
-    entry_truth_mumuTrigMassCutPt = leg_truth_mumuTrigMassCutPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_mumuTrigMassCutPt->SetMarkerColor(4);
-    entry_truth_mumuTrigMassCutPt->SetMarkerStyle(3);
-    entry_truth_mumuTrigMassCutPt->SetMarkerSize(2);
-    entry_truth_mumuTrigMassCutPt->SetTextFont(42);
+//    entry_truth_mumuTrigMassCutPt = leg_truth_mumuTrigMassCutPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_mumuTrigMassCutPt->SetMarkerColor(4);
+//    entry_truth_mumuTrigMassCutPt->SetMarkerStyle(3);
+//    entry_truth_mumuTrigMassCutPt->SetMarkerSize(2);
+//    entry_truth_mumuTrigMassCutPt->SetTextFont(42);
     leg_truth_mumuTrigMassCutPt->Draw("HIST");
 
     Canvas_truth_mumuTrigMassCutPt->Modified();
@@ -464,7 +464,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonPt_truth_mumuTrigNoMassCut");
     TH1F* h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonPt_truth_mumuTrigNoMassCut");
     TH1F* h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonPt_truth_mumuTrigNoMassCut");
-    TH1F* h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_truth_mumuTrigNoMassCut");
+//    TH1F* h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_truth_mumuTrigNoMassCut");
 
     TCanvas *Canvas_truth_mumuTrigNoMassCutPt = new TCanvas("Canvas_truth_mumuTrigNoMassCutPt", "Canvas_truth_mumuTrigNoMassCutPt",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -521,11 +521,11 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau100->SetMarkerSize(1);
     h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau100->Draw("HIST p same");
 
-    h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau1000->SetLineColor(4);
-    h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau1000->SetMarkerColor(4);
-    h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau1000->SetMarkerStyle(3);
-    h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau1000->SetMarkerSize(1);
-    h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau1000->Draw("HIST p same");
+//    h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau1000->SetLineColor(4);
+//    h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau1000->SetMarkerColor(4);
+//    h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau1000->SetMarkerStyle(3);
+//    h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau1000->SetMarkerSize(1);
+//    h_leadingMuonPt_truth_mumuTrigNoMassCutPt_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_mumuTrigNoMassCutPt = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_mumuTrigNoMassCutPt->SetBorderSize(0);
@@ -555,7 +555,7 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_mumuTrigNoMassCutPt->SetMarkerStyle(2);
     entry_truth_mumuTrigNoMassCutPt->SetMarkerSize(2);
     entry_truth_mumuTrigNoMassCutPt->SetTextFont(42);
-    entry_truth_mumuTrigNoMassCutPt = leg_truth_mumuTrigNoMassCutPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_mumuTrigNoMassCutPt = leg_truth_mumuTrigNoMassCutPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
     entry_truth_mumuTrigNoMassCutPt->SetMarkerColor(4);
     entry_truth_mumuTrigNoMassCutPt->SetMarkerStyle(3);
     entry_truth_mumuTrigNoMassCutPt->SetMarkerSize(2);
@@ -574,7 +574,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_leadingMuonPt_truth_L2muTrigPt_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonPt_truth_L2muTrig");
     TH1F* h_leadingMuonPt_truth_L2muTrigPt_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonPt_truth_L2muTrig");
    TH1F* h_leadingMuonPt_truth_L2muTrigPt_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonPt_truth_L2muTrig");
-    TH1F* h_leadingMuonPt_truth_L2muTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_truth_L2muTrig");
+//    TH1F* h_leadingMuonPt_truth_L2muTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_truth_L2muTrig");
 
     TCanvas *Canvas_truth_L2muTrigPt = new TCanvas("Canvas_truth_L2muTrigPt", "Canvas_truth_L2muTrigPt",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -631,11 +631,11 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonPt_truth_L2muTrigPt_ctau100->SetMarkerSize(1);
    h_leadingMuonPt_truth_L2muTrigPt_ctau100->Draw("HIST p same");
 
-    h_leadingMuonPt_truth_L2muTrigPt_ctau1000->SetLineColor(4);
-    h_leadingMuonPt_truth_L2muTrigPt_ctau1000->SetMarkerColor(4);
-    h_leadingMuonPt_truth_L2muTrigPt_ctau1000->SetMarkerStyle(3);
-    h_leadingMuonPt_truth_L2muTrigPt_ctau1000->SetMarkerSize(1);
-    h_leadingMuonPt_truth_L2muTrigPt_ctau1000->Draw("HIST p same");
+//    h_leadingMuonPt_truth_L2muTrigPt_ctau1000->SetLineColor(4);
+//    h_leadingMuonPt_truth_L2muTrigPt_ctau1000->SetMarkerColor(4);
+//    h_leadingMuonPt_truth_L2muTrigPt_ctau1000->SetMarkerStyle(3);
+//    h_leadingMuonPt_truth_L2muTrigPt_ctau1000->SetMarkerSize(1);
+//    h_leadingMuonPt_truth_L2muTrigPt_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_L2muTrigPt = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_L2muTrigPt->SetBorderSize(0);
@@ -665,7 +665,7 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_L2muTrigPt->SetMarkerStyle(2);
     entry_truth_L2muTrigPt->SetMarkerSize(2);
     entry_truth_L2muTrigPt->SetTextFont(42);
-    entry_truth_L2muTrigPt = leg_truth_L2muTrigPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_L2muTrigPt = leg_truth_L2muTrigPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
     entry_truth_L2muTrigPt->SetMarkerColor(4);
     entry_truth_L2muTrigPt->SetMarkerStyle(3);
     entry_truth_L2muTrigPt->SetMarkerSize(2);
@@ -682,7 +682,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_subLeadingMuonPt_truth_L2muTrigPt_ctau1    = (TH1F*)inFile1->Get("h_subLeadingMuonPt_truth_L2muTrig");
     TH1F* h_subLeadingMuonPt_truth_L2muTrigPt_ctau10   = (TH1F*)inFile2->Get("h_subLeadingMuonPt_truth_L2muTrig");
    TH1F* h_subLeadingMuonPt_truth_L2muTrigPt_ctau100  = (TH1F*)inFile3->Get("h_subLeadingMuonPt_truth_L2muTrig");
-    TH1F* h_subLeadingMuonPt_truth_L2muTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_subLeadingMuonPt_truth_L2muTrig");
+//    TH1F* h_subLeadingMuonPt_truth_L2muTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_subLeadingMuonPt_truth_L2muTrig");
 
     TCanvas *Canvas_truth_L2muTrigPt_subleading = new TCanvas("Canvas_truth_L2muTrigPt_subleading", "Canvas_truth_L2muTrigPt_subleading",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -739,11 +739,11 @@ void triggerEfficiencyPlotMacro() {
     h_subLeadingMuonPt_truth_L2muTrigPt_ctau100->SetMarkerSize(1);
    h_subLeadingMuonPt_truth_L2muTrigPt_ctau100->Draw("HIST p same");
 
-    h_subLeadingMuonPt_truth_L2muTrigPt_ctau1000->SetLineColor(4);
-    h_subLeadingMuonPt_truth_L2muTrigPt_ctau1000->SetMarkerColor(4);
-    h_subLeadingMuonPt_truth_L2muTrigPt_ctau1000->SetMarkerStyle(3);
-    h_subLeadingMuonPt_truth_L2muTrigPt_ctau1000->SetMarkerSize(1);
-    h_subLeadingMuonPt_truth_L2muTrigPt_ctau1000->Draw("HIST p same");
+//    h_subLeadingMuonPt_truth_L2muTrigPt_ctau1000->SetLineColor(4);
+//    h_subLeadingMuonPt_truth_L2muTrigPt_ctau1000->SetMarkerColor(4);
+//    h_subLeadingMuonPt_truth_L2muTrigPt_ctau1000->SetMarkerStyle(3);
+//    h_subLeadingMuonPt_truth_L2muTrigPt_ctau1000->SetMarkerSize(1);
+//    h_subLeadingMuonPt_truth_L2muTrigPt_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_L2muTrigPt_subleading = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_L2muTrigPt_subleading->SetBorderSize(0);
@@ -773,11 +773,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_L2muTrigPt_subleading->SetMarkerStyle(2);
     entry_truth_L2muTrigPt_subleading->SetMarkerSize(2);
     entry_truth_L2muTrigPt_subleading->SetTextFont(42);
-    entry_truth_L2muTrigPt = leg_truth_L2muTrigPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_L2muTrigPt->SetMarkerColor(4);
-    entry_truth_L2muTrigPt->SetMarkerStyle(3);
-    entry_truth_L2muTrigPt->SetMarkerSize(2);
-    entry_truth_L2muTrigPt->SetTextFont(42);
+//    entry_truth_L2muTrigPt = leg_truth_L2muTrigPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_L2muTrigPt->SetMarkerColor(4);
+//    entry_truth_L2muTrigPt->SetMarkerStyle(3);
+//    entry_truth_L2muTrigPt->SetMarkerSize(2);
+//    entry_truth_L2muTrigPt->SetTextFont(42);
     leg_truth_L2muTrigPt_subleading->Draw("HIST");
 
     Canvas_truth_L2muTrigPt_subleading->Modified();
@@ -790,7 +790,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_leadingMuonPt_truth_muOrL2muTrigPt_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonPt_truth_muOrL2muTrig");
     TH1F* h_leadingMuonPt_truth_muOrL2muTrigPt_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonPt_truth_muOrL2muTrig");
     TH1F* h_leadingMuonPt_truth_muOrL2muTrigPt_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonPt_truth_muOrL2muTrig");
-    TH1F* h_leadingMuonPt_truth_muOrL2muTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_truth_muOrL2muTrig");
+//    TH1F* h_leadingMuonPt_truth_muOrL2muTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_truth_muOrL2muTrig");
 
     TCanvas *Canvas_truth_muOrL2muTrigPt = new TCanvas("Canvas_truth_muOrL2muTrigPt", "Canvas_truth_muOrL2muTrigPt",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -847,11 +847,11 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonPt_truth_muOrL2muTrigPt_ctau100->SetMarkerSize(1);
     h_leadingMuonPt_truth_muOrL2muTrigPt_ctau100->Draw("HIST p same");
 
-    h_leadingMuonPt_truth_muOrL2muTrigPt_ctau1000->SetLineColor(4);
-    h_leadingMuonPt_truth_muOrL2muTrigPt_ctau1000->SetMarkerColor(4);
-    h_leadingMuonPt_truth_muOrL2muTrigPt_ctau1000->SetMarkerStyle(3);
-    h_leadingMuonPt_truth_muOrL2muTrigPt_ctau1000->SetMarkerSize(1);
-    h_leadingMuonPt_truth_muOrL2muTrigPt_ctau1000->Draw("HIST p same");
+//    h_leadingMuonPt_truth_muOrL2muTrigPt_ctau1000->SetLineColor(4);
+//    h_leadingMuonPt_truth_muOrL2muTrigPt_ctau1000->SetMarkerColor(4);
+//    h_leadingMuonPt_truth_muOrL2muTrigPt_ctau1000->SetMarkerStyle(3);
+//    h_leadingMuonPt_truth_muOrL2muTrigPt_ctau1000->SetMarkerSize(1);
+//    h_leadingMuonPt_truth_muOrL2muTrigPt_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_muOrL2muTrigPt = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_muOrL2muTrigPt->SetBorderSize(0);
@@ -881,11 +881,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_muOrL2muTrigPt->SetMarkerStyle(2);
     entry_truth_muOrL2muTrigPt->SetMarkerSize(2);
     entry_truth_muOrL2muTrigPt->SetTextFont(42);
-    entry_truth_muOrL2muTrigPt = leg_truth_muOrL2muTrigPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_muOrL2muTrigPt->SetMarkerColor(4);
-    entry_truth_muOrL2muTrigPt->SetMarkerStyle(3);
-    entry_truth_muOrL2muTrigPt->SetMarkerSize(2);
-    entry_truth_muOrL2muTrigPt->SetTextFont(42);
+//    entry_truth_muOrL2muTrigPt = leg_truth_muOrL2muTrigPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_muOrL2muTrigPt->SetMarkerColor(4);
+//    entry_truth_muOrL2muTrigPt->SetMarkerStyle(3);
+//    entry_truth_muOrL2muTrigPt->SetMarkerSize(2);
+//    entry_truth_muOrL2muTrigPt->SetTextFont(42);
    leg_truth_muOrL2muTrigPt->Draw("HIST");
 
     Canvas_truth_muOrL2muTrigPt->Modified();
@@ -898,7 +898,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_leadingMuonPt_truth_ORTrigPt_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonPt_truth_ORTrig");
     TH1F* h_leadingMuonPt_truth_ORTrigPt_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonPt_truth_ORTrig");
     TH1F* h_leadingMuonPt_truth_ORTrigPt_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonPt_truth_ORTrig");
-    TH1F* h_leadingMuonPt_truth_ORTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_truth_ORTrig");
+//    TH1F* h_leadingMuonPt_truth_ORTrigPt_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonPt_truth_ORTrig");
 
     TCanvas *Canvas_truth_ORTrigPt = new TCanvas("Canvas_truth_ORTrigPt", "Canvas_truth_ORTrigPt",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -955,11 +955,11 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonPt_truth_ORTrigPt_ctau100->SetMarkerSize(1);
     h_leadingMuonPt_truth_ORTrigPt_ctau100->Draw("HIST p same");
 
-    h_leadingMuonPt_truth_ORTrigPt_ctau1000->SetLineColor(4);
-    h_leadingMuonPt_truth_ORTrigPt_ctau1000->SetMarkerColor(4);
-    h_leadingMuonPt_truth_ORTrigPt_ctau1000->SetMarkerStyle(3);
-    h_leadingMuonPt_truth_ORTrigPt_ctau1000->SetMarkerSize(1);
-    h_leadingMuonPt_truth_ORTrigPt_ctau1000->Draw("HIST p same");
+//    h_leadingMuonPt_truth_ORTrigPt_ctau1000->SetLineColor(4);
+//    h_leadingMuonPt_truth_ORTrigPt_ctau1000->SetMarkerColor(4);
+//    h_leadingMuonPt_truth_ORTrigPt_ctau1000->SetMarkerStyle(3);
+//    h_leadingMuonPt_truth_ORTrigPt_ctau1000->SetMarkerSize(1);
+//    h_leadingMuonPt_truth_ORTrigPt_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_ORTrigPt = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_ORTrigPt->SetBorderSize(0);
@@ -989,11 +989,11 @@ void triggerEfficiencyPlotMacro() {
    entry_truth_ORTrigPt->SetMarkerStyle(2);
     entry_truth_ORTrigPt->SetMarkerSize(2);
    entry_truth_ORTrigPt->SetTextFont(42);
-    entry_truth_ORTrigPt = leg_truth_ORTrigPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_ORTrigPt->SetMarkerColor(4);
-    entry_truth_ORTrigPt->SetMarkerStyle(3);
-    entry_truth_ORTrigPt->SetMarkerSize(2);
-    entry_truth_ORTrigPt->SetTextFont(42);
+//    entry_truth_ORTrigPt = leg_truth_ORTrigPt->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_ORTrigPt->SetMarkerColor(4);
+//    entry_truth_ORTrigPt->SetMarkerStyle(3);
+//    entry_truth_ORTrigPt->SetMarkerSize(2);
+//    entry_truth_ORTrigPt->SetTextFont(42);
     leg_truth_ORTrigPt->Draw("HIST");
 
     Canvas_truth_ORTrigPt->Modified();
@@ -1008,7 +1008,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_leadingMuonEta_truth_muTrigEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_truth_muTrig");
     TH1F* h_leadingMuonEta_truth_muTrigEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_truth_muTrig");
     TH1F* h_leadingMuonEta_truth_muTrigEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_truth_muTrig");
-    TH1F* h_leadingMuonEta_truth_muTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_truth_muTrig");
+//    TH1F* h_leadingMuonEta_truth_muTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_truth_muTrig");
 
     TCanvas *Canvas_truth_muTrigEta = new TCanvas("Canvas_truth_muTrigEta", "Canvas_truth_muTrigEta",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -1065,11 +1065,11 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonEta_truth_muTrigEta_ctau100->SetMarkerSize(1);
     h_leadingMuonEta_truth_muTrigEta_ctau100->Draw("HIST p same");
 
-    h_leadingMuonEta_truth_muTrigEta_ctau1000->SetLineColor(4);
-    h_leadingMuonEta_truth_muTrigEta_ctau1000->SetMarkerColor(4);
-    h_leadingMuonEta_truth_muTrigEta_ctau1000->SetMarkerStyle(3);
-    h_leadingMuonEta_truth_muTrigEta_ctau1000->SetMarkerSize(1);
-    h_leadingMuonEta_truth_muTrigEta_ctau1000->Draw("HIST p same");
+//    h_leadingMuonEta_truth_muTrigEta_ctau1000->SetLineColor(4);
+//    h_leadingMuonEta_truth_muTrigEta_ctau1000->SetMarkerColor(4);
+//    h_leadingMuonEta_truth_muTrigEta_ctau1000->SetMarkerStyle(3);
+//    h_leadingMuonEta_truth_muTrigEta_ctau1000->SetMarkerSize(1);
+//    h_leadingMuonEta_truth_muTrigEta_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_muTrigEta = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_muTrigEta->SetBorderSize(0);
@@ -1099,11 +1099,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_muTrigEta->SetMarkerStyle(2);
     entry_truth_muTrigEta->SetMarkerSize(2);
     entry_truth_muTrigEta->SetTextFont(42);
-    entry_truth_muTrigEta = leg_truth_muTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_muTrigEta->SetMarkerColor(4);
-    entry_truth_muTrigEta->SetMarkerStyle(3);
-    entry_truth_muTrigEta->SetMarkerSize(2);
-    entry_truth_muTrigEta->SetTextFont(42);
+//    entry_truth_muTrigEta = leg_truth_muTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_muTrigEta->SetMarkerColor(4);
+//    entry_truth_muTrigEta->SetMarkerStyle(3);
+//    entry_truth_muTrigEta->SetMarkerSize(2);
+//    entry_truth_muTrigEta->SetTextFont(42);
     leg_truth_muTrigEta->Draw("HIST");
 
     Canvas_truth_muTrigEta->Modified();
@@ -1118,7 +1118,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_leadingMuonEta_truth_mumuTrigEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_truth_mumuTrig");
     TH1F* h_leadingMuonEta_truth_mumuTrigEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_truth_mumuTrig");
     TH1F* h_leadingMuonEta_truth_mumuTrigEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_truth_mumuTrig");
-    TH1F* h_leadingMuonEta_truth_mumuTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_truth_mumuTrig");
+//    TH1F* h_leadingMuonEta_truth_mumuTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_truth_mumuTrig");
 
     TCanvas *Canvas_truth_mumuTrigEta = new TCanvas("Canvas_truth_mumuTrigEta", "Canvas_truth_mumuTrigEta",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -1175,11 +1175,11 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonEta_truth_mumuTrigEta_ctau100->SetMarkerSize(1);
     h_leadingMuonEta_truth_mumuTrigEta_ctau100->Draw("HIST p same");
 
-    h_leadingMuonEta_truth_mumuTrigEta_ctau1000->SetLineColor(4);
-    h_leadingMuonEta_truth_mumuTrigEta_ctau1000->SetMarkerColor(4);
-    h_leadingMuonEta_truth_mumuTrigEta_ctau1000->SetMarkerStyle(3);
-    h_leadingMuonEta_truth_mumuTrigEta_ctau1000->SetMarkerSize(1);
-    h_leadingMuonEta_truth_mumuTrigEta_ctau1000->Draw("HIST p same");
+//    h_leadingMuonEta_truth_mumuTrigEta_ctau1000->SetLineColor(4);
+//    h_leadingMuonEta_truth_mumuTrigEta_ctau1000->SetMarkerColor(4);
+//    h_leadingMuonEta_truth_mumuTrigEta_ctau1000->SetMarkerStyle(3);
+//    h_leadingMuonEta_truth_mumuTrigEta_ctau1000->SetMarkerSize(1);
+//    h_leadingMuonEta_truth_mumuTrigEta_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_mumuTrigEta = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_mumuTrigEta->SetBorderSize(0);
@@ -1209,11 +1209,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_mumuTrigEta->SetMarkerStyle(2);
     entry_truth_mumuTrigEta->SetMarkerSize(2);
     entry_truth_mumuTrigEta->SetTextFont(42);
-    entry_truth_mumuTrigEta = leg_truth_mumuTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_mumuTrigEta->SetMarkerColor(4);
-    entry_truth_mumuTrigEta->SetMarkerStyle(3);
-    entry_truth_mumuTrigEta->SetMarkerSize(2);
-    entry_truth_mumuTrigEta->SetTextFont(42);
+//    entry_truth_mumuTrigEta = leg_truth_mumuTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_mumuTrigEta->SetMarkerColor(4);
+//    entry_truth_mumuTrigEta->SetMarkerStyle(3);
+//    entry_truth_mumuTrigEta->SetMarkerSize(2);
+//    entry_truth_mumuTrigEta->SetTextFont(42);
     leg_truth_mumuTrigEta->Draw("HIST");
 
     Canvas_truth_mumuTrigEta->Modified();
@@ -1228,7 +1228,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_subLeadingMuonEta_truth_mumuTrigEta_ctau1    = (TH1F*)inFile1->Get("h_subLeadingMuonEta_truth_mumuTrig");
     TH1F* h_subLeadingMuonEta_truth_mumuTrigEta_ctau10   = (TH1F*)inFile2->Get("h_subLeadingMuonEta_truth_mumuTrig");
     TH1F* h_subLeadingMuonEta_truth_mumuTrigEta_ctau100  = (TH1F*)inFile3->Get("h_subLeadingMuonEta_truth_mumuTrig");
-    TH1F* h_subLeadingMuonEta_truth_mumuTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_subLeadingMuonEta_truth_mumuTrig");
+//    TH1F* h_subLeadingMuonEta_truth_mumuTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_subLeadingMuonEta_truth_mumuTrig");
 
     TCanvas *Canvas_truth_mumuTrigEta_subleading = new TCanvas("Canvas_truth_mumuTrigEta_subleading", "Canvas_truth_mumuTrigEta",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -1285,11 +1285,11 @@ void triggerEfficiencyPlotMacro() {
     h_subLeadingMuonEta_truth_mumuTrigEta_ctau100->SetMarkerSize(1);
     h_subLeadingMuonEta_truth_mumuTrigEta_ctau100->Draw("HIST p same");
 
-    h_subLeadingMuonEta_truth_mumuTrigEta_ctau1000->SetLineColor(4);
-    h_subLeadingMuonEta_truth_mumuTrigEta_ctau1000->SetMarkerColor(4);
-    h_subLeadingMuonEta_truth_mumuTrigEta_ctau1000->SetMarkerStyle(3);
-    h_subLeadingMuonEta_truth_mumuTrigEta_ctau1000->SetMarkerSize(1);
-    h_subLeadingMuonEta_truth_mumuTrigEta_ctau1000->Draw("HIST p same");
+//    h_subLeadingMuonEta_truth_mumuTrigEta_ctau1000->SetLineColor(4);
+//    h_subLeadingMuonEta_truth_mumuTrigEta_ctau1000->SetMarkerColor(4);
+//    h_subLeadingMuonEta_truth_mumuTrigEta_ctau1000->SetMarkerStyle(3);
+//    h_subLeadingMuonEta_truth_mumuTrigEta_ctau1000->SetMarkerSize(1);
+//    h_subLeadingMuonEta_truth_mumuTrigEta_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_mumuTrigEta_subleading = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_mumuTrigEta_subleading->SetBorderSize(0);
@@ -1319,11 +1319,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_mumuTrigEta_subleading->SetMarkerStyle(2);
     entry_truth_mumuTrigEta_subleading->SetMarkerSize(2);
     entry_truth_mumuTrigEta_subleading->SetTextFont(42);
-    entry_truth_mumuTrigEta = leg_truth_mumuTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_mumuTrigEta->SetMarkerColor(4);
-    entry_truth_mumuTrigEta->SetMarkerStyle(3);
-    entry_truth_mumuTrigEta->SetMarkerSize(2);
-    entry_truth_mumuTrigEta->SetTextFont(42);
+//    entry_truth_mumuTrigEta = leg_truth_mumuTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_mumuTrigEta->SetMarkerColor(4);
+//    entry_truth_mumuTrigEta->SetMarkerStyle(3);
+//    entry_truth_mumuTrigEta->SetMarkerSize(2);
+//    entry_truth_mumuTrigEta->SetTextFont(42);
     leg_truth_mumuTrigEta_subleading->Draw("HIST");
 
     Canvas_truth_mumuTrigEta_subleading->Modified();
@@ -1337,7 +1337,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_truth_mumuTrigMassCut");
     TH1F* h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_truth_mumuTrigMassCut");
     TH1F* h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_truth_mumuTrigMassCut");
-    TH1F* h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_truth_mumuTrigMassCut");
+//    TH1F* h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_truth_mumuTrigMassCut");
 
     TCanvas *Canvas_truth_mumuTrigMassCutEta = new TCanvas("Canvas_truth_mumuTrigMassCutEta", "Canvas_truth_mumuTrigMassCutEta",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -1394,11 +1394,11 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau100->SetMarkerSize(1);
     h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau100->Draw("HIST p same");
 
-    h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau1000->SetLineColor(4);
-    h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau1000->SetMarkerColor(4);
-    h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau1000->SetMarkerStyle(3);
-    h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau1000->SetMarkerSize(1);
-    h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau1000->Draw("HIST p same");
+//    h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau1000->SetLineColor(4);
+//    h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau1000->SetMarkerColor(4);
+//    h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau1000->SetMarkerStyle(3);
+//    h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau1000->SetMarkerSize(1);
+//    h_leadingMuonEta_truth_mumuTrigMassCutEta_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_mumuTrigMassCutEta = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_mumuTrigMassCutEta->SetBorderSize(0);
@@ -1428,11 +1428,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_mumuTrigMassCutEta->SetMarkerStyle(2);
     entry_truth_mumuTrigMassCutEta->SetMarkerSize(2);
     entry_truth_mumuTrigMassCutEta->SetTextFont(42);
-    entry_truth_mumuTrigMassCutEta = leg_truth_mumuTrigMassCutEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_mumuTrigMassCutEta->SetMarkerColor(4);
-    entry_truth_mumuTrigMassCutEta->SetMarkerStyle(3);
-    entry_truth_mumuTrigMassCutEta->SetMarkerSize(2);
-    entry_truth_mumuTrigMassCutEta->SetTextFont(42);
+//    entry_truth_mumuTrigMassCutEta = leg_truth_mumuTrigMassCutEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_mumuTrigMassCutEta->SetMarkerColor(4);
+//    entry_truth_mumuTrigMassCutEta->SetMarkerStyle(3);
+//    entry_truth_mumuTrigMassCutEta->SetMarkerSize(2);
+//    entry_truth_mumuTrigMassCutEta->SetTextFont(42);
     leg_truth_mumuTrigMassCutEta->Draw("HIST");
 
     Canvas_truth_mumuTrigMassCutEta->Modified();
@@ -1447,7 +1447,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_truth_mumuTrigNoMassCut");
     TH1F* h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_truth_mumuTrigNoMassCut");
     TH1F* h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_truth_mumuTrigNoMassCut");
-    TH1F* h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_truth_mumuTrigNoMassCut");
+//    TH1F* h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_truth_mumuTrigNoMassCut");
 
     TCanvas *Canvas_truth_mumuTrigNoMassCutEta = new TCanvas("Canvas_truth_mumuTrigNoMassCutEta", "Canvas_truth_mumuTrigNoMassCutEta",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -1504,11 +1504,11 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau100->SetMarkerSize(1);
     h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau100->Draw("HIST p same");
 
-    h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau1000->SetLineColor(4);
-    h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau1000->SetMarkerColor(4);
-    h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau1000->SetMarkerStyle(3);
-    h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau1000->SetMarkerSize(1);
-    h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau1000->Draw("HIST p same");
+//    h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau1000->SetLineColor(4);
+//    h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau1000->SetMarkerColor(4);
+//    h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau1000->SetMarkerStyle(3);
+//    h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau1000->SetMarkerSize(1);
+//    h_leadingMuonEta_truth_mumuTrigNoMassCutEta_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_mumuTrigNoMassCutEta = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_mumuTrigNoMassCutEta->SetBorderSize(0);
@@ -1538,11 +1538,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_mumuTrigNoMassCutEta->SetMarkerStyle(2);
     entry_truth_mumuTrigNoMassCutEta->SetMarkerSize(2);
     entry_truth_mumuTrigNoMassCutEta->SetTextFont(42);
-    entry_truth_mumuTrigNoMassCutEta = leg_truth_mumuTrigNoMassCutEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_mumuTrigNoMassCutEta->SetMarkerColor(4);
-    entry_truth_mumuTrigNoMassCutEta->SetMarkerStyle(3);
-    entry_truth_mumuTrigNoMassCutEta->SetMarkerSize(2);
-    entry_truth_mumuTrigNoMassCutEta->SetTextFont(42);
+//    entry_truth_mumuTrigNoMassCutEta = leg_truth_mumuTrigNoMassCutEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_mumuTrigNoMassCutEta->SetMarkerColor(4);
+//    entry_truth_mumuTrigNoMassCutEta->SetMarkerStyle(3);
+//    entry_truth_mumuTrigNoMassCutEta->SetMarkerSize(2);
+//    entry_truth_mumuTrigNoMassCutEta->SetTextFont(42);
     leg_truth_mumuTrigNoMassCutEta->Draw("HIST");
 
     Canvas_truth_mumuTrigNoMassCutEta->Modified();
@@ -1557,7 +1557,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_leadingMuonEta_truth_L2muTrigEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_truth_L2muTrig");
     TH1F* h_leadingMuonEta_truth_L2muTrigEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_truth_L2muTrig");
     TH1F* h_leadingMuonEta_truth_L2muTrigEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_truth_L2muTrig");
-    TH1F* h_leadingMuonEta_truth_L2muTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_truth_L2muTrig");
+//    TH1F* h_leadingMuonEta_truth_L2muTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_truth_L2muTrig");
 
     TCanvas *Canvas_truth_L2muTrigEta = new TCanvas("Canvas_truth_L2muTrigEta", "Canvas_truth_L2muTrigEta",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -1614,11 +1614,11 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonEta_truth_L2muTrigEta_ctau100->SetMarkerSize(1);
     h_leadingMuonEta_truth_L2muTrigEta_ctau100->Draw("HIST p same");
 
-    h_leadingMuonEta_truth_L2muTrigEta_ctau1000->SetLineColor(4);
-    h_leadingMuonEta_truth_L2muTrigEta_ctau1000->SetMarkerColor(4);
-    h_leadingMuonEta_truth_L2muTrigEta_ctau1000->SetMarkerStyle(3);
-    h_leadingMuonEta_truth_L2muTrigEta_ctau1000->SetMarkerSize(1);
-    h_leadingMuonEta_truth_L2muTrigEta_ctau1000->Draw("HIST p same");
+//    h_leadingMuonEta_truth_L2muTrigEta_ctau1000->SetLineColor(4);
+//    h_leadingMuonEta_truth_L2muTrigEta_ctau1000->SetMarkerColor(4);
+//    h_leadingMuonEta_truth_L2muTrigEta_ctau1000->SetMarkerStyle(3);
+//    h_leadingMuonEta_truth_L2muTrigEta_ctau1000->SetMarkerSize(1);
+//    h_leadingMuonEta_truth_L2muTrigEta_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_L2muTrigEta = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_L2muTrigEta->SetBorderSize(0);
@@ -1648,11 +1648,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_L2muTrigEta->SetMarkerStyle(2);
     entry_truth_L2muTrigEta->SetMarkerSize(2);
     entry_truth_L2muTrigEta->SetTextFont(42);
-    entry_truth_L2muTrigEta = leg_truth_L2muTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_L2muTrigEta->SetMarkerColor(4);
-    entry_truth_L2muTrigEta->SetMarkerStyle(3);
-    entry_truth_L2muTrigEta->SetMarkerSize(2);
-    entry_truth_L2muTrigEta->SetTextFont(42);
+//    entry_truth_L2muTrigEta = leg_truth_L2muTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_L2muTrigEta->SetMarkerColor(4);
+//    entry_truth_L2muTrigEta->SetMarkerStyle(3);
+//    entry_truth_L2muTrigEta->SetMarkerSize(2);
+//    entry_truth_L2muTrigEta->SetTextFont(42);
     leg_truth_L2muTrigEta->Draw("HIST");
 
     Canvas_truth_L2muTrigEta->Modified();
@@ -1667,7 +1667,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_subLeadingMuonEta_truth_L2muTrigEta_ctau1    = (TH1F*)inFile1->Get("h_subLeadingMuonEta_truth_L2muTrig");
     TH1F* h_subLeadingMuonEta_truth_L2muTrigEta_ctau10   = (TH1F*)inFile2->Get("h_subLeadingMuonEta_truth_L2muTrig");
     TH1F* h_subLeadingMuonEta_truth_L2muTrigEta_ctau100  = (TH1F*)inFile3->Get("h_subLeadingMuonEta_truth_L2muTrig");
-    TH1F* h_subLeadingMuonEta_truth_L2muTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_subLeadingMuonEta_truth_L2muTrig");
+//    TH1F* h_subLeadingMuonEta_truth_L2muTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_subLeadingMuonEta_truth_L2muTrig");
 
     TCanvas *Canvas_truth_L2muTrigEta_subleading = new TCanvas("Canvas_truth_L2muTrigEta_subleading", "Canvas_truth_L2muTrigEta",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -1724,11 +1724,11 @@ void triggerEfficiencyPlotMacro() {
     h_subLeadingMuonEta_truth_L2muTrigEta_ctau100->SetMarkerSize(1);
     h_subLeadingMuonEta_truth_L2muTrigEta_ctau100->Draw("HIST p same");
 
-    h_subLeadingMuonEta_truth_L2muTrigEta_ctau1000->SetLineColor(4);
-    h_subLeadingMuonEta_truth_L2muTrigEta_ctau1000->SetMarkerColor(4);
-    h_subLeadingMuonEta_truth_L2muTrigEta_ctau1000->SetMarkerStyle(3);
-    h_subLeadingMuonEta_truth_L2muTrigEta_ctau1000->SetMarkerSize(1);
-    h_subLeadingMuonEta_truth_L2muTrigEta_ctau1000->Draw("HIST p same");
+//    h_subLeadingMuonEta_truth_L2muTrigEta_ctau1000->SetLineColor(4);
+//    h_subLeadingMuonEta_truth_L2muTrigEta_ctau1000->SetMarkerColor(4);
+//    h_subLeadingMuonEta_truth_L2muTrigEta_ctau1000->SetMarkerStyle(3);
+//    h_subLeadingMuonEta_truth_L2muTrigEta_ctau1000->SetMarkerSize(1);
+//    h_subLeadingMuonEta_truth_L2muTrigEta_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_L2muTrigEta_subleading = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_L2muTrigEta_subleading->SetBorderSize(0);
@@ -1758,11 +1758,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_L2muTrigEta_subleading->SetMarkerStyle(2);
     entry_truth_L2muTrigEta_subleading->SetMarkerSize(2);
     entry_truth_L2muTrigEta_subleading->SetTextFont(42);
-    entry_truth_L2muTrigEta = leg_truth_L2muTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_L2muTrigEta->SetMarkerColor(4);
-    entry_truth_L2muTrigEta->SetMarkerStyle(3);
-    entry_truth_L2muTrigEta->SetMarkerSize(2);
-    entry_truth_L2muTrigEta->SetTextFont(42);
+//    entry_truth_L2muTrigEta = leg_truth_L2muTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_L2muTrigEta->SetMarkerColor(4);
+//    entry_truth_L2muTrigEta->SetMarkerStyle(3);
+//    entry_truth_L2muTrigEta->SetMarkerSize(2);
+//    entry_truth_L2muTrigEta->SetTextFont(42);
     leg_truth_L2muTrigEta_subleading->Draw("HIST");
 
     Canvas_truth_L2muTrigEta_subleading->Modified();
@@ -1775,7 +1775,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_leadingMuonEta_truth_muOrL2muTrigEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_truth_muOrL2muTrig");
     TH1F* h_leadingMuonEta_truth_muOrL2muTrigEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_truth_muOrL2muTrig");
     TH1F* h_leadingMuonEta_truth_muOrL2muTrigEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_truth_muOrL2muTrig");
-    TH1F* h_leadingMuonEta_truth_muOrL2muTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_truth_muOrL2muTrig");
+//    TH1F* h_leadingMuonEta_truth_muOrL2muTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_truth_muOrL2muTrig");
 
     TCanvas *Canvas_truth_muOrL2muTrigEta = new TCanvas("Canvas_truth_muOrL2muTrigEta", "Canvas_truth_muOrL2muTrigEta",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -1832,11 +1832,11 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonEta_truth_muOrL2muTrigEta_ctau100->SetMarkerSize(1);
     h_leadingMuonEta_truth_muOrL2muTrigEta_ctau100->Draw("HIST p same");
 
-    h_leadingMuonEta_truth_muOrL2muTrigEta_ctau1000->SetLineColor(4);
-    h_leadingMuonEta_truth_muOrL2muTrigEta_ctau1000->SetMarkerColor(4);
-    h_leadingMuonEta_truth_muOrL2muTrigEta_ctau1000->SetMarkerStyle(3);
-    h_leadingMuonEta_truth_muOrL2muTrigEta_ctau1000->SetMarkerSize(1);
-    h_leadingMuonEta_truth_muOrL2muTrigEta_ctau1000->Draw("HIST p same");
+//    h_leadingMuonEta_truth_muOrL2muTrigEta_ctau1000->SetLineColor(4);
+//    h_leadingMuonEta_truth_muOrL2muTrigEta_ctau1000->SetMarkerColor(4);
+//    h_leadingMuonEta_truth_muOrL2muTrigEta_ctau1000->SetMarkerStyle(3);
+//    h_leadingMuonEta_truth_muOrL2muTrigEta_ctau1000->SetMarkerSize(1);
+//    h_leadingMuonEta_truth_muOrL2muTrigEta_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_muOrL2muTrigEta = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_muOrL2muTrigEta->SetBorderSize(0);
@@ -1866,11 +1866,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_muOrL2muTrigEta->SetMarkerStyle(2);
     entry_truth_muOrL2muTrigEta->SetMarkerSize(2);
     entry_truth_muOrL2muTrigEta->SetTextFont(42);
-    entry_truth_muOrL2muTrigEta = leg_truth_muOrL2muTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_muOrL2muTrigEta->SetMarkerColor(4);
-    entry_truth_muOrL2muTrigEta->SetMarkerStyle(3);
-    entry_truth_muOrL2muTrigEta->SetMarkerSize(2);
-    entry_truth_muOrL2muTrigEta->SetTextFont(42);
+//    entry_truth_muOrL2muTrigEta = leg_truth_muOrL2muTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_muOrL2muTrigEta->SetMarkerColor(4);
+//    entry_truth_muOrL2muTrigEta->SetMarkerStyle(3);
+//    entry_truth_muOrL2muTrigEta->SetMarkerSize(2);
+//    entry_truth_muOrL2muTrigEta->SetTextFont(42);
     leg_truth_muOrL2muTrigEta->Draw("HIST");
 
     Canvas_truth_muOrL2muTrigEta->Modified();
@@ -1883,7 +1883,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_leadingMuonEta_truth_ORTrigEta_ctau1    = (TH1F*)inFile1->Get("h_leadingMuonEta_truth_ORTrig");
     TH1F* h_leadingMuonEta_truth_ORTrigEta_ctau10   = (TH1F*)inFile2->Get("h_leadingMuonEta_truth_ORTrig");
     TH1F* h_leadingMuonEta_truth_ORTrigEta_ctau100  = (TH1F*)inFile3->Get("h_leadingMuonEta_truth_ORTrig");
-    TH1F* h_leadingMuonEta_truth_ORTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_truth_ORTrig");
+//    TH1F* h_leadingMuonEta_truth_ORTrigEta_ctau1000 = (TH1F*)inFile4->Get("h_leadingMuonEta_truth_ORTrig");
 
     TCanvas *Canvas_truth_ORTrigEta = new TCanvas("Canvas_truth_ORTrigEta", "Canvas_truth_ORTrigEta",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -1940,11 +1940,11 @@ void triggerEfficiencyPlotMacro() {
     h_leadingMuonEta_truth_ORTrigEta_ctau100->SetMarkerSize(1);
     h_leadingMuonEta_truth_ORTrigEta_ctau100->Draw("HIST p same");
 
-    h_leadingMuonEta_truth_ORTrigEta_ctau1000->SetLineColor(4);
-    h_leadingMuonEta_truth_ORTrigEta_ctau1000->SetMarkerColor(4);
-    h_leadingMuonEta_truth_ORTrigEta_ctau1000->SetMarkerStyle(3);
-    h_leadingMuonEta_truth_ORTrigEta_ctau1000->SetMarkerSize(1);
-    h_leadingMuonEta_truth_ORTrigEta_ctau1000->Draw("HIST p same");
+//    h_leadingMuonEta_truth_ORTrigEta_ctau1000->SetLineColor(4);
+//    h_leadingMuonEta_truth_ORTrigEta_ctau1000->SetMarkerColor(4);
+//    h_leadingMuonEta_truth_ORTrigEta_ctau1000->SetMarkerStyle(3);
+//    h_leadingMuonEta_truth_ORTrigEta_ctau1000->SetMarkerSize(1);
+//    h_leadingMuonEta_truth_ORTrigEta_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_ORTrigEta = new TLegend(0.20,0.70,0.27,0.90,NULL,"brNDC");
     leg_truth_ORTrigEta->SetBorderSize(0);
@@ -1974,11 +1974,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_ORTrigEta->SetMarkerStyle(2);
     entry_truth_ORTrigEta->SetMarkerSize(2);
     entry_truth_ORTrigEta->SetTextFont(42);
-    entry_truth_ORTrigEta = leg_truth_ORTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_ORTrigEta->SetMarkerColor(4);
-    entry_truth_ORTrigEta->SetMarkerStyle(3);
-    entry_truth_ORTrigEta->SetMarkerSize(2);
-    entry_truth_ORTrigEta->SetTextFont(42);
+//    entry_truth_ORTrigEta = leg_truth_ORTrigEta->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_ORTrigEta->SetMarkerColor(4);
+//    entry_truth_ORTrigEta->SetMarkerStyle(3);
+//    entry_truth_ORTrigEta->SetMarkerSize(2);
+//    entry_truth_ORTrigEta->SetTextFont(42);
     leg_truth_ORTrigEta->Draw("HIST");
 
     Canvas_truth_ORTrigEta->Modified();
@@ -1993,7 +1993,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_delR_truth_muTrigDelR_ctau1    = (TH1F*)inFile1->Get("h_delR_truth_muTrig");
     TH1F* h_delR_truth_muTrigDelR_ctau10   = (TH1F*)inFile2->Get("h_delR_truth_muTrig");
     TH1F* h_delR_truth_muTrigDelR_ctau100  = (TH1F*)inFile3->Get("h_delR_truth_muTrig");
-    TH1F* h_delR_truth_muTrigDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_truth_muTrig");
+//    TH1F* h_delR_truth_muTrigDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_truth_muTrig");
 
     TCanvas *Canvas_truth_muTrigDelR = new TCanvas("Canvas_truth_muTrigDelR", "Canvas_truth_muTrigDelR",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -2010,7 +2010,7 @@ void triggerEfficiencyPlotMacro() {
     Canvas_truth_muTrigDelR->SetTicky(1);
     Canvas_truth_muTrigDelR->SetFrameBorderMode(0);
     Canvas_truth_muTrigDelR->cd();
-
+    
     h_delR_truth_muTrigDelR_ctau0->SetTitle("");
     h_delR_truth_muTrigDelR_ctau0->GetXaxis()->SetTitle("#DeltaR (#mu#mu)");
     h_delR_truth_muTrigDelR_ctau0->GetXaxis()->SetLabelFont(42);
@@ -2018,7 +2018,8 @@ void triggerEfficiencyPlotMacro() {
     h_delR_truth_muTrigDelR_ctau0->GetXaxis()->SetTitleSize(0.05);
     h_delR_truth_muTrigDelR_ctau0->GetXaxis()->SetTitleOffset(1.3);
     h_delR_truth_muTrigDelR_ctau0->GetXaxis()->SetTitleFont(42);
-    h_delR_truth_muTrigDelR_ctau0->GetYaxis()->SetRangeUser(0.0, 1.0);
+    h_delR_truth_muTrigDelR_ctau0->GetXaxis()->SetRangeUser(0.0, 0.3);
+    h_delR_truth_muTrigDelR_ctau0->GetYaxis()->SetRangeUser(0.0, 1.);
     h_delR_truth_muTrigDelR_ctau0->GetYaxis()->SetTitle("#mu trigger efficiency");
     h_delR_truth_muTrigDelR_ctau0->GetYaxis()->SetLabelFont(42);
     h_delR_truth_muTrigDelR_ctau0->GetYaxis()->SetLabelSize(0.035);
@@ -2028,10 +2029,10 @@ void triggerEfficiencyPlotMacro() {
     h_delR_truth_muTrigDelR_ctau0->GetYaxis()->SetNdivisions(510);
     h_delR_truth_muTrigDelR_ctau0->SetLineColor(9);
     h_delR_truth_muTrigDelR_ctau0->SetMarkerColor(9);
-    h_delR_truth_muTrigDelR_ctau0->SetMarkerStyle(26);
-    h_delR_truth_muTrigDelR_ctau0->SetMarkerSize(1);
+    h_delR_truth_muTrigDelR_ctau0->SetMarkerStyle(22);
+    h_delR_truth_muTrigDelR_ctau0->SetMarkerSize(2);
     h_delR_truth_muTrigDelR_ctau0->Draw("HIST p");
-
+    /*
     h_delR_truth_muTrigDelR_ctau1->SetLineColor(8);
     h_delR_truth_muTrigDelR_ctau1->SetMarkerColor(8);
     h_delR_truth_muTrigDelR_ctau1->SetMarkerStyle(4);
@@ -2050,12 +2051,12 @@ void triggerEfficiencyPlotMacro() {
     h_delR_truth_muTrigDelR_ctau100->SetMarkerSize(1);
     h_delR_truth_muTrigDelR_ctau100->Draw("HIST p same");
 
-    h_delR_truth_muTrigDelR_ctau1000->SetLineColor(4);
-    h_delR_truth_muTrigDelR_ctau1000->SetMarkerColor(4);
-    h_delR_truth_muTrigDelR_ctau1000->SetMarkerStyle(3);
-    h_delR_truth_muTrigDelR_ctau1000->SetMarkerSize(1);
-    h_delR_truth_muTrigDelR_ctau1000->Draw("HIST p same");
-
+//    h_delR_truth_muTrigDelR_ctau1000->SetLineColor(4);
+//    h_delR_truth_muTrigDelR_ctau1000->SetMarkerColor(4);
+//    h_delR_truth_muTrigDelR_ctau1000->SetMarkerStyle(3);
+//    h_delR_truth_muTrigDelR_ctau1000->SetMarkerSize(1);
+//    h_delR_truth_muTrigDelR_ctau1000->Draw("HIST p same");
+*/
     TLegend *leg_truth_muTrigDelR = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_truth_muTrigDelR->SetBorderSize(0);
     leg_truth_muTrigDelR->SetTextSize(0.03);
@@ -2066,10 +2067,10 @@ void triggerEfficiencyPlotMacro() {
     leg_truth_muTrigDelR->SetFillStyle(1001);
     TLegendEntry *entry_truth_muTrigDelR = leg_truth_muTrigDelR->AddEntry("ms2_ctau0", "c_{#tau} = 0 mm", "P");
     entry_truth_muTrigDelR->SetMarkerColor(9);
-    entry_truth_muTrigDelR->SetMarkerStyle(26);
+    entry_truth_muTrigDelR->SetMarkerStyle(22);
     entry_truth_muTrigDelR->SetMarkerSize(2);
     entry_truth_muTrigDelR->SetTextFont(42);
-    entry_truth_muTrigDelR = leg_truth_muTrigDelR->AddEntry("ms2_ctau1", "c_{#tau} = 1 mm", "P");
+    /*entry_truth_muTrigDelR = leg_truth_muTrigDelR->AddEntry("ms2_ctau1", "c_{#tau} = 1 mm", "P");
     entry_truth_muTrigDelR->SetMarkerColor(8);
     entry_truth_muTrigDelR->SetMarkerStyle(4);
     entry_truth_muTrigDelR->SetMarkerSize(2);
@@ -2084,11 +2085,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_muTrigDelR->SetMarkerStyle(2);
     entry_truth_muTrigDelR->SetMarkerSize(2);
     entry_truth_muTrigDelR->SetTextFont(42);
-    entry_truth_muTrigDelR = leg_truth_muTrigDelR->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_muTrigDelR = leg_truth_muTrigDelR->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
     entry_truth_muTrigDelR->SetMarkerColor(4);
     entry_truth_muTrigDelR->SetMarkerStyle(3);
     entry_truth_muTrigDelR->SetMarkerSize(2);
-    entry_truth_muTrigDelR->SetTextFont(42);
+    entry_truth_muTrigDelR->SetTextFont(42);*/
     leg_truth_muTrigDelR->Draw("HIST");
 
     Canvas_truth_muTrigDelR->Modified();
@@ -2103,7 +2104,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_delR_truth_mumuTrigDelR_ctau1    = (TH1F*)inFile1->Get("h_delR_truth_mumuTrig");
     TH1F* h_delR_truth_mumuTrigDelR_ctau10   = (TH1F*)inFile2->Get("h_delR_truth_mumuTrig");
     TH1F* h_delR_truth_mumuTrigDelR_ctau100  = (TH1F*)inFile3->Get("h_delR_truth_mumuTrig");
-    TH1F* h_delR_truth_mumuTrigDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_truth_mumuTrig");
+//    TH1F* h_delR_truth_mumuTrigDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_truth_mumuTrig");
 
     TCanvas *Canvas_truth_mumuTrigDelR = new TCanvas("Canvas_truth_mumuTrigDelR", "Canvas_truth_mumuTrigDelR",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -2160,11 +2161,11 @@ void triggerEfficiencyPlotMacro() {
     h_delR_truth_mumuTrigDelR_ctau100->SetMarkerSize(1);
     h_delR_truth_mumuTrigDelR_ctau100->Draw("HIST p same");
 
-    h_delR_truth_mumuTrigDelR_ctau1000->SetLineColor(4);
-    h_delR_truth_mumuTrigDelR_ctau1000->SetMarkerColor(4);
-    h_delR_truth_mumuTrigDelR_ctau1000->SetMarkerStyle(3);
-    h_delR_truth_mumuTrigDelR_ctau1000->SetMarkerSize(1);
-    h_delR_truth_mumuTrigDelR_ctau1000->Draw("HIST p same");
+//    h_delR_truth_mumuTrigDelR_ctau1000->SetLineColor(4);
+//    h_delR_truth_mumuTrigDelR_ctau1000->SetMarkerColor(4);
+//    h_delR_truth_mumuTrigDelR_ctau1000->SetMarkerStyle(3);
+//    h_delR_truth_mumuTrigDelR_ctau1000->SetMarkerSize(1);
+//    h_delR_truth_mumuTrigDelR_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_mumuTrigDelR = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_truth_mumuTrigDelR->SetBorderSize(0);
@@ -2194,11 +2195,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_mumuTrigDelR->SetMarkerStyle(2);
     entry_truth_mumuTrigDelR->SetMarkerSize(2);
     entry_truth_mumuTrigDelR->SetTextFont(42);
-    entry_truth_mumuTrigDelR = leg_truth_mumuTrigDelR->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_mumuTrigDelR->SetMarkerColor(4);
-    entry_truth_mumuTrigDelR->SetMarkerStyle(3);
-    entry_truth_mumuTrigDelR->SetMarkerSize(2);
-    entry_truth_mumuTrigDelR->SetTextFont(42);
+//    entry_truth_mumuTrigDelR = leg_truth_mumuTrigDelR->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_mumuTrigDelR->SetMarkerColor(4);
+//    entry_truth_mumuTrigDelR->SetMarkerStyle(3);
+//    entry_truth_mumuTrigDelR->SetMarkerSize(2);
+//    entry_truth_mumuTrigDelR->SetTextFont(42);
     leg_truth_mumuTrigDelR->Draw("HIST");
 
     Canvas_truth_mumuTrigDelR->Modified();
@@ -2213,7 +2214,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_delR_truth_mumuTrigMassCutDelR_ctau1    = (TH1F*)inFile1->Get("h_delR_truth_mumuTrigMassCut");
     TH1F* h_delR_truth_mumuTrigMassCutDelR_ctau10   = (TH1F*)inFile2->Get("h_delR_truth_mumuTrigMassCut");
     TH1F* h_delR_truth_mumuTrigMassCutDelR_ctau100  = (TH1F*)inFile3->Get("h_delR_truth_mumuTrigMassCut");
-    TH1F* h_delR_truth_mumuTrigMassCutDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_truth_mumuTrigMassCut");
+//    TH1F* h_delR_truth_mumuTrigMassCutDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_truth_mumuTrigMassCut");
 
     TCanvas *Canvas_truth_mumuTrigMassCutDelR = new TCanvas("Canvas_truth_mumuTrigMassCutDelR", "Canvas_truth_mumuTrigMassCutDelR",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -2270,11 +2271,11 @@ void triggerEfficiencyPlotMacro() {
     h_delR_truth_mumuTrigMassCutDelR_ctau100->SetMarkerSize(1);
     h_delR_truth_mumuTrigMassCutDelR_ctau100->Draw("HIST p same");
 
-    h_delR_truth_mumuTrigMassCutDelR_ctau1000->SetLineColor(4);
-    h_delR_truth_mumuTrigMassCutDelR_ctau1000->SetMarkerColor(4);
-    h_delR_truth_mumuTrigMassCutDelR_ctau1000->SetMarkerStyle(3);
-    h_delR_truth_mumuTrigMassCutDelR_ctau1000->SetMarkerSize(1);
-    h_delR_truth_mumuTrigMassCutDelR_ctau1000->Draw("HIST p same");
+//    h_delR_truth_mumuTrigMassCutDelR_ctau1000->SetLineColor(4);
+//    h_delR_truth_mumuTrigMassCutDelR_ctau1000->SetMarkerColor(4);
+//    h_delR_truth_mumuTrigMassCutDelR_ctau1000->SetMarkerStyle(3);
+//    h_delR_truth_mumuTrigMassCutDelR_ctau1000->SetMarkerSize(1);
+//    h_delR_truth_mumuTrigMassCutDelR_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_mumuTrigMassCutDelR = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_truth_mumuTrigMassCutDelR->SetBorderSize(0);
@@ -2304,11 +2305,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_mumuTrigMassCutDelR->SetMarkerStyle(2);
     entry_truth_mumuTrigMassCutDelR->SetMarkerSize(2);
     entry_truth_mumuTrigMassCutDelR->SetTextFont(42);
-    entry_truth_mumuTrigMassCutDelR = leg_truth_mumuTrigMassCutDelR->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_mumuTrigMassCutDelR->SetMarkerColor(4);
-    entry_truth_mumuTrigMassCutDelR->SetMarkerStyle(3);
-    entry_truth_mumuTrigMassCutDelR->SetMarkerSize(2);
-    entry_truth_mumuTrigMassCutDelR->SetTextFont(42);
+//    entry_truth_mumuTrigMassCutDelR = leg_truth_mumuTrigMassCutDelR->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_mumuTrigMassCutDelR->SetMarkerColor(4);
+//    entry_truth_mumuTrigMassCutDelR->SetMarkerStyle(3);
+//    entry_truth_mumuTrigMassCutDelR->SetMarkerSize(2);
+//    entry_truth_mumuTrigMassCutDelR->SetTextFont(42);
     leg_truth_mumuTrigMassCutDelR->Draw("HIST");
 
     Canvas_truth_mumuTrigMassCutDelR->Modified();
@@ -2323,7 +2324,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_delR_truth_mumuTrigNoMassCutDelR_ctau1    = (TH1F*)inFile1->Get("h_delR_truth_mumuTrigNoMassCut");
     TH1F* h_delR_truth_mumuTrigNoMassCutDelR_ctau10   = (TH1F*)inFile2->Get("h_delR_truth_mumuTrigNoMassCut");
     TH1F* h_delR_truth_mumuTrigNoMassCutDelR_ctau100  = (TH1F*)inFile3->Get("h_delR_truth_mumuTrigNoMassCut");
-    TH1F* h_delR_truth_mumuTrigNoMassCutDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_truth_mumuTrigNoMassCut");
+//    TH1F* h_delR_truth_mumuTrigNoMassCutDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_truth_mumuTrigNoMassCut");
 
     TCanvas *Canvas_truth_mumuTrigNoMassCutDelR = new TCanvas("Canvas_truth_mumuTrigNoMassCutDelR", "Canvas_truth_mumuTrigNoMassCutDelR",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -2380,11 +2381,11 @@ void triggerEfficiencyPlotMacro() {
     h_delR_truth_mumuTrigNoMassCutDelR_ctau100->SetMarkerSize(1);
     h_delR_truth_mumuTrigNoMassCutDelR_ctau100->Draw("HIST p same");
 
-    h_delR_truth_mumuTrigNoMassCutDelR_ctau1000->SetLineColor(4);
-    h_delR_truth_mumuTrigNoMassCutDelR_ctau1000->SetMarkerColor(4);
-    h_delR_truth_mumuTrigNoMassCutDelR_ctau1000->SetMarkerStyle(3);
-    h_delR_truth_mumuTrigNoMassCutDelR_ctau1000->SetMarkerSize(1);
-    h_delR_truth_mumuTrigNoMassCutDelR_ctau1000->Draw("HIST p same");
+//    h_delR_truth_mumuTrigNoMassCutDelR_ctau1000->SetLineColor(4);
+//    h_delR_truth_mumuTrigNoMassCutDelR_ctau1000->SetMarkerColor(4);
+//    h_delR_truth_mumuTrigNoMassCutDelR_ctau1000->SetMarkerStyle(3);
+//    h_delR_truth_mumuTrigNoMassCutDelR_ctau1000->SetMarkerSize(1);
+//    h_delR_truth_mumuTrigNoMassCutDelR_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_mumuTrigNoMassCutDelR = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_truth_mumuTrigNoMassCutDelR->SetBorderSize(0);
@@ -2414,11 +2415,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_mumuTrigNoMassCutDelR->SetMarkerStyle(2);
     entry_truth_mumuTrigNoMassCutDelR->SetMarkerSize(2);
     entry_truth_mumuTrigNoMassCutDelR->SetTextFont(42);
-    entry_truth_mumuTrigNoMassCutDelR = leg_truth_mumuTrigNoMassCutDelR->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_mumuTrigNoMassCutDelR->SetMarkerColor(4);
-    entry_truth_mumuTrigNoMassCutDelR->SetMarkerStyle(3);
-    entry_truth_mumuTrigNoMassCutDelR->SetMarkerSize(2);
-    entry_truth_mumuTrigNoMassCutDelR->SetTextFont(42);
+//    entry_truth_mumuTrigNoMassCutDelR = leg_truth_mumuTrigNoMassCutDelR->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_mumuTrigNoMassCutDelR->SetMarkerColor(4);
+//    entry_truth_mumuTrigNoMassCutDelR->SetMarkerStyle(3);
+//    entry_truth_mumuTrigNoMassCutDelR->SetMarkerSize(2);
+//    entry_truth_mumuTrigNoMassCutDelR->SetTextFont(42);
     leg_truth_mumuTrigNoMassCutDelR->Draw("HIST");
 
     Canvas_truth_mumuTrigNoMassCutDelR->Modified();
@@ -2433,7 +2434,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_delR_truth_L2muTrigDelR_ctau1    = (TH1F*)inFile1->Get("h_delR_truth_L2muTrig");
     TH1F* h_delR_truth_L2muTrigDelR_ctau10   = (TH1F*)inFile2->Get("h_delR_truth_L2muTrig");
     TH1F* h_delR_truth_L2muTrigDelR_ctau100  = (TH1F*)inFile3->Get("h_delR_truth_L2muTrig");
-    TH1F* h_delR_truth_L2muTrigDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_truth_L2muTrig");
+//    TH1F* h_delR_truth_L2muTrigDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_truth_L2muTrig");
 
     TCanvas *Canvas_truth_L2muTrigDelR = new TCanvas("Canvas_truth_L2muTrigDelR", "Canvas_truth_L2muTrigDelR",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -2490,11 +2491,11 @@ void triggerEfficiencyPlotMacro() {
     h_delR_truth_L2muTrigDelR_ctau100->SetMarkerSize(1);
     h_delR_truth_L2muTrigDelR_ctau100->Draw("HIST p same");
 
-    h_delR_truth_L2muTrigDelR_ctau1000->SetLineColor(4);
-    h_delR_truth_L2muTrigDelR_ctau1000->SetMarkerColor(4);
-    h_delR_truth_L2muTrigDelR_ctau1000->SetMarkerStyle(3);
-    h_delR_truth_L2muTrigDelR_ctau1000->SetMarkerSize(1);
-    h_delR_truth_L2muTrigDelR_ctau1000->Draw("HIST p same");
+//    h_delR_truth_L2muTrigDelR_ctau1000->SetLineColor(4);
+//    h_delR_truth_L2muTrigDelR_ctau1000->SetMarkerColor(4);
+//    h_delR_truth_L2muTrigDelR_ctau1000->SetMarkerStyle(3);
+//    h_delR_truth_L2muTrigDelR_ctau1000->SetMarkerSize(1);
+//    h_delR_truth_L2muTrigDelR_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_L2muTrigDelR = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_truth_L2muTrigDelR->SetBorderSize(0);
@@ -2524,11 +2525,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_L2muTrigDelR->SetMarkerStyle(2);
     entry_truth_L2muTrigDelR->SetMarkerSize(2);
     entry_truth_L2muTrigDelR->SetTextFont(42);
-    entry_truth_L2muTrigDelR = leg_truth_L2muTrigDelR->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_L2muTrigDelR->SetMarkerColor(4);
-    entry_truth_L2muTrigDelR->SetMarkerStyle(3);
-    entry_truth_L2muTrigDelR->SetMarkerSize(2);
-    entry_truth_L2muTrigDelR->SetTextFont(42);
+//    entry_truth_L2muTrigDelR = leg_truth_L2muTrigDelR->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_L2muTrigDelR->SetMarkerColor(4);
+//    entry_truth_L2muTrigDelR->SetMarkerStyle(3);
+//    entry_truth_L2muTrigDelR->SetMarkerSize(2);
+//    entry_truth_L2muTrigDelR->SetTextFont(42);
     leg_truth_L2muTrigDelR->Draw("HIST");
 
     Canvas_truth_L2muTrigDelR->Modified();
@@ -2541,7 +2542,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_delR_truth_muOrL2muTrigDelR_ctau1    = (TH1F*)inFile1->Get("h_delR_truth_muOrL2muTrig");
     TH1F* h_delR_truth_muOrL2muTrigDelR_ctau10   = (TH1F*)inFile2->Get("h_delR_truth_muOrL2muTrig");
     TH1F* h_delR_truth_muOrL2muTrigDelR_ctau100  = (TH1F*)inFile3->Get("h_delR_truth_muOrL2muTrig");
-    TH1F* h_delR_truth_muOrL2muTrigDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_truth_muOrL2muTrig");
+//    TH1F* h_delR_truth_muOrL2muTrigDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_truth_muOrL2muTrig");
 
     TCanvas *Canvas_truth_muOrL2muTrigDelR = new TCanvas("Canvas_truth_muOrL2muTrigDelR", "Canvas_truth_muOrL2muTrigDelR",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -2598,11 +2599,11 @@ void triggerEfficiencyPlotMacro() {
     h_delR_truth_muOrL2muTrigDelR_ctau100->SetMarkerSize(1);
     h_delR_truth_muOrL2muTrigDelR_ctau100->Draw("HIST p same");
 
-    h_delR_truth_muOrL2muTrigDelR_ctau1000->SetLineColor(4);
-    h_delR_truth_muOrL2muTrigDelR_ctau1000->SetMarkerColor(4);
-    h_delR_truth_muOrL2muTrigDelR_ctau1000->SetMarkerStyle(3);
-    h_delR_truth_muOrL2muTrigDelR_ctau1000->SetMarkerSize(1);
-    h_delR_truth_muOrL2muTrigDelR_ctau1000->Draw("HIST p same");
+//    h_delR_truth_muOrL2muTrigDelR_ctau1000->SetLineColor(4);
+//    h_delR_truth_muOrL2muTrigDelR_ctau1000->SetMarkerColor(4);
+//    h_delR_truth_muOrL2muTrigDelR_ctau1000->SetMarkerStyle(3);
+//    h_delR_truth_muOrL2muTrigDelR_ctau1000->SetMarkerSize(1);
+//    h_delR_truth_muOrL2muTrigDelR_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_muOrL2muTrigDelR = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_truth_muOrL2muTrigDelR->SetBorderSize(0);
@@ -2632,11 +2633,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_muOrL2muTrigDelR->SetMarkerStyle(2);
     entry_truth_muOrL2muTrigDelR->SetMarkerSize(2);
     entry_truth_muOrL2muTrigDelR->SetTextFont(42);
-    entry_truth_muOrL2muTrigDelR = leg_truth_muOrL2muTrigDelR->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_muOrL2muTrigDelR->SetMarkerColor(4);
-    entry_truth_muOrL2muTrigDelR->SetMarkerStyle(3);
-    entry_truth_muOrL2muTrigDelR->SetMarkerSize(2);
-    entry_truth_muOrL2muTrigDelR->SetTextFont(42);
+//    entry_truth_muOrL2muTrigDelR = leg_truth_muOrL2muTrigDelR->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_muOrL2muTrigDelR->SetMarkerColor(4);
+//    entry_truth_muOrL2muTrigDelR->SetMarkerStyle(3);
+//    entry_truth_muOrL2muTrigDelR->SetMarkerSize(2);
+//    entry_truth_muOrL2muTrigDelR->SetTextFont(42);
     leg_truth_muOrL2muTrigDelR->Draw("HIST");
 
     Canvas_truth_muOrL2muTrigDelR->Modified();
@@ -2649,7 +2650,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_delR_truth_ORTrigDelR_ctau1    = (TH1F*)inFile1->Get("h_delR_truth_ORTrig");
     TH1F* h_delR_truth_ORTrigDelR_ctau10   = (TH1F*)inFile2->Get("h_delR_truth_ORTrig");
     TH1F* h_delR_truth_ORTrigDelR_ctau100  = (TH1F*)inFile3->Get("h_delR_truth_ORTrig");
-    TH1F* h_delR_truth_ORTrigDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_truth_ORTrig");
+//    TH1F* h_delR_truth_ORTrigDelR_ctau1000 = (TH1F*)inFile4->Get("h_delR_truth_ORTrig");
 
     TCanvas *Canvas_truth_ORTrigDelR = new TCanvas("Canvas_truth_ORTrigDelR", "Canvas_truth_ORTrigDelR",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -2706,11 +2707,11 @@ void triggerEfficiencyPlotMacro() {
     h_delR_truth_ORTrigDelR_ctau100->SetMarkerSize(1);
     h_delR_truth_ORTrigDelR_ctau100->Draw("HIST p same");
 
-    h_delR_truth_ORTrigDelR_ctau1000->SetLineColor(4);
-    h_delR_truth_ORTrigDelR_ctau1000->SetMarkerColor(4);
-    h_delR_truth_ORTrigDelR_ctau1000->SetMarkerStyle(3);
-    h_delR_truth_ORTrigDelR_ctau1000->SetMarkerSize(1);
-    h_delR_truth_ORTrigDelR_ctau1000->Draw("HIST p same");
+//    h_delR_truth_ORTrigDelR_ctau1000->SetLineColor(4);
+//    h_delR_truth_ORTrigDelR_ctau1000->SetMarkerColor(4);
+//    h_delR_truth_ORTrigDelR_ctau1000->SetMarkerStyle(3);
+//    h_delR_truth_ORTrigDelR_ctau1000->SetMarkerSize(1);
+//    h_delR_truth_ORTrigDelR_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_ORTrigDelR = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_truth_ORTrigDelR->SetBorderSize(0);
@@ -2740,11 +2741,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_ORTrigDelR->SetMarkerStyle(2);
     entry_truth_ORTrigDelR->SetMarkerSize(2);
     entry_truth_ORTrigDelR->SetTextFont(42);
-    entry_truth_ORTrigDelR = leg_truth_ORTrigDelR->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_ORTrigDelR->SetMarkerColor(4);
-    entry_truth_ORTrigDelR->SetMarkerStyle(3);
-    entry_truth_ORTrigDelR->SetMarkerSize(2);
-    entry_truth_ORTrigDelR->SetTextFont(42);
+//    entry_truth_ORTrigDelR = leg_truth_ORTrigDelR->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_ORTrigDelR->SetMarkerColor(4);
+//    entry_truth_ORTrigDelR->SetMarkerStyle(3);
+//    entry_truth_ORTrigDelR->SetMarkerSize(2);
+//    entry_truth_ORTrigDelR->SetTextFont(42);
     leg_truth_ORTrigDelR->Draw("HIST");
 
     Canvas_truth_ORTrigDelR->Modified();
@@ -2761,7 +2762,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_mass_truth_muTrigMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_truth_muTrig");
     TH1F* h_mass_truth_muTrigMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_truth_muTrig");
     TH1F* h_mass_truth_muTrigMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_truth_muTrig");
-    TH1F* h_mass_truth_muTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_truth_muTrig");
+//    TH1F* h_mass_truth_muTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_truth_muTrig");
 
     TCanvas *Canvas_truth_muTrigMass = new TCanvas("Canvas_truth_muTrigMass", "Canvas_truth_muTrigMass",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -2818,11 +2819,11 @@ void triggerEfficiencyPlotMacro() {
     h_mass_truth_muTrigMass_ctau100->SetMarkerSize(1);
     h_mass_truth_muTrigMass_ctau100->Draw("HIST p same");
 
-    h_mass_truth_muTrigMass_ctau1000->SetLineColor(4);
-    h_mass_truth_muTrigMass_ctau1000->SetMarkerColor(4);
-    h_mass_truth_muTrigMass_ctau1000->SetMarkerStyle(3);
-    h_mass_truth_muTrigMass_ctau1000->SetMarkerSize(1);
-    h_mass_truth_muTrigMass_ctau1000->Draw("HIST p same");
+//    h_mass_truth_muTrigMass_ctau1000->SetLineColor(4);
+//    h_mass_truth_muTrigMass_ctau1000->SetMarkerColor(4);
+//    h_mass_truth_muTrigMass_ctau1000->SetMarkerStyle(3);
+//    h_mass_truth_muTrigMass_ctau1000->SetMarkerSize(1);
+//    h_mass_truth_muTrigMass_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_muTrigMass = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_truth_muTrigMass->SetBorderSize(0);
@@ -2852,11 +2853,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_muTrigMass->SetMarkerStyle(2);
     entry_truth_muTrigMass->SetMarkerSize(2);
     entry_truth_muTrigMass->SetTextFont(42);
-    entry_truth_muTrigMass = leg_truth_muTrigMass->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_muTrigMass->SetMarkerColor(4);
-    entry_truth_muTrigMass->SetMarkerStyle(3);
-    entry_truth_muTrigMass->SetMarkerSize(2);
-    entry_truth_muTrigMass->SetTextFont(42);
+//    entry_truth_muTrigMass = leg_truth_muTrigMass->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_muTrigMass->SetMarkerColor(4);
+//    entry_truth_muTrigMass->SetMarkerStyle(3);
+//    entry_truth_muTrigMass->SetMarkerSize(2);
+//    entry_truth_muTrigMass->SetTextFont(42);
     leg_truth_muTrigMass->Draw("HIST");
 
     Canvas_truth_muTrigMass->Modified();
@@ -2871,7 +2872,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_mass_truth_mumuTrigMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_truth_mumuTrig");
     TH1F* h_mass_truth_mumuTrigMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_truth_mumuTrig");
     TH1F* h_mass_truth_mumuTrigMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_truth_mumuTrig");
-    TH1F* h_mass_truth_mumuTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_truth_mumuTrig");
+//    TH1F* h_mass_truth_mumuTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_truth_mumuTrig");
 
     TCanvas *Canvas_truth_mumuTrigMass = new TCanvas("Canvas_truth_mumuTrigMass", "Canvas_truth_mumuTrigMass",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -2928,11 +2929,11 @@ void triggerEfficiencyPlotMacro() {
     h_mass_truth_mumuTrigMass_ctau100->SetMarkerSize(1);
     h_mass_truth_mumuTrigMass_ctau100->Draw("HIST p same");
 
-    h_mass_truth_mumuTrigMass_ctau1000->SetLineColor(4);
-    h_mass_truth_mumuTrigMass_ctau1000->SetMarkerColor(4);
-    h_mass_truth_mumuTrigMass_ctau1000->SetMarkerStyle(3);
-    h_mass_truth_mumuTrigMass_ctau1000->SetMarkerSize(1);
-    h_mass_truth_mumuTrigMass_ctau1000->Draw("HIST p same");
+//    h_mass_truth_mumuTrigMass_ctau1000->SetLineColor(4);
+//    h_mass_truth_mumuTrigMass_ctau1000->SetMarkerColor(4);
+//    h_mass_truth_mumuTrigMass_ctau1000->SetMarkerStyle(3);
+//    h_mass_truth_mumuTrigMass_ctau1000->SetMarkerSize(1);
+//    h_mass_truth_mumuTrigMass_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_mumuTrigMass = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_truth_mumuTrigMass->SetBorderSize(0);
@@ -2962,11 +2963,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_mumuTrigMass->SetMarkerStyle(2);
     entry_truth_mumuTrigMass->SetMarkerSize(2);
     entry_truth_mumuTrigMass->SetTextFont(42);
-    entry_truth_mumuTrigMass = leg_truth_mumuTrigMass->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_mumuTrigMass->SetMarkerColor(4);
-    entry_truth_mumuTrigMass->SetMarkerStyle(3);
-    entry_truth_mumuTrigMass->SetMarkerSize(2);
-    entry_truth_mumuTrigMass->SetTextFont(42);
+//    entry_truth_mumuTrigMass = leg_truth_mumuTrigMass->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_mumuTrigMass->SetMarkerColor(4);
+//    entry_truth_mumuTrigMass->SetMarkerStyle(3);
+///    entry_truth_mumuTrigMass->SetMarkerSize(2);
+//    entry_truth_mumuTrigMass->SetTextFont(42);
     leg_truth_mumuTrigMass->Draw("HIST");
 
     Canvas_truth_mumuTrigMass->Modified();
@@ -2981,7 +2982,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_mass_truth_mumuTrigMassCutMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_truth_mumuTrigMassCut");
     TH1F* h_mass_truth_mumuTrigMassCutMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_truth_mumuTrigMassCut");
     TH1F* h_mass_truth_mumuTrigMassCutMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_truth_mumuTrigMassCut");
-    TH1F* h_mass_truth_mumuTrigMassCutMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_truth_mumuTrigMassCut");
+//    TH1F* h_mass_truth_mumuTrigMassCutMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_truth_mumuTrigMassCut");
 
     TCanvas *Canvas_truth_mumuTrigMassCutMass = new TCanvas("Canvas_truth_mumuTrigMassCutMass", "Canvas_truth_mumuTrigMassCutMass",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -3038,11 +3039,11 @@ void triggerEfficiencyPlotMacro() {
     h_mass_truth_mumuTrigMassCutMass_ctau100->SetMarkerSize(1);
     h_mass_truth_mumuTrigMassCutMass_ctau100->Draw("HIST p same");
 
-    h_mass_truth_mumuTrigMassCutMass_ctau1000->SetLineColor(4);
-    h_mass_truth_mumuTrigMassCutMass_ctau1000->SetMarkerColor(4);
-    h_mass_truth_mumuTrigMassCutMass_ctau1000->SetMarkerStyle(3);
-    h_mass_truth_mumuTrigMassCutMass_ctau1000->SetMarkerSize(1);
-    h_mass_truth_mumuTrigMassCutMass_ctau1000->Draw("HIST p same");
+//    h_mass_truth_mumuTrigMassCutMass_ctau1000->SetLineColor(4);
+//    h_mass_truth_mumuTrigMassCutMass_ctau1000->SetMarkerColor(4);
+//    h_mass_truth_mumuTrigMassCutMass_ctau1000->SetMarkerStyle(3);
+//    h_mass_truth_mumuTrigMassCutMass_ctau1000->SetMarkerSize(1);
+//    h_mass_truth_mumuTrigMassCutMass_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_mumuTrigMassCutMass = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_truth_mumuTrigMassCutMass->SetBorderSize(0);
@@ -3072,11 +3073,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_mumuTrigMassCutMass->SetMarkerStyle(2);
     entry_truth_mumuTrigMassCutMass->SetMarkerSize(2);
     entry_truth_mumuTrigMassCutMass->SetTextFont(42);
-    entry_truth_mumuTrigMassCutMass = leg_truth_mumuTrigMassCutMass->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_mumuTrigMassCutMass->SetMarkerColor(4);
-    entry_truth_mumuTrigMassCutMass->SetMarkerStyle(3);
-    entry_truth_mumuTrigMassCutMass->SetMarkerSize(2);
-    entry_truth_mumuTrigMassCutMass->SetTextFont(42);
+//    entry_truth_mumuTrigMassCutMass = leg_truth_mumuTrigMassCutMass->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_mumuTrigMassCutMass->SetMarkerColor(4);
+//    entry_truth_mumuTrigMassCutMass->SetMarkerStyle(3);
+//    entry_truth_mumuTrigMassCutMass->SetMarkerSize(2);
+//    entry_truth_mumuTrigMassCutMass->SetTextFont(42);
     leg_truth_mumuTrigMassCutMass->Draw("HIST");
 
     Canvas_truth_mumuTrigMassCutMass->Modified();
@@ -3091,7 +3092,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_mass_truth_mumuTrigNoMassCutMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_truth_mumuTrigNoMassCut");
     TH1F* h_mass_truth_mumuTrigNoMassCutMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_truth_mumuTrigNoMassCut");
     TH1F* h_mass_truth_mumuTrigNoMassCutMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_truth_mumuTrigNoMassCut");
-    TH1F* h_mass_truth_mumuTrigNoMassCutMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_truth_mumuTrigNoMassCut");
+//    TH1F* h_mass_truth_mumuTrigNoMassCutMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_truth_mumuTrigNoMassCut");
 
     TCanvas *Canvas_truth_mumuTrigNoMassCutMass = new TCanvas("Canvas_truth_mumuTrigNoMassCutMass", "Canvas_truth_mumuTrigNoMassCutMass",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -3148,11 +3149,11 @@ void triggerEfficiencyPlotMacro() {
     h_mass_truth_mumuTrigNoMassCutMass_ctau100->SetMarkerSize(1);
     h_mass_truth_mumuTrigNoMassCutMass_ctau100->Draw("HIST p same");
 
-    h_mass_truth_mumuTrigNoMassCutMass_ctau1000->SetLineColor(4);
-    h_mass_truth_mumuTrigNoMassCutMass_ctau1000->SetMarkerColor(4);
-    h_mass_truth_mumuTrigNoMassCutMass_ctau1000->SetMarkerStyle(3);
-    h_mass_truth_mumuTrigNoMassCutMass_ctau1000->SetMarkerSize(1);
-    h_mass_truth_mumuTrigNoMassCutMass_ctau1000->Draw("HIST p same");
+//    h_mass_truth_mumuTrigNoMassCutMass_ctau1000->SetLineColor(4);
+//    h_mass_truth_mumuTrigNoMassCutMass_ctau1000->SetMarkerColor(4);
+//    h_mass_truth_mumuTrigNoMassCutMass_ctau1000->SetMarkerStyle(3);
+//    h_mass_truth_mumuTrigNoMassCutMass_ctau1000->SetMarkerSize(1);
+//    h_mass_truth_mumuTrigNoMassCutMass_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_mumuTrigNoMassCutMass = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_truth_mumuTrigNoMassCutMass->SetBorderSize(0);
@@ -3182,11 +3183,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_mumuTrigNoMassCutMass->SetMarkerStyle(2);
     entry_truth_mumuTrigNoMassCutMass->SetMarkerSize(2);
     entry_truth_mumuTrigNoMassCutMass->SetTextFont(42);
-    entry_truth_mumuTrigNoMassCutMass = leg_truth_mumuTrigNoMassCutMass->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_mumuTrigNoMassCutMass->SetMarkerColor(4);
-    entry_truth_mumuTrigNoMassCutMass->SetMarkerStyle(3);
-    entry_truth_mumuTrigNoMassCutMass->SetMarkerSize(2);
-    entry_truth_mumuTrigNoMassCutMass->SetTextFont(42);
+//    entry_truth_mumuTrigNoMassCutMass = leg_truth_mumuTrigNoMassCutMass->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_mumuTrigNoMassCutMass->SetMarkerColor(4);
+//    entry_truth_mumuTrigNoMassCutMass->SetMarkerStyle(3);
+//    entry_truth_mumuTrigNoMassCutMass->SetMarkerSize(2);
+//    entry_truth_mumuTrigNoMassCutMass->SetTextFont(42);
     leg_truth_mumuTrigNoMassCutMass->Draw("HIST");
 
     Canvas_truth_mumuTrigNoMassCutMass->Modified();
@@ -3201,7 +3202,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_mass_truth_L2muTrigMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_truth_L2muTrig");
     TH1F* h_mass_truth_L2muTrigMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_truth_L2muTrig");
     TH1F* h_mass_truth_L2muTrigMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_truth_L2muTrig");
-    TH1F* h_mass_truth_L2muTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_truth_L2muTrig");
+//    TH1F* h_mass_truth_L2muTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_truth_L2muTrig");
 
     TCanvas *Canvas_truth_L2muTrigMass = new TCanvas("Canvas_truth_L2muTrigMass", "Canvas_truth_L2muTrigMass",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -3258,11 +3259,11 @@ void triggerEfficiencyPlotMacro() {
     h_mass_truth_L2muTrigMass_ctau100->SetMarkerSize(1);
    h_mass_truth_L2muTrigMass_ctau100->Draw("HIST p same");
 
-    h_mass_truth_L2muTrigMass_ctau1000->SetLineColor(4);
-    h_mass_truth_L2muTrigMass_ctau1000->SetMarkerColor(4);
-    h_mass_truth_L2muTrigMass_ctau1000->SetMarkerStyle(3);
-    h_mass_truth_L2muTrigMass_ctau1000->SetMarkerSize(1);
-    h_mass_truth_L2muTrigMass_ctau1000->Draw("HIST p same");
+//    h_mass_truth_L2muTrigMass_ctau1000->SetLineColor(4);
+//    h_mass_truth_L2muTrigMass_ctau1000->SetMarkerColor(4);
+//    h_mass_truth_L2muTrigMass_ctau1000->SetMarkerStyle(3);
+//    h_mass_truth_L2muTrigMass_ctau1000->SetMarkerSize(1);
+//    h_mass_truth_L2muTrigMass_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_L2muTrigMass = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_truth_L2muTrigMass->SetBorderSize(0);
@@ -3292,11 +3293,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_L2muTrigMass->SetMarkerStyle(2);
     entry_truth_L2muTrigMass->SetMarkerSize(2);
     entry_truth_L2muTrigMass->SetTextFont(42);
-    entry_truth_L2muTrigMass = leg_truth_L2muTrigMass->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_L2muTrigMass->SetMarkerColor(4);
-    entry_truth_L2muTrigMass->SetMarkerStyle(3);
-    entry_truth_L2muTrigMass->SetMarkerSize(2);
-    entry_truth_L2muTrigMass->SetTextFont(42);
+//    entry_truth_L2muTrigMass = leg_truth_L2muTrigMass->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_L2muTrigMass->SetMarkerColor(4);
+//    entry_truth_L2muTrigMass->SetMarkerStyle(3);
+//    entry_truth_L2muTrigMass->SetMarkerSize(2);
+//    entry_truth_L2muTrigMass->SetTextFont(42);
     leg_truth_L2muTrigMass->Draw("HIST");
 
     Canvas_truth_L2muTrigMass->Modified();
@@ -3309,7 +3310,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_mass_truth_muOrL2muTrigMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_truth_muOrL2muTrig");
     TH1F* h_mass_truth_muOrL2muTrigMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_truth_muOrL2muTrig");
     TH1F* h_mass_truth_muOrL2muTrigMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_truth_muOrL2muTrig");
-    TH1F* h_mass_truth_muOrL2muTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_truth_muOrL2muTrig");
+//    TH1F* h_mass_truth_muOrL2muTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_truth_muOrL2muTrig");
 
     TCanvas *Canvas_truth_muOrL2muTrigMass = new TCanvas("Canvas_truth_muOrL2muTrigMass", "Canvas_truth_muOrL2muTrigMass",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -3366,11 +3367,11 @@ void triggerEfficiencyPlotMacro() {
     h_mass_truth_muOrL2muTrigMass_ctau100->SetMarkerSize(1);
     h_mass_truth_muOrL2muTrigMass_ctau100->Draw("HIST p same");
 
-    h_mass_truth_muOrL2muTrigMass_ctau1000->SetLineColor(4);
-    h_mass_truth_muOrL2muTrigMass_ctau1000->SetMarkerColor(4);
-    h_mass_truth_muOrL2muTrigMass_ctau1000->SetMarkerStyle(3);
-    h_mass_truth_muOrL2muTrigMass_ctau1000->SetMarkerSize(1);
-    h_mass_truth_muOrL2muTrigMass_ctau1000->Draw("HIST p same");
+//    h_mass_truth_muOrL2muTrigMass_ctau1000->SetLineColor(4);
+//    h_mass_truth_muOrL2muTrigMass_ctau1000->SetMarkerColor(4);
+//    h_mass_truth_muOrL2muTrigMass_ctau1000->SetMarkerStyle(3);
+//    h_mass_truth_muOrL2muTrigMass_ctau1000->SetMarkerSize(1);
+//    h_mass_truth_muOrL2muTrigMass_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_muOrL2muTrigMass = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_truth_muOrL2muTrigMass->SetBorderSize(0);
@@ -3400,11 +3401,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_muOrL2muTrigMass->SetMarkerStyle(2);
     entry_truth_muOrL2muTrigMass->SetMarkerSize(2);
     entry_truth_muOrL2muTrigMass->SetTextFont(42);
-    entry_truth_muOrL2muTrigMass = leg_truth_muOrL2muTrigMass->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_muOrL2muTrigMass->SetMarkerColor(4);
-    entry_truth_muOrL2muTrigMass->SetMarkerStyle(3);
-    entry_truth_muOrL2muTrigMass->SetMarkerSize(2);
-    entry_truth_muOrL2muTrigMass->SetTextFont(42);
+//    entry_truth_muOrL2muTrigMass = leg_truth_muOrL2muTrigMass->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_muOrL2muTrigMass->SetMarkerColor(4);
+//    entry_truth_muOrL2muTrigMass->SetMarkerStyle(3);
+//    entry_truth_muOrL2muTrigMass->SetMarkerSize(2);
+//    entry_truth_muOrL2muTrigMass->SetTextFont(42);
     leg_truth_muOrL2muTrigMass->Draw("HIST");
 
     Canvas_truth_muOrL2muTrigMass->Modified();
@@ -3417,7 +3418,7 @@ void triggerEfficiencyPlotMacro() {
     TH1F* h_mass_truth_ORTrigMass_ctau1    = (TH1F*)inFile1->Get("h_diMuonMass_truth_ORTrig");
     TH1F* h_mass_truth_ORTrigMass_ctau10   = (TH1F*)inFile2->Get("h_diMuonMass_truth_ORTrig");
     TH1F* h_mass_truth_ORTrigMass_ctau100  = (TH1F*)inFile3->Get("h_diMuonMass_truth_ORTrig");
-    TH1F* h_mass_truth_ORTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_truth_ORTrig");
+//    TH1F* h_mass_truth_ORTrigMass_ctau1000 = (TH1F*)inFile4->Get("h_diMuonMass_truth_ORTrig");
 
     TCanvas *Canvas_truth_ORTrigMass = new TCanvas("Canvas_truth_ORTrigMass", "Canvas_truth_ORTrigMass",0,0,1280,925);
     gStyle->SetOptStat(0);
@@ -3474,11 +3475,11 @@ void triggerEfficiencyPlotMacro() {
     h_mass_truth_ORTrigMass_ctau100->SetMarkerSize(1);
     h_mass_truth_ORTrigMass_ctau100->Draw("HIST p same");
 
-    h_mass_truth_ORTrigMass_ctau1000->SetLineColor(4);
-    h_mass_truth_ORTrigMass_ctau1000->SetMarkerColor(4);
-    h_mass_truth_ORTrigMass_ctau1000->SetMarkerStyle(3);
-    h_mass_truth_ORTrigMass_ctau1000->SetMarkerSize(1);
-    h_mass_truth_ORTrigMass_ctau1000->Draw("HIST p same");
+//    h_mass_truth_ORTrigMass_ctau1000->SetLineColor(4);
+//    h_mass_truth_ORTrigMass_ctau1000->SetMarkerColor(4);
+//    h_mass_truth_ORTrigMass_ctau1000->SetMarkerStyle(3);
+//    h_mass_truth_ORTrigMass_ctau1000->SetMarkerSize(1);
+//    h_mass_truth_ORTrigMass_ctau1000->Draw("HIST p same");
 
     TLegend *leg_truth_ORTrigMass = new TLegend(0.80,0.70,0.87,0.90,NULL,"brNDC");
     leg_truth_ORTrigMass->SetBorderSize(0);
@@ -3508,11 +3509,11 @@ void triggerEfficiencyPlotMacro() {
     entry_truth_ORTrigMass->SetMarkerStyle(2);
     entry_truth_ORTrigMass->SetMarkerSize(2);
     entry_truth_ORTrigMass->SetTextFont(42);
-    entry_truth_ORTrigMass = leg_truth_ORTrigMass->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
-    entry_truth_ORTrigMass->SetMarkerColor(4);
-    entry_truth_ORTrigMass->SetMarkerStyle(3);
-    entry_truth_ORTrigMass->SetMarkerSize(2);
-    entry_truth_ORTrigMass->SetTextFont(42);
+//    entry_truth_ORTrigMass = leg_truth_ORTrigMass->AddEntry("ms2_ctau1000", "c_{#tau} = 1000 mm", "P");
+//    entry_truth_ORTrigMass->SetMarkerColor(4);
+//    entry_truth_ORTrigMass->SetMarkerStyle(3);
+//    entry_truth_ORTrigMass->SetMarkerSize(2);
+//    entry_truth_ORTrigMass->SetTextFont(42);
     leg_truth_ORTrigMass->Draw("HIST");
 
     Canvas_truth_ORTrigMass->Modified();
