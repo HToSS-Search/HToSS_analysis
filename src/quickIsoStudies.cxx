@@ -45,11 +45,11 @@ float deltaR(float eta1, float phi1, float eta2, float phi2);
 namespace fs = boost::filesystem;
 
 // Lepton cut variables
-const float looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {5.}, looseMuonRelIso_ {100.};
+const float looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {30.}, looseMuonRelIso_ {100.}; //leading muon is 30, previously 5
 const float invZMassCut_ {10.0}, chsMass_{0.13957018};
 
 // Diparticle cuts
-double maxDileptonDeltaR_ {0.2}, maxChsDeltaR_ {0.4};
+double maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4}; // previously 0.2 for dilepton (unsure why)
 double higgsTolerence_ {10.};
 
 int main(int argc, char* argv[]) {
@@ -309,9 +309,11 @@ int main(int argc, char* argv[]) {
       datasetChain->SetAutoSave(0);
 
       std::cerr << "Processing dataset " << dataset->name() << std::endl;
+      int flow = 1;
+      int fhigh = 10000; //to be changed to take input from condor
       if (!usePostLepTree) {
 	if (!datasetFilled) {
-	  if (!dataset->fillChain(datasetChain)) {
+	  if (!dataset->fillChain(datasetChain, flow, fhigh)) {
 	    std::cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
 	    continue;
 	  }
@@ -1011,10 +1013,10 @@ std::vector<int> getLooseMuons(const AnalysisEvent& event) {
     std::vector<int> muons;
     for (int i{0}; i < event.numMuonPF2PAT; i++)  {
        if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
-           if ( event.muonPF2PATPt[i] >= muons.empty() ? looseMuonPtLeading_ : looseMuonPt_) muons.emplace_back(i);
+           if ( event.muonPF2PATPt[i] >= (muons.empty() ? looseMuonPtLeading_ : looseMuonPt_)) muons.emplace_back(i); //storing indices
         }
     }
-    return muons;
+    return muons; //safe to assume pT ordered if PF PAT collection is pT ordered -> pls check
 }
 
 std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) {
@@ -1033,26 +1035,31 @@ std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) {
 
 
 bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) {
-    for ( unsigned int i{0}; i < muons.size(); i++ ) {
-        for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
-
-            if (event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue;
+    //should iterate over muons collection indices
+    //for ( unsigned int i{0}; i < muons.size(); i++ ) {
+    //    for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
+    for (int i : muons) {
+        for (int j : muons) {
+            if (j <= i) continue;
+            if (event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue; //since pT ordered, i is highest pT
             if (event.muonPF2PATPt[j] <= looseMuonPt_) continue;
 
-            if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
+            if (event.muonPF2PATCharge[i] * event.muonPF2PATCharge[j] >= 0) continue;
 
-            TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
-            TLorentzVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
+            TLorentzVector lepton1{event.muonPF2PATPX[i], event.muonPF2PATPY[i], event.muonPF2PATPZ[i], event.muonPF2PATE[i]};
+            TLorentzVector lepton2{event.muonPF2PATPX[j], event.muonPF2PATPY[j], event.muonPF2PATPZ[j], event.muonPF2PATE[j]};
             double delR { lepton1.DeltaR(lepton2) };
             if ( delR < maxDileptonDeltaR_  ) {
+                if (lepton1.Pt() < lepton2.Pt()) std::cout << "Something fishy here" << std::endl; 
                 event.zPairLeptons.first  = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
                 event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
-                event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[i] : muons[j];
-                event.zPairIndex.second  = lepton1.Pt() > lepton2.Pt() ? muons[j] : muons[i];
-                event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
-                event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
+                event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? i : j;
+                event.zPairIndex.second  = lepton1.Pt() > lepton2.Pt() ? j : i;
+                event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[i];
+                event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[j];
 
                 event.mumuTrkIndex = getMuonTrackPairIndex(event);
+                if (event.mumuTrkIndex < 0) std::cout << "Something fishy here too" << std::endl; 
 
 //                if ( (event.muonTkPairPF2PATTkVtxChi2[event.mumuTrkIndex])/(event.muonTkPairPF2PATTkVtxNdof[event.mumuTrkIndex]+1.0e-06) > 10. ) continue;
 
@@ -1124,6 +1131,7 @@ bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs) {
 }
 
 int getMuonTrackPairIndex(const AnalysisEvent& event) { 
+// track pairs with opp. charge and has "valid" RecoVtx (implemented via KalmanVertexFitter)
     for (int i{0}; i < event.numMuonTrackPairsPF2PAT; i++) {
         if (event.muonTkPairPF2PATIndex1[i] == event.zPairIndex.first && event.muonTkPairPF2PATIndex2[i] == event.zPairIndex.second) return i;
     }

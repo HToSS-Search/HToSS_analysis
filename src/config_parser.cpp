@@ -119,6 +119,7 @@ void Parser::parse_files(const std::vector<std::string> files,
                               root["label"].as<std::string>(),
                               root["plot_type"].as<std::string>(),
                               isMC ? "" : root["trigger_flag"].as<std::string>());
+        //This new element is constructed in place using args as the arguments for its constructor
 
         // If we are doing NPLs, add the NPL version of this dataset
         if (NPL) {

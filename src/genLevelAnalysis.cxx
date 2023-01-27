@@ -330,9 +330,11 @@ int main(int argc, char* argv[])
         datasetFilled = false;
         TChain* datasetChain{new TChain{dataset->treeName().c_str()}};
         datasetChain->SetAutoSave(0);
+        int flow = 1;
+        int fhigh = 10000; //to be changed to take input from condor
 
         if (!datasetFilled) {
-            if (!dataset->fillChain(datasetChain)) {
+            if (!dataset->fillChain(datasetChain, flow, fhigh)) {
                 std::cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
                 continue;
             }

@@ -30,9 +30,11 @@ Plots::~Plots() {
         delete plotPoint[i].plotHist;
 }
 
-std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisEvent&)>> Plots::getFncMap() const {
+std::unordered_map<std::string, std::function<std::vector<float>(const AnalysisEvent&)>> Plots::getFncMap() const { 
+// std::function<std::vector<float>(const AnalysisEvent&)> -> a function which returns vector float and takes AnalysisEvent as arg
+// this function returns an unordered mapping between function and string
     return {
-        {"lep1Pt", [](const AnalysisEvent& event) -> std::vector<float> {
+        {"lep1Pt", [](const AnalysisEvent& event) -> std::vector<float> { //info after arrow defines return type
              if (event.electronIndexTight.size() > 1) {
                  TLorentzVector tempVec{
                      event.elePF2PATPX[event.electronIndexTight[0]],

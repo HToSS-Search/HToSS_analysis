@@ -60,7 +60,7 @@ class Dataset {
     std::string getPlotType() {
         return plotType_;
     }
-    int fillChain(TChain* chain);
+    int fillChain(TChain* chain, int flow, int fhigh);
     float getDatasetWeight(double);
     std::string getTriggerFlag() {
         return triggerFlag_;

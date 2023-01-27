@@ -276,11 +276,13 @@ int main(int argc, char* argv[])
         datasetFilled = false;
         TChain* datasetChain{new TChain{dataset->treeName().c_str()}};
         datasetChain->SetAutoSave(0);
+        int flow = 1;
+        int fhigh = 10000; //to be changed to take input from condor
 
         cerr << "Processing dataset " << dataset->name() << endl;
         if (!usePostLepTree) {
             if (!datasetFilled) {
-                if (!dataset->fillChain(datasetChain)) {
+                if (!dataset->fillChain(datasetChain, flow, fhigh)) {
                     cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
                     continue;
                 }

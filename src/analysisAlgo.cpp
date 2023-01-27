@@ -264,7 +264,7 @@ void AnalysisAlgo::parseCommandLineArguements(int argc, char* argv[]){
 
 void AnalysisAlgo::setupSystematics()
 {
-    systNames.emplace_back("");
+    systNames.emplace_back(""); //without any systematic change (my guess)
     systNames.emplace_back("__trig__plus");
     systNames.emplace_back("__trig__minus");
     systNames.emplace_back("__jer__plus");
@@ -350,7 +350,7 @@ void AnalysisAlgo::setupSystematics()
 }
 
 void AnalysisAlgo::setupCuts() {
-    // Make cuts object. The methods in it should perhaps just be i nthe
+    // Make cuts object. The methods in it should perhaps just be in the
     // AnalysisEvent class....
     cutObj = new Cuts{plots, plots, invertLepCharge, invertLepIso, is2016_, is2016APV_, is2018_};
 
@@ -477,7 +477,8 @@ void AnalysisAlgo::runMainAnalysis() {
                             }
                             plotsMap[systNames[systInd] + channel][(histoName)] = {};
                             for (unsigned j{0}; j < stageNames.size(); j++) {
-                                plotsMap[systNames[systInd] + channel] [histoName][stageNames[j].first] = std::make_shared<Plots>(plotTitles, plotNames, xMin, xMax, nBins, fillExp, xAxisLabels, cutStage, j, histoName + "_" + stageNames[j].first + systNames[systInd] + "_" + channel);
+                                plotsMap[systNames[systInd] + channel] [histoName][stageNames[j].first] = std::make_shared<Plots>(plotTitles, plotNames, xMin, xMax, nBins, fillExp, xAxisLabels, cutStage, j, histoName + "_" + stageNames[j].first + systNames[systInd] + "_" + channel); //map of a map of a map is essentially a 3d array
+                                //plotsMap[systName+channel][histoName - dataset name][Level of event selection]
                             }
                         }
                     } // end cutFlow find loop
@@ -494,9 +495,11 @@ void AnalysisAlgo::runMainAnalysis() {
 
             // If making either plots, make cut flow object.
             std::cerr << "Processing dataset " << dataset->name() << std::endl;
+            int flow = 1;
+            int fhigh = 10000; //has to be changed to take as input for condor jobs
             if (!usePostLepTree) {
                 if (!datasetFilled) {
-                    if (!dataset->fillChain(datasetChain)) {
+                    if (!dataset->fillChain(datasetChain, flow, fhigh)) {
                         std::cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
                         continue;
                     }
@@ -505,7 +508,7 @@ void AnalysisAlgo::runMainAnalysis() {
             }
             else {
                 std::string inputPostfix{};
-                inputPostfix += postfix;
+                inputPostfix += postfix; //output directory for plots
 
                 if (invertLepCharge && !invertLepIso) inputPostfix += "invLepCharge";
                 else if (invertLepIso && !invertLepCharge) inputPostfix += "invLepIso";
@@ -762,9 +765,9 @@ void AnalysisAlgo::runMainAnalysis() {
                hasLHE = false;
             }
             TMVA::Timer* lEventTimer{new TMVA::Timer{boost::numeric_cast<int>(numberOfEvents), "Running over dataset ...", false}};
-            lEventTimer->DrawProgressBar(0, "");
+            lEventTimer->DrawProgressBar(0, ""); 
             std::cout << "Number of events: " << numberOfEvents << std::endl;
-            for (int i{0}; i < numberOfEvents; i++) {
+            for (int i{0}; i < numberOfEvents; i++) { //Analysis of events start here? 
                 std::stringstream lSStrFoundEvents;
                 lSStrFoundEvents << foundEvents;
                 lEventTimer->DrawProgressBar(i, ("Found " + lSStrFoundEvents.str() + " events."));

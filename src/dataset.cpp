@@ -64,11 +64,12 @@ Dataset::Dataset(std::string name, float lumi, bool isMC, float crossSection, st
 // Method that fills a TChain with the files that will be used for the analysis.
 // Returns 1 if succesful, otherwise returns 0. This can probably be largely
 // ignored.
-int Dataset::fillChain(TChain* chain) {
+int Dataset::fillChain(TChain* chain,int flow, int fhigh) {
     for (const auto& location : locations_) {
         const fs::path dir{location};
         if (fs::is_directory(dir))
-            chain->Add(TString{location + "*.root"});
+            //chain->Add(TString{location + "*.root"});
+            {for (int i=flow; i<=fhigh; i++) chain->Add(TString{location + Form("output_%d.root",i)});}
         else {
             std::cout << "ERROR: " << location << "is not a valid directory" << std::endl;
             return 0;
