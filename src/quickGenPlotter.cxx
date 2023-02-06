@@ -319,7 +319,44 @@ int main(int argc, char* argv[]) {
     TH1F* h_subLeadingChsEta_truth              {new TH1F("h_subLeadingChsEta_truth",  "SubLeading truth reco Chs; #eta; Events",    300, -3., 3.)};
     TH1F* h_ChsdelR_truth                       {new TH1F("h_ChsdelR_truth",               "#DeltaR truth reco; #DeltaR(chs,chs); Events",      100, 0., 1.0)};
     TH1F* h_diChsMass_truth                     {new TH1F("h_diChsMass_truth",         "Mass dist. truth reco; m_{chs,chs}; Events", 200, 0., 10.)}; 
+    
+    TH1F* h_genleadingChs_TrksInCone_AtTail            {new TH1F("h_genleadingChs_TrksInCone_AtTail", "Hadronic Tracks around gen leading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    
+    TH1F* h_gensubLeadingChs_TrksInCone_AtTail         {new TH1F("h_gensubLeadingChs_TrksInCone_AtTail", "Hadronic Tracks around gen subleading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    
+    TH1F* h_genleadingChs_TrksInCone_AtPeaks            {new TH1F("h_genleadingChs_TrksInCone_AtPeaks", "Hadronic Tracks around gen leading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    
+    TH1F* h_gensubLeadingChs_TrksInCone_AtPeaks         {new TH1F("h_gensubLeadingChs_TrksInCone_AtPeaks", "Hadronic Tracks around gen subleading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    
+    TH1F* h_genleadingChs_TrksInCone_AtTail_Tight            {new TH1F("h_genleadingChs_TrksInCone_AtTail_Tight", "Tight Hadronic Tracks around gen leading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    
+    TH1F* h_gensubLeadingChs_TrksInCone_AtTail_Tight         {new TH1F("h_gensubLeadingChs_TrksInCone_AtTail_Tight", "Tight Hadronic Tracks around gen subleading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    
+    TH1F* h_genleadingChs_TrksInCone_AtPeaks_Tight            {new TH1F("h_genleadingChs_TrksInCone_AtPeaks_Tight", "Tight Hadronic Tracks around gen leading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    
+    TH1F* h_gensubLeadingChs_TrksInCone_AtPeaks_Tight         {new TH1F("h_gensubLeadingChs_TrksInCone_AtPeaks_Tight", "Tight Hadronic Tracks around gen subleading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    
+    TH1F* h_genleadingChs_PhTrksInCone_AtTail            {new TH1F("h_genleadingChs_PhTrksInCone_AtTail", "Photon Tracks around gen leading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    
+    TH1F* h_gensubLeadingChs_PhTrksInCone_AtTail         {new TH1F("h_gensubLeadingChs_PhTrksInCone_AtTail", "Photon Tracks around gen subleading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    
+    TH1F* h_genleadingChs_PhTrksInCone_AtPeaks            {new TH1F("h_genleadingChs_PhTrksInCone_AtPeaks", "Photon Tracks around gen leading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    
+    TH1F* h_gensubLeadingChs_PhTrksInCone_AtPeaks         {new TH1F("h_gensubLeadingChs_PhTrksInCone_AtPeaks", "Photon Tracks around gen subleading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    
+    TH1F* h_genleadingChs_PhGenInCone_AtTail            {new TH1F("h_genleadingChs_PhGenInCone_AtTail", "Gen. Photons around gen leading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    TH1F* h_gensubLeadingChs_PhGenInCone_AtTail         {new TH1F("h_gensubLeadingChs_PhGenInCone_AtTail", "Gen. Photons around gen subleading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    TH1F* h_genleadingChs_PhGenInCone_AtPeaks            {new TH1F("h_genleadingChs_PhGenInCone_AtPeaks", "Gen. Photons around gen leading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    TH1F* h_gensubLeadingChs_PhGenInCone_AtPeaks         {new TH1F("h_gensubLeadingChs_PhGenInCone_AtPeaks", "Gen. Photons around gen subleading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    
+    TH1F* h_leadingChs_PhGenInCone_AtTail            {new TH1F("h_leadingChs_PhGenInCone_AtTail", "Gen. Photons around reco leading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    TH1F* h_subLeadingChs_PhGenInCone_AtTail         {new TH1F("h_subLeadingChs_PhGenInCone_AtTail", "Gen. Photons around reco subleading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    TH1F* h_leadingChs_PhGenInCone_AtPeaks            {new TH1F("h_leadingChs_PhGenInCone_AtPeaks", "Gen. Photons around reco leading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    TH1F* h_subLeadingChs_PhGenInCone_AtPeaks         {new TH1F("h_subLeadingChs_PhGenInCone_AtPeaks", "Gen. Photons around reco subleading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    
     TH2F* h_diChsMass_truth_dR                  {new TH2F("h_diChsMass_truth_dR","Mass dist. truth reco; m_{chs,chs}; #Delta R_{chs,chs}", 200, 0., 10., 100, 0., 1.)}; 
+    
+    
     TH2F* h_diChsMass_truth_leadingChsPt_truth      {new TH2F("h_diChsMass_truth_leadingChsPt_truth","Mass dist. truth reco; m_{chs,chs}; Leading CHS trk p_{T} truth (GeV)", 200, 0., 10., 200, 0., 100.)}; 
     TH2F* h_diChsMass_truth_subLeadingChsPt_truth   {new TH2F("h_diChsMass_truth_subLeadingChsPt_truth", "Mass dist. truth reco; m_{chs,chs}; subLeading CHS trk p_{T} truth (GeV)", 200, 0., 10., 200, 0., 100.)};
     TH2F* h_leadingChsPt_truth_genleadingChsPt_AtTail   {new TH2F("h_leadingChsPt_truth_genleadingChsPt_AtTail", "Reco p_{T} and Gen p_{T} at m_{chs,chs}<1.5 GeV; leading CHS trk p_{T} truth (GeV); gen leading had. p_{T} (GeV)", 200, 0., 100., 200, 0., 100.)};
@@ -784,12 +821,15 @@ int main(int argc, char* argv[]) {
                   //std::cout<<"Accessing non-final state particle!"<<std::endl;
                   continue;
                 }*/ // this is an addition?
-                /*if (status != 1) {
-                  std::cout<<"Non-final state particle (id, status, motherId, daughterId1, daughterId2, eventno.) - "<<pid<<", "<<status<<", "<<motherId<<", "<<event.genParDaughterId1[k]<<", "<<event.genParDaughterId2[k]<<", "<<i<<std::endl;
-                }*/
+                if ((status != 1)&&(verbose_)) {
+                  std::cout<<"Non-final state particle (id, status, motherId, daughterId1, daughterId2, eventno.) - "<<event.genParId[k]<<", "<<status<<", "<<event.genParMotherId[k]<<", "<<event.genParDaughterId1[k]<<", "<<event.genParDaughterId2[k]<<", "<<i<<std::endl;
+                }
+								if (((pid == 130)||(pid==310)||(pid==311))&&(verbose_)) {
+                  std::cout<<"Kaons (id, status, motherId, daughterId1, daughterId2, eventno.) - "<<event.genParId[k]<<", "<<status<<", "<<event.genParMotherId[k]<<", "<<event.genParDaughterId1[k]<<", "<<event.genParDaughterId2[k]<<", "<<i<<std::endl;
+                }
                 const bool hasScalarAncestry {shf.scalarAncestry(event, k, 9000006, verbose_)}; //checks if at any point, it comes from scalar
 
-                if ( pid == 13 && motherId == 9000006 && status == 1) {
+                if ( pid == 13 && hasScalarAncestry && status == 1) {
                     genMuonIndex.emplace_back(k);
                 }
                 //else if ( pid == 211 && (motherId < 6 || motherId == 21 || motherId == 9000006 ) ) { //checking if pion is coming from quarks, or gluon or scalar //most pions coming from meson decays though
@@ -805,14 +845,14 @@ int main(int argc, char* argv[]) {
                         genChsIndex.emplace_back(k);
                     }
                 }
-                else if ( pid == 130 && status == 1 ) {
+                else if ( pid == 130) {
                     if ( hasScalarAncestry ) {
                         genKlongIndex.emplace_back(k);
                         //genKaonIndex.emplace_back(k);
                         //genChsIndex.emplace_back(k);
                     }
                 }
-                else if ( pid == 310 && status == 1) {
+                else if ( pid == 310) {
                     if ( hasScalarAncestry ) {
                         genKshortIndex.emplace_back(k);
                         //genKaonIndex.emplace_back(k);
@@ -830,8 +870,8 @@ int main(int argc, char* argv[]) {
 
             p_genHadronicDecayFractions->Fill(1.0, bool (genPionIndex.size() >= 2) );
             p_genHadronicDecayFractions->Fill(2.0, bool (genKaonIndex.size() >= 2 ) );
-            p_genHadronicDecayFractions->Fill(3.0, bool (genKshortIndex.size() >= 2) );
-            p_genHadronicDecayFractions->Fill(4.0, bool (genKlongIndex.size() >= 2) );
+            p_genHadronicDecayFractions->Fill(3.0, bool (genKlongIndex.size() >= 2) );
+            p_genHadronicDecayFractions->Fill(4.0, bool (genKshortIndex.size() >= 2) );
             p_genHadronicDecayFractions->Fill(5.0, bool (genChargedKaonIndex.size() >= 2) );
 
             if ((genPionIndex.size() > 2) || (genKaonIndex.size() > 2 )  || (genKshortIndex.size() > 2) || (genChargedKaonIndex.size() > 2) ) std::cout<<"Event with more no. of daughters: "<<i<<std::endl;
@@ -947,7 +987,7 @@ int main(int argc, char* argv[]) {
             if ( genChsIndex.size() >= 2 ) {
                 bool firstLeading {false};
                 if ( event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ) firstLeading = true;
-                TLorentzVector genChs1, genChs2;
+                TLorentzVector genChs1, genChs2; //genChs1 is leading, genChs2 is subleading
                 if (firstLeading) {
                     genChs1.SetPtEtaPhiE(event.genParPt[genChsIndex[0]], event.genParEta[genChsIndex[0]], event.genParPhi[genChsIndex[0]], event.genParE[genChsIndex[0]]);
                     genChs2.SetPtEtaPhiE(event.genParPt[genChsIndex[1]], event.genParEta[genChsIndex[1]], event.genParPhi[genChsIndex[1]], event.genParE[genChsIndex[1]]);
@@ -991,15 +1031,30 @@ int main(int argc, char* argv[]) {
             if (genMuonIndex.size() < 2) continue;
             Cutflow->Fill(3, eventWeight);
             
-            TLorentzVector genChs1, genChs2;
-            genChs1.SetPtEtaPhiE(event.genParPt[genChsIndex[0]], event.genParEta[genChsIndex[0]], event.genParPhi[genChsIndex[0]], event.genParE[genChsIndex[0]]);
-            genChs2.SetPtEtaPhiE(event.genParPt[genChsIndex[1]], event.genParEta[genChsIndex[1]], event.genParPhi[genChsIndex[1]], event.genParE[genChsIndex[1]]);
+            bool firstLeading {false};
+                if ( event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ) firstLeading = true;
+                TLorentzVector genChs1, genChs2; //genChs1 is leading, genChs2 is subleading
+                if (firstLeading) {
+                    genChs1.SetPtEtaPhiE(event.genParPt[genChsIndex[0]], event.genParEta[genChsIndex[0]], event.genParPhi[genChsIndex[0]], event.genParE[genChsIndex[0]]);
+                    genChs2.SetPtEtaPhiE(event.genParPt[genChsIndex[1]], event.genParEta[genChsIndex[1]], event.genParPhi[genChsIndex[1]], event.genParE[genChsIndex[1]]);
+                }
+                else {
+                    genChs1.SetPtEtaPhiE(event.genParPt[genChsIndex[1]], event.genParEta[genChsIndex[1]], event.genParPhi[genChsIndex[1]], event.genParE[genChsIndex[1]]);
+                    genChs2.SetPtEtaPhiE(event.genParPt[genChsIndex[0]], event.genParEta[genChsIndex[0]], event.genParPhi[genChsIndex[0]], event.genParE[genChsIndex[0]]);
+                }
+            
             double match_dR = 0.03; //0.03 taken from MuonAnalyzer code used by MuonPOG
             //int mu1=-99, mu2=-99;
-            if ((genChsIndex.size() == 2) && (event.numPackedCands>=2)){ //Condition needed to avoid segmentation fault
-              int MatchedChs1Index = shf.MatchReco(genChsIndex[0], event, match_dR);
-              int MatchedChs2Index = shf.MatchReco(genChsIndex[1], event, match_dR);
-              
+            if ((genChsIndex.size() >= 2) && (event.numPackedCands>=2)) { //Condition needed to avoid segmentation fault
+              int MatchedChs1Index=-99, MatchedChs2Index=-99;
+              if (firstLeading) {
+                MatchedChs1Index = shf.MatchReco(genChsIndex[0], event, match_dR);
+                MatchedChs2Index = shf.MatchReco(genChsIndex[1], event, match_dR);
+              }
+              else {
+                MatchedChs1Index = shf.MatchReco(genChsIndex[1], event, match_dR);
+                MatchedChs2Index = shf.MatchReco(genChsIndex[0], event, match_dR);
+              }
               
               if ((MatchedChs1Index==MatchedChs2Index) && (MatchedChs1Index!=-99)) {
                 std::cout<<"Matched to same recos"<<std::endl;
@@ -1011,19 +1066,11 @@ int main(int argc, char* argv[]) {
               }
               
               if ((MatchedChs1Index<0)||(MatchedChs2Index<0)) {
-                   //std::cout<<"Two Matched CHS not found"<<std::endl;
-                   //std::cout<<"SOMETHING IS UP HERE TOO"<<std::endl;
-                   //std::cout<<"Indices-"<<genChsIndex[0]<<", "<<genChsIndex[1]<<std::endl;
-                   //std::cout<<"Pt of gen-"<<event.genParPt[genChsIndex[0]]<<", "<<event.genParPt[genChsIndex[1]]<<std::endl;
-                   //std::cout<<"Chs1, Chs2: "<<MatchedChs1Index<<", "<<MatchedChs2Index<<std::endl;
-                   //const TLorentzVector chs1_truth {event.packedCandsPx[leadingGenChsIndex], event.packedCandsPy[leadingGenChsIndex], event.packedCandsPz[leadingGenChsIndex], event.packedCandsE[leadingGenChsIndex]};
-                   //const TLorentzVector chs2_truth {event.packedCandsPx[subleadingGenChsIndex], event.packedCandsPy[subleadingGenChsIndex], event.packedCandsPz[subleadingGenChsIndex], event.packedCandsE[subleadingGenChsIndex]};
-                   
-                   
-                   h_genleadingChsPt_failed->Fill(genChs1.Pt()>genChs2.Pt() ? genChs1.Pt() : genChs2.Pt());
-                   h_gensubLeadingChsPt_failed->Fill(genChs1.Pt()>genChs2.Pt() ? genChs2.Pt() : genChs1.Pt());
-                   h_genleadingChsEta_failed->Fill(genChs1.Pt()>genChs2.Pt() ? genChs1.Eta() : genChs2.Eta());
-                   h_gensubLeadingChsEta_failed->Fill(genChs1.Pt()>genChs2.Pt() ? genChs2.Eta() : genChs1.Eta());
+                
+                   h_genleadingChsPt_failed->Fill(genChs1.Pt());
+                   h_gensubLeadingChsPt_failed->Fill(genChs2.Pt());
+                   h_genleadingChsEta_failed->Fill(genChs1.Eta());
+                   h_gensubLeadingChsEta_failed->Fill(genChs2.Eta());
                    h_genChsdelR_failed->Fill(genChs1.DeltaR(genChs2));
                    h_gendiChsMass_failed->Fill((genChs1+genChs2).M());
                    
@@ -1058,11 +1105,12 @@ int main(int argc, char* argv[]) {
               else {
                 //std::cout<<"Two Matched CHS found"<<std::endl;
                 //genChsIndex[0]
-                const int leadingGenChsIndex {genChs1.Pt()>genChs2.Pt() ? MatchedChs1Index : MatchedChs2Index};
+                //const int leadingGenChsIndex {genChs1.Pt()>genChs2.Pt() ? MatchedChs1Index : MatchedChs2Index};
                 
-                const int subleadingGenChsIndex {genChs1.Pt()>genChs2.Pt() ? MatchedChs2Index : MatchedChs1Index};
-                const TLorentzVector chs1_truth {event.packedCandsPx[leadingGenChsIndex], event.packedCandsPy[leadingGenChsIndex], event.packedCandsPz[leadingGenChsIndex], event.packedCandsE[leadingGenChsIndex]};
-                const TLorentzVector chs2_truth {event.packedCandsPx[subleadingGenChsIndex], event.packedCandsPy[subleadingGenChsIndex], event.packedCandsPz[subleadingGenChsIndex], event.packedCandsE[subleadingGenChsIndex]};
+                //const int subleadingGenChsIndex {genChs1.Pt()>genChs2.Pt() ? MatchedChs2Index : MatchedChs1Index};
+                
+                const TLorentzVector chs1_truth {event.packedCandsPx[MatchedChs1Index], event.packedCandsPy[MatchedChs1Index], event.packedCandsPz[MatchedChs1Index], event.packedCandsE[MatchedChs1Index]};
+                const TLorentzVector chs2_truth {event.packedCandsPx[MatchedChs2Index], event.packedCandsPy[MatchedChs2Index], event.packedCandsPz[MatchedChs2Index], event.packedCandsE[MatchedChs2Index]};
                 
                 h_leadingChsPt_truth->Fill(chs1_truth.Pt());
                 h_subLeadingChsPt_truth->Fill(chs2_truth.Pt());
@@ -1075,18 +1123,49 @@ int main(int argc, char* argv[]) {
                 h_diChsMass_truth_subLeadingChsPt_truth->Fill((chs2_truth+chs1_truth).M(), chs2_truth.Pt());
                 
                 if ((chs2_truth+chs1_truth).M()<=1.5) {
-                  h_leadingChsPt_truth_genleadingChsPt_AtTail->Fill(chs1_truth.Pt(), genChs1.Pt()>genChs2.Pt() ? genChs1.Pt() : genChs2.Pt()); //Note: chs1_truth corresponds to trk matched to leading gen chs
-                  h_leadingChsPtDiff_genleadingChsPt_AtTail->Fill((genChs1.Pt()>genChs2.Pt() ? genChs1.Pt() : genChs2.Pt()) - chs1_truth.Pt(), genChs1.Pt()>genChs2.Pt() ? genChs1.Pt() : genChs2.Pt());
-                  h_subLeadingChsPt_truth_gensubLeadingChsPt_AtTail->Fill(chs2_truth.Pt(), genChs1.Pt()>genChs2.Pt() ? genChs2.Pt() : genChs1.Pt());
-                  h_subLeadingChsPtDiff_gensubLeadingChsPt_AtTail->Fill((genChs1.Pt()>genChs2.Pt() ? genChs2.Pt() : genChs1.Pt()) - chs2_truth.Pt(), genChs1.Pt()>genChs2.Pt() ? genChs2.Pt() : genChs1.Pt());
+                  h_leadingChsPt_truth_genleadingChsPt_AtTail->Fill(chs1_truth.Pt(), genChs1.Pt()); //Note: chs1_truth corresponds to trk matched to leading gen chs
+                  h_leadingChsPtDiff_genleadingChsPt_AtTail->Fill(genChs1.Pt() - chs1_truth.Pt(), genChs1.Pt());
+                  h_subLeadingChsPt_truth_gensubLeadingChsPt_AtTail->Fill(chs2_truth.Pt(), genChs2.Pt());
+                  h_subLeadingChsPtDiff_gensubLeadingChsPt_AtTail->Fill(genChs2.Pt() - chs2_truth.Pt(), genChs2.Pt());
+                  
+                  h_genleadingChs_TrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 211, 0.03, true));
+                  h_gensubLeadingChs_TrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]],211, 0.03, true));
+                  
+                  h_genleadingChs_TrksInCone_AtTail_Tight->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]],211, 0.03, false));
+                  h_gensubLeadingChs_TrksInCone_AtTail_Tight->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]],211, 0.03, false));
+                  
+                  h_genleadingChs_PhTrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4, true));
+                  h_gensubLeadingChs_PhTrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4, true));
+                  
+                  h_genleadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4));
+                  h_gensubLeadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4));
+                  
+                  h_leadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, chs1_truth, event.packedCandsCharge[MatchedChs1Index], 22, 0.4));
+                  h_subLeadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, chs2_truth, event.packedCandsCharge[MatchedChs2Index], 22, 0.4));
+    
+                  
                   p_HadronicDecayFractions_AtTail->Fill(1.0, bool (genPionIndex.size() >= 2) );
                   p_HadronicDecayFractions_AtTail->Fill(2.0, bool (genKaonIndex.size() >= 2 ) );
                   p_HadronicDecayFractions_AtTail->Fill(3.0, bool (genKshortIndex.size() >= 2) );
                   p_HadronicDecayFractions_AtTail->Fill(4.0, bool (genChargedKaonIndex.size() >= 2) );
                 }
                 else {
-                  h_leadingChsPt_truth_genleadingChsPt_AtPeaks->Fill(chs1_truth.Pt(), genChs1.Pt()>genChs2.Pt() ? genChs1.Pt() : genChs2.Pt()); //Note: chs1_truth corresponds to trk matched to leading gen chs
-                  h_subLeadingChsPt_truth_gensubLeadingChsPt_AtPeaks->Fill(chs2_truth.Pt(), genChs1.Pt()>genChs2.Pt() ? genChs2.Pt() : genChs1.Pt());
+                  h_leadingChsPt_truth_genleadingChsPt_AtPeaks->Fill(chs1_truth.Pt(), genChs1.Pt()); //Note: chs1_truth corresponds to trk matched to leading gen chs
+                  h_subLeadingChsPt_truth_gensubLeadingChsPt_AtPeaks->Fill(chs2_truth.Pt(), genChs2.Pt());
+                  h_genleadingChs_TrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 211, 0.03, true));
+                  h_gensubLeadingChs_TrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 211, 0.03, true));
+                  
+                  h_genleadingChs_TrksInCone_AtPeaks_Tight->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 211, 0.03, false));
+                  h_gensubLeadingChs_TrksInCone_AtPeaks_Tight->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 211, 0.03, false));
+                  
+                  
+                  h_genleadingChs_PhTrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4, true));
+                  h_gensubLeadingChs_PhTrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4, true));
+                  h_genleadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4));
+                  h_gensubLeadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4));
+                  
+                  h_leadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, chs1_truth, event.packedCandsCharge[MatchedChs1Index], 22, 0.4));
+                  h_subLeadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, chs2_truth, event.packedCandsCharge[MatchedChs2Index], 22, 0.4));
                 }
               }
             }
@@ -1830,6 +1909,26 @@ int main(int argc, char* argv[]) {
     //h_subLeadingChsPtDiff_gensubLeadingChsPt_AtTail->Write();
     h_leadingChsPt_truth_genleadingChsPt_AtPeaks->Write();
     h_subLeadingChsPt_truth_gensubLeadingChsPt_AtPeaks->Write();
+    h_genleadingChs_TrksInCone_AtPeaks->Write();
+    h_genleadingChs_TrksInCone_AtTail->Write();
+    h_gensubLeadingChs_TrksInCone_AtPeaks->Write();
+    h_gensubLeadingChs_TrksInCone_AtTail->Write();
+    //h_genleadingChs_TrksInCone_AtPeaks_Tight->Write();
+    //h_genleadingChs_TrksInCone_AtTail_Tight->Write();
+    //h_gensubLeadingChs_TrksInCone_AtPeaks_Tight->Write();
+    //h_gensubLeadingChs_TrksInCone_AtTail_Tight->Write();
+    h_genleadingChs_PhTrksInCone_AtTail->Write();
+    h_gensubLeadingChs_PhTrksInCone_AtTail->Write();
+    h_genleadingChs_PhGenInCone_AtTail->Write();
+    h_gensubLeadingChs_PhGenInCone_AtTail->Write();
+    h_genleadingChs_PhTrksInCone_AtPeaks->Write();
+    h_gensubLeadingChs_PhTrksInCone_AtPeaks->Write();
+    h_genleadingChs_PhGenInCone_AtPeaks->Write();
+    h_gensubLeadingChs_PhGenInCone_AtPeaks->Write();
+    h_leadingChs_PhGenInCone_AtTail->Write();
+    h_subLeadingChs_PhGenInCone_AtTail->Write();
+    h_leadingChs_PhGenInCone_AtPeaks->Write();
+    h_subLeadingChs_PhGenInCone_AtPeaks->Write();
     p_HadronicDecayFractions_AtTail->Write();
     Cutflow->Write();
     

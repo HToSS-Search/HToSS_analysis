@@ -29,7 +29,10 @@ class SharedFunctions {
     int getChsTrackPairIndex(const AnalysisEvent& event);
     float deltaR(float eta1, float phi1, float eta2, float phi2);
     // for MCtruth
-    bool scalarAncestry(const AnalysisEvent& event, const Int_t k, const Int_t ancestorId, const bool verbose);
+    bool scalarAncestry(const AnalysisEvent& event, const Int_t& k, const Int_t& ancestorId, const bool verbose);
+    int nTrksInCone(const AnalysisEvent& event, const TLorentzVector& particle, const Int_t particle_ch, int trkPdgId, double dr_max, bool loose);
+    int nGenParsInCone(const AnalysisEvent& event, const TLorentzVector& particle, const Int_t particle_ch,int ParPdgId, double dr_max);
+    bool GenLevelCheck(const AnalysisEvent& event, const bool verbose);
     int MatchReco(int gen_ind, const AnalysisEvent& event, double dr_max);
     
     // Lepton cut variables

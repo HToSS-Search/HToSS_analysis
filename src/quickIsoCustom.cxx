@@ -219,9 +219,13 @@ int main(int argc, char* argv[]) {
 	      lEventTimer->DrawProgressBar(i,"");
 	     	if (i%1000==0) std::cout<<"Events processed - "<<i<<std::endl; 
 	      event.GetEntry(i);
+	      SharedFunctions shf{false};//true for using MCTruth
 	      
 	      float eventWeight = 1.;
-	      //eventWeight *= datasetWeight;
+	      eventWeight *= datasetWeight;
+				TString dname(dataset->name());
+				bool MCSignal = dname.Contains("HToSS");
+				if ((MCSignal)&&(!shf.GenLevelCheck(event,false))) continue;
         hists_1d_["Cutflow"]->Fill(1, eventWeight);
 
 	      const bool passSingleMuonTrigger {event.muTrig()}, passDimuonTrigger {event.mumuTrig()};
@@ -233,7 +237,6 @@ int main(int argc, char* argv[]) {
 	      if (!event.metFilters()) continue;
         hists_1d_["Cutflow"]->Fill(3, eventWeight);
 	      
-	      SharedFunctions shf{false};
        
         // Below for muons 
        /*event selection criteria for leptons*/

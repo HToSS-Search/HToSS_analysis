@@ -42,7 +42,7 @@ SharedFunctions::SharedFunctions(const bool MCTruth)
   
 SharedFunctions::~SharedFunctions()
 {}
-
+//Why not invoke / define "AnalysisEvent event" in constructor and access as global in all functions?
 std::vector<int> SharedFunctions::getLooseMuons(const AnalysisEvent& event) {
     std::vector<int> muons;
     for (int i{0}; i < event.numMuonPF2PAT; i++)  {
@@ -336,7 +336,7 @@ int SharedFunctions::getChsTrackPairIndex(const AnalysisEvent& event) { //needs 
     return -1;
 }
 
-bool SharedFunctions::scalarAncestry (const AnalysisEvent& event, const Int_t k, const Int_t ancestorId, const bool verbose = false) {
+bool SharedFunctions::scalarAncestry (const AnalysisEvent& event, const Int_t& k, const Int_t& ancestorId, const bool verbose = false) {
 
     const Int_t pdgId        { std::abs(event.genParId[k]) };
     const Int_t numDaughters { event.genParNumDaughters[k] };
@@ -345,13 +345,17 @@ bool SharedFunctions::scalarAncestry (const AnalysisEvent& event, const Int_t k,
     if (verbose) std::cout << "Going up the ladder ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
     if (motherId == 0 || motherIndex == -1) return false; // if no parent, then mother Id is null and there's no index, quit search
     else if (motherId == std::abs(ancestorId)) return true; // if parent is ancestor, return true
-    else if (motherId != pdgId) return false; // if parent is not an excited state of same particle, return false
+    else if ((pdgId != 130) && (pdgId != 310) && (pdgId != 311) && (motherId != pdgId)) {
+			return false; // if parent is not an excited state of same particle, return false except in the case of neutral kaons
+		}
     else if (motherIndex >= event.NGENPARMAX) return false; // index exceeds stored genParticle range, return false for safety
     else {
         
 //        debugCounter++;
 //        std::cout << "debugCounter: " << debugCounter << std::endl;
-        return scalarAncestry(event, motherIndex, ancestorId); // otherwise check mother's mother ...
+				
+	    	//if (verbose) std::cout << "Enters right condition ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
+        return scalarAncestry(event, motherIndex, ancestorId, verbose); // otherwise check mother's mother ...
     }
 }
 
@@ -382,6 +386,126 @@ int SharedFunctions::MatchReco(int gen_ind, const AnalysisEvent& event, double d
         return index;
     else
         return -99;
+}
+
+int SharedFunctions::nTrksInCone(const AnalysisEvent& event, const TLorentzVector& particle, const Int_t particle_ch, int trkPdgId,double dr_max, bool loose=true) {
+    int count = 0;
+    double tmpdR=999.;
+    for (int i=0;i < event.numPackedCands; i++) {
+        TLorentzVector trk{event.packedCandsPx[i], event.packedCandsPy[i], event.packedCandsPz[i], event.packedCandsE[i]};
+        if (loose) {
+          if (fabs(event.packedCandsPdgId[i]) != trkPdgId) continue;
+          if ((event.packedCandsCharge[i] != particle_ch)) continue;
+        }
+        else {
+          if (trk.Pt() < 0.5) continue;
+          if ((fabs(event.packedCandsPdgId[i]) != trkPdgId) || (event.packedCandsFromPV[i] < 2)) continue; //hadronic and not PU
+          if ((event.packedCandsCharge[i] != particle_ch)) continue;
+        }
+        tmpdR = particle.DeltaR(trk);
+        if ((tmpdR < dr_max)) count++;// include 0.03 cut to ensure not the same track as candidate
+        //if (std::abs(trk.Pt() - event.zPairLeptons.first.Pt()) < 0.5) continue; //if pt is within 0.5 GeV, then same track possibly
+        
+    }
+    return count;
+}
+
+int SharedFunctions::nGenParsInCone(const AnalysisEvent& event, const TLorentzVector& particle, const Int_t particle_ch, int ParPdgId, double dr_max) {
+    int count = 0;
+    double tmpdR=999.;
+    for (int i = 0; i < event.nGenPar; i++) {
+        int pid { std::abs(event.genParId[i]) };
+        int motherId { std::abs(event.genParMotherId[i]) };
+        int status {event.genParStatus[i]};
+        TLorentzVector GenPar;
+        GenPar.SetPtEtaPhiE(event.genParPt[i], event.genParEta[i], event.genParPhi[i], event.genParE[i]);
+        if (fabs(event.packedCandsPdgId[i]) != ParPdgId) continue;
+        if (GenPar.Pt() > 0.5) continue;
+        
+        tmpdR = particle.DeltaR(GenPar);
+        if ((tmpdR < dr_max)) count++;// include 0.03 cut to ensure not the same track as candidate
+        //if (std::abs(trk.Pt() - event.zPairLeptons.first.Pt()) < 0.5) continue; //if pt is within 0.5 GeV, then same track possibly
+        
+    }
+    return count;
+}
+
+bool SharedFunctions::GenLevelCheck(const AnalysisEvent& event, const bool verbose = false) {
+	std::vector<int> genMuonIndex;
+  std::vector<int> genMuonSortedIndex;
+  std::vector<int> genPionIndex;
+  std::vector<int> genKaonIndex;
+  std::vector<int> genChargedKaonIndex;
+  std::vector<int> genKshortIndex;
+  std::vector<int> genKlongIndex;
+  std::vector<int> genChsIndex;
+  // gen particle loop -> only check final state particles!
+  for ( Int_t k = 0; k < event.nGenPar; k++ ) {
+  	const int pid { std::abs(event.genParId[k]) };
+    const int motherId { std::abs(event.genParMotherId[k]) };
+    const int status {event.genParStatus[k]};
+    //bool verbose = false;
+                
+    if (verbose) {
+      std::cout<<"Starting the ladder for particle (id, idx, status) - "<<pid<<", "<<k<<", "<<status<<std::endl;
+                  
+    }
+                
+    //if (pid == motherId) std::cout<<"Interesting event! Event no. "<<i<<std::endl;
+    /*if (status != 1) {
+    	//std::cout<<"Accessing non-final state particle!"<<std::endl;
+      continue;
+  	}*/ // this is an addition?
+    if ((status != 1)&&(verbose)) {
+    	std::cout<<"Non-final state particle (id, status, motherId, daughterId1, daughterId2) - "<<event.genParId[k]<<", "<<status<<", "<<event.genParMotherId[k]<<", "<<event.genParDaughterId1[k]<<", "<<event.genParDaughterId2[k]<<", "<<std::endl;
+    }
+		if (((pid == 130)||(pid==310)||(pid==311))&&(verbose)) {
+     	std::cout<<"Kaons (id, status, motherId, daughterId1, daughterId2) - "<<event.genParId[k]<<", "<<status<<", "<<event.genParMotherId[k]<<", "<<event.genParDaughterId1[k]<<", "<<event.genParDaughterId2[k]<<", "<<std::endl;
+    }
+    const bool hasScalarAncestry {scalarAncestry(event, k, 9000006, verbose)}; //checks if at any point, it comes from scalar
+
+    if ( pid == 13 && status == 1 && hasScalarAncestry) {
+    	genMuonIndex.emplace_back(k);
+    }
+    //else if ( pid == 211 && (motherId < 6 || motherId == 21 || motherId == 9000006 ) ) { //checking if pion is coming from quarks, or gluon or scalar //most pions coming from meson decays though
+    else if ( pid == 211 && status == 1) {
+    //if ( hasScalarAncestry && motherId == 9000006 ) genPionIndex.emplace_back(k); //checking stricter criteria, just to see if pt dist changes; motherId not originally there
+    	if ( hasScalarAncestry ) genPionIndex.emplace_back(k); //low stats for pions comparitively
+      if ( hasScalarAncestry ) genChsIndex.emplace_back(k);
+  	}
+    else if ( pid == 321 && status == 1) {
+    	if ( hasScalarAncestry ) {
+      	genChargedKaonIndex.emplace_back(k);
+        //genKaonIndex.emplace_back(k);
+        genChsIndex.emplace_back(k);
+      }
+    }
+    else if ( pid == 130) {
+    	if ( hasScalarAncestry ) {
+      genKlongIndex.emplace_back(k);
+      //genKaonIndex.emplace_back(k);
+      //genChsIndex.emplace_back(k);
+    	}
+    }
+    else if ( pid == 310) {
+      if ( hasScalarAncestry ) {
+      	genKshortIndex.emplace_back(k);
+        //genKaonIndex.emplace_back(k);
+        //genChsIndex.emplace_back(k);
+      }
+    }
+    else if ( pid == 311 ) {
+    	if ( hasScalarAncestry ) {
+      	genKaonIndex.emplace_back(k);
+        //genKaonIndex.emplace_back(k);
+        //genChsIndex.emplace_back(k);
+      }
+    }
+  }	
+	if (verbose) std::cout<<"GenLevelCheck (muons, hadrons) - "<<genMuonIndex.size()<<", "<<genChsIndex.size()<<std::endl;
+	if (( genChsIndex.size() < 2 )||(genMuonIndex.size() < 2)) return false;
+	return true;
+
 }
 
 float SharedFunctions::deltaR(float eta1, float phi1, float eta2, float phi2){
