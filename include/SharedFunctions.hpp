@@ -48,6 +48,7 @@ class SharedFunctions {
     double maxChsDeltaR_;
     double scalarMassCut_;
     double higgsTolerence_;
+    float looseChsEta_;
 
     // debug flag
     bool useMCTruth_;

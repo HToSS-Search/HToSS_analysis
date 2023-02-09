@@ -307,6 +307,7 @@ int main(int argc, char* argv[]) {
 		hists_1d_["h_DiChHadPt"]->Write(); 
     hists_1d_["h_DiChHadMass"]->Write();
     hists_1d_["h_DiChHadDeltaRAtZeroIso"]->Write();      
+		hists_1d_["Cutflow"]->Write();
     outFile->Close();
 
 //  std::cout << "Max nGenPar: " << maxGenPars << std::endl;    

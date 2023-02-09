@@ -298,8 +298,23 @@ int main(int argc, char* argv[]) {
     //EvtSelHist->GetXaxis()->SetBinLabel(6, "Higgs window");
     
     
-    
-    
+		TH1F* h_leadingChsPVAscQuality_truth {new TH1F ("h_leadingChsPVAscQuality_truth", "PVAssociationQuality for truth leading trk", 6, 0.5, 6.5)};
+    h_leadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(1, "NotReconstructedPrimary");
+    h_leadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(2, "OtherDeltaZ");
+    h_leadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(3, "CompatibilityBTag");
+    h_leadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(4, "CompatibilityDz");
+    h_leadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(5, "UsedInFitLoose");
+    h_leadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(6, "UsedInFitTight");
+
+		TH1F* h_subleadingChsPVAscQuality_truth {new TH1F ("h_subleadingChsPVAscQuality_truth", "PVAssociationQuality for truth subleading trk", 6, 0.5, 6.5)};
+    h_subleadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(1, "NotReconstructedPrimary");
+    h_subleadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(2, "OtherDeltaZ");
+    h_subleadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(3, "CompatibilityBTag");
+    h_subleadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(4, "CompatibilityDz");
+    h_subleadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(5, "UsedInFitLoose");
+    h_subleadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(6, "UsedInFitTight");
+
+
 
     TH1F* h_diChsPt                  {new TH1F("h_diChsPt",                "DiChs p_{T}", 200, 0.0, 100.)};
     TH1F* h_diChsPtBothGen           {new TH1F("h_diChsPtBothGen",         "DiChs p_{T}", 200, 0.0, 100.)};
@@ -315,8 +330,11 @@ int main(int argc, char* argv[]) {
 
     TH1F* h_leadingChsPt_truth                  {new TH1F("h_leadingChsPt_truth",     "Leading truth reco Chs; p_{T} (GeV); Events", 200, 0., 100.)};
     TH1F* h_subLeadingChsPt_truth               {new TH1F("h_subLeadingChsPt_truth", "SubLeading truth reco Chs; p_{T} (GeV); Events", 200, 0., 100.)};
-    TH1F* h_leadingChsEta_truth                 {new TH1F("h_leadingMuonEta_truth",     "Leading truth reco Chs; #eta; Events",       300, -3., 3.)};
+    TH1F* h_leadingChsEta_truth                 {new TH1F("h_leadingChsEta_truth",     "Leading truth reco Chs; #eta; Events",       300, -3., 3.)};
     TH1F* h_subLeadingChsEta_truth              {new TH1F("h_subLeadingChsEta_truth",  "SubLeading truth reco Chs; #eta; Events",    300, -3., 3.)};
+		TH1F* h_leadingChsDz_truth                 {new TH1F("h_leadingChsDz_truth",     "Leading truth reco Chs; dz; Events",       500, -5., 5.)};
+    TH1F* h_subleadingChsDz_truth              {new TH1F("h_subleadingChsDz_truth",  "SubLeading truth reco Chs; dz; Events",    500, -5., 5.)};
+    
     TH1F* h_ChsdelR_truth                       {new TH1F("h_ChsdelR_truth",               "#DeltaR truth reco; #DeltaR(chs,chs); Events",      100, 0., 1.0)};
     TH1F* h_diChsMass_truth                     {new TH1F("h_diChsMass_truth",         "Mass dist. truth reco; m_{chs,chs}; Events", 200, 0., 10.)}; 
     
@@ -375,6 +393,23 @@ int main(int argc, char* argv[]) {
     TH1F* h_genChsdelR_SamePFCand                   {new TH1F("h_genChsdelR_SamePFCand",   "gen Chs #DeltaR for match to same PFCand.; #DeltaR(chs,chs)", 100, 0., 1.)};
     TH1F* h_gendiChsMass_failed                     {new TH1F("h_gendiChsMass_failed",         "Mass dist. failed gen; m_{chs,chs}; Events", 200, 0., 10.)}; 
 
+		TH1F* h_leadingChsPVAscQuality {new TH1F ("h_leadingChsPVAscQuality", "PVAssociationQuality for leading trk", 6, 0.5, 6.5)};
+    h_leadingChsPVAscQuality->GetXaxis()->SetBinLabel(1, "NotReconstructedPrimary");
+    h_leadingChsPVAscQuality->GetXaxis()->SetBinLabel(2, "OtherDeltaZ");
+    h_leadingChsPVAscQuality->GetXaxis()->SetBinLabel(3, "CompatibilityBTag");
+    h_leadingChsPVAscQuality->GetXaxis()->SetBinLabel(4, "CompatibilityDz");
+    h_leadingChsPVAscQuality->GetXaxis()->SetBinLabel(5, "UsedInFitLoose");
+    h_leadingChsPVAscQuality->GetXaxis()->SetBinLabel(6, "UsedInFitTight");
+
+		TH1F* h_subleadingChsPVAscQuality {new TH1F ("h_subleadingChsPVAscQuality", "PVAssociationQuality for subleading trk", 6, 0.5, 6.5)};
+    h_subleadingChsPVAscQuality->GetXaxis()->SetBinLabel(1, "NotReconstructedPrimary");
+    h_subleadingChsPVAscQuality->GetXaxis()->SetBinLabel(2, "OtherDeltaZ");
+    h_subleadingChsPVAscQuality->GetXaxis()->SetBinLabel(3, "CompatibilityBTag");
+    h_subleadingChsPVAscQuality->GetXaxis()->SetBinLabel(4, "CompatibilityDz");
+    h_subleadingChsPVAscQuality->GetXaxis()->SetBinLabel(5, "UsedInFitLoose");
+    h_subleadingChsPVAscQuality->GetXaxis()->SetBinLabel(6, "UsedInFitTight");
+
+
     TH1F* h_chsPt1                   {new TH1F("h_chsPt1",                 "Leading charged hadron track p_{T}", 200, 0.0, 100.)};
     TH1F* h_chsPt2                   {new TH1F("h_chsPt2",                 "Subleading charged hadron track p_{T}", 200, 0.0, 100.)};
     TH1F* h_chsPtBothGen1            {new TH1F("h_chsPtBothGen1",          "Leading charged hadron track p_{T} - both tracks genuine", 200, 0.0, 100.)};
@@ -404,6 +439,11 @@ int main(int argc, char* argv[]) {
     TH1F* h_chsEtaGen2               {new TH1F("h_chsEtaGen2",             "Subleading genuine charged hadron track #eta", 300, -3.0, 3.0)};
     TH1F* h_chsEtaFake1              {new TH1F("h_chsEtaFake1",            "Leading fake charged hadron track #eta", 300, -3.0, 3.0)};
     TH1F* h_chsEtaFake2              {new TH1F("h_chsEtaFake2",            "Subleading fake charged hadron track #eta", 300, -3.0, 3.0)};
+		
+		TH1F* h_leadingChsDz                 {new TH1F("h_leadingChsDz",     "Leading reco trk; dz; Events",       500, -5., 5.)};
+    TH1F* h_subleadingChsDz              {new TH1F("h_subleadingChsDz",  "SubLeading reco trk; dz; Events",    500, -5., 5.)};
+    
+
 
     TH1F* h_chsIso1                  {new TH1F("h_chsIso1",                "Leading charged hadron iso", 600, .0, 30.0)};
     TH1F* h_chsIso2                  {new TH1F("h_chsIso2",                "Subleading charged hadron iso", 600, .0, 30.0)};
@@ -787,7 +827,7 @@ int main(int argc, char* argv[]) {
             
             if (i%10000 == 0) std::cout<<"Event no. - "<<i<<std::endl;
             float eventWeight = 1.;
-            //eventWeight *= datasetWeight;
+            eventWeight *= datasetWeight;
              
             Cutflow->Fill(1, eventWeight);
     //EvtSelHist->GetXaxis()->SetBinLabel(6, "Higgs window");
@@ -1121,6 +1161,11 @@ int main(int argc, char* argv[]) {
                 h_diChsMass_truth_dR->Fill((chs2_truth+chs1_truth).M(),chs2_truth.DeltaR(chs1_truth));
                 h_diChsMass_truth_leadingChsPt_truth->Fill((chs2_truth+chs1_truth).M(), chs1_truth.Pt());
                 h_diChsMass_truth_subLeadingChsPt_truth->Fill((chs2_truth+chs1_truth).M(), chs2_truth.Pt());
+                h_leadingChsPVAscQuality_truth->Fill(event.packedCandsPVquality[MatchedChs1Index]+1);
+                h_subleadingChsPVAscQuality_truth->Fill(event.packedCandsPVquality[MatchedChs2Index]+1);
+                h_leadingChsDz_truth->Fill(event.packedCandsDz[MatchedChs1Index]);
+                h_subleadingChsDz_truth->Fill(event.packedCandsDz[MatchedChs2Index]);
+                
                 
                 if ((chs2_truth+chs1_truth).M()<=1.5) {
                   h_leadingChsPt_truth_genleadingChsPt_AtTail->Fill(chs1_truth.Pt(), genChs1.Pt()); //Note: chs1_truth corresponds to trk matched to leading gen chs
@@ -1446,6 +1491,11 @@ int main(int argc, char* argv[]) {
             if (  subleadingGen ) h_chsPtGen2->Fill(event.chsPairVec.second.Pt());
             if ( !leadingGen )    h_chsPtFake1->Fill(event.chsPairVec.first.Pt());
             if ( !subleadingGen ) h_chsPtFake2->Fill(event.chsPairVec.second.Pt());
+            
+            h_leadingChsPVAscQuality->Fill(event.packedCandsPVquality[event.chsPairIndex.first]+1);
+            h_subleadingChsPVAscQuality->Fill(event.packedCandsPVquality[event.chsPairIndex.second]+1);
+            h_leadingChsDz->Fill(event.packedCandsDz[event.chsPairIndex.first]);
+            h_subleadingChsDz->Fill(event.packedCandsDz[event.chsPairIndex.second]);
 
             h_chsIso1->Fill(event.chsPairTrkIso.first);
             h_chsIso2->Fill(event.chsPairTrkIso.second);
@@ -1931,6 +1981,10 @@ int main(int argc, char* argv[]) {
     h_subLeadingChs_PhGenInCone_AtPeaks->Write();
     p_HadronicDecayFractions_AtTail->Write();
     Cutflow->Write();
+    h_leadingChsPVAscQuality_truth->Write();
+    h_subleadingChsPVAscQuality_truth->Write();
+    h_leadingChsDz_truth->Write();
+    h_subleadingChsDz_truth->Write();
     
     h_genleadingChsPt_failed->Write();
     h_gensubLeadingChsPt_failed->Write();
@@ -1969,6 +2023,11 @@ int main(int argc, char* argv[]) {
     h_chsEtaGen2->Write();
     h_chsEtaFake1->Write();
     h_chsEtaFake2->Write();
+    
+    h_leadingChsPVAscQuality->Write();
+    h_subleadingChsPVAscQuality->Write();
+    h_leadingChsDz->Write();
+    h_subleadingChsDz->Write();
 
     h_chsIso1->Write();
     h_chsIso2->Write();

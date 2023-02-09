@@ -37,7 +37,7 @@
 namespace fs = boost::filesystem;
 
 SharedFunctions::SharedFunctions(const bool MCTruth)
-  : looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {30.}, looseMuonRelIso_ {100.}, invZMassCut_ {4.0}, chsMass_{0.13957018}, maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4}, scalarMassCut_{4.0}, higgsTolerence_ {10.}, useMCTruth_{MCTruth}
+  : looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {30.}, looseMuonRelIso_ {100.}, invZMassCut_ {4.0}, chsMass_{0.13957018}, maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4}, scalarMassCut_{4.0}, higgsTolerence_ {10.}, useMCTruth_{MCTruth}, looseChsEta_{2.4}
   {}
   
 SharedFunctions::~SharedFunctions()
@@ -56,11 +56,13 @@ std::vector<int> SharedFunctions::getLooseMuons(const AnalysisEvent& event) {
 std::vector<int> SharedFunctions::getChargedHadronTracks(const AnalysisEvent& event) {
     std::vector<int> chs;
     for (Int_t k = 0; k < event.numPackedCands; k++) {
+				//if (std::abs(event.packedCandsEta[k])>2.4) continue;
         if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
         if (event.packedCandsCharge[k] == 0 ) continue;
         if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
         TLorentzVector lVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
-//        if (lVec.Pt() < 5.0) continue;
+//      if (lVec.Pt() < 5.0) continue;
+//      	if (std::abs(lVec.Eta()) >= looseChsEta_) continue;
 
         chs.emplace_back(k);
     }
@@ -216,7 +218,9 @@ bool SharedFunctions::getDihadronCand(AnalysisEvent& event, std::vector<int>& ch
             double higgsMass { (chs1+chs2+event.zPairLeptons.first+event.zPairLeptons.second).M() };
 
             //if ( delR < maxChsDeltaR_ && (higgsMass - 125.) < higgsTolerence_ && pT >= 0. ) {
-            if ( delR < maxChsDeltaR_ && pT >= 0. ) {
+            //if ( delR < maxChsDeltaR_ && (chs1+chs2).DeltaPhi(event.zPairLeptons.first+event.zPairLeptons.second)>3 && pT >= 0. ) {
+            if ( delR < maxChsDeltaR_ && std::abs((chs1+chs2).M()-(event.zPairLeptons.first+event.zPairLeptons.second).M()) < 0.8 && pT >= 0. ) {
+            //if ( delR < maxChsDeltaR_ && pT >= 0. ) {
                 event.chsPairVec.first  = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
                 event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
                 event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chs[i] : chs[j];
