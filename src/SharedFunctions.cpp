@@ -219,8 +219,8 @@ bool SharedFunctions::getDihadronCand(AnalysisEvent& event, std::vector<int>& ch
 
             //if ( delR < maxChsDeltaR_ && (higgsMass - 125.) < higgsTolerence_ && pT >= 0. ) {
             //if ( delR < maxChsDeltaR_ && (chs1+chs2).DeltaPhi(event.zPairLeptons.first+event.zPairLeptons.second)>3 && pT >= 0. ) {
-            if ( delR < maxChsDeltaR_ && std::abs((chs1+chs2).M()-(event.zPairLeptons.first+event.zPairLeptons.second).M()) < 0.8 && pT >= 0. ) {
-            //if ( delR < maxChsDeltaR_ && pT >= 0. ) {
+						//if ( delR < maxChsDeltaR_ && std::abs((chs1+chs2).M()-(event.zPairLeptons.first+event.zPairLeptons.second).M()) < 0.8 && pT >= 0. ) {
+            if ( delR < maxChsDeltaR_ && pT >= 0. ) {
                 event.chsPairVec.first  = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
                 event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
                 event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chs[i] : chs[j];
@@ -326,6 +326,7 @@ bool SharedFunctions::getDihadronCand(AnalysisEvent& event, std::vector<int>& ch
     return false;
 }
 
+
 int SharedFunctions::getMuonTrackPairIndex(const AnalysisEvent& event) { //needs to be checked
     for (int i{0}; i < event.numMuonTrackPairsPF2PAT; i++) {
         if (event.muonTkPairPF2PATIndex1[i] == event.zPairIndex.first && event.muonTkPairPF2PATIndex2[i] == event.zPairIndex.second) return i;
@@ -424,7 +425,8 @@ int SharedFunctions::nGenParsInCone(const AnalysisEvent& event, const TLorentzVe
         TLorentzVector GenPar;
         GenPar.SetPtEtaPhiE(event.genParPt[i], event.genParEta[i], event.genParPhi[i], event.genParE[i]);
         if (fabs(event.packedCandsPdgId[i]) != ParPdgId) continue;
-        if (GenPar.Pt() > 0.5) continue;
+        if (GenPar.Pt() < 0.5) continue;
+        if (status != 1) continue;
         
         tmpdR = particle.DeltaR(GenPar);
         if ((tmpdR < dr_max)) count++;// include 0.03 cut to ensure not the same track as candidate
@@ -512,6 +514,40 @@ bool SharedFunctions::GenLevelCheck(const AnalysisEvent& event, const bool verbo
 
 }
 
+float SharedFunctions::PFIsolation(int trk_ind, int trk_exc, const AnalysisEvent& event, double dr_max = 0.4) {
+  float neutral_iso {0.0};
+  float ch_iso {0.0};
+  float pu_iso {0.0};
+  const TLorentzVector Trk {event.packedCandsPx[trk_ind], event.packedCandsPy[trk_ind], event.packedCandsPz[trk_ind], event.packedCandsE[trk_ind]};
+  for (int k = 0; k < event.numPackedCands; k++) {
+    if ( k == trk_ind || k == trk_exc ) continue;
+
+    TLorentzVector packedCandVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
+    TLorentzVector packedCandTrkVec;
+    packedCandTrkVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
+    
+    
+    //const TLorentzVector Trk_avoid {event.packedCandsPx[trk_exc], event.packedCandsPy[trk_exc], event.packedCandsPz[trk_exc], event.packedCandsE[trk_exc]};
+    if ( event.packedCandsCharge[k] == 0 ) {
+      if ( packedCandVec.Pt() >= 0.5 ) {
+        if ( Trk.DeltaR(packedCandVec)< dr_max )  neutral_iso += packedCandVec.Et();
+      }
+    }
+    else {
+      if ( event.packedCandsFromPV[k] >= 2 ) {
+        if ( Trk.DeltaR(packedCandVec)   < dr_max )  ch_iso += packedCandVec.Pt();
+      }
+      else {
+        if ( packedCandVec.Pt() >= 0.5 ) {
+          if ( Trk.DeltaR(packedCandVec)   < 0.3 )  pu_iso += packedCandVec.Pt();
+        }
+      }
+    }
+  }
+  const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
+  const float RelIso = iso/(Trk.Pt()+1.0e-06);
+  return RelIso;
+}
 float SharedFunctions::deltaR(float eta1, float phi1, float eta2, float phi2){
   float dEta = eta1-eta2;
   float dPhi = phi1-phi2;

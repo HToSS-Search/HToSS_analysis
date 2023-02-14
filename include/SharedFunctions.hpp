@@ -34,6 +34,7 @@ class SharedFunctions {
     int nGenParsInCone(const AnalysisEvent& event, const TLorentzVector& particle, const Int_t particle_ch,int ParPdgId, double dr_max);
     bool GenLevelCheck(const AnalysisEvent& event, const bool verbose);
     int MatchReco(int gen_ind, const AnalysisEvent& event, double dr_max);
+    float PFIsolation(int trk_ind, int trk_exc, const AnalysisEvent& event, double dr_max);
     
     // Lepton cut variables
     float looseMuonEta_;

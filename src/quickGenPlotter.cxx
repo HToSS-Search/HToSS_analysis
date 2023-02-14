@@ -335,6 +335,10 @@ int main(int argc, char* argv[]) {
 		TH1F* h_leadingChsDz_truth                 {new TH1F("h_leadingChsDz_truth",     "Leading truth reco Chs; dz; Events",       500, -5., 5.)};
     TH1F* h_subleadingChsDz_truth              {new TH1F("h_subleadingChsDz_truth",  "SubLeading truth reco Chs; dz; Events",    500, -5., 5.)};
     
+    TH1F* h_subleadingChsIso_truth                {new TH1F("h_subleadingChsIso_truth",  "SubLeading truth reco Chs; PFIsolation subleading trk; Events",    1000, 0., 15.)};
+    TH1F* h_leadingChsIso_truth                   {new TH1F("h_leadingChsIso_truth",  "Leading truth reco Chs; PFIsolation leading trk; Events",    1000, 0., 15.)};
+    
+    
     TH1F* h_ChsdelR_truth                       {new TH1F("h_ChsdelR_truth",               "#DeltaR truth reco; #DeltaR(chs,chs); Events",      100, 0., 1.0)};
     TH1F* h_diChsMass_truth                     {new TH1F("h_diChsMass_truth",         "Mass dist. truth reco; m_{chs,chs}; Events", 200, 0., 10.)}; 
     
@@ -354,26 +358,34 @@ int main(int argc, char* argv[]) {
     
     TH1F* h_gensubLeadingChs_TrksInCone_AtPeaks_Tight         {new TH1F("h_gensubLeadingChs_TrksInCone_AtPeaks_Tight", "Tight Hadronic Tracks around gen subleading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
     
-    TH1F* h_genleadingChs_PhTrksInCone_AtTail            {new TH1F("h_genleadingChs_PhTrksInCone_AtTail", "Photon Tracks around gen leading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    TH1F* h_genleadingChs_PhTrksInCone_AtTail            {new TH1F("h_genleadingChs_PhTrksInCone_AtTail", "Photon Tracks around gen leading hadron (#Delta R < 0.4) for m_{chs,chs}<1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
     
-    TH1F* h_gensubLeadingChs_PhTrksInCone_AtTail         {new TH1F("h_gensubLeadingChs_PhTrksInCone_AtTail", "Photon Tracks around gen subleading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    TH1F* h_gensubLeadingChs_PhTrksInCone_AtTail         {new TH1F("h_gensubLeadingChs_PhTrksInCone_AtTail", "Photon Tracks around gen subleading hadron (#Delta R < 0.4) for m_{chs,chs}<1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
     
-    TH1F* h_genleadingChs_PhTrksInCone_AtPeaks            {new TH1F("h_genleadingChs_PhTrksInCone_AtPeaks", "Photon Tracks around gen leading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    TH1F* h_genleadingChs_PhTrksInCone_AtPeaks            {new TH1F("h_genleadingChs_PhTrksInCone_AtPeaks", "Photon Tracks around gen leading hadron (#Delta R < 0.4) for m_{chs,chs}>1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
     
-    TH1F* h_gensubLeadingChs_PhTrksInCone_AtPeaks         {new TH1F("h_gensubLeadingChs_PhTrksInCone_AtPeaks", "Photon Tracks around gen subleading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
+    TH1F* h_gensubLeadingChs_PhTrksInCone_AtPeaks         {new TH1F("h_gensubLeadingChs_PhTrksInCone_AtPeaks", "Photon Tracks around gen subleading hadron (#Delta R < 0.4) for m_{chs,chs}>1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
     
-    TH1F* h_genleadingChs_PhGenInCone_AtTail            {new TH1F("h_genleadingChs_PhGenInCone_AtTail", "Gen. Photons around gen leading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
-    TH1F* h_gensubLeadingChs_PhGenInCone_AtTail         {new TH1F("h_gensubLeadingChs_PhGenInCone_AtTail", "Gen. Photons around gen subleading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
-    TH1F* h_genleadingChs_PhGenInCone_AtPeaks            {new TH1F("h_genleadingChs_PhGenInCone_AtPeaks", "Gen. Photons around gen leading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
-    TH1F* h_gensubLeadingChs_PhGenInCone_AtPeaks         {new TH1F("h_gensubLeadingChs_PhGenInCone_AtPeaks", "Gen. Photons around gen subleading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    TH1F* h_genleadingChs_PhGenInCone_AtTail            {new TH1F("h_genleadingChs_PhGenInCone_AtTail", "Gen. Photons around gen leading hadron (#Delta R < 0.4) for m_{chs,chs}<1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    TH1F* h_gensubLeadingChs_PhGenInCone_AtTail         {new TH1F("h_gensubLeadingChs_PhGenInCone_AtTail", "Gen. Photons around gen subleading hadron (#Delta R < 0.4) for m_{chs,chs}<1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    TH1F* h_genleadingChs_PhGenInCone_AtPeaks            {new TH1F("h_genleadingChs_PhGenInCone_AtPeaks", "Gen. Photons around gen leading hadron (#Delta R < 0.4) for m_{chs,chs}>1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    TH1F* h_gensubLeadingChs_PhGenInCone_AtPeaks         {new TH1F("h_gensubLeadingChs_PhGenInCone_AtPeaks", "Gen. Photons around gen subleading hadron (#Delta R < 0.4) for m_{chs,chs}>1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
     
-    TH1F* h_leadingChs_PhGenInCone_AtTail            {new TH1F("h_leadingChs_PhGenInCone_AtTail", "Gen. Photons around reco leading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
-    TH1F* h_subLeadingChs_PhGenInCone_AtTail         {new TH1F("h_subLeadingChs_PhGenInCone_AtTail", "Gen. Photons around reco subleading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
-    TH1F* h_leadingChs_PhGenInCone_AtPeaks            {new TH1F("h_leadingChs_PhGenInCone_AtPeaks", "Gen. Photons around reco leading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
-    TH1F* h_subLeadingChs_PhGenInCone_AtPeaks         {new TH1F("h_subLeadingChs_PhGenInCone_AtPeaks", "Gen. Photons around reco subleading hadron (#Delta R < 0.03) for m_{chs,chs}>1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    TH1F* h_leadingChs_PhGenInCone_AtTail            {new TH1F("h_leadingChs_PhGenInCone_AtTail", "Gen. Photons around reco leading hadron (#Delta R < 0.4) for m_{chs,chs}<1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    TH1F* h_subLeadingChs_PhGenInCone_AtTail         {new TH1F("h_subLeadingChs_PhGenInCone_AtTail", "Gen. Photons around reco subleading hadron (#Delta R < 0.4) for m_{chs,chs}<1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    TH1F* h_leadingChs_PhGenInCone_AtPeaks            {new TH1F("h_leadingChs_PhGenInCone_AtPeaks", "Gen. Photons around reco leading hadron (#Delta R < 0.4) for m_{chs,chs}>1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    TH1F* h_subLeadingChs_PhGenInCone_AtPeaks         {new TH1F("h_subLeadingChs_PhGenInCone_AtPeaks", "Gen. Photons around reco subleading hadron (#Delta R < 0.4) for m_{chs,chs}>1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
+    
+    TH2F* h_diChsMass_truth_genleadingChs_PhGenInCone {new TH2F("h_diChsMass_truth_genleadingChs_PhGenInCone", "Gen. Photons around gen leading hadron (#Delta R < 0.4); m_{chs,chs};N_{gen}", 200, 0., 10., 101, -0.5, 100.5)};
+    TH2F* h_diChsMass_truth_gensubleadingChs_PhGenInCone {new TH2F("h_diChsMass_truth_gensubleadingChs_PhGenInCone", "Gen. Photons around gen subleading hadron (#Delta R < 0.4); m_{chs,chs};N_{gen}", 200, 0., 10., 101, -0.5, 100.5)};
     
     TH2F* h_diChsMass_truth_dR                  {new TH2F("h_diChsMass_truth_dR","Mass dist. truth reco; m_{chs,chs}; #Delta R_{chs,chs}", 200, 0., 10., 100, 0., 1.)}; 
     
+    TH2F* h_diChsMass_truth_leadingChsIso_truth   {new TH2F("h_diChsMass_truth_leadingChsIso_truth","Leading Chs Iso truth vs diChs Mass truth; m_{chs,chs}; PFIsolation Leading trk",200,0.,5.,1000,0.,15.)};
+    TH2F* h_diChsMass_truth_subleadingChsIso_truth   {new TH2F("h_diChsMass_truth_subleadingChsIso_truth","subLeading Chs Iso truth vs diChs Mass truth; m_{chs,chs}; PFIsolation subLeading trk",200,0.,5.,1000,0.,15.)};
+    
+    TH2F* h_leadingChsPtDiff_leadingChsIso_truth   {new TH2F("h_leadingChsPtDiff_leadingChsIso_truth", "Leading trk PFIso AND p_{T}^{gen} - p_{T}^{reco} (leading trk); #Delta p_{T}^{gen,reco};PFIsolation Leading trk", 360, -60, 60, 1000,0.,15.)}; 
+    TH2F* h_subleadingChsPtDiff_subleadingChsIso_truth   {new TH2F("h_subleadingChsPtDiff_subleadingChsIso_truth", "subLeading trk PFIso AND p_{T}^{gen} - p_{T}^{reco} (subleading trk); #Delta p_{T}^{gen,reco};PFIsolation subLeading trk", 360, -60, 60, 1000,0.,15.)}; 
     
     TH2F* h_diChsMass_truth_leadingChsPt_truth      {new TH2F("h_diChsMass_truth_leadingChsPt_truth","Mass dist. truth reco; m_{chs,chs}; Leading CHS trk p_{T} truth (GeV)", 200, 0., 10., 200, 0., 100.)}; 
     TH2F* h_diChsMass_truth_subLeadingChsPt_truth   {new TH2F("h_diChsMass_truth_subLeadingChsPt_truth", "Mass dist. truth reco; m_{chs,chs}; subLeading CHS trk p_{T} truth (GeV)", 200, 0., 10., 200, 0., 100.)};
@@ -815,6 +827,12 @@ int main(int argc, char* argv[]) {
         lEventTimer->DrawProgressBar(0, "");
     
         totalEvents += numberOfEvents;
+        Double_t sumWeights = 0.;
+        for (Long64_t i{0}; i < numberOfEvents; i++) {
+          event.GetEntry(i);
+          sumWeights += event.origWeightForNorm;
+          if (i%10000==0) std::cout<<"Measuring weights"<<std::endl;
+        }
         
         
         for (Long64_t i{0}; i < numberOfEvents; i++) {
@@ -827,7 +845,9 @@ int main(int argc, char* argv[]) {
             
             if (i%10000 == 0) std::cout<<"Event no. - "<<i<<std::endl;
             float eventWeight = 1.;
-            eventWeight *= datasetWeight;
+            //eventWeight *= datasetWeight;
+            eventWeight *= event.origWeightForNorm/sumWeights;
+						//std::cout<<"Weight - "<<eventWeight<<std::endl;
              
             Cutflow->Fill(1, eventWeight);
     //EvtSelHist->GetXaxis()->SetBinLabel(6, "Higgs window");
@@ -849,7 +869,7 @@ int main(int argc, char* argv[]) {
                 const int motherId { std::abs(event.genParMotherId[k]) };
                 const int status {event.genParStatus[k]};
                 //bool verbose = false;
-                if (motherId == 9000006) h_scalarEnergy->Fill(event.genParE[k]);
+                if (motherId == 9000006) h_scalarEnergy->Fill(event.genParE[k],eventWeight);
                 
                 if (verbose_) {
                   std::cout<<"Starting the ladder for particle (id, idx, status, eventno.) - "<<pid<<", "<<k<<", "<<status<<", "<<i<<std::endl;
@@ -955,31 +975,31 @@ int main(int argc, char* argv[]) {
                     genPion2.SetPtEtaPhiE(event.genParPt[genPionIndex[0]], event.genParEta[genPionIndex[0]], event.genParPhi[genPionIndex[0]], event.genParE[genPionIndex[0]]);
                 }
                 //if ( genPion1.Pt() < 0.5 || genPion2.Pt() < 0.5 ) continue;
-                h_genDipionDeltaR->Fill( genPion1.DeltaR(genPion2) );
-                h_genDipionMass->Fill( (genPion1+genPion2).M() );
-                h_genDipionPt->Fill( (genPion1+genPion2).Pt() );
-                h_genDipionEta->Fill( (genPion1+genPion2).Eta() );
-                h_genLeadingPionPt->Fill( genPion1.Pt() );
-                h_genSubleadingPionPt->Fill( genPion2.Pt() );
-                h_genLeadingPionPt_genSubleadingPionPt->Fill(genPion1.Pt(), genPion2.Pt());
-                h_genLeadingPionEta->Fill( genPion1.Eta() );
-                h_genSubleadingPionEta->Fill( genPion2.Eta() );
-                h_genLeadingPionPhi->Fill( genPion1.Phi() );
-                h_genSubleadingPionPhi->Fill( genPion2.Phi() );
-                h_genLeadingVxPion->Fill( event.genParVx[genPionIndex[0]] );
-                h_genLeadingVyPion->Fill( event.genParVy[genPionIndex[0]] );
-                h_genLeadingVzPion->Fill( event.genParVz[genPionIndex[0]] );
-                h_genLeadingVxyPion->Fill( std::sqrt(event.genParVx[genPionIndex[0]]*event.genParVx[genPionIndex[0]] + event.genParVy[genPionIndex[0]]*event.genParVy[genPionIndex[0]]) );
-                h_genLeadingVdPion->Fill(  std::sqrt(event.genParVx[genPionIndex[0]]*event.genParVx[genPionIndex[0]] + event.genParVy[genPionIndex[0]]*event.genParVy[genPionIndex[0]] + event.genParVz[genPionIndex[0]]*event.genParVz[genPionIndex[0]]) );
-                h_genSubleadingVxPion->Fill( event.genParVx[genPionIndex[1]] );
-                h_genSubleadingVyPion->Fill( event.genParVy[genPionIndex[1]] );
-                h_genSubleadingVzPion->Fill( event.genParVz[genPionIndex[1]] );
-                h_genSubleadingVxyPion->Fill( std::sqrt(event.genParVx[genPionIndex[1]]*event.genParVx[genPionIndex[1]] + event.genParVy[genPionIndex[1]]*event.genParVy[genPionIndex[1]]) );
-                h_genSubleadingVdPion->Fill( std::sqrt(event.genParVx[genPionIndex[1]]*event.genParVx[genPionIndex[1]] + event.genParVy[genPionIndex[1]]*event.genParVy[genPionIndex[1]] + event.genParVz[genPionIndex[1]]*event.genParVz[genPionIndex[1]]) );
+                h_genDipionDeltaR->Fill( genPion1.DeltaR(genPion2) ,eventWeight);
+                h_genDipionMass->Fill( (genPion1+genPion2).M() ,eventWeight);
+                h_genDipionPt->Fill( (genPion1+genPion2).Pt(),eventWeight );
+                h_genDipionEta->Fill( (genPion1+genPion2).Eta(),eventWeight );
+                h_genLeadingPionPt->Fill( genPion1.Pt(),eventWeight );
+                h_genSubleadingPionPt->Fill( genPion2.Pt(),eventWeight );
+                h_genLeadingPionPt_genSubleadingPionPt->Fill(genPion1.Pt(), genPion2.Pt(),eventWeight);
+                h_genLeadingPionEta->Fill( genPion1.Eta(),eventWeight );
+                h_genSubleadingPionEta->Fill( genPion2.Eta(),eventWeight );
+                h_genLeadingPionPhi->Fill( genPion1.Phi(),eventWeight );
+                h_genSubleadingPionPhi->Fill( genPion2.Phi(),eventWeight );
+                h_genLeadingVxPion->Fill( event.genParVx[genPionIndex[0]],eventWeight );
+                h_genLeadingVyPion->Fill( event.genParVy[genPionIndex[0]],eventWeight );
+                h_genLeadingVzPion->Fill( event.genParVz[genPionIndex[0]],eventWeight );
+                h_genLeadingVxyPion->Fill( std::sqrt(event.genParVx[genPionIndex[0]]*event.genParVx[genPionIndex[0]] + event.genParVy[genPionIndex[0]]*event.genParVy[genPionIndex[0]]),eventWeight );
+                h_genLeadingVdPion->Fill(  std::sqrt(event.genParVx[genPionIndex[0]]*event.genParVx[genPionIndex[0]] + event.genParVy[genPionIndex[0]]*event.genParVy[genPionIndex[0]] + event.genParVz[genPionIndex[0]]*event.genParVz[genPionIndex[0]]),eventWeight );
+                h_genSubleadingVxPion->Fill( event.genParVx[genPionIndex[1]],eventWeight );
+                h_genSubleadingVyPion->Fill( event.genParVy[genPionIndex[1]],eventWeight );
+                h_genSubleadingVzPion->Fill( event.genParVz[genPionIndex[1]],eventWeight );
+                h_genSubleadingVxyPion->Fill( std::sqrt(event.genParVx[genPionIndex[1]]*event.genParVx[genPionIndex[1]] + event.genParVy[genPionIndex[1]]*event.genParVy[genPionIndex[1]]),eventWeight );
+                h_genSubleadingVdPion->Fill( std::sqrt(event.genParVx[genPionIndex[1]]*event.genParVx[genPionIndex[1]] + event.genParVy[genPionIndex[1]]*event.genParVy[genPionIndex[1]] + event.genParVz[genPionIndex[1]]*event.genParVz[genPionIndex[1]]),eventWeight );
                 if ( genMuonSortedIndex.size() == 2 ) {
-                  h_genDiscalarDeltaR_mumu_pipi->Fill( (genMuon1+genMuon2).DeltaR( (genPion1+genPion2) ) );
-                  h_genScalarMassRatio->Fill( (genPion1+genPion2).M()/( (genMuon1+genMuon2).M() + 1.0e-06) );
-                  h_genScalarMass2D->Fill( (genMuon1+genMuon2).M(), (genPion1+genPion2).M() );
+                  h_genDiscalarDeltaR_mumu_pipi->Fill( (genMuon1+genMuon2).DeltaR( (genPion1+genPion2) ),eventWeight );
+                  h_genScalarMassRatio->Fill( (genPion1+genPion2).M()/( (genMuon1+genMuon2).M() + 1.0e-06),eventWeight );
+                  h_genScalarMass2D->Fill( (genMuon1+genMuon2).M(), (genPion1+genPion2).M(),eventWeight );
                 }
             }
 
@@ -996,31 +1016,31 @@ int main(int argc, char* argv[]) {
                     genKaon2.SetPtEtaPhiE(event.genParPt[genKaonIndex[0]], event.genParEta[genKaonIndex[0]], event.genParPhi[genKaonIndex[0]], event.genParE[genKaonIndex[0]]);
                 }
                 //if ( genKaon1.Pt() < 0.5 || genKaon2.Pt() < 0.5 ) continue;
-                h_genDikaonDeltaR->Fill( genKaon1.DeltaR(genKaon2) );
-                h_genDikaonMass->Fill( (genKaon1+genKaon2).M() );
-                h_genDikaonPt->Fill( (genKaon1+genKaon2).Pt() );
-                h_genDikaonEta->Fill( (genKaon1+genKaon2).Eta() );
-                h_genLeadingKaonPt->Fill( genKaon1.Pt() );
-                h_genSubleadingKaonPt->Fill( genKaon2.Pt() );
-                h_genLeadingKaonPt_genSubleadingKaonPt->Fill(genKaon1.Pt(), genKaon2.Pt());
-                h_genLeadingKaonEta->Fill( genKaon1.Eta() );
-                h_genSubleadingKaonEta->Fill( genKaon2.Eta() );
-                h_genLeadingKaonPhi->Fill( genKaon1.Phi() );
-                h_genSubleadingKaonPhi->Fill( genKaon2.Phi() );
-                h_genLeadingVxKaon->Fill( event.genParVx[genKaonIndex[0]] );
-                h_genLeadingVyKaon->Fill( event.genParVy[genKaonIndex[0]] );
-                h_genLeadingVzKaon->Fill( event.genParVz[genKaonIndex[0]] );
-                h_genLeadingVxyKaon->Fill( std::sqrt(event.genParVx[genKaonIndex[0]]*event.genParVx[genKaonIndex[0]] + event.genParVy[genKaonIndex[0]]*event.genParVy[genKaonIndex[0]]) );
-                h_genLeadingVdKaon->Fill( std::sqrt(event.genParVx[genKaonIndex[0]]*event.genParVx[genKaonIndex[0]] + event.genParVy[genKaonIndex[0]]*event.genParVy[genKaonIndex[0]] + event.genParVz[genKaonIndex[0]]*event.genParVz[genKaonIndex[0]]) );
-                h_genSubleadingVxKaon->Fill( event.genParVx[genKaonIndex[1]] );
-                h_genSubleadingVyKaon->Fill( event.genParVy[genKaonIndex[1]] );
-                h_genSubleadingVzKaon->Fill( event.genParVz[genKaonIndex[1]] );
-                h_genSubleadingVxyKaon->Fill( std::sqrt(event.genParVx[genKaonIndex[1]]*event.genParVx[genKaonIndex[1]] + event.genParVy[genKaonIndex[1]]*event.genParVy[genKaonIndex[1]]) );
-                h_genSubleadingVdKaon->Fill( std::sqrt(event.genParVx[genKaonIndex[1]]*event.genParVx[genKaonIndex[1]] + event.genParVy[genKaonIndex[1]]*event.genParVy[genKaonIndex[1]] + event.genParVz[genKaonIndex[1]]*event.genParVz[genKaonIndex[1]]) );
+                h_genDikaonDeltaR->Fill( genKaon1.DeltaR(genKaon2),eventWeight );
+                h_genDikaonMass->Fill( (genKaon1+genKaon2).M(),eventWeight );
+                h_genDikaonPt->Fill( (genKaon1+genKaon2).Pt(),eventWeight );
+                h_genDikaonEta->Fill( (genKaon1+genKaon2).Eta(),eventWeight );
+                h_genLeadingKaonPt->Fill( genKaon1.Pt(),eventWeight );
+                h_genSubleadingKaonPt->Fill( genKaon2.Pt(),eventWeight );
+                h_genLeadingKaonPt_genSubleadingKaonPt->Fill(genKaon1.Pt(), genKaon2.Pt(),eventWeight);
+                h_genLeadingKaonEta->Fill( genKaon1.Eta(),eventWeight );
+                h_genSubleadingKaonEta->Fill( genKaon2.Eta(),eventWeight );
+                h_genLeadingKaonPhi->Fill( genKaon1.Phi(),eventWeight );
+                h_genSubleadingKaonPhi->Fill( genKaon2.Phi(),eventWeight );
+                h_genLeadingVxKaon->Fill( event.genParVx[genKaonIndex[0]],eventWeight );
+                h_genLeadingVyKaon->Fill( event.genParVy[genKaonIndex[0]],eventWeight );
+                h_genLeadingVzKaon->Fill( event.genParVz[genKaonIndex[0]],eventWeight );
+                h_genLeadingVxyKaon->Fill( std::sqrt(event.genParVx[genKaonIndex[0]]*event.genParVx[genKaonIndex[0]] + event.genParVy[genKaonIndex[0]]*event.genParVy[genKaonIndex[0]]),eventWeight );
+                h_genLeadingVdKaon->Fill( std::sqrt(event.genParVx[genKaonIndex[0]]*event.genParVx[genKaonIndex[0]] + event.genParVy[genKaonIndex[0]]*event.genParVy[genKaonIndex[0]] + event.genParVz[genKaonIndex[0]]*event.genParVz[genKaonIndex[0]]),eventWeight );
+                h_genSubleadingVxKaon->Fill( event.genParVx[genKaonIndex[1]],eventWeight );
+                h_genSubleadingVyKaon->Fill( event.genParVy[genKaonIndex[1]],eventWeight );
+                h_genSubleadingVzKaon->Fill( event.genParVz[genKaonIndex[1]],eventWeight );
+                h_genSubleadingVxyKaon->Fill( std::sqrt(event.genParVx[genKaonIndex[1]]*event.genParVx[genKaonIndex[1]] + event.genParVy[genKaonIndex[1]]*event.genParVy[genKaonIndex[1]]),eventWeight );
+                h_genSubleadingVdKaon->Fill( std::sqrt(event.genParVx[genKaonIndex[1]]*event.genParVx[genKaonIndex[1]] + event.genParVy[genKaonIndex[1]]*event.genParVy[genKaonIndex[1]] + event.genParVz[genKaonIndex[1]]*event.genParVz[genKaonIndex[1]]),eventWeight );
                 if ( genMuonSortedIndex.size() == 2 ) {
-                  h_genDiscalarDeltaR_mumu_kaonkaon->Fill( (genMuon1+genMuon2).DeltaR( (genKaon1+genKaon2) ) );
-                  h_genScalarMassRatio->Fill( (genKaon1+genKaon2).M()/( (genMuon1+genMuon2).M() + 1.0e-06) );
-                  h_genScalarMass2D->Fill( (genMuon1+genMuon2).M(), (genKaon1+genKaon2).M() );
+                  h_genDiscalarDeltaR_mumu_kaonkaon->Fill( (genMuon1+genMuon2).DeltaR( (genKaon1+genKaon2) ),eventWeight );
+                  h_genScalarMassRatio->Fill( (genKaon1+genKaon2).M()/( (genMuon1+genMuon2).M() + 1.0e-06),eventWeight );
+                  h_genScalarMass2D->Fill( (genMuon1+genMuon2).M(), (genKaon1+genKaon2).M(),eventWeight );
                 }
             }
             
@@ -1037,31 +1057,31 @@ int main(int argc, char* argv[]) {
                     genChs2.SetPtEtaPhiE(event.genParPt[genChsIndex[0]], event.genParEta[genChsIndex[0]], event.genParPhi[genChsIndex[0]], event.genParE[genChsIndex[0]]);
                 }
                 //if ( genChs1.Pt() < 0.5 || genChs2.Pt() < 0.5 ) continue;
-                h_genDiChsDeltaR->Fill( genChs1.DeltaR(genChs2) );
-                h_genDiChsMass->Fill( (genChs1+genChs2).M() );
-                h_genDiChsPt->Fill( (genChs1+genChs2).Pt() );
-                h_genDiChsEta->Fill( (genChs1+genChs2).Eta() );
+                h_genDiChsDeltaR->Fill( genChs1.DeltaR(genChs2),eventWeight );
+                h_genDiChsMass->Fill( (genChs1+genChs2).M(),eventWeight );
+                h_genDiChsPt->Fill( (genChs1+genChs2).Pt(),eventWeight );
+                h_genDiChsEta->Fill( (genChs1+genChs2).Eta(),eventWeight );
                  
-                h_genLeadingChsPt->Fill( genChs1.Pt() );
-                h_genSubleadingChsPt->Fill( genChs2.Pt() );
-                h_genLeadingChsEta->Fill( genChs1.Eta() );
-                h_genSubleadingChsEta->Fill( genChs2.Eta() );
-                h_genLeadingChsPhi->Fill( genChs1.Phi() );
-                h_genSubleadingChsPhi->Fill( genChs2.Phi() );
-                h_genLeadingVxChs->Fill( event.genParVx[genChsIndex[0]] );
-                h_genLeadingVyChs->Fill( event.genParVy[genChsIndex[0]] );
-                h_genLeadingVzChs->Fill( event.genParVz[genChsIndex[0]] );
-                h_genLeadingVxyChs->Fill( std::sqrt(event.genParVx[genChsIndex[0]]*event.genParVx[genChsIndex[0]] + event.genParVy[genChsIndex[0]]*event.genParVy[genChsIndex[0]]) );
-                h_genLeadingVdChs->Fill( std::sqrt(event.genParVx[genChsIndex[0]]*event.genParVx[genChsIndex[0]] + event.genParVy[genChsIndex[0]]*event.genParVy[genChsIndex[0]] + event.genParVz[genChsIndex[0]]*event.genParVz[genChsIndex[0]]) );
-                h_genSubleadingVxChs->Fill( event.genParVx[genChsIndex[1]] );
-                h_genSubleadingVyChs->Fill( event.genParVy[genChsIndex[1]] );
-                h_genSubleadingVzChs->Fill( event.genParVz[genChsIndex[1]] );
-                h_genSubleadingVxyChs->Fill( std::sqrt(event.genParVx[genChsIndex[1]]*event.genParVx[genChsIndex[1]] + event.genParVy[genChsIndex[1]]*event.genParVy[genChsIndex[1]]) );
-                h_genSubleadingVdChs->Fill( std::sqrt(event.genParVx[genChsIndex[1]]*event.genParVx[genChsIndex[1]] + event.genParVy[genChsIndex[1]]*event.genParVy[genChsIndex[1]] + event.genParVz[genChsIndex[1]]*event.genParVz[genChsIndex[1]]) );
+                h_genLeadingChsPt->Fill( genChs1.Pt(),eventWeight );
+                h_genSubleadingChsPt->Fill( genChs2.Pt(),eventWeight );
+                h_genLeadingChsEta->Fill( genChs1.Eta(),eventWeight );
+                h_genSubleadingChsEta->Fill( genChs2.Eta(),eventWeight );
+                h_genLeadingChsPhi->Fill( genChs1.Phi(),eventWeight );
+                h_genSubleadingChsPhi->Fill( genChs2.Phi(),eventWeight );
+                h_genLeadingVxChs->Fill( event.genParVx[genChsIndex[0]],eventWeight );
+                h_genLeadingVyChs->Fill( event.genParVy[genChsIndex[0]],eventWeight );
+                h_genLeadingVzChs->Fill( event.genParVz[genChsIndex[0]],eventWeight );
+                h_genLeadingVxyChs->Fill( std::sqrt(event.genParVx[genChsIndex[0]]*event.genParVx[genChsIndex[0]] + event.genParVy[genChsIndex[0]]*event.genParVy[genChsIndex[0]]),eventWeight );
+                h_genLeadingVdChs->Fill( std::sqrt(event.genParVx[genChsIndex[0]]*event.genParVx[genChsIndex[0]] + event.genParVy[genChsIndex[0]]*event.genParVy[genChsIndex[0]] + event.genParVz[genChsIndex[0]]*event.genParVz[genChsIndex[0]]),eventWeight );
+                h_genSubleadingVxChs->Fill( event.genParVx[genChsIndex[1]],eventWeight );
+                h_genSubleadingVyChs->Fill( event.genParVy[genChsIndex[1]],eventWeight );
+                h_genSubleadingVzChs->Fill( event.genParVz[genChsIndex[1]],eventWeight );
+                h_genSubleadingVxyChs->Fill( std::sqrt(event.genParVx[genChsIndex[1]]*event.genParVx[genChsIndex[1]] + event.genParVy[genChsIndex[1]]*event.genParVy[genChsIndex[1]]),eventWeight );
+                h_genSubleadingVdChs->Fill( std::sqrt(event.genParVx[genChsIndex[1]]*event.genParVx[genChsIndex[1]] + event.genParVy[genChsIndex[1]]*event.genParVy[genChsIndex[1]] + event.genParVz[genChsIndex[1]]*event.genParVz[genChsIndex[1]]),eventWeight );
                 if ( genMuonSortedIndex.size() == 2 ) {
-                  h_genDiscalarDeltaR_mumu_ChsChs->Fill( (genMuon1+genMuon2).DeltaR( (genChs1+genChs2) ) );
-                  h_genScalarMassRatio->Fill( (genChs1+genChs2).M()/( (genMuon1+genMuon2).M() + 1.0e-06) );
-                  h_genScalarMass2D->Fill( (genMuon1+genMuon2).M(), (genChs1+genChs2).M() );
+                  h_genDiscalarDeltaR_mumu_ChsChs->Fill( (genMuon1+genMuon2).DeltaR( (genChs1+genChs2) ),eventWeight );
+                  h_genScalarMassRatio->Fill( (genChs1+genChs2).M()/( (genMuon1+genMuon2).M() + 1.0e-06),eventWeight );
+                  h_genScalarMass2D->Fill( (genMuon1+genMuon2).M(), (genChs1+genChs2).M(),eventWeight );
                 }
                 
             }
@@ -1101,18 +1121,18 @@ int main(int argc, char* argv[]) {
                 std::cout<<"Indices-"<<genChsIndex[0]<<", "<<genChsIndex[1]<<std::endl;
                 std::cout<<"Pt of gen-"<<event.genParPt[genChsIndex[0]]<<", "<<event.genParPt[genChsIndex[1]]<<std::endl;
                 std::cout<<"Chs1, Chs2: "<<MatchedChs1Index<<", "<<MatchedChs2Index<<std::endl;
-                h_genChsdelR_SamePFCand->Fill(genChs1.DeltaR(genChs2));
+                h_genChsdelR_SamePFCand->Fill(genChs1.DeltaR(genChs2),eventWeight);
                 //continue;
               }
               
               if ((MatchedChs1Index<0)||(MatchedChs2Index<0)) {
                 
-                   h_genleadingChsPt_failed->Fill(genChs1.Pt());
-                   h_gensubLeadingChsPt_failed->Fill(genChs2.Pt());
-                   h_genleadingChsEta_failed->Fill(genChs1.Eta());
-                   h_gensubLeadingChsEta_failed->Fill(genChs2.Eta());
-                   h_genChsdelR_failed->Fill(genChs1.DeltaR(genChs2));
-                   h_gendiChsMass_failed->Fill((genChs1+genChs2).M());
+                   h_genleadingChsPt_failed->Fill(genChs1.Pt(),eventWeight);
+                   h_gensubLeadingChsPt_failed->Fill(genChs2.Pt(),eventWeight);
+                   h_genleadingChsEta_failed->Fill(genChs1.Eta(),eventWeight);
+                   h_gensubLeadingChsEta_failed->Fill(genChs2.Eta(),eventWeight);
+                   h_genChsdelR_failed->Fill(genChs1.DeltaR(genChs2),eventWeight);
+                   h_gendiChsMass_failed->Fill((genChs1+genChs2).M(),eventWeight);
                    
                    
                     //checking if pT ordered or not
@@ -1152,41 +1172,55 @@ int main(int argc, char* argv[]) {
                 const TLorentzVector chs1_truth {event.packedCandsPx[MatchedChs1Index], event.packedCandsPy[MatchedChs1Index], event.packedCandsPz[MatchedChs1Index], event.packedCandsE[MatchedChs1Index]};
                 const TLorentzVector chs2_truth {event.packedCandsPx[MatchedChs2Index], event.packedCandsPy[MatchedChs2Index], event.packedCandsPz[MatchedChs2Index], event.packedCandsE[MatchedChs2Index]};
                 
-                h_leadingChsPt_truth->Fill(chs1_truth.Pt());
-                h_subLeadingChsPt_truth->Fill(chs2_truth.Pt());
-                h_leadingChsEta_truth->Fill(chs1_truth.Eta());
-                h_subLeadingChsEta_truth->Fill(chs2_truth.Pt());
-                h_ChsdelR_truth->Fill(chs2_truth.DeltaR(chs1_truth));
-                h_diChsMass_truth->Fill((chs2_truth+chs1_truth).M());
-                h_diChsMass_truth_dR->Fill((chs2_truth+chs1_truth).M(),chs2_truth.DeltaR(chs1_truth));
-                h_diChsMass_truth_leadingChsPt_truth->Fill((chs2_truth+chs1_truth).M(), chs1_truth.Pt());
-                h_diChsMass_truth_subLeadingChsPt_truth->Fill((chs2_truth+chs1_truth).M(), chs2_truth.Pt());
-                h_leadingChsPVAscQuality_truth->Fill(event.packedCandsPVquality[MatchedChs1Index]+1);
-                h_subleadingChsPVAscQuality_truth->Fill(event.packedCandsPVquality[MatchedChs2Index]+1);
-                h_leadingChsDz_truth->Fill(event.packedCandsDz[MatchedChs1Index]);
-                h_subleadingChsDz_truth->Fill(event.packedCandsDz[MatchedChs2Index]);
+                h_leadingChsPt_truth->Fill(chs1_truth.Pt(),eventWeight);
+                h_subLeadingChsPt_truth->Fill(chs2_truth.Pt(),eventWeight);
+                h_leadingChsEta_truth->Fill(chs1_truth.Eta(),eventWeight);
+                h_subLeadingChsEta_truth->Fill(chs2_truth.Pt(),eventWeight);
+                h_ChsdelR_truth->Fill(chs2_truth.DeltaR(chs1_truth),eventWeight);
+                h_diChsMass_truth->Fill((chs2_truth+chs1_truth).M(),eventWeight);
+                h_diChsMass_truth_dR->Fill((chs2_truth+chs1_truth).M(),chs2_truth.DeltaR(chs1_truth),eventWeight);
+                h_diChsMass_truth_leadingChsPt_truth->Fill((chs2_truth+chs1_truth).M(), chs1_truth.Pt(),eventWeight);
+                h_diChsMass_truth_subLeadingChsPt_truth->Fill((chs2_truth+chs1_truth).M(), chs2_truth.Pt(),eventWeight);
+                h_leadingChsPVAscQuality_truth->Fill(event.packedCandsPVquality[MatchedChs1Index]+1,eventWeight);
+                h_subleadingChsPVAscQuality_truth->Fill(event.packedCandsPVquality[MatchedChs2Index]+1,eventWeight);
+                h_leadingChsDz_truth->Fill(event.packedCandsDz[MatchedChs1Index],eventWeight);
+                h_subleadingChsDz_truth->Fill(event.packedCandsDz[MatchedChs2Index],eventWeight);
+                
+                float pfiso_chs1_truth = shf.PFIsolation(MatchedChs1Index,MatchedChs2Index,event,0.4);
+                float pfiso_chs2_truth = shf.PFIsolation(MatchedChs2Index,MatchedChs1Index,event,0.4);
+                
+                h_leadingChsIso_truth->Fill(pfiso_chs1_truth,eventWeight);
+                h_subleadingChsIso_truth->Fill(pfiso_chs2_truth,eventWeight);
+                h_diChsMass_truth_leadingChsIso_truth->Fill((chs2_truth+chs1_truth).M(),pfiso_chs1_truth,eventWeight);
+                h_diChsMass_truth_subleadingChsIso_truth->Fill((chs2_truth+chs1_truth).M(),pfiso_chs2_truth,eventWeight);
+                
+                h_leadingChsPtDiff_leadingChsIso_truth->Fill(genChs1.Pt() - chs1_truth.Pt(),pfiso_chs1_truth,eventWeight);
+                h_subleadingChsPtDiff_subleadingChsIso_truth->Fill(genChs2.Pt() - chs2_truth.Pt(),pfiso_chs2_truth,eventWeight);
+                
+                h_diChsMass_truth_gensubleadingChs_PhGenInCone->Fill((chs2_truth+chs1_truth).M(),shf.nGenParsInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]],22, 0.4),eventWeight);
+                h_diChsMass_truth_genleadingChs_PhGenInCone->Fill((chs2_truth+chs1_truth).M(),shf.nGenParsInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4),eventWeight);
                 
                 
                 if ((chs2_truth+chs1_truth).M()<=1.5) {
-                  h_leadingChsPt_truth_genleadingChsPt_AtTail->Fill(chs1_truth.Pt(), genChs1.Pt()); //Note: chs1_truth corresponds to trk matched to leading gen chs
-                  h_leadingChsPtDiff_genleadingChsPt_AtTail->Fill(genChs1.Pt() - chs1_truth.Pt(), genChs1.Pt());
-                  h_subLeadingChsPt_truth_gensubLeadingChsPt_AtTail->Fill(chs2_truth.Pt(), genChs2.Pt());
-                  h_subLeadingChsPtDiff_gensubLeadingChsPt_AtTail->Fill(genChs2.Pt() - chs2_truth.Pt(), genChs2.Pt());
+                  h_leadingChsPt_truth_genleadingChsPt_AtTail->Fill(chs1_truth.Pt(), genChs1.Pt(),eventWeight); //Note: chs1_truth corresponds to trk matched to leading gen chs
+                  h_leadingChsPtDiff_genleadingChsPt_AtTail->Fill(genChs1.Pt() - chs1_truth.Pt(), genChs1.Pt(),eventWeight);
+                  h_subLeadingChsPt_truth_gensubLeadingChsPt_AtTail->Fill(chs2_truth.Pt(), genChs2.Pt(),eventWeight);
+                  h_subLeadingChsPtDiff_gensubLeadingChsPt_AtTail->Fill(genChs2.Pt() - chs2_truth.Pt(), genChs2.Pt(),eventWeight);
                   
-                  h_genleadingChs_TrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 211, 0.03, true));
-                  h_gensubLeadingChs_TrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]],211, 0.03, true));
+                  h_genleadingChs_TrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 211, 0.03, true),eventWeight);
+                  h_gensubLeadingChs_TrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]],211, 0.03, true),eventWeight);
                   
-                  h_genleadingChs_TrksInCone_AtTail_Tight->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]],211, 0.03, false));
-                  h_gensubLeadingChs_TrksInCone_AtTail_Tight->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]],211, 0.03, false));
+                  h_genleadingChs_TrksInCone_AtTail_Tight->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]],211, 0.03, false),eventWeight);
+                  h_gensubLeadingChs_TrksInCone_AtTail_Tight->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]],211, 0.03, false),eventWeight);
                   
-                  h_genleadingChs_PhTrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4, true));
-                  h_gensubLeadingChs_PhTrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4, true));
+                  h_genleadingChs_PhTrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4, true),eventWeight);
+                  h_gensubLeadingChs_PhTrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4, true),eventWeight);
                   
-                  h_genleadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4));
-                  h_gensubLeadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4));
+                  h_genleadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4),eventWeight);
+                  h_gensubLeadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4),eventWeight);
                   
-                  h_leadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, chs1_truth, event.packedCandsCharge[MatchedChs1Index], 22, 0.4));
-                  h_subLeadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, chs2_truth, event.packedCandsCharge[MatchedChs2Index], 22, 0.4));
+                  h_leadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, chs1_truth, event.packedCandsCharge[MatchedChs1Index], 22, 0.4),eventWeight);
+                  h_subLeadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, chs2_truth, event.packedCandsCharge[MatchedChs2Index], 22, 0.4),eventWeight);
     
                   
                   p_HadronicDecayFractions_AtTail->Fill(1.0, bool (genPionIndex.size() >= 2) );
@@ -1195,22 +1229,22 @@ int main(int argc, char* argv[]) {
                   p_HadronicDecayFractions_AtTail->Fill(4.0, bool (genChargedKaonIndex.size() >= 2) );
                 }
                 else {
-                  h_leadingChsPt_truth_genleadingChsPt_AtPeaks->Fill(chs1_truth.Pt(), genChs1.Pt()); //Note: chs1_truth corresponds to trk matched to leading gen chs
-                  h_subLeadingChsPt_truth_gensubLeadingChsPt_AtPeaks->Fill(chs2_truth.Pt(), genChs2.Pt());
-                  h_genleadingChs_TrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 211, 0.03, true));
-                  h_gensubLeadingChs_TrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 211, 0.03, true));
+                  h_leadingChsPt_truth_genleadingChsPt_AtPeaks->Fill(chs1_truth.Pt(), genChs1.Pt(),eventWeight); //Note: chs1_truth corresponds to trk matched to leading gen chs
+                  h_subLeadingChsPt_truth_gensubLeadingChsPt_AtPeaks->Fill(chs2_truth.Pt(), genChs2.Pt(),eventWeight);
+                  h_genleadingChs_TrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 211, 0.03, true),eventWeight);
+                  h_gensubLeadingChs_TrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 211, 0.03, true),eventWeight);
                   
-                  h_genleadingChs_TrksInCone_AtPeaks_Tight->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 211, 0.03, false));
-                  h_gensubLeadingChs_TrksInCone_AtPeaks_Tight->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 211, 0.03, false));
+                  h_genleadingChs_TrksInCone_AtPeaks_Tight->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 211, 0.03, false),eventWeight);
+                  h_gensubLeadingChs_TrksInCone_AtPeaks_Tight->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 211, 0.03, false),eventWeight);
                   
                   
-                  h_genleadingChs_PhTrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4, true));
-                  h_gensubLeadingChs_PhTrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4, true));
-                  h_genleadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4));
-                  h_gensubLeadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4));
+                  h_genleadingChs_PhTrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4, true),eventWeight);
+                  h_gensubLeadingChs_PhTrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4, true),eventWeight);
+                  h_genleadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4),eventWeight);
+                  h_gensubLeadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4),eventWeight);
                   
-                  h_leadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, chs1_truth, event.packedCandsCharge[MatchedChs1Index], 22, 0.4));
-                  h_subLeadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, chs2_truth, event.packedCandsCharge[MatchedChs2Index], 22, 0.4));
+                  h_leadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, chs1_truth, event.packedCandsCharge[MatchedChs1Index], 22, 0.4),eventWeight);
+                  h_subLeadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, chs2_truth, event.packedCandsCharge[MatchedChs2Index], 22, 0.4),eventWeight);
                 }
               }
             }
@@ -1228,7 +1262,7 @@ int main(int argc, char* argv[]) {
             event.muonIndexLoose = shf.getLooseMuons(event);
             std::vector<int> chsIndex = shf.getChargedHadronTracks(event);
 
-            h_numLooseMuons->Fill(event.muonIndexLoose.size());
+            h_numLooseMuons->Fill(event.muonIndexLoose.size(),eventWeight);
 
             if ( event.muonIndexLoose.size() < 2 ) continue;
             
@@ -1256,8 +1290,8 @@ int main(int argc, char* argv[]) {
                 if (event.genMuonPF2PATDirectScalarAncestor[event.muonIndexLoose[i]]) nDirectScalarMuons++; 
             }
 
-            h_numRecoScalarMuons->Fill(nScalarMuons);
-            h_numRecoDirectScalarMuons->Fill(nDirectScalarMuons);
+            h_numRecoScalarMuons->Fill(nScalarMuons,eventWeight);
+            h_numRecoDirectScalarMuons->Fill(nDirectScalarMuons,eventWeight);
 
             if ( !shf.getDileptonCand( event, event.muonIndexLoose, useMCTruth_ ) ) continue;
             
@@ -1265,12 +1299,12 @@ int main(int argc, char* argv[]) {
             const double dileptonMass {(event.zPairLeptons.first + event.zPairLeptons.second).M()};
             //if (dileptonMass > scalarMassCut_) continue;
 
-            h_recoDimuonDeltaR->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second));
-            h_recoDimuonMass->Fill( (event.zPairLeptons.first + event.zPairLeptons.second).M() );
-            h_recoDimuonPt->Fill( (event.zPairLeptons.first + event.zPairLeptons.second).Pt() );
-            h_recoDimuonEta->Fill((event.zPairLeptons.first + event.zPairLeptons.second).Eta() );
-            h_recoLeadingMuonPt->Fill( (event.zPairLeptons.first).Pt() );
-            h_recoSubleadingMuonPt->Fill( (event.zPairLeptons.second).Pt() );
+            h_recoDimuonDeltaR->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second),eventWeight);
+            h_recoDimuonMass->Fill( (event.zPairLeptons.first + event.zPairLeptons.second).M() ,eventWeight);
+            h_recoDimuonPt->Fill( (event.zPairLeptons.first + event.zPairLeptons.second).Pt() ,eventWeight);
+            h_recoDimuonEta->Fill((event.zPairLeptons.first + event.zPairLeptons.second).Eta() ,eventWeight);
+            h_recoLeadingMuonPt->Fill( (event.zPairLeptons.first).Pt() ,eventWeight);
+            h_recoSubleadingMuonPt->Fill( (event.zPairLeptons.second).Pt(),eventWeight );
 
             // Add comparison between leptonic and hadronic scalar decayed muons
             /*
@@ -1434,29 +1468,29 @@ int main(int argc, char* argv[]) {
             const TLorentzVector refittedLeptonicScalarVec {event.zPairLeptonsRefitted.first + event.zPairLeptonsRefitted.second};
             const TLorentzVector refittedHadronicScalarVec {event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second};
 
-            h_diScalarDeltaR->Fill( leptonicScalarVec.DeltaR(hadronicScalarVec) );
-            if ( leadingGen && subleadingGen ) h_diScalarGenDeltaR->Fill( leptonicScalarVec.DeltaR(hadronicScalarVec) );
-            if ( !leadingGen && !subleadingGen ) h_diScalarFakeDeltaR->Fill( leptonicScalarVec.DeltaR(hadronicScalarVec) );
-            h_diScalarDeltaR_refittedMuons->Fill( refittedLeptonicScalarVec.DeltaR(hadronicScalarVec) );
-            if ( leadingGen && subleadingGen ) h_diScalarGenDeltaR_refittedMuons->Fill( refittedLeptonicScalarVec.DeltaR(hadronicScalarVec) );
+            h_diScalarDeltaR->Fill( leptonicScalarVec.DeltaR(hadronicScalarVec) ,eventWeight);
+            if ( leadingGen && subleadingGen ) h_diScalarGenDeltaR->Fill( leptonicScalarVec.DeltaR(hadronicScalarVec),eventWeight);
+            if ( !leadingGen && !subleadingGen ) h_diScalarFakeDeltaR->Fill( leptonicScalarVec.DeltaR(hadronicScalarVec) ,eventWeight);
+            h_diScalarDeltaR_refittedMuons->Fill( refittedLeptonicScalarVec.DeltaR(hadronicScalarVec),eventWeight );
+            if ( leadingGen && subleadingGen ) h_diScalarGenDeltaR_refittedMuons->Fill( refittedLeptonicScalarVec.DeltaR(hadronicScalarVec),eventWeight );
             h_diScalarDeltaR_refittedMuonsChs->Fill( refittedLeptonicScalarVec.DeltaR(refittedHadronicScalarVec) );
-            if ( leadingGen && subleadingGen ) h_diScalarGenDeltaR_refittedMuonsChs->Fill( refittedLeptonicScalarVec.DeltaR(refittedHadronicScalarVec) );
+            if ( leadingGen && subleadingGen ) h_diScalarGenDeltaR_refittedMuonsChs->Fill( refittedLeptonicScalarVec.DeltaR(refittedHadronicScalarVec),eventWeight );
 
             h_diScalarDeltaRvsPt->Fill( (leptonicScalarVec+hadronicScalarVec).Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec) );
-            if ( leadingGen && subleadingGen )   h_diScalarGenDeltaRvsPt->Fill(	(leptonicScalarVec+hadronicScalarVec).Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec) );
-            if ( !leadingGen && !subleadingGen ) h_diScalarFakeDeltaRvsPt->Fill( (leptonicScalarVec+hadronicScalarVec).Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec) );
+            if ( leadingGen && subleadingGen )   h_diScalarGenDeltaRvsPt->Fill(	(leptonicScalarVec+hadronicScalarVec).Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec),eventWeight );
+            if ( !leadingGen && !subleadingGen ) h_diScalarFakeDeltaRvsPt->Fill( (leptonicScalarVec+hadronicScalarVec).Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec),eventWeight );
 
-            h_diScalarDeltaRvsLepPt->Fill( leptonicScalarVec.Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec) );
-       	    if ( leadingGen && subleadingGen ) 	 h_diScalarGenDeltaRvsLepPt->Fill( leptonicScalarVec.Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec) );
-       	    if ( !leadingGen && !subleadingGen ) h_diScalarFakeDeltaRvsLepPt->Fill( leptonicScalarVec.Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec) );
+            h_diScalarDeltaRvsLepPt->Fill( leptonicScalarVec.Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec),eventWeight );
+       	    if ( leadingGen && subleadingGen ) 	 h_diScalarGenDeltaRvsLepPt->Fill( leptonicScalarVec.Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec),eventWeight );
+       	    if ( !leadingGen && !subleadingGen ) h_diScalarFakeDeltaRvsLepPt->Fill( leptonicScalarVec.Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec),eventWeight );
 
-            h_diScalarDeltaRvsHadPt->Fill( hadronicScalarVec.Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec) );
-            if ( leadingGen && subleadingGen )	 h_diScalarGenDeltaRvsHadPt->Fill( hadronicScalarVec.Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec) );
-            if ( !leadingGen && !subleadingGen ) h_diScalarFakeDeltaRvsHadPt->Fill( hadronicScalarVec.Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec) );
+            h_diScalarDeltaRvsHadPt->Fill( hadronicScalarVec.Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec),eventWeight );
+            if ( leadingGen && subleadingGen )	 h_diScalarGenDeltaRvsHadPt->Fill( hadronicScalarVec.Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec),eventWeight );
+            if ( !leadingGen && !subleadingGen ) h_diScalarFakeDeltaRvsHadPt->Fill( hadronicScalarVec.Pt(), leptonicScalarVec.DeltaR(hadronicScalarVec),eventWeight );
 
-            h_scalarVsScalarPt->Fill( leptonicScalarVec.Pt(), hadronicScalarVec.Pt() );
-            if ( leadingGen && subleadingGen )   h_scalarVsScalarPtGen->Fill( leptonicScalarVec.Pt(), hadronicScalarVec.Pt() );
-            if ( !leadingGen && !subleadingGen ) h_scalarVsScalarPtFake->Fill( leptonicScalarVec.Pt(), hadronicScalarVec.Pt() );
+            h_scalarVsScalarPt->Fill( leptonicScalarVec.Pt(), hadronicScalarVec.Pt() ,eventWeight);
+            if ( leadingGen && subleadingGen )   h_scalarVsScalarPtGen->Fill( leptonicScalarVec.Pt(), hadronicScalarVec.Pt() ,eventWeight);
+            if ( !leadingGen && !subleadingGen ) h_scalarVsScalarPtFake->Fill( leptonicScalarVec.Pt(), hadronicScalarVec.Pt() ,eventWeight);
 
             p_selectedChsMatching->Fill( 1.0, bool (  leadingGen &&  subleadingGen ) );
             p_selectedChsMatching->Fill( 2.0, bool (  leadingGen && !subleadingGen ) );
@@ -1465,55 +1499,55 @@ int main(int argc, char* argv[]) {
             p_selectedChsMatching->Fill( 5.0, leadingGen );
             p_selectedChsMatching->Fill( 6.0, subleadingGen );
 
-            h_diChsPt->Fill(hadronicScalarVec.Pt());
-            if ( leadingGen &&  subleadingGen) h_diChsPtBothGen->Fill(hadronicScalarVec.Pt());
-            if ( leadingGen && !subleadingGen) h_diChsPtLeadingGen->Fill(hadronicScalarVec.Pt());
-            if (!leadingGen &&  subleadingGen) h_diChsPtSubleadingGen->Fill(hadronicScalarVec.Pt());
-            if (!leadingGen && !subleadingGen) h_diChsPtBothFake->Fill(hadronicScalarVec.Pt());
+            h_diChsPt->Fill(hadronicScalarVec.Pt(),eventWeight);
+            if ( leadingGen &&  subleadingGen) h_diChsPtBothGen->Fill(hadronicScalarVec.Pt(),eventWeight);
+            if ( leadingGen && !subleadingGen) h_diChsPtLeadingGen->Fill(hadronicScalarVec.Pt(),eventWeight);
+            if (!leadingGen &&  subleadingGen) h_diChsPtSubleadingGen->Fill(hadronicScalarVec.Pt(),eventWeight);
+            if (!leadingGen && !subleadingGen) h_diChsPtBothFake->Fill(hadronicScalarVec.Pt(),eventWeight);
             
-            h_diChsMass->Fill(hadronicScalarVec.M());
-            if ( leadingGen &&  subleadingGen) h_diChsMassBothGen->Fill(hadronicScalarVec.M());
-            if ( leadingGen && !subleadingGen) h_diChsMassLeadingGen->Fill(hadronicScalarVec.M());
-            if (!leadingGen &&  subleadingGen) h_diChsMassSubleadingGen->Fill(hadronicScalarVec.M());
-            if (!leadingGen && !subleadingGen) h_diChsMassBothFake->Fill(hadronicScalarVec.M());
+            h_diChsMass->Fill(hadronicScalarVec.M(),eventWeight);
+            if ( leadingGen &&  subleadingGen) h_diChsMassBothGen->Fill(hadronicScalarVec.M(),eventWeight);
+            if ( leadingGen && !subleadingGen) h_diChsMassLeadingGen->Fill(hadronicScalarVec.M(),eventWeight);
+            if (!leadingGen &&  subleadingGen) h_diChsMassSubleadingGen->Fill(hadronicScalarVec.M(),eventWeight);
+            if (!leadingGen && !subleadingGen) h_diChsMassBothFake->Fill(hadronicScalarVec.M(),eventWeight);
 
-            h_chsPt1->Fill(event.chsPairVec.first.Pt());
-            h_chsPt2->Fill(event.chsPairVec.second.Pt());
-            if ( leadingGen &&  subleadingGen) h_chsPtBothGen1->Fill(event.chsPairVec.first.Pt());
-            if ( leadingGen &&  subleadingGen) h_chsPtBothGen2->Fill(event.chsPairVec.second.Pt());
-            if ( leadingGen && !subleadingGen) h_chsPtLeadingGen1->Fill(event.chsPairVec.first.Pt());
-            if ( leadingGen && !subleadingGen) h_chsPtLeadingGen2->Fill(event.chsPairVec.second.Pt());
-            if (!leadingGen &&  subleadingGen) h_chsPtSubleadingGen1->Fill(event.chsPairVec.first.Pt());
-            if (!leadingGen &&  subleadingGen) h_chsPtSubleadingGen2->Fill(event.chsPairVec.second.Pt());
-            if (!leadingGen && !subleadingGen) h_chsPtBothFake1->Fill(event.chsPairVec.first.Pt());
-            if (!leadingGen && !subleadingGen) h_chsPtBothFake2->Fill(event.chsPairVec.second.Pt());
-            if (  leadingGen )    h_chsPtGen1->Fill(event.chsPairVec.first.Pt());
-            if (  subleadingGen ) h_chsPtGen2->Fill(event.chsPairVec.second.Pt());
-            if ( !leadingGen )    h_chsPtFake1->Fill(event.chsPairVec.first.Pt());
-            if ( !subleadingGen ) h_chsPtFake2->Fill(event.chsPairVec.second.Pt());
+            h_chsPt1->Fill(event.chsPairVec.first.Pt(),eventWeight);
+            h_chsPt2->Fill(event.chsPairVec.second.Pt(),eventWeight);
+            if ( leadingGen &&  subleadingGen) h_chsPtBothGen1->Fill(event.chsPairVec.first.Pt(),eventWeight);
+            if ( leadingGen &&  subleadingGen) h_chsPtBothGen2->Fill(event.chsPairVec.second.Pt(),eventWeight);
+            if ( leadingGen && !subleadingGen) h_chsPtLeadingGen1->Fill(event.chsPairVec.first.Pt(),eventWeight);
+            if ( leadingGen && !subleadingGen) h_chsPtLeadingGen2->Fill(event.chsPairVec.second.Pt(),eventWeight);
+            if (!leadingGen &&  subleadingGen) h_chsPtSubleadingGen1->Fill(event.chsPairVec.first.Pt(),eventWeight);
+            if (!leadingGen &&  subleadingGen) h_chsPtSubleadingGen2->Fill(event.chsPairVec.second.Pt(),eventWeight);
+            if (!leadingGen && !subleadingGen) h_chsPtBothFake1->Fill(event.chsPairVec.first.Pt(),eventWeight);
+            if (!leadingGen && !subleadingGen) h_chsPtBothFake2->Fill(event.chsPairVec.second.Pt(),eventWeight);
+            if (  leadingGen )    h_chsPtGen1->Fill(event.chsPairVec.first.Pt(),eventWeight);
+            if (  subleadingGen ) h_chsPtGen2->Fill(event.chsPairVec.second.Pt(),eventWeight);
+            if ( !leadingGen )    h_chsPtFake1->Fill(event.chsPairVec.first.Pt(),eventWeight);
+            if ( !subleadingGen ) h_chsPtFake2->Fill(event.chsPairVec.second.Pt(),eventWeight);
             
-            h_leadingChsPVAscQuality->Fill(event.packedCandsPVquality[event.chsPairIndex.first]+1);
-            h_subleadingChsPVAscQuality->Fill(event.packedCandsPVquality[event.chsPairIndex.second]+1);
-            h_leadingChsDz->Fill(event.packedCandsDz[event.chsPairIndex.first]);
-            h_subleadingChsDz->Fill(event.packedCandsDz[event.chsPairIndex.second]);
+            h_leadingChsPVAscQuality->Fill(event.packedCandsPVquality[event.chsPairIndex.first]+1,eventWeight);
+            h_subleadingChsPVAscQuality->Fill(event.packedCandsPVquality[event.chsPairIndex.second]+1,eventWeight);
+            h_leadingChsDz->Fill(event.packedCandsDz[event.chsPairIndex.first],eventWeight);
+            h_subleadingChsDz->Fill(event.packedCandsDz[event.chsPairIndex.second],eventWeight);
 
-            h_chsIso1->Fill(event.chsPairTrkIso.first);
-            h_chsIso2->Fill(event.chsPairTrkIso.second);
-            if ( leadingGen &&  subleadingGen) h_chsIsoBothGen1->Fill(event.chsPairTrkIso.first);
-            if ( leadingGen &&  subleadingGen) h_chsIsoBothGen2->Fill(event.chsPairTrkIso.second);
-            if ( leadingGen && !subleadingGen) h_chsIsoLeadingGen1->Fill(event.chsPairTrkIso.first);
-            if ( leadingGen && !subleadingGen) h_chsIsoLeadingGen2->Fill(event.chsPairTrkIso.second);
-            if (!leadingGen &&  subleadingGen) h_chsIsoSubleadingGen1->Fill(event.chsPairTrkIso.first);
-            if (!leadingGen &&  subleadingGen) h_chsIsoSubleadingGen2->Fill(event.chsPairTrkIso.second);
-            if (!leadingGen && !subleadingGen) h_chsIsoBothFake1->Fill(event.chsPairTrkIso.first);
-            if (!leadingGen && !subleadingGen) h_chsIsoBothFake2->Fill(event.chsPairTrkIso.second);
-            if (  leadingGen )    h_chsIsoGen1->Fill(event.chsPairTrkIso.first);
-            if (  subleadingGen ) h_chsIsoGen2->Fill(event.chsPairTrkIso.second);
-            if ( !leadingGen )    h_chsIsoFake1->Fill(event.chsPairTrkIso.first);
-            if ( !subleadingGen ) h_chsIsoFake2->Fill(event.chsPairTrkIso.second);
+            h_chsIso1->Fill(event.chsPairTrkIso.first,eventWeight);
+            h_chsIso2->Fill(event.chsPairTrkIso.second,eventWeight);
+            if ( leadingGen &&  subleadingGen) h_chsIsoBothGen1->Fill(event.chsPairTrkIso.first,eventWeight);
+            if ( leadingGen &&  subleadingGen) h_chsIsoBothGen2->Fill(event.chsPairTrkIso.second,eventWeight);
+            if ( leadingGen && !subleadingGen) h_chsIsoLeadingGen1->Fill(event.chsPairTrkIso.first,eventWeight);
+            if ( leadingGen && !subleadingGen) h_chsIsoLeadingGen2->Fill(event.chsPairTrkIso.second,eventWeight);
+            if (!leadingGen &&  subleadingGen) h_chsIsoSubleadingGen1->Fill(event.chsPairTrkIso.first,eventWeight);
+            if (!leadingGen &&  subleadingGen) h_chsIsoSubleadingGen2->Fill(event.chsPairTrkIso.second,eventWeight);
+            if (!leadingGen && !subleadingGen) h_chsIsoBothFake1->Fill(event.chsPairTrkIso.first,eventWeight);
+            if (!leadingGen && !subleadingGen) h_chsIsoBothFake2->Fill(event.chsPairTrkIso.second,eventWeight);
+            if (  leadingGen )    h_chsIsoGen1->Fill(event.chsPairTrkIso.first,eventWeight);
+            if (  subleadingGen ) h_chsIsoGen2->Fill(event.chsPairTrkIso.second,eventWeight);
+            if ( !leadingGen )    h_chsIsoFake1->Fill(event.chsPairTrkIso.first,eventWeight);
+            if ( !subleadingGen ) h_chsIsoFake2->Fill(event.chsPairTrkIso.second,eventWeight);
 
-            h_chsIsoPt1->Fill(event.chsPairVec.first.Pt(), event.chsPairTrkIso.first);
-            h_chsIsoPt2->Fill(event.chsPairVec.second.Pt(), event.chsPairTrkIso.second);
+            h_chsIsoPt1->Fill(event.chsPairVec.first.Pt(), event.chsPairTrkIso.first,eventWeight);
+            h_chsIsoPt2->Fill(event.chsPairVec.second.Pt(), event.chsPairTrkIso.second,eventWeight);
             if ( leadingGen &&  subleadingGen) h_chsIsoPtBothGen1->Fill(event.chsPairVec.first.Pt(), event.chsPairTrkIso.first);
             if ( leadingGen &&  subleadingGen) h_chsIsoPtBothGen2->Fill(event.chsPairVec.second.Pt(), event.chsPairTrkIso.second);
             if ( leadingGen && !subleadingGen) h_chsIsoPtLeadingGen1->Fill(event.chsPairVec.first.Pt(), event.chsPairTrkIso.first);
@@ -1948,11 +1982,21 @@ int main(int argc, char* argv[]) {
     h_subLeadingChsPt_truth->Write();
     h_leadingChsEta_truth->Write();
     h_subLeadingChsEta_truth->Write();
+    h_leadingChsIso_truth->Write();
+    h_subleadingChsIso_truth->Write();
+    h_diChsMass_truth_leadingChsIso_truth->Write();
+    h_diChsMass_truth_subleadingChsIso_truth->Write();
     h_ChsdelR_truth->Write();
     h_diChsMass_truth->Write();
     h_diChsMass_truth_dR->Write();
     h_diChsMass_truth_leadingChsPt_truth->Write();
     h_diChsMass_truth_subLeadingChsPt_truth->Write();
+    h_leadingChsPtDiff_leadingChsIso_truth->Write();
+    h_subleadingChsPtDiff_subleadingChsIso_truth->Write();
+    
+    h_diChsMass_truth_genleadingChs_PhGenInCone->Write();
+    h_diChsMass_truth_gensubleadingChs_PhGenInCone->Write();
+    
     h_leadingChsPt_truth_genleadingChsPt_AtTail->Write();
     //h_leadingChsPtDiff_genleadingChsPt_AtTail->Write();
     h_subLeadingChsPt_truth_gensubLeadingChsPt_AtTail->Write();

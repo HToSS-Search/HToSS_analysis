@@ -176,7 +176,11 @@ int main(int argc, char* argv[]) {
     const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "_legacy/"};
 //    const std::string postLepSelSkimInputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "/"};
     std::cout<<"usePostLepTree :"<<usePostLepTree<<std::endl;
-    // Begin to loop over all datasets
+		std::ofstream isotail_evts;
+		std::ofstream masstail_evts;
+		isotail_evts.open ("interesting_events_iso.txt");
+		masstail_evts.open ("interesting_events_mass.txt");
+		// Begin to loop over all datasets
     for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset) {
       datasetFilled = false;
       TChain* datasetChain{new TChain{dataset->treeName().c_str()}};
@@ -283,13 +287,20 @@ int main(int argc, char* argv[]) {
 	      if (event.chsPairRelIso.first == 0.) {
           hists_1d_["h_DiChHadDeltaRAtZeroIso"]->Fill(event.chsPairVec.first.DeltaR(event.chsPairVec.second), eventWeight);        
         }
-        
+       	
+				if ((event.chsPairRelIso.first > 1) || (event.chsPairRelIso.second > 1)) isotail_evts <<event.eventRun<<":"<<event.eventLumiblock<<":"<<event.eventNum<<"\n";
+				if ((event.chsPairVec.first + event.chsPairVec.second).M()<=1.2) masstail_evts <<event.eventRun<<":"<<event.eventLumiblock<<":"<<event.eventNum<<"\n";
+
+
 	      //std::cout << "Enters event, processes hadrons" << std::endl;
 	
       } // end event loop
     } // end dataset loop
 
-    TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
+		isotail_evts.close();
+		masstail_evts.close();
+    
+		TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
     outFile->cd();
 
     // Write Histos
