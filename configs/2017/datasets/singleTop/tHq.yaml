@@ -1,7 +1,7 @@
 name: "tHq"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/singleTop/tHq/"
-cross_section: 0.3184
+cross_section: 0.7452
 mc: true
 histogram: "SingleTop"
 colour: "#ff99cc"

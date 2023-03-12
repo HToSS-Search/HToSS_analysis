@@ -1,7 +1,7 @@
 name: "WW_2l2nu"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VV/WW_2l2nu/"
-cross_section: 11.08
+cross_section: 11.09
 mc: true
 histogram: "VV"
 colour: "#ff9933"

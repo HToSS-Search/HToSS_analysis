@@ -1,7 +1,7 @@
 name: "tW"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/singleTop/tW/"
-cross_section: 34.91
+cross_section: 32.45
 mc: true
 histogram: "SingleTop"
 colour: "#ff99cc"

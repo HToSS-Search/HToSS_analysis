@@ -2,7 +2,7 @@ name: "WZZ"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VVV/WZZ/"
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VVV/WZZ_ext/"
-cross_section: 0.05565
+cross_section: 0.05709
 mc: true
 histogram: "VVV"
 colour: "#999999"

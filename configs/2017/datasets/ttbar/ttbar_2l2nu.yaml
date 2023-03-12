@@ -1,7 +1,7 @@
 name: "ttbar_2l2nu"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/ttbar/ttbar_2l2nu/"
-cross_section: 88.29
+cross_section: 687.1
 mc: true
 histogram: "ttbar"
 colour: "#8aefff"

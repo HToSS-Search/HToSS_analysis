@@ -1,4 +1,3 @@
-#include "SharedFunctions.hpp"
 #include "AnalysisEvent.hpp"
 #include "TChain.h"
 #include "TFile.h"
@@ -33,11 +32,12 @@
 #include <string>
 #include <vector>
 #include <map>
+#include "SharedFunctions.hpp"
 
 namespace fs = boost::filesystem;
 
-SharedFunctions::SharedFunctions(const bool MCTruth)
-  : looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {30.}, looseMuonRelIso_ {100.}, invZMassCut_ {4.0}, chsMass_{0.13957018}, maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4}, scalarMassCut_{4.0}, higgsTolerence_ {10.}, useMCTruth_{MCTruth}, looseChsEta_{2.4}
+SharedFunctions::SharedFunctions(const bool MCTruth = false, const bool debug = false)
+  : looseMuonEta_ {2.4}, looseMuonPt_ {5.}, looseMuonPtLeading_ {30.}, looseMuonRelIso_ {100.}, invZMassCut_ {4.0}, chsMass_{0.13957018}, maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4}, scalarMassCut_{4.0}, higgsTolerence_ {10.}, useMCTruth_{MCTruth}, looseChsEta_{2.4}, looseChsPt_{5.}, looseChsPtLeading_{5.}, diChsPt_{20.}, verbose_{debug}
   {}
   
 SharedFunctions::~SharedFunctions()
@@ -55,32 +55,33 @@ std::vector<int> SharedFunctions::getLooseMuons(const AnalysisEvent& event) {
 
 std::vector<int> SharedFunctions::getChargedHadronTracks(const AnalysisEvent& event) {
     std::vector<int> chs;
+    // bool flag = false;
     for (Int_t k = 0; k < event.numPackedCands; k++) {
 				//if (std::abs(event.packedCandsEta[k])>2.4) continue;
         if (std::abs(event.packedCandsPdgId[k]) != 211) continue;
         if (event.packedCandsCharge[k] == 0 ) continue;
         if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
         TLorentzVector lVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
-//      if (lVec.Pt() < 5.0) continue;
-//      	if (std::abs(lVec.Eta()) >= looseChsEta_) continue;
-
+        if (lVec.Pt() < 0.5) continue;
+        if (std::abs(lVec.Eta()) > looseChsEta_) continue;
+        // if ( std::abs(lVec.Pt()) >= (chs.empty() ? looseChsPtLeading_ : looseChsPt_)) chs.emplace_back(k);
+        if ( std::abs(lVec.Pt()) < looseChsPt_) continue;
         chs.emplace_back(k);
+        // if ( std::abs(lVec.Pt()) >= looseChsPtLeading_) flag=true;
     }
+    // if (!flag) chs.erase(chs.begin()+1,chs.end());
     return chs;
 }
 
 
-bool SharedFunctions::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons, bool mcTruth) {
-    //for ( unsigned int i{0}; i < muons.size(); i++ ) {
-    //    for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
-        
+bool SharedFunctions::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) {
     for (int i=0;i<muons.size();i++) {
         for (int j=0;j<muons.size();j++) {
             if (muons[j]==muons[i]) continue; //ensure not to use same muon
             if (event.muonPF2PATPt[muons[i]] <= looseMuonPtLeading_) continue;
             if (event.muonPF2PATPt[muons[j]] <= looseMuonPt_) continue;
 
-            if ( mcTruth && (!event.genMuonPF2PATDirectScalarAncestor[muons[i]] || !event.genMuonPF2PATDirectScalarAncestor[muons[j]]) ) continue;
+            if ( useMCTruth_ && (!event.genMuonPF2PATDirectScalarAncestor[muons[i]] || !event.genMuonPF2PATDirectScalarAncestor[muons[j]]) ) continue;
             if (event.muonPF2PATCharge[muons[i]] * event.muonPF2PATCharge[muons[j]] >= 0) continue;
 
             TLorentzVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
@@ -91,79 +92,101 @@ bool SharedFunctions::getDileptonCand(AnalysisEvent& event, const std::vector<in
                 event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
                 event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? muons[i] : muons[j];
                 event.zPairIndex.second  = lepton1.Pt() > lepton2.Pt() ? muons[j] : muons[i];
-                event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
-                event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
+                // event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
+                // event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
+                
+                if (verbose_) std::cout<<"Check out the muons!"<<std::endl;
 
-                // pf quantities
-                float neutral_iso {0.0}, neutral_iso1 {0.0}, neutral_iso2 {0.0};
-                float ch_iso {0.0}, ch_iso1 {0.0}, ch_iso2 {0.0};
-                float pu_iso {0.0}, pu_iso1 {0.0}, pu_iso2 {0.0};
+                struct Isolation leadingMuonIso, subleadingMuonIso;
+                leadingMuonIso = PFIsolation("muon",event.zPairIndex.first, -99, event.zPairIndex.second, event, 0.4);
+                subleadingMuonIso = PFIsolation("muon",event.zPairIndex.second, -99, event.zPairIndex.first, event, 0.4);
 
-                // trk quantities
-                float neutral_trkiso {0.0}, neutral_trkiso1 {0.0}, neutral_trkiso2 {0.0};
-                float ch_trkiso {0.0}, ch_trkiso1 {0.0}, ch_trkiso2 {0.0};
-                float pu_trkiso {0.0}, pu_trkiso1 {0.0}, pu_trkiso2 {0.0};
-   
-                for (int k = 0; k < event.numPackedCands; k++) {
-                    if ( k == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || k == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
+                event.zPairRelIso.first = leadingMuonIso.reliso_;
+                event.zPairChIso.first = leadingMuonIso.chiso_;
+                event.zPairNhIso.first = leadingMuonIso.nhiso_;
+                event.zPairPhIso.first = leadingMuonIso.phiso_;
+                event.zPairPuIso.first = leadingMuonIso.puiso_;
+                
+                event.zPairRelIso.second = subleadingMuonIso.reliso_;
+                event.zPairChIso.second = subleadingMuonIso.chiso_;
+                event.zPairNhIso.second = subleadingMuonIso.nhiso_;
+                event.zPairPhIso.second = subleadingMuonIso.phiso_;
+                event.zPairPuIso.second = subleadingMuonIso.puiso_;
 
-                    TLorentzVector packedCandVec, packedCandTrkVec;
-                    packedCandVec.SetPxPyPzE      (event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]);
-                    packedCandTrkVec.SetPtEtaPhiE (event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
-
-                    // Charge hadron contributions have to have pT > 0.5
-                    if ( event.packedCandsCharge[k] == 0 ) {
-                        if ( packedCandVec.Pt() >= 0.5 ) {
-                            if ( event.zPairLeptons.first.DeltaR(packedCandVec)   < 0.4 )  neutral_iso1 += packedCandVec.Et();
-                            if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.4 )  neutral_iso2 += packedCandVec.Et();
-                            if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec)  < 0.4 ) neutral_iso += packedCandVec.Et();
-                        }
-                        if ( packedCandTrkVec.Pt() >= 0.5 ) {
-                            if ( event.zPairLeptons.first.DeltaR(packedCandTrkVec)   < 0.4 )  neutral_trkiso1 += packedCandTrkVec.Et();
-                            if ( event.zPairLeptons.second.DeltaR(packedCandTrkVec)  < 0.4 )  neutral_trkiso2 += packedCandTrkVec.Et();
-                            if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandTrkVec)  < 0.4 ) neutral_trkiso += packedCandTrkVec.Et();
-                        }
-                    }
-                    else {
-                        if ( event.packedCandsFromPV[k] >= 2 ) {
-                            if ( event.zPairLeptons.first.DeltaR(packedCandVec)   < 0.4 )  ch_iso1 += packedCandVec.Pt();
-                            if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.4 )  ch_iso2 += packedCandVec.Pt();
-                            if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec)  < 0.4 ) ch_iso += packedCandVec.Pt();
-
-                            if ( event.zPairLeptons.first.DeltaR(packedCandTrkVec)   < 0.4 )  ch_trkiso1 += packedCandTrkVec.Pt();
-                            if ( event.zPairLeptons.second.DeltaR(packedCandTrkVec)  < 0.4 )  ch_trkiso2 += packedCandTrkVec.Pt();
-                            if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandTrkVec)  < 0.4 ) ch_trkiso += packedCandTrkVec.Pt();
-                        }
-                        else {
-                            if ( packedCandVec.Pt() >= 0.5 ) {
-                                if ( event.zPairLeptons.first.DeltaR(packedCandVec)   < 0.4 )  pu_iso1 += packedCandVec.Pt();
-                                if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.4 )  pu_iso2 += packedCandVec.Pt();
-                                if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec)  < 0.4 ) pu_iso += packedCandVec.Pt();
-                            }
-       	                    if ( packedCandTrkVec.Pt() >= 0.5 ) {
-                                if ( event.zPairLeptons.first.DeltaR(packedCandTrkVec)   < 0.4 )  pu_trkiso1 += packedCandTrkVec.Pt();
-                                if ( event.zPairLeptons.second.DeltaR(packedCandTrkVec)  < 0.4 )  pu_trkiso2 += packedCandTrkVec.Pt();
-                                if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandTrkVec)  < 0.4 ) pu_trkiso += packedCandTrkVec.Pt();
-                            }
-                        }
-                    }
+                if (verbose_) {
+                  std::cout<<"Leading muon (idx, pT, eta, phi, isolation):"<<event.zPairIndex.first<<","<<event.zPairLeptons.first.Pt()<<","<<event.zPairLeptons.first.Eta()<<","<<event.zPairLeptons.first.Phi()<<","<<event.zPairRelIso.first<<std::endl;
+                  std::cout<<"subleading muon (idx, pT, eta, phi, isolation):"<<event.zPairIndex.second<<","<<event.zPairLeptons.second.Pt()<<","<<event.zPairLeptons.second.Eta()<<","<<event.zPairLeptons.second.Phi()<<","<<event.zPairRelIso.second<<std::endl;
                 }
+                // // pf quantities
+                // float neutral_iso {0.0}, neutral_iso1 {0.0}, neutral_iso2 {0.0};
+                // float ch_iso {0.0}, ch_iso1 {0.0}, ch_iso2 {0.0};
+                // float pu_iso {0.0}, pu_iso1 {0.0}, pu_iso2 {0.0};
 
-                const float iso1 = ch_iso1 + std::max( float(0.0), neutral_iso1 - float(0.5*pu_iso1) );
-                const float iso2 = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
-                const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
+                // // trk quantities
+                // float neutral_trkiso {0.0}, neutral_trkiso1 {0.0}, neutral_trkiso2 {0.0};
+                // float ch_trkiso {0.0}, ch_trkiso1 {0.0}, ch_trkiso2 {0.0};
+                // float pu_trkiso {0.0}, pu_trkiso1 {0.0}, pu_trkiso2 {0.0};
+   
+                // for (int k = 0; k < event.numPackedCands; k++) {
+                //     if ( k == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] || k == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
 
-                const float trkiso1 = ch_trkiso1 + std::max( float(0.0), neutral_trkiso1 - float(0.5*pu_trkiso1) );
-                const float trkiso2 = ch_trkiso2 + std::max( float(0.0), neutral_trkiso2 - float(0.5*pu_trkiso2) );
-                const float trkiso  = ch_trkiso  + std::max( float(0.0), neutral_trkiso  - float(0.5*pu_trkiso)  );
+                //     TLorentzVector packedCandVec, packedCandTrkVec;
+                //     packedCandVec.SetPxPyPzE      (event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]);
+                //     packedCandTrkVec.SetPtEtaPhiE (event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
 
-                event.zPairNewRelIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
-                event.zPairNewRelIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
-                event.zRelIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+                //     // Charge hadron contributions have to have pT > 0.5
+                //     if ( event.packedCandsCharge[k] == 0 ) {
+                //         if ( packedCandVec.Pt() >= 0.5 ) {
+                //             if ( event.zPairLeptons.first.DeltaR(packedCandVec)   < 0.4 )  neutral_iso1 += packedCandVec.Et();
+                //             if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.4 )  neutral_iso2 += packedCandVec.Et();
+                //             if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec)  < 0.4 ) neutral_iso += packedCandVec.Et();
+                //         }
+                //         if ( packedCandTrkVec.Pt() >= 0.5 ) {
+                //             if ( event.zPairLeptons.first.DeltaR(packedCandTrkVec)   < 0.4 )  neutral_trkiso1 += packedCandTrkVec.Et();
+                //             if ( event.zPairLeptons.second.DeltaR(packedCandTrkVec)  < 0.4 )  neutral_trkiso2 += packedCandTrkVec.Et();
+                //             if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandTrkVec)  < 0.4 ) neutral_trkiso += packedCandTrkVec.Et();
+                //         }
+                //     }
+                //     else {
+                //         if ( event.packedCandsFromPV[k] >= 2 ) {
+                //             if ( event.zPairLeptons.first.DeltaR(packedCandVec)   < 0.4 )  ch_iso1 += packedCandVec.Pt();
+                //             if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.4 )  ch_iso2 += packedCandVec.Pt();
+                //             if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec)  < 0.4 ) ch_iso += packedCandVec.Pt();
 
-                event.zPairNewTrkIso.first  = trkiso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
-                event.zPairNewTrkIso.second = trkiso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
-                event.zTrkIso = trkiso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+                //             if ( event.zPairLeptons.first.DeltaR(packedCandTrkVec)   < 0.4 )  ch_trkiso1 += packedCandTrkVec.Pt();
+                //             if ( event.zPairLeptons.second.DeltaR(packedCandTrkVec)  < 0.4 )  ch_trkiso2 += packedCandTrkVec.Pt();
+                //             if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandTrkVec)  < 0.4 ) ch_trkiso += packedCandTrkVec.Pt();
+                //         }
+                //         else {
+                //             if ( packedCandVec.Pt() >= 0.5 ) {
+                //                 if ( event.zPairLeptons.first.DeltaR(packedCandVec)   < 0.4 )  pu_iso1 += packedCandVec.Pt();
+                //                 if ( event.zPairLeptons.second.DeltaR(packedCandVec)  < 0.4 )  pu_iso2 += packedCandVec.Pt();
+                //                 if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandVec)  < 0.4 ) pu_iso += packedCandVec.Pt();
+                //             }
+       	        //             if ( packedCandTrkVec.Pt() >= 0.5 ) {
+                //                 if ( event.zPairLeptons.first.DeltaR(packedCandTrkVec)   < 0.4 )  pu_trkiso1 += packedCandTrkVec.Pt();
+                //                 if ( event.zPairLeptons.second.DeltaR(packedCandTrkVec)  < 0.4 )  pu_trkiso2 += packedCandTrkVec.Pt();
+                //                 if ( (event.zPairLeptons.first+event.zPairLeptons.second).DeltaR(packedCandTrkVec)  < 0.4 ) pu_trkiso += packedCandTrkVec.Pt();
+                //             }
+                //         }
+                //     }
+                // }
+
+                // const float iso1 = ch_iso1 + std::max( float(0.0), neutral_iso1 - float(0.5*pu_iso1) );
+                // const float iso2 = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
+                // const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
+
+                // const float trkiso1 = ch_trkiso1 + std::max( float(0.0), neutral_trkiso1 - float(0.5*pu_trkiso1) );
+                // const float trkiso2 = ch_trkiso2 + std::max( float(0.0), neutral_trkiso2 - float(0.5*pu_trkiso2) );
+                // const float trkiso  = ch_trkiso  + std::max( float(0.0), neutral_trkiso  - float(0.5*pu_trkiso)  );
+
+                // event.zPairNewRelIso.first  = iso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                // event.zPairNewRelIso.second = iso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                // event.zRelIso = iso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
+
+                // event.zPairNewTrkIso.first  = trkiso1/(event.zPairLeptons.first.Pt() + 1.0e-06);
+                // event.zPairNewTrkIso.second = trkiso2/(event.zPairLeptons.second.Pt() + 1.0e-06);
+                // event.zTrkIso = trkiso/((event.zPairLeptons.first+event.zPairLeptons.second).Pt() + 1.0e-06);
 
 //                if ( event.zRelIso > 0.2 ) continue;
 
@@ -181,7 +204,7 @@ bool SharedFunctions::getDileptonCand(AnalysisEvent& event, const std::vector<in
     return false;
 }
 
-bool SharedFunctions::getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool mcTruth ) {
+bool SharedFunctions::getDihadronCand(AnalysisEvent& event, std::vector<int>& chs) {
     for (int i = 0;i < chs.size();i++) {
     //for ( unsigned int i{0}; i < chs.size(); i++ ) {
       
@@ -201,7 +224,7 @@ bool SharedFunctions::getDihadronCand(AnalysisEvent& event, std::vector<int>& ch
             //if ( event.packedCandsMuonIndex[chs[j]] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
             
             if (chs[j]==chs[i]) continue; //ensure not to use same track
-            if ( mcTruth ) {
+            if ( useMCTruth_ ) {
                 if ( event.packedCandsElectronIndex[chs[j]] < 0  && event.packedCandsMuonIndex[chs[j]] < 0 && event.packedCandsJetIndex[chs[j]] < 0 ) continue;
                 if ( event.packedCandsElectronIndex[chs[j]] >= 0 && event.genElePF2PATScalarAncestor[event.packedCandsElectronIndex[chs[j]]] < 1 ) continue;
                 if ( event.packedCandsMuonIndex[chs[j]] >= 0     && event.genMuonPF2PATScalarAncestor[event.packedCandsMuonIndex[chs[j]]] < 1 ) continue;
@@ -217,10 +240,17 @@ bool SharedFunctions::getDihadronCand(AnalysisEvent& event, std::vector<int>& ch
             double delR { chs1.DeltaR(chs2) };
             double higgsMass { (chs1+chs2+event.zPairLeptons.first+event.zPairLeptons.second).M() };
 
-            //if ( delR < maxChsDeltaR_ && (higgsMass - 125.) < higgsTolerence_ && pT >= 0. ) {
+            std::vector<int> notrkID;
+            notrkID.push_back(11);notrkID.push_back(13);
+            float tmp_dr_max = 0.6;
+            int emtrks_chs1 = NoTrksInCone(event, chs1, notrkID,tmp_dr_max,false);
+            int emtrks_chs2 = NoTrksInCone(event, chs2, notrkID,tmp_dr_max,false);
+            // if ( delR < maxChsDeltaR_ && (higgsMass - 125.) < higgsTolerence_ && pT >= 0. ) {
             //if ( delR < maxChsDeltaR_ && (chs1+chs2).DeltaPhi(event.zPairLeptons.first+event.zPairLeptons.second)>3 && pT >= 0. ) {
-						//if ( delR < maxChsDeltaR_ && std::abs((chs1+chs2).M()-(event.zPairLeptons.first+event.zPairLeptons.second).M()) < 0.8 && pT >= 0. ) {
-            if ( delR < maxChsDeltaR_ && pT >= 0. ) {
+            //if ( delR < maxChsDeltaR_ && std::abs((chs1+chs2).M()-(event.zPairLeptons.first+event.zPairLeptons.second).M()) < 0.8 && pT >= 0. ) {
+            // if ( delR < maxChsDeltaR_ && pT >= 0. ) {
+            if ( delR < maxChsDeltaR_ && pT >= diChsPt_ ) {
+            // if ( delR < maxChsDeltaR_ && (higgsMass - 125.) < higgsTolerence_ && pT >= 0. ) {
                 event.chsPairVec.first  = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
                 event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
                 event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? chs[i] : chs[j];
@@ -233,73 +263,107 @@ bool SharedFunctions::getDihadronCand(AnalysisEvent& event, std::vector<int>& ch
                 event.chsPairTrkVec.first  = chsTrk1;
                 event.chsPairTrkVec.second = chsTrk2;
 
-                float neutral_iso {0.0}, neutral_iso1 {0.0}, neutral_iso2 {0.0};
-                float ch_iso {0.0}, ch_iso1 {0.0}, ch_iso2 {0.0};
-                float pu_iso {0.0}, pu_iso1 {0.0}, pu_iso2 {0.0};
+                if (verbose_) std::cout<<"Check out the hadrons!"<<std::endl;
 
-                float neutral_trkiso {0.0}, neutral_trkiso1 {0.0}, neutral_trkiso2 {0.0};
-                float ch_trkiso {0.0}, ch_trkiso1 {0.0}, ch_trkiso2 {0.0};
-                float pu_trkiso {0.0}, pu_trkiso1 {0.0}, pu_trkiso2 {0.0};
+                struct Isolation leadingChsIso, subleadingChsIso;
+                leadingChsIso = PFIsolation("hadron",event.chsPairIndex.first, -99, event.chsPairIndex.second, event, 0.4);
+                subleadingChsIso = PFIsolation("hadron",event.chsPairIndex.second,-99, event.chsPairIndex.first, event, 0.4);
 
-                for (int k = 0; k < event.numPackedCands; k++) {
-                    if ( k == event.chsPairIndex.first || k == event.chsPairIndex.second ) continue;
+                // if (subleadingChsIso.reliso_>=2) return false;
 
-                    TLorentzVector packedCandVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
-                    TLorentzVector packedCandTrkVec;
-                    packedCandTrkVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
+                event.chsPairRelIso.first = leadingChsIso.reliso_;
+                event.chsPairChIso.first = leadingChsIso.chiso_;
+                event.chsPairNhIso.first = leadingChsIso.nhiso_;
+                event.chsPairPhIso.first = leadingChsIso.phiso_;
+                event.chsPairPuIso.first = leadingChsIso.puiso_;
 
-                    if ( event.packedCandsCharge[k] == 0 ) {
-                        if ( packedCandVec.Pt() >= 0.5 ) {
-                            if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.3 )  neutral_iso1 += packedCandVec.Et();
-                            if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.3 )  neutral_iso2 += packedCandVec.Et();
-                            if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.3 ) neutral_iso += packedCandVec.Et();
-                        }
-                        if ( packedCandTrkVec.Pt() >= 0.5 ) {
-                            if ( event.chsPairTrkVec.first.DeltaR(packedCandTrkVec)  < 0.3 ) neutral_trkiso1 += packedCandTrkVec.Et();
-                            if ( event.chsPairTrkVec.second.DeltaR(packedCandTrkVec) < 0.3 ) neutral_trkiso2 += packedCandTrkVec.Et();
-                            if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandTrkVec) ) neutral_trkiso += packedCandVec.Et();
-                        }
-                    }
-                    else {
-                        if ( event.packedCandsFromPV[k] >= 2 ) {
-                            if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.3 )  ch_iso1 += packedCandVec.Pt();
-                            if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.3 )  ch_iso2 += packedCandVec.Pt();
-                            if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.3 ) ch_iso += packedCandVec.Pt();
+                event.chsPairRelIso.second = subleadingChsIso.reliso_;
+                event.chsPairChIso.second = subleadingChsIso.chiso_;
+                event.chsPairNhIso.second = subleadingChsIso.nhiso_;
+                event.chsPairPhIso.second = subleadingChsIso.phiso_;
+                event.chsPairPuIso.second = subleadingChsIso.puiso_;
 
-                            if ( event.chsPairTrkVec.first.DeltaR(packedCandTrkVec)   < 0.3 )  ch_trkiso1 += packedCandTrkVec.Pt();
-                            if ( event.chsPairTrkVec.second.DeltaR(packedCandTrkVec)  < 0.3 )  ch_trkiso2 += packedCandTrkVec.Pt();
-                            if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandTrkVec)  < 0.3 ) ch_trkiso += packedCandTrkVec.Pt();
-                        }
-                        else {
-                            if ( packedCandVec.Pt() >= 0.5 ) {
-                                if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.3 )  pu_iso1 += packedCandVec.Pt();
-                                if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.3 )  pu_iso2 += packedCandVec.Pt();
-                                if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.3 ) pu_iso += packedCandVec.Pt();
-                            }
-                            if ( packedCandTrkVec.Pt() >= 0.5 ) {
-                                if ( event.chsPairTrkVec.first.DeltaR(packedCandTrkVec)   < 0.3 )  pu_trkiso1 += packedCandTrkVec.Pt();
-                                if ( event.chsPairTrkVec.second.DeltaR(packedCandTrkVec)  < 0.3 )  pu_trkiso2 += packedCandTrkVec.Pt();
-                                if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandTrkVec)  < 0.3 ) pu_trkiso += packedCandTrkVec.Pt();
-                            }
-                        }
-                    }
+                if (verbose_) {
+                  std::cout<<"Leading hadron (pT, eta, phi, isolation):"<<event.chsPairVec.first.Pt()<<","<<event.chsPairVec.first.Eta()<<","<<event.chsPairVec.first.Phi()<<","<<event.chsPairRelIso.first<<std::endl;
+                  std::cout<<"subleading hadron (pT, eta, phi, isolation):"<<event.chsPairVec.second.Pt()<<","<<event.chsPairVec.second.Eta()<<","<<event.chsPairVec.second.Phi()<<","<<event.chsPairRelIso.second<<std::endl;
                 }
 
-                const float iso1 = ch_iso1 + std::max( float(0.0), neutral_iso1 - float(0.5*pu_iso1) );
-                const float iso2 = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
-                const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
+                // float neutral_iso {0.0}, neutral_iso1 {0.0}, neutral_iso2 {0.0};
+                // float ch_iso {0.0}, ch_iso1 {0.0}, ch_iso2 {0.0};
+                // float pu_iso {0.0}, pu_iso1 {0.0}, pu_iso2 {0.0};
 
-                const float trkiso1 = ch_trkiso1 + std::max( float(0.0), neutral_trkiso1 - float(0.5*pu_trkiso1) );
-                const float trkiso2 = ch_trkiso2 + std::max( float(0.0), neutral_trkiso2 - float(0.5*pu_trkiso2) );
-                const float trkiso  = ch_trkiso  + std::max( float(0.0), neutral_trkiso  - float(0.5*pu_trkiso)  );
+                // float neutral_trkiso {0.0}, neutral_trkiso1 {0.0}, neutral_trkiso2 {0.0};
+                // float ch_trkiso {0.0}, ch_trkiso1 {0.0}, ch_trkiso2 {0.0};
+                // float pu_trkiso {0.0}, pu_trkiso1 {0.0}, pu_trkiso2 {0.0};
 
-                event.chsPairRelIso.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
-                event.chsPairRelIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
-                event.chsRelIso = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
+                // for (int k = 0; k < event.numPackedCands; k++) {
+                //     if ( k == event.chsPairIndex.first || k == event.chsPairIndex.second ) continue;
 
-                event.chsPairTrkIso.first = trkiso1/(event.chsPairTrkVec.first.Pt() + 1.0e-06);
-                event.chsPairTrkIso.second = trkiso2/(event.chsPairTrkVec.second.Pt() + 1.0e-06);
-                event.chsTrkIso = trkiso/((event.chsPairTrkVec.first+event.chsPairTrkVec.second).Pt() + 1.0e-06);
+                //     TLorentzVector packedCandVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
+                //     TLorentzVector packedCandTrkVec;
+                //     packedCandTrkVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
+
+                //     if ( event.packedCandsCharge[k] == 0 ) {
+                //         if ( packedCandVec.Pt() >= 0.5 ) {
+                //             if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.4 )  neutral_iso1 += packedCandVec.Et();
+                //             if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.4 )  neutral_iso2 += packedCandVec.Et();
+                //             if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.4 ) neutral_iso += packedCandVec.Et();
+                //         }
+                //         if ( packedCandTrkVec.Pt() >= 0.5 ) {
+                //             if ( event.chsPairTrkVec.first.DeltaR(packedCandTrkVec)  < 0.4 ) neutral_trkiso1 += packedCandTrkVec.Et();
+                //             if ( event.chsPairTrkVec.second.DeltaR(packedCandTrkVec) < 0.4 ) neutral_trkiso2 += packedCandTrkVec.Et();
+                //             if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandTrkVec) ) neutral_trkiso += packedCandVec.Et();
+                //         }
+                //     }
+                //     else {
+                //         if ( event.packedCandsFromPV[k] >= 2 ) {
+                //             if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.4 )  ch_iso1 += packedCandVec.Pt();
+                //             if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.4 )  ch_iso2 += packedCandVec.Pt();
+                //             if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.4 ) ch_iso += packedCandVec.Pt();
+
+                //             if ( event.chsPairTrkVec.first.DeltaR(packedCandTrkVec)   < 0.4 )  ch_trkiso1 += packedCandTrkVec.Pt();
+                //             if ( event.chsPairTrkVec.second.DeltaR(packedCandTrkVec)  < 0.4 )  ch_trkiso2 += packedCandTrkVec.Pt();
+                //             if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandTrkVec)  < 0.4 ) ch_trkiso += packedCandTrkVec.Pt();
+                //         }
+                //         else {
+                //             if ( packedCandVec.Pt() >= 0.5 ) {
+                //                 if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.4 )  pu_iso1 += packedCandVec.Pt();
+                //                 if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.4 )  pu_iso2 += packedCandVec.Pt();
+                //                 if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.4 ) pu_iso += packedCandVec.Pt();
+                //             }
+                //             if ( packedCandTrkVec.Pt() >= 0.5 ) {
+                //                 if ( event.chsPairTrkVec.first.DeltaR(packedCandTrkVec)   < 0.4 )  pu_trkiso1 += packedCandTrkVec.Pt();
+                //                 if ( event.chsPairTrkVec.second.DeltaR(packedCandTrkVec)  < 0.4 )  pu_trkiso2 += packedCandTrkVec.Pt();
+                //                 if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandTrkVec)  < 0.4 ) pu_trkiso += packedCandTrkVec.Pt();
+                //             }
+                //         }
+                //     }
+                // }
+								
+                // const float iso1 = ch_iso1 + std::max( float(0.0), neutral_iso1 - float(0.5*pu_iso1) );
+                // const float iso2 = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
+                // const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
+
+                // const float trkiso1 = ch_trkiso1 + std::max( float(0.0), neutral_trkiso1 - float(0.5*pu_trkiso1) );
+                // const float trkiso2 = ch_trkiso2 + std::max( float(0.0), neutral_trkiso2 - float(0.5*pu_trkiso2) );
+                // const float trkiso  = ch_trkiso  + std::max( float(0.0), neutral_trkiso  - float(0.5*pu_trkiso)  );
+
+
+								// event.chsPairChHadIso.first = ch_iso1/event.chsPairVec.first.Pt();
+								// event.chsPairNtIso.first = neutral_iso1/event.chsPairVec.first.Pt();
+								// event.chsPairPuIso.first = pu_iso1/event.chsPairVec.first.Pt();
+								
+								// event.chsPairChHadIso.second = ch_iso2/event.chsPairVec.second.Pt();
+								// event.chsPairNtIso.second = neutral_iso2/event.chsPairVec.second.Pt();
+								// event.chsPairPuIso.second = pu_iso2/event.chsPairVec.second.Pt();
+
+                // event.chsPairRelIso.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
+                // event.chsPairRelIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
+                // event.chsRelIso = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
+
+                // event.chsPairTrkIso.first = trkiso1/(event.chsPairTrkVec.first.Pt() + 1.0e-06);
+                // event.chsPairTrkIso.second = trkiso2/(event.chsPairTrkVec.second.Pt() + 1.0e-06);
+                // event.chsTrkIso = trkiso/((event.chsPairTrkVec.first+event.chsPairTrkVec.second).Pt() + 1.0e-06);
 
 //                if ( event.chsTrkIso > 0.4 ) continue;
 
@@ -347,7 +411,7 @@ bool SharedFunctions::scalarAncestry (const AnalysisEvent& event, const Int_t& k
     const Int_t numDaughters { event.genParNumDaughters[k] };
     const Int_t motherId     { std::abs(event.genParMotherId[k]) };
     const Int_t motherIndex  { std::abs(event.genParMotherIndex[k]) };
-    if (verbose) std::cout << "Going up the ladder ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
+    // if (verbose) std::cout << "Going up the ladder ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
     if (motherId == 0 || motherIndex == -1) return false; // if no parent, then mother Id is null and there's no index, quit search
     else if (motherId == std::abs(ancestorId)) return true; // if parent is ancestor, return true
     else if ((pdgId != 130) && (pdgId != 310) && (pdgId != 311) && (motherId != pdgId)) {
@@ -380,7 +444,7 @@ int SharedFunctions::MatchReco(int gen_ind, const AnalysisEvent& event, double d
         //std::cout<<"PCdIndex, Pt, Charge, ID: "<<j<<", "<<packedCand.Pt()<<",  "<<event.packedCandsCharge[j]<<", "<<event.packedCandsPdgId[j]<<";"<<std::endl;
         //std::cout<<"Check the dR on this: "<<tmpDR<<std::endl;
         //std::cout<<"GenIndex: "<<gen_ind<<", PackedCandIndex: "<<j<<std::endl;
-        if (fabs(event.packedCandsPdgId[j])!=211) continue; //must be hadronic track
+        //if (fabs(event.packedCandsPdgId[j])!=211) continue; //must be hadronic track
         if (event.genParCharge[gen_ind]!= event.packedCandsCharge[j]) continue; //must have same charge
         if (minDR < tmpDR) continue;
         
@@ -393,29 +457,56 @@ int SharedFunctions::MatchReco(int gen_ind, const AnalysisEvent& event, double d
         return -99;
 }
 
-int SharedFunctions::nTrksInCone(const AnalysisEvent& event, const TLorentzVector& particle, const Int_t particle_ch, int trkPdgId,double dr_max, bool loose=true) {
+int SharedFunctions::nTrksInCone(const AnalysisEvent& event,
+                                 const TLorentzVector& particle,
+                                 const Int_t particle_ch,
+                                 int trkPdgId,
+                                 double dr_max,
+                                 bool loose = true, bool selective=true)
+{
     int count = 0;
     double tmpdR=999.;
     for (int i=0;i < event.numPackedCands; i++) {
         TLorentzVector trk{event.packedCandsPx[i], event.packedCandsPy[i], event.packedCandsPz[i], event.packedCandsE[i]};
-        if (loose) {
-          if (fabs(event.packedCandsPdgId[i]) != trkPdgId) continue;
-          if ((event.packedCandsCharge[i] != particle_ch)) continue;
-        }
-        else {
-          if (trk.Pt() < 0.5) continue;
-          if ((fabs(event.packedCandsPdgId[i]) != trkPdgId) || (event.packedCandsFromPV[i] < 2)) continue; //hadronic and not PU
-          if ((event.packedCandsCharge[i] != particle_ch)) continue;
-        }
+        if ((selective) && (fabs(event.packedCandsPdgId[i])) != trkPdgId) continue;
+        if ((std::abs(event.packedCandsCharge[i]) != particle_ch)) continue;
+        if (trk.Pt() < 0.5) continue;
         tmpdR = particle.DeltaR(trk);
-        if ((tmpdR < dr_max)) count++;// include 0.03 cut to ensure not the same track as candidate
+        if ((tmpdR < dr_max) && (tmpdR > 0.03)) count++;// include 0.03 cut to ensure not the same track as candidate
         //if (std::abs(trk.Pt() - event.zPairLeptons.first.Pt()) < 0.5) continue; //if pt is within 0.5 GeV, then same track possibly
         
     }
     return count;
 }
 
-int SharedFunctions::nGenParsInCone(const AnalysisEvent& event, const TLorentzVector& particle, const Int_t particle_ch, int ParPdgId, double dr_max) {
+int SharedFunctions::NoTrksInCone(const AnalysisEvent& event,
+                                 const TLorentzVector& particle,
+                                 std::vector<int>& trkPdgId,
+                                 double dr_max, bool verboseFlag=false)
+{
+    if (verboseFlag) std::cout<<"DEBUG HERE"<<std::endl;
+    int count = 0;
+    double tmpdR=999.;
+    int flag;
+    for (int i=0;i < event.numPackedCands; i++) {
+        TLorentzVector trk{event.packedCandsPx[i], event.packedCandsPy[i], event.packedCandsPz[i], event.packedCandsE[i]};
+        flag=0;
+        for (int k:trkPdgId) {
+          if (verboseFlag) std::cout<<"Track ID within second loop, k, flag - "<<fabs(event.packedCandsPdgId[i])<<","<<k<<","<<flag<<std::endl;
+          if (fabs(event.packedCandsPdgId[i]) == k) flag=1;
+        }
+        if (!flag) continue;
+        
+        if (trk.Pt() < 0.5) continue;
+        tmpdR = particle.DeltaR(trk);
+        if (verboseFlag) std::cout<<"Track ID, dR - "<<fabs(event.packedCandsPdgId[i])<<","<<tmpdR<<std::endl;
+        if ((tmpdR < dr_max)) ++count;// include 0.03 cut to ensure not the same track as candidate
+        //if (std::abs(trk.Pt() - event.zPairLeptons.first.Pt()) < 0.5) continue; //if pt is within 0.5 GeV, then same track possibly
+    }
+    return count;
+}
+
+int SharedFunctions::nGenParsInCone(const AnalysisEvent& event, const TLorentzVector& particle, const Int_t particle_ch, int ParPdgId, double dr_max, bool selective=true) {
     int count = 0;
     double tmpdR=999.;
     for (int i = 0; i < event.nGenPar; i++) {
@@ -424,12 +515,12 @@ int SharedFunctions::nGenParsInCone(const AnalysisEvent& event, const TLorentzVe
         int status {event.genParStatus[i]};
         TLorentzVector GenPar;
         GenPar.SetPtEtaPhiE(event.genParPt[i], event.genParEta[i], event.genParPhi[i], event.genParE[i]);
-        if (fabs(event.packedCandsPdgId[i]) != ParPdgId) continue;
+        if ((selective) && (fabs(event.packedCandsPdgId[i]) != ParPdgId)) continue;
         if (GenPar.Pt() < 0.5) continue;
         if (status != 1) continue;
         
         tmpdR = particle.DeltaR(GenPar);
-        if ((tmpdR < dr_max)) count++;// include 0.03 cut to ensure not the same track as candidate
+        if ((tmpdR < dr_max) && (tmpdR > 0.03)) count++;// include 0.03 cut to ensure not the same track as candidate
         //if (std::abs(trk.Pt() - event.zPairLeptons.first.Pt()) < 0.5) continue; //if pt is within 0.5 GeV, then same track possibly
         
     }
@@ -474,12 +565,12 @@ bool SharedFunctions::GenLevelCheck(const AnalysisEvent& event, const bool verbo
     	genMuonIndex.emplace_back(k);
     }
     //else if ( pid == 211 && (motherId < 6 || motherId == 21 || motherId == 9000006 ) ) { //checking if pion is coming from quarks, or gluon or scalar //most pions coming from meson decays though
-    else if ( pid == 211 && status == 1) {
+    else if ( pid == 211 && status == 1 && std::abs(event.genParEta[k])<looseChsEta_) {
     //if ( hasScalarAncestry && motherId == 9000006 ) genPionIndex.emplace_back(k); //checking stricter criteria, just to see if pt dist changes; motherId not originally there
     	if ( hasScalarAncestry ) genPionIndex.emplace_back(k); //low stats for pions comparitively
       if ( hasScalarAncestry ) genChsIndex.emplace_back(k);
   	}
-    else if ( pid == 321 && status == 1) {
+    else if ( pid == 321 && status == 1 && std::abs(event.genParEta[k])<looseChsEta_) {
     	if ( hasScalarAncestry ) {
       	genChargedKaonIndex.emplace_back(k);
         //genKaonIndex.emplace_back(k);
@@ -514,40 +605,197 @@ bool SharedFunctions::GenLevelCheck(const AnalysisEvent& event, const bool verbo
 
 }
 
-float SharedFunctions::PFIsolation(int trk_ind, int trk_exc, const AnalysisEvent& event, double dr_max = 0.4) {
-  float neutral_iso {0.0};
+Isolation SharedFunctions::PFIsolation(TString ptype,int trk_ind, int gen_ind, int trk_exc,  const AnalysisEvent& event, double dr_max = 0.4) {
+  float nh_iso {0.0};
+  float ph_iso {0.0};
   float ch_iso {0.0};
   float pu_iso {0.0};
-  const TLorentzVector Trk {event.packedCandsPx[trk_ind], event.packedCandsPy[trk_ind], event.packedCandsPz[trk_ind], event.packedCandsE[trk_ind]};
+  float dr_trk_packedCandVec {99.};
+  int count = 0;
+  TLorentzVector Trk;
+  if (ptype.Contains("muon")) 
+    Trk.SetPxPyPzE(event.muonPF2PATPX[trk_ind], event.muonPF2PATPY[trk_ind], event.muonPF2PATPZ[trk_ind], event.muonPF2PATE[trk_ind]);
+  else
+    Trk.SetPxPyPzE(event.packedCandsPx[trk_ind], event.packedCandsPy[trk_ind], event.packedCandsPz[trk_ind], event.packedCandsE[trk_ind]);
+  if (verbose_) {
+      std::cout<<"Check the PFCandidates for isolation!"<<std::endl;
+      std::cout<<"Reco primary trk (type,index,pt,eta,phi):"<<ptype<<","<<trk_ind<<","<<Trk.Pt()<<","<<Trk.Eta()<<","<<Trk.Phi()<<std::endl;
+    }
   for (int k = 0; k < event.numPackedCands; k++) {
-    if ( k == trk_ind || k == trk_exc ) continue;
+    
+    if (ptype.Contains("hadron")) {
+      if ( k == trk_ind || k == trk_exc ) continue;
+    }
+    
 
+    // exclude tracks from HF above? 
+    
     TLorentzVector packedCandVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
     TLorentzVector packedCandTrkVec;
     packedCandTrkVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
-    
-    
+    if (packedCandVec.Pt()<0.5) continue;
+    dr_trk_packedCandVec = Trk.DeltaR(packedCandVec);
+    if ((verbose_) && (dr_trk_packedCandVec < dr_max)) {
+      std::cout<<"Nearby trk (index,pt,eta,phi,pdg):"<<k<<","<<packedCandVec.Pt()<<","<<packedCandVec.Eta()<<","<<packedCandVec.Phi()<<","<<event.packedCandsPdgId[k]<<std::endl;
+    }
+    if ( std::abs(event.packedCandsPdgId[k]) == 11 ||  std::abs(event.packedCandsPdgId[k]) == 13) continue; //rejecting muon/ele tracks
     //const TLorentzVector Trk_avoid {event.packedCandsPx[trk_exc], event.packedCandsPy[trk_exc], event.packedCandsPz[trk_exc], event.packedCandsE[trk_exc]};
     if ( event.packedCandsCharge[k] == 0 ) {
-      if ( packedCandVec.Pt() >= 0.5 ) {
-        if ( Trk.DeltaR(packedCandVec)< dr_max )  neutral_iso += packedCandVec.Et();
+      if ( dr_trk_packedCandVec < dr_max ) { 
+        if (event.packedCandsPdgId[k] == 22) ph_iso += packedCandVec.Et();
+        else nh_iso += packedCandVec.Et();
       }
     }
     else {
       if ( event.packedCandsFromPV[k] >= 2 ) {
-        if ( Trk.DeltaR(packedCandVec)   < dr_max )  ch_iso += packedCandVec.Pt();
+        if ( dr_trk_packedCandVec < dr_max )  ch_iso += packedCandVec.Pt();
       }
       else {
-        if ( packedCandVec.Pt() >= 0.5 ) {
-          if ( Trk.DeltaR(packedCandVec)   < 0.3 )  pu_iso += packedCandVec.Pt();
-        }
+        if ( dr_trk_packedCandVec  < dr_max )  pu_iso += packedCandVec.Pt();
       }
     }
   }
-  const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
-  const float RelIso = iso/(Trk.Pt()+1.0e-06);
-  return RelIso;
+  struct Isolation pfiso;
+  float iso  = ch_iso  + std::max( float(0.0), nh_iso+ph_iso - float(0.5*pu_iso)  );
+  float RelIso;
+  if (ptype.Contains("gen"))
+    RelIso = iso/(event.genParPt[gen_ind]+1.0e-06);
+  else
+    RelIso = iso/(Trk.Pt()+1.0e-06);
+  if (verbose_) std::cout<<"All the iso values (reliso, iso, ch_iso, ph_iso, nh_iso, pu_iso):"<<RelIso<<","<<iso<<","<<ch_iso<<","<<ph_iso<<","<<nh_iso<<","<<pu_iso<<std::endl;
+  pfiso.chiso_ = ch_iso;
+  pfiso.phiso_ = ph_iso;
+  pfiso.nhiso_ = nh_iso;
+  pfiso.puiso_ = pu_iso;
+  pfiso.reliso_ = RelIso;
+  return pfiso;
 }
+
+Isolation SharedFunctions::PFIsolation(TString ptype, TLorentzVector& trk, int gen_ind, std::vector<int>& trk_exc, const AnalysisEvent& event, double dr_max = 0.4) {
+  float nh_iso {0.0};
+  float ph_iso {0.0};
+  float ch_iso {0.0};
+  float pu_iso {0.0};
+  float dr_trk_packedCandVec {99.};
+  if (verbose_) {
+      std::cout<<"Check the PFCandidates for isolation from 2nd func!"<<std::endl;
+      std::cout<<"Reco primary trk (type,pt,eta,phi):"<<ptype<<","<<trk.Pt()<<","<<trk.Eta()<<","<<trk.Phi()<<std::endl;
+    }
+  int flag;
+  for (int k = 0; k < event.numPackedCands; k++) {
+    flag=0;
+    if (ptype.Contains("hadron")) {
+      for (auto i : trk_exc) {
+        if ( i == k ) flag=1;
+      }
+    }
+    if (flag) continue;
+    if ( std::abs(event.packedCandsPdgId[k]) == 11 ||  std::abs(event.packedCandsPdgId[k]) == 13) continue; //rejecting muon/ele tracks
+    // exclude tracks from HF above? 
+    
+    TLorentzVector packedCandVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
+    TLorentzVector packedCandTrkVec;
+    packedCandTrkVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
+    if (packedCandVec.Pt()<0.5) continue;
+    dr_trk_packedCandVec = trk.DeltaR(packedCandVec);
+    if ((verbose_) && (dr_trk_packedCandVec < dr_max)) {
+      std::cout<<"Nearby trk (index,pt,eta,phi,pdg):"<<k<<","<<packedCandVec.Pt()<<","<<packedCandVec.Eta()<<","<<packedCandVec.Phi()<<","<<event.packedCandsPdgId[k]<<std::endl;
+    }
+    //const TLorentzVector Trk_avoid {event.packedCandsPx[trk_exc], event.packedCandsPy[trk_exc], event.packedCandsPz[trk_exc], event.packedCandsE[trk_exc]};
+    if ( event.packedCandsCharge[k] == 0 ) {
+          if ( dr_trk_packedCandVec < dr_max ) { 
+            if (event.packedCandsPdgId[k] == 22) ph_iso += packedCandVec.Et();
+            else nh_iso += packedCandVec.Et();
+          }
+    }
+    else {
+      if ( event.packedCandsFromPV[k] >= 2 ) {
+        if ( dr_trk_packedCandVec < dr_max )  ch_iso += packedCandVec.Pt();
+      }
+      else {
+          if ( dr_trk_packedCandVec  < dr_max )  pu_iso += packedCandVec.Pt();
+      }
+    }
+  }
+  struct Isolation pfiso;
+  float iso  = ch_iso  + std::max( float(0.0), nh_iso+ph_iso - float(0.5*pu_iso)  );
+  float RelIso;
+  if (ptype.Contains("gen"))
+    RelIso = iso/(event.genParPt[gen_ind]+1.0e-06);
+  else
+    RelIso = iso/(trk.Pt()+1.0e-06);
+  if (verbose_) std::cout<<"All the iso values (reliso, iso, ch_iso, ph_iso, nh_iso, pu_iso):"<<RelIso<<","<<iso<<","<<ch_iso<<","<<ph_iso<<","<<nh_iso<<","<<pu_iso<<std::endl;
+  pfiso.chiso_ = ch_iso;
+  pfiso.phiso_ = ph_iso;
+  pfiso.nhiso_ = nh_iso;
+  pfiso.puiso_ = pu_iso;
+  pfiso.reliso_ = RelIso;
+  return pfiso;
+}
+Isolation SharedFunctions::GenIsolation(TString ptype, int gen_ind, std::vector<int>& gen_exc, const AnalysisEvent& event, double dr_max) {
+  // std::cout<<"Enters Isolation for "<<gen_ind<<std::endl;
+
+  float nh_iso {0.0};
+  float ph_iso {0.0};
+  float ch_iso {0.0};
+  float pu_iso {0.0};
+  float dr_gen_genCand {99.};
+  TLorentzVector genp;
+  genp.SetPtEtaPhiE(event.genParPt[gen_ind], event.genParEta[gen_ind], event.genParPhi[gen_ind], event.genParE[gen_ind]);
+  // std::cout<<"Forms Vector genp"<<std::endl;
+  if (verbose_) {
+    std::cout<<"Check the GenParticles for isolation!"<<std::endl;
+    std::cout<<"Gen. primary trk (type,index,pt,eta,phi):"<<ptype<<","<<gen_ind<<","<<genp.Pt()<<","<<genp.Eta()<<","<<genp.Phi()<<std::endl;
+  }
+  int flag;
+  for (int k = 0; k < event.nGenPar; k++) {
+    flag=0;
+    if (ptype.Contains("hadron")) {
+      for (auto i : gen_exc) {
+        if ( i == k ) flag=1;
+      }
+    }
+    if (flag) continue;
+    if (k==gen_ind) continue;
+
+    int pid { std::abs(event.genParId[k]) };
+    int motherId { std::abs(event.genParMotherId[k]) };
+    int status {event.genParStatus[k]};
+    TLorentzVector GenCand;
+    GenCand.SetPtEtaPhiE(event.genParPt[k], event.genParEta[k], event.genParPhi[k], event.genParE[k]);
+    if ( pid == 11 || pid == 13) continue; //rejecting muon/ele tracks
+    // exclude tracks from HF above? 
+    if (GenCand.Pt() < 0.5) continue;
+    if (status != 1) continue;
+    dr_gen_genCand = genp.DeltaR(GenCand);
+    if ((verbose_) && (dr_gen_genCand < dr_max)) {
+      std::cout<<"Nearby gen particle (index,pt,eta,phi,pdg):"<<k<<","<<GenCand.Pt()<<","<<GenCand.Eta()<<","<<GenCand.Phi()<<","<<pid<<std::endl;
+    }
+    //const TLorentzVector Trk_avoid {event.packedCandsPx[trk_exc], event.packedCandsPy[trk_exc], event.packedCandsPz[trk_exc], event.packedCandsE[trk_exc]};
+    if ( event.genParCharge[k] == 0 ) {
+      if ( dr_gen_genCand < dr_max ) { 
+        if (pid == 22) ph_iso += GenCand.Et();
+        else nh_iso += GenCand.Et();
+      }
+    }
+    else {
+      if ( dr_gen_genCand < dr_max )  ch_iso += GenCand.Pt();
+    }
+  }
+  struct Isolation pfiso;
+  // float iso  = ch_iso  + std::max( float(0.0), nh_iso+ph_iso - float(0.5*pu_iso)  );
+  float iso  = ch_iso + nh_iso+ph_iso;
+  float RelIso;
+  RelIso = iso/(genp.Pt()+1.0e-06);
+  if (verbose_) std::cout<<"All the iso values (reliso, iso, ch_iso, ph_iso, nh_iso, pu_iso):"<<RelIso<<","<<iso<<","<<ch_iso<<","<<ph_iso<<","<<nh_iso<<","<<pu_iso<<std::endl;
+  pfiso.chiso_ = ch_iso;
+  pfiso.phiso_ = ph_iso;
+  pfiso.nhiso_ = nh_iso;
+  pfiso.puiso_ = 0;
+  pfiso.reliso_ = RelIso;
+  return pfiso;
+} 
+
 float SharedFunctions::deltaR(float eta1, float phi1, float eta2, float phi2){
   float dEta = eta1-eta2;
   float dPhi = phi1-phi2;

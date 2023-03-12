@@ -1,7 +1,7 @@
 name: "WG_lnug"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VV/WG_lnug/"
-cross_section: 405.271
+cross_section: 411.2
 mc: true
 histogram: "VV"
 colour: "#ff9933"

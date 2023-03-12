@@ -1,7 +1,7 @@
 name: "ttbar_hadronic"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/ttbar/ttbar_hadronic/"
-cross_section: 377.96
+cross_section: 687.1
 mc: true
 histogram: "ttbar"
 colour: "#8aefff"

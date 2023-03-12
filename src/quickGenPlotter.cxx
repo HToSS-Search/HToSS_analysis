@@ -15,6 +15,7 @@
 #include "TLorentzVector.h"
 #include "TString.h"
 #include "config_parser.hpp"
+#include <Math/Vector4D.h>
 
 #include <boost/filesystem.hpp>
 #include <boost/functional/hash.hpp>
@@ -47,6 +48,12 @@ const double scalarMassCut_{4.0}, higgsTolerence_ {10.};
 // debug flag
 const bool useMCTruth_{false};
 
+//interesting events
+const int ninteresting=2;
+int run_nb[ninteresting]={1,1}; 
+int lumi_nb[ninteresting]={8,9};
+int num_nb[ninteresting]={9362,10548}; //has to be in ascending order though
+
 int main(int argc, char* argv[]) {
     auto timerStart = std::chrono::high_resolution_clock::now(); 
 
@@ -55,8 +62,8 @@ int main(int argc, char* argv[]) {
     double totalLumi;
     double usePreLumi;
     bool usePostLepTree {false};
-		int flow, fhigh;
-		bool verbose_{false};
+    int flow, fhigh;
+    bool verbose_{false};
    
     std::string outFileString{"plots/distributions/output.root"};
     bool is2016_;
@@ -152,6 +159,7 @@ int main(int argc, char* argv[]) {
     TH1F* h_genSubleadingVzChs   {new TH1F("h_genSubleadingVzChs",   "Subleading gen Chs v_{z}",  200, -50., 50.)};
     TH1F* h_genSubleadingVxyChs  {new TH1F("h_genSubleadingVxyChs",  "Subleading gen Chs v_{xy}", 200, 0., 100.)};
     TH1F* h_genSubleadingVdChs   {new TH1F("h_genSubleadingVdChs",   "Subleading gen Chs v_{d}",  200, 0., 100.)};
+    
 
     TH1F* h_genDiscalarDeltaR_mumu_pipi     {new TH1F("h_genDiscalarDeltaR_mumu_pipi",      "#DeltaR_{#mu#mu#pi#pi}^{gen}", 500, 0., 10.)};
     TH1F* h_genDiscalarDeltaR_mumu_kaonkaon {new TH1F("h_genDiscalarDeltaR_mumu_kaonkaon",  "#DeltaR_{#mu#muKK}^{gen}", 500, 0., 10.)};
@@ -172,11 +180,49 @@ int main(int argc, char* argv[]) {
     TH1F* h_numRecoDirectScalarMuons  {new TH1F("h_numRecoDirectScalarMuons", "Number of loose muons directly from scalar decay", 10, -0.5, 9.5)};
 
     TH1F* h_recoDimuonDeltaR        {new TH1F("h_recoDimuonDeltaR",      "Dimuon reco deltaR", 50, 0., 1.)};
-    TH1F* h_recoDimuonMass          {new TH1F("h_recoDimuonMass",        "Dimuon reco mass", 30, 0., 11.)};
+    TH1F* h_recoDimuonMass          {new TH1F("h_recoDimuonMass",        "Dimuon reco mass", 200, 0., 5.)};
     TH1F* h_recoDimuonPt            {new TH1F("h_recoDimuonPt",          "Dimuon reco Pt",  200, 0., 200)}; 
     TH1F* h_recoDimuonEta           {new TH1F("h_recoDimuonEta",         "Dimuon reco Eta", 60, 0., 5.)};
     TH1F* h_recoLeadingMuonPt       {new TH1F("h_recoLeadingMuonPt",     "Leading generator muon", 300, 0., 150.)};
     TH1F* h_recoSubleadingMuonPt    {new TH1F("h_recoSubleadingMuonPt",  "Subleading generator muon", 300, 0., 150.)};
+    TH1F* h_diMuonPFIso             {new TH1F("h_diMuonPFIso",   "PFIsolation truth reco; PFIso_{#mu,#mu}; Events", 1000,0.,30.)}; 
+    TH1F* h_diMuonSumPtCh           {new TH1F("h_diMuonSumPtCh_truth",         "PFIsolation truth reco; #Sigma_{fromPV}^{#mu,#mu}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_diMuonSumPtNh           {new TH1F("h_diMuonSumPtNh_truth",         "PFIsolation truth reco; #Sigma_{Nh}^{#mu,#mu}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_diMuonSumPtPh           {new TH1F("h_diMuonSumPtPh_truth",         "PFIsolation truth reco; #Sigma_{#gamma}^{#mu,#mu}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_diMuonSumPtPU           {new TH1F("h_diMuonSumPtPU_truth",         "PFIsolation truth reco; #Sigma_{PU}^{#mu,#mu}(p_{T}); Events", 1000,0.,80.)}; 
+
+    TH1F* h_leadingMuonIso             {new TH1F("h_leadingMuonIso",   "PFIsolation leading #mu; leading Muon Iso_{#mu}; Events", 1000,0.,30.)}; 
+    TH1F* h_leadingMuonSumPtCh           {new TH1F("h_leadingMuonSumPtCh", "PFIsolation leading #mu Ch; leading Muon #Sigma_{fromPV}^{#mu}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_leadingMuonSumPtNh           {new TH1F("h_leadingMuonSumPtNh", "PFIsolation leading #mu Nh; leading Muon #Sigma_{Nh}^{#mu}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_leadingMuonSumPtPh           {new TH1F("h_leadingMuonSumPtPh", "PFIsolation leading #mu Ph; leading Muon #Sigma_{#gamma}^{#mu}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_leadingMuonSumPtPu           {new TH1F("h_leadingMuonSumPtPu", "PFIsolation leading #mu PU; subleading Muon #Sigma_{PU}^{#mu}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_subleadingMuonIso             {new TH1F("h_subleadingMuonIso",   "PFIsolation subleading #mu; subleading Muon Iso_{#mu}; Events", 1000,0.,30.)}; 
+    TH1F* h_subleadingMuonSumPtCh           {new TH1F("h_subleadingMuonSumPtCh", "PFIsolation subleading #mu Ch; subleading Muon #Sigma_{fromPV}^{#mu}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_subleadingMuonSumPtNh           {new TH1F("h_subleadingMuonSumPtNh", "PFIsolation subleading #mu Nh; subleading Muon #Sigma_{Nh}^{#mu}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_subleadingMuonSumPtPh           {new TH1F("h_subleadingMuonSumPtPh", "PFIsolation subleading #mu Ph; subleading Muon #Sigma_{#gamma}^{#mu}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_subleadingMuonSumPtPu           {new TH1F("h_subleadingMuonSumPtPu", "PFIsolation subleading #mu PU; subleading Muon #Sigma_{PU}^{#mu}(p_{T}); Events", 1000,0.,80.)}; 
+
+
+    TH1F* h_genleadingMuonGenIso             {new TH1F("h_genleadingMuonGenIso",   "GenIsolation gen leading #mu; leading Muon Iso_{#mu}; Events", 1000,0.,30.)}; 
+    TH1F* h_genleadingMuonGenSumPtCh           {new TH1F("h_genleadingMuonGenSumPtCh", "GenIsolation gen leading #mu Ch; leading Muon #Sigma_{fromPV}^{#mu}(p_{T}); Events", 1000,0.,30.)}; 
+    TH1F* h_genleadingMuonGenSumPtNh           {new TH1F("h_genleadingMuonGenSumPtNh", "GenIsolation gen leading #mu Nh; leading Muon #Sigma_{Nh}^{#mu}(p_{T}); Events", 1000,0.,30.)}; 
+    TH1F* h_genleadingMuonGenSumPtPh           {new TH1F("h_genleadingMuonGenSumPtPh", "GenIsolation gen leading #mu Ph; leading Muon #Sigma_{#gamma}^{#mu}(p_{T}); Events", 1000,0.,30.)}; 
+    TH1F* h_gensubleadingMuonGenIso             {new TH1F("h_gensubleadingMuonGenIso",   "GenIsolation gen subleading #mu; subleading Muon Iso_{#mu}; Events", 1000,0.,30.)}; 
+    TH1F* h_gensubleadingMuonGenSumPtCh           {new TH1F("h_gensubleadingMuonGenSumPtCh", "GenIsolation gen subleading #mu Ch; subleading Muon #Sigma_{fromPV}^{#mu}(p_{T}); Events", 1000,0.,30.)}; 
+    TH1F* h_gensubleadingMuonGenSumPtNh           {new TH1F("h_gensubleadingMuonGenSumPtNh", "GenIsolation gen subleading #mu Nh; subleading Muon #Sigma_{Nh}^{#mu}(p_{T}); Events", 1000,0.,30.)}; 
+    TH1F* h_gensubleadingMuonGenSumPtPh           {new TH1F("h_gensubleadingMuonGenSumPtPh", "GenIsolation gen subleading #mu Ph; subleading Muon #Sigma_{#gamma}^{#mu}(p_{T}); Events", 1000,0.,30.)}; 
+
+
+
+    TH2F* h_recoDimuonMass_leadingMuonIso          {new TH2F("h_recoDimuonMass_leadingMuonIso", "Leading muon Iso vs diMuon Mass; m_{#mu,#mu}; PFIsolation Leading muon",200,0.,5.,1000,0.,15.)};
+    TH2F* h_recoDimuonMass_subleadingMuonIso       {new TH2F("h_recoDimuonMass_subleadingMuonIso", "subleading muon Iso vs diMuon Mass; m_{#mu,#mu}; PFIsolation subleading muon",200,0.,5.,1000,0.,15.)};
+    TH2F* h_recoDimuonMass_diMuonPFIso           {new TH2F("h_recoDimuonMass_diMuonPFIso", "diMuon scalar Iso vs diMuon mass; m_{#mu,#mu}; PFIsolation Scalar(#mu,#mu)", 200,0.,5.,1000,0.,15.)}; 
+    TH2F* h_recoDimuonMass_diMuonSumPtCh           {new TH2F("h_recoDimuonMass_diMuonSumPtCh", "diMuon scalar Iso vs diMuon mass; m_{#mu,#mu}; #Sigma_{fromPV}^{#mu,#mu}(p_{T});", 200,0.,5.,1000,0.,15.)}; 
+    TH2F* h_recoDimuonMass_diMuonSumPtNh             {new TH2F("h_recoDimuonMass_diMuonSumPtNh", "diMuon scalar Iso vs diMuon mass; m_{#mu,#mu}; #Sigma_{Nh}^{#mu,#mu}(p_{T});", 200,0.,5.,1000,0.,15.)}; 
+    TH2F* h_recoDimuonMass_diMuonSumPtPh           {new TH2F("h_recoDimuonMass_diMuonSumPtPh", "diMuon scalar Iso vs diMuon mass; m_{#mu,#mu}; #Sigma_{#gamma}^{#mu,#mu}(p_{T});", 200,0.,5.,1000,0.,15.)}; 
+    TH2F* h_recoDimuonMass_diMuonSumPtPU             {new TH2F("h_recoDimuonMass_diMuonSumPtPU", "diMuon scalar Iso vs diMuon mass; m_{#mu,#mu}; #Sigma_{PU}^{#mu,#mu}(p_{T});", 200,0.,5.,1000,0.,15.)}; 
+    
+
 
     TProfile* p_numPromptMuons            {new TProfile ("p_numPromptMuons", "Muon flags for selected reco muons", 6, 0.5, 6.5, "ymax = 1.0")};
     p_numPromptMuons->GetXaxis()->SetBinLabel(1, "Prompt Decayed");
@@ -296,9 +342,18 @@ int main(int argc, char* argv[]) {
     Cutflow->GetXaxis()->SetBinLabel(8, "chs Trk selection");
     Cutflow->GetXaxis()->SetBinLabel(9, "dichs candidate");
     //EvtSelHist->GetXaxis()->SetBinLabel(6, "Higgs window");
+
+    TH1F* Cutflow_afterGen {new TH1F ("Cutflow_afterGen", "Cutflow distribution", 7, 0.5, 7.5)};
+    Cutflow_afterGen->GetXaxis()->SetBinLabel(1, "GeneratedEvts");
+    Cutflow_afterGen->GetXaxis()->SetBinLabel(2, "HLT_IsoMu27");
+    Cutflow_afterGen->GetXaxis()->SetBinLabel(3, "MET Filters");
+    Cutflow_afterGen->GetXaxis()->SetBinLabel(4, "#mu selection");
+    Cutflow_afterGen->GetXaxis()->SetBinLabel(5, "dimuon candidate");
+    Cutflow_afterGen->GetXaxis()->SetBinLabel(6, "chs Trk selection");
+    Cutflow_afterGen->GetXaxis()->SetBinLabel(7, "dichs candidate");
     
     
-		TH1F* h_leadingChsPVAscQuality_truth {new TH1F ("h_leadingChsPVAscQuality_truth", "PVAssociationQuality for truth leading trk", 6, 0.5, 6.5)};
+    TH1F* h_leadingChsPVAscQuality_truth {new TH1F ("h_leadingChsPVAscQuality_truth", "PVAssociationQuality for truth leading trk", 6, 0.5, 6.5)};
     h_leadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(1, "NotReconstructedPrimary");
     h_leadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(2, "OtherDeltaZ");
     h_leadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(3, "CompatibilityBTag");
@@ -306,7 +361,7 @@ int main(int argc, char* argv[]) {
     h_leadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(5, "UsedInFitLoose");
     h_leadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(6, "UsedInFitTight");
 
-		TH1F* h_subleadingChsPVAscQuality_truth {new TH1F ("h_subleadingChsPVAscQuality_truth", "PVAssociationQuality for truth subleading trk", 6, 0.5, 6.5)};
+    TH1F* h_subleadingChsPVAscQuality_truth {new TH1F ("h_subleadingChsPVAscQuality_truth", "PVAssociationQuality for truth subleading trk", 6, 0.5, 6.5)};
     h_subleadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(1, "NotReconstructedPrimary");
     h_subleadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(2, "OtherDeltaZ");
     h_subleadingChsPVAscQuality_truth->GetXaxis()->SetBinLabel(3, "CompatibilityBTag");
@@ -332,15 +387,50 @@ int main(int argc, char* argv[]) {
     TH1F* h_subLeadingChsPt_truth               {new TH1F("h_subLeadingChsPt_truth", "SubLeading truth reco Chs; p_{T} (GeV); Events", 200, 0., 100.)};
     TH1F* h_leadingChsEta_truth                 {new TH1F("h_leadingChsEta_truth",     "Leading truth reco Chs; #eta; Events",       300, -3., 3.)};
     TH1F* h_subLeadingChsEta_truth              {new TH1F("h_subLeadingChsEta_truth",  "SubLeading truth reco Chs; #eta; Events",    300, -3., 3.)};
-		TH1F* h_leadingChsDz_truth                 {new TH1F("h_leadingChsDz_truth",     "Leading truth reco Chs; dz; Events",       500, -5., 5.)};
+    TH1F* h_leadingChsDz_truth                 {new TH1F("h_leadingChsDz_truth",     "Leading truth reco Chs; dz; Events",       500, -5., 5.)};
     TH1F* h_subleadingChsDz_truth              {new TH1F("h_subleadingChsDz_truth",  "SubLeading truth reco Chs; dz; Events",    500, -5., 5.)};
     
-    TH1F* h_subleadingChsIso_truth                {new TH1F("h_subleadingChsIso_truth",  "SubLeading truth reco Chs; PFIsolation subleading trk; Events",    1000, 0., 15.)};
+    
+    TH1F* h_genleadingChsGenIso             {new TH1F("h_genleadingChsGenIso",   "GenIsolation gen leading Chs; leading Chs Iso_{Chs}; Events", 1000,0.,30.)}; 
+    TH1F* h_genleadingChsGenSumPtCh           {new TH1F("h_genleadingChsGenSumPtCh", "GenIsolation gen leading Chs Ch; leading Chs #Sigma_{fromPV}^{Chs}(p_{T}); Events", 1000,0.,30.)}; 
+    TH1F* h_genleadingChsGenSumPtNh           {new TH1F("h_genleadingChsGenSumPtNh", "GenIsolation gen leading Chs Nh; leading Chs #Sigma_{Nh}^{Chs}(p_{T}); Events", 1000,0.,30.)}; 
+    TH1F* h_genleadingChsGenSumPtPh           {new TH1F("h_genleadingChsGenSumPtPh", "GenIsolation gen leading Chs Ph; leading Chs #Sigma_{#gamma}^{Chs}(p_{T}); Events", 1000,0.,30.)}; 
+    TH1F* h_gensubleadingChsGenIso             {new TH1F("h_gensubleadingChsGenIso",   "GenIsolation gen subleading Chs; subleading Chs Iso_{Chs}; Events", 1000,0.,30.)}; 
+    TH1F* h_gensubleadingChsGenSumPtCh           {new TH1F("h_gensubleadingChsGenSumPtCh", "GenIsolation gen subleading Chs Ch; subleading Chs #Sigma_{fromPV}^{Chs}(p_{T}); Events", 1000,0.,30.)}; 
+    TH1F* h_gensubleadingChsGenSumPtNh           {new TH1F("h_gensubleadingChsGenSumPtNh", "GenIsolation gen subleading Chs Nh; subleading Chs #Sigma_{Nh}^{Chs}(p_{T}); Events", 1000,0.,30.)}; 
+    TH1F* h_gensubleadingChsGenSumPtPh           {new TH1F("h_gensubleadingChsGenSumPtPh", "GenIsolation gen subleading Chs Ph; subleading Chs #Sigma_{#gamma}^{Chs}(p_{T}); Events", 1000,0.,30.)}; 
+
     TH1F* h_leadingChsIso_truth                   {new TH1F("h_leadingChsIso_truth",  "Leading truth reco Chs; PFIsolation leading trk; Events",    1000, 0., 15.)};
-    
-    
+    TH1F* h_leadingChsSumPtCh_truth           {new TH1F("h_leadingChsSumPtCh_truth", "Isolation leading Chs truth Ch; leading Chs #Sigma_{fromPV}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_leadingChsSumPtNh_truth           {new TH1F("h_leadingChsSumPtNh_truth", "Isolation leading Chs truth Nh; leading Chs #Sigma_{Nh}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_leadingChsSumPtPh_truth           {new TH1F("h_leadingChsSumPtPh_truth", "Isolation leading Chs truth Ph; leading Chs #Sigma_{#gamma}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_leadingChsSumPtPu_truth           {new TH1F("h_leadingChsSumPtPu_truth", "Isolation leading Chs truth PU; leading Chs #Sigma_{PU}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_subleadingChsIso_truth             {new TH1F("h_subleadingChsIso_truth",   "Isolation subleading Chs truth; subleading Chs Iso_{Chs}; Events", 1000,0.,30.)}; 
+    TH1F* h_subleadingChsSumPtCh_truth           {new TH1F("h_subleadingChsSumPtCh_truth", "Isolation subleading Chs Ch truth; subleading Chs #Sigma_{fromPV}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_subleadingChsSumPtNh_truth           {new TH1F("h_subleadingChsSumPtNh_truth", "Isolation subleading Chs Nh truth; subleading Chs #Sigma_{Nh}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_subleadingChsSumPtPh_truth          {new TH1F("h_subleadingChsSumPtPh_truth", "Isolation subleading Chs Ph truth; subleading Chs #Sigma_{#gamma}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_subleadingChsSumPtPu_truth           {new TH1F("h_subleadingChsSumPtPu_truth", "Isolation subleading Chs truth PU; subleading Chs #Sigma_{PU}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+
+    TH1F* h_leadingChs_NoTrksInCone_goodID_truth            {new TH1F("h_leadingChs_NoTrksInCone_goodID_truth", "Ele/Mu Tracks around matched leading hadron (#Delta R < 0.4) with right ID; N_{trks}; Events", 101, -0.5, 100.5)};
+    TH1F* h_subleadingChs_NoTrksInCone_goodID_truth            {new TH1F("h_subleadingChs_NoTrksInCone_goodID_truth", "Ele/Mu Tracks around matched leading hadron (#Delta R < 0.4) with right ID; N_{trks}; Events", 101, -0.5, 100.5)};
+    TH1F* h_leadingChs_NoTrksInCone_badID_truth            {new TH1F("h_leadingChs_NoTrksInCone_badID_truth", "Ele/Mu Tracks around matched leading hadron (#Delta R < 0.4) with wrong ID; N_{trks}; Events", 101, -0.5, 100.5)};
+    TH1F* h_subleadingChs_NoTrksInCone_badID_truth            {new TH1F("h_subleadingChs_NoTrksInCone_badID_truth", "Ele/Mu Tracks around matched leading hadron (#Delta R < 0.4) with wrong ID; N_{trks}; Events", 101, -0.5, 100.5)};
+
+    TH1F* h_leadingChsPtUnc_truth                   {new TH1F("h_leadingChsPtUnc_truth",  "Leading Chs truth rel. Pt Uncty; #sigma_{pT}/pT; Events", 100, 0., 5.)};
+    TH1F* h_subleadingChsPtUnc_truth                   {new TH1F("h_subleadingChsPtUnc_truth",  "subleading Chs truth rel. Pt Uncty; #sigma_{pT}/pT; Events", 100, 0., 5.)};
+    TH1F* h_leadingChsTkChi2Ndof_truth              {new TH1F("h_leadingChsTkChi2Ndof_truth",  "Leading charged hadron track #chi^{2}/Ndof truth", 200, .0, 10.0)};
+    TH1F* h_subleadingChsTkChi2Ndof_truth          {new TH1F("h_subleadingChsTkChi2Ndof_truth",  "Subleading charged hadron track #chi^{2}/Ndof truth", 200, .0, 10.0)};
+    TH1F* h_leadingChsPurity_truth              {new TH1F("h_leadingChsPurity_truth", "leading charged hadron track High Purity truth", 2, -0.5, 1.5)};
+    TH1F* h_subleadingChsPurity_truth              {new TH1F("h_subleadingChsPurity_truth", "subleading charged hadron track High Purity truth", 2, -0.5, 1.5)};
+
     TH1F* h_ChsdelR_truth                       {new TH1F("h_ChsdelR_truth",               "#DeltaR truth reco; #DeltaR(chs,chs); Events",      100, 0., 1.0)};
     TH1F* h_diChsMass_truth                     {new TH1F("h_diChsMass_truth",         "Mass dist. truth reco; m_{chs,chs}; Events", 200, 0., 10.)}; 
+    TH1F* h_diChsPt_truth                     {new TH1F("h_diChsPt_truth",         "Pt dist. truth reco; pT_{chs,chs}; Events", 1000, 0., 100.)}; 
+    TH1F* h_diChsPFIso_truth                     {new TH1F("h_diChsPFIso_truth",         "PFIsolation truth reco; PFiso_{chs,chs}; Events", 1000,0.,30.)}; 
+    TH1F* h_diChsSumPtCh_truth                     {new TH1F("h_diChsSumPtCh_truth",         "PFIsolation truth reco; #Sigma_{fromPV}^{chs,chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_diChsSumPtNh_truth                     {new TH1F("h_diChsSumPtNh_truth",         "PFIsolation truth reco; #Sigma_{Nh}^{chs,chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_diChsSumPtPh_truth                     {new TH1F("h_diChsSumPtPh_truth",         "PFIsolation truth reco; #Sigma_{#gamma}^{chs,chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_diChsSumPtPU_truth                     {new TH1F("h_diChsSumPtPU_truth",         "PFIsolation truth reco; #Sigma_{PU}^{chs,chs}(p_{T}); Events", 1000,0.,80.)}; 
     
     TH1F* h_genleadingChs_TrksInCone_AtTail            {new TH1F("h_genleadingChs_TrksInCone_AtTail", "Hadronic Tracks around gen leading hadron (#Delta R < 0.03) for m_{chs,chs}<1.5 GeV; N_{trks}; Events", 101, -0.5, 100.5)};
     
@@ -375,28 +465,9 @@ int main(int argc, char* argv[]) {
     TH1F* h_subLeadingChs_PhGenInCone_AtTail         {new TH1F("h_subLeadingChs_PhGenInCone_AtTail", "Gen. Photons around reco subleading hadron (#Delta R < 0.4) for m_{chs,chs}<1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
     TH1F* h_leadingChs_PhGenInCone_AtPeaks            {new TH1F("h_leadingChs_PhGenInCone_AtPeaks", "Gen. Photons around reco leading hadron (#Delta R < 0.4) for m_{chs,chs}>1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
     TH1F* h_subLeadingChs_PhGenInCone_AtPeaks         {new TH1F("h_subLeadingChs_PhGenInCone_AtPeaks", "Gen. Photons around reco subleading hadron (#Delta R < 0.4) for m_{chs,chs}>1.5 GeV; N_{gen}; Events", 101, -0.5, 100.5)};
-    
-    TH2F* h_diChsMass_truth_genleadingChs_PhGenInCone {new TH2F("h_diChsMass_truth_genleadingChs_PhGenInCone", "Gen. Photons around gen leading hadron (#Delta R < 0.4); m_{chs,chs};N_{gen}", 200, 0., 10., 101, -0.5, 100.5)};
-    TH2F* h_diChsMass_truth_gensubleadingChs_PhGenInCone {new TH2F("h_diChsMass_truth_gensubleadingChs_PhGenInCone", "Gen. Photons around gen subleading hadron (#Delta R < 0.4); m_{chs,chs};N_{gen}", 200, 0., 10., 101, -0.5, 100.5)};
-    
-    TH2F* h_diChsMass_truth_dR                  {new TH2F("h_diChsMass_truth_dR","Mass dist. truth reco; m_{chs,chs}; #Delta R_{chs,chs}", 200, 0., 10., 100, 0., 1.)}; 
-    
-    TH2F* h_diChsMass_truth_leadingChsIso_truth   {new TH2F("h_diChsMass_truth_leadingChsIso_truth","Leading Chs Iso truth vs diChs Mass truth; m_{chs,chs}; PFIsolation Leading trk",200,0.,5.,1000,0.,15.)};
-    TH2F* h_diChsMass_truth_subleadingChsIso_truth   {new TH2F("h_diChsMass_truth_subleadingChsIso_truth","subLeading Chs Iso truth vs diChs Mass truth; m_{chs,chs}; PFIsolation subLeading trk",200,0.,5.,1000,0.,15.)};
-    
-    TH2F* h_leadingChsPtDiff_leadingChsIso_truth   {new TH2F("h_leadingChsPtDiff_leadingChsIso_truth", "Leading trk PFIso AND p_{T}^{gen} - p_{T}^{reco} (leading trk); #Delta p_{T}^{gen,reco};PFIsolation Leading trk", 360, -60, 60, 1000,0.,15.)}; 
-    TH2F* h_subleadingChsPtDiff_subleadingChsIso_truth   {new TH2F("h_subleadingChsPtDiff_subleadingChsIso_truth", "subLeading trk PFIso AND p_{T}^{gen} - p_{T}^{reco} (subleading trk); #Delta p_{T}^{gen,reco};PFIsolation subLeading trk", 360, -60, 60, 1000,0.,15.)}; 
-    
-    TH2F* h_diChsMass_truth_leadingChsPt_truth      {new TH2F("h_diChsMass_truth_leadingChsPt_truth","Mass dist. truth reco; m_{chs,chs}; Leading CHS trk p_{T} truth (GeV)", 200, 0., 10., 200, 0., 100.)}; 
-    TH2F* h_diChsMass_truth_subLeadingChsPt_truth   {new TH2F("h_diChsMass_truth_subLeadingChsPt_truth", "Mass dist. truth reco; m_{chs,chs}; subLeading CHS trk p_{T} truth (GeV)", 200, 0., 10., 200, 0., 100.)};
-    TH2F* h_leadingChsPt_truth_genleadingChsPt_AtTail   {new TH2F("h_leadingChsPt_truth_genleadingChsPt_AtTail", "Reco p_{T} and Gen p_{T} at m_{chs,chs}<1.5 GeV; leading CHS trk p_{T} truth (GeV); gen leading had. p_{T} (GeV)", 200, 0., 100., 200, 0., 100.)};
-    TH2F* h_leadingChsPt_truth_genleadingChsPt_AtPeaks   {new TH2F("h_leadingChsPt_truth_genleadingChsPt_AtPeaks", "Reco p_{T} and Gen p_{T} at m_{chs,chs}>1.5 GeV; leading CHS trk p_{T} truth (GeV); gen leading had. p_{T} (GeV)", 200, 0., 100., 200, 0., 100.)};
-    TH2F* h_subLeadingChsPt_truth_gensubLeadingChsPt_AtTail   {new TH2F("h_subLeadingChsPt_truth_gensubLeadingChsPt_AtTail", "Reco p_{T} and Gen p_{T} at m_{chs,chs}<1.5 GeV; subleading CHS trk p_{T} truth (GeV); gen subleading had. p_{T} (GeV)", 200, 0., 100., 200, 0., 100.)};
-    TH2F* h_subLeadingChsPt_truth_gensubLeadingChsPt_AtPeaks   {new TH2F("h_subLeadingChsPt_truth_gensubLeadingChsPt_AtPeaks", "Reco p_{T} and Gen p_{T} at m_{chs,chs}>1.5 GeV; subleading CHS trk p_{T} truth (GeV); gen subleading had. p_{T} (GeV)", 200, 0., 100., 200, 0., 100.)};
-    TH2F* h_leadingChsPtDiff_genleadingChsPt_AtTail   {new TH2F("h_leadingChsPtDiff_genleadingChsPt_AtTail", "Gen p_{T} AND p_{T}^{gen} - p_{T}^{reco} (leading trk) at m_{chs,chs}<1.5 GeV; #Delta p_{T}^{gen,reco};gen leading CHS trk p_{T} (GeV)", 160, -20, 20, 200., 0., 100.)}; 
-    TH2F* h_subLeadingChsPtDiff_gensubLeadingChsPt_AtTail   {new TH2F("h_subLeadingChsPtDiff_gensubLeadingChsPt_AtTail", "Gen p_{T} AND p_{T}^{gen} - p_{T}^{reco} (subleading trk) at m_{chs,chs}<1.5 GeV; #Delta p_{T}^{gen,reco};gen subleading CHS trk p_{T} (GeV)", 160, -20, 20, 200., 0., 100.)};
-    //TH2F* h_diChsMass_truth_subLeadingChsPt_truth   {new TH2F("h_diChsMass_truth_subLeadingChsPt_truth", "Mass dist. truth reco; m_{chs,chs}; subLeading CHS trk p_{T} truth (GeV)", 200, 0., 10., 200, 0., 100.)}; 
-    
+
+
+
     TH1F* h_genleadingChsPt_failed                  {new TH1F("h_genleadingChsPt_failed",     "Leading failed gen Chs; p_{T} (GeV); Events", 200, 0., 100.)};
     TH1F* h_gensubLeadingChsPt_failed               {new TH1F("h_gensubLeadingChsPt_failed", "SubLeading failed gen Chs; p_{T} (GeV); Events", 200, 0., 100.)};
     TH1F* h_genleadingChsEta_failed                 {new TH1F("h_genleadingChsEta_failed",     "Leading failed gen Chs; #eta; Events",       300, -3., 3.)};
@@ -404,8 +475,100 @@ int main(int argc, char* argv[]) {
     TH1F* h_genChsdelR_failed                       {new TH1F("h_genChsdelR_failed",        "#DeltaR failed gen; #DeltaR(chs,chs); Events",      100, 0., 1.0)};
     TH1F* h_genChsdelR_SamePFCand                   {new TH1F("h_genChsdelR_SamePFCand",   "gen Chs #DeltaR for match to same PFCand.; #DeltaR(chs,chs)", 100, 0., 1.)};
     TH1F* h_gendiChsMass_failed                     {new TH1F("h_gendiChsMass_failed",         "Mass dist. failed gen; m_{chs,chs}; Events", 200, 0., 10.)}; 
+    TH1F* h_diChsMass_failed                     {new TH1F("h_diChsMass_failed",         "Mass dist. reco for non-genmatched evts after selection; m_{chs,chs}; Events", 200, 0., 10.)}; 
+    TH1F* h_leadingChsPt_failed                     {new TH1F("h_leadingChsPt_failed",     "Leading for non-genmatched evts after selection reco Chs; p_{T} (GeV); Events", 200, 0., 100.)};
+    TH1F* h_subleadingChsPt_failed                     {new TH1F("h_subleadingChsPt_failed", "subleading for non-genmatched evts after selection reco Chs; p_{T} (GeV); Events", 200, 0., 100.)};
 
-		TH1F* h_leadingChsPVAscQuality {new TH1F ("h_leadingChsPVAscQuality", "PVAssociationQuality for leading trk", 6, 0.5, 6.5)};
+    TH2F* h_leadingChsPt_subleadingChsPt_failed     {new TH2F("h_leadingChsPt_subleadingChsPt_failed",     "subleading vs leading for non-genmatched evts after selection reco Chs; leading p_{T} (GeV); subleading p_{T} (GeV)", 200, 0., 100.,  200, 0., 100.)};
+
+
+    std::map<int,int> PDG_map = {{11,1},{13,2},{22,3},{211,4},{130,5},{1,6},{2,7}};
+    std::map<int,std::string> PDG_map_label = {{11,"electron"},{13,"muon"},{22,"photon"},{211,"charged hadron"},{130,"neutral hadron"},{1,"hadron in HF"},{2,"EM in HF"}};
+	const char *PDGs[8] = {"ele","mu","photon","charged hadron","neutral hadron","HF hadron","HF EM"};
+    TH1F* h_leadingChsID_truth {new TH1F ("h_leadingChsID_truth", "Track id for leading trk", 7, 0.5, 7.5)};
+	for (int i=1;i<=7;i++) h_leadingChsID_truth->GetXaxis()->SetBinLabel(i,PDGs[i-1]);
+    TH1F* h_subleadingChsID_truth {new TH1F ("h_subleadingChsID_truth", "Track id for subleading trk", 7, 0.5, 7.5)};
+	for (int i=1;i<=7;i++) h_subleadingChsID_truth->GetXaxis()->SetBinLabel(i,PDGs[i-1]);
+    TH2F* h_leadingChsID_dR_truth {new TH2F ("h_leadingChsID_dR_truth", "Genmatched track dR vs track ID", 7, 0.5, 7.5, 50, 0., 1.)};
+    for (int i=1;i<=7;i++) h_leadingChsID_dR_truth->GetXaxis()->SetBinLabel(i,PDGs[i-1]);
+    TH2F* h_subleadingChsID_dR_truth {new TH2F ("h_subleadingChsID_dR_truth", "Genmatched track dR vs track ID", 7, 0.5, 7.5, 50, 0., 1.)};
+    for (int i=1;i<=7;i++) h_subleadingChsID_dR_truth->GetXaxis()->SetBinLabel(i,PDGs[i-1]);
+
+    TH1F* h_leadingChsID_failed {new TH1F ("h_leadingChsID_failed", "Non-genmatched track ID", 7, 0.5, 7.5)};
+    for (int i=1;i<=7;i++) h_leadingChsID_failed->GetXaxis()->SetBinLabel(i,PDGs[i-1]);
+    TH1F* h_subleadingChsID_failed {new TH1F ("h_subleadingChsID_failed", "Non-genmatched track ID", 7, 0.5, 7.5)};
+    for (int i=1;i<=7;i++) h_subleadingChsID_failed->GetXaxis()->SetBinLabel(i,PDGs[i-1]);
+
+    TH2F* h_leadingChsID_dR_failed {new TH2F ("h_leadingChsID_dR_failed", "Non-genmatched track dR vs track ID", 7, 0.5, 7.5, 50, 0., 1.)};
+    for (int i=1;i<=7;i++) h_leadingChsID_dR_failed->GetXaxis()->SetBinLabel(i,PDGs[i-1]);
+    TH2F* h_subleadingChsID_dR_failed {new TH2F ("h_subleadingChsID_dR_failed", "Non-genmatched track dR vs track ID", 7, 0.5, 7.5, 50, 0., 1.)};
+    for (int i=1;i<=7;i++) h_subleadingChsID_dR_failed->GetXaxis()->SetBinLabel(i,PDGs[i-1]);
+
+    TH2F* h_leadingChsID_charged_dR_failed {new TH2F ("h_leadingChsID_charged_dR_failed", "Non-genmatched track dR vs track ID", 7, 0.5, 7.5, 50, 0., 1.)};
+    for (int i=1;i<=7;i++) h_leadingChsID_charged_dR_failed->GetXaxis()->SetBinLabel(i,PDGs[i-1]);
+    TH2F* h_subleadingChsID_charged_dR_failed {new TH2F ("h_subleadingChsID_charged_dR_failed", "Non-genmatched track dR vs track ID", 7, 0.5, 7.5, 50, 0., 1.)};
+    for (int i=1;i<=7;i++) h_subleadingChsID_charged_dR_failed->GetXaxis()->SetBinLabel(i,PDGs[i-1]);
+
+    TH1F* h_leadingChsIso_failed                   {new TH1F("h_leadingChsIso_failed",  "Leading non-genmatched evts reco Chs; PFIsolation leading trk; Events",    1000, 0., 15.)};
+    TH1F* h_leadingChsSumPtCh_failed           {new TH1F("h_leadingChsSumPtCh_failed", "Isolation leading Chs non-genmatched evts Ch; leading Chs #Sigma_{fromPV}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_leadingChsSumPtNh_failed           {new TH1F("h_leadingChsSumPtNh_failed", "Isolation leading Chs non-genmatched evts Nh; leading Chs #Sigma_{Nh}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_leadingChsSumPtPh_failed           {new TH1F("h_leadingChsSumPtPh_failed", "Isolation leading Chs non-genmatched evts Ph; leading Chs #Sigma_{#gamma}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_leadingChsSumPtPu_failed           {new TH1F("h_leadingChsSumPtPu_failed", "Isolation leading Chs non-genmatched evts PU; leading Chs #Sigma_{PU}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_subleadingChsIso_failed               {new TH1F("h_subleadingChsIso_failed",  "subleading non-genmatched evts reco Chs; PFIsolation subleading trk; Events",    1000, 0., 15.)};
+    TH1F* h_subleadingChsSumPtCh_failed           {new TH1F("h_subleadingChsSumPtCh_failed", "Isolation subleading Chs non-genmatched evts Ch; subleading Chs #Sigma_{fromPV}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_subleadingChsSumPtNh_failed           {new TH1F("h_subleadingChsSumPtNh_failed", "Isolation subleading Chs non-genmatched evts Nh; subleading Chs #Sigma_{Nh}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_subleadingChsSumPtPh_failed           {new TH1F("h_subleadingChsSumPtPh_failed", "Isolation subleading Chs non-genmatched evts Ph; subleading Chs #Sigma_{#gamma}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_subleadingChsSumPtPu_failed           {new TH1F("h_subleadingChsSumPtPu_failed", "Isolation subleading Chs non-genmatched evts PU; subleading Chs #Sigma_{PU}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
+    TH1F* h_diChsPt_failed                     {new TH1F("h_diChsPt_failed",         "Pt dist. non-genmatched evts reco diChs; pT_{chs,chs}; Events", 1000, 0., 100.)}; 
+
+
+    TH1F* h_leadingChsPtUnc_failed                   {new TH1F("h_leadingChsPtUnc_failed",  "Leading Chs non-genmatched evts rel. Pt Uncty; #sigma_{pT}/pT; Events", 100, 0., 5.)};
+    TH1F* h_subleadingChsPtUnc_failed                   {new TH1F("h_subleadingChsPtUnc_failed",  "subleading Chs non-genmatched evts rel. Pt Uncty; #sigma_{pT}/pT; Events", 100, 0., 5.)};
+    TH1F* h_leadingChsTkChi2Ndof_failed              {new TH1F("h_leadingChsTkChi2Ndof_failed",  "Leading charged hadron track  #chi^{2}/Ndof non-genmatched evts", 200, .0, 10.0)};
+    TH1F* h_subleadingChsTkChi2Ndof_failed          {new TH1F("h_subleadingChsTkChi2Ndof_failed",  "Subleading charged hadron track #chi^{2}/Ndof non-genmatched evts", 200, .0, 10.0)};
+    TH1F* h_leadingChsPurity_failed              {new TH1F("h_leadingChsPurity_failed", "leading charged hadron track High Purity non-genmatched evts", 2, -0.5, 1.5)};
+    TH1F* h_subleadingChsPurity_failed              {new TH1F("h_subleadingChsPurity_failed", "subleading charged hadron track High Purity non-genmatched evts", 2, -0.5, 1.5)};
+
+    // TH2F* h_diChsMass_truth_leadingChsID_truth {new TH2F("h_diChsMass_truth_leadingChsID_truth", "ID of matched leading trk vs dihadron mass; m_{chs,chs};Track ID", 200, 0., 10.,7, 0.5, 7.5)};
+	// for (int i=1;i<=7;i++) h_diChsMass_truth_leadingChsID_truth->GetXaxis()->SetBinLabel(i,PDGs[i-1]);
+    // TH2F* h_leadingChsID_truth_leadingChsIso_truth 
+    // TH2F* h_leadingChsPtRes_leadingChsID_truth 
+    // TH2F* h_leadingChsPtRes_NtTrkInCone 
+    
+    TH2F* h_diChsMass_truth_genleadingChs_PhGenInCone {new TH2F("h_diChsMass_truth_genleadingChs_PhGenInCone", "Gen. Photons around gen leading hadron (#Delta R < 0.4); m_{chs,chs};N_{gen}", 200, 0., 10., 101, -0.5, 100.5)};
+    TH2F* h_diChsMass_truth_gensubleadingChs_PhGenInCone {new TH2F("h_diChsMass_truth_gensubleadingChs_PhGenInCone", "Gen. Photons around gen subleading hadron (#Delta R < 0.4); m_{chs,chs};N_{gen}", 200, 0., 10., 101, -0.5, 100.5)};
+    TH2F* h_diChsMass_truth_genleadingChs_PhTrkInCone {new TH2F("h_diChsMass_truth_genleadingChs_PhTrkInCone", "Reco. Photons around gen leading hadron (#Delta R < 0.4); m_{chs,chs};N_{reco}", 200, 0., 10., 101, -0.5, 100.5)};
+    TH2F* h_diChsMass_truth_gensubleadingChs_PhTrkInCone {new TH2F("h_diChsMass_truth_gensubleadingChs_PhTrkInCone", "Reco. Photons around gen subleading hadron (#Delta R < 0.4); m_{chs,chs};N_{reco}", 200, 0., 10., 101, -0.5, 100.5)};
+    TH2F* h_diChsMass_truth_genleadingChs_ChsTrkInCone {new TH2F("h_diChsMass_truth_genleadingChs_ChsTrkInCone", "Reco. Hadronic trks around gen leading hadron (#Delta R < 0.4); m_{chs,chs};N_{reco}", 200, 0., 10., 101, -0.5, 100.5)};
+    TH2F* h_diChsMass_truth_gensubleadingChs_ChsTrkInCone {new TH2F("h_diChsMass_truth_gensubleadingChs_ChsTrkInCone", "Reco. Hadronic trks around gen subleading hadron (#Delta R < 0.4); m_{chs,chs};N_{reco}", 200, 0., 10., 101, -0.5, 100.5)};
+    
+    TH2F* h_diChsMass_truth_dR                  {new TH2F("h_diChsMass_truth_dR","Mass dist. truth reco; m_{chs,chs}; #Delta R_{chs,chs}", 200, 0., 10., 100, 0., 1.)}; 
+    
+    TH2F* h_diChsMass_truth_leadingChsIso_truth   {new TH2F("h_diChsMass_truth_leadingChsIso_truth","Leading Chs Iso truth vs diChs Mass truth; m_{chs,chs}; PFIsolation Leading trk",200,0.,5.,1000,0.,15.)};
+    TH2F* h_diChsMass_truth_subleadingChsIso_truth   {new TH2F("h_diChsMass_truth_subleadingChsIso_truth","subLeading Chs Iso truth vs diChs Mass truth; m_{chs,chs}; PFIsolation subLeading trk",200,0.,5.,1000,0.,15.)};
+    TH2F* h_diChsMass_truth_diChsPFIso_truth       {new TH2F("h_diChsMass_truth_diChsPFIso_truth", "diChs scalar Iso vs diChs mass; m_{chs,chs}; PFIsolation Scalar(chs,chs)", 200,0.,5.,1000,0.,15.)}; 
+    TH2F* h_diChsMass_truth_diChsSumPtCh_truth           {new TH2F("h_diChsMass_truth_diChsSumPtCh_truth", "diChs scalar Iso vs diChs mass; m_{chs,chs}; #Sigma_{fromPV}^{chs,chs}(p_{T});", 200,0.,5.,1000,0.,15.)}; 
+    TH2F* h_diChsMass_truth_diChsSumPtNh_truth             {new TH2F("h_diChsMass_truth_diChsSumPtNh_truth", "diChs scalar Iso vs diChs mass; m_{chs,chs}; #Sigma_{Nh}^{chs,chs}(p_{T});", 200,0.,5.,1000,0.,15.)}; 
+    TH2F* h_diChsMass_truth_diChsSumPtPh_truth           {new TH2F("h_diChsMass_truth_diChsSumPtPh_truth", "diChs scalar Iso vs diChs mass; m_{chs,chs}; #Sigma_{#gamma}^{chs,chs}(p_{T});", 200,0.,5.,1000,0.,15.)}; 
+    TH2F* h_diChsMass_truth_diChsSumPtPU_truth             {new TH2F("h_diChsMass_truth_diChsSumPtPU_truth", "diChs scalar Iso vs diChs mass; m_{chs,chs}; #Sigma_{PU}^{chs,chs}(p_{T});", 200,0.,5.,1000,0.,15.)}; 
+    TH2F* h_diChsMass_truth_leadingChsPtRes   {new TH2F("h_diChsMass_truth_leadingChsPtRes", "p_{T}^{gen} - p_{T}^{reco} (leading trk) AND diChs Mass truth; m_{chs,chs}; #Delta p_{T}^{gen,reco}/p_{T}^{gen};", 200, 0., 5.,360, -6, 6)}; 
+    TH2F* h_diChsMass_truth_subleadingChsPtRes   {new TH2F("h_diChsMass_truth_subleadingChsPtRes", "p_{T}^{gen} - p_{T}^{reco} (subleading trk) AND diChs Mass truth; m_{chs,chs}; #Delta p_{T}^{gen,reco}/p_{T}^{gen};", 200, 0., 5.,360, -6, 6)}; 
+
+    TH2F* h_leadingChsPtRes_leadingChsIso_truth   {new TH2F("h_leadingChsPtRes_leadingChsIso_truth", "Leading trk PFIso AND p_{T}^{gen} - p_{T}^{reco} (leading trk); #Delta p_{T}^{gen,reco}/p_{T}^{gen};PFIsolation Leading trk", 360, -6, 6, 1000,0.,15.)}; 
+    TH2F* h_subleadingChsPtRes_subleadingChsIso_truth   {new TH2F("h_subleadingChsPtRes_subleadingChsIso_truth", "subLeading trk PFIso AND p_{T}^{gen} - p_{T}^{reco} (subleading trk); #Delta p_{T}^{gen,reco}/p_{T}^{gen};PFIsolation subLeading trk", 360, -6, 6, 1000,0.,15.)}; 
+    
+    TH2F* h_diChsMass_truth_leadingChsPt_truth      {new TH2F("h_diChsMass_truth_leadingChsPt_truth","Mass dist. truth reco; m_{chs,chs}; Leading CHS trk p_{T} truth (GeV)", 200, 0., 10., 200, 0., 100.)}; 
+    TH2F* h_diChsMass_truth_subLeadingChsPt_truth   {new TH2F("h_diChsMass_truth_subLeadingChsPt_truth", "Mass dist. truth reco; m_{chs,chs}; subLeading CHS trk p_{T} truth (GeV)", 200, 0., 10., 200, 0., 100.)};
+    TH2F* h_leadingChsPt_truth_genleadingChsPt_AtTail   {new TH2F("h_leadingChsPt_truth_genleadingChsPt_AtTail", "Reco p_{T} and Gen p_{T} at m_{chs,chs}<1.5 GeV; leading CHS trk p_{T} truth (GeV); gen leading had. p_{T} (GeV)", 200, 0., 100., 200, 0., 100.)};
+    TH2F* h_leadingChsPt_truth_genleadingChsPt_AtPeaks   {new TH2F("h_leadingChsPt_truth_genleadingChsPt_AtPeaks", "Reco p_{T} and Gen p_{T} at m_{chs,chs}>1.5 GeV; leading CHS trk p_{T} truth (GeV); gen leading had. p_{T} (GeV)", 200, 0., 100., 200, 0., 100.)};
+    TH2F* h_subLeadingChsPt_truth_gensubLeadingChsPt_AtTail   {new TH2F("h_subLeadingChsPt_truth_gensubLeadingChsPt_AtTail", "Reco p_{T} and Gen p_{T} at m_{chs,chs}<1.5 GeV; subleading CHS trk p_{T} truth (GeV); gen subleading had. p_{T} (GeV)", 200, 0., 100., 200, 0., 100.)};
+    TH2F* h_subLeadingChsPt_truth_gensubLeadingChsPt_AtPeaks   {new TH2F("h_subLeadingChsPt_truth_gensubLeadingChsPt_AtPeaks", "Reco p_{T} and Gen p_{T} at m_{chs,chs}>1.5 GeV; subleading CHS trk p_{T} truth (GeV); gen subleading had. p_{T} (GeV)", 200, 0., 100., 200, 0., 100.)};
+    TH2F* h_leadingChsPtRes_genleadingChsPt_AtTail   {new TH2F("h_leadingChsPtRes_genleadingChsPt_AtTail", "Gen p_{T} AND p_{T}^{gen} - p_{T}^{reco} (leading trk) at m_{chs,chs}<1.5 GeV; #Delta p_{T}^{gen,reco}/p_{T}^{gen};gen leading CHS trk p_{T} (GeV)", 360, -6, 6, 200., 0., 100.)}; 
+    TH2F* h_subLeadingChsPtRes_gensubLeadingChsPt_AtTail   {new TH2F("h_subLeadingChsPtRes_gensubLeadingChsPt_AtTail", "Gen p_{T} AND p_{T}^{gen} - p_{T}^{reco} (subleading trk) at m_{chs,chs}<1.5 GeV; #Delta p_{T}^{gen,reco}/p_{T}^{gen};gen subleading CHS trk p_{T} (GeV)", 360, -6, 6, 200., 0., 100.)};
+    //TH2F* h_diChsMass_truth_subLeadingChsPt_truth   {new TH2F("h_diChsMass_truth_subLeadingChsPt_truth", "Mass dist. truth reco; m_{chs,chs}; subLeading CHS trk p_{T} truth (GeV)", 200, 0., 10., 200, 0., 100.)}; 
+    
+
+    TH1F* h_leadingChsPVAscQuality {new TH1F ("h_leadingChsPVAscQuality", "PVAssociationQuality for leading trk", 6, 0.5, 6.5)};
     h_leadingChsPVAscQuality->GetXaxis()->SetBinLabel(1, "NotReconstructedPrimary");
     h_leadingChsPVAscQuality->GetXaxis()->SetBinLabel(2, "OtherDeltaZ");
     h_leadingChsPVAscQuality->GetXaxis()->SetBinLabel(3, "CompatibilityBTag");
@@ -413,7 +576,7 @@ int main(int argc, char* argv[]) {
     h_leadingChsPVAscQuality->GetXaxis()->SetBinLabel(5, "UsedInFitLoose");
     h_leadingChsPVAscQuality->GetXaxis()->SetBinLabel(6, "UsedInFitTight");
 
-		TH1F* h_subleadingChsPVAscQuality {new TH1F ("h_subleadingChsPVAscQuality", "PVAssociationQuality for subleading trk", 6, 0.5, 6.5)};
+    TH1F* h_subleadingChsPVAscQuality {new TH1F ("h_subleadingChsPVAscQuality", "PVAssociationQuality for subleading trk", 6, 0.5, 6.5)};
     h_subleadingChsPVAscQuality->GetXaxis()->SetBinLabel(1, "NotReconstructedPrimary");
     h_subleadingChsPVAscQuality->GetXaxis()->SetBinLabel(2, "OtherDeltaZ");
     h_subleadingChsPVAscQuality->GetXaxis()->SetBinLabel(3, "CompatibilityBTag");
@@ -421,6 +584,14 @@ int main(int argc, char* argv[]) {
     h_subleadingChsPVAscQuality->GetXaxis()->SetBinLabel(5, "UsedInFitLoose");
     h_subleadingChsPVAscQuality->GetXaxis()->SetBinLabel(6, "UsedInFitTight");
 
+
+    TH1F* h_chs1_NoTrksInCone_goodID_truth          {new TH1F("h_chs1_NoTrksInCone_goodID_truth", "Ele/Mu Tracks around leading hadron (#Delta R < 0.4) with right ID truth; N_{trks}; Events", 101, -0.5, 100.5)};
+    TH1F* h_chs2_NoTrksInCone_goodID_truth          {new TH1F("h_chs2_NoTrksInCone_goodID_truth", "Ele/Mu Tracks around subleading hadron (#Delta R < 0.4) with right ID truth; N_{trks}; Events", 101, -0.5, 100.5)};
+    TH1F* h_chs1_NoTrksInCone_badID_truth           {new TH1F("h_chs1_NoTrksInCone_badID_truth", "Ele/Mu Tracks around leading hadron (#Delta R < 0.4) with wrong ID truth; N_{trks}; Events", 101, -0.5, 100.5)};
+    TH1F* h_chs2_NoTrksInCone_badID_truth           {new TH1F("h_chs2_NoTrksInCone_badID_truth", "Ele/Mu Tracks around subleading hadron (#Delta R < 0.4) with wrong ID truth; N_{trks}; Events", 101, -0.5, 100.5)};
+
+    TH2F* h_chs1_NoTrksInCone_chs2_NoTrksInCone_badID_truth  {new TH2F("h_chs1_NoTrksInCone_chs2_NoTrksInCone_badID_truth", "Ele/Mu Tracks around h tracks (#Delta R < 0.4) with wrong ID truth; N_{trks}^{leading}; N_{trks}^{subleading}", 101, -0.5, 100.5, 101, -0.5, 100.5)};
+    TH2F* h_chs1_NoTrksInCone_chs2_NoTrksInCone_goodID_truth  {new TH2F("h_chs1_NoTrksInCone_chs2_NoTrksInCone_goodID_truth", "Ele/Mu Tracks around h tracks (#Delta R < 0.4) with right ID truth; N_{trks}^{leading}; N_{trks}^{subleading}", 101, -0.5, 100.5, 101, -0.5, 100.5)};
 
     TH1F* h_chsPt1                   {new TH1F("h_chsPt1",                 "Leading charged hadron track p_{T}", 200, 0.0, 100.)};
     TH1F* h_chsPt2                   {new TH1F("h_chsPt2",                 "Subleading charged hadron track p_{T}", 200, 0.0, 100.)};
@@ -785,6 +956,7 @@ int main(int argc, char* argv[]) {
     const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "_legacy/"};
 //    const std::string postLepSelSkimInputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "/"};
 
+    float nevts_passsel=0.;
     // Begin to loop over all datasets
     for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset) {
         datasetFilled = false;
@@ -826,28 +998,48 @@ int main(int argc, char* argv[]) {
         TMVA::Timer* lEventTimer{ new TMVA::Timer{boost::numeric_cast<int>(numberOfEvents), "Running over dataset ...", false}}; 
         lEventTimer->DrawProgressBar(0, "");
     
-        totalEvents += numberOfEvents;
+        
+        // TFile* f_weightHisto{new TFile{"f_weightHisto.root", "RECREATE"}};
+        // TH1F* weightHisto {new TH1F{"weightHisto","Generator Weights",2,0.5,2.5}};
+        // totalEvents += numberOfEvents;
         Double_t sumWeights = 0.;
-        for (Long64_t i{0}; i < numberOfEvents; i++) {
-          event.GetEntry(i);
-          sumWeights += event.origWeightForNorm;
-          if (i%10000==0) std::cout<<"Measuring weights"<<std::endl;
-        }
+        // for (Long64_t i{0}; i < numberOfEvents; i++) {
+        //   event.GetEntry(i);
+        //   sumWeights += event.origWeightForNorm;
+        //   event.origWeightForNorm >= 0.0 ? weightHisto->AddBinContent(1,event.origWeightForNorm) : weightHisto->AddBinContent(2,-event.origWeightForNorm);
+        //   if (i%10000==0) std::cout<<"Measuring weights"<<std::endl;
+        // }
+        // weightHisto.Write();
+        // f_weightHisto.Close();
+        // TFile* f_weights{new TFile{}}
+        sumWeights = 835725; //from terminal from before -> But check later on
+        std::cout<<"SumWeights:"<<sumWeights<<std::endl;
         
-        
+        // array of interesting events (PFIso leading > 2)
+        int ctr=0;
+        bool orig_verbose = verbose_;
         for (Long64_t i{0}; i < numberOfEvents; i++) {
 
             lEventTimer->DrawProgressBar(i,"");
-
-            event.GetEntry(i);
             
-            SharedFunctions shf{useMCTruth_};
+            event.GetEntry(i);
+            if (event.eventRun != run_nb[ctr] || event.eventLumiblock != lumi_nb[ctr] || event.eventNum != num_nb[ctr]) {
+                verbose_=false;//only when this event is triggered, is true flag allowed to pass
+                ctr++;
+                if (ctr==ninteresting) ctr=0;
+            }
+            else {
+                std::cout<<"Here we go again:"<<run_nb[ctr]<<":"<<lumi_nb[ctr]<<":"<<num_nb[ctr]<<std::endl;
+                verbose_=orig_verbose;
+            }
+            SharedFunctions shf{useMCTruth_,verbose_};
+            // SharedFunctions shf{useMCTruth_,true};
             
             if (i%10000 == 0) std::cout<<"Event no. - "<<i<<std::endl;
             float eventWeight = 1.;
             //eventWeight *= datasetWeight;
-            eventWeight *= event.origWeightForNorm/sumWeights;
-						//std::cout<<"Weight - "<<eventWeight<<std::endl;
+            eventWeight *= event.processMCWeight/sumWeights;
+            //std::cout<<"Weight - "<<eventWeight<<std::endl;
              
             Cutflow->Fill(1, eventWeight);
     //EvtSelHist->GetXaxis()->SetBinLabel(6, "Higgs window");
@@ -871,22 +1063,22 @@ int main(int argc, char* argv[]) {
                 //bool verbose = false;
                 if (motherId == 9000006) h_scalarEnergy->Fill(event.genParE[k],eventWeight);
                 
-                if (verbose_) {
-                  std::cout<<"Starting the ladder for particle (id, idx, status, eventno.) - "<<pid<<", "<<k<<", "<<status<<", "<<i<<std::endl;
+                // if (verbose_) {
+                //   std::cout<<"Starting the ladder for particle (id, idx, status, eventno.) - "<<pid<<", "<<k<<", "<<status<<", "<<i<<std::endl;
                   
-                }
+                // }
                 
                 //if (pid == motherId) std::cout<<"Interesting event! Event no. "<<i<<std::endl;
                 /*if (status != 1) {
                   //std::cout<<"Accessing non-final state particle!"<<std::endl;
                   continue;
                 }*/ // this is an addition?
-                if ((status != 1)&&(verbose_)) {
-                  std::cout<<"Non-final state particle (id, status, motherId, daughterId1, daughterId2, eventno.) - "<<event.genParId[k]<<", "<<status<<", "<<event.genParMotherId[k]<<", "<<event.genParDaughterId1[k]<<", "<<event.genParDaughterId2[k]<<", "<<i<<std::endl;
-                }
-								if (((pid == 130)||(pid==310)||(pid==311))&&(verbose_)) {
-                  std::cout<<"Kaons (id, status, motherId, daughterId1, daughterId2, eventno.) - "<<event.genParId[k]<<", "<<status<<", "<<event.genParMotherId[k]<<", "<<event.genParDaughterId1[k]<<", "<<event.genParDaughterId2[k]<<", "<<i<<std::endl;
-                }
+                // if ((status != 1)&&(verbose_)) {
+                //   std::cout<<"Non-final state particle (id, status, motherId, daughterId1, daughterId2, eventno.) - "<<event.genParId[k]<<", "<<status<<", "<<event.genParMotherId[k]<<", "<<event.genParDaughterId1[k]<<", "<<event.genParDaughterId2[k]<<", "<<i<<std::endl;
+                // }
+                // if (((pid == 130)||(pid==310)||(pid==311))&&(verbose_)) {
+                //   std::cout<<"Kaons (id, status, motherId, daughterId1, daughterId2, eventno.) - "<<event.genParId[k]<<", "<<status<<", "<<event.genParMotherId[k]<<", "<<event.genParDaughterId1[k]<<", "<<event.genParDaughterId2[k]<<", "<<i<<std::endl;
+                // }
                 const bool hasScalarAncestry {shf.scalarAncestry(event, k, 9000006, verbose_)}; //checks if at any point, it comes from scalar
 
                 if ( pid == 13 && hasScalarAncestry && status == 1) {
@@ -947,10 +1139,16 @@ int main(int argc, char* argv[]) {
                     genMuon1.SetPtEtaPhiE(event.genParPt[genMuonIndex[1]], event.genParEta[genMuonIndex[1]], event.genParPhi[genMuonIndex[1]], event.genParE[genMuonIndex[1]]);
                     genMuon2.SetPtEtaPhiE(event.genParPt[genMuonIndex[0]], event.genParEta[genMuonIndex[0]], event.genParPhi[genMuonIndex[0]], event.genParE[genMuonIndex[0]]);
                 }
-                if ( genMuon1.Pt() > looseMuonPtLeading_ && firstLeading ) genMuonSortedIndex.emplace_back(genMuonIndex[0]);
-                else if ( genMuon1.Pt() > looseMuonPtLeading_ && !firstLeading ) genMuonSortedIndex.emplace_back(genMuonIndex[1]);
-                if ( genMuon2.Pt() > looseMuonPt_ && !firstLeading ) genMuonSortedIndex.emplace_back(genMuonIndex[1]);
-                if ( genMuon2.Pt() > looseMuonPt_ && firstLeading ) genMuonSortedIndex.emplace_back(genMuonIndex[0]);
+                // if ( genMuon1.Pt() > looseMuonPtLeading_ && firstLeading ) genMuonSortedIndex.emplace_back(genMuonIndex[0]);
+                // else if ( genMuon1.Pt() > looseMuonPtLeading_ && !firstLeading ) genMuonSortedIndex.emplace_back(genMuonIndex[1]);
+                if (firstLeading ) {
+                    genMuonSortedIndex.emplace_back(genMuonIndex[0]);
+                    genMuonSortedIndex.emplace_back(genMuonIndex[1]);
+                }
+                else{
+                    genMuonSortedIndex.emplace_back(genMuonIndex[1]);
+                    genMuonSortedIndex.emplace_back(genMuonIndex[0]);
+                }
             }
 
             if ( genMuonSortedIndex.size() >= 2 ) {
@@ -1089,166 +1287,9 @@ int main(int argc, char* argv[]) {
             if ( genChsIndex.size() < 2 ) continue;
             Cutflow->Fill(2, eventWeight);
             if (genMuonIndex.size() < 2) continue;
-            Cutflow->Fill(3, eventWeight);
-            
-            bool firstLeading {false};
-                if ( event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ) firstLeading = true;
-                TLorentzVector genChs1, genChs2; //genChs1 is leading, genChs2 is subleading
-                if (firstLeading) {
-                    genChs1.SetPtEtaPhiE(event.genParPt[genChsIndex[0]], event.genParEta[genChsIndex[0]], event.genParPhi[genChsIndex[0]], event.genParE[genChsIndex[0]]);
-                    genChs2.SetPtEtaPhiE(event.genParPt[genChsIndex[1]], event.genParEta[genChsIndex[1]], event.genParPhi[genChsIndex[1]], event.genParE[genChsIndex[1]]);
-                }
-                else {
-                    genChs1.SetPtEtaPhiE(event.genParPt[genChsIndex[1]], event.genParEta[genChsIndex[1]], event.genParPhi[genChsIndex[1]], event.genParE[genChsIndex[1]]);
-                    genChs2.SetPtEtaPhiE(event.genParPt[genChsIndex[0]], event.genParEta[genChsIndex[0]], event.genParPhi[genChsIndex[0]], event.genParE[genChsIndex[0]]);
-                }
-            
-            double match_dR = 0.03; //0.03 taken from MuonAnalyzer code used by MuonPOG
-            //int mu1=-99, mu2=-99;
-            if ((genChsIndex.size() >= 2) && (event.numPackedCands>=2)) { //Condition needed to avoid segmentation fault
-              int MatchedChs1Index=-99, MatchedChs2Index=-99;
-              if (firstLeading) {
-                MatchedChs1Index = shf.MatchReco(genChsIndex[0], event, match_dR);
-                MatchedChs2Index = shf.MatchReco(genChsIndex[1], event, match_dR);
-              }
-              else {
-                MatchedChs1Index = shf.MatchReco(genChsIndex[1], event, match_dR);
-                MatchedChs2Index = shf.MatchReco(genChsIndex[0], event, match_dR);
-              }
-              
-              if ((MatchedChs1Index==MatchedChs2Index) && (MatchedChs1Index!=-99)) {
-                std::cout<<"Matched to same recos"<<std::endl;
-                std::cout<<"Indices-"<<genChsIndex[0]<<", "<<genChsIndex[1]<<std::endl;
-                std::cout<<"Pt of gen-"<<event.genParPt[genChsIndex[0]]<<", "<<event.genParPt[genChsIndex[1]]<<std::endl;
-                std::cout<<"Chs1, Chs2: "<<MatchedChs1Index<<", "<<MatchedChs2Index<<std::endl;
-                h_genChsdelR_SamePFCand->Fill(genChs1.DeltaR(genChs2),eventWeight);
-                //continue;
-              }
-              
-              if ((MatchedChs1Index<0)||(MatchedChs2Index<0)) {
-                
-                   h_genleadingChsPt_failed->Fill(genChs1.Pt(),eventWeight);
-                   h_gensubLeadingChsPt_failed->Fill(genChs2.Pt(),eventWeight);
-                   h_genleadingChsEta_failed->Fill(genChs1.Eta(),eventWeight);
-                   h_gensubLeadingChsEta_failed->Fill(genChs2.Eta(),eventWeight);
-                   h_genChsdelR_failed->Fill(genChs1.DeltaR(genChs2),eventWeight);
-                   h_gendiChsMass_failed->Fill((genChs1+genChs2).M(),eventWeight);
-                   
-                   
-                    //checking if pT ordered or not
-                    TLorentzVector packedCand1 {event.packedCandsPx[0], event.packedCandsPy[0], event.packedCandsPz[0], event.packedCandsE[0]};
-                    TLorentzVector packedCand2 {event.packedCandsPx[1], event.packedCandsPy[1], event.packedCandsPz[1], event.packedCandsE[1]};
-                    
-                    
-                   //std::cout<<"Gen Chs Pt: (Pt1,Pt2,PtReco1,PtReco2): "<<genChs1.Pt()<<", "<<genChs2.Pt()<<", "<<packedCand1.Pt()<<", "<<packedCand2.Pt()<<std::endl;
-                    //TLorentzVector packedCand3 {event.packedCandsPx[2], event.packedCandsPy[2], event.packedCandsPz[2], event.packedCandsE[2]};
-                    for (int j=1; j<event.numPackedCands; j++) {
-                      TLorentzVector packedCand {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
-                      //if ((packedCand.Pt() > packedCand1.Pt()) || (packedCand.Pt() > packedCand2.Pt()) || (packedCand.Pt() > packedCand3.Pt()))
-                      //if ((packedCand.Pt() > packedCand1.Pt()) || (packedCand.Pt() > packedCand2.Pt()))
-                        //std::cout<<"Not Pt-ordered (Pt1,Pt2,Pt3,PtX): "<<packedCand1.Pt()<<", "<<packedCand2.Pt()<<", "<<packedCand3.Pt()<<", "<<packedCand.Pt()<<std::endl;
-                        //std::cout<<"Not Pt-ordered (Pt1,Pt2,Pt3,PtX): "<<packedCand1.Pt()<<", "<<packedCand2.Pt()<<", "<<packedCand.Pt()<<std::endl;
-                      //if ((packedCand.DeltaR(genChs1)<0.4) || (packedCand.DeltaR(genChs2)<0.4))
-                        //std::cout<<"Pt: (genPt1,genPt2,PtX, dR1, dR2): "<<genChs1.Pt()<<", "<<genChs2.Pt()<<", "<<packedCand.Pt()<<", "<<packedCand.DeltaR(genChs1)<<", "<<packedCand.DeltaR(genChs2)<<std::endl;
-                        
-                    }
-                  
-                  
-                  //std::cout<<"Matched to same recos"<<std::endl;
-                  //std::cout<<"Indices-"<<genChsIndex[0]<<", "<<genChsIndex[1]<<std::endl;
-                  //std::cout<<"Pt of gen-"<<event.genParPt[genChsIndex[0]]<<", "<<event.genParPt[genChsIndex[1]]<<std::endl;
-                  //std::cout<<"Chs1, Chs2: "<<MatchedChs1Index<<", "<<MatchedChs2Index<<std::endl;
-                  
-                  
-                   
-                  }
-              else {
-                //std::cout<<"Two Matched CHS found"<<std::endl;
-                //genChsIndex[0]
-                //const int leadingGenChsIndex {genChs1.Pt()>genChs2.Pt() ? MatchedChs1Index : MatchedChs2Index};
-                
-                //const int subleadingGenChsIndex {genChs1.Pt()>genChs2.Pt() ? MatchedChs2Index : MatchedChs1Index};
-                
-                const TLorentzVector chs1_truth {event.packedCandsPx[MatchedChs1Index], event.packedCandsPy[MatchedChs1Index], event.packedCandsPz[MatchedChs1Index], event.packedCandsE[MatchedChs1Index]};
-                const TLorentzVector chs2_truth {event.packedCandsPx[MatchedChs2Index], event.packedCandsPy[MatchedChs2Index], event.packedCandsPz[MatchedChs2Index], event.packedCandsE[MatchedChs2Index]};
-                
-                h_leadingChsPt_truth->Fill(chs1_truth.Pt(),eventWeight);
-                h_subLeadingChsPt_truth->Fill(chs2_truth.Pt(),eventWeight);
-                h_leadingChsEta_truth->Fill(chs1_truth.Eta(),eventWeight);
-                h_subLeadingChsEta_truth->Fill(chs2_truth.Pt(),eventWeight);
-                h_ChsdelR_truth->Fill(chs2_truth.DeltaR(chs1_truth),eventWeight);
-                h_diChsMass_truth->Fill((chs2_truth+chs1_truth).M(),eventWeight);
-                h_diChsMass_truth_dR->Fill((chs2_truth+chs1_truth).M(),chs2_truth.DeltaR(chs1_truth),eventWeight);
-                h_diChsMass_truth_leadingChsPt_truth->Fill((chs2_truth+chs1_truth).M(), chs1_truth.Pt(),eventWeight);
-                h_diChsMass_truth_subLeadingChsPt_truth->Fill((chs2_truth+chs1_truth).M(), chs2_truth.Pt(),eventWeight);
-                h_leadingChsPVAscQuality_truth->Fill(event.packedCandsPVquality[MatchedChs1Index]+1,eventWeight);
-                h_subleadingChsPVAscQuality_truth->Fill(event.packedCandsPVquality[MatchedChs2Index]+1,eventWeight);
-                h_leadingChsDz_truth->Fill(event.packedCandsDz[MatchedChs1Index],eventWeight);
-                h_subleadingChsDz_truth->Fill(event.packedCandsDz[MatchedChs2Index],eventWeight);
-                
-                float pfiso_chs1_truth = shf.PFIsolation(MatchedChs1Index,MatchedChs2Index,event,0.4);
-                float pfiso_chs2_truth = shf.PFIsolation(MatchedChs2Index,MatchedChs1Index,event,0.4);
-                
-                h_leadingChsIso_truth->Fill(pfiso_chs1_truth,eventWeight);
-                h_subleadingChsIso_truth->Fill(pfiso_chs2_truth,eventWeight);
-                h_diChsMass_truth_leadingChsIso_truth->Fill((chs2_truth+chs1_truth).M(),pfiso_chs1_truth,eventWeight);
-                h_diChsMass_truth_subleadingChsIso_truth->Fill((chs2_truth+chs1_truth).M(),pfiso_chs2_truth,eventWeight);
-                
-                h_leadingChsPtDiff_leadingChsIso_truth->Fill(genChs1.Pt() - chs1_truth.Pt(),pfiso_chs1_truth,eventWeight);
-                h_subleadingChsPtDiff_subleadingChsIso_truth->Fill(genChs2.Pt() - chs2_truth.Pt(),pfiso_chs2_truth,eventWeight);
-                
-                h_diChsMass_truth_gensubleadingChs_PhGenInCone->Fill((chs2_truth+chs1_truth).M(),shf.nGenParsInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]],22, 0.4),eventWeight);
-                h_diChsMass_truth_genleadingChs_PhGenInCone->Fill((chs2_truth+chs1_truth).M(),shf.nGenParsInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4),eventWeight);
-                
-                
-                if ((chs2_truth+chs1_truth).M()<=1.5) {
-                  h_leadingChsPt_truth_genleadingChsPt_AtTail->Fill(chs1_truth.Pt(), genChs1.Pt(),eventWeight); //Note: chs1_truth corresponds to trk matched to leading gen chs
-                  h_leadingChsPtDiff_genleadingChsPt_AtTail->Fill(genChs1.Pt() - chs1_truth.Pt(), genChs1.Pt(),eventWeight);
-                  h_subLeadingChsPt_truth_gensubLeadingChsPt_AtTail->Fill(chs2_truth.Pt(), genChs2.Pt(),eventWeight);
-                  h_subLeadingChsPtDiff_gensubLeadingChsPt_AtTail->Fill(genChs2.Pt() - chs2_truth.Pt(), genChs2.Pt(),eventWeight);
-                  
-                  h_genleadingChs_TrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 211, 0.03, true),eventWeight);
-                  h_gensubLeadingChs_TrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]],211, 0.03, true),eventWeight);
-                  
-                  h_genleadingChs_TrksInCone_AtTail_Tight->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]],211, 0.03, false),eventWeight);
-                  h_gensubLeadingChs_TrksInCone_AtTail_Tight->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]],211, 0.03, false),eventWeight);
-                  
-                  h_genleadingChs_PhTrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4, true),eventWeight);
-                  h_gensubLeadingChs_PhTrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4, true),eventWeight);
-                  
-                  h_genleadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4),eventWeight);
-                  h_gensubLeadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4),eventWeight);
-                  
-                  h_leadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, chs1_truth, event.packedCandsCharge[MatchedChs1Index], 22, 0.4),eventWeight);
-                  h_subLeadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, chs2_truth, event.packedCandsCharge[MatchedChs2Index], 22, 0.4),eventWeight);
-    
-                  
-                  p_HadronicDecayFractions_AtTail->Fill(1.0, bool (genPionIndex.size() >= 2) );
-                  p_HadronicDecayFractions_AtTail->Fill(2.0, bool (genKaonIndex.size() >= 2 ) );
-                  p_HadronicDecayFractions_AtTail->Fill(3.0, bool (genKshortIndex.size() >= 2) );
-                  p_HadronicDecayFractions_AtTail->Fill(4.0, bool (genChargedKaonIndex.size() >= 2) );
-                }
-                else {
-                  h_leadingChsPt_truth_genleadingChsPt_AtPeaks->Fill(chs1_truth.Pt(), genChs1.Pt(),eventWeight); //Note: chs1_truth corresponds to trk matched to leading gen chs
-                  h_subLeadingChsPt_truth_gensubLeadingChsPt_AtPeaks->Fill(chs2_truth.Pt(), genChs2.Pt(),eventWeight);
-                  h_genleadingChs_TrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 211, 0.03, true),eventWeight);
-                  h_gensubLeadingChs_TrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 211, 0.03, true),eventWeight);
-                  
-                  h_genleadingChs_TrksInCone_AtPeaks_Tight->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 211, 0.03, false),eventWeight);
-                  h_gensubLeadingChs_TrksInCone_AtPeaks_Tight->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 211, 0.03, false),eventWeight);
-                  
-                  
-                  h_genleadingChs_PhTrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4, true),eventWeight);
-                  h_gensubLeadingChs_PhTrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4, true),eventWeight);
-                  h_genleadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, genChs1, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[0]] : event.genParCharge[genChsIndex[1]], 22, 0.4),eventWeight);
-                  h_gensubLeadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, genChs2, event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ? event.genParCharge[genChsIndex[1]] : event.genParCharge[genChsIndex[0]], 22, 0.4),eventWeight);
-                  
-                  h_leadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, chs1_truth, event.packedCandsCharge[MatchedChs1Index], 22, 0.4),eventWeight);
-                  h_subLeadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, chs2_truth, event.packedCandsCharge[MatchedChs2Index], 22, 0.4),eventWeight);
-                }
-              }
-            }
-            
+            Cutflow->Fill(3, eventWeight);            
+
+            Cutflow_afterGen->Fill(1, eventWeight);
             
             const bool passSingleMuonTrigger {event.muTrig()}, passDimuonTrigger {event.mumuTrig()};
             const bool passL2MuonTrigger {event.mumuL2Trig()}, passDimuonNoVtxTrigger {event.mumuNoVtxTrig()};
@@ -1256,8 +1297,12 @@ int main(int argc, char* argv[]) {
 //            if (! ( passDimuonTrigger || passSingleMuonTrigger || passL2MuonTrigger || passDimuonNoVtxTrigger ) ) continue;
             if ( !passSingleMuonTrigger ) continue;
             Cutflow->Fill(4, eventWeight);
+            Cutflow_afterGen->Fill(2, eventWeight);
+
             if (!event.metFilters()) continue;
             Cutflow->Fill(5, eventWeight);
+            Cutflow_afterGen->Fill(3, eventWeight);
+
  
             event.muonIndexLoose = shf.getLooseMuons(event);
             std::vector<int> chsIndex = shf.getChargedHadronTracks(event);
@@ -1267,6 +1312,8 @@ int main(int argc, char* argv[]) {
             if ( event.muonIndexLoose.size() < 2 ) continue;
             
             Cutflow->Fill(6, eventWeight);
+            Cutflow_afterGen->Fill(4, eventWeight);
+
 /*
             std::cout << "event.muonIndexLoose.size(): " << event.muonIndexLoose.size() << std::endl;
             if (event.muonIndexLoose.size() == 2) {
@@ -1293,9 +1340,11 @@ int main(int argc, char* argv[]) {
             h_numRecoScalarMuons->Fill(nScalarMuons,eventWeight);
             h_numRecoDirectScalarMuons->Fill(nDirectScalarMuons,eventWeight);
 
-            if ( !shf.getDileptonCand( event, event.muonIndexLoose, useMCTruth_ ) ) continue;
+            if ( !shf.getDileptonCand( event, event.muonIndexLoose) ) continue;
             
             Cutflow->Fill(7, eventWeight);
+            Cutflow_afterGen->Fill(5, eventWeight);
+
             const double dileptonMass {(event.zPairLeptons.first + event.zPairLeptons.second).M()};
             //if (dileptonMass > scalarMassCut_) continue;
 
@@ -1305,6 +1354,50 @@ int main(int argc, char* argv[]) {
             h_recoDimuonEta->Fill((event.zPairLeptons.first + event.zPairLeptons.second).Eta() ,eventWeight);
             h_recoLeadingMuonPt->Fill( (event.zPairLeptons.first).Pt() ,eventWeight);
             h_recoSubleadingMuonPt->Fill( (event.zPairLeptons.second).Pt(),eventWeight );
+            
+            h_recoDimuonMass_leadingMuonIso->Fill(dileptonMass, event.zPairRelIso.first ,eventWeight);
+            h_recoDimuonMass_subleadingMuonIso->Fill(dileptonMass, event.zPairRelIso.second ,eventWeight);
+            h_leadingMuonIso->Fill(event.zPairRelIso.first ,eventWeight);
+            h_leadingMuonSumPtCh->Fill(event.zPairChIso.first ,eventWeight);
+            h_leadingMuonSumPtNh->Fill(event.zPairNhIso.first ,eventWeight);
+            h_leadingMuonSumPtPh->Fill(event.zPairPhIso.first ,eventWeight);
+            h_leadingMuonSumPtPu->Fill(event.zPairPuIso.first ,eventWeight);
+            h_subleadingMuonIso->Fill(event.zPairRelIso.second ,eventWeight);
+            h_subleadingMuonSumPtCh->Fill(event.zPairChIso.second ,eventWeight);
+            h_subleadingMuonSumPtNh->Fill(event.zPairNhIso.second ,eventWeight);
+            h_subleadingMuonSumPtPh->Fill(event.zPairPhIso.second ,eventWeight);
+            h_subleadingMuonSumPtPu->Fill(event.zPairPuIso.second ,eventWeight);
+
+            std::vector<int> mu_trks_tmp;
+            mu_trks_tmp.push_back(event.zPairIndex.first); mu_trks_tmp.push_back(event.zPairIndex.second);
+            TLorentzVector recoDimuon = event.zPairLeptons.first + event.zPairLeptons.second;
+            struct Isolation recoDimuon_iso = shf.PFIsolation("muon",recoDimuon,-99,mu_trks_tmp,event,0.4);
+
+            h_recoDimuonMass_diMuonPFIso->Fill(dileptonMass, recoDimuon_iso.reliso_);
+            h_diMuonPFIso->Fill(recoDimuon_iso.reliso_,eventWeight);
+            h_diMuonSumPtCh->Fill(recoDimuon_iso.chiso_,eventWeight);
+            h_diMuonSumPtNh->Fill(recoDimuon_iso.nhiso_,eventWeight);
+            h_diMuonSumPtPh->Fill(recoDimuon_iso.phiso_,eventWeight);
+            h_diMuonSumPtPU->Fill(recoDimuon_iso.puiso_,eventWeight);
+
+            std::vector<int> genmu_tmp;
+            genmu_tmp.push_back(genMuonSortedIndex[0]); genmu_tmp.push_back(genMuonSortedIndex[1]); 
+            struct Isolation genmu1_geniso = shf.GenIsolation("muon",genMuonSortedIndex[0], genmu_tmp, event,0.4);
+            struct Isolation genmu2_geniso = shf.GenIsolation("muon",genMuonSortedIndex[1], genmu_tmp, event,0.4);
+
+            h_genleadingMuonGenIso->Fill(genmu1_geniso.reliso_,eventWeight);
+            h_genleadingMuonGenSumPtCh->Fill(genmu1_geniso.chiso_,eventWeight);
+            h_genleadingMuonGenSumPtNh->Fill(genmu1_geniso.nhiso_,eventWeight);
+            h_genleadingMuonGenSumPtPh->Fill(genmu1_geniso.phiso_,eventWeight);
+            h_gensubleadingMuonGenIso->Fill(genmu2_geniso.reliso_,eventWeight);
+            h_gensubleadingMuonGenSumPtCh->Fill(genmu2_geniso.chiso_,eventWeight);
+            h_gensubleadingMuonGenSumPtNh->Fill(genmu2_geniso.nhiso_,eventWeight);
+            h_gensubleadingMuonGenSumPtPh->Fill(genmu2_geniso.phiso_,eventWeight);
+        
+            h_recoDimuonMass_diMuonSumPtCh->Fill(dileptonMass,recoDimuon_iso.chiso_,eventWeight);
+            h_recoDimuonMass_diMuonSumPtNh->Fill(dileptonMass,recoDimuon_iso.nhiso_,eventWeight);
+            h_recoDimuonMass_diMuonSumPtPh->Fill(dileptonMass,recoDimuon_iso.phiso_,eventWeight);
+            h_recoDimuonMass_diMuonSumPtPU->Fill(dileptonMass,recoDimuon_iso.puiso_,eventWeight);
 
             // Add comparison between leptonic and hadronic scalar decayed muons
             /*
@@ -1419,11 +1512,352 @@ int main(int argc, char* argv[]) {
             if ( chsIndex.size() < 2 ) continue;
             
             Cutflow->Fill(8, eventWeight);
-            
-                        
-            if (!shf.getDihadronCand(event, chsIndex, useMCTruth_)) continue;
+            Cutflow_afterGen->Fill(6, eventWeight);
+        
+            if (!shf.getDihadronCand(event, chsIndex)) continue;
             
             Cutflow->Fill(9, eventWeight);
+            Cutflow_afterGen->Fill(7, eventWeight);
+
+
+            bool firstLeading {false};
+            if ( event.genParPt[genChsIndex[0]] > event.genParPt[genChsIndex[1]] ) firstLeading = true;
+            int genChs1_ind, genChs2_ind;
+            
+            TLorentzVector genChs1, genChs2; //genChs1 is leading, genChs2 is subleading
+            if (firstLeading) {
+                genChs1_ind = genChsIndex[0];
+                genChs2_ind = genChsIndex[1];
+                genChs1.SetPtEtaPhiE(event.genParPt[genChsIndex[0]], event.genParEta[genChsIndex[0]], event.genParPhi[genChsIndex[0]], event.genParE[genChsIndex[0]]);
+                genChs2.SetPtEtaPhiE(event.genParPt[genChsIndex[1]], event.genParEta[genChsIndex[1]], event.genParPhi[genChsIndex[1]], event.genParE[genChsIndex[1]]);
+            }
+            else {
+                genChs1_ind = genChsIndex[1];
+                genChs2_ind = genChsIndex[0];
+                genChs1.SetPtEtaPhiE(event.genParPt[genChsIndex[1]], event.genParEta[genChsIndex[1]], event.genParPhi[genChsIndex[1]], event.genParE[genChsIndex[1]]);
+                genChs2.SetPtEtaPhiE(event.genParPt[genChsIndex[0]], event.genParEta[genChsIndex[0]], event.genParPhi[genChsIndex[0]], event.genParE[genChsIndex[0]]);
+            }
+            
+            double match_dR = 0.03; //0.03 taken from MuonAnalyzer code used by MuonPOG
+            //int mu1=-99, mu2=-99;
+            if ((genChsIndex.size() >= 2) && (event.numPackedCands>=2)) { //Condition needed to avoid segmentation fault
+              int MatchedChs1Index=-99, MatchedChs2Index=-99;
+              if (firstLeading) {
+                MatchedChs1Index = shf.MatchReco(genChsIndex[0], event, match_dR);
+                MatchedChs2Index = shf.MatchReco(genChsIndex[1], event, match_dR);
+              }
+              else {
+                MatchedChs1Index = shf.MatchReco(genChsIndex[1], event, match_dR);
+                MatchedChs2Index = shf.MatchReco(genChsIndex[0], event, match_dR);
+              }
+              
+              if ((MatchedChs1Index==MatchedChs2Index) && (MatchedChs1Index!=-99)) {
+                std::cout<<"Matched to same recos"<<std::endl;
+                std::cout<<"Indices-"<<genChsIndex[0]<<", "<<genChsIndex[1]<<std::endl;
+                std::cout<<"Pt of gen-"<<event.genParPt[genChsIndex[0]]<<", "<<event.genParPt[genChsIndex[1]]<<std::endl;
+                std::cout<<"Chs1, Chs2: "<<MatchedChs1Index<<", "<<MatchedChs2Index<<std::endl;
+                h_genChsdelR_SamePFCand->Fill(genChs1.DeltaR(genChs2),eventWeight);
+                //continue;
+              }
+              
+              if ((MatchedChs1Index<0)||(MatchedChs2Index<0)) {
+                
+                   h_genleadingChsPt_failed->Fill(genChs1.Pt(),eventWeight);
+                   h_gensubLeadingChsPt_failed->Fill(genChs2.Pt(),eventWeight);
+                   h_genleadingChsEta_failed->Fill(genChs1.Eta(),eventWeight);
+                   h_gensubLeadingChsEta_failed->Fill(genChs2.Eta(),eventWeight);
+                   h_genChsdelR_failed->Fill(genChs1.DeltaR(genChs2),eventWeight);
+                   h_gendiChsMass_failed->Fill((genChs1+genChs2).M(),eventWeight);
+                   h_diChsMass_failed->Fill((event.chsPairVec.first+event.chsPairVec.second).M(),eventWeight);
+                   h_leadingChsPt_failed->Fill(event.chsPairVec.first.Pt(),eventWeight);
+                   h_subleadingChsPt_failed->Fill(event.chsPairVec.second.Pt(),eventWeight);
+                   h_leadingChsPt_subleadingChsPt_failed->Fill(event.chsPairVec.first.Pt(),event.chsPairVec.second.Pt(),eventWeight);
+
+                   h_leadingChsIso_failed->Fill(event.chsPairRelIso.first,eventWeight);
+                   h_leadingChsSumPtCh_failed->Fill(event.chsPairChIso.first,eventWeight);
+                   h_leadingChsSumPtNh_failed->Fill(event.chsPairNhIso.first,eventWeight);
+                   h_leadingChsSumPtPh_failed->Fill(event.chsPairPhIso.first,eventWeight);
+                   h_leadingChsSumPtPu_failed->Fill(event.chsPairPuIso.first,eventWeight);
+                   h_subleadingChsIso_failed->Fill(event.chsPairRelIso.second,eventWeight);
+                   h_subleadingChsSumPtCh_failed->Fill(event.chsPairChIso.second,eventWeight);
+                   h_subleadingChsSumPtNh_failed->Fill(event.chsPairNhIso.second,eventWeight);
+                   h_subleadingChsSumPtPh_failed->Fill(event.chsPairPhIso.second,eventWeight);
+                   h_subleadingChsSumPtPu_failed->Fill(event.chsPairPuIso.second,eventWeight);
+
+                   h_diChsPt_failed->Fill((event.chsPairVec.first+event.chsPairVec.second).Pt(),eventWeight);
+
+                   h_leadingChsTkChi2Ndof_failed->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.first],eventWeight);
+                   h_subleadingChsTkChi2Ndof_failed->Fill(event.packedCandsPseudoTrkChi2Norm[event.chsPairIndex.second],eventWeight);
+                   h_leadingChsPurity_failed->Fill(event.packedCandsHighPurityTrack[event.chsPairIndex.first],eventWeight);
+                   h_subleadingChsPurity_failed->Fill(event.packedCandsHighPurityTrack[event.chsPairIndex.second],eventWeight);
+
+                   double mindR = 100;
+                   unsigned index = 0;
+                   double tmpDR;
+                   int gen_ind;
+                   if (MatchedChs1Index < 0) {
+                    mindR = 100;
+                    index = 0;
+                    gen_ind = genChs1_ind;
+                    for (int j=0; j<event.numPackedCands; j++) {
+                        if ((j==MatchedChs1Index)||(j==MatchedChs2Index)) continue;
+                        TLorentzVector packedCand {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
+                        tmpDR=shf.deltaR(event.genParEta[gen_ind],event.genParPhi[gen_ind],packedCand.Eta(),packedCand.Phi());
+                        if (mindR < tmpDR) continue;
+                        mindR = tmpDR;
+                        index = j;
+                    }
+                    h_leadingChsID_dR_failed->Fill(PDG_map[std::abs(event.packedCandsPdgId[index])],mindR,eventWeight);
+                    h_leadingChsID_failed->Fill(PDG_map[std::abs(event.packedCandsPdgId[index])],eventWeight);
+                    mindR = 100;
+                    index = 0;
+                    gen_ind = genChs1_ind;
+                    for (int j=0; j<event.numPackedCands; j++) {
+                        if ((j==MatchedChs1Index)||(j==MatchedChs2Index)) continue;
+                        TLorentzVector packedCand {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
+                        tmpDR=shf.deltaR(event.genParEta[gen_ind],event.genParPhi[gen_ind],packedCand.Eta(),packedCand.Phi());
+                        if (event.genParCharge[gen_ind]!= event.packedCandsCharge[j]) continue; //must have same charge
+                        if (mindR < tmpDR) continue;
+                        mindR = tmpDR;
+                        index = j;
+                    }
+                    h_leadingChsID_charged_dR_failed->Fill(PDG_map[std::abs(event.packedCandsPdgId[index])],mindR,eventWeight);
+                   }
+                   if (MatchedChs2Index < 0) {
+                    mindR = 100;
+                    index = 0;
+                    gen_ind = genChs2_ind;
+                    for (int j=0; j<event.numPackedCands; j++) {
+                        if ((j==MatchedChs1Index)||(j==MatchedChs2Index)) continue;
+                        TLorentzVector packedCand {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
+                        tmpDR=shf.deltaR(event.genParEta[gen_ind],event.genParPhi[gen_ind],packedCand.Eta(),packedCand.Phi());
+                        if (mindR < tmpDR) continue;
+                        mindR = tmpDR;
+                        index = j;
+                    }
+                    h_subleadingChsID_dR_failed->Fill(PDG_map[std::abs(event.packedCandsPdgId[index])],mindR,eventWeight);
+                    h_subleadingChsID_failed->Fill(PDG_map[std::abs(event.packedCandsPdgId[index])],eventWeight);
+                    mindR = 100;
+                    index = 0;
+                    gen_ind = genChs2_ind;
+                    for (int j=0; j<event.numPackedCands; j++) {
+                        if ((j==MatchedChs1Index)||(j==MatchedChs2Index)) continue;
+                        TLorentzVector packedCand {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
+                        tmpDR=shf.deltaR(event.genParEta[gen_ind],event.genParPhi[gen_ind],packedCand.Eta(),packedCand.Phi());
+                        if (event.genParCharge[gen_ind]!= event.packedCandsCharge[j]) continue; //must have same charge
+                        if (mindR < tmpDR) continue;
+                        mindR = tmpDR;
+                        index = j;
+                    }
+                    h_subleadingChsID_charged_dR_failed->Fill(PDG_map[std::abs(event.packedCandsPdgId[index])],mindR,eventWeight);
+                   }                   
+                   
+                    //checking if pT ordered or not
+                    TLorentzVector packedCand1 {event.packedCandsPx[0], event.packedCandsPy[0], event.packedCandsPz[0], event.packedCandsE[0]};
+                    TLorentzVector packedCand2 {event.packedCandsPx[1], event.packedCandsPy[1], event.packedCandsPz[1], event.packedCandsE[1]};
+                  
+                  
+                  //std::cout<<"Matched to same recos"<<std::endl;
+                  //std::cout<<"Indices-"<<genChsIndex[0]<<", "<<genChsIndex[1]<<std::endl;
+                  //std::cout<<"Pt of gen-"<<event.genParPt[genChsIndex[0]]<<", "<<event.genParPt[genChsIndex[1]]<<std::endl;
+                  //std::cout<<"Chs1, Chs2: "<<MatchedChs1Index<<", "<<MatchedChs2Index<<std::endl;
+                  
+                  
+                   
+                  }
+              else {
+                //std::cout<<"Two Matched CHS found"<<std::endl;
+                //genChsIndex[0]
+                //const int leadingGenChsIndex {genChs1.Pt()>genChs2.Pt() ? MatchedChs1Index : MatchedChs2Index};
+                
+                //const int subleadingGenChsIndex {genChs1.Pt()>genChs2.Pt() ? MatchedChs2Index : MatchedChs1Index};
+                // For switching between mass assumptions below
+                // ROOT::Math::PxPyPzMVector chs1_truth; 
+                // ROOT::Math::PxPyPzMVector chs2_truth;
+                
+                // bool kaonMassAssumption = false; 
+                // if (kaonMassAssumption) {
+                //     float kaonMass = 493.677;
+                //     chs1_truth.SetCoordinates(event.packedCandsPx[MatchedChs1Index],event.packedCandsPy[MatchedChs1Index], event.packedCandsPz[MatchedChs1Index], kaonMass);
+                //     chs2_truth.SetCoordinates(event.packedCandsPx[MatchedChs2Index],event.packedCandsPy[MatchedChs2Index], event.packedCandsPz[MatchedChs2Index], kaonMass);
+                // }
+                // else {
+                //     float pionMass = 139.57061;
+                //     chs1_truth.SetCoordinates(event.packedCandsPx[MatchedChs1Index], event.packedCandsPy[MatchedChs1Index], event.packedCandsPz[MatchedChs1Index], pionMass);
+                //     chs2_truth.SetCoordinates(event.packedCandsPx[MatchedChs2Index], event.packedCandsPy[MatchedChs2Index], event.packedCandsPz[MatchedChs2Index], pionMass);
+                // }
+                nevts_passsel+=eventWeight;
+
+                TLorentzVector chs1_truth{event.packedCandsPx[MatchedChs1Index], event.packedCandsPy[MatchedChs1Index], event.packedCandsPz[MatchedChs1Index], event.packedCandsE[MatchedChs1Index]};
+                TLorentzVector chs2_truth{event.packedCandsPx[MatchedChs2Index], event.packedCandsPy[MatchedChs2Index], event.packedCandsPz[MatchedChs2Index], event.packedCandsE[MatchedChs2Index]};
+                
+                h_leadingChsPt_truth->Fill(chs1_truth.Pt(),eventWeight);
+                h_subLeadingChsPt_truth->Fill(chs2_truth.Pt(),eventWeight);
+                h_leadingChsEta_truth->Fill(chs1_truth.Eta(),eventWeight);
+                h_subLeadingChsEta_truth->Fill(chs2_truth.Pt(),eventWeight);
+                h_ChsdelR_truth->Fill(chs2_truth.DeltaR(chs1_truth),eventWeight);
+                h_diChsMass_truth->Fill((chs2_truth+chs1_truth).M(),eventWeight);
+                h_diChsPt_truth->Fill((chs2_truth+chs1_truth).Pt(),eventWeight);
+                h_diChsMass_truth_dR->Fill((chs2_truth+chs1_truth).M(),chs2_truth.DeltaR(chs1_truth),eventWeight);
+                h_diChsMass_truth_leadingChsPt_truth->Fill((chs2_truth+chs1_truth).M(), chs1_truth.Pt(),eventWeight);
+                h_diChsMass_truth_subLeadingChsPt_truth->Fill((chs2_truth+chs1_truth).M(), chs2_truth.Pt(),eventWeight);
+                h_leadingChsPVAscQuality_truth->Fill(event.packedCandsPVquality[MatchedChs1Index]+1,eventWeight);
+                h_subleadingChsPVAscQuality_truth->Fill(event.packedCandsPVquality[MatchedChs2Index]+1,eventWeight);
+                h_leadingChsDz_truth->Fill(event.packedCandsDz[MatchedChs1Index],eventWeight);
+                h_subleadingChsDz_truth->Fill(event.packedCandsDz[MatchedChs2Index],eventWeight);
+                h_leadingChsID_truth->Fill(PDG_map[std::abs(event.packedCandsPdgId[MatchedChs1Index])],eventWeight);
+                h_subleadingChsID_truth->Fill(PDG_map[std::abs(event.packedCandsPdgId[MatchedChs2Index])],eventWeight);
+
+              
+                // p_leadingChsID_truth->Fill(i,PDG_map[std::abs(event.packedCandsPdgId[MatchedChs1Index])],eventWeight);
+                // p_subleadingChsID_truth->Fill(i,PDG_map[std::abs(event.packedCandsPdgId[MatchedChs2Index])],eventWeight);
+              
+                struct Isolation chs1_truth_iso, chs2_truth_iso;
+                if (verbose_) {
+                    std::cout<<"Gen leading trk (type,index,pt,eta,phi):"<<genChs1_ind<<","<<","<<genChs1.Pt()<<","<<genChs1.Eta()<<","<<genChs1.Phi()<<std::endl;
+                    std::cout<<"Gen subleading trk (type,index,pt,eta,phi):"<<genChs2_ind<<","<<","<<genChs2.Pt()<<","<<genChs2.Eta()<<","<<genChs2.Phi()<<std::endl;
+                }
+                chs1_truth_iso = shf.PFIsolation("hadron",MatchedChs1Index, genChs1_ind, MatchedChs2Index,event,0.4);
+                chs2_truth_iso = shf.PFIsolation("hadron",MatchedChs2Index, genChs2_ind, MatchedChs1Index,event,0.4);
+                float pfiso_chs1_truth = chs1_truth_iso.reliso_;
+                float pfiso_chs2_truth = chs2_truth_iso.reliso_;
+
+                std::vector<int> chs_trks_tmp;
+                chs_trks_tmp.push_back(MatchedChs1Index); chs_trks_tmp.push_back(MatchedChs2Index);
+                TLorentzVector diChs_truth = chs2_truth+chs1_truth;
+                struct Isolation diChs_truth_iso = shf.PFIsolation("hadron",diChs_truth,-99,chs_trks_tmp,event,0.4);
+                h_diChsMass_truth_diChsPFIso_truth->Fill(diChs_truth.M(), diChs_truth_iso.reliso_);
+                h_diChsPFIso_truth->Fill(diChs_truth_iso.reliso_,eventWeight);
+                h_diChsSumPtCh_truth->Fill(diChs_truth_iso.chiso_,eventWeight);
+                h_diChsSumPtNh_truth->Fill(diChs_truth_iso.nhiso_,eventWeight);
+                h_diChsSumPtPh_truth->Fill(diChs_truth_iso.phiso_,eventWeight);
+                h_diChsSumPtPU_truth->Fill(diChs_truth_iso.puiso_,eventWeight);
+
+                std::vector<int> genchs_tmp;
+                genchs_tmp.push_back(genChs1_ind); genchs_tmp.push_back(genChs2_ind); 
+                // std::cout<<"Look at hadron indices:"<<genChs1_ind<<","<<genChs2_ind<<std::endl;
+                struct Isolation genchs1_geniso = shf.GenIsolation("hadron",genChs1_ind, genchs_tmp, event,0.4);
+                struct Isolation genchs2_geniso = shf.GenIsolation("hadron",genChs2_ind, genchs_tmp, event,0.4);
+
+                h_genleadingChsGenIso->Fill(genchs1_geniso.reliso_,eventWeight);
+                h_genleadingChsGenSumPtCh->Fill(genchs1_geniso.chiso_,eventWeight);
+                h_genleadingChsGenSumPtNh->Fill(genchs1_geniso.nhiso_,eventWeight);
+                h_genleadingChsGenSumPtPh->Fill(genchs1_geniso.phiso_,eventWeight);
+                h_gensubleadingChsGenIso->Fill(genchs2_geniso.reliso_,eventWeight);
+                h_gensubleadingChsGenSumPtCh->Fill(genchs2_geniso.chiso_,eventWeight);
+                h_gensubleadingChsGenSumPtNh->Fill(genchs2_geniso.nhiso_,eventWeight);
+                h_gensubleadingChsGenSumPtPh->Fill(genchs2_geniso.phiso_,eventWeight);
+
+                h_diChsMass_truth_diChsSumPtCh_truth->Fill(diChs_truth.M(),diChs_truth_iso.chiso_,eventWeight);
+                h_diChsMass_truth_diChsSumPtNh_truth->Fill(diChs_truth.M(),diChs_truth_iso.nhiso_,eventWeight);
+                h_diChsMass_truth_diChsSumPtPh_truth->Fill(diChs_truth.M(),diChs_truth_iso.phiso_,eventWeight);
+                h_diChsMass_truth_diChsSumPtPU_truth->Fill(diChs_truth.M(),diChs_truth_iso.puiso_,eventWeight);
+
+                // h_leadingChsPtUnc_truth->Fill(event.packedCandsPseudoTrkChi2Norm[genChs1_ind],eventWeight);
+                // h_subleadingChsPtUnc_truth->Fill(event.packedCandsPseudoTrkChi2Norm[genChs2_ind],eventWeight);
+                h_leadingChsTkChi2Ndof_truth->Fill(event.packedCandsPseudoTrkChi2Norm[genChs1_ind],eventWeight);
+                h_subleadingChsTkChi2Ndof_truth->Fill(event.packedCandsPseudoTrkChi2Norm[genChs2_ind],eventWeight);
+                h_leadingChsPurity_truth->Fill(event.packedCandsHighPurityTrack[genChs1_ind],eventWeight);
+                h_subleadingChsPurity_truth->Fill(event.packedCandsHighPurityTrack[genChs2_ind],eventWeight);
+
+                h_leadingChsIso_truth->Fill(pfiso_chs1_truth,eventWeight);
+                h_subleadingChsIso_truth->Fill(pfiso_chs2_truth,eventWeight);
+                h_leadingChsSumPtCh_truth->Fill(chs1_truth_iso.chiso_,eventWeight);
+                h_leadingChsSumPtNh_truth->Fill(chs1_truth_iso.nhiso_,eventWeight);
+                h_leadingChsSumPtPh_truth->Fill(chs1_truth_iso.phiso_,eventWeight);
+                h_leadingChsSumPtPu_truth->Fill(chs1_truth_iso.puiso_,eventWeight);
+                h_subleadingChsSumPtCh_truth->Fill(chs2_truth_iso.chiso_,eventWeight);
+                h_subleadingChsSumPtNh_truth->Fill(chs2_truth_iso.nhiso_,eventWeight);
+                h_subleadingChsSumPtPh_truth->Fill(chs2_truth_iso.phiso_,eventWeight);
+                h_subleadingChsSumPtPu_truth->Fill(chs2_truth_iso.puiso_,eventWeight);
+                h_diChsMass_truth_leadingChsIso_truth->Fill((chs2_truth+chs1_truth).M(),pfiso_chs1_truth,eventWeight);
+                h_diChsMass_truth_subleadingChsIso_truth->Fill((chs2_truth+chs1_truth).M(),pfiso_chs2_truth,eventWeight);
+                h_diChsMass_truth_leadingChsPtRes->Fill((chs1_truth+chs2_truth).M(),std::abs(genChs1.Pt() - chs1_truth.Pt())/genChs1.Pt(),eventWeight);
+                h_diChsMass_truth_subleadingChsPtRes->Fill((chs1_truth+chs2_truth).M(),std::abs(genChs2.Pt() - chs2_truth.Pt())/genChs2.Pt(),eventWeight);
+                
+                h_leadingChsPtRes_leadingChsIso_truth->Fill(std::abs(genChs1.Pt() - chs1_truth.Pt())/genChs1.Pt(),pfiso_chs1_truth,eventWeight);
+                h_subleadingChsPtRes_subleadingChsIso_truth->Fill(std::abs(genChs2.Pt() - chs2_truth.Pt())/genChs2.Pt(),pfiso_chs2_truth,eventWeight);
+                
+                h_diChsMass_truth_gensubleadingChs_PhGenInCone->Fill((chs2_truth+chs1_truth).M(),shf.nGenParsInCone(event, genChs2, 0, 22, 0.4, true),eventWeight);
+                h_diChsMass_truth_genleadingChs_PhGenInCone->Fill((chs2_truth+chs1_truth).M(),shf.nGenParsInCone(event, genChs1, 0, 22, 0.4, true),eventWeight);
+
+                std::vector<int> notrkID;
+                notrkID.push_back(11);notrkID.push_back(13);
+                float tmp_dr_max = 0.6;
+                int emtrks_chs1_truth = shf.NoTrksInCone(event, chs1_truth,notrkID,tmp_dr_max,false);
+                int emtrks_chs2_truth = shf.NoTrksInCone(event, chs2_truth,notrkID,tmp_dr_max,false);
+                int emtrks_chs1 = shf.NoTrksInCone(event,event.chsPairVec.first,notrkID,tmp_dr_max,false);
+                int emtrks_chs2 = shf.NoTrksInCone(event,event.chsPairVec.second,notrkID,tmp_dr_max,false);
+                if ((std::abs(event.packedCandsPdgId[MatchedChs1Index])==211) && (std::abs(event.packedCandsPdgId[MatchedChs2Index])==211)) {
+                    h_leadingChs_NoTrksInCone_goodID_truth->Fill(emtrks_chs1_truth,eventWeight);
+                    h_subleadingChs_NoTrksInCone_goodID_truth->Fill(emtrks_chs2_truth,eventWeight);
+                    h_chs1_NoTrksInCone_goodID_truth->Fill(emtrks_chs1,eventWeight);
+                    h_chs2_NoTrksInCone_goodID_truth->Fill(emtrks_chs2,eventWeight);
+                    h_chs1_NoTrksInCone_chs2_NoTrksInCone_goodID_truth->Fill(emtrks_chs1,emtrks_chs2,eventWeight);
+
+                }
+                else {
+                    int tmp1 = shf.NoTrksInCone(event,event.chsPairVec.first,notrkID,tmp_dr_max,true);
+                    int tmp2 = shf.NoTrksInCone(event,event.chsPairVec.second,notrkID,tmp_dr_max,true);
+                
+                    h_leadingChs_NoTrksInCone_badID_truth->Fill(emtrks_chs1_truth,eventWeight);
+                    h_subleadingChs_NoTrksInCone_badID_truth->Fill(emtrks_chs2_truth,eventWeight);
+                    h_chs1_NoTrksInCone_badID_truth->Fill(emtrks_chs1,eventWeight);
+                    h_chs2_NoTrksInCone_badID_truth->Fill(emtrks_chs2,eventWeight);
+                    h_chs1_NoTrksInCone_chs2_NoTrksInCone_badID_truth->Fill(emtrks_chs1,emtrks_chs2,eventWeight);
+                }
+                // h_diChsMass_truth_genleadingChs_PhTrkInCone->Fill((chs2_truth+chs1_truth).M(),shf.nTrksInCone(event, genChs1, 0, 22, 0.4, true, true),eventWeight);
+                // h_diChsMass_truth_gensubleadingChs_PhTrkInCone->Fill((chs2_truth+chs1_truth).M(),shf.nTrksInCone(event, genChs2, 0, 22, 0.4, true, true),eventWeight);
+                // h_diChsMass_truth_genleadingChs_ChsTrkInCone->Fill((chs2_truth+chs1_truth).M(),shf.nTrksInCone(event, genChs1, 1, 211, 0.4, true, true),eventWeight);
+                // h_diChsMass_truth_gensubleadingChs_ChsTrkInCone->Fill((chs2_truth+chs1_truth).M(),shf.nTrksInCone(event, genChs2, 1, 211, 0.4, true,true),eventWeight);
+                
+                if ((chs2_truth+chs1_truth).M()<=1.5) {
+                  h_leadingChsPt_truth_genleadingChsPt_AtTail->Fill(chs1_truth.Pt(), genChs1.Pt(),eventWeight); //Note: chs1_truth corresponds to trk matched to leading gen chs
+                  h_leadingChsPtRes_genleadingChsPt_AtTail->Fill(std::abs(genChs1.Pt() - chs1_truth.Pt())/genChs1.Pt(), genChs1.Pt(),eventWeight);
+                  h_subLeadingChsPt_truth_gensubLeadingChsPt_AtTail->Fill(chs2_truth.Pt(), genChs2.Pt(),eventWeight);
+                  h_subLeadingChsPtRes_gensubLeadingChsPt_AtTail->Fill(std::abs(genChs2.Pt() - chs2_truth.Pt())/genChs2.Pt(), genChs2.Pt(),eventWeight);
+                  
+                //   h_genleadingChs_TrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs1, 1, 211, 0.4, true, true),eventWeight);
+                //   h_gensubLeadingChs_TrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs2, 1, 211, 0.4, true, true),eventWeight);
+                  
+                //   h_genleadingChs_TrksInCone_AtTail_Tight->Fill(shf.nTrksInCone(event, genChs1,1,211, 0.4, false),eventWeight);
+                //   h_gensubLeadingChs_TrksInCone_AtTail_Tight->Fill(shf.nTrksInCone(event, genChs2, 1,211, 0.4, false),eventWeight);
+                  
+                //   h_genleadingChs_PhTrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs1,0, 22, 0.4, true, true),eventWeight);
+                //   h_gensubLeadingChs_PhTrksInCone_AtTail->Fill(shf.nTrksInCone(event, genChs2, 0, 22, 0.4, true, true),eventWeight);
+                  
+                  h_genleadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, genChs1,0, 22, 0.4,true),eventWeight);
+                  h_gensubLeadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, genChs2, 0, 22, 0.4,true),eventWeight);
+                  
+                  h_leadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, chs1_truth, 0, 22, 0.4,true),eventWeight);
+                  h_subLeadingChs_PhGenInCone_AtTail->Fill(shf.nGenParsInCone(event, chs2_truth, 0, 22, 0.4,true),eventWeight);
+    
+                  
+                  p_HadronicDecayFractions_AtTail->Fill(1.0, bool (genPionIndex.size() >= 2) );
+                  p_HadronicDecayFractions_AtTail->Fill(2.0, bool (genKaonIndex.size() >= 2 ) );
+                  p_HadronicDecayFractions_AtTail->Fill(3.0, bool (genKshortIndex.size() >= 2) );
+                  p_HadronicDecayFractions_AtTail->Fill(4.0, bool (genChargedKaonIndex.size() >= 2) );
+                }
+                else {
+                  h_leadingChsPt_truth_genleadingChsPt_AtPeaks->Fill(chs1_truth.Pt(), genChs1.Pt(),eventWeight); //Note: chs1_truth corresponds to trk matched to leading gen chs
+                  h_subLeadingChsPt_truth_gensubLeadingChsPt_AtPeaks->Fill(chs2_truth.Pt(), genChs2.Pt(),eventWeight);
+                //   h_genleadingChs_TrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs1,1, 211, 0.4, true, true),eventWeight);
+                //   h_gensubLeadingChs_TrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs2, 1, 211, 0.4, true, true),eventWeight);
+                  
+                //   h_genleadingChs_TrksInCone_AtPeaks_Tight->Fill(shf.nTrksInCone(event, genChs1, 1, 211, 0.4, true,true),eventWeight);
+                //   h_gensubLeadingChs_TrksInCone_AtPeaks_Tight->Fill(shf.nTrksInCone(event, genChs2, 1, 211, 0.4, true,true),eventWeight);
+                  
+                  
+                //   h_genleadingChs_PhTrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs1, 0, 22, 0.4, true, true),eventWeight);
+                //   h_gensubLeadingChs_PhTrksInCone_AtPeaks->Fill(shf.nTrksInCone(event, genChs2, 0, 22, 0.4, true, true),eventWeight);
+                  h_genleadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, genChs1, 0, 22, 0.4, true),eventWeight);
+                  h_gensubLeadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, genChs2, 0, 22, 0.4, true),eventWeight);
+                  
+                  h_leadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, chs1_truth, 0, 22, 0.4, true),eventWeight);
+                  h_subLeadingChs_PhGenInCone_AtPeaks->Fill(shf.nGenParsInCone(event, chs2_truth, 0, 22, 0.4, true),eventWeight);
+                }
+              }
+            }
             
             //if ((mu1<0)||(mu2<0)) {
               //cout<<"reaches this"<<endl;
@@ -1915,6 +2349,36 @@ int main(int argc, char* argv[]) {
     h_recoDimuonEta->Write();
     h_recoLeadingMuonPt->Write();
     h_recoSubleadingMuonPt->Write();
+    h_recoDimuonMass_leadingMuonIso->Write();
+    h_recoDimuonMass_subleadingMuonIso->Write();
+    h_recoDimuonMass_diMuonPFIso->Write();
+    h_leadingMuonIso->Write();
+    h_leadingMuonSumPtCh->Write();
+    h_leadingMuonSumPtNh->Write();
+    h_leadingMuonSumPtPh->Write();
+    h_leadingMuonSumPtPu->Write();
+    h_subleadingMuonIso->Write();
+    h_subleadingMuonSumPtCh->Write();
+    h_subleadingMuonSumPtNh->Write();
+    h_subleadingMuonSumPtPh->Write();
+    h_subleadingMuonSumPtPu->Write();
+    h_diMuonPFIso->Write();
+    h_diMuonSumPtCh->Write();
+    h_diMuonSumPtNh->Write();
+    h_diMuonSumPtPh->Write();
+    h_diMuonSumPtPU->Write();
+    h_recoDimuonMass_diMuonSumPtCh->Write();
+    h_recoDimuonMass_diMuonSumPtNh->Write();
+    h_recoDimuonMass_diMuonSumPtPh->Write();
+    h_recoDimuonMass_diMuonSumPtPU->Write();
+    h_genleadingMuonGenIso->Write();
+    h_genleadingMuonGenSumPtCh->Write();
+    h_genleadingMuonGenSumPtNh->Write();
+    h_genleadingMuonGenSumPtPh->Write();
+    h_gensubleadingMuonGenIso->Write();
+    h_gensubleadingMuonGenSumPtCh->Write();
+    h_gensubleadingMuonGenSumPtNh->Write();
+    h_gensubleadingMuonGenSumPtPh->Write();
 
     p_numPromptMuons->Write();
     p_recoSelectedMuonMatching->Write();
@@ -1984,52 +2448,71 @@ int main(int argc, char* argv[]) {
     h_subLeadingChsEta_truth->Write();
     h_leadingChsIso_truth->Write();
     h_subleadingChsIso_truth->Write();
+    h_leadingChsSumPtCh_truth->Write();
+    h_leadingChsSumPtNh_truth->Write();
+    h_leadingChsSumPtPh_truth->Write();
+    h_leadingChsSumPtPu_truth->Write();
+    h_subleadingChsSumPtCh_truth->Write();
+    h_subleadingChsSumPtNh_truth->Write();
+    h_subleadingChsSumPtPh_truth->Write();
+    h_subleadingChsSumPtPu_truth->Write();
+    h_diChsPFIso_truth->Write();
     h_diChsMass_truth_leadingChsIso_truth->Write();
     h_diChsMass_truth_subleadingChsIso_truth->Write();
+    h_diChsMass_truth_leadingChsPtRes->Write();
+    h_diChsMass_truth_subleadingChsPtRes->Write();
     h_ChsdelR_truth->Write();
     h_diChsMass_truth->Write();
+    h_diChsPt_truth->Write();
     h_diChsMass_truth_dR->Write();
     h_diChsMass_truth_leadingChsPt_truth->Write();
     h_diChsMass_truth_subLeadingChsPt_truth->Write();
-    h_leadingChsPtDiff_leadingChsIso_truth->Write();
-    h_subleadingChsPtDiff_subleadingChsIso_truth->Write();
+    h_leadingChsPtRes_leadingChsIso_truth->Write();
+    h_subleadingChsPtRes_subleadingChsIso_truth->Write();
+    h_diChsMass_truth_diChsPFIso_truth->Write();
+    h_diChsSumPtCh_truth->Write();
+    h_diChsSumPtNh_truth->Write();
+    h_diChsSumPtPh_truth->Write();
+    h_diChsSumPtPU_truth->Write();
+
+    h_leadingChsTkChi2Ndof_truth->Write();
+    h_subleadingChsTkChi2Ndof_truth->Write();
+    h_leadingChsPurity_truth->Write();
+    h_subleadingChsPurity_truth->Write();
+
+    h_genleadingChsGenIso->Write();
+    h_genleadingChsGenSumPtCh->Write();
+    h_genleadingChsGenSumPtNh->Write();
+    h_genleadingChsGenSumPtPh->Write();
+    h_gensubleadingChsGenIso->Write();
+    h_gensubleadingChsGenSumPtCh->Write();
+    h_gensubleadingChsGenSumPtNh->Write();
+    h_gensubleadingChsGenSumPtPh->Write();
+
+    h_diChsMass_truth_diChsSumPtCh_truth->Write();
+    h_diChsMass_truth_diChsSumPtNh_truth->Write();
+    h_diChsMass_truth_diChsSumPtPh_truth->Write();
+    h_diChsMass_truth_diChsSumPtPU_truth->Write();
     
     h_diChsMass_truth_genleadingChs_PhGenInCone->Write();
     h_diChsMass_truth_gensubleadingChs_PhGenInCone->Write();
-    
-    h_leadingChsPt_truth_genleadingChsPt_AtTail->Write();
-    //h_leadingChsPtDiff_genleadingChsPt_AtTail->Write();
-    h_subLeadingChsPt_truth_gensubLeadingChsPt_AtTail->Write();
-    //h_subLeadingChsPtDiff_gensubLeadingChsPt_AtTail->Write();
-    h_leadingChsPt_truth_genleadingChsPt_AtPeaks->Write();
-    h_subLeadingChsPt_truth_gensubLeadingChsPt_AtPeaks->Write();
-    h_genleadingChs_TrksInCone_AtPeaks->Write();
-    h_genleadingChs_TrksInCone_AtTail->Write();
-    h_gensubLeadingChs_TrksInCone_AtPeaks->Write();
-    h_gensubLeadingChs_TrksInCone_AtTail->Write();
-    //h_genleadingChs_TrksInCone_AtPeaks_Tight->Write();
-    //h_genleadingChs_TrksInCone_AtTail_Tight->Write();
-    //h_gensubLeadingChs_TrksInCone_AtPeaks_Tight->Write();
-    //h_gensubLeadingChs_TrksInCone_AtTail_Tight->Write();
-    h_genleadingChs_PhTrksInCone_AtTail->Write();
-    h_gensubLeadingChs_PhTrksInCone_AtTail->Write();
-    h_genleadingChs_PhGenInCone_AtTail->Write();
-    h_gensubLeadingChs_PhGenInCone_AtTail->Write();
-    h_genleadingChs_PhTrksInCone_AtPeaks->Write();
-    h_gensubLeadingChs_PhTrksInCone_AtPeaks->Write();
-    h_genleadingChs_PhGenInCone_AtPeaks->Write();
-    h_gensubLeadingChs_PhGenInCone_AtPeaks->Write();
-    h_leadingChs_PhGenInCone_AtTail->Write();
-    h_subLeadingChs_PhGenInCone_AtTail->Write();
-    h_leadingChs_PhGenInCone_AtPeaks->Write();
-    h_subLeadingChs_PhGenInCone_AtPeaks->Write();
-    p_HadronicDecayFractions_AtTail->Write();
-    Cutflow->Write();
-    h_leadingChsPVAscQuality_truth->Write();
-    h_subleadingChsPVAscQuality_truth->Write();
-    h_leadingChsDz_truth->Write();
-    h_subleadingChsDz_truth->Write();
-    
+    h_diChsMass_truth_genleadingChs_PhTrkInCone->Write();
+    h_diChsMass_truth_gensubleadingChs_PhTrkInCone->Write();
+    h_diChsMass_truth_genleadingChs_ChsTrkInCone->Write();
+    h_diChsMass_truth_gensubleadingChs_ChsTrkInCone->Write();
+
+    h_leadingChsID_truth->Scale(1./nevts_passsel);
+    h_subleadingChsID_truth->Scale(1./nevts_passsel);
+    h_leadingChsID_truth->Write();
+    h_subleadingChsID_truth->Write();
+
+    h_leadingChsID_dR_failed->Write();
+    h_leadingChsID_charged_dR_failed->Write();
+    h_leadingChsID_failed->Write();
+    h_subleadingChsID_dR_failed->Write();
+    h_subleadingChsID_charged_dR_failed->Write();
+    h_subleadingChsID_failed->Write();
+
     h_genleadingChsPt_failed->Write();
     h_gensubLeadingChsPt_failed->Write();
     h_genleadingChsEta_failed->Write();
@@ -2037,6 +2520,75 @@ int main(int argc, char* argv[]) {
     h_genChsdelR_failed->Write();
     h_genChsdelR_SamePFCand->Write();
     h_gendiChsMass_failed->Write();
+    h_diChsMass_failed->Write();
+    h_diChsPt_failed->Write();
+    h_leadingChsPt_failed->Write();
+    h_subleadingChsPt_failed->Write();
+    h_leadingChsPt_subleadingChsPt_failed->Write();
+    h_leadingChsIso_failed->Write();
+    h_leadingChsSumPtCh_failed->Write();
+    h_leadingChsSumPtNh_failed->Write();
+    h_leadingChsSumPtPh_failed->Write();
+    h_leadingChsSumPtPu_failed->Write();
+    h_subleadingChsIso_failed->Write();
+    h_subleadingChsSumPtCh_failed->Write();
+    h_subleadingChsSumPtNh_failed->Write();
+    h_subleadingChsSumPtPh_failed->Write();
+    h_subleadingChsSumPtPu_failed->Write();
+    h_leadingChsTkChi2Ndof_failed->Write();
+    h_subleadingChsTkChi2Ndof_failed->Write();
+    h_leadingChsPurity_failed->Write();
+    h_subleadingChsPurity_failed->Write();
+    // p_leadingChsID_truth->Write();
+    // p_subleadingChsID_truth->Write();
+    h_leadingChs_NoTrksInCone_goodID_truth->Write();
+    h_leadingChs_NoTrksInCone_badID_truth->Write();  
+    h_subleadingChs_NoTrksInCone_goodID_truth->Write();   
+    h_subleadingChs_NoTrksInCone_badID_truth->Write();   
+
+    
+    // h_leadingChsPt_truth_genleadingChsPt_AtTail->Write();
+    // //h_leadingChsPtRes_genleadingChsPt_AtTail->Write();
+    // h_subLeadingChsPt_truth_gensubLeadingChsPt_AtTail->Write();
+    // //h_subLeadingChsPtRes_gensubLeadingChsPt_AtTail->Write();
+    // h_leadingChsPt_truth_genleadingChsPt_AtPeaks->Write();
+    // h_subLeadingChsPt_truth_gensubLeadingChsPt_AtPeaks->Write();
+    // h_genleadingChs_TrksInCone_AtPeaks->Write();
+    // h_genleadingChs_TrksInCone_AtTail->Write();
+    // h_gensubLeadingChs_TrksInCone_AtPeaks->Write();
+    // h_gensubLeadingChs_TrksInCone_AtTail->Write();
+    // //h_genleadingChs_TrksInCone_AtPeaks_Tight->Write();
+    // //h_genleadingChs_TrksInCone_AtTail_Tight->Write();
+    // //h_gensubLeadingChs_TrksInCone_AtPeaks_Tight->Write();
+    // //h_gensubLeadingChs_TrksInCone_AtTail_Tight->Write();
+    // h_genleadingChs_PhTrksInCone_AtTail->Write();
+    // h_gensubLeadingChs_PhTrksInCone_AtTail->Write();
+    // h_genleadingChs_PhGenInCone_AtTail->Write();
+    // h_gensubLeadingChs_PhGenInCone_AtTail->Write();
+    // h_genleadingChs_PhTrksInCone_AtPeaks->Write();
+    // h_gensubLeadingChs_PhTrksInCone_AtPeaks->Write();
+    // h_genleadingChs_PhGenInCone_AtPeaks->Write();
+    // h_gensubLeadingChs_PhGenInCone_AtPeaks->Write();
+    // h_leadingChs_PhGenInCone_AtTail->Write();
+    // h_subLeadingChs_PhGenInCone_AtTail->Write();
+    // h_leadingChs_PhGenInCone_AtPeaks->Write();
+    // h_subLeadingChs_PhGenInCone_AtPeaks->Write();
+    // p_HadronicDecayFractions_AtTail->Write();
+    Cutflow->Write();
+    Cutflow_afterGen->Scale(1./Cutflow_afterGen->GetBinContent(1));
+    Cutflow_afterGen->Write();
+    h_leadingChsPVAscQuality_truth->Write();
+    h_subleadingChsPVAscQuality_truth->Write();
+    h_leadingChsDz_truth->Write();
+    h_subleadingChsDz_truth->Write();
+    
+
+    h_chs1_NoTrksInCone_goodID_truth->Write();
+    h_chs2_NoTrksInCone_goodID_truth->Write();
+    h_chs1_NoTrksInCone_badID_truth->Write();
+    h_chs2_NoTrksInCone_badID_truth->Write();
+    h_chs1_NoTrksInCone_chs2_NoTrksInCone_goodID_truth->Write();
+    h_chs1_NoTrksInCone_chs2_NoTrksInCone_badID_truth->Write();
 
     h_chsPt1->Write();
     h_chsPt2->Write();

@@ -1,7 +1,7 @@
 name: "ZZ_2l2nu"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VV/ZZ_2l2nu/"
-cross_section: 0.5644
+cross_section: 0.9738
 mc: true
 histogram: "VV"
 colour: "#a65628"

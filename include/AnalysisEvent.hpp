@@ -545,9 +545,9 @@ class AnalysisEvent
     Float_t packedCandsPy[NPACKEDCANDSMAX];
     Float_t packedCandsPz[NPACKEDCANDSMAX];
     Float_t packedCandsE[NPACKEDCANDSMAX];
-		//Float_t packedCandsEta[NPACKEDCANDSMAX];
+    Float_t packedCandsEta[NPACKEDCANDSMAX];
 //    Float_t packedCandsTheta[NPACKEDCANDSMAX];
-//    Float_t packedCandsPhi[NPACKEDCANDSMAX];
+    Float_t packedCandsPhi[NPACKEDCANDSMAX];
     Int_t packedCandsCharge[NPACKEDCANDSMAX];
     Int_t packedCandsPdgId[NPACKEDCANDSMAX];
     Float_t packedCandsTime[NPACKEDCANDSMAX];
@@ -1472,9 +1472,9 @@ class AnalysisEvent
     TBranch* b_packedCandsPy; //!
     TBranch* b_packedCandsPz; //!
     TBranch* b_packedCandsE; //!
-		//TBranch* b_packedCandsEta; //!
+    TBranch* b_packedCandsEta; //!
 //    TBranch* b_packedCandsTheta; //!
-//    TBranch* b_packedCandsPhi; //!
+    TBranch* b_packedCandsPhi; //!
     TBranch* b_packedCandsCharge; //!
     TBranch* b_packedCandsPdgId; //!
     TBranch* b_packedCandsTime; //!
@@ -1888,6 +1888,10 @@ class AnalysisEvent
     std::pair<TLorentzVector, TLorentzVector> zPairLeptons;
     std::pair<TLorentzVector, TLorentzVector> zPairLeptonsRefitted;
     std::pair<float, float> zPairRelIso;
+    std::pair<float, float> zPairChIso;
+    std::pair<float, float> zPairNhIso;
+    std::pair<float, float> zPairPhIso;
+    std::pair<float, float> zPairPuIso;
     std::pair<float, float> zPairNewRelIso;
     std::pair<float, float> zPairNewTrkIso;
     std::pair<float, float> zPairRelIsoDbeta;
@@ -1904,8 +1908,9 @@ class AnalysisEvent
     std::pair<TLorentzVector, TLorentzVector> chsPairTrkVec;
     std::pair<TLorentzVector, TLorentzVector> chsPairTrkVecRefitted;
     std::pair<float, float> chsPairRelIso;
-    std::pair<float, float> chsPairChHadIso;
-    std::pair<float, float> chsPairNtIso;
+    std::pair<float, float> chsPairChIso;
+    std::pair<float, float> chsPairNhIso;
+    std::pair<float, float> chsPairPhIso;
     std::pair<float, float> chsPairPuIso;
     std::pair<float, float> chsPairTrkIso;
     std::pair<float, float> chsPairRelIsoDbeta;
@@ -2520,9 +2525,9 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
    fChain->SetBranchAddress("packedCandsPy", packedCandsPy, &b_packedCandsPy);
    fChain->SetBranchAddress("packedCandsPz", packedCandsPz, &b_packedCandsPz);
    fChain->SetBranchAddress("packedCandsE", packedCandsE, &b_packedCandsE);
-	 //fChain->SetBranchAddress("packedCandsEta", packedCandsEta, &b_packedCandsEta);
-//   fChain->SetBranchAddress("packedCandsTheta", packedCandsTheta, &b_packedCandsTheta);
-//   fChain->SetBranchAddress("packedCandsPhi", packedCandsPhi, &b_packedCandsPhi);
+//    fChain->SetBranchAddress("packedCandsEta", packedCandsEta, &b_packedCandsEta);
+//    fChain->SetBranchAddress("packedCandsTheta", packedCandsTheta, &b_packedCandsTheta);
+//    fChain->SetBranchAddress("packedCandsPhi", packedCandsPhi, &b_packedCandsPhi);
    fChain->SetBranchAddress("packedCandsCharge", packedCandsCharge, &b_packedCandsCharge);
    fChain->SetBranchAddress("packedCandsPdgId", packedCandsPdgId, &b_packedCandsPdgId);
    fChain->SetBranchAddress("packedCandsTime", packedCandsTime, &b_packedCandsTime);
@@ -2956,24 +2961,33 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
   selectedJetTracksHt = -1.0;
   bTagIndex = {};
 
-  std::pair<TLorentzVector, TLorentzVector> zPairLeptons = {};
-  std::pair<TLorentzVector, TLorentzVector> zPairLeptonsRefitted = {};
-  std::pair<float, float> zPairRelIso = {};
-  std::pair<float, float> zPairNewRelIso = {};
-  std::pair<float, float> zPairNewTrkIso = {};
-  std::pair<int, int> zPairIndex = {};
+  zPairLeptons = {};
+  zPairLeptonsRefitted = {};
+  zPairRelIso = {};
+  zPairChIso = {};
+  zPairNhIso = {};
+  zPairPhIso = {};
+  zPairPuIso = {};
+  zPairNewTrkIso = {};
+  zPairRelIsoDbeta = {};
+  zPairNewRelIsoDbeta = {};
+  zPairNewTrkIsoDbeta = {};
+  zPairIndex = {};
   mumuTrkIndex = -1;
   zRelIso = -1.;
   zTrkIso = -1.;
 
-  std::pair<TLorentzVector, TLorentzVector> chsPairVec = {};
-  std::pair<TLorentzVector, TLorentzVector> chsPairVecRefitted = {};
-  std::pair<float, float> chsPairRelIso = {};
-  std::pair<float, float> chsPairTrkIso = {};
-  std::pair<float, float> chsPairChHadIso = {};
-  std::pair<float, float> chsPairNtIso = {};
-  std::pair<float, float> chsPairPuIso = {};
-  std::pair<int, int> chsPairIndex = {};
+  chsPairRelIso = {};
+  chsPairChIso = {};
+  chsPairNhIso = {};
+  chsPairPhIso = {};
+  chsPairPuIso = {};
+  chsPairTrkIso = {};
+  chsPairRelIsoDbeta = {};
+  chsPairTrkIsoDbeta = {};
+  chsPairVec = {};
+//   chsPairVecRefitted = {};
+  chsPairIndex = {};
   chsPairTrkIndex = -1;
   chsRelIso = -1;
   chsTrkIso = -1;

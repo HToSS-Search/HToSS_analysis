@@ -83,6 +83,7 @@ int Dataset::fillChain(TChain* chain,int flow, int fhigh) {
 float Dataset::getDatasetWeight(double lumi) {
     if (!isMC_)
         return 1.;
-    return (lumi * crossSection_) / (totalEvents_ + 1.0e-06);
+    // return (lumi * crossSection_) / (totalEvents_ + 1.0e-06);
+    return (lumi * crossSection_); // for now, we only include lumi*cross-section here; weight/Nevts added in main code
 }
 

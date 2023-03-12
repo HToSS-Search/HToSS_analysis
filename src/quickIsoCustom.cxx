@@ -53,6 +53,9 @@ const float invZMassCut_ {10.0}, chsMass_{0.13957018};
 double maxDileptonDeltaR_ {0.4}, maxChsDeltaR_ {0.4}; // previously 0.2 for dilepton (unsure why)
 double higgsTolerence_ {1.};
 
+// debug flag
+bool verbose = false;
+
 int main(int argc, char* argv[]) {
     auto timerStart = std::chrono::high_resolution_clock::now(); 
 
@@ -62,6 +65,7 @@ int main(int argc, char* argv[]) {
     double usePreLumi;
     bool usePostLepTree {false};
 		int flow, fhigh;
+    std::string fweights = "";
    
     std::string outFileString{"plots/distributions/output.root"};
     bool is2016_;
@@ -92,6 +96,9 @@ int main(int argc, char* argv[]) {
     hists_1d_["Cutflow"]->GetXaxis()->SetBinLabel(5, "dimuon candidate");
     hists_1d_["Cutflow"]->GetXaxis()->SetBinLabel(6, "chs Trk selection");
     hists_1d_["Cutflow"]->GetXaxis()->SetBinLabel(7, "dichs candidate");
+
+    
+
 		const char *PDGs[8] = {"ele","mu","photon","charged hadron from PV","charged hadron from PU","neutral hadron","HF hadron","HF EM"};
 		//std::map<char,std::map<int,int>> PDG_map = {{"ele",{11,1}},{"mu",{13,2}},{"photon",{22,3}},{"charged hadron from PV",{211,4}},{"charged hadron from PU",{211,5}},{"neutral hadron",{130,6}},{"HF hadron",{1,7}},{"HF EM",{2,8}}};
 	  std::map<int,int> PDG_map = {{11,1},{13,2},{22,3},{130,6},{1,7},{2,8}};//all maps except 211	
@@ -120,7 +127,10 @@ int main(int argc, char* argv[]) {
         "2016", po::bool_switch(&is2016_), "Use 2016 conditions (SFs, et al.).")(
         "2018", po::bool_switch(&is2018_), "Use 2018 conditions (SFs, et al.).")(
 				"flow", po::value<int>(&flow)->default_value(0), "Starting file no. - ")(
-				"fhigh", po::value<int>(&fhigh)->default_value(10000), "Ending file no. -");
+				"fhigh", po::value<int>(&fhigh)->default_value(10000), "Ending file no. -")(
+        "weight,w",
+        po::value<std::string>(&fweights)->default_value(fweights),
+        "The weights file to be used. Put "" for none");
     po::variables_map vm;
 
     try {
@@ -202,6 +212,7 @@ int main(int argc, char* argv[]) {
       }
 
       // extract the dataset weight. MC = (lumi*crossSection)/(totalEvents), data = 1.0
+      // extract the dataset weight. MC = (lumi*crossSection), data = 1.0
       float datasetWeight{dataset->getDatasetWeight(totalLumi)};
       std::cout << datasetChain->GetEntries() << " number of items in tree. Dataset weight: " << datasetWeight << std::endl;
       if (datasetChain->GetEntries() == 0) {
@@ -216,17 +227,35 @@ int main(int argc, char* argv[]) {
      	TMVA::gConfig().SetDrawProgressBar(true);	 
       TMVA::Timer* lEventTimer{ new TMVA::Timer{boost::numeric_cast<int>(numberOfEvents), "Running over dataset ..."}}; 
       lEventTimer->DrawProgressBar(0, "");
-      
       totalEvents += numberOfEvents;
+      TFile* f_wts;
+      float sumWeights = 0.;
+      if ((dataset->isMC())&&(fweights!="")) {
+        f_wts = new TFile(fweights.c_str(),"READ");
+        TH1F* h_weights = (TH1F*)f_wts->Get("weightHisto");
+        sumWeights += h_weights->GetBinContent(1) - h_weights->GetBinContent(2);
+      }
+      std::cout<<"Sum of weights (Nevts):"<<sumWeights<<std::endl;
+      if (sumWeights<=0) std::cout<<"Something wrong with the sum of weights! Check pls."<<std::endl; //temporary measure until new ntuples
+
       for (Long64_t i{0}; i < numberOfEvents; i++) {
+
+				verbose = false;
 	
 	      lEventTimer->DrawProgressBar(i,"");
 	     	if (i%1000==0) std::cout<<"Events processed - "<<i<<std::endl; 
 	      event.GetEntry(i);
-	      SharedFunctions shf{false};//true for using MCTruth
-	      
+        if (event.eventRun == 1 && event.eventLumiblock == 9 && event.eventNum == 10548) {
+          std::cout<<"Enters verbose check"<<std::endl;
+          verbose=true;
+        }
+        SharedFunctions shf{false, verbose};
+	      //else SharedFunctions shf{false, true};
 	      float eventWeight = 1.;
-	      eventWeight *= datasetWeight;
+        if (dataset->isMC()) {
+	        eventWeight *= datasetWeight; //cross-section*lumi 
+          if (sumWeights>0) eventWeight *= event.processMCWeight/sumWeights; //evtweight/nevts
+        }
 				TString dname(dataset->name());
 				bool MCSignal = dname.Contains("HToSS");
 				if ((MCSignal)&&(!shf.GenLevelCheck(event,false))) continue;
@@ -238,8 +267,10 @@ int main(int argc, char* argv[]) {
       //        if (! ( passDimuonTrigger || passSingleMuonTrigger || passL2MuonTrigger || passDimuonNoVtxTrigger ) ) continue;
 	      if ( !passSingleMuonTrigger ) continue;
         hists_1d_["Cutflow"]->Fill(2, eventWeight);
+
 	      if (!event.metFilters()) continue;
         hists_1d_["Cutflow"]->Fill(3, eventWeight);
+
 	      
        
         // Below for muons 
@@ -248,9 +279,11 @@ int main(int argc, char* argv[]) {
 	      if ( event.muonIndexLoose.size() < 2 ) continue;
         hists_1d_["Cutflow"]->Fill(4, eventWeight);
 
+
 	      if ( !shf.getDileptonCand( event, event.muonIndexLoose ) ) continue;
 	      
         hists_1d_["Cutflow"]->Fill(5, eventWeight);
+
         /*Now analyse*/
         fillMuonHists(event, "leadingMuon", event.zPairIndex.first, eventWeight);
         fillMuonHists(event, "subleadingMuon", event.zPairIndex.second, eventWeight);
@@ -268,13 +301,15 @@ int main(int argc, char* argv[]) {
 	      event.chsIndex = shf.getChargedHadronTracks(event);
 	      if ( event.chsIndex.size() < 2 ) continue;
         hists_1d_["Cutflow"]->Fill(6, eventWeight);
+
 	      //std::cout << "Enters event, found 2 hadrons!" << std::endl;
 	      if ( !shf.getDihadronCand( event, event.chsIndex ) ) {
-	        std::cout << "Eh, no dihadron found :("<<std::endl;      
+	        // std::cout << "Eh, no dihadron found :("<<std::endl;      
 	        continue; //fine for now
 	      }
+        hists_1d_["Cutflow"]->Fill(7, eventWeight);
+
 	      
-        hists_1d_["Cutflow"]->Fill(1, eventWeight);
 	      //std::cout << "Enters event, found dihadron object!" << std::endl;
 	      /*Now analyse*/
         fillChHadHists(event, "leadingChHad", event.chsPairIndex.first, eventWeight);
@@ -288,8 +323,8 @@ int main(int argc, char* argv[]) {
           hists_1d_["h_DiChHadDeltaRAtZeroIso"]->Fill(event.chsPairVec.first.DeltaR(event.chsPairVec.second), eventWeight);        
         }
        	
-				if ((event.chsPairRelIso.first > 1) || (event.chsPairRelIso.second > 1)) isotail_evts <<event.eventRun<<":"<<event.eventLumiblock<<":"<<event.eventNum<<"\n";
-				if ((event.chsPairVec.first + event.chsPairVec.second).M()<=1.2) masstail_evts <<event.eventRun<<":"<<event.eventLumiblock<<":"<<event.eventNum<<"\n";
+				if ((event.chsPairRelIso.first > 2)&&(MCSignal)) isotail_evts <<event.eventRun<<":"<<event.eventLumiblock<<":"<<event.eventNum<<"\n";
+				if (((event.chsPairVec.first + event.chsPairVec.second).M()<=1.0) && (MCSignal)) masstail_evts <<event.eventRun<<":"<<event.eventLumiblock<<":"<<event.eventNum<<"\n";
 
 
 	      //std::cout << "Enters event, processes hadrons" << std::endl;
@@ -318,6 +353,11 @@ int main(int argc, char* argv[]) {
 		hists_1d_["h_DiChHadPt"]->Write(); 
     hists_1d_["h_DiChHadMass"]->Write();
     hists_1d_["h_DiChHadDeltaRAtZeroIso"]->Write();      
+    
+    
+    float norm = hists_1d_["Cutflow"]->GetBinContent(1);
+    hists_1d_["Cutflow"]->Scale(1./norm);
+    // for(int i=1;i<=hists_1d_["Cutflow"]->GetNbinsX();i++) hists_1d_["Cutflow"]->SetBinContent(i,hists_1d_["Cutflow"]->GetBinContent(i)/norm);
 		hists_1d_["Cutflow"]->Write();
     outFile->Close();
 
@@ -327,238 +367,6 @@ int main(int argc, char* argv[]) {
 
     std::cout << "\nFinished. Took " << duration.count() << " seconds" <<std::endl;
 }
-/*
-std::vector<int> getLooseMuons(const AnalysisEvent& event) {
-    std::vector<int> muons;
-    for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-       if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i] && std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
-           if ( event.muonPF2PATPt[i] >= (muons.empty() ? looseMuonPtLeading_ : looseMuonPt_)) muons.emplace_back(i); //storing indices
-        }
-    }
-    return muons; //safe to assume pT ordered if PF PAT collection is pT ordered -> pls check
-}
-
-std::vector<int> getChargedHadronTracks(const AnalysisEvent& event) {
-    std::vector<int> chs;
-    for (Int_t k = 0; k < event.numPackedCands; k++) {
-        if (std::abs(event.packedCandsPdgId[k]) != 211) continue; //charged hadron
-        if (event.packedCandsCharge[k] == 0 ) continue;
-        if (event.packedCandsHasTrackDetails[k] != 1 ) continue; //need those tracks
-        TLorentzVector lVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
-        if (lVec.Pt() < 1.0) continue; //Pt > 1 GeV
-
-        chs.emplace_back(k);
-    }
-    return chs;
-}*/
-/*
-
-bool getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) {
-    //should iterate over muons collection indices
-    //for ( unsigned int i{0}; i < muons.size(); i++ ) {
-    //    for ( unsigned int j{i+1}; j < muons.size(); j++ ) {
-    for (int i : muons) {
-        for (int j : muons) {
-            //if (j <= i) continue; 
-            if (event.muonPF2PATPt[i] <= looseMuonPtLeading_) continue; //since pT ordered, i is highest pT
-            if (event.muonPF2PATPt[j] <= looseMuonPt_) continue;
-
-            if (event.muonPF2PATCharge[i] * event.muonPF2PATCharge[j] >= 0) continue;
-
-            TLorentzVector lepton1{event.muonPF2PATPX[i], event.muonPF2PATPY[i], event.muonPF2PATPZ[i], event.muonPF2PATE[i]};
-            TLorentzVector lepton2{event.muonPF2PATPX[j], event.muonPF2PATPY[j], event.muonPF2PATPZ[j], event.muonPF2PATE[j]};
-            double delR { lepton1.DeltaR(lepton2) };
-            if ( delR < maxDileptonDeltaR_  ) {
-                if (lepton1.Pt() < lepton2.Pt()) std::cout << "Something fishy with muons" << std::endl; 
-                event.zPairLeptons.first  = lepton1.Pt() > lepton2.Pt() ? lepton1 : lepton2;
-                event.zPairLeptons.second = lepton1.Pt() > lepton2.Pt() ? lepton2 : lepton1;
-                event.zPairIndex.first = lepton1.Pt() > lepton2.Pt() ? i : j;
-                event.zPairIndex.second  = lepton1.Pt() > lepton2.Pt() ? j : i;
-                event.zPairRelIso.first  = lepton1.Pt() > lepton2.Pt() ? event.muonPF2PATComRelIsodBeta[i] : event.muonPF2PATComRelIsodBeta[j];
-                event.zPairRelIso.second = lepton1.Pt() > lepton2.Pt() ? event.muonPF2PATComRelIsodBeta[j] : event.muonPF2PATComRelIsodBeta[i];
-
-                event.mumuTrkIndex = getMuonTrackPairIndex(event);
-                //if (event.mumuTrkIndex < 0) std::cout << "Something fishy here too" << std::endl; //some events do not have muon track pairs
-
-//                if ( (event.muonTkPairPF2PATTkVtxChi2[event.mumuTrkIndex])/(event.muonTkPairPF2PATTkVtxNdof[event.mumuTrkIndex]+1.0e-06) > 10. ) continue;
-
-                event.zPairLeptonsRefitted.first  = TLorentzVector{event.muonTkPairPF2PATTk1Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
-                event.zPairLeptonsRefitted.second = TLorentzVector{event.muonTkPairPF2PATTk2Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
-
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs) {
-    //std::cout<<"Looking for hadrons from collection of "<<chs.size()<<" hadrons"<<std::endl;
-    //std::cout<<"Last hadron at "<<chs[chs.size()-1]<<" hadrons"<<std::endl;
-    for (int i : chs) {
-		//for ( unsigned int i0{0}; i0 < chs.size(); i0++ ) {
-				//int i = chs[i0]; 
-        //ensuring that track is hadron and not muon? Removing for now
-        //if ( event.packedCandsMuonIndex[i] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue; 
-        //if ( event.packedCandsMuonIndex[i] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
-
-        for (int j : chs) {
-				//for ( unsigned int j0{i0+1}; j0 < chs.size(); j0++ ) {
-						//int j = chs[j0]; 
-            //ensuring that track is hadron and not muon? Removing for now
-            //if ( event.packedCandsMuonIndex[j] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
-            //if ( event.packedCandsMuonIndex[j] == event.muonPF2PATPackedCandIndex[event.zPairIndex.second] ) continue;
-
-            //if (j <= i) continue; 
-            if (event.packedCandsCharge[i] * event.packedCandsCharge[j] >= 0) continue; //OS charges allowed
-            //std::cout << "Jet index - "<<i<<", "<<j<< std::endl; 
-            TLorentzVector chs1 {event.packedCandsPx[i], event.packedCandsPy[i], event.packedCandsPz[i], event.packedCandsE[i]};
-            TLorentzVector chs2 {event.packedCandsPx[j], event.packedCandsPy[j], event.packedCandsPz[j], event.packedCandsE[j]};
-            //std::cout << "No problem in forming Vectors: "<<i<<", "<<j<< std::endl; 
-            double pT { (chs1+chs2).Pt() };
-            double delR { chs1.DeltaR(chs2) };
-            double higgsMass { (chs1+chs2+event.zPairLeptons.first+event.zPairLeptons.second).M() };
-            //if (chs1.Pt() < chs2.Pt()) std::cout << "Something fishy with hadrons" << std::endl; 
-            //hadrons are not pt ordered according to above
-            //if ( delR < maxChsDeltaR_ && (higgsMass - 125.) < higgsTolerence_ && pT >= 0. ) { //higgs window was applied, removing for now
-            
-            //std::cout << "dihadron candidate? Check: dR-" <<delR<<",pT-"<< pT  << std::endl;
-            if ( delR < maxChsDeltaR_ && pT >= 0. ) {
-                event.chsPairVec.first  = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
-                event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
-                event.chsPairIndex.first = chs1.Pt() > chs2.Pt() ? i : j;
-                event.chsPairIndex.second = chs1.Pt() > chs2.Pt() ? j : i;
-
-                TLorentzVector chsTrk1, chsTrk2; //PseudoTrack is the original reco::Track of candidate
-                chsTrk1.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[event.chsPairIndex.first], event.packedCandsPseudoTrkEta[event.chsPairIndex.first], event.packedCandsPseudoTrkPhi[event.chsPairIndex.first], event.packedCandsE[event.chsPairIndex.first]);
-                chsTrk2.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[event.chsPairIndex.second], event.packedCandsPseudoTrkEta[event.chsPairIndex.second], event.packedCandsPseudoTrkPhi[event.chsPairIndex.second], event.packedCandsE[event.chsPairIndex.second]);
-
-                event.chsPairTrkVec.first  = chsTrk1;
-                event.chsPairTrkVec.second = chsTrk2;
-
-                event.chsPairTrkIndex = getChsTrackPairIndex(event);
-                
-                //std::cout << "Returns from getChsTrackPairIndex(event)!" << std::endl; 
-
-//                if ( (event.chsTkPairTkVtxChi2[event.chsPairTrkIndex])/(event.chsTkPairTkVtxNdof[event.chsPairTrkIndex]+1.0e-06) > 20. ) continue;
-
-       	       	// If refit fails then reject event - all signal events	pass refit, but	QCD does not
-                if ( std::isnan(event.chsTkPairTk1Pt[event.chsPairTrkIndex])  || std::isnan(event.chsTkPairTk2Pt[event.chsPairTrkIndex]) ) {
-                  //std::cout << "Fails to find refit tracks!" << std::endl; 
-                  return false;
-                }
-                if ( std::isnan(event.chsTkPairTk1P2[event.chsPairTrkIndex])  || std::isnan(event.chsTkPairTk2P2[event.chsPairTrkIndex]) ) return false;
-                if ( std::isnan(event.chsTkPairTk1Phi[event.chsPairTrkIndex]) || std::isnan(event.chsTkPairTk2Phi[event.chsPairTrkIndex]) ) return false;
-                
-                
-                //std::cout << "Finds refit tracks!" << std::endl; 
-
-                TLorentzVector chsTrk1Refitted, chsTrk2Refitted;
-                chsTrk1Refitted.SetPtEtaPhiE(event.chsTkPairTk1Pt[event.chsPairTrkIndex], event.chsTkPairTk1Eta[event.chsPairTrkIndex], event.chsTkPairTk1Phi[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2)));
-                chsTrk2Refitted.SetPtEtaPhiE(event.chsTkPairTk2Pt[event.chsPairTrkIndex], event.chsTkPairTk2Eta[event.chsPairTrkIndex], event.chsTkPairTk2Phi[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2)));
-                event.chsPairTrkVecRefitted.first  = chsTrk1Refitted;
-                event.chsPairTrkVecRefitted.second = chsTrk2Refitted;
-
-                float neutral_iso {0.0}, neutral_iso1 {0.0}, neutral_iso2 {0.0};
-                float ch_iso {0.0}, ch_iso1 {0.0}, ch_iso2 {0.0};
-                float pu_iso {0.0}, pu_iso1 {0.0}, pu_iso2 {0.0};
-
-                float neutral_trkiso {0.0}, neutral_trkiso1 {0.0}, neutral_trkiso2 {0.0};
-                float ch_trkiso {0.0}, ch_trkiso1 {0.0}, ch_trkiso2 {0.0};
-                float pu_trkiso {0.0}, pu_trkiso1 {0.0}, pu_trkiso2 {0.0};
-
-                for (int k = 0; k < event.numPackedCands; k++) {
-                    if ( k == event.chsPairIndex.first || k == event.chsPairIndex.second ) continue;
-
-                    TLorentzVector packedCandVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
-                    TLorentzVector packedCandTrkVec;
-                    packedCandTrkVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
-
-                    if ( event.packedCandsCharge[k] == 0 ) {
-                        if ( packedCandVec.Pt() >= 0.5 ) {
-                            if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.4 )  neutral_iso1 += packedCandVec.Et();
-                            if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.4 )  neutral_iso2 += packedCandVec.Et();
-                            if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.4 ) neutral_iso += packedCandVec.Et();
-                        }
-                        if ( packedCandTrkVec.Pt() >= 0.5 ) {
-                            if ( event.chsPairTrkVec.first.DeltaR(packedCandTrkVec)  < 0.4 ) neutral_trkiso1 += packedCandTrkVec.Et();
-                            if ( event.chsPairTrkVec.second.DeltaR(packedCandTrkVec) < 0.4 ) neutral_trkiso2 += packedCandTrkVec.Et();
-                            if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandTrkVec) ) neutral_trkiso += packedCandVec.Et();
-                        }
-                    }
-                    else {
-                        if ( event.packedCandsFromPV[k] >= 2 ) {
-                            if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.4 )  ch_iso1 += packedCandVec.Pt();
-                            if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.4 )  ch_iso2 += packedCandVec.Pt();
-                            if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.4 ) ch_iso += packedCandVec.Pt();
-
-                            if ( event.chsPairTrkVec.first.DeltaR(packedCandTrkVec)   < 0.4 )  ch_trkiso1 += packedCandTrkVec.Pt();
-                            if ( event.chsPairTrkVec.second.DeltaR(packedCandTrkVec)  < 0.4 )  ch_trkiso2 += packedCandTrkVec.Pt();
-                            if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandTrkVec)  < 0.4 ) ch_trkiso += packedCandTrkVec.Pt();
-                        }
-                        else {
-                            if ( packedCandVec.Pt() >= 0.5 ) {
-                                if ( event.chsPairVec.first.DeltaR(packedCandVec)   < 0.4 )  pu_iso1 += packedCandVec.Pt();
-                                if ( event.chsPairVec.second.DeltaR(packedCandVec)  < 0.4 )  pu_iso2 += packedCandVec.Pt();
-                                if ( (event.chsPairVec.first+event.chsPairVec.second).DeltaR(packedCandVec)  < 0.4 ) pu_iso += packedCandVec.Pt();
-                            }
-                            if ( packedCandTrkVec.Pt() >= 0.5 ) {
-                                if ( event.chsPairTrkVec.first.DeltaR(packedCandTrkVec)   < 0.4 )  pu_trkiso1 += packedCandTrkVec.Pt();
-                                if ( event.chsPairTrkVec.second.DeltaR(packedCandTrkVec)  < 0.4 )  pu_trkiso2 += packedCandTrkVec.Pt();
-                                if ( (event.chsPairTrkVec.first+event.chsPairTrkVec.second).DeltaR(packedCandTrkVec)  < 0.4 ) pu_trkiso += packedCandTrkVec.Pt();
-                            }
-                        }
-                    }
-                }
-
-                const float iso1 = ch_iso1 + std::max( float(0.0), neutral_iso1 - float(0.5*pu_iso1) );
-                const float iso2 = ch_iso2 + std::max( float(0.0), neutral_iso2 - float(0.5*pu_iso2) );
-                const float iso  = ch_iso  + std::max( float(0.0), neutral_iso  - float(0.5*pu_iso)  );
-
-                const float trkiso1 = ch_trkiso1 + std::max( float(0.0), neutral_trkiso1 - float(0.5*pu_trkiso1) );
-                const float trkiso2 = ch_trkiso2 + std::max( float(0.0), neutral_trkiso2 - float(0.5*pu_trkiso2) );
-                const float trkiso  = ch_trkiso  + std::max( float(0.0), neutral_trkiso  - float(0.5*pu_trkiso)  );
-
-                event.chsPairRelIso.first = iso1/(event.chsPairVec.first.Pt() + 1.0e-06);
-                event.chsPairRelIso.second = iso2/(event.chsPairVec.second.Pt() + 1.0e-06);
-                event.chsRelIso = iso/((event.chsPairVec.first+event.chsPairVec.second).Pt() + 1.0e-06);
-
-                event.chsPairTrkIso.first = trkiso1/(event.chsPairTrkVec.first.Pt() + 1.0e-06);
-                event.chsPairTrkIso.second = trkiso2/(event.chsPairTrkVec.second.Pt() + 1.0e-06);
-                event.chsTrkIso = trkiso/((event.chsPairTrkVec.first+event.chsPairTrkVec.second).Pt() + 1.0e-06);
-                
-                event.chsPairChHadIso.first = ch_iso1;
-                event.chsPairNtIso.first = neutral_iso1;
-                event.chsPairPuIso.first = pu_iso1;
-                
-                event.chsPairChHadIso.second = ch_iso2;
-                event.chsPairNtIso.second = neutral_iso2;
-                event.chsPairPuIso.second = pu_iso2;
-                
-                //std::cout << "Returns true" << std::endl; 
-                return true;
-            }
-            else continue;
-        }
-    }
-    //std::cout << "Returns false" << std::endl; 
-    return false;
-}
-*/
-/*int getMuonTrackPairIndex(const AnalysisEvent& event) { 
-// track pairs with opp. charge and has "valid" RecoVtx (implemented via KalmanVertexFitter)
-    for (int i{0}; i < event.numMuonTrackPairsPF2PAT; i++) {
-        if (event.muonTkPairPF2PATIndex1[i] == event.zPairIndex.first && event.muonTkPairPF2PATIndex2[i] == event.zPairIndex.second) return i;
-    }
-    return -1;
-}*/
-
-/*int getChsTrackPairIndex(const AnalysisEvent& event) {
-    for (int i{0}; i < event.numChsTrackPairs; i++) {
-        if (event.chsTkPairIndex1[i] == event.chsPairIndex.first && event.chsTkPairIndex2[i] == event.chsPairIndex.second) return i;
-    } //iterating over track pairs to look for the selected pair of tracks?
-    return -1;
-}*/
 
 int nTrksInCone(TLorentzVector& particle, const AnalysisEvent& event, double dr_max) {
     int count = 0;
@@ -593,17 +401,6 @@ bool scalarGrandparent (const AnalysisEvent& event, const Int_t& k, const Int_t&
     }
 }
 */
-/*
-float deltaR(float eta1, float phi1, float eta2, float phi2){
-  float dEta = eta1-eta2;
-  float dPhi = phi1-phi2;
-  while (fabs(dPhi) > 3.14159265359){
-    dPhi += (dPhi > 0.? -2*3.14159265359:2*3.14159265359);
-  }
-  //  if(singleEventInfoDump_)  std::cout << eta1 << " " << eta2 << " phi " << phi1 << " " << phi2 << " ds: " << eta1-eta2 << " " << phi1-phi2 << " dR: " << std::sqrt((dEta*dEta)+(dPhi*dPhi)) << std::endl;
-  return std::sqrt((dEta*dEta)+(dPhi*dPhi));
-}
-*/
 void bookHists(const std::string &prefix) {
 	//Some kinematics
   hists_1d_["h_"+prefix+"Pt"]                       = new TH1F(Form("h_%sPt",prefix.c_str()), "", 5000, 0., 150.);
@@ -612,12 +409,9 @@ void bookHists(const std::string &prefix) {
 	//Histograms to study isolation
   hists_1d_["h_"+prefix+"RelIso"]                       = new TH1F(Form("h_%sRelIso",prefix.c_str()), "", 5000, 0., 10.);
   hists_1d_["h_"+prefix+"TrackIso"]                     = new TH1F(Form("h_%sTrackIso",prefix.c_str()), "", 5000, 0., 100.);
-  hists_1d_["h_"+prefix+"SumPtChHad"]                   = new TH1F(Form("h_%sSumPtChHad",prefix.c_str()),"", 5000, 0., 100.);
-  if (prefix.find("Muon") != std::string::npos) {
-    hists_1d_["h_"+prefix+"SumPtNtHad"]                   = new TH1F(Form("h_%sSumPtNtHad",prefix.c_str()),"", 5000, 0., 100.);
-    hists_1d_["h_"+prefix+"SumPtPhoton"]                  = new TH1F(Form("h_%sSumPtPhoton",prefix.c_str()),"", 5000, 0., 100.);
-  }
-  else hists_1d_["h_"+prefix+"SumPtNt"]                   = new TH1F(Form("h_%sSumPtNt",prefix.c_str()),"", 5000, 0., 100.);  
+  hists_1d_["h_"+prefix+"SumPtCh"]                   = new TH1F(Form("h_%sSumPtCh",prefix.c_str()),"", 5000, 0., 100.);    
+  hists_1d_["h_"+prefix+"SumPtNh"]                   = new TH1F(Form("h_%sSumPtNh",prefix.c_str()),"", 5000, 0., 100.);
+  hists_1d_["h_"+prefix+"SumPtPh"]                  = new TH1F(Form("h_%sSumPtPh",prefix.c_str()),"", 5000, 0., 100.);
   
   hists_1d_["h_"+prefix+"SumPtPU"]                      = new TH1F(Form("h_%sSumPtPU",prefix.c_str()),"", 5000, 0., 100.);
   //TH1F* h_DiMuonDeltaR                {new TH1F("h_DiMuonDeltaR", "", 100, 0., 1.)};
@@ -625,12 +419,9 @@ void bookHists(const std::string &prefix) {
 	hists_1d_["h_"+prefix+"ChHadFromPVdR"]                = new TH1F(Form("h_%sChHadFromPVdR",prefix.c_str()), "", 1000, 0., 5.);
 	//Investigation at Zero Iso
 	hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]            = new TH1F(Form("h_%sTrackIsoAtZeroIso",prefix.c_str()), "", 5000, 0., 100.);
-  hists_1d_["h_"+prefix+"SumPtChHadAtZeroIso"]          = new TH1F(Form("h_%sSumPtChHadAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
-  if (prefix.find("Muon") != std::string::npos) {
-    hists_1d_["h_"+prefix+"SumPtNtHadAtZeroIso"]          = new TH1F(Form("h_%sSumPtNtHadAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
-    hists_1d_["h_"+prefix+"SumPtPhotonAtZeroIso"]         = new TH1F(Form("h_%sSumPtPhotonAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
-  }
-  else hists_1d_["h_"+prefix+"SumPtNtAtZeroIso"]                   = new TH1F(Form("h_%sSumPtNtAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);  
+  hists_1d_["h_"+prefix+"SumPtChAtZeroIso"]          = new TH1F(Form("h_%sSumPtChAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
+  hists_1d_["h_"+prefix+"SumPtNhAtZeroIso"]          = new TH1F(Form("h_%sSumPtNhAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
+  hists_1d_["h_"+prefix+"SumPtPhAtZeroIso"]         = new TH1F(Form("h_%sSumPtPhAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
   hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]             = new TH1F(Form("h_%sSumPtPUAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
   hists_1d_["h_"+prefix+"PtInConeAtZeroIso"]            = new TH1F(Form("h_%sPtInConeAtZeroIso",prefix.c_str()), "", 500, 0., 150.);
   hists_1d_["h_"+prefix+"EtaInConeAtZeroIso"]           = new TH1F(Form("h_%sEtaInConeAtZeroIso",prefix.c_str()), "", 100, -5., 5.);
@@ -650,14 +441,15 @@ void bookHists(const std::string &prefix) {
 }
 
 void fillMuonHists(const AnalysisEvent& event, const std::string &prefix, const int idx, const float eventweight){
-	hists_1d_["h_"+prefix+"RelIso"]->Fill(event.muonPF2PATComRelIsodBeta[idx],eventweight);        
-	hists_1d_["h_"+prefix+"TrackIso"]->Fill(event.muonPF2PATTrackIso[idx],eventweight);
-  hists_1d_["h_"+prefix+"SumPtChHad"]->Fill(event.muonPF2PATChHadIso[idx],eventweight);                              
-  hists_1d_["h_"+prefix+"SumPtNtHad"]->Fill(event.muonPF2PATNtHadIso[idx],eventweight);   
-  hists_1d_["h_"+prefix+"SumPtPhoton"]->Fill(event.muonPF2PATGammaIso[idx],eventweight);   
-  hists_1d_["h_"+prefix+"SumPtPU"]->Fill(event.muonPF2PATPuIso[idx],eventweight); 
-  
+
   TLorentzVector particle{event.muonPF2PATPX[idx], event.muonPF2PATPY[idx], event.muonPF2PATPZ[idx], event.muonPF2PATE[idx]};
+	hists_1d_["h_"+prefix+"RelIso"]->Fill(event.muonPF2PATComRelIsodBeta[idx],eventweight);        
+	hists_1d_["h_"+prefix+"TrackIso"]->Fill(event.muonPF2PATTrackIso[idx] ,eventweight);
+  hists_1d_["h_"+prefix+"SumPtCh"]->Fill(event.muonPF2PATChHadIso[idx] ,eventweight);                              
+  hists_1d_["h_"+prefix+"SumPtNh"]->Fill(event.muonPF2PATNtHadIso[idx] ,eventweight);   
+  hists_1d_["h_"+prefix+"SumPtPh"]->Fill(event.muonPF2PATGammaIso[idx] ,eventweight);   
+  hists_1d_["h_"+prefix+"SumPtPU"]->Fill(event.muonPF2PATPuIso[idx] ,eventweight); 
+  
 	hists_1d_["h_"+prefix+"Pt"]->Fill(particle.Pt(),eventweight); 
 	hists_1d_["h_"+prefix+"Eta"]->Fill(particle.Eta(),eventweight);
 	hists_1d_["h_"+prefix+"Phi"]->Fill(particle.Phi(),eventweight);
@@ -696,10 +488,10 @@ void fillMuonHists(const AnalysisEvent& event, const std::string &prefix, const 
 
 	if (event.muonPF2PATComRelIsodBeta[idx] == 0.) {
     hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]->Fill(event.muonPF2PATTrackIso[idx],eventweight);
-    hists_1d_["h_"+prefix+"SumPtChHadAtZeroIso"]->Fill(event.muonPF2PATChHadIso[idx],eventweight);
-    hists_1d_["h_"+prefix+"SumPtNtHadAtZeroIso"]->Fill(event.muonPF2PATNtHadIso[idx],eventweight);
-    hists_1d_["h_"+prefix+"SumPtPhotonAtZeroIso"]->Fill(event.muonPF2PATGammaIso[idx],eventweight);
-    hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]->Fill(event.muonPF2PATPuIso[idx],eventweight); 
+    hists_1d_["h_"+prefix+"SumPtChAtZeroIso"]->Fill(event.muonPF2PATChHadIso[idx] ,eventweight);
+    hists_1d_["h_"+prefix+"SumPtNhAtZeroIso"]->Fill(event.muonPF2PATNtHadIso[idx] ,eventweight);
+    hists_1d_["h_"+prefix+"SumPtPhAtZeroIso"]->Fill(event.muonPF2PATGammaIso[idx] ,eventweight);
+    hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]->Fill(event.muonPF2PATPuIso[idx] ,eventweight); 
     //h_DiMuonDeltaRAtZeroIso->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second));
     hists_1d_["h_"+prefix+"TrksInConeAtZeroIso"]->Fill(nTrksInCone(particle,event,0.4),eventweight);
   
@@ -711,10 +503,11 @@ void fillChHadHists(const AnalysisEvent& event, const std::string &prefix, const
   TLorentzVector particle{event.packedCandsPx[idx], event.packedCandsPy[idx], event.packedCandsPz[idx], event.packedCandsE[idx]};
   if (prefix.find("sub") == std::string::npos) {
 	  hists_1d_["h_"+prefix+"RelIso"]->Fill(event.chsPairRelIso.first,eventweight);        
-	  hists_1d_["h_"+prefix+"TrackIso"]->Fill(event.chsPairTrkIso.first,eventweight);
-    hists_1d_["h_"+prefix+"SumPtChHad"]->Fill(event.chsPairChHadIso.first,eventweight);                              
-    hists_1d_["h_"+prefix+"SumPtNt"]->Fill(event.chsPairNtIso.first,eventweight); //photons + neutral hadrons  
-    hists_1d_["h_"+prefix+"SumPtPU"]->Fill(event.chsPairPuIso.first,eventweight); 
+	  hists_1d_["h_"+prefix+"TrackIso"]->Fill(event.chsPairTrkIso.first ,eventweight);
+    hists_1d_["h_"+prefix+"SumPtCh"]->Fill(event.chsPairChIso.first ,eventweight);                              
+    hists_1d_["h_"+prefix+"SumPtNh"]->Fill(event.chsPairNhIso.first ,eventweight); //neutral hadrons  
+    hists_1d_["h_"+prefix+"SumPtPh"]->Fill(event.chsPairPhIso.first ,eventweight); //photons
+    hists_1d_["h_"+prefix+"SumPtPU"]->Fill(event.chsPairPuIso.first ,eventweight); 
 		hists_1d_["h_"+prefix+"Pt"]->Fill(particle.Pt(),eventweight); 
 		hists_1d_["h_"+prefix+"Eta"]->Fill(particle.Eta(),eventweight);
 		hists_1d_["h_"+prefix+"Phi"]->Fill(particle.Phi(),eventweight);
@@ -722,18 +515,20 @@ void fillChHadHists(const AnalysisEvent& event, const std::string &prefix, const
 	  hists_2d_["h_"+prefix+"RelIso_"+"dR"]->Fill(event.chsPairRelIso.first, event.chsPairVec.first.DeltaR(event.chsPairVec.second),eventweight);
 	  hists_2d_["h_"+prefix+"RelIso_"+prefix+"TrksInCone"]->Fill(event.chsPairRelIso.first, nTrksInCone(particle,event,0.4),eventweight);
 	  if (event.chsPairRelIso.first == 0.) {
-      hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]->Fill(event.chsPairTrkIso.first,eventweight);
-      hists_1d_["h_"+prefix+"SumPtChHadAtZeroIso"]->Fill(event.chsPairChHadIso.first,eventweight);
-      hists_1d_["h_"+prefix+"SumPtNtAtZeroIso"]->Fill(event.chsPairNtIso.first,eventweight);
-      hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]->Fill(event.chsPairPuIso.first,eventweight); 
+      hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]->Fill(event.chsPairTrkIso.first ,eventweight);
+      hists_1d_["h_"+prefix+"SumPtChAtZeroIso"]->Fill(event.chsPairChIso.first ,eventweight);
+      hists_1d_["h_"+prefix+"SumPtNhAtZeroIso"]->Fill(event.chsPairNhIso.first ,eventweight);
+      hists_1d_["h_"+prefix+"SumPtPhAtZeroIso"]->Fill(event.chsPairPhIso.first ,eventweight);
+      hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]->Fill(event.chsPairPuIso.first ,eventweight); 
     }
   }
   else {
 	  hists_1d_["h_"+prefix+"RelIso"]->Fill(event.chsPairRelIso.second,eventweight);        
 	  hists_1d_["h_"+prefix+"TrackIso"]->Fill(event.chsPairTrkIso.second,eventweight);
-    hists_1d_["h_"+prefix+"SumPtChHad"]->Fill(event.chsPairChHadIso.second,eventweight);                              
-    hists_1d_["h_"+prefix+"SumPtNt"]->Fill(event.chsPairNtIso.second,eventweight); //photons + neutral hadrons  
-    hists_1d_["h_"+prefix+"SumPtPU"]->Fill(event.chsPairPuIso.second,eventweight); 
+    hists_1d_["h_"+prefix+"SumPtCh"]->Fill(event.chsPairChIso.second ,eventweight);                              
+    hists_1d_["h_"+prefix+"SumPtNh"]->Fill(event.chsPairNhIso.second ,eventweight); //photons + neutral hadrons  
+    hists_1d_["h_"+prefix+"SumPtPh"]->Fill(event.chsPairPhIso.second ,eventweight); //photons + neutral hadrons  
+    hists_1d_["h_"+prefix+"SumPtPU"]->Fill(event.chsPairPuIso.second ,eventweight); 
 		hists_1d_["h_"+prefix+"Pt"]->Fill(particle.Pt(),eventweight); 
 		hists_1d_["h_"+prefix+"Eta"]->Fill(particle.Eta(),eventweight);
 		hists_1d_["h_"+prefix+"Phi"]->Fill(particle.Phi(),eventweight);
@@ -742,9 +537,10 @@ void fillChHadHists(const AnalysisEvent& event, const std::string &prefix, const
 	  hists_2d_["h_"+prefix+"RelIso_"+prefix+"TrksInCone"]->Fill(event.chsPairRelIso.second, nTrksInCone(particle,event,0.4),eventweight);
 	  if (event.chsPairRelIso.second == 0.) {
       hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]->Fill(event.chsPairTrkIso.second,eventweight);
-      hists_1d_["h_"+prefix+"SumPtChHadAtZeroIso"]->Fill(event.chsPairChHadIso.second,eventweight);
-      hists_1d_["h_"+prefix+"SumPtNtAtZeroIso"]->Fill(event.chsPairNtIso.second,eventweight);
-      hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]->Fill(event.chsPairPuIso.second,eventweight); 
+      hists_1d_["h_"+prefix+"SumPtChAtZeroIso"]->Fill(event.chsPairChIso.second ,eventweight);
+      hists_1d_["h_"+prefix+"SumPtNhAtZeroIso"]->Fill(event.chsPairNhIso.second ,eventweight);
+      hists_1d_["h_"+prefix+"SumPtPhAtZeroIso"]->Fill(event.chsPairPhIso.second ,eventweight);
+      hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]->Fill(event.chsPairPuIso.second ,eventweight); 
     }
   }
   hists_1d_["h_"+prefix+"TrksInCone"]->Fill(nTrksInCone(particle,event,0.4),eventweight);
@@ -791,23 +587,17 @@ void writeHists(const std::string &prefix) {
 	hists_1d_["h_"+prefix+"Phi"]->Write();
 	hists_1d_["h_"+prefix+"RelIso"]->Write();                       
   hists_1d_["h_"+prefix+"TrackIso"]->Write();                   
-  hists_1d_["h_"+prefix+"SumPtChHad"]->Write();   
-  if (prefix.find("Muon") != std::string::npos) {
-    hists_1d_["h_"+prefix+"SumPtNtHad"]->Write();
-    hists_1d_["h_"+prefix+"SumPtPhoton"]->Write();
-  }
-  else hists_1d_["h_"+prefix+"SumPtNt"]->Write();
+  hists_1d_["h_"+prefix+"SumPtCh"]->Write();   
+  hists_1d_["h_"+prefix+"SumPtNh"]->Write();
+  hists_1d_["h_"+prefix+"SumPtPh"]->Write();
   hists_1d_["h_"+prefix+"SumPtPU"]->Write();                    
   hists_1d_["h_"+prefix+"TrksInCone"]->Write();                 
   hists_1d_["h_"+prefix+"ChHadFromPVdR"]->Write();              
   //Investigation at Zero Iso
   hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]->Write();          
-  hists_1d_["h_"+prefix+"SumPtChHadAtZeroIso"]->Write();  
-  if (prefix.find("Muon") != std::string::npos) {      
-    hists_1d_["h_"+prefix+"SumPtNtHadAtZeroIso"]->Write();        
-    hists_1d_["h_"+prefix+"SumPtPhotonAtZeroIso"]->Write();     
-  }
-  else hists_1d_["h_"+prefix+"SumPtNtAtZeroIso"]->Write();  
+  hists_1d_["h_"+prefix+"SumPtChAtZeroIso"]->Write();      
+  hists_1d_["h_"+prefix+"SumPtNhAtZeroIso"]->Write();        
+  hists_1d_["h_"+prefix+"SumPtPhAtZeroIso"]->Write();     
   hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]->Write();           
   hists_1d_["h_"+prefix+"PtInConeAtZeroIso"]->Write();          
   hists_1d_["h_"+prefix+"EtaInConeAtZeroIso"]->Write();         

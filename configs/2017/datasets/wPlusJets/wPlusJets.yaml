@@ -2,7 +2,7 @@ name: "wPlusJets"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/Wjets/Wjets/"
 mc: true
-cross_section: 52940.0
+cross_section: 53940.0
 histogram: "wJets"
 colour: "#ffff33"
 label: "W+jets"

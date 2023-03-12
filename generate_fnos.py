@@ -27,6 +27,24 @@ pathnamesdict = {
 	# W+jets
 	"wPlusJets": "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/Wjets/Wjets/"
 }
+pathweightsdict = {
+	"HtoSS_MS2_ctau0": "plots/weightDistributions/output_HtoSS_MS2_ctau0.root",
+	# QCD
+	"QCD_Pt-15to20_MuEnrichedPt5": "plots/weightDistributions/QCD/output_QCD_Pt-15to20_MuEnrichedPt5.root",
+	"QCD_Pt-20to30_MuEnrichedPt5": "plots/weightDistributions/QCD/output_QCD_Pt-20to30_MuEnrichedPt5.root",
+	"QCD_Pt-30to50_MuEnrichedPt5": "plots/weightDistributions/QCD/output_QCD_Pt-30to50_MuEnrichedPt5.root",
+	"QCD_Pt-50to80_MuEnrichedPt5": "plots/weightDistributions/QCD/output_QCD_Pt-50to80_MuEnrichedPt5.root",
+	"QCD_Pt-80to120_MuEnrichedPt5": "plots/weightDistributions/QCD/output_QCD_Pt-80to120_MuEnrichedPt5.root",
+	"QCD_Pt-120to170_MuEnrichedPt5": "plots/weightDistributions/QCD/output_QCD_Pt-120to170_MuEnrichedPt5.root",
+	"QCD_Pt-170to300_MuEnrichedPt5": "plots/weightDistributions/QCD/output_QCD_Pt-170to300_MuEnrichedPt5.root",
+	"QCD_Pt-300to470_MuEnrichedPt5": "plots/weightDistributions/QCD/output_QCD_Pt-300to470_MuEnrichedPt5.root",
+	"QCD_Pt-470to600_MuEnrichedPt5": "plots/weightDistributions/QCD/output_QCD_Pt-470to600_MuEnrichedPt5.root",
+	"QCD_Pt-600to800_MuEnrichedPt5": "plots/weightDistributions/QCD/output_QCD_Pt-600to800_MuEnrichedPt5.root",
+	"QCD_Pt-800to1000_MuEnrichedPt5": "plots/weightDistributions/QCD/output_QCD_Pt-800to1000_MuEnrichedPt5.root",
+	"QCD_Pt-1000toInf_MuEnrichedPt5": "plots/weightDistributions/QCD/output_QCD_Pt-1000toInf_MuEnrichedPt5.root",
+	# W+jets
+	"wPlusJets": "plots/weightDistributions/wPlusJets/output_wPlusJets.root"
+}
 
 def maxfilenumber(pathname):
 	list_of_files = os.listdir(pathnamesdict[pathname])
@@ -36,7 +54,7 @@ f = open("params.txt",'a')
 for i in range(1, maxfilenumber(args.dataset), args.njobs):
 	start = str(i)
 	end = str(min(maxfilenumber(args.dataset),i+args.njobs-1))
-	print ("configs/"+str(args.year)+"/mumu_"+args.dataset+".yaml"+ "," +args.outdir+"/output_"+args.dataset +"_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + args.dataset)
-	line = "configs/"+str(args.year)+"/mumu_"+args.dataset+".yaml"+ "," +args.outdir+"/output_"+args.dataset +"_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + args.dataset
+	print ("configs/"+str(args.year)+"/mumu_"+args.dataset+".yaml"+ "," +args.outdir+"/output_"+args.dataset +"_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + args.dataset + "," + pathweightsdict[args.dataset])
+	line = "configs/"+str(args.year)+"/mumu_"+args.dataset+".yaml"+ "," +args.outdir+"/output_"+args.dataset +"_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + args.dataset + "," + pathweightsdict[args.dataset]
 	f.write("\n"+line)
 f.close()

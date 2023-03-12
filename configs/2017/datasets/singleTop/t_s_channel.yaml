@@ -1,7 +1,7 @@
 name: "t_s_channel"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/singleTop/t_s_channel/"
-cross_section: 3.74
+cross_section: 3.549
 mc: true
 histogram: "SingleTop"
 colour: "#ff99cc"

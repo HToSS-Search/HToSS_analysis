@@ -1,7 +1,7 @@
 name: "QCD_Pt-80to120_MuEnrichedPt5_raw"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/QCD/QCD_Pt-80to120_MuEnrichedPt5_raw/"
-cross_section: 88930.0
+cross_section: 87740.0
 mc: true
 histogram: "QCD_80to120_raw"
 colour: "#10c4e4"

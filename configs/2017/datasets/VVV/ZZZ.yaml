@@ -1,7 +1,7 @@
 name: "ZZZ"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VVV/ZZZ/"
-cross_section: 0.01398
+cross_section: 0.01476
 mc: true
 histogram: "VVV"
 colour: "#999999"

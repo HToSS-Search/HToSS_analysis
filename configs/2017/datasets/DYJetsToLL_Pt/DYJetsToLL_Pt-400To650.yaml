@@ -1,7 +1,7 @@
 name: "DYJetsToLL_Pt-400To650"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/DYJetsToLL_Pt/DYJetsToLL_Pt-400To650/"
-cross_section: 0.436041144
+cross_section: 0.5
 mc: true
 histogram: "Zjets"
 colour: "#006699"

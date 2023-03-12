@@ -1,7 +1,7 @@
 name: "WWW"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VVV/WWW/"
-cross_section: 0.2086
+cross_section: 0.2158
 mc: true
 histogram: "VVV"
 colour: "#999999"

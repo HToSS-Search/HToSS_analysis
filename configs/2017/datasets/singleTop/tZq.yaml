@@ -1,7 +1,7 @@
 name: "tZq"
 locations:
     - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/singleTop/tZq_ll_4f_ckm/"
-cross_section: 0.0758
+cross_section: 0.07561
 mc: true
 histogram: "SingleTop"
 colour: "#ff99cc"
