@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
     TH1F* h_scalarEnergy          {new TH1F("h_scalarEnergy",          "scalar energy; [GeV]", 5000, 0., 2500)};
 
     TH1F* h_genDimuonDeltaR       {new TH1F("h_genDimuonDeltaR",       "Dimuon gen deltaR", 50, 0., 1.)};
-    TH1F* h_genDimuonMass         {new TH1F("h_genDimuonMass",         "Dimuon gen mass", 30, 0., 11.)};
+    TH1F* h_genDimuonMass         {new TH1F("h_genDimuonMass",         "Dimuon gen mass", 400, 0., 10.)};
     TH1F* h_genDimuonPt           {new TH1F("h_genDimuonPt",           "Dimuon gen Pt",  200, 0., 200)}; 
     TH1F* h_genDimuonEta          {new TH1F("h_genDimuonEta",          "Dimuon gen Eta", 60, 0., 5.)};
     TH1F* h_genLeadingMuonPt      {new TH1F("h_genLeadingMuonPt",      "Leading generator muon", 300, 0., 150.)};
@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
 
     TH1F* h_genDikaonDeltaR       {new TH1F("h_genDikaonDeltaR",       "Dikaon gen deltaR", 50, 0., 1.)};
     TH1F* h_genDikaonMass         {new TH1F("h_genDikaonMass",         "Dikaon gen mass", 30, 0., 11.)};
-    TH1F* h_genDikaonPt           {new TH1F("h_genDikaonPt",           "Dikaon gen Pt",  200, 0., 200)}; 
+    TH1F* h_genDikaonPt           {new TH1F("h_genDikaonPt",           "Dikaon gen Pt",  300, 0., 150)}; 
     TH1F* h_genDikaonEta          {new TH1F("h_genDikaonEta",          "Dikaon gen Eta", 60, 0., 5.)};
     TH1F* h_genLeadingKaonPt      {new TH1F("h_genLeadingKaonPt",      "Leading generator Kaon p_{T}", 300, 0., 150.)};
     TH1F* h_genSubleadingKaonPt   {new TH1F("h_genSubleadingKaonPt",   "Subleading generator Kaon p_{T}", 300, 0., 150.)};
@@ -140,8 +140,8 @@ int main(int argc, char* argv[]) {
     TH1F* h_genSubleadingVdKaon   {new TH1F("h_genSubleadingVdKaon",   "Subleading gen kaon v_{d}",  200, 0., 100.)};
     
     TH1F* h_genDiChsDeltaR       {new TH1F("h_genDiChsDeltaR",       "DiChs gen deltaR", 50, 0., 1.)};
-    TH1F* h_genDiChsMass         {new TH1F("h_genDiChsMass",         "DiChs gen mass", 30, 0., 11.)};
-    TH1F* h_genDiChsPt           {new TH1F("h_genDiChsPt",           "DiChs gen Pt",  200, 0., 200)}; 
+    TH1F* h_genDiChsMass         {new TH1F("h_genDiChsMass",         "DiChs gen mass", 400, 0., 10.)};
+    TH1F* h_genDiChsPt           {new TH1F("h_genDiChsPt",           "DiChs gen Pt",  300, 0., 150)}; 
     TH1F* h_genDiChsEta          {new TH1F("h_genDiChsEta",          "DiChs gen Eta", 60, 0., 5.)};
     TH1F* h_genLeadingChsPt      {new TH1F("h_genLeadingChsPt",      "Leading generator Chs p_{T}", 300, 0., 150.)};
     TH1F* h_genSubleadingChsPt   {new TH1F("h_genSubleadingChsPt",   "Subleading generator Chs p_{T}", 300, 0., 150.)};
@@ -180,7 +180,7 @@ int main(int argc, char* argv[]) {
     TH1F* h_numRecoDirectScalarMuons  {new TH1F("h_numRecoDirectScalarMuons", "Number of loose muons directly from scalar decay", 10, -0.5, 9.5)};
 
     TH1F* h_recoDimuonDeltaR        {new TH1F("h_recoDimuonDeltaR",      "Dimuon reco deltaR", 50, 0., 1.)};
-    TH1F* h_recoDimuonMass          {new TH1F("h_recoDimuonMass",        "Dimuon reco mass", 200, 0., 5.)};
+    TH1F* h_recoDimuonMass          {new TH1F("h_recoDimuonMass",        "Dimuon reco mass", 400, 0., 10.)};
     TH1F* h_recoDimuonPt            {new TH1F("h_recoDimuonPt",          "Dimuon reco Pt",  200, 0., 200)}; 
     TH1F* h_recoDimuonEta           {new TH1F("h_recoDimuonEta",         "Dimuon reco Eta", 60, 0., 5.)};
     TH1F* h_recoLeadingMuonPt       {new TH1F("h_recoLeadingMuonPt",     "Leading generator muon", 300, 0., 150.)};
@@ -371,17 +371,17 @@ int main(int argc, char* argv[]) {
 
 
 
-    TH1F* h_diChsPt                  {new TH1F("h_diChsPt",                "DiChs p_{T}", 200, 0.0, 100.)};
-    TH1F* h_diChsPtBothGen           {new TH1F("h_diChsPtBothGen",         "DiChs p_{T}", 200, 0.0, 100.)};
-    TH1F* h_diChsPtLeadingGen        {new TH1F("h_diChsPtLeadingGen",      "DiChs p_{T}", 200, 0.0, 100.)};
-    TH1F* h_diChsPtSubleadingGen     {new TH1F("h_diChsPtSubleadingGen",   "DiChs p_{T}", 200, 0.0, 100.)};
-    TH1F* h_diChsPtBothFake          {new TH1F("h_diChsPtBothFake",        "DiChs p_{T}", 200, 0.0, 100.)};
+    TH1F* h_diChsPt                  {new TH1F("h_diChsPt",                "DiChs p_{T}", 300, 0., 150)};
+    TH1F* h_diChsPtBothGen           {new TH1F("h_diChsPtBothGen",         "DiChs p_{T}", 300, 0., 150)};
+    TH1F* h_diChsPtLeadingGen        {new TH1F("h_diChsPtLeadingGen",      "DiChs p_{T}", 300, 0., 150)};
+    TH1F* h_diChsPtSubleadingGen     {new TH1F("h_diChsPtSubleadingGen",   "DiChs p_{T}", 300, 0., 150)};
+    TH1F* h_diChsPtBothFake          {new TH1F("h_diChsPtBothFake",        "DiChs p_{T}", 300, 0., 150)};
     
-    TH1F* h_diChsMass                  {new TH1F("h_diChsMass",                "DiChs Mass", 200, 0.0, 11.)};
-    TH1F* h_diChsMassBothGen           {new TH1F("h_diChsMassBothGen",         "DiChs Mass", 200, 0.0, 11.)};
-    TH1F* h_diChsMassLeadingGen        {new TH1F("h_diChsMassLeadingGen",      "DiChs Mass", 200, 0.0, 11.)};
-    TH1F* h_diChsMassSubleadingGen     {new TH1F("h_diChsMassSubleadingGen",   "DiChs Mass", 200, 0.0, 11.)};
-    TH1F* h_diChsMassBothFake          {new TH1F("h_diChsMassBothFake",        "DiChs Mass", 200, 0.0, 11.)};
+    TH1F* h_diChsMass                  {new TH1F("h_diChsMass",                "DiChs Mass", 200, 0.0, 10.)};
+    TH1F* h_diChsMassBothGen           {new TH1F("h_diChsMassBothGen",         "DiChs Mass", 200, 0.0, 10.)};
+    TH1F* h_diChsMassLeadingGen        {new TH1F("h_diChsMassLeadingGen",      "DiChs Mass", 200, 0.0, 10.)};
+    TH1F* h_diChsMassSubleadingGen     {new TH1F("h_diChsMassSubleadingGen",   "DiChs Mass", 200, 0.0, 10.)};
+    TH1F* h_diChsMassBothFake          {new TH1F("h_diChsMassBothFake",        "DiChs Mass", 200, 0.0, 10.)};
 
     TH1F* h_leadingChsPt_truth                  {new TH1F("h_leadingChsPt_truth",     "Leading truth reco Chs; p_{T} (GeV); Events", 200, 0., 100.)};
     TH1F* h_subLeadingChsPt_truth               {new TH1F("h_subLeadingChsPt_truth", "SubLeading truth reco Chs; p_{T} (GeV); Events", 200, 0., 100.)};
@@ -424,8 +424,8 @@ int main(int argc, char* argv[]) {
     TH1F* h_subleadingChsPurity_truth              {new TH1F("h_subleadingChsPurity_truth", "subleading charged hadron track High Purity truth", 2, -0.5, 1.5)};
 
     TH1F* h_ChsdelR_truth                       {new TH1F("h_ChsdelR_truth",               "#DeltaR truth reco; #DeltaR(chs,chs); Events",      100, 0., 1.0)};
-    TH1F* h_diChsMass_truth                     {new TH1F("h_diChsMass_truth",         "Mass dist. truth reco; m_{chs,chs}; Events", 200, 0., 10.)}; 
-    TH1F* h_diChsPt_truth                     {new TH1F("h_diChsPt_truth",         "Pt dist. truth reco; pT_{chs,chs}; Events", 1000, 0., 100.)}; 
+    TH1F* h_diChsMass_truth                     {new TH1F("h_diChsMass_truth",         "Mass dist. truth reco; m_{chs,chs}; Events", 400, 0., 10.)}; 
+    TH1F* h_diChsPt_truth                     {new TH1F("h_diChsPt_truth",         "Pt dist. truth reco; pT_{chs,chs}; Events", 300, 0., 150)}; 
     TH1F* h_diChsPFIso_truth                     {new TH1F("h_diChsPFIso_truth",         "PFIsolation truth reco; PFiso_{chs,chs}; Events", 1000,0.,30.)}; 
     TH1F* h_diChsSumPtCh_truth                     {new TH1F("h_diChsSumPtCh_truth",         "PFIsolation truth reco; #Sigma_{fromPV}^{chs,chs}(p_{T}); Events", 1000,0.,80.)}; 
     TH1F* h_diChsSumPtNh_truth                     {new TH1F("h_diChsSumPtNh_truth",         "PFIsolation truth reco; #Sigma_{Nh}^{chs,chs}(p_{T}); Events", 1000,0.,80.)}; 
@@ -474,8 +474,8 @@ int main(int argc, char* argv[]) {
     TH1F* h_gensubLeadingChsEta_failed              {new TH1F("h_gensubLeadingChsEta_failed",  "SubLeading failed gen Chs; #eta; Events",    300, -3., 3.)};
     TH1F* h_genChsdelR_failed                       {new TH1F("h_genChsdelR_failed",        "#DeltaR failed gen; #DeltaR(chs,chs); Events",      100, 0., 1.0)};
     TH1F* h_genChsdelR_SamePFCand                   {new TH1F("h_genChsdelR_SamePFCand",   "gen Chs #DeltaR for match to same PFCand.; #DeltaR(chs,chs)", 100, 0., 1.)};
-    TH1F* h_gendiChsMass_failed                     {new TH1F("h_gendiChsMass_failed",         "Mass dist. failed gen; m_{chs,chs}; Events", 200, 0., 10.)}; 
-    TH1F* h_diChsMass_failed                     {new TH1F("h_diChsMass_failed",         "Mass dist. reco for non-genmatched evts after selection; m_{chs,chs}; Events", 200, 0., 10.)}; 
+    TH1F* h_gendiChsMass_failed                     {new TH1F("h_gendiChsMass_failed",         "Mass dist. failed gen; m_{chs,chs}; Events", 400, 0., 10.)}; 
+    TH1F* h_diChsMass_failed                     {new TH1F("h_diChsMass_failed",         "Mass dist. reco for non-genmatched evts after selection; m_{chs,chs}; Events", 400, 0., 10.)}; 
     TH1F* h_leadingChsPt_failed                     {new TH1F("h_leadingChsPt_failed",     "Leading for non-genmatched evts after selection reco Chs; p_{T} (GeV); Events", 200, 0., 100.)};
     TH1F* h_subleadingChsPt_failed                     {new TH1F("h_subleadingChsPt_failed", "subleading for non-genmatched evts after selection reco Chs; p_{T} (GeV); Events", 200, 0., 100.)};
 
@@ -519,7 +519,7 @@ int main(int argc, char* argv[]) {
     TH1F* h_subleadingChsSumPtNh_failed           {new TH1F("h_subleadingChsSumPtNh_failed", "Isolation subleading Chs non-genmatched evts Nh; subleading Chs #Sigma_{Nh}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
     TH1F* h_subleadingChsSumPtPh_failed           {new TH1F("h_subleadingChsSumPtPh_failed", "Isolation subleading Chs non-genmatched evts Ph; subleading Chs #Sigma_{#gamma}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
     TH1F* h_subleadingChsSumPtPu_failed           {new TH1F("h_subleadingChsSumPtPu_failed", "Isolation subleading Chs non-genmatched evts PU; subleading Chs #Sigma_{PU}^{Chs}(p_{T}); Events", 1000,0.,80.)}; 
-    TH1F* h_diChsPt_failed                     {new TH1F("h_diChsPt_failed",         "Pt dist. non-genmatched evts reco diChs; pT_{chs,chs}; Events", 1000, 0., 100.)}; 
+    TH1F* h_diChsPt_failed                     {new TH1F("h_diChsPt_failed",         "Pt dist. non-genmatched evts reco diChs; pT_{chs,chs}; Events", 300, 0., 150)}; 
 
 
     TH1F* h_leadingChsPtUnc_failed                   {new TH1F("h_leadingChsPtUnc_failed",  "Leading Chs non-genmatched evts rel. Pt Uncty; #sigma_{pT}/pT; Events", 100, 0., 5.)};
@@ -593,8 +593,8 @@ int main(int argc, char* argv[]) {
     TH2F* h_chs1_NoTrksInCone_chs2_NoTrksInCone_badID_truth  {new TH2F("h_chs1_NoTrksInCone_chs2_NoTrksInCone_badID_truth", "Ele/Mu Tracks around h tracks (#Delta R < 0.4) with wrong ID truth; N_{trks}^{leading}; N_{trks}^{subleading}", 101, -0.5, 100.5, 101, -0.5, 100.5)};
     TH2F* h_chs1_NoTrksInCone_chs2_NoTrksInCone_goodID_truth  {new TH2F("h_chs1_NoTrksInCone_chs2_NoTrksInCone_goodID_truth", "Ele/Mu Tracks around h tracks (#Delta R < 0.4) with right ID truth; N_{trks}^{leading}; N_{trks}^{subleading}", 101, -0.5, 100.5, 101, -0.5, 100.5)};
 
-    TH1F* h_chsPt1                   {new TH1F("h_chsPt1",                 "Leading charged hadron track p_{T}", 200, 0.0, 100.)};
-    TH1F* h_chsPt2                   {new TH1F("h_chsPt2",                 "Subleading charged hadron track p_{T}", 200, 0.0, 100.)};
+    TH1F* h_chsPt1                   {new TH1F("h_chsPt1",                 "Leading charged hadron track p_{T}", 300, 0.0, 150.)};
+    TH1F* h_chsPt2                   {new TH1F("h_chsPt2",                 "Subleading charged hadron track p_{T}", 300, 0.0, 150.)};
     TH1F* h_chsPtBothGen1            {new TH1F("h_chsPtBothGen1",          "Leading charged hadron track p_{T} - both tracks genuine", 200, 0.0, 100.)};
     TH1F* h_chsPtBothGen2            {new TH1F("h_chsPtBothGen2",          "Subleading charged hadron track p_{T} - both tracks genuine", 200, 0.0, 100.)};
     TH1F* h_chsPtLeadingGen1         {new TH1F("h_chsPtLeadingGen1",       "Leading charged hadron track p_{T} - leading genuine/subleading fake", 200, 0.0, 100.)};
@@ -1797,8 +1797,8 @@ int main(int argc, char* argv[]) {
 
                 }
                 else {
-                    int tmp1 = shf.NoTrksInCone(event,event.chsPairVec.first,notrkID,tmp_dr_max,true);
-                    int tmp2 = shf.NoTrksInCone(event,event.chsPairVec.second,notrkID,tmp_dr_max,true);
+                    int tmp1 = shf.NoTrksInCone(event,event.chsPairVec.first,notrkID,tmp_dr_max,false);
+                    int tmp2 = shf.NoTrksInCone(event,event.chsPairVec.second,notrkID,tmp_dr_max,false);
                 
                     h_leadingChs_NoTrksInCone_badID_truth->Fill(emtrks_chs1_truth,eventWeight);
                     h_subleadingChs_NoTrksInCone_badID_truth->Fill(emtrks_chs2_truth,eventWeight);

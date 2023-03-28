@@ -6,6 +6,6 @@ channelName: "mumu"
 datasets:
 # HToSS
   - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS1_ctauS0.yaml"
-  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS1_ctauS1.yaml"
+# - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS1_ctauS1.yaml"
 #  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS1_ctauS10.yaml"
 #  - "configs/2017/datasets/ggH/ggH_HToSS_MH125_MS1_ctauS100.yaml"

@@ -13,7 +13,7 @@
 
 namespace fs = boost::filesystem;
 
-Dataset::Dataset(std::string name, float lumi, bool isMC, float crossSection, std::vector<std::string> locations, std::string histoName, std::string treeName, std::string colourHex, std::string plotLabel, std::string plotType, std::string triggerFlag) : colour_{TColor::GetColor(colourHex.c_str())} {
+Dataset::Dataset(std::string name, float lumi, bool isMC, bool isOldNtuple,float crossSection, std::vector<std::string> locations, std::string histoName, std::string treeName, std::string colourHex, std::string plotLabel, std::string plotType, std::string triggerFlag) : colour_{TColor::GetColor(colourHex.c_str())} {
     name_ = name;
     lumi_ = lumi;
     isMC_ = isMC;
@@ -26,7 +26,8 @@ Dataset::Dataset(std::string name, float lumi, bool isMC, float crossSection, st
     plotLabel_ = plotLabel;
     triggerFlag_ = triggerFlag;
     generatorWeightPlot_ = nullptr;
-
+    isOldNtuple_=isOldNtuple;
+    std::cout<<"Is old ntuple:"<<isOldNtuple_;
     std::cout << "For dataset " << name_ << " trigger flag is " << triggerFlag_  << std::endl;
 
     for (auto& location : locations_) {
@@ -58,7 +59,7 @@ Dataset::Dataset(std::string name, float lumi, bool isMC, float crossSection, st
         }
     }
 
-    if (isMC_) totalEvents_ = generatorWeightPlot_->GetBinContent(1)+generatorWeightPlot_->GetBinContent(2);
+    if (isMC_) totalEvents_ = generatorWeightPlot_->GetBinContent(1)-generatorWeightPlot_->GetBinContent(2);
 }
 
 // Method that fills a TChain with the files that will be used for the analysis.
@@ -83,7 +84,9 @@ int Dataset::fillChain(TChain* chain,int flow, int fhigh) {
 float Dataset::getDatasetWeight(double lumi) {
     if (!isMC_)
         return 1.;
-    // return (lumi * crossSection_) / (totalEvents_ + 1.0e-06);
-    return (lumi * crossSection_); // for now, we only include lumi*cross-section here; weight/Nevts added in main code
+    if (isOldNtuple_)
+        return (lumi * crossSection_); // for now, we only include lumi*cross-section here; weight/Nevts added in main code
+    else
+        return (lumi * crossSection_) / (totalEvents_ + 1.0e-06);
 }
 

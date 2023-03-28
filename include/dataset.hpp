@@ -23,11 +23,13 @@ class Dataset {
     std::string plotType_;
     std::string triggerFlag_;
     TH1I* generatorWeightPlot_;
+    bool isOldNtuple_; // true for oldntuples
 
     public:
     Dataset(std::string name,
             float lumi,
             bool isMC,
+            bool isOldNtuple,
             float crossSection,
             std::vector<std::string> locations,
             std::string histoName,
@@ -44,6 +46,9 @@ class Dataset {
     }
     bool isMC() {
         return isMC_;
+    }
+    bool isOldNtuple() {
+        return isOldNtuple_;
     }
     std::string getFillHisto() {
         return fillName_;
@@ -71,6 +76,10 @@ class Dataset {
 
     TH1I* getGeneratorWeightHistogram() {
         return generatorWeightPlot_;
+    }
+
+    std::vector<std::string> locations() {
+        return locations_;
     }
 
 };

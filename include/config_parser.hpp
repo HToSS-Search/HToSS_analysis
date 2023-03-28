@@ -14,7 +14,8 @@ namespace Parser {
     void parse_config(const std::string conf,
                       std::vector<Dataset>& datasets,
                       double& lumi,
-                      const bool usePostLepTree = false);
+                      const bool usePostLepTree = false,
+                      bool hack=false);
     void parse_config(const std::string conf,
                       std::vector<Dataset>& datasets,
                       double& lumi,

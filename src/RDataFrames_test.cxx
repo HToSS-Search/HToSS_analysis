@@ -15,6 +15,7 @@
 #include "TLorentzVector.h"
 #include "TString.h"
 #include "config_parser.hpp"
+#include <ROOT/RDataFrame.hxx>
 
 #include <boost/filesystem.hpp>
 #include <boost/functional/hash.hpp>
@@ -210,174 +211,54 @@ int main(int argc, char* argv[]) {
     const std::string postLepSelSkimInputDir{std::string{"/pnfs/iihe/cms/store/user/almorton/MC/postLepSkims/postLepSkims"} + era + "_legacy/"};
 //    const std::string postLepSelSkimInputDir{std::string{"/user/almorton/HToSS_analysis/postLepSkims"} + era + "/"};
     std::cout<<"usePostLepTree :"<<usePostLepTree<<std::endl;
-		std::ofstream isotail_evts;
-		std::ofstream masstail_evts;
-		isotail_evts.open ("interesting_events_iso.txt");
-		masstail_evts.open ("interesting_events_mass.txt");
+    std::vector<std::string> filenames;
+    TH1D histA;
 		// Begin to loop over all datasets
     for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset) {
-      datasetFilled = false;
-      TChain* datasetChain{new TChain{dataset->treeName().c_str()}};
-      datasetChain->SetAutoSave(0);
-      
-      std::cerr << "Processing dataset " << dataset->name() << std::endl;
-      if (!usePostLepTree) {
-	      if (!datasetFilled) {
-	        if (!dataset->fillChain(datasetChain,flow,fhigh)) {
-	          std::cerr << "There was a problem constructing the chain for " << dataset->name() << ". Continuing with next dataset.\n";
-	          continue;
-	        }
-	        datasetFilled=true;
-	      }
-      }
-      else {
-	std::cout << postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root" << std::endl;
-	datasetChain->Add((postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root").c_str());
-      }
-
-      // extract the dataset weight. MC = (lumi*crossSection)/(totalEvents), data = 1.0
-      // extract the dataset weight. MC = (lumi*crossSection), data = 1.0
-      float datasetWeight{dataset->getDatasetWeight(totalLumi)};
-      std::cout << datasetChain->GetEntries() << " number of items in tree. Dataset weight: " << datasetWeight << std::endl;
-      if (datasetChain->GetEntries() == 0) {
-	std::cout << "No entries in tree, skipping..." << std::endl;
-	continue;
-      }
-
-      AnalysisEvent event{dataset->isMC(), datasetChain, is2016_, is2018_};
-      
-      Long64_t numberOfEvents{datasetChain->GetEntries()};
-      if (nEvents && nEvents < numberOfEvents) numberOfEvents = nEvents;
-     	TMVA::gConfig().SetDrawProgressBar(true);	 
-      TMVA::Timer* lEventTimer{ new TMVA::Timer{boost::numeric_cast<int>(numberOfEvents), "Running over dataset ..."}}; 
-      lEventTimer->DrawProgressBar(0, "");
-      totalEvents += numberOfEvents;
-      TFile* f_wts;
-      float sumWeights = 0.;
-      if ((dataset->isMC())&&(fweights!="")&&(dataset->isOldNtuple())) {
-        f_wts = new TFile(fweights.c_str(),"READ");
-        TH1F* h_weights = (TH1F*)f_wts->Get("weightHisto");
-        sumWeights += h_weights->GetBinContent(1) - h_weights->GetBinContent(2);
-      }
-      std::cout<<"Sum of weights (Nevts):"<<sumWeights<<std::endl;
-      if (sumWeights<=0) std::cout<<"Something wrong with the sum of weights! Check pls."<<std::endl; //temporary measure until new ntuples
-
-      for (Long64_t i{0}; i < numberOfEvents; i++) {
-
-				verbose = false;
-	
-	      lEventTimer->DrawProgressBar(i,"");
-	     	if (i%1000==0) std::cout<<"Events processed - "<<i<<std::endl; 
-	      event.GetEntry(i);
-        if (event.eventRun == 1 && event.eventLumiblock == 9 && event.eventNum == 10548) {
-          std::cout<<"Enters verbose check"<<std::endl;
-          verbose=true;
+      // auto dataset=datasets.begin();
+      filenames.clear();
+      for (const auto& location : dataset->locations()) {
+        const fs::path dir{location};
+        if (fs::is_directory(dir))
+            //chain->Add(TString{location + "*.root"});
+            {for (int i=flow; i<=fhigh; i++) filenames.push_back(location + Form("output_%d.root",i)); }
+        else {
+            std::cout << "ERROR: " << location << "is not a valid directory" << std::endl;
         }
-        SharedFunctions shf{false, verbose};
-	      //else SharedFunctions shf{false, true};
-	      float eventWeight = 1.;
-        if (dataset->isMC()) {
-          if (dataset->isOldNtuple()&&(sumWeights>0)) eventWeight *= event.processMCWeight/sumWeights; //evtweight/nevts
-          else eventWeight *= datasetWeight; //cross-section*lumi/nevts
-        }
-				TString dname(dataset->name());
-				bool MCSignal = dname.Contains("HToSS");
-				if ((MCSignal)&&(!shf.GenLevelCheck(event,false))) continue;
-        hists_1d_["Cutflow"]->Fill(1, eventWeight);
+      }
+      ROOT::RDataFrame d(dataset->treeName().c_str(),filenames);
+      histA = d.Histo1D("numMuonPF2PAT").GetValue();
+      // auto scalarAncestry = []() {
 
-	      const bool passSingleMuonTrigger {event.muTrig()}, passDimuonTrigger {event.mumuTrig()};
-	      const bool passL2MuonTrigger {event.mumuL2Trig()}, passDimuonNoVtxTrigger {event.mumuNoVtxTrig()};
+      // };
+      // bool SharedFunctions::scalarAncestry (const AnalysisEvent& event, const Int_t& k, const Int_t& ancestorId, const bool verbose = false) {
+      //     const Int_t pdgId        { std::abs(event.genParId[k]) };
+      //     const Int_t numDaughters { event.genParNumDaughters[k] };
+      //     const Int_t motherId     { std::abs(event.genParMotherId[k]) };
+      //     const Int_t motherIndex  { std::abs(event.genParMotherIndex[k]) };
+      //     // if (verbose) std::cout << "Going up the ladder ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
+      //     if (motherId == 0 || motherIndex == -1) return false; // if no parent, then mother Id is null and there's no index, quit search
+      //     else if (motherId == std::abs(ancestorId)) return true; // if parent is ancestor, return true
+      //     else if ((pdgId != 130) && (pdgId != 310) && (pdgId != 311) && (motherId != pdgId)) {
+      //       return false; // if parent is not an excited state of same particle, return false except in the case of neutral kaons
+      //     }
+      //     else if (motherIndex >= event.NGENPARMAX) return false; // index exceeds stored genParticle range, return false for safety
+      //     else {
+              
+      // //        debugCounter++;
+      // //        std::cout << "debugCounter: " << debugCounter << std::endl;
+              
+      //         //if (verbose) std::cout << "Enters right condition ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
+      //         return scalarAncestry(event, motherIndex, ancestorId, verbose); // otherwise check mother's mother ...
+      //     }
+      // }
 
-      //        if (! ( passDimuonTrigger || passSingleMuonTrigger || passL2MuonTrigger || passDimuonNoVtxTrigger ) ) continue;
-	      if ( !passSingleMuonTrigger ) continue;
-        hists_1d_["Cutflow"]->Fill(2, eventWeight);
-
-	      if (!event.metFilters()) continue;
-        hists_1d_["Cutflow"]->Fill(3, eventWeight);
-
-	      
-       
-        // Below for muons 
-       /*event selection criteria for leptons*/
-	      event.muonIndexLoose = shf.getLooseMuons(event);
-	      if ( event.muonIndexLoose.size() < 2 ) continue;
-        hists_1d_["Cutflow"]->Fill(4, eventWeight);
-
-
-	      if ( !shf.getDileptonCand( event, event.muonIndexLoose ) ) continue;
-	      
-        hists_1d_["Cutflow"]->Fill(5, eventWeight);
-        
-	      //std::cout << "Enters event, processes muons" << std::endl;
-        //Below for charged hadrons
-        /*event selection criteria for hadrons*/
-	      event.chsIndex = shf.getChargedHadronTracks(event);
-	      if ( event.chsIndex.size() < 2 ) continue;
-        hists_1d_["Cutflow"]->Fill(6, eventWeight);
-
-	      //std::cout << "Enters event, found 2 hadrons!" << std::endl;
-	      if ( !shf.getDihadronCand( event, event.chsIndex ) ) {
-	        // std::cout << "Eh, no dihadron found :("<<std::endl;      
-	        continue; //fine for now
-	      }
-        hists_1d_["Cutflow"]->Fill(7, eventWeight);
-
-        /*Now analyse*/
-        fillMuonHists(event, "leadingMuon", event.zPairIndex.first, eventWeight);
-        fillMuonHists(event, "subleadingMuon", event.zPairIndex.second, eventWeight);
-	      hists_1d_["h_DiMuonDeltaR"]->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second), eventWeight);
-	      hists_1d_["h_DiMuonMass"]->Fill((event.zPairLeptons.first + event.zPairLeptons.second).M(), eventWeight);
-	      hists_1d_["h_DiMuonPt"]->Fill((event.zPairLeptons.first + event.zPairLeptons.second).Pt(), eventWeight);
-	      //std::cout<<"Number of tracks:"<<nTrksInCone(event.zPairIndex.first,event,0.4)<<std::endl;    
-	      if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.first] == 0.) {
-          hists_1d_["h_DiMuonDeltaRAtZeroIso"]->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second), eventWeight);        
-        }
-	      //std::cout << "Enters event, found dihadron object!" << std::endl;
-	      /*Now analyse*/
-        fillChHadHists(event, "leadingChHad", event.chsPairIndex.first, eventWeight);
-        fillChHadHists(event, "subleadingChHad", event.chsPairIndex.second, eventWeight);
-	      //std::cout << "Enters event, Filled the histos for hadrons!" << std::endl;
-	      hists_1d_["h_DiChHadDeltaR"]->Fill(event.chsPairVec.first.DeltaR(event.chsPairVec.second), eventWeight);
-	      hists_1d_["h_DiChHadMass"]->Fill((event.chsPairVec.first + event.chsPairVec.second).M(), eventWeight);
-	      hists_1d_["h_DiChHadPt"]->Fill((event.chsPairVec.first + event.chsPairVec.second).Pt(), eventWeight);
-
-        float mass_avg = ((event.chsPairVec.first + event.chsPairVec.second).M() + (event.zPairLeptons.first + event.zPairLeptons.second).M())/2.;
-        hists_1d_["h_AvgMass_mumu_hh"]->Fill(mass_avg,eventWeight);
-
-        hists_2d_["h_leadingMuon_RelIso_leadingHadron_RelIso"]->Fill(event.zPairRelIso.first,event.chsPairRelIso.first,eventWeight);
-        hists_2d_["h_leadingMuon_SumPtCh_leadingHadron_SumPtCh"]->Fill(event.zPairChIso.first,event.chsPairChIso.first,eventWeight);
-        hists_2d_["h_leadingMuon_SumPtNh_leadingHadron_SumPtNh"]->Fill(event.zPairNhIso.first,event.chsPairNhIso.first,eventWeight);
-        hists_2d_["h_leadingMuon_SumPtPh_leadingHadron_SumPtPh"]->Fill(event.zPairPhIso.first,event.chsPairPhIso.first,eventWeight);
-        hists_2d_["h_leadingMuon_SumPtPU_leadingHadron_SumPtPU"]->Fill(event.zPairPuIso.first,event.chsPairPuIso.first,eventWeight);
-        hists_2d_["h_subleadingMuon_RelIso_subleadingHadron_RelIso"]->Fill(event.zPairRelIso.second,event.chsPairRelIso.second,eventWeight);
-        hists_2d_["h_subleadingMuon_SumPtCh_subleadingHadron_SumPtCh"]->Fill(event.zPairChIso.second,event.chsPairChIso.second,eventWeight);
-        hists_2d_["h_subleadingMuon_SumPtNh_subleadingHadron_SumPtNh"]->Fill(event.zPairNhIso.second,event.chsPairNhIso.second,eventWeight);
-        hists_2d_["h_subleadingMuon_SumPtPh_subleadingHadron_SumPtPh"]->Fill(event.zPairPhIso.second,event.chsPairPhIso.second,eventWeight);
-        hists_2d_["h_subleadingMuon_SumPtPU_subleadingHadron_SumPtPU"]->Fill(event.zPairPuIso.second,event.chsPairPuIso.second,eventWeight);
-
-        hists_2d_["h_DiMuonMass_DiChHadMass"]->Fill((event.zPairLeptons.first + event.zPairLeptons.second).M(),(event.chsPairVec.first + event.chsPairVec.second).M(),eventWeight);
-	      
-	      //std::cout<<"Number of tracks:"<<nTrksInCone(event.zPairIndex.first,event,0.4)<<std::endl;    
-	      if (event.chsPairRelIso.first == 0.) {
-          hists_1d_["h_DiChHadDeltaRAtZeroIso"]->Fill(event.chsPairVec.first.DeltaR(event.chsPairVec.second), eventWeight);        
-        }
-       	
-				if ((event.chsPairRelIso.first > 2)&&(MCSignal)) isotail_evts <<event.eventRun<<":"<<event.eventLumiblock<<":"<<event.eventNum<<"\n";
-				if (((event.chsPairVec.first + event.chsPairVec.second).M()<=1.0) && (MCSignal)) masstail_evts <<event.eventRun<<":"<<event.eventLumiblock<<":"<<event.eventNum<<"\n";
-
-
-	      //std::cout << "Enters event, processes hadrons" << std::endl;
-	
-      } // end event loop
     } // end dataset loop
-
-		isotail_evts.close();
-		masstail_evts.close();
-    
 		TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
     outFile->cd();
 
     // Write Histos
+    histA.Write();
 
     // Write muon histos
     writeHists("leadingMuon");
@@ -431,6 +312,26 @@ int nTrksInCone(TLorentzVector& particle, const AnalysisEvent& event, double dr_
     }
     return count;
 }
+/*
+bool scalarGrandparent (const AnalysisEvent& event, const Int_t& k, const Int_t& grandparentId) {
+
+    const Int_t pdgId        { std::abs(event.genParId[k]) };
+    const Int_t numDaughters { event.genParNumDaughters[k] };
+    const Int_t motherId     { std::abs(event.genParMotherId[k]) };
+    const Int_t motherIndex  { std::abs(event.genParMotherIndex[k]) };
+
+
+    if (motherId == 0 || motherIndex == -1) return false; // if no parent, then mother Id is null and there's no index, quit search
+    else if (motherId == std::abs(grandparentId)) return true; // if mother is granparent being searched for, return true
+    else if (motherIndex >= event.NGENPARMAX) return false; // index exceeds stored genParticle range, return false for safety
+    else {
+//        std::cout << "Going up the ladder ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
+//        debugCounter++;
+//        std::cout << "debugCounter: " << debugCounter << std::endl;
+        return scalarGrandparent(event, motherIndex, grandparentId); // otherwise check mother's mother ...
+    }
+}
+*/
 void bookHists(const std::string &prefix) {
 	//Some kinematics
   hists_1d_["h_"+prefix+"Pt"]                       = new TH1F(Form("h_%sPt",prefix.c_str()), "", 5000, 0., 150.);

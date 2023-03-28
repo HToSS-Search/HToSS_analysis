@@ -1,7 +1,7 @@
 name: "WZ_lnu2q"
 locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VV/WZ_lnu2q/"
-cross_section: 11.66
+    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VV/WZ_lnu2q/"
+cross_section: 9.119 #taken from similar name sample but not the same
 mc: true
 histogram: "VV"
 colour: "#ff9933"

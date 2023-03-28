@@ -76,7 +76,7 @@ std::vector<int> SharedFunctions::getChargedHadronTracks(const AnalysisEvent& ev
 
 bool SharedFunctions::getDileptonCand(AnalysisEvent& event, const std::vector<int>& muons) {
     for (int i=0;i<muons.size();i++) {
-        for (int j=0;j<muons.size();j++) {
+        for (int j=i+1;j<muons.size();j++) { //it is Et sorted array
             if (muons[j]==muons[i]) continue; //ensure not to use same muon
             if (event.muonPF2PATPt[muons[i]] <= looseMuonPtLeading_) continue;
             if (event.muonPF2PATPt[muons[j]] <= looseMuonPt_) continue;
@@ -217,7 +217,7 @@ bool SharedFunctions::getDihadronCand(AnalysisEvent& event, std::vector<int>& ch
             if ( event.packedCandsMuonIndex[chs[i]] >= 0     && event.genMuonPF2PATScalarAncestor[event.packedCandsMuonIndex[chs[i]]] < 1 ) continue;
             if ( event.packedCandsJetIndex[chs[i]] >= 0      && event.genJetPF2PATScalarAncestor[event.packedCandsJetIndex[chs[i]]] < 1 ) continue;
         }*/
-        for (int j = 0;j < chs.size();j++) {
+        for (int j = i+1;j < chs.size();j++) { //since it is not an ordered pair
         //for ( unsigned int j{i+1}; j < chs.size(); j++ ) {
 
             //if ( event.packedCandsMuonIndex[chs[j]] == event.muonPF2PATPackedCandIndex[event.zPairIndex.first] ) continue;
@@ -243,8 +243,8 @@ bool SharedFunctions::getDihadronCand(AnalysisEvent& event, std::vector<int>& ch
             std::vector<int> notrkID;
             notrkID.push_back(11);notrkID.push_back(13);
             float tmp_dr_max = 0.6;
-            int emtrks_chs1 = NoTrksInCone(event, chs1, notrkID,tmp_dr_max,false);
-            int emtrks_chs2 = NoTrksInCone(event, chs2, notrkID,tmp_dr_max,false);
+            // int emtrks_chs1 = NoTrksInCone(event, chs1, notrkID,tmp_dr_max,false);
+            // int emtrks_chs2 = NoTrksInCone(event, chs2, notrkID,tmp_dr_max,false);
             // if ( delR < maxChsDeltaR_ && (higgsMass - 125.) < higgsTolerence_ && pT >= 0. ) {
             //if ( delR < maxChsDeltaR_ && (chs1+chs2).DeltaPhi(event.zPairLeptons.first+event.zPairLeptons.second)>3 && pT >= 0. ) {
             //if ( delR < maxChsDeltaR_ && std::abs((chs1+chs2).M()-(event.zPairLeptons.first+event.zPairLeptons.second).M()) < 0.8 && pT >= 0. ) {

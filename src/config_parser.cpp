@@ -7,10 +7,21 @@
 #include <unordered_map>
 #include <vector>
 #include <yaml-cpp/yaml.h>
+#include <typeinfo>
 
-void Parser::parse_config(const std::string conf, std::vector<Dataset>& datasets, double& lumi, const bool usePostLepTree) {
-    const YAML::Node root{YAML::LoadFile(conf)};
-    auto datasetConfs{root["datasets"].as<std::vector<std::string>>()};
+
+void Parser::parse_config(const std::string conf, std::vector<Dataset>& datasets, double& lumi, const bool usePostLepTree, bool hack) {
+    std::vector<std::string> datasetConfs;
+    if (hack) {
+        datasetConfs.push_back(conf);
+    }
+    else {
+        std::cout<<"Going the traditional way"<<std::endl;
+        const YAML::Node root{YAML::LoadFile(conf)};
+        datasetConfs = root["datasets"].as<std::vector<std::string>>();
+    }
+
+    // std::cout<<"See config here (inside parser) -"<<conf<<","<<typeid(datasetConfs).name()<<std::endl;
     try {
         parse_files(datasetConfs, datasets, lumi, usePostLepTree);
     }
@@ -104,13 +115,19 @@ void Parser::parse_files(const std::vector<std::string> files,
 
     std::string treeName {"makeTopologyNtupleMiniAOD/tree"};
     if (usePostLepTree) treeName = "tree";
-
+    //add handle here to check if old ntuple by checking if almorton in name
     for (const auto& file : files) {
         const YAML::Node root{YAML::LoadFile(file)};
         const bool isMC{root["mc"].as<bool>()};
+        auto ntuple_loc{root["locations"].as<std::vector<std::string>>()[0]};
+        std::size_t found = ntuple_loc.find("almorton"); //hack for old ntuples right now, modify yaml for a longtime solution
+        bool isOldNtuple;
+        if (found != std::string::npos) isOldNtuple=true;
+        else isOldNtuple=false;
         datasets.emplace_back(root["name"].as<std::string>(),
                               isMC ? 0 : root["luminosity"].as<double>(),
                               isMC,
+                              isOldNtuple,
                               isMC ? root["cross_section"].as<double>() : 0,
                               root["locations"].as<std::vector<std::string>>(),
                               root["histogram"].as<std::string>(),
@@ -122,20 +139,20 @@ void Parser::parse_files(const std::vector<std::string> files,
         //This new element is constructed in place using args as the arguments for its constructor
 
         // If we are doing NPLs, add the NPL version of this dataset
-        if (NPL) {
-            datasets.emplace_back(
-                root["name"].as<std::string>(),
-                0,
-                isMC,
-                isMC ? root["cross_section"].as<double>() : 0,
-                root["locations"].as<std::vector<std::string>>(),
-                "NPL",
-                treeName,
-                "#003300",
-                "NPL",
-                "f",
-                isMC ? "" : root["trigger_flag"].as<std::string>());
-        }
+        // if (NPL) {
+        //     datasets.emplace_back(
+        //         root["name"].as<std::string>(),
+        //         0,
+        //         isMC,
+        //         isMC ? root["cross_section"].as<double>() : 0,
+        //         root["locations"].as<std::vector<std::string>>(),
+        //         "NPL",
+        //         treeName,
+        //         "#003300",
+        //         "NPL",
+        //         "f",
+        //         isMC ? "" : root["trigger_flag"].as<std::string>());
+        // }
 
         if (root["luminosity"])
             totalLumi += root["luminosity"].as<double>();
