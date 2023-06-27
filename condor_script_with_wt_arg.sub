@@ -1,5 +1,5 @@
 executable = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/JobTemplate.sh
-arguments = $(cfg) $(output) $(flow) $(fhigh) $(dataset) $(weight)
+arguments = $(cfg) $(cuts) $(output) $(flow) $(fhigh) $(dataset) $(weight)
 
 should_transfer_files = no
 
@@ -9,4 +9,4 @@ log = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/log/log_$(dataset)_$(flow)
 
 +JobFlavour = "workday"
 
-queue cfg,output,flow,fhigh,dataset,weight from params.txt
+queue cfg,cuts,output,flow,fhigh,dataset,weight from params_resubmit_QCD.txt

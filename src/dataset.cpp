@@ -36,7 +36,7 @@ Dataset::Dataset(std::string name, float lumi, bool isMC, bool isOldNtuple,float
     }
 
     // Read in generator level plots to determine event weights and total number of events
-    if (isMC_) {
+    if ((isMC_) && (!isOldNtuple_)) {
         const std::regex mask{R"(\.root$)"};
         bool firstFile{true};
         for (const auto& location : locations_) {
@@ -59,7 +59,7 @@ Dataset::Dataset(std::string name, float lumi, bool isMC, bool isOldNtuple,float
         }
     }
 
-    if (isMC_) totalEvents_ = generatorWeightPlot_->GetBinContent(1)-generatorWeightPlot_->GetBinContent(2);
+    if ((isMC_) && (!isOldNtuple_)) totalEvents_ = generatorWeightPlot_->GetBinContent(1)-generatorWeightPlot_->GetBinContent(2);
 }
 
 // Method that fills a TChain with the files that will be used for the analysis.
@@ -84,8 +84,11 @@ int Dataset::fillChain(TChain* chain,int flow, int fhigh) {
 float Dataset::getDatasetWeight(double lumi) {
     if (!isMC_)
         return 1.;
-    if (isOldNtuple_)
+    if (isOldNtuple_) {
+        // std::cout<<"Enters lumi*crosssection"<<std::endl;
         return (lumi * crossSection_); // for now, we only include lumi*cross-section here; weight/Nevts added in main code
+    }
+
     else
         return (lumi * crossSection_) / (totalEvents_ + 1.0e-06);
 }

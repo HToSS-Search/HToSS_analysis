@@ -10,6 +10,9 @@
 #include <TChain.h>
 #include <TFile.h>
 #include <TLorentzVector.h>
+#include <Math/Vector4D.h>
+#include <Math/VectorUtil.h>
+
 #include <TROOT.h>
 #include <iostream>
 #include <string>
@@ -1867,6 +1870,7 @@ class AnalysisEvent
     bool isMC_{};
     const bool is2016_{};
     const bool is2018_{};
+    float eventWeight;
 
     std::vector<double> muonMomentumSF;
     std::vector<double> jetSmearValue;
@@ -1885,8 +1889,8 @@ class AnalysisEvent
     double selectedJetTracksHt;
     std::vector<int> bTagIndex;
 
-    std::pair<TLorentzVector, TLorentzVector> zPairLeptons;
-    std::pair<TLorentzVector, TLorentzVector> zPairLeptonsRefitted;
+    std::pair<ROOT::Math::PxPyPzEVector, ROOT::Math::PxPyPzEVector> zPairLeptons;
+    std::pair<ROOT::Math::PxPyPzEVector, ROOT::Math::PxPyPzEVector> zPairLeptonsRefitted;
     std::pair<float, float> zPairRelIso;
     std::pair<float, float> zPairChIso;
     std::pair<float, float> zPairNhIso;
@@ -1904,9 +1908,9 @@ class AnalysisEvent
     float zRelIsoDbeta;
     float zTrkIsoDbeta;
 
-    std::pair<TLorentzVector, TLorentzVector> chsPairVec;
-    std::pair<TLorentzVector, TLorentzVector> chsPairTrkVec;
-    std::pair<TLorentzVector, TLorentzVector> chsPairTrkVecRefitted;
+    std::pair<ROOT::Math::PxPyPzMVector, ROOT::Math::PxPyPzMVector> chsPairVec;
+    std::pair<ROOT::Math::PxPyPzMVector, ROOT::Math::PxPyPzMVector> chsPairTrkVec;
+    std::pair<ROOT::Math::PxPyPzMVector, ROOT::Math::PxPyPzMVector> chsPairTrkVecRefitted;
     std::pair<float, float> chsPairRelIso;
     std::pair<float, float> chsPairChIso;
     std::pair<float, float> chsPairNhIso;
@@ -1922,10 +1926,10 @@ class AnalysisEvent
     float chsRelIsoDbeta;
     float chsTrkIsoDbeta;
 
-    std::pair<TLorentzVector, TLorentzVector> wPairQuarks;
+    std::pair<ROOT::Math::PxPyPzMVector, ROOT::Math::PxPyPzMVector> wPairQuarks;
     std::pair<int, int> wPairIndex;
 
-    TLorentzVector wLepton;
+    ROOT::Math::PxPyPzMVector wLepton;
     int wLepIndex;
     float wLeptonRelIso;
 
@@ -2944,6 +2948,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
    fChain->SetBranchAddress("eventLumiblock", &eventLumiblock, &b_eventLumiblock);
    fChain->SetBranchAddress("numVert", &numVert, &b_numVert);
 
+  eventWeight = 0;
   muonMomentumSF = {};
   jetSmearValue = {};
 
@@ -2992,7 +2997,7 @@ inline AnalysisEvent::AnalysisEvent(const bool isMC, TTree* tree, const bool is2
   chsRelIso = -1;
   chsTrkIso = -1;
 
-  std::pair<TLorentzVector, TLorentzVector> wPairQuarks = {};
+  std::pair<ROOT::Math::PxPyPzMVector, ROOT::Math::PxPyPzMVector> wPairQuarks = {};
   std::pair<int, int> wPairIndex = {};
 
   wLepton = {};

@@ -30,6 +30,27 @@ void Parser::parse_config(const std::string conf, std::vector<Dataset>& datasets
         throw;
     }
 }
+//testing below
+// void Parser::parse_config(const std::string conf, const std::string cut, std::vector<Dataset>& datasets, double& lumi, const bool usePostLepTree, bool hack) {
+//     std::vector<std::string> datasetConfs;
+//     if (hack) {
+//         datasetConfs.push_back(conf);
+//     }
+//     else {
+//         std::cout<<"Going the traditional way"<<std::endl;
+//         const YAML::Node root{YAML::LoadFile(conf)};
+//         datasetConfs = root["datasets"].as<std::vector<std::string>>();
+//     }
+
+//     // std::cout<<"See config here (inside parser) -"<<conf<<","<<typeid(datasetConfs).name()<<std::endl;
+//     try {
+//         parse_files(datasetConfs, datasets, lumi, usePostLepTree);
+//     }
+//     catch (const std::exception) {
+//         std::cerr << "ERROR while parsing dataset file" << std::endl;
+//         throw;
+//     }
+// }
 
 void Parser::parse_config(const std::string conf,
                           std::vector<Dataset>& datasets,
@@ -124,6 +145,7 @@ void Parser::parse_files(const std::vector<std::string> files,
         bool isOldNtuple;
         if (found != std::string::npos) isOldNtuple=true;
         else isOldNtuple=false;
+        // std::cout<<isOldNtuple<<" - isOldNtuple"<<std::endl;
         datasets.emplace_back(root["name"].as<std::string>(),
                               isMC ? 0 : root["luminosity"].as<double>(),
                               isMC,

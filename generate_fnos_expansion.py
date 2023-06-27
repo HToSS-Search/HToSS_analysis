@@ -74,10 +74,12 @@ def maxfilenumber(path):
 
 parser = argparse.ArgumentParser(description='Plot stacked histogram')
 parser.add_argument("-c", "--config", dest="config",   help="Enter config file to process", type=str)
+parser.add_argument("-a", "--cuts", dest="cuts",   help="Enter cuts file to process", type=str)
 parser.add_argument("-n","--njobs", dest="njobs", help="No. of files to process in one job", type=int)
 parser.add_argument("-o","--output", dest="outdir", help="Destination directory", type=str)
 parser.add_argument("-y","--year", dest="year", help="Year for processing", type=int)
 parser.add_argument("-w","--weight",dest="isWeight", help="Generate weight dist? true or false", default=0, type=int)
+parser.add_argument("-d","--data",dest="isData", help="Data or not", default=0, type=int)
 args = parser.parse_args()
 
 fin = open(args.config,'r')
@@ -97,14 +99,18 @@ for conf in pars['datasets']:
 			sample_string_2 = conf.split("/")
 			sample_type = sample_string_2[len(sample_string_2)-2] if ".yaml" in sample_string_2[len(sample_string_2)-1] else sample_string_2[len(sample_string_2)-1]
 			outdir_extra = conf.split("/datasets/")[1].split(".yaml")[0]
-			if (args.isWeight):
-				print (conf + "," +args.outdir+"/output_"+data_name+"_"+out_name +"_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + data_name)
-				line = conf + "," +args.outdir+"/output_"+data_name+"_"+out_name +"_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + data_name
+			if (args.isData):
+				print (conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + data_name + "," + "dummy")
+				line = conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + data_name + "," + "dummy"
+			elif (args.isWeight): # generating only weight distribution
+				print (conf + "," + args.cuts + "," +args.outdir+"/output_"+out_name +"_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + data_name)
+				line = conf + "," + args.cuts + "," +args.outdir+"/output_"+out_name +"_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + data_name
 			else:
 				# $(cfg) $(output) $(flow) $(fhigh) $(dataset) $(weight)
 				weightFile = "plots/weightDistributions/"+sample_type+"/output_"+data_name+".root"
-				print (conf + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + data_name + "," + weightFile)
-				line = conf + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + data_name + "," + weightFile
+				print (conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + data_name + "," + weightFile)
+				line = conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + data_name + "," + weightFile
+			
 			f.write("\n"+line)
 f.close()
 

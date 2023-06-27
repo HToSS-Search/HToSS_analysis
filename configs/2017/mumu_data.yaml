@@ -5,5 +5,9 @@ outputPostfix: "mumu"
 channelName: "mumu"
 datasets:
 # Data
-  - "configs/2017/datasets/data/mumuRun2017.yaml"
+  - "configs/2017/datasets/data/mumuRun2017B.yaml"
+  - "configs/2017/datasets/data/mumuRun2017C.yaml"
+  - "configs/2017/datasets/data/mumuRun2017D.yaml"
+  - "configs/2017/datasets/data/mumuRun2017E.yaml"
+  - "configs/2017/datasets/data/mumuRun2017F.yaml"
 
