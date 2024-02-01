@@ -1,0 +1,11 @@
+colour: '#fc0303'
+cross_section: 0.0234657072
+histogram: ggH_HToSS_MS1p6_ctauS0
+label: H#rightarrowaa m_{a}=1.6 c_{#tau}=0
+locations: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL17MiniAOD-106X_mc2017_realistic_v6-v1_MCUL2017_HToSS_ChargedKaon/231114_125930
+mc: true
+name: ggH_HToSS_MS1p6_ctauS0
+plot_type: l
+skim_location: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/dummy/
+sum_weights: 386779.80900000705
+total_events: -1

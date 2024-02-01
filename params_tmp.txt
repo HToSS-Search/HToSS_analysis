@@ -1,0 +1,1 @@
+configs/2017/datasets/ggH/HToSS_MH125_MS2_ctauS0.yaml,configs/2017/cuts/SRCuts_kaonmass.yaml,plots/KaonMassAssumption/ScalarHiggsCuts_Category_90pPrompt_240130/ggH/HToSS_MH125_MS2_ctauS0/output_HToSS_MH125_MS2_ctauS0_1-3.root,1,3,ggH_HToSS_MS2_ctauS0

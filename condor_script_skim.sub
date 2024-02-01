@@ -1,0 +1,12 @@
+executable = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/SkimJob.sh
+arguments = $(cfg) $(output) $(flow) $(fhigh) $(dataset)
+
+should_transfer_files = no
+
+error = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/error/error_skim_$(dataset)_$(flow)-$(fhigh).txt
+output = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/out/out_skim_$(dataset)_$(flow)-$(fhigh).txt
+log = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/log/log_skim_$(dataset)_$(flow)-$(fhigh).txt
+
++JobFlavour = "longlunch"
+
+queue cfg,output,flow,fhigh,dataset from params_skim_data.txt

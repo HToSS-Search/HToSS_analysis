@@ -1,0 +1,10 @@
+colour: '#ff99cc'
+cross_section: 0.01103
+histogram: SingleTop
+label: Single top
+locations:
+- /pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/singleTop/tWz_tWll/
+mc: true
+name: tWZ
+plot_type: f
+sum_weights: -1

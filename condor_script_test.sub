@@ -1,0 +1,13 @@
+executable = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/JobTemplate_Ztest.sh
+arguments = $(cfg) $(output) $(dataset)
+
+should_transfer_files = no
+
+error = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/error/error_test_$(dataset)_new.txt
+output = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/out/out_test_$(dataset)_new.txt
+log = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/log/log_test_$(dataset)_new.txt
+
++JobFlavour = "longlunch"
+request_cpus = 4
+
+queue cfg,output,dataset from params_test.txt

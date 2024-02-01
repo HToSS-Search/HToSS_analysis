@@ -1,0 +1,3 @@
+configs/2017/datasets/VV/ZG_llg.yaml,plots/weightDistributions_231108/VV/ZG_llg/output_ZG_llg_1-43.root,1,43,ZG_llg
+configs/2017/datasets/VV/WZ_lnu2q.yaml,plots/weightDistributions_231108/VV/WZ_lnu2q/output_WZ_lnu2q_1-19.root,1,19,WZ_lnu2q
+configs/2017/datasets/VV/WZ_l3nu.yaml,plots/weightDistributions_231108/VV/WZ_l3nu/output_WZ_l3nu_1-14.root,1,14,WZ_l3nu
