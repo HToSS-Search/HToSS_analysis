@@ -10,7 +10,7 @@
 #include <typeinfo>
 
 
-void Parser::parse_config(const std::string conf, std::vector<Dataset>& datasets, double& lumi, const bool usePostLepTree, bool hack) {
+void Parser::parse_config(const std::string conf, std::vector<Dataset>& datasets, double& lumi, const bool usePostLepTree, bool hack, bool isSkim) {
     std::vector<std::string> datasetConfs;
     if (hack) {
         datasetConfs.push_back(conf);
@@ -23,7 +23,8 @@ void Parser::parse_config(const std::string conf, std::vector<Dataset>& datasets
 
     // std::cout<<"See config here (inside parser) -"<<conf<<","<<typeid(datasetConfs).name()<<std::endl;
     try {
-        parse_files(datasetConfs, datasets, lumi, usePostLepTree);
+        // std::cout<<"is skim? "<<isSkim<<std::endl;
+        parse_files(datasetConfs, datasets, lumi, usePostLepTree, isSkim);
     }
     catch (const std::exception) {
         std::cerr << "ERROR while parsing dataset file" << std::endl;
@@ -130,8 +131,9 @@ void Parser::parse_files(const std::vector<std::string> files,
                          std::vector<Dataset>& datasets,
                          double& totalLumi,
                          const bool usePostLepTree,
-                         const bool NPL)
+                         const bool isSkim_)
 {
+    
     std::cerr << "Adding datasets:" << std::endl;
 
     std::string treeName {"makeTopologyNtupleMiniAOD/tree"};
@@ -139,6 +141,7 @@ void Parser::parse_files(const std::vector<std::string> files,
     //add handle here to check if old ntuple by checking if almorton in name
     for (const auto& file : files) {
         const YAML::Node root{YAML::LoadFile(file)};
+        std::cout<<"Passes LoadFile "<<std::endl;
         const bool isMC{root["mc"].as<bool>()};
         auto ntuple_loc{root["locations"].as<std::vector<std::string>>()[0]};
         std::size_t found = ntuple_loc.find("almorton"); //hack for old ntuples right now, modify yaml for a longtime solution
@@ -146,18 +149,22 @@ void Parser::parse_files(const std::vector<std::string> files,
         if (found != std::string::npos) isOldNtuple=true;
         else isOldNtuple=false;
         // std::cout<<isOldNtuple<<" - isOldNtuple"<<std::endl;
+        std::vector<std::string> temp = isSkim_ ? root["skim_location"].as<std::vector<std::string>>() : root["locations"].as<std::vector<std::string>>();
+        std::cout<<"Just before datasets"<<std::endl;
         datasets.emplace_back(root["name"].as<std::string>(),
                               isMC ? 0 : root["luminosity"].as<double>(),
                               isMC,
                               isOldNtuple,
                               isMC ? root["cross_section"].as<double>() : 0,
-                              root["locations"].as<std::vector<std::string>>(),
+                              isSkim_ ? root["skim_location"].as<std::vector<std::string>>() : root["locations"].as<std::vector<std::string>>(),
                               root["histogram"].as<std::string>(),
                               treeName,
                               root["colour"].as<std::string>(),
                               root["label"].as<std::string>(),
                               root["plot_type"].as<std::string>(),
-                              isMC ? "" : root["trigger_flag"].as<std::string>());
+                              isMC ? "" : root["trigger_flag"].as<std::string>(),
+                              isMC ? root["sum_weights"].as<double>() : -99 ,
+                              isSkim_);
         //This new element is constructed in place using args as the arguments for its constructor
 
         // If we are doing NPLs, add the NPL version of this dataset

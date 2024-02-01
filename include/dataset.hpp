@@ -24,6 +24,8 @@ class Dataset {
     std::string triggerFlag_;
     TH1I* generatorWeightPlot_;
     bool isOldNtuple_; // true for oldntuples
+    bool isSkim_;
+    // double sumOfweights_;
 
     public:
     Dataset(std::string name,
@@ -37,7 +39,9 @@ class Dataset {
             std::string,
             std::string,
             std::string,
-            std::string);
+            std::string,
+            double weights_,
+            bool isSkim);
     std::string name() {
         return name_;
     }

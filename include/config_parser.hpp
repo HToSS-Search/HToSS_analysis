@@ -15,7 +15,8 @@ namespace Parser {
                       std::vector<Dataset>& datasets,
                       double& lumi,
                       const bool usePostLepTree = false,
-                      bool hack=false);
+                      bool hack=false,
+                      bool isSkim=false);
     void parse_config(const std::string conf,
                       std::vector<Dataset>& datasets,
                       double& lumi,
@@ -38,7 +39,7 @@ namespace Parser {
                      std::vector<Dataset>& datasets,
                      double& lumi,
                      const bool usePostLepTree = false,
-                     const bool NPL = false);
+                     bool isSkim = false);
     void parse_plots(const std::string plotConf,
                      std::vector<std::string>&,
                      std::vector<std::string>&,

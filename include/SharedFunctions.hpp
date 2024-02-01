@@ -32,12 +32,12 @@ class SharedFunctions {
     bool getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool flag);
     bool DiHadronPtCut(AnalysisEvent& event);
     bool MassCompatibility(AnalysisEvent& event, TF1& f_lower, TF1& f_higher);
-    bool HiggsWindow(AnalysisEvent& event);
-    bool getMuonTrackPairIndex(AnalysisEvent& event);
-    bool getChsTrackPairIndex(AnalysisEvent& event);
+    bool HiggsWindow(AnalysisEvent& event, bool isMC_);
+    bool getMuonTrackPairIndex(AnalysisEvent& event, int leadingidx, int subleadingidx, std::vector<ROOT::Math::PxPyPzMVector> &refit_trks, int &idx);
+    bool getChsTrackPairIndex(AnalysisEvent& event,  int leadingidx, int subleadingidx, std::vector<ROOT::Math::PxPyPzMVector> &refit_trks, int &idx);
     float deltaR(float eta1, float phi1, float eta2, float phi2);
     // void massAssumption(TString type="pion");
-    Isolation PFIsolation(TString ptype, int trk_ind, int gen_ind, int trk_exc, const AnalysisEvent& event, double dr_max);
+    Isolation PFIsolation(TString ptype, ROOT::Math::PxPyPzMVector& Trk, int trk_ind, int gen_ind, int trk_exc, const AnalysisEvent& event, double dr_max);
     Isolation PFIsolation(TString ptype, ROOT::Math::PxPyPzMVector& trk, int gen_ind, std::vector<int>& trk_exc, const AnalysisEvent& event, double dr_max); 
 
     // for MCtruth
@@ -57,6 +57,7 @@ class SharedFunctions {
     float looseMuonRelIsoLeading_;
     float looseMuonRelIso_;
     float invZMassCut_;
+    float muonMass_;
     
     // Hadron cut variables
     float chsMass_;
@@ -64,6 +65,8 @@ class SharedFunctions {
     float looseChsPt_;
     float looseChsSumPtCh_;
     float looseChsSumPtChLeading_;
+    float looseChsRelIso_;
+    float looseChsRelIsoLeading_;
 
 
     // Diparticle cuts

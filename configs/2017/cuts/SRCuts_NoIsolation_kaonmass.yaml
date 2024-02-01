@@ -1,42 +1,45 @@
-hadronType: "kaon"
-trig: "single"
-metfilters: true
 cuts:
-    muons:
-        eta: 2.4
-        flag: true
-        pt: 5
-        ptLeading: 30
-        id: "Loose"
-        number: 2
-    hadrons:
-        eta: 2.4
-        flag: true
-        pt: 5
-        id: None
-        number: 2
-    dimuon:
-        charge: "OS"
-        flag: true
-        pt: 0
-        dR: 0.4
-        reliso: 100
-        relisoLeading: 100
-    dihadron:
-        charge: "OS"
-        flag: true
-        pt: 20
-        dR: 0.4
-        sumptchLeading: 1000.0
-        sumptch: 1000.0
-    recohiggs:
-        flag: true
-        region: "SR"
-        massLow: 122.5
-        massHigh: 127.5
-        sideband: 2.5
-    recoscalar:
-        flag: false
-        # manually input parameters of linear fit for now, [0]+[1]*x
-        lowerbound: [0.01584950817379659, 0.7416189735134979]
-        higherbound: [0.1889653298755102, 1.015905966461237]
+  dihadron:
+    charge: OS
+    dR: 0.4
+    flag: false
+    pt: 20
+    reliso: 1000
+    relisoLeading: 1000
+  dimuon:
+    charge: OS
+    dR: 0.4
+    flag: false
+    pt: 0
+    reliso: 1000
+    relisoLeading: 1000
+  hadrons:
+    eta: 2.4
+    flag: true
+    id: None
+    number: 2
+    pt: 5
+  muons:
+    eta: 2.4
+    flag: true
+    id: Loose
+    number: 2
+    pt: 5
+    ptLeading: 30
+  recohiggs:
+    flag: true
+    massHigh: 127.5
+    massLow: 122.5
+    sideband: 2.5
+    unblind: true
+  recoscalar:
+    flag: true
+    higherbound:
+    - 0.05977444743866022
+    - 1.0118713900072867
+    lowerbound:
+    - -0.03774457815853343
+    - 0.9775876400579211
+hadronType: kaon
+metfilters: true
+trig: single

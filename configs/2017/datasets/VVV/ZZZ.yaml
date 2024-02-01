@@ -1,9 +1,12 @@
-name: "ZZZ"
-locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VVV/ZZZ/"
+colour: '#999999'
 cross_section: 0.01476
+histogram: VVV
+label: VVV
+locations: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17MiniAODv2-106X_mc2017_realistic_v9-v1_MCUL2017_HToSS/231106_122500
 mc: true
-histogram: "VVV"
-colour: "#999999"
-label: "VVV"
-plot_type: "f"
+name: ZZZ
+plot_type: f
+skim_location:
+- /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/2017/VVV/ZZZ/
+sum_weights: 2628.4716708955652
+total_events: 178000

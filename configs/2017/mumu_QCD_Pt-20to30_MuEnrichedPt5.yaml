@@ -1,8 +1,0 @@
-cuts: "configs/2017/cuts/SRCuts.yaml"
-plots: "configs/plots/plotDileptonConf.yaml"
-outputFolder: "plots/2017/mumu/"
-outputPostfix: "mumu"
-channelName: "mumu"
-datasets:
-# QCD
-  - "configs/2017/datasets/QCD/QCD_Pt-20to30_MuEnrichedPt5.yaml"

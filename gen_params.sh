@@ -13,7 +13,13 @@
 # python generate_fnos.py -d HtoSS_MS2_ctau0 -y 2017 -n 100 -o plots/IsoDistributions
 # python generate_fnos.py -d wPlusJets -y 2017 -n 100 -o plots/IsoDistributions
 
-# python generate_fnos_expansion.py -c configs/2017/mumu_data.yaml -y 2017 -n 50 -o plots/IsolationAndScalarMassCut_230620 -w 0 --cuts configs/2017/cuts/CRCuts_kaonmass.yaml -d 1 
+python generate_fnos_expansion.py -c configs/2017/mumu_data.yaml -y 2017 -n 10 -o plots/IsolationAndScalarMassCut_withRefitted --cuts configs/2017/cuts/CRCuts_kaonmass.yaml --data 
+python generate_fnos_expansion.py -c configs/2017/SM_MC.yaml -y 2017 -n 50 -o plots/IsolationAndScalarMassCut_withRefitted --cuts configs/2017/cuts/CRCuts_kaonmass.yaml 
+python generate_fnos_expansion.py -c configs/2017/SM_QCD.yaml -y 2017 -n 10 -o plots/IsolationAndScalarMassCut_withRefitted --cuts configs/2017/cuts/CRCuts_kaonmass.yaml 
+
+python generate_fnos_expansion.py -c configs/2017/SM_MC.yaml -y 2017 -n 100 -o /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/2017 --cuts configs/2017/cuts/CRCuts_kaonmass.yaml --fname params_skim_MC.txt --skim
+python generate_fnos_expansion.py -c configs/2017/SM_QCD.yaml -y 2017 -n 50 -o /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/2017 --cuts configs/2017/cuts/CRCuts_kaonmass.yaml --fname params_skim_QCD.txt --skim
+python generate_fnos_expansion.py -c configs/2017/mumu_data.yaml -y 2017 -n 50 -o /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/2017 --cuts configs/2017/cuts/CRCuts_kaonmass.yaml --fname params_skim_data.txt --skim
 #python generate_fnos_expansion.py -c configs/2017/SM_QCD.yaml -y 2017 -n 50 -o plots/IsolationAndScalarMassCut_230620 -w 1 --cuts configs/2017/cuts/CRCuts_kaonmass.yaml
 #python generate_fnos_expansion.py -c configs/2017/SM_MC.yaml -y 2017 -n 100 -o plots/IsolationAndScalarMassCut_230620 -w 1 --cuts configs/2017/cuts/CRCuts_kaonmass.yaml
 #python generate_fnos.py -d QCD_Pt-15to20_MuEnrichedPt5 -y 2017 -n 100 -o plots/weightDistributions

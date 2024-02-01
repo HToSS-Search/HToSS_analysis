@@ -1,9 +1,0 @@
-name: "tWZ"
-locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/singleTop/tWz_tWll/"
-cross_section: 0.01103
-mc: true
-histogram: "SingleTop"
-colour: "#ff99cc"
-label: "Single top"
-plot_type: "f"

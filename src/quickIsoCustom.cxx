@@ -80,8 +80,10 @@ int main(int argc, char* argv[]) {
     bool is2016_;
     bool is2018_;
     bool ishack_;
+    bool isSkim_;
     Long64_t nEvents;
-    Long64_t totalEvents {0};
+    float totalEvents {0};
+    int numberofevts {0};
     const std::regex mask{".*\\.root"};
 
 		// muons
@@ -90,29 +92,43 @@ int main(int argc, char* argv[]) {
     bookHists("subleadingMuon");
     bookHists("leadingChHad");
     bookHists("subleadingChHad");
-    hists_1d_["h_DiMuonDeltaR"]                  = new TH1F("h_DiMuonDeltaR", "", 1000, 0., 10.);
-    hists_1d_["h_DiMuonPt"]                      = new TH1F("h_DiMuonPt", "", 1000, 0., 150.);
-    hists_1d_["h_DiMuonMass"]                    = new TH1F("h_DiMuonMass", "", 1000, 0., 10.);
-    hists_1d_["h_DiMuonDeltaRAtZeroIso"]         = new TH1F("h_DiMuonDeltaRAtZeroIso", "", 100, 0., 1.);
-    hists_1d_["h_DiChHadDeltaR"]                 = new TH1F("h_DiChHadDeltaR", "", 1000, 0., 10.);
-    hists_1d_["h_DiChHadPt"]                     = new TH1F("h_DiChHadPt", "", 1000, 0., 150.);
-    hists_1d_["h_DiChHadMass"]                   = new TH1F("h_DiChHadMass", "", 1000, 0., 10.);
-    hists_1d_["h_DiChHadDeltaRAtZeroIso"]        = new TH1F("h_DiChHadDeltaRAtZeroIso", "", 100, 0., 1.);
-    hists_1d_["h_AvgMass_mumu_hh"]               = new TH1F("h_AvgMass_mumu_hh","",1000,0.,10.);
-    hists_1d_["h_recoHiggsMass"]                 = new TH1F("h_recoHiggsMass", "", 20000, 0., 1000.);
-    hists_1d_["h_DiChHadVtxSignificance"]        = new TH1F("h_DiChHadVtxSignificance", "", 2000, 0., 1000.);
-    hists_1d_["h_DiMuonVtxSignificance"]         = new TH1F("h_DiMuonVtxSignificance", "", 2000, 0., 1000.);
-    hists_1d_["h_DiChHadVtxLxy"]                 = new TH1F("h_DiChHadVtxLxy", "", 5000, 0., 1000.);
-    hists_1d_["h_DiMuonVtxLxy"]                  = new TH1F("h_DiMuonVtxLxy", "", 5000, 0., 1000.);
-    hists_1d_["h_DiChHadVtxSigma"]               = new TH1F("h_DiChHadVtxSigma", "", 1000, 0., 500.);
-    hists_1d_["h_DiMuonVtxSigma"]                = new TH1F("h_DiMuonVtxSigma", "", 1000, 0., 500.);
+    hists_1d_["h_DiMuonDeltaR"]                                   = new TH1F("h_DiMuonDeltaR", "", 1000, 0., 10.);
+    hists_1d_["h_DiMuonPt"]                                       = new TH1F("h_DiMuonPt", "", 1000, 0., 150.);
+    hists_1d_["h_DiMuonMass"]                                     = new TH1F("h_DiMuonMass", "", 5000, 0., 5.);
+    hists_1d_["h_DiMuonDeltaRAtZeroIso"]                          = new TH1F("h_DiMuonDeltaRAtZeroIso", "", 100, 0., 1.);
+    hists_1d_["h_DiChHadDeltaR"]                                  = new TH1F("h_DiChHadDeltaR", "", 1000, 0., 10.);
+    hists_1d_["h_DiChHadPt"]                                      = new TH1F("h_DiChHadPt", "", 1000, 0., 150.);
+    hists_1d_["h_DiChHadMass"]                                    = new TH1F("h_DiChHadMass", "", 5000, 0., 5.);
+    hists_1d_["h_DiChHadDeltaRAtZeroIso"]                         = new TH1F("h_DiChHadDeltaRAtZeroIso", "", 100, 0., 1.);
+    hists_1d_["h_AvgMass_mumu_hh"]                                = new TH1F("h_AvgMass_mumu_hh","",5000,0.,5.);
+    hists_1d_["h_recoHiggsMass"]                                  = new TH1F("h_recoHiggsMass", "", 5000, 0., 500.);
+    hists_1d_["h_DiChHadVtxSignificance"]                         = new TH1F("h_DiChHadVtxSignificance", "", 2000, 0., 1000.);
+    hists_1d_["h_DiMuonVtxSignificance"]                          = new TH1F("h_DiMuonVtxSignificance", "", 2000, 0., 1000.);
+    hists_1d_["h_DiChHadVtxLxy"]                                  = new TH1F("h_DiChHadVtxLxy", "", 5000, 0., 1000.);
+    hists_1d_["h_DiMuonVtxLxy"]                                   = new TH1F("h_DiMuonVtxLxy", "", 5000, 0., 1000.);
+    hists_1d_["h_DiChHadVtxSigma"]                                = new TH1F("h_DiChHadVtxSigma", "", 1000, 0., 500.);
+    hists_1d_["h_DiMuonVtxSigma"]                                 = new TH1F("h_DiMuonVtxSigma", "", 1000, 0., 500.);
     //before application of cut
-    hists_1d_["h_leadingMuon_RelIso_BC"]         = new TH1F("h_leadingMuon_RelIso", "", 5000, 0., 10.);
-    hists_1d_["h_leadingChHad_RelIso_BC"]        = new TH1F("h_leadingChHad_RelIso_BC", "", 5000, 0., 10.);
-    hists_1d_["h_subleadingMuon_RelIso_BC"]      = new TH1F("h_subleadingMuon_RelIso_BC", "", 5000, 0., 10.);
-    hists_1d_["h_subleadingChHad_RelIso_BC"]     = new TH1F("h_subleadingChHad_RelIso_BC", "", 5000, 0., 10.);
-    hists_1d_["h_DiChHadPt_BC"]                  = new TH1F("h_DiChHadPt_BC", "", 1000, 0., 150.);
-    hists_1d_["h_recoHiggsMass_BC"]              = new TH1F("h_recoHiggsMass_BC", "", 20000, 0., 1000.);
+    hists_1d_["h_leadingMuon_RelIso_BC"]                          = new TH1F("h_leadingMuon_RelIso_BC", "", 5000, 0., 10.);
+    hists_1d_["h_leadingChHad_RelIso_BC"]                         = new TH1F("h_leadingChHad_RelIso_BC", "", 5000, 0., 10.);
+    hists_1d_["h_subleadingMuon_RelIso_BC"]                       = new TH1F("h_subleadingMuon_RelIso_BC", "", 5000, 0., 10.);
+    hists_1d_["h_subleadingChHad_RelIso_BC"]                      = new TH1F("h_subleadingChHad_RelIso_BC", "", 5000, 0., 10.);
+    hists_1d_["h_DiChHadPt_BC"]                                   = new TH1F("h_DiChHadPt_BC", "", 1000, 0., 150.);
+    hists_1d_["h_recoHiggsMass_BC"]                               = new TH1F("h_recoHiggsMass_BC", "", 5000, 0., 500.);
+    hists_1d_["h_DiChHadMass_BC"]                                 = new TH1F("h_DiChHadMass_BC", "", 5000, 0., 5.);
+    hists_1d_["h_DiMuonMass_BC"]                                  = new TH1F("h_DiMuonMass_BC", "", 5000, 0., 5.);
+    hists_1d_["h_AvgMass_mumu_hh_BC"]                             = new TH1F("h_AvgMass_mumu_hh_BC","",5000,0.,5.);
+    hists_1d_["h_DiChHadVtxVz"]                                   = new TH1F("h_DiChHadVtxVz", "", 5000, -500., 500.);
+    hists_1d_["h_DiChHadVtxChi2"]                                 = new TH1F("h_DiChHadVtxChi2", "", 5000, 0., 100.);
+    hists_1d_["h_DiChHadVtxChi2Ndof"]                             = new TH1F("h_DiChHadVtxChi2Ndof", "", 5000, 0., 100.);
+    hists_1d_["h_DiChHadVtxNdof"]                                 = new TH1F("h_DiChHadVtxNdof", "", 500, 0., 10.);
+    hists_1d_["h_DiChHadVtxDz"]                                   = new TH1F("h_DiChHadVtxDz", "", 5000, -500., 500.);
+    hists_1d_["h_DiMuonVtxVz"]                                   = new TH1F("h_DiMuonVtxVz", "", 5000, -500., 500.);
+    hists_1d_["h_DiMuonVtxChi2"]                                 = new TH1F("h_DiMuonVtxChi2", "", 5000, 0., 100.);
+    hists_1d_["h_DiMuonVtxChi2Ndof"]                             = new TH1F("h_DiMuonVtxChi2Ndof", "", 5000, 0., 100.);
+    hists_1d_["h_DiMuonVtxNdof"]                                 = new TH1F("h_DiMuonVtxNdof", "", 500, 0., 10.);
+    hists_1d_["h_DiMuonVtxDz"]                                   = new TH1F("h_DiMuonVtxDz", "", 5000, -500., 500.);
+
     
 
 
@@ -132,24 +148,24 @@ int main(int argc, char* argv[]) {
     hists_1d_["Cutflow"]->GetXaxis()->SetBinLabel(8, "higgs mass");
     hists_1d_["Cutflow"]->GetXaxis()->SetBinLabel(9, "scalar mass");
 
-    hists_2d_["h_leadingMuon_RelIso_leadingHadron_RelIso"]               = new TH2F("h_leadingMuon_RelIso_leadingHadron_RelIso", "", 5000, 0., 10., 5000, 0., 10.);
-    hists_2d_["h_leadingMuon_SumPtCh_leadingHadron_SumPtCh"]             = new TH2F("h_leadingMuon_SumPtCh_leadingHadron_SumPtCh","", 5000, 0., 100., 5000, 0., 100.);    
-    hists_2d_["h_leadingMuon_SumPtNh_leadingHadron_SumPtNh"]             = new TH2F("h_leadingMuon_SumPtNh_leadingHadron_SumPtNh","", 5000, 0., 100., 5000, 0., 100.);
-    hists_2d_["h_leadingMuon_SumPtPh_leadingHadron_SumPtPh"]             = new TH2F("h_leadingMuon_SumPtPh_leadingHadron_SumPtPh","", 5000, 0., 100., 5000, 0., 100.);
-    hists_2d_["h_leadingMuon_SumPtPU_leadingHadron_SumPtPU"]             = new TH2F("h_leadingMuon_SumPtPU_leadingHadron_SumPtPU","", 5000, 0., 100., 5000, 0., 100.);
-    hists_2d_["h_subleadingMuon_RelIso_subleadingHadron_RelIso"]               = new TH2F("h_subleadingMuon_RelIso_subleadingHadron_RelIso", "", 5000, 0., 10., 5000, 0., 10.);
-    hists_2d_["h_subleadingMuon_SumPtCh_subleadingHadron_SumPtCh"]             = new TH2F("h_subleadingMuon_SumPtCh_subleadingHadron_SumPtCh","", 5000, 0., 100., 5000, 0., 100.);    
-    hists_2d_["h_subleadingMuon_SumPtNh_subleadingHadron_SumPtNh"]             = new TH2F("h_subleadingMuon_SumPtNh_subleadingHadron_SumPtNh","", 5000, 0., 100., 5000, 0., 100.);
-    hists_2d_["h_subleadingMuon_SumPtPh_subleadingHadron_SumPtPh"]             = new TH2F("h_subleadingMuon_SumPtPh_subleadingHadron_SumPtPh","", 5000, 0., 100., 5000, 0., 100.);
-    hists_2d_["h_subleadingMuon_SumPtPU_subleadingHadron_SumPtPU"]             = new TH2F("h_subleadingMuon_SumPtPU_subleadingHadron_SumPtPU","", 5000, 0., 100., 5000, 0., 100.);
-    hists_2d_["h_DiMuonMass_DiChHadMass"]               = new TH2F("h_DiMuonMass_DiChHadMass", "", 1000, 0., 10., 1000, 0., 10.);
-    hists_2d_["h_DiMuonVtxSignificance_DiChHadVtxSignificance"]         = new TH2F("h_DiMuonVtxSignificance_DiChHadVtxSignificance", "", 2000, 0., 1000., 2000, 0., 1000.);
-    hists_2d_["h_DiMuonVtxLxy_DiChHadVtxLxy"]         = new TH2F("h_DiMuonVtxLxy_DiChHadVtxLxy", "", 5000, 0., 1000., 5000, 0., 1000.);
-    hists_2d_["h_DiMuonVtxLxy_DiMuonVtxSigma"]               = new TH2F("h_DiMuonVtxLxy_DiMuonVtxSigma", "", 5000, 0., 1000., 1000, 0., 500.);
-    hists_2d_["h_DiChHadVtxLxy_DiChHadVtxSigma"]               = new TH2F("h_DiChHadVtxLxy_DiChHadVtxSigma", "", 5000, 0., 1000., 1000, 0., 500.);
+    hists_2d_["h_leadingMuon_RelIso_leadingHadron_RelIso"]           = new TH2F("h_leadingMuon_RelIso_leadingHadron_RelIso", "", 5000, 0., 10., 5000, 0., 10.);
+    hists_2d_["h_leadingMuon_SumPtCh_leadingHadron_SumPtCh"]         = new TH2F("h_leadingMuon_SumPtCh_leadingHadron_SumPtCh","", 5000, 0., 100., 5000, 0., 100.);    
+    hists_2d_["h_leadingMuon_SumPtNh_leadingHadron_SumPtNh"]         = new TH2F("h_leadingMuon_SumPtNh_leadingHadron_SumPtNh","", 5000, 0., 100., 5000, 0., 100.);
+    hists_2d_["h_leadingMuon_SumPtPh_leadingHadron_SumPtPh"]         = new TH2F("h_leadingMuon_SumPtPh_leadingHadron_SumPtPh","", 5000, 0., 100., 5000, 0., 100.);
+    hists_2d_["h_leadingMuon_SumPtPU_leadingHadron_SumPtPU"]         = new TH2F("h_leadingMuon_SumPtPU_leadingHadron_SumPtPU","", 5000, 0., 100., 5000, 0., 100.);
+    hists_2d_["h_subleadingMuon_RelIso_subleadingHadron_RelIso"]     = new TH2F("h_subleadingMuon_RelIso_subleadingHadron_RelIso", "", 5000, 0., 10., 5000, 0., 10.);
+    hists_2d_["h_subleadingMuon_SumPtCh_subleadingHadron_SumPtCh"]   = new TH2F("h_subleadingMuon_SumPtCh_subleadingHadron_SumPtCh","", 5000, 0., 100., 5000, 0., 100.);    
+    hists_2d_["h_subleadingMuon_SumPtNh_subleadingHadron_SumPtNh"]   = new TH2F("h_subleadingMuon_SumPtNh_subleadingHadron_SumPtNh","", 5000, 0., 100., 5000, 0., 100.);
+    hists_2d_["h_subleadingMuon_SumPtPh_subleadingHadron_SumPtPh"]   = new TH2F("h_subleadingMuon_SumPtPh_subleadingHadron_SumPtPh","", 5000, 0., 100., 5000, 0., 100.);
+    hists_2d_["h_subleadingMuon_SumPtPU_subleadingHadron_SumPtPU"]   = new TH2F("h_subleadingMuon_SumPtPU_subleadingHadron_SumPtPU","", 5000, 0., 100., 5000, 0., 100.);
+    hists_2d_["h_DiMuonMass_DiChHadMass"]                            = new TH2F("h_DiMuonMass_DiChHadMass", "", 5000, 0., 5., 5000, 0., 5.);
+    hists_2d_["h_DiMuonVtxSignificance_DiChHadVtxSignificance"]      = new TH2F("h_DiMuonVtxSignificance_DiChHadVtxSignificance", "", 2000, 0., 1000., 2000, 0., 1000.);
+    hists_2d_["h_DiMuonVtxLxy_DiChHadVtxLxy"]                        = new TH2F("h_DiMuonVtxLxy_DiChHadVtxLxy", "", 5000, 0., 1000., 5000, 0., 1000.);
+    hists_2d_["h_DiMuonVtxLxy_DiMuonVtxSigma"]                       = new TH2F("h_DiMuonVtxLxy_DiMuonVtxSigma", "", 5000, 0., 1000., 1000, 0., 500.);
+    hists_2d_["h_DiChHadVtxLxy_DiChHadVtxSigma"]                     = new TH2F("h_DiChHadVtxLxy_DiChHadVtxSigma", "", 5000, 0., 1000., 1000, 0., 500.);
     // hists_1d_["h_DiMuonVtxSigma"]                = new TH1F("h_DiMuonVtxSigma", "", 500, 0., 100.);
     //before application of cut
-    hists_2d_["h_DiMuonMass_DiChHadMass_BC"]               = new TH2F("h_DiMuonMass_DiChHadMass_BC", "", 1000, 0., 10., 1000, 0., 10.);
+    hists_2d_["h_DiMuonMass_DiChHadMass_BC"]                         = new TH2F("h_DiMuonMass_DiChHadMass_BC", "", 5000, 0., 5., 5000, 0., 5.);
 
 
 
@@ -193,7 +209,8 @@ int main(int argc, char* argv[]) {
         po::value<std::string>(&fweights)->default_value(fweights),
         "The weights file to be used. Put "" for none")(
         "hack",
-        po::value<bool>(&ishack_)->default_value(false), "Pass directly to dataset conf processing");
+        po::value<bool>(&ishack_)->default_value(false), "Pass directly to dataset conf processing")(
+        "skim", po::bool_switch(&isSkim_), "Use skimmed datasets");
     po::variables_map vm;
 
     try {
@@ -220,14 +237,14 @@ int main(int argc, char* argv[]) {
 
     // Some vectors that will be filled in the parsing
     totalLumi = 0;
-
     try {
         Parser::parse_config(config,
                             //  cuts,
                              datasets,
                              totalLumi,
                              usePostLepTree,
-                             ishack_); //last par is for hack, currently true
+                             ishack_,
+                             isSkim_); //last par is for hack, currently true
         // std::vector<std::string> tempconf;
         // tempconf.push_back(config);
         // std::cout<<"See config here -"<<config<<","<<typeid(tempconf).name()<<std::endl;
@@ -259,6 +276,14 @@ int main(int argc, char* argv[]) {
 		std::ofstream masstail_evts;
 		isotail_evts.open ("interesting_events_iso.txt");
 		masstail_evts.open ("interesting_events_mass.txt");
+    double cut_trig = 0; 
+    double cut_met = 0; 
+    double cut_mu_sel = 0; 
+    double cut_hadron_sel = 0; 
+    double cut_dimuon = 0; 
+    double cut_dihadron = 0; 
+    double cut_higgsmass = 0; 
+    double cut_scalarmass = 0; 
 		// Begin to loop over all datasets
     for (auto dataset = datasets.begin(); dataset != datasets.end(); ++dataset) {
       datasetFilled = false;
@@ -276,8 +301,8 @@ int main(int argc, char* argv[]) {
 	      }
       }
       else {
-	std::cout << postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root" << std::endl;
-	datasetChain->Add((postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root").c_str());
+        std::cout << postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root" << std::endl;
+        datasetChain->Add((postLepSelSkimInputDir + dataset->name() + "mumuSmallSkim.root").c_str());
       }
 
       // extract the dataset weight. MC = (lumi*crossSection)/(totalEvents), data = 1.0
@@ -285,28 +310,31 @@ int main(int argc, char* argv[]) {
       float datasetWeight{dataset->getDatasetWeight(totalLumi)};
       std::cout << datasetChain->GetEntries() << " number of items in tree. Dataset weight: " << datasetWeight << std::endl;
       if (datasetChain->GetEntries() == 0) {
-	std::cout << "No entries in tree, skipping..." << std::endl;
-	continue;
+        std::cout << "No entries in tree, skipping..." << std::endl;
+        continue;
       }
 
       AnalysisEvent event{dataset->isMC(), datasetChain, is2016_, is2018_};
+
       
       Long64_t numberOfEvents{datasetChain->GetEntries()};
       if (nEvents && nEvents < numberOfEvents) numberOfEvents = nEvents;
-     	TMVA::gConfig().SetDrawProgressBar(true);	 
+     	TMVA::gConfig().SetDrawProgressBar(true);
       TMVA::Timer* lEventTimer{ new TMVA::Timer{boost::numeric_cast<int>(numberOfEvents), "Running over dataset ..."}}; 
       lEventTimer->DrawProgressBar(0, "");
-      totalEvents += numberOfEvents;
-      TFile* f_wts;
       float sumWeights = 0.;
-      if ((dataset->isMC())&&(fweights!="")&&(dataset->isOldNtuple())) {
-        f_wts = new TFile(fweights.c_str(),"READ");
-        TH1F* h_weights = (TH1F*)f_wts->Get("weightHisto");
-        sumWeights += h_weights->GetBinContent(1) - h_weights->GetBinContent(2);
+      if (!isSkim_) {
+        TFile* f_wts;
+        if ((dataset->isMC())&&(fweights!="")&&(dataset->isOldNtuple())) {
+          f_wts = new TFile(fweights.c_str(),"READ");
+          TH1F* h_weights = (TH1F*)f_wts->Get("weightHisto"); //this weightHisto was generated privately by filling weight of all stored events (NOT all events)
+          sumWeights += h_weights->GetBinContent(1) - h_weights->GetBinContent(2);
+          // std::cout<<"Look at sum of weights:"<<sumWeights<<std::endl;
+        }
       }
       if ((dataset->isMC())) std::cout<<"Sum of weights (Nevts):"<<sumWeights<<std::endl;
       if (sumWeights<=0) std::cout<<"Something wrong with the sum of weights! Check pls."<<std::endl; //temporary measure until new ntuples
-
+      //sum weights stored into datasetWeight from config - check config parser
       for (Long64_t i{0}; i < numberOfEvents; i++) {
 
 				verbose = false;
@@ -321,19 +349,6 @@ int main(int argc, char* argv[]) {
         // std::cout<<"Pointer smh inside main:"<<&hists_1d_<<std::endl;
         SharedFunctions shf{false, verbose, &hists_1d_, &hists_2d_};
 	      //else SharedFunctions shf{false, true};
-	      float eventWeight = 1.;
-        if (dataset->isMC()) {
-          //modification for old ntuple
-          if (dataset->isOldNtuple()&&(sumWeights>0)) eventWeight *= (event.processMCWeight/sumWeights); //*evtweight/nevts
-          else eventWeight *= event.processMCWeight; //*weight
-          eventWeight *= datasetWeight; //multiply cs*L/sumWeights (for not old ntuples) for old, cs*L
-        }
-        event.eventWeight = eventWeight;
-        // std::cout<<"eventWeight, processMCWeight, sumWeights, datasetweight:"<<eventWeight<<","<<event.processMCWeight<<","<<sumWeights<<","<<datasetWeight<<std::endl;
-				TString dname(dataset->name());
-				bool MCSignal = dname.Contains("HToSS");
-				if ((MCSignal)&&(!shf.GenLevelCheck(event,false))) continue;
-        hists_1d_["Cutflow"]->Fill(1, eventWeight);
 
         // For make cuts here in this class itself
         const YAML::Node config{YAML::LoadFile(cuts_config)};
@@ -342,12 +357,28 @@ int main(int argc, char* argv[]) {
         bool metfilters_flag = config["metfilters"].as<bool>();
         const YAML::Node cuts{config["cuts"]};
 
-        // TString hadronType = "kaon";// for now, change manually, but later, modify to read from a parser
-        //TString hadronType = "pion";// for now, change manually, but later, modify to read from a parser
         shf.massAssumption(hadronType);
         if (hadronType.Contains("kaon")) chsMass_ = 0.493677;
         // std::cout<<"chsMass: "<<chsMass_<<std::endl;
         // std::cout<<"From sharedfunction, chsMass: "<<shf.chsMass_<<std::endl;
+        
+        float eventWeight = 1.;
+        if (dataset->isMC()) {
+          //modification for old ntuple?
+          if (dataset->isOldNtuple()&&(sumWeights>0)) eventWeight *= (event.processMCWeight/sumWeights); //*evtweight/nevts
+          else eventWeight *= event.processMCWeight; //*weight
+          eventWeight *= datasetWeight; //multiply cs*L/sumWeights (for not old ntuples) for old, cs*L
+        }
+        event.eventWeight = eventWeight;
+        // std::cout<<"eventWeight, processMCWeight, sumWeights, datasetweight:"<<eventWeight<<","<<event.processMCWeight<<","<<sumWeights<<","<<datasetWeight<<std::endl;
+				
+        TString dname(dataset->name());
+				bool MCSignal = dname.Contains("HToSS");
+				// bool MCSignal = false;
+				// if ((MCSignal)&&(!shf.GenLevelCheck(event,false))) continue;
+        numberofevts += 1;
+        totalEvents += eventWeight;
+        hists_1d_["Cutflow"]->Fill(1, eventWeight);
 
         
 	      const bool passSingleMuonTrigger {event.muTrig()}, passDimuonTrigger {event.mumuTrig()};
@@ -372,12 +403,15 @@ int main(int argc, char* argv[]) {
 	        if ( !passSingleMuonTrigger ) continue;
         }
         hists_1d_["Cutflow"]->Fill(2, eventWeight);
+        // cut_trig+=eventWeight;
+        cut_trig+=1;
 
         if (metfilters_flag) {
 	        if (!event.metFilters()) continue;
           hists_1d_["Cutflow"]->Fill(3, eventWeight);
         }
-
+        // cut_met+=eventWeight;
+        cut_met+=1;
         // Below for muons 
        /*event selection criteria for leptons*/
         const YAML::Node muon_cuts{cuts["muons"]};
@@ -400,8 +434,11 @@ int main(int argc, char* argv[]) {
         shf.diMuonPt_ = dimuon_cuts["pt"].as<double>();
         shf.diMuonOppCharge_ = dimuon_cuts["charge"].as<std::string>() == "OS"; //opposite sign or same sign muons
 
-        shf.looseChsSumPtCh_ = dihadron_cuts["sumptch"].as<double>();
-        shf.looseChsSumPtChLeading_ = dihadron_cuts["sumptchLeading"].as<double>();
+        // shf.looseChsSumPtCh_ = dihadron_cuts["sumptch"].as<double>();
+        // shf.looseChsSumPtChLeading_ = dihadron_cuts["sumptchLeading"].as<double>();
+        shf.looseChsRelIso_ = dihadron_cuts["reliso"].as<double>();
+        shf.looseChsRelIsoLeading_ = dihadron_cuts["relisoLeading"].as<double>();
+
         shf.maxChsDeltaR_ = dihadron_cuts["dR"].as<double>();
         shf.diChsPt_ = dihadron_cuts["pt"].as<double>();
         shf.diChsOppCharge_ = dihadron_cuts["charge"].as<std::string>() == "OS"; //opposite sign or same sign tracks
@@ -420,12 +457,14 @@ int main(int argc, char* argv[]) {
         event.muonIndexLoose = shf.getLooseMuons(event, muon_cuts["flag"].as<bool>());
         if ( event.muonIndexLoose.size() < muon_cuts["number"].as<int>() ) continue;
         hists_1d_["Cutflow"]->Fill(4, eventWeight);
+        // cut_mu_sel+=eventWeight;
+        cut_mu_sel+=1;
             
-        // hists_1d_["h_leadingMuon_RelIso_BC"]         = new TH1F("h_leadingMuon_RelIso", "", 5000, 0., 10.);
-        // hists_1d_["h_subleadingMuon_RelIso_BC"]      = new TH1F("h_subleadingMuon_RelIso_BC", "", 5000, 0., 10.);
 
         if ( !shf.getDileptonCand( event, event.muonIndexLoose , dimuon_cuts["flag"].as<bool>()  )) continue;
         hists_1d_["Cutflow"]->Fill(5, eventWeight);
+        // cut_dimuon+=eventWeight;
+        cut_dimuon+=1;
         // }
 	      
         
@@ -433,13 +472,13 @@ int main(int argc, char* argv[]) {
         //Below for charged hadrons
         /*event selection criteria for hadrons*/
         // if (chs_cuts["flag"].as<bool>()) {
-                  // hists_1d_["h_leadingChHad_RelIso_BC"]        = new TH1F("h_leadingChHad_RelIso_BC", "", 5000, 0., 10.);
-        // hists_1d_["h_subleadingChHad_RelIso_BC"]     = new TH1F("h_subleadingChHad_RelIso_BC", "", 5000, 0., 10.);
-        // hists_1d_["h_DiChHadPt_BC"]                  = new TH1F("h_DiChHadPt_BC", "", 1000, 0., 150.);
 
         event.chsIndex = shf.getChargedHadronTracks(event, chs_cuts["flag"].as<bool>());
         if ( event.chsIndex.size() < chs_cuts["number"].as<int>() ) continue;
         hists_1d_["Cutflow"]->Fill(6, eventWeight);
+        // cut_hadron_sel+=eventWeight;
+        cut_hadron_sel+=1;
+
 
         //std::cout << "Enters event, found 2 hadrons!" << std::endl;
         if ( !shf.getDihadronCand( event, event.chsIndex, dihadron_cuts["flag"].as<bool>()) ) { //dihadron pt cut included here
@@ -447,14 +486,19 @@ int main(int argc, char* argv[]) {
           continue; //fine for now
         }
         hists_1d_["Cutflow"]->Fill(7, eventWeight);
+        // cut_dihadron+=eventWeight;
+        cut_dihadron+=1;
         // }
         if (recohiggs_cuts["flag"].as<bool>()) {
-                  // hists_1d_["h_recoHiggsMass_BC"]              = new TH1F("h_recoHiggsMass_BC", "", 20000, 0., 1000.);
-        // hists_2d_["h_DiMuonMass_DiChHadMass_BC"]               = new TH2F("h_DiMuonMass_DiChHadMass_BC", "", 1000, 0., 10., 1000, 0., 10.);
-
-          if ( !shf.HiggsWindow(event) ) continue; 
+          if ( !shf.HiggsWindow(event,dataset->isMC()) ) continue; 
           hists_1d_["Cutflow"]->Fill(8, eventWeight);
         }
+        if ((!shf.SR_) && (!dataset->isMC())) { // blinding the peak in data
+          double higgsMass {(event.chsPairTrkVecRefitted.first+event.chsPairTrkVecRefitted.second+event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M()};
+          if ((higgsMass >= shf.higgsPeakLow_) && (higgsMass <= shf.higgsPeakHigh_)) continue;
+        }
+        // cut_higgsmass+=eventWeight;
+        cut_higgsmass+=1;
 
         if (recoscalar_cuts["flag"].as<bool>()) {
           // std::cout<<"enters mass window"<<std::endl;
@@ -468,29 +512,29 @@ int main(int argc, char* argv[]) {
           if ( !shf.MassCompatibility(event,func_lowerbound_,func_higherbound_) ) continue; 
           hists_1d_["Cutflow"]->Fill(9, eventWeight);
         }
+        // cut_scalarmass+=eventWeight;
+        cut_scalarmass+=1;
+
 
         /*Now analyse*/
         fillMuonHists(event, "leadingMuon", event.zPairIndex.first, eventWeight);
         fillMuonHists(event, "subleadingMuon", event.zPairIndex.second, eventWeight);
-	      hists_1d_["h_DiMuonDeltaR"]->Fill(ROOT::Math::VectorUtil::DeltaR(event.zPairLeptons.first,event.zPairLeptons.second), eventWeight);
-	      hists_1d_["h_DiMuonMass"]->Fill((event.zPairLeptons.first + event.zPairLeptons.second).M(), eventWeight);
-	      hists_1d_["h_DiMuonPt"]->Fill((event.zPairLeptons.first + event.zPairLeptons.second).Pt(), eventWeight);
+	      hists_1d_["h_DiMuonDeltaR"]->Fill(ROOT::Math::VectorUtil::DeltaR(event.zPairLeptonsRefitted.first,event.zPairLeptonsRefitted.second), eventWeight);
+	      hists_1d_["h_DiMuonMass"]->Fill((event.zPairLeptonsRefitted.first + event.zPairLeptonsRefitted.second).M(), eventWeight);
+	      hists_1d_["h_DiMuonPt"]->Fill((event.zPairLeptonsRefitted.first + event.zPairLeptonsRefitted.second).Pt(), eventWeight);
 	      //std::cout<<"Number of tracks:"<<nTrksInCone(event.zPairIndex.first,event,0.4)<<std::endl;    
-	      if (event.muonPF2PATComRelIsodBeta[event.zPairIndex.first] == 0.) {
-          hists_1d_["h_DiMuonDeltaRAtZeroIso"]->Fill(ROOT::Math::VectorUtil::DeltaR(event.zPairLeptons.first,event.zPairLeptons.second), eventWeight);        
-        }
 	      //std::cout << "Enters event, found dihadron object!" << std::endl;
 	      /*Now analyse*/
         fillChHadHists(event, "leadingChHad", event.chsPairIndex.first, eventWeight);
         fillChHadHists(event, "subleadingChHad", event.chsPairIndex.second, eventWeight);
 	      //std::cout << "Enters event, Filled the histos for hadrons!" << std::endl;
-	      hists_1d_["h_DiChHadDeltaR"]->Fill(ROOT::Math::VectorUtil::DeltaR(event.chsPairVec.first,event.chsPairVec.second), eventWeight);
-	      hists_1d_["h_DiChHadMass"]->Fill((event.chsPairVec.first + event.chsPairVec.second).M(), eventWeight);
-	      hists_1d_["h_DiChHadPt"]->Fill((event.chsPairVec.first + event.chsPairVec.second).Pt(), eventWeight);
+	      hists_1d_["h_DiChHadDeltaR"]->Fill(ROOT::Math::VectorUtil::DeltaR(event.chsPairTrkVecRefitted.first,event.chsPairTrkVecRefitted.second), eventWeight);
+	      hists_1d_["h_DiChHadMass"]->Fill((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).M(), eventWeight);
+	      hists_1d_["h_DiChHadPt"]->Fill((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).Pt(), eventWeight);
 
-        float mass_avg = ((event.chsPairVec.first + event.chsPairVec.second).M() + (event.zPairLeptons.first + event.zPairLeptons.second).M())/2.;
+        float mass_avg = ((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).M() + (event.zPairLeptonsRefitted.first + event.zPairLeptonsRefitted.second).M())/2.;
         hists_1d_["h_AvgMass_mumu_hh"]->Fill(mass_avg,eventWeight);
-        hists_1d_["h_recoHiggsMass"]->Fill((event.chsPairVec.first + event.chsPairVec.second+event.zPairLeptons.first + event.zPairLeptons.second).M(),eventWeight);
+        hists_1d_["h_recoHiggsMass"]->Fill((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second+event.zPairLeptonsRefitted.first + event.zPairLeptonsRefitted.second).M(),eventWeight);
         
         int k;
         for (k=0;k<event.numPVs;k++) {
@@ -498,7 +542,7 @@ int main(int argc, char* argv[]) {
         }
         double pvCov_arr[9] = {event.pvCov00[k], event.pvCov01[k], event.pvCov02[k], event.pvCov10[k], event.pvCov11[k], event.pvCov12[k], event.pvCov20[k], event.pvCov21[k], event.pvCov22[k]};
         double muon_svCov_arr[9] = {event.muonTkPairPF2PATTkVtxCov00[event.mumuTrkIndex], event.muonTkPairPF2PATTkVtxCov01[event.mumuTrkIndex], event.muonTkPairPF2PATTkVtxCov02[event.mumuTrkIndex], event.muonTkPairPF2PATTkVtxCov10[event.mumuTrkIndex], event.muonTkPairPF2PATTkVtxCov11[event.mumuTrkIndex], event.muonTkPairPF2PATTkVtxCov12[event.mumuTrkIndex], event.muonTkPairPF2PATTkVtxCov20[event.mumuTrkIndex], event.muonTkPairPF2PATTkVtxCov21[event.mumuTrkIndex], event.muonTkPairPF2PATTkVtxCov22[event.mumuTrkIndex]};
-        ROOT::Math::SVector<double, 3>  muon_distVecXY(event.muonTkPairPF2PATTkVx[event.chsPairTrkIndex] - event.pvX[k], event.muonTkPairPF2PATTkVy[event.chsPairTrkIndex] - event.pvY[k], 0.);
+        ROOT::Math::SVector<double, 3>  muon_distVecXY(event.muonTkPairPF2PATTkVx[event.mumuTrkIndex] - event.pvX[k], event.muonTkPairPF2PATTkVy[event.mumuTrkIndex] - event.pvY[k], 0.);
         ROOT::Math::SMatrix<double,3> muon_svCov(muon_svCov_arr,9);
         ROOT::Math::SMatrix<double,3> pvCov(pvCov_arr,9);
         auto muon_totalCov = pvCov + muon_svCov;
@@ -515,6 +559,17 @@ int main(int argc, char* argv[]) {
         double chs_similarity_val = sqrt(ROOT::Math::Similarity(chs_totalCov, chs_distVecXY/chs_distMagXY));
         double chs_sigmaDistMagXY = chs_similarity_val/chs_distMagXY;
         double chs_significance = chs_distMagXY/chs_similarity_val;
+
+        hists_1d_["h_DiChHadVtxVz"]->Fill(event.chsTkPairTkVz[event.chsPairTrkIndex],eventWeight);
+        hists_1d_["h_DiChHadVtxChi2"]->Fill(event.chsTkPairTkVtxChi2[event.chsPairTrkIndex],eventWeight);
+        hists_1d_["h_DiChHadVtxNdof"]->Fill(event.chsTkPairTkVtxNdof[event.chsPairTrkIndex],eventWeight);
+        hists_1d_["h_DiChHadVtxChi2Ndof"]->Fill(event.chsTkPairTkVtxChi2[event.chsPairTrkIndex]/event.chsTkPairTkVtxNdof[event.chsPairTrkIndex],eventWeight);
+        hists_1d_["h_DiChHadVtxDz"]->Fill(event.chsTkPairTkVz[event.chsPairTrkIndex] - event.pvZ[k],eventWeight);
+        hists_1d_["h_DiMuonVtxVz"]->Fill(event.muonTkPairPF2PATTkVz[event.mumuTrkIndex],eventWeight);
+        hists_1d_["h_DiMuonVtxChi2"]->Fill(event.muonTkPairPF2PATTkVtxChi2[event.mumuTrkIndex],eventWeight);
+        hists_1d_["h_DiMuonVtxNdof"]->Fill(event.muonTkPairPF2PATTkVtxNdof[event.mumuTrkIndex],eventWeight);
+        hists_1d_["h_DiMuonVtxChi2Ndof"]->Fill(event.muonTkPairPF2PATTkVtxChi2[event.mumuTrkIndex]/event.muonTkPairPF2PATTkVtxNdof[event.mumuTrkIndex],eventWeight);
+        hists_1d_["h_DiMuonVtxDz"]->Fill(event.muonTkPairPF2PATTkVz[event.mumuTrkIndex] - event.pvZ[k],eventWeight);
 
         hists_1d_["h_DiChHadVtxSignificance"]->Fill(chs_significance,eventWeight);
         hists_1d_["h_DiMuonVtxSignificance"]->Fill(muon_significance,eventWeight);
@@ -538,15 +593,12 @@ int main(int argc, char* argv[]) {
         hists_2d_["h_subleadingMuon_SumPtPh_subleadingHadron_SumPtPh"]->Fill(event.zPairPhIso.second,event.chsPairPhIso.second,eventWeight);
         hists_2d_["h_subleadingMuon_SumPtPU_subleadingHadron_SumPtPU"]->Fill(event.zPairPuIso.second,event.chsPairPuIso.second,eventWeight);
 
-        hists_2d_["h_DiMuonMass_DiChHadMass"]->Fill((event.zPairLeptons.first + event.zPairLeptons.second).M(),(event.chsPairVec.first + event.chsPairVec.second).M(),eventWeight);
+        hists_2d_["h_DiMuonMass_DiChHadMass"]->Fill((event.zPairLeptonsRefitted.first + event.zPairLeptonsRefitted.second).M(),(event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).M(),eventWeight);
 	      
 	      //std::cout<<"Number of tracks:"<<nTrksInCone(event.zPairIndex.first,event,0.4)<<std::endl;    
-	      if (event.chsPairRelIso.first == 0.) {
-          hists_1d_["h_DiChHadDeltaRAtZeroIso"]->Fill(ROOT::Math::VectorUtil::DeltaR(event.chsPairVec.first,event.chsPairVec.second), eventWeight);        
-        }
 
 				if ((event.chsPairRelIso.first > 2)&&(MCSignal)) isotail_evts <<event.eventRun<<":"<<event.eventLumiblock<<":"<<event.eventNum<<"\n";
-				if (((event.chsPairVec.first + event.chsPairVec.second).M()<=1.0) && (MCSignal)) masstail_evts <<event.eventRun<<":"<<event.eventLumiblock<<":"<<event.eventNum<<"\n";
+				if (((event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).M()<=1.0) && (MCSignal)) masstail_evts <<event.eventRun<<":"<<event.eventLumiblock<<":"<<event.eventNum<<"\n";
 
 
 	      //std::cout << "Enters event, processes hadrons" << std::endl;
@@ -556,7 +608,18 @@ int main(int argc, char* argv[]) {
 
 		isotail_evts.close();
 		masstail_evts.close();
-    
+
+    std::cout<<"Number of events: "<<numberofevts<<std::endl;
+    std::cout<<"Total events:"<<totalEvents<<std::endl;
+    std::cout<<"After trigger cut:"<<cut_trig<<std::endl;
+    std::cout<<"After MET filters cut:"<<cut_met<<std::endl;
+    std::cout<<"After muon selection cut:"<<cut_mu_sel<<std::endl;
+    std::cout<<"After dimuon cut:"<<cut_dimuon<<std::endl;
+    std::cout<<"After hadron selection cut:"<<cut_hadron_sel<<std::endl;
+    std::cout<<"After dihadron cut:"<<cut_dihadron<<std::endl;
+    std::cout<<"After higgs mass cut:"<<cut_higgsmass<<std::endl;
+    std::cout<<"After scalar mass cut:"<<cut_scalarmass<<std::endl;
+
 		TFile* outFile{new TFile{outFileString.c_str(), "RECREATE"}};
     outFile->cd();
 
@@ -567,6 +630,8 @@ int main(int argc, char* argv[]) {
     writeHists("subleadingMuon");
     writeHists("leadingChHad");
     writeHists("subleadingChHad");
+    std::cout<<"Filled hists"<<std::endl;
+
     hists_1d_["h_DiMuonDeltaR"]->Write();
 		hists_1d_["h_DiMuonPt"]->Write();             
     hists_1d_["h_DiMuonMass"]->Write();
@@ -598,11 +663,15 @@ int main(int argc, char* argv[]) {
     hists_1d_["h_DiMuonVtxSigma"]->Write();
     hists_2d_["h_DiMuonVtxLxy_DiMuonVtxSigma"]->Write();
     hists_2d_["h_DiChHadVtxLxy_DiChHadVtxSigma"]->Write();
+    std::cout<<"Filled hists 2"<<std::endl;
+
     
     // float norm = hists_1d_["Cutflow"]->GetBinContent(1);
     // hists_1d_["Cutflow"]->Scale(1./norm);
     // for(int i=1;i<=hists_1d_["Cutflow"]->GetNbinsX();i++) hists_1d_["Cutflow"]->SetBinContent(i,hists_1d_["Cutflow"]->GetBinContent(i)/norm);
 		hists_1d_["Cutflow"]->Write();
+    std::cout<<"Filled hists 3"<<std::endl;
+
     hists_1d_["h_leadingMuon_RelIso_BC"]->Write();    
     hists_1d_["h_leadingChHad_RelIso_BC"]->Write();   
     hists_1d_["h_subleadingMuon_RelIso_BC"]->Write(); 
@@ -610,8 +679,28 @@ int main(int argc, char* argv[]) {
     hists_1d_["h_DiChHadPt_BC"]->Write();             
     hists_1d_["h_recoHiggsMass_BC"]->Write();         
     hists_2d_["h_DiMuonMass_DiChHadMass_BC"]->Write();
-
+    hists_1d_["h_DiChHadMass_BC"]->Write();
+    hists_1d_["h_DiMuonMass_BC"]->Write();
+    hists_1d_["h_AvgMass_mumu_hh_BC"]->Write();
+    hists_1d_["h_DiChHadVtxVz"]->Write();
+    hists_1d_["h_DiChHadVtxChi2"]->Write();
+    hists_1d_["h_DiChHadVtxNdof"]->Write();
+    hists_1d_["h_DiChHadVtxChi2Ndof"]->Write();
+    hists_1d_["h_DiChHadVtxDz"]->Write();
+    hists_1d_["h_DiMuonVtxVz"]->Write();
+    hists_1d_["h_DiMuonVtxChi2"]->Write();
+    hists_1d_["h_DiMuonVtxNdof"]->Write();
+    hists_1d_["h_DiMuonVtxChi2Ndof"]->Write();
+    hists_1d_["h_DiMuonVtxDz"]->Write();
     outFile->Close();
+
+    // float ngen = hists_1d_["Cutflow"]->GetBinContent(0);
+    // float nTrigAndFilters = hists_1d_["Cutflow"]->GetBinContent(2);
+    // float nfinal = hists_1d_["Cutflow"]->GetBinContent(9);
+    // std::cout << "Generated events:" << ngen << std::endl;    
+    // std::cout << "Passing trigger & MET filters events:" << nTrigAndFilters << std::endl;    
+    // std::cout << "Final passed events:" << nfinal << std::endl;    
+
 
 //  std::cout << "Max nGenPar: " << maxGenPars << std::endl;    
     auto timerStop = std::chrono::high_resolution_clock::now(); 
@@ -635,32 +724,41 @@ int nTrksInCone( ROOT::Math::PxPyPzMVector& particle, const AnalysisEvent& event
 }
 void bookHists(const std::string &prefix) {
 	//Some kinematics
-  hists_1d_["h_"+prefix+"Pt"]                       = new TH1F(Form("h_%sPt",prefix.c_str()), "", 5000, 0., 150.);
-  hists_1d_["h_"+prefix+"Eta"]                       = new TH1F(Form("h_%sEta",prefix.c_str()), "", 5000, -3., 3.);
-  hists_1d_["h_"+prefix+"Phi"]                       = new TH1F(Form("h_%sPhi",prefix.c_str()), "", 5000, -4,4);
+  hists_1d_["h_"+prefix+"Pt"]                           = new TH1F(Form("h_%sPt",prefix.c_str()), "", 5000, 0., 150.);
+  hists_1d_["h_"+prefix+"Eta"]                          = new TH1F(Form("h_%sEta",prefix.c_str()), "", 5000, -3., 3.);
+  hists_1d_["h_"+prefix+"Phi"]                          = new TH1F(Form("h_%sPhi",prefix.c_str()), "", 5000, -4,4);
 	//Histograms to study isolation
   hists_1d_["h_"+prefix+"RelIso"]                       = new TH1F(Form("h_%sRelIso",prefix.c_str()), "", 5000, 0., 10.);
   hists_1d_["h_"+prefix+"TrackIso"]                     = new TH1F(Form("h_%sTrackIso",prefix.c_str()), "", 5000, 0., 100.);
-  hists_1d_["h_"+prefix+"SumPtCh"]                   = new TH1F(Form("h_%sSumPtCh",prefix.c_str()),"", 5000, 0., 100.);    
+  hists_1d_["h_"+prefix+"SumPtCh"]                      = new TH1F(Form("h_%sSumPtCh",prefix.c_str()),"", 5000, 0., 100.);    
   hists_1d_["h_"+prefix+"SumPtChRel"]                   = new TH1F(Form("h_%sSumPtChRel",prefix.c_str()),"", 5000, 0., 10.);    
-  hists_1d_["h_"+prefix+"SumPtNh"]                   = new TH1F(Form("h_%sSumPtNh",prefix.c_str()),"", 5000, 0., 100.);
-  hists_1d_["h_"+prefix+"SumPtPh"]                  = new TH1F(Form("h_%sSumPtPh",prefix.c_str()),"", 5000, 0., 100.);
+  hists_1d_["h_"+prefix+"SumPtNh"]                      = new TH1F(Form("h_%sSumPtNh",prefix.c_str()),"", 5000, 0., 100.);
+  hists_1d_["h_"+prefix+"SumPtPh"]                      = new TH1F(Form("h_%sSumPtPh",prefix.c_str()),"", 5000, 0., 100.);
   hists_1d_["h_"+prefix+"SumPtPU"]                      = new TH1F(Form("h_%sSumPtPU",prefix.c_str()),"", 5000, 0., 100.);
-  //TH1F* h_DiMuonDeltaR                {new TH1F("h_DiMuonDeltaR", "", 100, 0., 1.)};
   hists_1d_["h_"+prefix+"TrksInCone"]                   = new TH1F(Form("h_%sTrksInCone",prefix.c_str()), "", 100, 0., 100.);
 	hists_1d_["h_"+prefix+"ChHadFromPVdR"]                = new TH1F(Form("h_%sChHadFromPVdR",prefix.c_str()), "", 1000, 0., 5.);
 	//Investigation at Zero Iso
-	hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]            = new TH1F(Form("h_%sTrackIsoAtZeroIso",prefix.c_str()), "", 5000, 0., 100.);
-  hists_1d_["h_"+prefix+"SumPtChAtZeroIso"]          = new TH1F(Form("h_%sSumPtChAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
-  hists_1d_["h_"+prefix+"SumPtNhAtZeroIso"]          = new TH1F(Form("h_%sSumPtNhAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
-  hists_1d_["h_"+prefix+"SumPtPhAtZeroIso"]         = new TH1F(Form("h_%sSumPtPhAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
-  hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]             = new TH1F(Form("h_%sSumPtPUAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
-  hists_1d_["h_"+prefix+"PtInConeAtZeroIso"]            = new TH1F(Form("h_%sPtInConeAtZeroIso",prefix.c_str()), "", 500, 0., 150.);
-  hists_1d_["h_"+prefix+"EtaInConeAtZeroIso"]           = new TH1F(Form("h_%sEtaInConeAtZeroIso",prefix.c_str()), "", 100, -5., 5.);
-  hists_1d_["h_"+prefix+"PhiInConeAtZeroIso"]           = new TH1F(Form("h_%sPhiInConeAtZeroIso",prefix.c_str()), "", 100, -4., 4.);
-  //  TH1F* h_DiMuonDeltaRAtZeroIso               = new TH1F("h_DiMuonDeltaRAtZeroIso", "", 100, 0., 1.)};
-  hists_1d_["h_"+prefix+"TrksInConeAtZeroIso"]          = new TH1F(Form("h_%sTrksInConeAtZeroIso",prefix.c_str()), "", 100, 0., 100.);
-	
+	// hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]            = new TH1F(Form("h_%sTrackIsoAtZeroIso",prefix.c_str()), "", 5000, 0., 100.);
+  // hists_1d_["h_"+prefix+"SumPtChAtZeroIso"]             = new TH1F(Form("h_%sSumPtChAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
+  // hists_1d_["h_"+prefix+"SumPtNhAtZeroIso"]             = new TH1F(Form("h_%sSumPtNhAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
+  // hists_1d_["h_"+prefix+"SumPtPhAtZeroIso"]             = new TH1F(Form("h_%sSumPtPhAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
+  // hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]             = new TH1F(Form("h_%sSumPtPUAtZeroIso",prefix.c_str()),"", 5000, 0., 100.);
+  // hists_1d_["h_"+prefix+"PtInConeAtZeroIso"]            = new TH1F(Form("h_%sPtInConeAtZeroIso",prefix.c_str()), "", 500, 0., 150.);
+  // hists_1d_["h_"+prefix+"EtaInConeAtZeroIso"]           = new TH1F(Form("h_%sEtaInConeAtZeroIso",prefix.c_str()), "", 100, -5., 5.);
+  // hists_1d_["h_"+prefix+"PhiInConeAtZeroIso"]           = new TH1F(Form("h_%sPhiInConeAtZeroIso",prefix.c_str()), "", 100, -4., 4.);
+  // hists_1d_["h_"+prefix+"TrksInConeAtZeroIso"]          = new TH1F(Form("h_%sTrksInConeAtZeroIso",prefix.c_str()), "", 100, 0., 100.);
+  hists_1d_["h_"+prefix+"PVAscQuality"]           = new TH1F (Form("h_%sPVAscQuality",prefix.c_str()), "", 6, 0.5, 6.5);
+  hists_1d_["h_"+prefix+"PVAscQuality"]->GetXaxis()->SetBinLabel(1, "NotReconstructedPrimary");
+  hists_1d_["h_"+prefix+"PVAscQuality"]->GetXaxis()->SetBinLabel(2, "OtherDeltaZ");
+  hists_1d_["h_"+prefix+"PVAscQuality"]->GetXaxis()->SetBinLabel(3, "CompatibilityBTag");
+  hists_1d_["h_"+prefix+"PVAscQuality"]->GetXaxis()->SetBinLabel(4, "CompatibilityDz");
+  hists_1d_["h_"+prefix+"PVAscQuality"]->GetXaxis()->SetBinLabel(5, "UsedInFitLoose");
+  hists_1d_["h_"+prefix+"PVAscQuality"]->GetXaxis()->SetBinLabel(6, "UsedInFitTight");
+  hists_1d_["h_"+prefix+"Dz"]                           = new TH1F(Form("h_%sDz",prefix.c_str()), "", 5000, -500., 500.);
+  hists_1d_["h_"+prefix+"Vz"]                           = new TH1F(Form("h_%sVz",prefix.c_str()), "", 5000, -500., 500.);
+
+
+
 	const char *PDGs[8] = {"ele","mu","photon","charged hadron from PV","charged hadron from PU","neutral hadron","HF hadron","HF EM"};
 		//std::map<char,std::map<int,int>> PDG_map = {{"ele",{11,1}},{"mu",{13,2}},{"photon",{22,3}},{"charged hadron from PV",{211,4}},{"charged hadron from PU",{211,5}},{"neutral hadron",{130,6}},{"HF hadron",{1,7}},{"HF EM",{2,8}}};
   hists_1d_["h_"+prefix+"PdgIdInConeAtZeroIso"]         = new TH1F(Form("h_%sPdgIdInConeAtZeroIso",prefix.c_str()), "", 8, 0, 8);
@@ -675,158 +773,175 @@ void bookHists(const std::string &prefix) {
 void fillMuonHists(const AnalysisEvent& event, const std::string &prefix, const int idx, const float eventweight){
   ROOT::Math::PxPyPzEVector particle{event.muonPF2PATPX[idx], event.muonPF2PATPY[idx], event.muonPF2PATPZ[idx], event.muonPF2PATE[idx]};
 	hists_1d_["h_"+prefix+"TrackIso"]->Fill(event.muonPF2PATTrackIso[idx] ,eventweight);
+  int PVascqual = event.packedCandsPVquality[event.muonPF2PATPackedCandIndex[idx]];
+  hists_1d_["h_"+prefix+"PVAscQuality"]->Fill(PVascqual > 1 ? PVascqual-1 : PVascqual + 1, eventweight);
+  // event.packedCandsPVquality[idx] > 1 ? event.packedCandsPVquality[idx]-1 : event.packedCandsPVquality[idx]+1
+  //NotReconstructedPrimary = 0, OtherDeltaZ = 1, CompatibilityBTag = 4, CompatibilityDz = 5, UsedInFitLoose = 6, UsedInFitTight = 7
+  // hists_1d_["h_"+prefix+"Dz"]->Fill(event.packedCandsDz[event.muonPF2PATPackedCandIndex[idx]], eventweight);
+  hists_1d_["h_"+prefix+"Dz"]->Fill(event.muonPF2PATDZPV[idx], eventweight);
+  //muonSortedDZPV -> for from PAT muon
+  // hists_1d_["h_"+prefix+"Vz"]->Fill(event.packedCandsVz[event.muonPF2PATPackedCandIndex[idx]], eventweight);
+  hists_1d_["h_"+prefix+"Vz"]->Fill(event.muonPF2PATVertZ[idx], eventweight);
+  //muonSortedVertZ -> for from PAT muon
+
+
   if (prefix.find("sub") == std::string::npos) {
+    hists_1d_["h_"+prefix+"Pt"]->Fill(event.zPairLeptonsRefitted.first.Pt(),eventweight);  
+    hists_1d_["h_"+prefix+"Eta"]->Fill(event.zPairLeptonsRefitted.first.Eta(),eventweight);
+    hists_1d_["h_"+prefix+"Phi"]->Fill(event.zPairLeptonsRefitted.first.Phi(),eventweight);
     hists_1d_["h_"+prefix+"RelIso"]->Fill(event.zPairRelIso.first ,eventweight);
     hists_1d_["h_"+prefix+"SumPtCh"]->Fill(event.zPairChIso.first  ,eventweight);
-    hists_1d_["h_"+prefix+"SumPtChRel"]->Fill(event.zPairChIso.first/particle.Pt()  ,eventweight);
+    hists_1d_["h_"+prefix+"SumPtChRel"]->Fill(event.zPairChIso.first/event.zPairLeptonsRefitted.first.Pt()  ,eventweight);
     hists_1d_["h_"+prefix+"SumPtNh"]->Fill(event.zPairNhIso.first  ,eventweight);
     hists_1d_["h_"+prefix+"SumPtPh"]->Fill(event.zPairPhIso.first  ,eventweight);
     hists_1d_["h_"+prefix+"SumPtPU"]->Fill(event.zPairPuIso.first  ,eventweight);
-    hists_2d_["h_"+prefix+"RelIso_"+prefix+"Pt"]->Fill(event.zPairRelIso.first, particle.Pt(),eventweight);
-    hists_2d_["h_"+prefix+"RelIso_"+"dR"]->Fill(event.zPairRelIso.first, ROOT::Math::VectorUtil::DeltaR(event.zPairLeptons.first,event.zPairLeptons.second),eventweight);
+    hists_2d_["h_"+prefix+"RelIso_"+prefix+"Pt"]->Fill(event.zPairRelIso.first, event.zPairLeptonsRefitted.first.Pt(),eventweight);
+    hists_2d_["h_"+prefix+"RelIso_"+"dR"]->Fill(event.zPairRelIso.first, ROOT::Math::VectorUtil::DeltaR(event.zPairLeptonsRefitted.first,event.zPairLeptonsRefitted.second),eventweight);
     // hists_2d_["h_"+prefix+"RelIso_"+prefix+"TrksInCone"]->Fill(event.zPairRelIso.first, nTrksInCone(particle,event,0.4),eventweight);
-	
   }
   else {
+    hists_1d_["h_"+prefix+"Pt"]->Fill(event.zPairLeptonsRefitted.second.Pt(),eventweight); 
+    hists_1d_["h_"+prefix+"Eta"]->Fill(event.zPairLeptonsRefitted.second.Eta(),eventweight);
+    hists_1d_["h_"+prefix+"Phi"]->Fill(event.zPairLeptonsRefitted.second.Phi(),eventweight);
     hists_1d_["h_"+prefix+"RelIso"]->Fill(event.zPairRelIso.second ,eventweight);
     hists_1d_["h_"+prefix+"SumPtCh"]->Fill(event.zPairChIso.second ,eventweight);
-    hists_1d_["h_"+prefix+"SumPtChRel"]->Fill(event.zPairChIso.second/particle.Pt()  ,eventweight);
+    hists_1d_["h_"+prefix+"SumPtChRel"]->Fill(event.zPairChIso.second/event.zPairLeptonsRefitted.second.Pt()  ,eventweight);
     hists_1d_["h_"+prefix+"SumPtNh"]->Fill(event.zPairNhIso.second  ,eventweight);
     hists_1d_["h_"+prefix+"SumPtPh"]->Fill(event.zPairPhIso.second  ,eventweight);
     hists_1d_["h_"+prefix+"SumPtPU"]->Fill(event.zPairPuIso.second  ,eventweight);
-    hists_2d_["h_"+prefix+"RelIso_"+prefix+"Pt"]->Fill(event.zPairRelIso.second, particle.Pt(),eventweight);
-    hists_2d_["h_"+prefix+"RelIso_"+"dR"]->Fill(event.zPairRelIso.second, ROOT::Math::VectorUtil::DeltaR(event.zPairLeptons.first,event.zPairLeptons.second),eventweight);
+    hists_2d_["h_"+prefix+"RelIso_"+prefix+"Pt"]->Fill(event.zPairRelIso.second, event.zPairLeptonsRefitted.second.Pt(),eventweight);
+    hists_2d_["h_"+prefix+"RelIso_"+"dR"]->Fill(event.zPairRelIso.second, ROOT::Math::VectorUtil::DeltaR(event.zPairLeptonsRefitted.first,event.zPairLeptonsRefitted.second),eventweight);
     // hists_2d_["h_"+prefix+"RelIso_"+prefix+"TrksInCone"]->Fill(event.zPairRelIso.second, nTrksInCone(particle,event,0.4),eventweight);
   }
-	hists_1d_["h_"+prefix+"Pt"]->Fill(particle.Pt(),eventweight); 
-	hists_1d_["h_"+prefix+"Eta"]->Fill(particle.Eta(),eventweight);
-	hists_1d_["h_"+prefix+"Phi"]->Fill(particle.Phi(),eventweight);
   // hists_1d_["h_"+prefix+"TrksInCone"]->Fill(nTrksInCone(particle,event,0.4),eventweight);
   //std::cout<<"Number of tracks:"<<nTrksInCone(event.zPairIndex.first,event,0.4)<<std::endl;
 	
-	std::map<int,int> PDG_map = {{11,1},{13,2},{22,3},{130,6},{1,7},{2,8}};//all maps except 211	
-	double tmpdR = 999.;
-	//easier to just loop over tracks here and fill hists directly
-	for (int i=0;i < event.numPackedCands; i++) {
-        ROOT::Math::PxPyPzEVector trk{event.packedCandsPx[i], event.packedCandsPy[i], event.packedCandsPz[i], event.packedCandsE[i]};
-        //if (trk.Pt() < 0.5) continue;
-        //if ((event.packedCandsPdgId[i] == 211) || (event.packedCandsPdgId[i] == 130)) std::cout<<"Found hadrons"<<std::endl;
-        //if (std::abs(trk.Pt() - event.zPairLeptons.first.Pt()) < 0.5) continue; //if pt is within 0.5 GeV, then same track possibly
-        tmpdR = ROOT::Math::VectorUtil::DeltaR(particle,trk);
-				if ((std::abs(event.packedCandsPdgId[i]) == 211) && (event.packedCandsFromPV[i] >= 2)) {
-					hists_1d_["h_"+prefix+"ChHadFromPVdR"]->Fill(tmpdR,eventweight);
-					hists_2d_["h_"+prefix+"ChHadFromPVdR_ChHadPt"]->Fill(tmpdR,trk.Pt(),eventweight);
-				}
-				if (event.muonPF2PATComRelIsodBeta[idx] != 0.) continue; // At Zero Iso
-				if ((tmpdR > 0.4) || (tmpdR < 0.03)) continue; // Only if diff. trk within dR0p4
-				//if ((event.packedCandsPdgId[i] == 211)
-				//if (event.packedCandsPdgId[i]!=211) h_leadingMuonPdgIdInConeAtZeroIso->Fill(PDG_map[event.packedCandsPdgId[i]]);
-				if (std::abs(event.packedCandsPdgId[i]) == 211){
-					if (event.packedCandsFromPV[i] >= 2) hists_1d_["h_"+prefix+"PdgIdInConeAtZeroIso"] ->Fill(4-0.5,eventweight);
-				 	else hists_1d_["h_"+prefix+"PdgIdInConeAtZeroIso"] ->Fill(5-0.5,eventweight); 	
-				}  
-				else hists_1d_["h_"+prefix+"PdgIdInConeAtZeroIso"] ->Fill(PDG_map[std::abs(event.packedCandsPdgId[i])]-0.5,eventweight);
-				hists_1d_["h_"+prefix+"PtInConeAtZeroIso"]->Fill(trk.Pt(),eventweight);
-				hists_1d_["h_"+prefix+"EtaInConeAtZeroIso"]->Fill(trk.Eta(),eventweight);
-				hists_1d_["h_"+prefix+"PhiInConeAtZeroIso"]->Fill(trk.Phi(),eventweight);
-	}
+	// std::map<int,int> PDG_map = {{11,1},{13,2},{22,3},{130,6},{1,7},{2,8}};//all maps except 211	
+	// double tmpdR = 999.;
+	// //easier to just loop over tracks here and fill hists directly
+	// for (int i=0;i < event.numPackedCands; i++) {
+  //       ROOT::Math::PxPyPzEVector trk{event.packedCandsPx[i], event.packedCandsPy[i], event.packedCandsPz[i], event.packedCandsE[i]};
+  //       //if (trk.Pt() < 0.5) continue;
+  //       //if ((event.packedCandsPdgId[i] == 211) || (event.packedCandsPdgId[i] == 130)) std::cout<<"Found hadrons"<<std::endl;
+  //       //if (std::abs(trk.Pt() - event.zPairLeptons.first.Pt()) < 0.5) continue; //if pt is within 0.5 GeV, then same track possibly
+  //       tmpdR = ROOT::Math::VectorUtil::DeltaR(particle,trk);
+	// 			if ((std::abs(event.packedCandsPdgId[i]) == 211) && (event.packedCandsFromPV[i] >= 2)) {
+	// 				hists_1d_["h_"+prefix+"ChHadFromPVdR"]->Fill(tmpdR,eventweight);
+	// 				hists_2d_["h_"+prefix+"ChHadFromPVdR_ChHadPt"]->Fill(tmpdR,trk.Pt(),eventweight);
+	// 			}
+	// 			if (event.muonPF2PATComRelIsodBeta[idx] != 0.) continue; // At Zero Iso
+	// 			if ((tmpdR > 0.4) || (tmpdR < 0.03)) continue; // Only if diff. trk within dR0p4
+	// 			//if ((event.packedCandsPdgId[i] == 211)
+	// 			//if (event.packedCandsPdgId[i]!=211) h_leadingMuonPdgIdInConeAtZeroIso->Fill(PDG_map[event.packedCandsPdgId[i]]);
+	// 			if (std::abs(event.packedCandsPdgId[i]) == 211){
+	// 				if (event.packedCandsFromPV[i] >= 2) hists_1d_["h_"+prefix+"PdgIdInConeAtZeroIso"] ->Fill(4-0.5,eventweight);
+	// 			 	else hists_1d_["h_"+prefix+"PdgIdInConeAtZeroIso"] ->Fill(5-0.5,eventweight); 	
+	// 			}  
+	// 			else hists_1d_["h_"+prefix+"PdgIdInConeAtZeroIso"] ->Fill(PDG_map[std::abs(event.packedCandsPdgId[i])]-0.5,eventweight);
+	// 			hists_1d_["h_"+prefix+"PtInConeAtZeroIso"]->Fill(trk.Pt(),eventweight);
+	// 			hists_1d_["h_"+prefix+"EtaInConeAtZeroIso"]->Fill(trk.Eta(),eventweight);
+	// 			hists_1d_["h_"+prefix+"PhiInConeAtZeroIso"]->Fill(trk.Phi(),eventweight);
+	// }
 
-	if (event.muonPF2PATComRelIsodBeta[idx] == 0.) {
-    hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]->Fill(event.muonPF2PATTrackIso[idx],eventweight);
-    hists_1d_["h_"+prefix+"SumPtChAtZeroIso"]->Fill(event.muonPF2PATChHadIso[idx] ,eventweight);
-    hists_1d_["h_"+prefix+"SumPtNhAtZeroIso"]->Fill(event.muonPF2PATNtHadIso[idx] ,eventweight);
-    hists_1d_["h_"+prefix+"SumPtPhAtZeroIso"]->Fill(event.muonPF2PATGammaIso[idx] ,eventweight);
-    hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]->Fill(event.muonPF2PATPuIso[idx] ,eventweight); 
-    //h_DiMuonDeltaRAtZeroIso->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second));
-    // hists_1d_["h_"+prefix+"TrksInConeAtZeroIso"]->Fill(nTrksInCone(particle,event,0.4),eventweight);
+	// if (event.muonPF2PATComRelIsodBeta[idx] == 0.) {
+  //   hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]->Fill(event.muonPF2PATTrackIso[idx],eventweight);
+  //   hists_1d_["h_"+prefix+"SumPtChAtZeroIso"]->Fill(event.muonPF2PATChHadIso[idx] ,eventweight);
+  //   hists_1d_["h_"+prefix+"SumPtNhAtZeroIso"]->Fill(event.muonPF2PATNtHadIso[idx] ,eventweight);
+  //   hists_1d_["h_"+prefix+"SumPtPhAtZeroIso"]->Fill(event.muonPF2PATGammaIso[idx] ,eventweight);
+  //   hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]->Fill(event.muonPF2PATPuIso[idx] ,eventweight); 
+  //   //h_DiMuonDeltaRAtZeroIso->Fill(event.zPairLeptons.first.DeltaR(event.zPairLeptons.second));
+  //   // hists_1d_["h_"+prefix+"TrksInConeAtZeroIso"]->Fill(nTrksInCone(particle,event,0.4),eventweight);
   
-  }
+  // }
 } 
 
 void fillChHadHists(const AnalysisEvent& event, const std::string &prefix, const int idx, const float eventweight){
-  int pair_idx = prefix.find("sub") == std::string::npos ? 0 : 1; // npos is "not found" and 0 is leading
   ROOT::Math::PxPyPzMVector particle{event.packedCandsPx[idx], event.packedCandsPy[idx], event.packedCandsPz[idx], chsMass_};
+  hists_1d_["h_"+prefix+"PVAscQuality"]->Fill(event.packedCandsPVquality[idx] > 1 ? event.packedCandsPVquality[idx]-1 : event.packedCandsPVquality[idx]+1, eventweight);
+  //NotReconstructedPrimary = 0, OtherDeltaZ = 1, CompatibilityBTag = 4, CompatibilityDz = 5, UsedInFitLoose = 6, UsedInFitTight = 7
+  hists_1d_["h_"+prefix+"Dz"]->Fill(event.packedCandsDz[idx], eventweight);
+  hists_1d_["h_"+prefix+"Vz"]->Fill(event.packedCandsVz[idx], eventweight);
   if (prefix.find("sub") == std::string::npos) {
 	  hists_1d_["h_"+prefix+"RelIso"]->Fill(event.chsPairRelIso.first,eventweight);        
 	  hists_1d_["h_"+prefix+"TrackIso"]->Fill(event.chsPairTrkIso.first ,eventweight);
     hists_1d_["h_"+prefix+"SumPtCh"]->Fill(event.chsPairChIso.first ,eventweight);                              
-    hists_1d_["h_"+prefix+"SumPtChRel"]->Fill(event.chsPairChIso.first/event.chsPairVec.first.Pt() ,eventweight);                              
+    hists_1d_["h_"+prefix+"SumPtChRel"]->Fill(event.chsPairChIso.first/event.chsPairTrkVecRefitted.first.Pt() ,eventweight);                              
     hists_1d_["h_"+prefix+"SumPtNh"]->Fill(event.chsPairNhIso.first ,eventweight); //neutral hadrons  
     hists_1d_["h_"+prefix+"SumPtPh"]->Fill(event.chsPairPhIso.first ,eventweight); //photons
     hists_1d_["h_"+prefix+"SumPtPU"]->Fill(event.chsPairPuIso.first ,eventweight); 
-		hists_1d_["h_"+prefix+"Pt"]->Fill(event.chsPairVec.first.Pt(),eventweight); 
-		hists_1d_["h_"+prefix+"Eta"]->Fill(event.chsPairVec.first.Eta(),eventweight);
-		hists_1d_["h_"+prefix+"Phi"]->Fill(event.chsPairVec.first.Phi(),eventweight);
-    hists_2d_["h_"+prefix+"RelIso_"+prefix+"Pt"]->Fill(event.chsPairRelIso.first, event.chsPairVec.first.Pt(),eventweight);
-	  hists_2d_["h_"+prefix+"RelIso_"+"dR"]->Fill(event.chsPairRelIso.first, ROOT::Math::VectorUtil::DeltaR(event.chsPairVec.first,event.chsPairVec.second),eventweight);
-	  // hists_2d_["h_"+prefix+"RelIso_"+prefix+"TrksInCone"]->Fill(event.chsPairRelIso.first, nTrksInCone(event.chsPairVec.first,event,0.4),eventweight);
-	  if (event.chsPairRelIso.first == 0.) {
-      hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]->Fill(event.chsPairTrkIso.first ,eventweight);
-      hists_1d_["h_"+prefix+"SumPtChAtZeroIso"]->Fill(event.chsPairChIso.first ,eventweight);
-      hists_1d_["h_"+prefix+"SumPtNhAtZeroIso"]->Fill(event.chsPairNhIso.first ,eventweight);
-      hists_1d_["h_"+prefix+"SumPtPhAtZeroIso"]->Fill(event.chsPairPhIso.first ,eventweight);
-      hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]->Fill(event.chsPairPuIso.first ,eventweight); 
-    }
+		hists_1d_["h_"+prefix+"Pt"]->Fill(event.chsPairTrkVecRefitted.first.Pt(),eventweight); 
+		hists_1d_["h_"+prefix+"Eta"]->Fill(event.chsPairTrkVecRefitted.first.Eta(),eventweight);
+		hists_1d_["h_"+prefix+"Phi"]->Fill(event.chsPairTrkVecRefitted.first.Phi(),eventweight);
+    hists_2d_["h_"+prefix+"RelIso_"+prefix+"Pt"]->Fill(event.chsPairRelIso.first, event.chsPairTrkVecRefitted.first.Pt(),eventweight);
+	  hists_2d_["h_"+prefix+"RelIso_"+"dR"]->Fill(event.chsPairRelIso.first, ROOT::Math::VectorUtil::DeltaR(event.chsPairTrkVecRefitted.first,event.chsPairTrkVecRefitted.second),eventweight);
+	  // hists_2d_["h_"+prefix+"RelIso_"+prefix+"TrksInCone"]->Fill(event.chsPairRelIso.first, nTrksInCone(event.chsPairTrkVecRefitted.first,event,0.4),eventweight);
+	  // if (event.chsPairRelIso.first == 0.) {
+    //   hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]->Fill(event.chsPairTrkIso.first ,eventweight);
+    //   hists_1d_["h_"+prefix+"SumPtChAtZeroIso"]->Fill(event.chsPairChIso.first ,eventweight);
+    //   hists_1d_["h_"+prefix+"SumPtNhAtZeroIso"]->Fill(event.chsPairNhIso.first ,eventweight);
+    //   hists_1d_["h_"+prefix+"SumPtPhAtZeroIso"]->Fill(event.chsPairPhIso.first ,eventweight);
+    //   hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]->Fill(event.chsPairPuIso.first ,eventweight); 
+    // }
   }
   else {
 	  hists_1d_["h_"+prefix+"RelIso"]->Fill(event.chsPairRelIso.second,eventweight);        
 	  hists_1d_["h_"+prefix+"TrackIso"]->Fill(event.chsPairTrkIso.second,eventweight);
     hists_1d_["h_"+prefix+"SumPtCh"]->Fill(event.chsPairChIso.second ,eventweight);                              
-    hists_1d_["h_"+prefix+"SumPtChRel"]->Fill(event.chsPairChIso.second/event.chsPairVec.second.Pt() ,eventweight);                              
+    hists_1d_["h_"+prefix+"SumPtChRel"]->Fill(event.chsPairChIso.second/event.chsPairTrkVecRefitted.second.Pt() ,eventweight);                              
     hists_1d_["h_"+prefix+"SumPtNh"]->Fill(event.chsPairNhIso.second ,eventweight); //photons + neutral hadrons  
     hists_1d_["h_"+prefix+"SumPtPh"]->Fill(event.chsPairPhIso.second ,eventweight); //photons + neutral hadrons  
     hists_1d_["h_"+prefix+"SumPtPU"]->Fill(event.chsPairPuIso.second ,eventweight); 
-		hists_1d_["h_"+prefix+"Pt"]->Fill(event.chsPairVec.second.Pt(),eventweight); 
-		hists_1d_["h_"+prefix+"Eta"]->Fill(event.chsPairVec.second.Eta(),eventweight);
-		hists_1d_["h_"+prefix+"Phi"]->Fill(event.chsPairVec.second.Phi(),eventweight);
-    hists_2d_["h_"+prefix+"RelIso_"+prefix+"Pt"]->Fill(event.chsPairRelIso.second, event.chsPairVec.second.Pt(),eventweight);
-	  hists_2d_["h_"+prefix+"RelIso_"+"dR"]->Fill(event.chsPairRelIso.second, ROOT::Math::VectorUtil::DeltaR(event.chsPairVec.first,event.chsPairVec.second),eventweight);
-	  // hists_2d_["h_"+prefix+"RelIso_"+prefix+"TrksInCone"]->Fill(event.chsPairRelIso.second, nTrksInCone(event.chsPairVec.second,event,0.4),eventweight);
-	  if (event.chsPairRelIso.second == 0.) {
-      hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]->Fill(event.chsPairTrkIso.second,eventweight);
-      hists_1d_["h_"+prefix+"SumPtChAtZeroIso"]->Fill(event.chsPairChIso.second ,eventweight);
-      hists_1d_["h_"+prefix+"SumPtNhAtZeroIso"]->Fill(event.chsPairNhIso.second ,eventweight);
-      hists_1d_["h_"+prefix+"SumPtPhAtZeroIso"]->Fill(event.chsPairPhIso.second ,eventweight);
-      hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]->Fill(event.chsPairPuIso.second ,eventweight); 
-    }
+		hists_1d_["h_"+prefix+"Pt"]->Fill(event.chsPairTrkVecRefitted.second.Pt(),eventweight); 
+		hists_1d_["h_"+prefix+"Eta"]->Fill(event.chsPairTrkVecRefitted.second.Eta(),eventweight);
+		hists_1d_["h_"+prefix+"Phi"]->Fill(event.chsPairTrkVecRefitted.second.Phi(),eventweight);
+    hists_2d_["h_"+prefix+"RelIso_"+prefix+"Pt"]->Fill(event.chsPairRelIso.second, event.chsPairTrkVecRefitted.second.Pt(),eventweight);
+	  hists_2d_["h_"+prefix+"RelIso_"+"dR"]->Fill(event.chsPairRelIso.second, ROOT::Math::VectorUtil::DeltaR(event.chsPairTrkVecRefitted.first,event.chsPairTrkVecRefitted.second),eventweight);
+	  // hists_2d_["h_"+prefix+"RelIso_"+prefix+"TrksInCone"]->Fill(event.chsPairRelIso.second, nTrksInCone(event.chsPairTrkVecRefitted.second,event,0.4),eventweight);
+	  // if (event.chsPairRelIso.second == 0.) {
+    //   hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]->Fill(event.chsPairTrkIso.second,eventweight);
+    //   hists_1d_["h_"+prefix+"SumPtChAtZeroIso"]->Fill(event.chsPairChIso.second ,eventweight);
+    //   hists_1d_["h_"+prefix+"SumPtNhAtZeroIso"]->Fill(event.chsPairNhIso.second ,eventweight);
+    //   hists_1d_["h_"+prefix+"SumPtPhAtZeroIso"]->Fill(event.chsPairPhIso.second ,eventweight);
+    //   hists_1d_["h_"+prefix+"SumPtPUAtZeroIso"]->Fill(event.chsPairPuIso.second ,eventweight); 
+    // }
   }
   // hists_1d_["h_"+prefix+"TrksInCone"]->Fill(nTrksInCone(particle,event,0.4),eventweight);
   
 	//std::cout<<"Number of tracks:"<<nTrksInCone(event.zPairIndex.first,event,0.4)<<std::endl;
 	
-	std::map<int,int> PDG_map = {{11,1},{13,2},{22,3},{130,6},{1,7},{2,8}};//all maps except 211	
-	double tmpdR = 999.;
-	//easier to just loop over tracks here and fill hists directly
-	for (int i=0;i < event.numPackedCands; i++) {
-        ROOT::Math::PxPyPzEVector trk{event.packedCandsPx[i], event.packedCandsPy[i], event.packedCandsPz[i], event.packedCandsE[i]};
-        //if (trk.Pt() < 0.5) continue;
-        //if ((event.packedCandsPdgId[i] == 211) || (event.packedCandsPdgId[i] == 130)) std::cout<<"Found hadrons"<<std::endl;
-        //if (std::abs(trk.Pt() - event.zPairLeptons.first.Pt()) < 0.5) continue; //if pt is within 0.5 GeV, then same track possibly
-        tmpdR = ROOT::Math::VectorUtil::DeltaR(particle,trk);
-				if ((std::abs(event.packedCandsPdgId[i]) == 211) && (event.packedCandsFromPV[i] >= 2)) {
-					hists_1d_["h_"+prefix+"ChHadFromPVdR"]->Fill(tmpdR,eventweight);
-					hists_2d_["h_"+prefix+"ChHadFromPVdR_ChHadPt"]->Fill(tmpdR,trk.Pt(),eventweight);
-				}
-				if (prefix.find("sub") == std::string::npos){
-				  if (event.chsPairRelIso.first != 0.) continue; // At Zero Iso
-				}
-				else {
-				  if (event.chsPairRelIso.second != 0.) continue; // At Zero Iso
-				}
-				if ((tmpdR > 0.4) || (tmpdR < 0.03)) continue; // Only if diff. trk within dR0p4
-				// another condition here to exclude the other hadron leg from contributing
-				if ( i == event.chsPairIndex.first || i == event.chsPairIndex.second ) continue;
-				//if ((event.packedCandsPdgId[i] == 211)
-				//if (event.packedCandsPdgId[i]!=211) h_leadingMuonPdgIdInConeAtZeroIso->Fill(PDG_map[event.packedCandsPdgId[i]]);
-				if (std::abs(event.packedCandsPdgId[i]) == 211){
-					if (event.packedCandsFromPV[i] >= 2) hists_1d_["h_"+prefix+"PdgIdInConeAtZeroIso"] ->Fill(4-0.5,eventweight);
-				 	else hists_1d_["h_"+prefix+"PdgIdInConeAtZeroIso"] ->Fill(5-0.5,eventweight); 	
-				}  
-				else hists_1d_["h_"+prefix+"PdgIdInConeAtZeroIso"] ->Fill(PDG_map[std::abs(event.packedCandsPdgId[i])]-0.5,eventweight);
-				hists_1d_["h_"+prefix+"PtInConeAtZeroIso"]->Fill(trk.Pt(),eventweight);
-				hists_1d_["h_"+prefix+"EtaInConeAtZeroIso"]->Fill(trk.Eta(),eventweight);
-				hists_1d_["h_"+prefix+"PhiInConeAtZeroIso"]->Fill(trk.Phi(),eventweight);
-	}
+	// std::map<int,int> PDG_map = {{11,1},{13,2},{22,3},{130,6},{1,7},{2,8}};//all maps except 211	
+	// double tmpdR = 999.;
+	// //easier to just loop over tracks here and fill hists directly
+	// for (int i=0;i < event.numPackedCands; i++) {
+  //       ROOT::Math::PxPyPzEVector trk{event.packedCandsPx[i], event.packedCandsPy[i], event.packedCandsPz[i], event.packedCandsE[i]};
+  //       //if (trk.Pt() < 0.5) continue;
+  //       //if ((event.packedCandsPdgId[i] == 211) || (event.packedCandsPdgId[i] == 130)) std::cout<<"Found hadrons"<<std::endl;
+  //       //if (std::abs(trk.Pt() - event.zPairLeptons.first.Pt()) < 0.5) continue; //if pt is within 0.5 GeV, then same track possibly
+  //       tmpdR = ROOT::Math::VectorUtil::DeltaR(particle,trk);
+	// 			if ((std::abs(event.packedCandsPdgId[i]) == 211) && (event.packedCandsFromPV[i] >= 2)) {
+	// 				hists_1d_["h_"+prefix+"ChHadFromPVdR"]->Fill(tmpdR,eventweight);
+	// 				hists_2d_["h_"+prefix+"ChHadFromPVdR_ChHadPt"]->Fill(tmpdR,trk.Pt(),eventweight);
+	// 			}
+	// 			if (prefix.find("sub") == std::string::npos){
+	// 			  if (event.chsPairRelIso.first != 0.) continue; // At Zero Iso
+	// 			}
+	// 			else {
+	// 			  if (event.chsPairRelIso.second != 0.) continue; // At Zero Iso
+	// 			}
+	// 			if ((tmpdR > 0.4) || (tmpdR < 0.03)) continue; // Only if diff. trk within dR0p4
+	// 			// another condition here to exclude the other hadron leg from contributing
+	// 			if ( i == event.chsPairIndex.first || i == event.chsPairIndex.second ) continue;
+	// 			//if ((event.packedCandsPdgId[i] == 211)
+	// 			//if (event.packedCandsPdgId[i]!=211) h_leadingMuonPdgIdInConeAtZeroIso->Fill(PDG_map[event.packedCandsPdgId[i]]);
+	// 			if (std::abs(event.packedCandsPdgId[i]) == 211){
+	// 				if (event.packedCandsFromPV[i] >= 2) hists_1d_["h_"+prefix+"PdgIdInConeAtZeroIso"] ->Fill(4-0.5,eventweight);
+	// 			 	else hists_1d_["h_"+prefix+"PdgIdInConeAtZeroIso"] ->Fill(5-0.5,eventweight); 	
+	// 			}  
+	// 			else hists_1d_["h_"+prefix+"PdgIdInConeAtZeroIso"] ->Fill(PDG_map[std::abs(event.packedCandsPdgId[i])]-0.5,eventweight);
+	// 			hists_1d_["h_"+prefix+"PtInConeAtZeroIso"]->Fill(trk.Pt(),eventweight);
+	// 			hists_1d_["h_"+prefix+"EtaInConeAtZeroIso"]->Fill(trk.Eta(),eventweight);
+	// 			hists_1d_["h_"+prefix+"PhiInConeAtZeroIso"]->Fill(trk.Phi(),eventweight);
+	// }
 }
 void writeHists(const std::string &prefix) {
 	hists_1d_["h_"+prefix+"Pt"]->Write();
@@ -841,6 +956,10 @@ void writeHists(const std::string &prefix) {
   hists_1d_["h_"+prefix+"SumPtPU"]->Write();                    
   hists_1d_["h_"+prefix+"TrksInCone"]->Write();                 
   hists_1d_["h_"+prefix+"ChHadFromPVdR"]->Write();              
+  hists_1d_["h_"+prefix+"PVAscQuality"]->Write();
+  hists_1d_["h_"+prefix+"Dz"]->Write();
+  hists_1d_["h_"+prefix+"Vz"]->Write();
+
   //Investigation at Zero Iso
   // hists_1d_["h_"+prefix+"TrackIsoAtZeroIso"]->Write();          
   // hists_1d_["h_"+prefix+"SumPtChAtZeroIso"]->Write();      

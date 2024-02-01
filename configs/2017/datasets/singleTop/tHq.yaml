@@ -1,9 +1,12 @@
-name: "tHq"
-locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/singleTop/tHq/"
+colour: '#ff99cc'
 cross_section: 0.7452
+histogram: SingleTop
+label: Single top
+locations: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/THQ_ctcvcp_4f_Hincl_TuneCP5_13TeV_madgraph_pythia8/RunIISummer20UL17MiniAODv2-106X_mc2017_realistic_v9-v2_MCUL2017_HToSS/231030_210946
 mc: true
-histogram: "SingleTop"
-colour: "#ff99cc"
-label: "Single top"
-plot_type: "f"
+name: tHq
+plot_type: f
+skim_location:
+- /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/2017/singleTop/tHq/
+sum_weights: 29132984.0
+total_events: 29297984

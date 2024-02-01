@@ -13,7 +13,7 @@
 
 namespace fs = boost::filesystem;
 
-Dataset::Dataset(std::string name, float lumi, bool isMC, bool isOldNtuple,float crossSection, std::vector<std::string> locations, std::string histoName, std::string treeName, std::string colourHex, std::string plotLabel, std::string plotType, std::string triggerFlag) : colour_{TColor::GetColor(colourHex.c_str())} {
+Dataset::Dataset(std::string name, float lumi, bool isMC, bool isOldNtuple,float crossSection, std::vector<std::string> locations, std::string histoName, std::string treeName, std::string colourHex, std::string plotLabel, std::string plotType, std::string triggerFlag, double weights_, bool isSkim) : colour_{TColor::GetColor(colourHex.c_str())} {
     name_ = name;
     lumi_ = lumi;
     isMC_ = isMC;
@@ -27,6 +27,7 @@ Dataset::Dataset(std::string name, float lumi, bool isMC, bool isOldNtuple,float
     triggerFlag_ = triggerFlag;
     generatorWeightPlot_ = nullptr;
     isOldNtuple_=isOldNtuple;
+    isSkim_=isSkim;
     std::cout<<"Is old ntuple:"<<isOldNtuple_;
     std::cout << "For dataset " << name_ << " trigger flag is " << triggerFlag_  << std::endl;
 
@@ -34,32 +35,38 @@ Dataset::Dataset(std::string name, float lumi, bool isMC, bool isOldNtuple,float
         if (location.back() != '/')
             location += '/';
     }
+    if (weights_ != -1)
+        totalEvents_ = weights_;
+    else { // -1 means weights not calculated
+        // Read in generator level plots to determine event weights and total number of events
+        std::cout<<"Enters weight calculation"<<std::endl;
+        if ((isMC_) && (!isOldNtuple_) && (!isSkim_)) { 
+            const std::regex mask{R"(\.root$)"};
+            bool firstFile{true};
+            for (const auto& location : locations_) {
+                for (const auto& file : boost::make_iterator_range(fs::directory_iterator{location}, {})) {
+                    const std::string path{file.path().string()};
+                    std::cout<<"first file:"<<path<<std::endl;
 
-    // Read in generator level plots to determine event weights and total number of events
-    if ((isMC_) && (!isOldNtuple_)) {
-        const std::regex mask{R"(\.root$)"};
-        bool firstFile{true};
-        for (const auto& location : locations_) {
-            for (const auto& file : boost::make_iterator_range(fs::directory_iterator{location}, {})) {
-                const std::string path{file.path().string()};
-                if (!fs::is_regular_file(file.status()) || !std::regex_search(path, mask))
-                    continue;
+                    if (!fs::is_regular_file(file.status()) || !std::regex_search(path, mask))
+                        continue;
 
-                TFile* tempFile{new TFile{path.c_str(), "READ"}};
-                if (firstFile) {
-                    generatorWeightPlot_ = dynamic_cast<TH1I*>((TH1I*)tempFile->Get("makeTopologyNtupleMiniAOD/weightHisto")->Clone());
-                    firstFile = false;
-                }
-                else {
-                    generatorWeightPlot_->Add((TH1I*)tempFile->Get("makeTopologyNtupleMiniAOD/weightHisto"));
-                    tempFile->Close();
-                    delete tempFile;
+                    TFile* tempFile{new TFile{path.c_str(), "READ"}};
+                    if (firstFile) {
+                        generatorWeightPlot_ = dynamic_cast<TH1I*>((TH1I*)tempFile->Get("makeTopologyNtupleMiniAOD/weightHisto")->Clone());
+                        firstFile = false;
+                    }
+                    else {
+                        generatorWeightPlot_->Add((TH1I*)tempFile->Get("makeTopologyNtupleMiniAOD/weightHisto"));
+                        tempFile->Close();
+                        delete tempFile;
+                    }
                 }
             }
         }
-    }
 
-    if ((isMC_) && (!isOldNtuple_)) totalEvents_ = generatorWeightPlot_->GetBinContent(1)-generatorWeightPlot_->GetBinContent(2);
+        if ((isMC_) && (!isOldNtuple_) && (!isSkim_)) totalEvents_ = generatorWeightPlot_->GetBinContent(1)-generatorWeightPlot_->GetBinContent(2);
+    }
 }
 
 // Method that fills a TChain with the files that will be used for the analysis.
@@ -67,10 +74,14 @@ Dataset::Dataset(std::string name, float lumi, bool isMC, bool isOldNtuple,float
 // ignored.
 int Dataset::fillChain(TChain* chain,int flow, int fhigh) {
     for (const auto& location : locations_) {
+        std::cout<<"Here is the location:"<<location<<std::endl;
         const fs::path dir{location};
-        if (fs::is_directory(dir))
-            //chain->Add(TString{location + "*.root"});
-            {for (int i=flow; i<=fhigh; i++) chain->Add(TString{location + Form("output_%d.root",i)});}
+        if (fs::is_directory(dir)) {
+            if (isSkim_)
+                chain->Add(TString{location + "*.root"});
+            else
+                {for (int i=flow; i<=fhigh; i++) chain->Add(TString{location + Form("output_%d.root",i)});}
+        }
         else {
             std::cout << "ERROR: " << location << "is not a valid directory" << std::endl;
             return 0;
@@ -82,14 +93,16 @@ int Dataset::fillChain(TChain* chain,int flow, int fhigh) {
 // Function that returns the weight of a dataset. This is 1 is the dataset is
 // data, but varies by lumi, number of events and cross section otherwise.
 float Dataset::getDatasetWeight(double lumi) {
+    std::cout<<"Total events:"<<totalEvents_<<std::endl;
+
     if (!isMC_)
         return 1.;
-    if (isOldNtuple_) {
+    if (totalEvents_ > 0) {
         // std::cout<<"Enters lumi*crosssection"<<std::endl;
-        return (lumi * crossSection_); // for now, we only include lumi*cross-section here; weight/Nevts added in main code
-    }
-
-    else
         return (lumi * crossSection_) / (totalEvents_ + 1.0e-06);
+    }
+    else
+        return (lumi * crossSection_); // for now, we only include lumi*cross-section here; weight/Nevts added in main code
+
 }
 

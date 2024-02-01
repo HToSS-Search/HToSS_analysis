@@ -7,6 +7,6 @@ error = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/error/error_$(dataset)_$
 output = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/out/out_$(dataset)_$(flow)-$(fhigh).txt
 log = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/log/log_$(dataset)_$(flow)-$(fhigh).txt
 
-+JobFlavour = "workday"
++JobFlavour = "longlunch"
 
-queue cfg,cuts,output,flow,fhigh,dataset,weight from params_resubmit_QCD.txt
+queue cfg,cuts,output,flow,fhigh,dataset,weight from params_resubmit_ill_data_final.txt

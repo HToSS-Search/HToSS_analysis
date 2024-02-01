@@ -1,9 +1,0 @@
-name: "ttZ2q"
-locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/ttV/ttZ_qq/"
-cross_section: 0.5113
-mc: true
-histogram: "ttV"
-colour: "#339933"
-label: "t#bar{t}V"
-plot_type: "f"

@@ -1,9 +1,12 @@
-name: "wPlusJets"
-locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/Wjets/Wjets/"
-mc: true
+colour: '#ffff33'
 cross_section: 53940.0
-histogram: "wJets"
-colour: "#ffff33"
-label: "W+jets"
-plot_type: "f"
+histogram: wJets
+label: W+jets
+locations: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17MiniAODv2-106X_mc2017_realistic_v9-v1_MCUL2017_HToSS/231106_115457
+mc: true
+name: wPlusJets
+plot_type: f
+skim_location:
+- /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/2017/wPlusJets/wPlusJets/
+sum_weights: 1023201450.7937069 #use as is for now; 95% processed dataset
+total_events: 78981243

@@ -50,19 +50,22 @@ SharedFunctions::SharedFunctions(const bool MCTruth = false, const bool debug = 
     looseChsPt_{5},
     looseChsSumPtCh_{500},
     looseChsSumPtChLeading_{500},
+    looseChsRelIso_{100},
+    looseChsRelIsoLeading_{100},
     maxDileptonDeltaR_{0.4},
     maxChsDeltaR_{0.4},
     scalarMassCut_{4.0},
     higgsTolerence_{10.0},
     diChsPt_{0.},
     diMuonPt_{0.},
-    diMuonOppCharge_{"OS"},
-    diChsOppCharge_{"OS"},
+    diMuonOppCharge_{true},
+    diChsOppCharge_{true},
     higgsPeakLow_{125},
     higgsPeakHigh_{125},
     higgsPeakSideband_{2.5},
     SR_{false},
-    verbose_{debug}
+    verbose_{debug},
+    muonMass_{0.10566}
   {
 
     hists_1d_ = hists_1d_ref_;
@@ -77,13 +80,13 @@ SharedFunctions::~SharedFunctions()
 std::vector<int> SharedFunctions::getLooseMuons(const AnalysisEvent& event, bool flag = true) {
   std::vector<int> muons;
   for (int i{0}; i < event.numMuonPF2PAT; i++)  {
-    if (std::abs(event.muonPF2PATEta[i]) < looseMuonEta_) {
+    if (std::abs(event.muonPF2PATEta[i]) <= looseMuonEta_) {
       if (verbose_) {
         std::cout<<"in getLooseMuons(index,flag,pt,eta,PFMuon,LooseCutId):"<<i<<","<<flag<<","<<event.muonPF2PATPt[i]<<","<<event.muonPF2PATEta[i]<<","<<event.muonPF2PATIsPFMuon[i]<<","<<event.muonPF2PATLooseCutId[i]<<std::endl;
       }
       if (flag) {
         if (event.muonPF2PATIsPFMuon[i] && event.muonPF2PATLooseCutId[i]) {
-          if ( event.muonPF2PATPt[i] >= (muons.empty() ? looseMuonPtLeading_ : looseMuonPt_)) muons.emplace_back(i); //storing indices
+          if ( event.muonPF2PATPt[i] > (muons.empty() ? looseMuonPtLeading_ : looseMuonPt_)) muons.emplace_back(i); //storing indices
         }
       }
       else muons.emplace_back(i); //storing indices
@@ -102,10 +105,10 @@ std::vector<int> SharedFunctions::getChargedHadronTracks(const AnalysisEvent& ev
         if (event.packedCandsHasTrackDetails[k] != 1 ) continue;
         ROOT::Math::PxPyPzMVector lVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], chsMass_};
         if (lVec.Pt() < 0.5) continue;
-        if (std::abs(lVec.Eta()) > looseChsEta_) continue;
+        if (std::abs(lVec.Eta()) >= looseChsEta_) continue;
         if (flag) {
           // if ( std::abs(lVec.Pt()) >= (chs.empty() ? looseChsPtLeading_ : looseChsPt_)) chs.emplace_back(k);
-          if ( std::abs(lVec.Pt()) < looseChsPt_) continue;
+          if ( std::abs(lVec.Pt()) <= looseChsPt_) continue;
         }
         chs.emplace_back(k);
         // if ( std::abs(lVec.Pt()) >= looseChsPtLeading_) flag=true;
@@ -137,27 +140,33 @@ bool SharedFunctions::getDileptonCand(AnalysisEvent& event, const std::vector<in
               std::cout<<"muon indices:"<<muons[i]<<","<<muons[j]<<std::endl;
               std::cout<<"i,j:"<<muons[i]<<","<<muons[j]<<std::endl;
             }
-            ROOT::Math::PxPyPzEVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], event.muonPF2PATE[muons[i]]};
-            ROOT::Math::PxPyPzEVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], event.muonPF2PATE[muons[j]]};
-            double pT { (lepton1+lepton2).Pt() };
-            double delR = ROOT::Math::VectorUtil::DeltaR(lepton1, lepton2);
-            if (flag) {
-              if (event.muonPF2PATPt[muons[i]] <= looseMuonPtLeading_) continue;
-              if (event.muonPF2PATPt[muons[j]] <= looseMuonPt_) continue;
-              if ( delR > maxDileptonDeltaR_ ) continue;
-              // if (pT < diMuonPt_) continue;
-            }
-
-            struct Isolation leadingMuonIso, subleadingMuonIso;
+            ROOT::Math::PxPyPzMVector lepton1{event.muonPF2PATPX[muons[i]], event.muonPF2PATPY[muons[i]], event.muonPF2PATPZ[muons[i]], muonMass_};
+            ROOT::Math::PxPyPzMVector lepton2{event.muonPF2PATPX[muons[j]], event.muonPF2PATPY[muons[j]], event.muonPF2PATPZ[muons[j]], muonMass_};
             int leadingidx = lepton1.Pt() > lepton2.Pt() ? muons[i] : muons[j];
             int subleadingidx = lepton1.Pt() > lepton2.Pt() ? muons[j] : muons[i];
-            
-            leadingMuonIso = PFIsolation("muon",leadingidx, -99, subleadingidx, event, 0.4);
-            subleadingMuonIso = PFIsolation("muon",subleadingidx, -99, leadingidx, event, 0.4);
+            double delR = ROOT::Math::VectorUtil::DeltaR(lepton1, lepton2);
+            std::vector<ROOT::Math::PxPyPzMVector> refittedTrks(2);
+            // if (flag) {
+              // if (event.muonPF2PATPt[muons[i]] <= looseMuonPtLeading_) continue;
+              // if (event.muonPF2PATPt[muons[j]] <= looseMuonPt_) continue;
+              if ( delR > maxDileptonDeltaR_ ) continue;
+            // }
+            int mumuTkIdx = -1;
+            if (!getMuonTrackPairIndex(event, leadingidx, subleadingidx ,refittedTrks, mumuTkIdx)) continue; //checking if refitted tracks are present -> necessary for SV construction
+            if (mumuTkIdx < 0) std::cout<<"some issue at refit"<<std::endl;
+            ROOT::Math::PxPyPzMVector lepton1_refit = refittedTrks[0].Pt() > refittedTrks[1].Pt() ? refittedTrks[0] : refittedTrks[1];
+            ROOT::Math::PxPyPzMVector lepton2_refit = refittedTrks[0].Pt() > refittedTrks[1].Pt() ? refittedTrks[1] : refittedTrks[0];
+            double pT { (lepton1_refit+lepton2_refit).Pt() };
+            // if (flag) {
+              if (pT < diMuonPt_) continue;
+            // }
+            struct Isolation leadingMuonIso, subleadingMuonIso;
+            leadingMuonIso = PFIsolation("muon", lepton1_refit,leadingidx, -99, subleadingidx, event, 0.4);
+            subleadingMuonIso = PFIsolation("muon", lepton2_refit,subleadingidx, -99, leadingidx, event, 0.4);
 
             // std::cout<<"Pointer smh:"<<*hists_1d_<<std::endl;
-            (*hists_1d_)["h_leadingMuon_RelIso_BC"]->Fill(leadingMuonIso.reliso_,event.eventWeight);
-            (*hists_1d_)["h_subleadingMuon_RelIso_BC"]->Fill(subleadingMuonIso.reliso_,event.eventWeight);
+            // if (isMC_) (*hists_1d_)["h_leadingMuon_RelIso_BC"]->Fill(leadingMuonIso.reliso_,event.eventWeight);
+            // if (isMC_) (*hists_1d_)["h_subleadingMuon_RelIso_BC"]->Fill(subleadingMuonIso.reliso_,event.eventWeight);
             if (flag) {
               if ( leadingMuonIso.reliso_ > looseMuonRelIsoLeading_ ) continue;
               if ( subleadingMuonIso.reliso_ > looseMuonRelIso_ ) continue;
@@ -179,6 +188,12 @@ bool SharedFunctions::getDileptonCand(AnalysisEvent& event, const std::vector<in
             event.zPairNhIso.second = subleadingMuonIso.nhiso_;
             event.zPairPhIso.second = subleadingMuonIso.phiso_;
             event.zPairPuIso.second = subleadingMuonIso.puiso_;
+
+            event.zPairLeptonsRefitted.first = lepton1_refit;
+            event.zPairLeptonsRefitted.second = lepton2_refit;
+            event.mumuTrkIndex = mumuTkIdx;
+
+
             // event.zPairRelIso.first  = event.muonPF2PATComRelIsodBeta[muons[i]];
             // event.zPairRelIso.second = event.muonPF2PATComRelIsodBeta[muons[j]];
             
@@ -187,7 +202,6 @@ bool SharedFunctions::getDileptonCand(AnalysisEvent& event, const std::vector<in
               std::cout<<"Leading muon (idx, pT, eta, phi, isolation):"<<event.zPairIndex.first<<","<<event.zPairLeptons.first.Pt()<<","<<event.zPairLeptons.first.Eta()<<","<<event.zPairLeptons.first.Phi()<<","<<event.zPairRelIso.first<<std::endl;
               std::cout<<"subleading muon (idx, pT, eta, phi, isolation):"<<event.zPairIndex.second<<","<<event.zPairLeptons.second.Pt()<<","<<event.zPairLeptons.second.Eta()<<","<<event.zPairLeptons.second.Phi()<<","<<event.zPairRelIso.second<<std::endl;
             }
-            if (!getMuonTrackPairIndex(event)) return false; //checking if refitted tracks are present -> necessary for SV construction
             return true;
         }
     }
@@ -195,6 +209,13 @@ bool SharedFunctions::getDileptonCand(AnalysisEvent& event, const std::vector<in
 }
 
 bool SharedFunctions::getDihadronCand(AnalysisEvent& event, std::vector<int>& chs, bool flag = true) {
+  if (verbose_) {
+      std::cout<<"See the chs indices:";
+      for (int i=0;i<chs.size();i++) {
+        std::cout<<i<<","<<chs[i]<<",";
+      }
+      std::cout<<";"<<std::endl;
+    }
     for (int i = 0;i < chs.size();i++) {
         for (int j = i+1;j < chs.size();j++) { //since it is not an ordered pair
         //for ( unsigned int j{i+1}; j < chs.size(); j++ ) {
@@ -220,37 +241,46 @@ bool SharedFunctions::getDihadronCand(AnalysisEvent& event, std::vector<int>& ch
             
             ROOT::Math::PxPyPzMVector chs1 {event.packedCandsPx[chs[i]], event.packedCandsPy[chs[i]], event.packedCandsPz[chs[i]], chsMass_};
             ROOT::Math::PxPyPzMVector chs2 {event.packedCandsPx[chs[j]], event.packedCandsPy[chs[j]], event.packedCandsPz[chs[j]], chsMass_};
-
-            double pT { (chs1+chs2).Pt() };
-            double delR = ROOT::Math::VectorUtil::DeltaR(chs1, chs2);
-            // double delR { chs1.DeltaR(chs2) };
-            // double higgsMass { (chs1+chs2+event.zPairLeptons.first+event.zPairLeptons.second).M() };
-
-            // std::vector<int> notrkID;
-
-            // notrkID.push_back(11);notrkID.push_back(13);
-            // float tmp_dr_max = 0.6;
-            // int emtrks_chs1 = NoTrksInCone(event, chs1, notrkID,tmp_dr_max,false);
-            // int emtrks_chs2 = NoTrksInCone(event, chs2, notrkID,tmp_dr_max,false);
-            // if ( delR < maxChsDeltaR_ && (higgsMass - 125.) < higgsTolerence_ && pT >= 0. ) {
-            //if ( delR < maxChsDeltaR_ && (chs1+chs2).DeltaPhi(event.zPairLeptons.first+event.zPairLeptons.second)>3 && pT >= 0. ) {
-            //if ( delR < maxChsDeltaR_ && std::abs((chs1+chs2).M()-(event.zPairLeptons.first+event.zPairLeptons.second).M()) < 0.8 && pT >= 0. ) {
-            // if ( delR < maxChsDeltaR_ && pT >= 0. ) {
-            // if ( delR < maxChsDeltaR_ && pT >= diChsPt_ ) {
-            // if ( delR < maxChsDeltaR_ ) {
-            if (flag) {
-              if ( delR > maxChsDeltaR_ ) continue;
-              if (pT < diChsPt_) continue;
-            }
-            struct Isolation leadingChsIso, subleadingChsIso;
             int leadingidx = chs1.Pt() > chs2.Pt() ? chs[i] : chs[j];
             int subleadingidx = chs1.Pt() > chs2.Pt() ? chs[j] : chs[i];
-            leadingChsIso = PFIsolation("hadron",leadingidx, -99, subleadingidx, event, 0.4);
-            subleadingChsIso = PFIsolation("hadron",subleadingidx,-99, leadingidx, event, 0.4);
+
+            double delR = ROOT::Math::VectorUtil::DeltaR(chs1, chs2);
+            // if (flag) {
+              if ( delR > maxChsDeltaR_ ) continue;
+            // }
+            std::vector<ROOT::Math::PxPyPzMVector> refittedTrks(2);
+            int hhTkIdx = -1;
+            // If refit fails then reject event - all signal events	pass refit, but	QCD does not -> check this
+            if (!getChsTrackPairIndex(event, leadingidx, subleadingidx, refittedTrks, hhTkIdx)) continue; //checking if refitted tracks are present -> necessary for SV construction
+            if (hhTkIdx < 0) std::cout<<"some issue at refit"<<std::endl;
+            // if (verbose_) std::
+            // std::cout<<"Passes TrackPairIndex"<<std::endl;
+
+            ROOT::Math::PxPyPzMVector hadron1_refit = refittedTrks[0].Pt() > refittedTrks[1].Pt() ? refittedTrks[0] : refittedTrks[1];
+            ROOT::Math::PxPyPzMVector hadron2_refit = refittedTrks[0].Pt() > refittedTrks[1].Pt() ? refittedTrks[1] : refittedTrks[0];
+            double pT { (hadron1_refit+hadron2_refit).Pt() };
+            (*hists_1d_)["h_DiChHadPt_BC"]->Fill(pT,event.eventWeight);
+            // if (flag) {
+              if (pT < diChsPt_) continue;
+            // }
+            // std::cout<<"Passes pT"<<std::endl;
+
+            struct Isolation leadingChsIso, subleadingChsIso;
+            leadingChsIso = PFIsolation("hadron", hadron1_refit,leadingidx, -99, subleadingidx, event, 0.4);
+            subleadingChsIso = PFIsolation("hadron", hadron2_refit,subleadingidx,-99, leadingidx, event, 0.4);
+
+            // if (isMC_) (*hists_1d_)["h_leadingChHad_RelIso_BC"]->Fill(leadingChsIso.reliso_,event.eventWeight);
+            // if (isMC_) (*hists_1d_)["h_subleadingChHad_RelIso_BC"]->Fill(subleadingChsIso.reliso_,event.eventWeight);
+
             if (flag) {
-              if ( leadingChsIso.chiso_ > looseChsSumPtChLeading_ ) continue;
-              if ( subleadingChsIso.chiso_ > looseChsSumPtCh_ ) continue;
+              // if ( leadingChsIso.chiso_ > looseChsSumPtChLeading_ ) continue;
+              // if ( subleadingChsIso.chiso_ > looseChsSumPtCh_ ) continue;
+              if (leadingChsIso.reliso_ > looseChsRelIsoLeading_) continue;
+              if (subleadingChsIso.reliso_ > looseChsRelIso_) continue;
             }
+            // std::cout<<"Passes Isolation"<<std::endl;
+
+            
             event.chsPairVec.first  = chs1.Pt() > chs2.Pt() ? chs1 : chs2;
             event.chsPairVec.second = chs1.Pt() > chs2.Pt() ? chs2 : chs1;
             event.chsPairIndex.first = leadingidx;
@@ -268,20 +298,22 @@ bool SharedFunctions::getDihadronCand(AnalysisEvent& event, std::vector<int>& ch
             event.chsPairPhIso.second = subleadingChsIso.phiso_;
             event.chsPairPuIso.second = subleadingChsIso.puiso_;
             // TLorentzVector chsTrk1, chsTrk2;
-            ROOT::Math::PtEtaPhiMVector chsTrk1 {event.packedCandsPseudoTrkPt[event.chsPairIndex.first], event.packedCandsPseudoTrkEta[event.chsPairIndex.first], event.packedCandsPseudoTrkPhi[event.chsPairIndex.first], chsMass_};
-            ROOT::Math::PtEtaPhiMVector chsTrk2 {event.packedCandsPseudoTrkPt[event.chsPairIndex.second], event.packedCandsPseudoTrkEta[event.chsPairIndex.second], event.packedCandsPseudoTrkPhi[event.chsPairIndex.second], chsMass_};
+            ROOT::Math::PxPyPzMVector chsTrk1 {event.packedCandsPseudoTrkPx[event.chsPairIndex.first], event.packedCandsPseudoTrkPy[event.chsPairIndex.first], event.packedCandsPseudoTrkPz[event.chsPairIndex.first], chsMass_};
+            ROOT::Math::PxPyPzMVector chsTrk2 {event.packedCandsPseudoTrkPx[event.chsPairIndex.second], event.packedCandsPseudoTrkPy[event.chsPairIndex.second], event.packedCandsPseudoTrkPz[event.chsPairIndex.second], chsMass_};
 
             event.chsPairTrkVec.first  = chsTrk1;
             event.chsPairTrkVec.second = chsTrk2;
 
+
+            event.chsPairTrkVecRefitted.first = hadron1_refit;
+            event.chsPairTrkVecRefitted.second = hadron2_refit;
+            event.chsPairTrkIndex = hhTkIdx;
 
             if (verbose_) {
               std::cout<<"Check out the hadrons!"<<std::endl;
               std::cout<<"Leading hadron (pT, eta, phi, isolation):"<<event.chsPairVec.first.Pt()<<","<<event.chsPairVec.first.Eta()<<","<<event.chsPairVec.first.Phi()<<","<<event.chsPairRelIso.first<<std::endl;
               std::cout<<"subleading hadron (pT, eta, phi, isolation):"<<event.chsPairVec.second.Pt()<<","<<event.chsPairVec.second.Eta()<<","<<event.chsPairVec.second.Phi()<<","<<event.chsPairRelIso.second<<std::endl;
             }
-            // If refit fails then reject event - all signal events	pass refit, but	QCD does not -> check this
-            if (!getChsTrackPairIndex(event)) return false; //checking if refitted tracks are present -> necessary for SV construction
             return true;
         }
     }
@@ -295,71 +327,88 @@ bool SharedFunctions::DiHadronPtCut(AnalysisEvent& event) {
 }
 
 bool SharedFunctions::MassCompatibility(AnalysisEvent& event, TF1& f_lower, TF1& f_higher) {
-  double dihadron_mass = (event.chsPairVec.first + event.chsPairVec.second).M();
-  double dimuon_mass = (event.zPairLeptons.first + event.zPairLeptons.second).M();
+  double dihadron_mass = (event.chsPairTrkVecRefitted.first + event.chsPairTrkVecRefitted.second).M();
+  double dimuon_mass = (event.zPairLeptonsRefitted.first + event.zPairLeptonsRefitted.second).M();
   double mass_upper = f_higher.Eval(dimuon_mass);
   double mass_lower = f_lower.Eval(dimuon_mass);
   if (verbose_) std::cout<<"Look here(dimu, dihad, low, up):"<<dimuon_mass<<","<<dihadron_mass<<","<<mass_lower<<","<<mass_upper<<std::endl;
+  (*hists_2d_)["h_DiMuonMass_DiChHadMass_BC"]->Fill(dimuon_mass,dihadron_mass,event.eventWeight);
+  (*hists_1d_)["h_DiMuonMass_BC"]->Fill(dimuon_mass,event.eventWeight);
+  (*hists_1d_)["h_DiChHadMass_BC"]->Fill(dihadron_mass,event.eventWeight);
+  (*hists_1d_)["h_AvgMass_mumu_hh_BC"]->Fill(0.5*(dihadron_mass+dimuon_mass),event.eventWeight);
   if ((dihadron_mass>=mass_lower) && (dihadron_mass<=mass_upper)) return true;
   else return false;
 }
 
-bool SharedFunctions::HiggsWindow(AnalysisEvent& event) {
-  double higgsMass {(event.chsPairVec.first+event.chsPairVec.second+event.zPairLeptons.first+event.zPairLeptons.second).M()};
-  // if ((std::abs(higgsMass - 125.35) > 2)  && (std::abs(higgsMass - 125.35) < 4)) return true;
+bool SharedFunctions::HiggsWindow(AnalysisEvent& event, bool isMC_) {
+  double higgsMass {(event.chsPairTrkVecRefitted.first+event.chsPairTrkVecRefitted.second+event.zPairLeptonsRefitted.first+event.zPairLeptonsRefitted.second).M()};
+    
+  if (isMC_) (*hists_1d_)["h_recoHiggsMass_BC"]->Fill(higgsMass,event.eventWeight);
+  else {
+    if (SR_) (*hists_1d_)["h_recoHiggsMass_BC"]->Fill(higgsMass,event.eventWeight);
+    else {
+      if ((higgsMass < higgsPeakLow_) || (higgsMass > higgsPeakHigh_)) (*hists_1d_)["h_recoHiggsMass_BC"]->Fill(higgsMass,event.eventWeight);
+    }
+  }
   if (SR_) {
     if ((higgsMass >= higgsPeakLow_) && (higgsMass <= higgsPeakHigh_)) return true;
     else return false;
   }
   else {
     // std::cout<<"BLINDED HIGGS PEAK"<<std::endl;
-    if ((higgsMass > higgsPeakLow_-higgsPeakSideband_) && (higgsMass < higgsPeakLow_)) return true;
-    else if ((higgsMass > higgsPeakHigh_) && (higgsMass < higgsPeakHigh_+higgsPeakSideband_)) return true;
+    if (((higgsMass > higgsPeakLow_-higgsPeakSideband_) && (higgsMass < higgsPeakLow_)) || ((higgsMass > higgsPeakHigh_) && (higgsMass < higgsPeakHigh_+higgsPeakSideband_))) return true;
     else return false;
   }
 }
 
-bool SharedFunctions::getMuonTrackPairIndex(AnalysisEvent& event) { 
+bool SharedFunctions::getMuonTrackPairIndex(AnalysisEvent& event, int leadingidx, int subleadingidx, std::vector<ROOT::Math::PxPyPzMVector> &refit_trks, int &idx) { 
     int TkPairIdx = -1;
     for (int i{0}; i < event.numMuonTrackPairsPF2PAT; i++) {
-        if (event.muonTkPairPF2PATIndex1[i] == event.zPairIndex.first && event.muonTkPairPF2PATIndex2[i] == event.zPairIndex.second) {
+        if ((event.muonTkPairPF2PATIndex1[i] == leadingidx && event.muonTkPairPF2PATIndex2[i] == subleadingidx) || (event.muonTkPairPF2PATIndex1[i] == subleadingidx && event.muonTkPairPF2PATIndex2[i] == leadingidx)) {
           TkPairIdx = i;
           break;
         }
     }
-    event.mumuTrkIndex = TkPairIdx;
+    idx = TkPairIdx;
+    if (verbose_) std::cout<<"TkPair index:"<<idx<<std::endl;
+    if (idx < 0) return false;
+    // if ( (event.muonTkPairPF2PATTkVtxChi2[idx])/(event.muonTkPairPF2PATTkVtxNdof[idx]+1.0e-06) > 10. ) continue;
 
-    // if ( (event.muonTkPairPF2PATTkVtxChi2[event.mumuTrkIndex])/(event.muonTkPairPF2PATTkVtxNdof[event.mumuTrkIndex]+1.0e-06) > 10. ) continue;
+    if ( std::isnan(event.muonTkPairPF2PATTk1Pt[idx])  || std::isnan(event.muonTkPairPF2PATTk2Pt[idx]) ) return false;
+    if ( std::isnan(event.muonTkPairPF2PATTk1P2[idx])  || std::isnan(event.muonTkPairPF2PATTk2P2[idx]) ) return false;
+    if ( std::isnan(event.muonTkPairPF2PATTk1Phi[idx]) || std::isnan(event.muonTkPairPF2PATTk2Phi[idx]) ) return false;
 
-    if ( std::isnan(event.muonTkPairPF2PATTk1Pt[event.mumuTrkIndex])  || std::isnan(event.muonTkPairPF2PATTk2Pt[event.mumuTrkIndex]) ) return false;
-    if ( std::isnan(event.muonTkPairPF2PATTk1P2[event.mumuTrkIndex])  || std::isnan(event.muonTkPairPF2PATTk2P2[event.mumuTrkIndex]) ) return false;
-    if ( std::isnan(event.muonTkPairPF2PATTk1Phi[event.mumuTrkIndex]) || std::isnan(event.muonTkPairPF2PATTk2Phi[event.mumuTrkIndex]) ) return false;
-
-    event.zPairLeptonsRefitted.first  = ROOT::Math::PxPyPzEVector{event.muonTkPairPF2PATTk1Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk1Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk1P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
-    event.zPairLeptonsRefitted.second = ROOT::Math::PxPyPzEVector{event.muonTkPairPF2PATTk2Px[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Py[event.mumuTrkIndex], event.muonTkPairPF2PATTk2Pz[event.mumuTrkIndex], std::sqrt(event.muonTkPairPF2PATTk2P2[event.mumuTrkIndex]+std::pow(0.1057,2))};
+    ROOT::Math::PxPyPzMVector muTrk1{event.muonTkPairPF2PATTk1Px[idx], event.muonTkPairPF2PATTk1Py[idx], event.muonTkPairPF2PATTk1Pz[idx], muonMass_};
+    ROOT::Math::PxPyPzMVector muTrk2{event.muonTkPairPF2PATTk2Px[idx], event.muonTkPairPF2PATTk2Py[idx], event.muonTkPairPF2PATTk2Pz[idx], muonMass_};
+    refit_trks[0]  = muTrk1.Pt() > muTrk2.Pt() ? muTrk1 : muTrk2;
+    refit_trks[1] = muTrk1.Pt() > muTrk2.Pt() ? muTrk2 : muTrk1;
     return true;
 }
 
-bool SharedFunctions::getChsTrackPairIndex(AnalysisEvent& event) { 
+bool SharedFunctions::getChsTrackPairIndex(AnalysisEvent& event,  int leadingidx, int subleadingidx, std::vector<ROOT::Math::PxPyPzMVector> &refit_trks, int &idx) { 
     int TkPairIdx = -1;
     for (int i{0}; i < event.numChsTrackPairs; i++) {
-        if (event.chsTkPairIndex1[i] == event.chsPairIndex.first && event.chsTkPairIndex2[i] == event.chsPairIndex.second) {
+        if ((event.chsTkPairIndex1[i] == leadingidx && event.chsTkPairIndex2[i] == subleadingidx) || (event.chsTkPairIndex1[i] == subleadingidx && event.chsTkPairIndex2[i] == leadingidx)) {
           TkPairIdx = i;
           break;
         }
     }
-    event.chsPairTrkIndex = TkPairIdx;
+    idx = TkPairIdx;
+    // if (verbose_) 
+    // std::cout<<"chsTkPair index:"<<idx<<std::endl;
+
+    if (idx < 0) return false;
 
     // if ( (event.chsTkPairTkVtxChi2[event.chsPairTrkIndex])/(event.chsTkPairTkVtxNdof[event.chsPairTrkIndex]+1.0e-06) > 20. ) continue;
     // If refit fails then reject event - all signal events	pass refit, but	QCD does not
-    if ( std::isnan(event.chsTkPairTk1Pt[event.chsPairTrkIndex])  || std::isnan(event.chsTkPairTk2Pt[event.chsPairTrkIndex]) ) return false;
-    if ( std::isnan(event.chsTkPairTk1P2[event.chsPairTrkIndex])  || std::isnan(event.chsTkPairTk2P2[event.chsPairTrkIndex]) ) return false;
-    if ( std::isnan(event.chsTkPairTk1Phi[event.chsPairTrkIndex]) || std::isnan(event.chsTkPairTk2Phi[event.chsPairTrkIndex]) ) return false;
+    if ( std::isnan(event.chsTkPairTk1Pt[idx])  || std::isnan(event.chsTkPairTk2Pt[idx]) ) return false;
+    if ( std::isnan(event.chsTkPairTk1P2[idx])  || std::isnan(event.chsTkPairTk2P2[idx]) ) return false;
+    if ( std::isnan(event.chsTkPairTk1Phi[idx]) || std::isnan(event.chsTkPairTk2Phi[idx]) ) return false;
 
-    ROOT::Math::PxPyPzEVector chsTrk1Refitted {event.chsTkPairTk1Pt[event.chsPairTrkIndex], event.chsTkPairTk1Eta[event.chsPairTrkIndex], event.chsTkPairTk1Phi[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk1P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
-    ROOT::Math::PxPyPzEVector chsTrk2Refitted {event.chsTkPairTk2Pt[event.chsPairTrkIndex], event.chsTkPairTk2Eta[event.chsPairTrkIndex], event.chsTkPairTk2Phi[event.chsPairTrkIndex], std::sqrt(event.chsTkPairTk2P2[event.chsPairTrkIndex]+std::pow(chsMass_,2))};
-    event.chsPairTrkVecRefitted.first  = chsTrk1Refitted;
-    event.chsPairTrkVecRefitted.second = chsTrk2Refitted;
+    ROOT::Math::PxPyPzMVector chsTrk1Refitted {event.chsTkPairTk1Px[idx], event.chsTkPairTk1Py[idx], event.chsTkPairTk1Pz[idx], chsMass_};
+    ROOT::Math::PxPyPzMVector chsTrk2Refitted {event.chsTkPairTk2Px[idx], event.chsTkPairTk2Py[idx], event.chsTkPairTk2Pz[idx], chsMass_};
+    refit_trks[0]  = chsTrk1Refitted.Pt() > chsTrk2Refitted.Pt() ? chsTrk1Refitted : chsTrk2Refitted;
+    refit_trks[1] = chsTrk1Refitted.Pt() > chsTrk2Refitted.Pt() ? chsTrk2Refitted : chsTrk1Refitted;
     return true;
 }
 
@@ -524,12 +573,12 @@ bool SharedFunctions::GenLevelCheck(const AnalysisEvent& event, const bool verbo
     	genMuonIndex.emplace_back(k);
     }
     //else if ( pid == 211 && (motherId < 6 || motherId == 21 || motherId == 9000006 ) ) { //checking if pion is coming from quarks, or gluon or scalar //most pions coming from meson decays though
-    else if ( pid == 211 && status == 1 && std::abs(event.genParEta[k])<looseChsEta_) {
+    else if ( pid == 211 && status == 1) {
     //if ( hasScalarAncestry && motherId == 9000006 ) genPionIndex.emplace_back(k); //checking stricter criteria, just to see if pt dist changes; motherId not originally there
     	if ( hasScalarAncestry ) genPionIndex.emplace_back(k); //low stats for pions comparitively
       if ( hasScalarAncestry ) genChsIndex.emplace_back(k);
   	}
-    else if ( pid == 321 && status == 1 && std::abs(event.genParEta[k])<looseChsEta_) {
+    else if ( pid == 321 && status == 1) {
     	if ( hasScalarAncestry ) {
       	genChargedKaonIndex.emplace_back(k);
         //genKaonIndex.emplace_back(k);
@@ -559,24 +608,30 @@ bool SharedFunctions::GenLevelCheck(const AnalysisEvent& event, const bool verbo
     }
   }	
 	if (verbose) std::cout<<"GenLevelCheck (muons, hadrons) - "<<genMuonIndex.size()<<", "<<genChsIndex.size()<<std::endl;
-	if (( genChsIndex.size() < 2 )||(genMuonIndex.size() < 2)) return false;
+	// if (( genChsIndex.size() < 2 )||(genMuonIndex.size() < 2)) return false; //change this to have only charged kaons or charged pions //old, only use to demonstrate older results
+  
+  if (chsMass_ > 0.14) {
+	  if (( genChargedKaonIndex.size() < 2 )||(genMuonIndex.size() < 2)) return false; //change this to have only charged kaons or charged pions
+  }
+  else {
+	  if (( genPionIndex.size() < 2 )||(genMuonIndex.size() < 2)) return false; //change this to have only charged kaons or charged pions
+  }
 	return true;
-
 }
 
-Isolation SharedFunctions::PFIsolation(TString ptype,int trk_ind, int gen_ind, int trk_exc,  const AnalysisEvent& event, double dr_max = 0.4) {
+Isolation SharedFunctions::PFIsolation(TString ptype, ROOT::Math::PxPyPzMVector &Trk,int trk_ind, int gen_ind, int trk_exc, const AnalysisEvent& event, double dr_max = 0.4) {
   float nh_iso {0.0};
   float ph_iso {0.0};
   float ch_iso {0.0};
   float pu_iso {0.0};
   float dr_trk_packedCandVec {99.};
   int count = 0;
-  ROOT::Math::PxPyPzMVector Trk;
-  if (ptype.Contains("muon")) 
-    Trk.SetCoordinates(event.muonPF2PATPX[trk_ind], event.muonPF2PATPY[trk_ind], event.muonPF2PATPZ[trk_ind], 0.1056583745); //NECESSARY TO USE THE SAME LORENTZ VECTOR TYPE AND GIVE SAME QUANTITIES AS IN DEFINITION
-    // Trk.SetPxPyPzE;
-  else
-    Trk.SetCoordinates(event.packedCandsPx[trk_ind],event.packedCandsPy[trk_ind],event.packedCandsPz[trk_ind],chsMass_);
+  // ROOT::Math::PxPyPzMVector Trk;
+  // if (ptype.Contains("muon")) 
+  //   Trk.SetCoordinates(event.muonPF2PATPX[trk_ind], event.muonPF2PATPY[trk_ind], event.muonPF2PATPZ[trk_ind], muonMass_); //NECESSARY TO USE THE SAME LORENTZ VECTOR TYPE AND GIVE SAME QUANTITIES AS IN DEFINITION
+  //   // Trk.SetPxPyPzE;
+  // else
+  //   Trk.SetCoordinates(event.packedCandsPx[trk_ind],event.packedCandsPy[trk_ind],event.packedCandsPz[trk_ind],chsMass_);
     // Trk.SetPx(event.packedCandsPx[trk_ind]);Trk.SetPy(event.packedCandsPy[trk_ind]);Trk.SetPz(event.packedCandsPz[trk_ind]);Trk.SetM(chsMass_);
   if (verbose_) {
       std::cout<<"Check the PFCandidates for isolation!"<<std::endl;
@@ -592,7 +647,7 @@ Isolation SharedFunctions::PFIsolation(TString ptype,int trk_ind, int gen_ind, i
     // exclude tracks from HF above? 
     
     ROOT::Math::PxPyPzEVector packedCandVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
-    ROOT::Math::PxPyPzEVector packedCandTrkVec {event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]};
+    ROOT::Math::PxPyPzEVector packedCandTrkVec {event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
     // packedCandTrkVec.SetPtEtaPhiE(event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]);
     if (packedCandVec.Pt()<0.5) continue;
     dr_trk_packedCandVec = ROOT::Math::VectorUtil::DeltaR(Trk, packedCandVec);
@@ -655,7 +710,7 @@ Isolation SharedFunctions::PFIsolation(TString ptype, ROOT::Math::PxPyPzMVector&
     // exclude tracks from HF above? 
     
     ROOT::Math::PxPyPzEVector packedCandVec {event.packedCandsPx[k], event.packedCandsPy[k], event.packedCandsPz[k], event.packedCandsE[k]};
-    ROOT::Math::PxPyPzEVector packedCandTrkVec{event.packedCandsPseudoTrkPt[k], event.packedCandsPseudoTrkEta[k], event.packedCandsPseudoTrkPhi[k], event.packedCandsE[k]};
+    ROOT::Math::PxPyPzEVector packedCandTrkVec{event.packedCandsPseudoTrkPx[k], event.packedCandsPseudoTrkPy[k], event.packedCandsPseudoTrkPz[k], event.packedCandsE[k]};
     if (packedCandVec.Pt()<0.5) continue;
     dr_trk_packedCandVec = ROOT::Math::VectorUtil::DeltaR(trk, packedCandVec);
     if ((verbose_) && (dr_trk_packedCandVec < dr_max)) {
