@@ -1,0 +1,4 @@
+configs/2017/datasets/data/mumuRun2017B_Zpeak.yaml,plots/ZMass_test/mumuRun2017B.root,mumuRun2017B
+configs/2017/datasets/data/mumuRun2017C_Zpeak.yaml,plots/ZMass_test/mumuRun2017C.root,mumuRun2017C
+configs/2017/datasets/data/mumuRun2017E_Zpeak.yaml,plots/ZMass_test/mumuRun2017E.root,mumuRun2017E
+configs/2017/datasets/data/mumuRun2017F_Zpeak.yaml,plots/ZMass_test/mumuRun2017F.root,mumuRun2017F

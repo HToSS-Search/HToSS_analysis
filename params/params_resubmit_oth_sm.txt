@@ -1,0 +1,3 @@
+configs/2017/datasets/ttbar/ttbar_semileptonic.yaml,configs/2017/cuts/CRCuts_kaonmass.yaml,plots/KaonMassAssumption/IsoScalarHiggsCuts_Category_90pPrompt_240313/ttbar/ttbar_semileptonic/output_ttbar_semileptonic_1101-1120.root,1101,1120,ttbar_semileptonic
+configs/2017/datasets/VV/WG_lnug.yaml,configs/2017/cuts/CRCuts_kaonmass.yaml,plots/KaonMassAssumption/IsoScalarHiggsCuts_Category_90pPrompt_240313/VV/WG_lnug/output_WG_lnug_1-18.root,1,18,WG_lnug
+configs/2017/datasets/ttV/ttZ_qq.yaml,configs/2017/cuts/CRCuts_kaonmass.yaml,plots/KaonMassAssumption/IsoScalarHiggsCuts_Category_90pPrompt_240313/ttV/ttZ_qq/output_ttZ_qq_41-42.root,41,42,ttZ_qq

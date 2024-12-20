@@ -1,0 +1,13 @@
+colour: '#ff9933'
+cross_section: 6.331
+histogram: VV
+label: VV
+locations:
+- /pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/VV/WZ_2l2q/
+mc: true
+name: WZ_2l2q
+plot_type: f
+skim_location:
+- /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/2017/VV/WZ_2l2q/
+sum_weights: 2408673.6336984774
+total_events: -1

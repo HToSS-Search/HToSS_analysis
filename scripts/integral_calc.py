@@ -28,8 +28,8 @@ def main():
     # Run the function
     fin = ROOT.TFile(args.fname,"READ")
     hist=fin.Get(args.hname).Clone()
-    if 'Run' not in args.fname:
-        hist.Scale(41474.989603894)
+    if 'Data' not in args.fname:
+        hist.Scale(41480)
     xlow, ylow = 0, 0
     xhigh, yhigh = 1000000, 1000000
     integral = hist.Integral(0,hist.GetNbinsX()+1, 0, hist.GetNbinsY()+1)

@@ -1,10 +1,10 @@
-name: "ggH_HToSS_MS1p1_ctauS10"
-locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/ggH/NLO_ggH_HToSS_SmuonHadronFiltered_M125_MS1p1_ctauS10/"
-cross_section: 0.109674208
+colour: '#fc0303'
+cross_section: 0.005977904
+histogram: HToSS_MH125_MS1p1_ctauS10
+label: H#rightarrowaa m_{a}=1.1 c_{#tau}=1
+locations: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL17MiniAOD-106X_mc2017_realistic_v6-v1_MCUL2017_HToSS_ChargedKaon/240227_215950
 mc: true
-histogram: "ggH_HToSS_MS1p1_ctauS10"
-colour: "#fc0303"
-label: "H#rightarrowaa m_{a}=1.1 c_{#tau}=10"
-plot_type: "l"
-
+name: HToSS_MH125_MS1p1_ctauS10
+plot_type: l
+sum_weights: 312345.372000058
+total_events: -1

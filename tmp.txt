@@ -1,0 +1,21 @@
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p8_ctauS10.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/test1.root
+Fourth arg: 1
+Fifth arg: 3
+Sixth arg: HToSS_MH125_MS1p8_ctauS10_ctauS1_ctauS3p594
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134635/0000/output_1.root//makeTopologyNtupleMiniAOD/tree
+0,1
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134635/0000/output_2.root//makeTopologyNtupleMiniAOD/tree
+0,1
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134635/0000/output_3.root//makeTopologyNtupleMiniAOD/tree
+0,1
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134623/0000/output_1.root//makeTopologyNtupleMiniAOD/tree
+1,0
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134623/0000/output_2.root//makeTopologyNtupleMiniAOD/tree
+1,0
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134623/0000/output_3.root//makeTopologyNtupleMiniAOD/tree
+1,0

@@ -1,0 +1,3 @@
+configs/2017/datasets/QCD/QCD_Pt-15to20_MuEnrichedPt5.yaml,/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/2017/QCD/QCD_Pt-15to20_MuEnrichedPt5/output_1-50.root,1,50,QCD_Pt-15to20_MuEnrichedPt5
+configs/2017/datasets/QCD/QCD_Pt-15to20_MuEnrichedPt5.yaml,/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/2017/QCD/QCD_Pt-15to20_MuEnrichedPt5/output_51-92.root,51,92,QCD_Pt-15to20_MuEnrichedPt5
+configs/2017/datasets/QCD/QCD_Pt-20to30_MuEnrichedPt5.yaml,/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/2017/QCD/QCD_Pt-20to30_MuEnrichedPt5/output_1-50.root,1,50,QCD_Pt-20to30_MuEnrichedPt5

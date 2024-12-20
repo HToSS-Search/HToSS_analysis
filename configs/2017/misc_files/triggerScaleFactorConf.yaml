@@ -1,0 +1,3 @@
+datasets:
+  - "configs/2017/datasets/ttbar_2l2nu.yaml"
+  - "configs/2017/datasets/metRun2017.yaml"

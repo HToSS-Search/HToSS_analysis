@@ -1,0 +1,2376 @@
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p4_ctauS0.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p4_ctauS0/output_HToSS_MH125_MS0p4_ctauS0_1-5.root
+Fourth arg: 1
+Fifth arg: 5
+Sixth arg: HToSS_MH125_MS0p4_ctauS0
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135406/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135406/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135406/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135406/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135406/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135406/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135406/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135406/0000/output_5.root']
+HToSS_MH125_MS0p4_ctauS0
+0.1 0.0
+population mean:  8.920977801551216e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p4_ctauS0
+Total entries: 44868.0
+Skimmed entries: 14876
+Analyzed entries: 6446.0
+4.152992520939386e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p4_ctauS100.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p4_ctauS100/output_HToSS_MH125_MS0p4_ctauS100_1-12.root
+Fourth arg: 1
+Fifth arg: 12
+Sixth arg: HToSS_MH125_MS0p4_ctauS100
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/0000/output_6.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/0000/output_7.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/0000/output_8.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/0000/output_9.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/0000/output_10.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/0000/output_11.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135442/0000/output_12.root']
+HToSS_MH125_MS0p4_ctauS100
+100.0 100.0
+population mean:  3.178205921820535e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p4_ctauS100
+Total entries: 125941.0
+Skimmed entries: 2822
+Analyzed entries: 21.0
+1.4795582041896299e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p4_ctauS10.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p4_ctauS10/output_HToSS_MH125_MS0p4_ctauS10_1-6.root
+Fourth arg: 1
+Fifth arg: 6
+Sixth arg: HToSS_MH125_MS0p4_ctauS10
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135430/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135430/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135430/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135430/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135430/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135430/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135430/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135430/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135430/0000/output_6.root']
+HToSS_MH125_MS0p4_ctauS10
+10.0 10.0
+population mean:  2.789410306979337e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p4_ctauS10
+Total entries: 143495.0
+Skimmed entries: 6499
+Analyzed entries: 251.0
+1.2985898347886105e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p4_ctauS1.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p4_ctauS1/output_HToSS_MH125_MS0p4_ctauS1_1-3.root
+Fourth arg: 1
+Fifth arg: 3
+Sixth arg: HToSS_MH125_MS0p4_ctauS1
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135418/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135418/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135418/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135418/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135418/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p4_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135418/0000/output_3.root']
+HToSS_MH125_MS0p4_ctauS1
+1.0 1.0
+population mean:  8.918592513368983e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p4_ctauS1
+Total entries: 44880.0
+Skimmed entries: 8053
+Analyzed entries: 1788.0
+4.1524372090517515e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p6_ctauS0.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p6_ctauS0/output_HToSS_MH125_MS0p6_ctauS0_1-4.root
+Fourth arg: 1
+Fifth arg: 4
+Sixth arg: HToSS_MH125_MS0p6_ctauS0
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135318/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135318/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135318/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135318/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135318/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135318/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135318/0000/output_4.root']
+HToSS_MH125_MS0p6_ctauS0
+0.1 0.0
+population mean:  6.606258409930825e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p6_ctauS0
+Total entries: 42212.0
+Skimmed entries: 14057
+Analyzed entries: 6108.0
+3.075281591826635e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p6_ctauS100.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p6_ctauS100/output_HToSS_MH125_MS0p6_ctauS100_1-14.root
+Fourth arg: 1
+Fifth arg: 14
+Sixth arg: HToSS_MH125_MS0p6_ctauS100
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/output_6.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/output_7.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/output_8.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/output_9.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/output_10.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/output_11.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/output_12.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/output_13.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135354/0000/output_14.root']
+HToSS_MH125_MS0p6_ctauS100
+100.0 100.0
+population mean:  1.5056930121054395e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p6_ctauS100
+Total entries: 185206.0
+Skimmed entries: 4581
+Analyzed entries: 41.0
+7.009610816455467e-09
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p6_ctauS10.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p6_ctauS10/output_HToSS_MH125_MS0p6_ctauS10_1-10.root
+Fourth arg: 1
+Fifth arg: 10
+Sixth arg: HToSS_MH125_MS0p6_ctauS10
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135342/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135342/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135342/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135342/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135342/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135342/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135342/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135342/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135342/0000/output_6.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135342/0000/output_7.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135342/0000/output_8.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135342/0000/output_9.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135342/0000/output_10.root']
+HToSS_MH125_MS0p6_ctauS10
+10.0 10.0
+population mean:  1.6019449901768173e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p6_ctauS10
+Total entries: 174078.0
+Skimmed entries: 9691
+Analyzed entries: 552.0
+7.457390911584222e-09
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p6_ctauS1.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p6_ctauS1/output_HToSS_MH125_MS0p6_ctauS1_1-3.root
+Fourth arg: 1
+Fifth arg: 3
+Sixth arg: HToSS_MH125_MS0p6_ctauS1
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135330/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135330/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135330/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135330/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135330/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p6_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135330/0000/output_3.root']
+HToSS_MH125_MS0p6_ctauS1
+1.0 1.0
+population mean:  6.681602932719954e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p6_ctauS1
+Total entries: 41736.0
+Skimmed entries: 9591
+Analyzed entries: 2872.0
+3.110653372812638e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p8_ctauS0.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p8_ctauS0/output_HToSS_MH125_MS0p8_ctauS0_1-5.root
+Fourth arg: 1
+Fifth arg: 5
+Sixth arg: HToSS_MH125_MS0p8_ctauS0
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135231/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135231/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135231/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135231/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135231/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135231/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135231/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135231/0000/output_5.root']
+HToSS_MH125_MS0p8_ctauS0
+0.1 0.0
+population mean:  4.6915715511584473e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p8_ctauS0
+Total entries: 39622.0
+Skimmed entries: 16446
+Analyzed entries: 8068.0
+2.1843058348178393e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p8_ctauS100.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p8_ctauS100/output_HToSS_MH125_MS0p8_ctauS100_1-12.root
+Fourth arg: 1
+Fifth arg: 12
+Sixth arg: HToSS_MH125_MS0p8_ctauS100
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/0000/output_6.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/0000/output_7.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/0000/output_8.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/0000/output_9.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/0000/output_10.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/0000/output_11.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135306/0000/output_12.root']
+HToSS_MH125_MS0p8_ctauS100
+100.0 100.0
+population mean:  1.0234061595040686e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p8_ctauS100
+Total entries: 181638.0
+Skimmed entries: 4840
+Analyzed entries: 56.0
+4.764271318185629e-09
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p8_ctauS10.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p8_ctauS10/output_HToSS_MH125_MS0p8_ctauS10_1-9.root
+Fourth arg: 1
+Fifth arg: 9
+Sixth arg: HToSS_MH125_MS0p8_ctauS10
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135254/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135254/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135254/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135254/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135254/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135254/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135254/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135254/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135254/0000/output_6.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135254/0000/output_7.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135254/0000/output_8.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135254/0000/output_9.root']
+HToSS_MH125_MS0p8_ctauS10
+10.0 10.0
+population mean:  9.507244532640495e-08
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p8_ctauS10
+Total entries: 195524.0
+Skimmed entries: 12780
+Analyzed entries: 991.0
+4.426082817693401e-09
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p8_ctauS1.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p8_ctauS1/output_HToSS_MH125_MS0p8_ctauS1_1-3.root
+Fourth arg: 1
+Fifth arg: 3
+Sixth arg: HToSS_MH125_MS0p8_ctauS1
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135242/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135242/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135242/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135242/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135242/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135242/0000/output_3.root']
+HToSS_MH125_MS0p8_ctauS1
+1.0 1.0
+population mean:  4.625956798725861e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p8_ctauS1
+Total entries: 40184.0
+Skimmed entries: 11228
+Analyzed entries: 4126.0
+2.1536450958718536e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p9_ctauS0.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p9_ctauS0/output_HToSS_MH125_MS0p9_ctauS0_1-3.root
+Fourth arg: 1
+Fifth arg: 3
+Sixth arg: HToSS_MH125_MS0p9_ctauS0
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135143/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135143/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135143/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135143/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135143/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135143/0000/output_3.root']
+HToSS_MH125_MS0p9_ctauS0
+0.1 0.0
+population mean:  2.9443049555273195e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p9_ctauS0
+Total entries: 36202.0
+Skimmed entries: 15970
+Analyzed entries: 8184.0
+1.3707558542889769e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p9_ctauS100.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p9_ctauS100/output_HToSS_MH125_MS0p9_ctauS100_1-13.root
+Fourth arg: 1
+Fifth arg: 13
+Sixth arg: HToSS_MH125_MS0p9_ctauS100
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/output_6.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/output_7.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/output_8.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/output_9.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/output_10.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/output_11.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/output_12.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135219/0000/output_13.root']
+HToSS_MH125_MS0p9_ctauS100
+100.0 100.0
+population mean:  5.5059521669507727e-08
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p9_ctauS100
+Total entries: 193590.0
+Skimmed entries: 5214
+Analyzed entries: 75.0
+2.563289512723087e-09
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p9_ctauS10.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p9_ctauS10/output_HToSS_MH125_MS0p9_ctauS10_1-8.root
+Fourth arg: 1
+Fifth arg: 8
+Sixth arg: HToSS_MH125_MS0p9_ctauS10
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135207/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135207/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135207/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135207/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135207/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135207/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135207/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135207/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135207/0000/output_6.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135207/0000/output_7.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135207/0000/output_8.root']
+HToSS_MH125_MS0p9_ctauS10
+10.0 10.0
+population mean:  5.0347757986273485e-08
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p9_ctauS10
+Total entries: 211707.0
+Skimmed entries: 14911
+Analyzed entries: 1218.0
+2.343961623225186e-09
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS0p9_ctauS1.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS0p9_ctauS1/output_HToSS_MH125_MS0p9_ctauS1_1-5.root
+Fourth arg: 1
+Fifth arg: 5
+Sixth arg: HToSS_MH125_MS0p9_ctauS1
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135155/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135155/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135155/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135155/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135155/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135155/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135155/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS0p9_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135155/0000/output_5.root']
+HToSS_MH125_MS0p9_ctauS1
+1.0 1.0
+population mean:  2.6328852880150183e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS0p9_ctauS1
+Total entries: 40484.0
+Skimmed entries: 11991
+Analyzed entries: 4581.0
+1.2256353229313698e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1_ctauS0.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS1_ctauS0/output_HToSS_MH125_MS1_ctauS0_1-2.root
+Fourth arg: 1
+Fifth arg: 2
+Sixth arg: HToSS_MH125_MS1_ctauS0
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135057/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135057/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135057/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135057/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135057/0000/output_2.root']
+HToSS_MH125_MS1_ctauS0
+0.1 0.0
+population mean:  1.001343649745235e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1_ctauS0
+Total entries: 31794.0
+Skimmed entries: 14225
+Analyzed entries: 7398.0
+4.661651459285428e-09
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1_ctauS100.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS1_ctauS100/output_HToSS_MH125_MS1_ctauS100_1-15.root
+Fourth arg: 1
+Fifth arg: 15
+Sixth arg: HToSS_MH125_MS1_ctauS100
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_6.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_7.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_8.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_9.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_10.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_11.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_12.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_13.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_14.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135132/0000/output_15.root']
+HToSS_MH125_MS1_ctauS100
+100.0 100.0
+population mean:  2.6074086207320168e-08
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1_ctauS100
+Total entries: 122101.0
+Skimmed entries: 3397
+Analyzed entries: 48.0
+1.2138154352165018e-09
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1_ctauS10.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS1_ctauS10/output_HToSS_MH125_MS1_ctauS10_1-6.root
+Fourth arg: 1
+Fifth arg: 6
+Sixth arg: HToSS_MH125_MS1_ctauS10
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135120/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135120/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135120/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135120/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135120/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135120/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135120/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135120/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135120/0000/output_6.root']
+HToSS_MH125_MS1_ctauS10
+10.0 10.0
+population mean:  3.7366603678360585e-08
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1_ctauS10
+Total entries: 85201.0
+Skimmed entries: 6301
+Analyzed entries: 576.0
+1.7395357018865509e-09
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1_ctauS1.yaml
+Second arg: configs/2018/cuts/SRCuts_pionmass.yaml
+Third arg: plots/UL2018/PionAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240703/ggH/HToSS_MH125_MS1_ctauS1/output_HToSS_MH125_MS1_ctauS1_1-4.root
+Fourth arg: 1
+Fifth arg: 4
+Sixth arg: HToSS_MH125_MS1_ctauS1
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135109/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135109/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135109/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135109/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135109/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135109/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedPion/240313_135109/0000/output_4.root']
+HToSS_MH125_MS1_ctauS1
+1.0 1.0
+population mean:  9.92107198504207e-08
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1_ctauS1
+Total entries: 32090.0
+Skimmed entries: 10115
+Analyzed entries: 4027.0
+4.619225258495559e-09
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS2_ctauS0.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS2_ctauS0/output_HToSS_MH125_MS2_ctauS0_1-1.root
+Fourth arg: 1
+Fifth arg: 1
+Sixth arg: HToSS_MH125_MS2_ctauS0
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192454/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192454/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192454/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192454/0000/output_1.root']
+HToSS_MH125_MS2_ctauS0
+0.1 0.0
+population mean:  2.2694543833249733e-06
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS2_ctauS0
+Total entries: 17943.0
+Skimmed entries: 8998
+Analyzed entries: 4934.0
+1.0564544792915205e-07
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS2_ctauS100.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS2_ctauS100/output_HToSS_MH125_MS2_ctauS100_1-11.root
+Fourth arg: 1
+Fifth arg: 11
+Sixth arg: HToSS_MH125_MS2_ctauS100
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192548/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192548/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192548/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192548/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192548/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192548/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192548/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192548/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192548/0000/output_6.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192548/0000/output_7.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192548/0000/output_8.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192548/0000/output_9.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192548/0000/output_10.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192548/0000/output_11.root']
+HToSS_MH125_MS2_ctauS100
+100.0 100.0
+population mean:  7.300254571531014e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS2_ctauS100
+Total entries: 55780.0
+Skimmed entries: 2365
+Analyzed entries: 103.0
+3.398953330093493e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS2_ctauS10.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS2_ctauS10/output_HToSS_MH125_MS2_ctauS10_1-1.root
+Fourth arg: 1
+Fifth arg: 1
+Sixth arg: HToSS_MH125_MS2_ctauS10
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192529/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192529/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192529/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192529/0000/output_1.root']
+HToSS_MH125_MS2_ctauS10
+10.0 10.0
+population mean:  2.261765163297045e-06
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS2_ctauS10
+Total entries: 18004.0
+Skimmed entries: 2978
+Analyzed entries: 743.0
+1.052992040991431e-07
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS2_ctauS1.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS2_ctauS1/output_HToSS_MH125_MS2_ctauS1_1-1.root
+Fourth arg: 1
+Fifth arg: 1
+Sixth arg: HToSS_MH125_MS2_ctauS1
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192512/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192512/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192512/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS2_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240221_192512/0000/output_1.root']
+HToSS_MH125_MS2_ctauS1
+1.0 1.0
+population mean:  2.2355651935218224e-06
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS2_ctauS1
+Total entries: 18215.0
+Skimmed entries: 8285
+Analyzed entries: 4714.0
+1.040792989728639e-07
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p8_ctauS0.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p8_ctauS0/output_HToSS_MH125_MS1p8_ctauS0_1-3.root
+Fourth arg: 1
+Fifth arg: 3
+Sixth arg: HToSS_MH125_MS1p8_ctauS0
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134558/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134558/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134558/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134558/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134558/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134558/0000/output_3.root']
+HToSS_MH125_MS1p8_ctauS0
+0.1 0.0
+population mean:  1.7897506250000001e-06
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p8_ctauS0
+Total entries: 18560.0
+Skimmed entries: 9451
+Analyzed entries: 5205.0
+8.331474201416621e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p8_ctauS100.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p8_ctauS100/output_HToSS_MH125_MS1p8_ctauS100_1-4.root
+Fourth arg: 1
+Fifth arg: 4
+Sixth arg: HToSS_MH125_MS1p8_ctauS100
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134647/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134647/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134647/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134647/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134647/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134647/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134647/0000/output_4.root']
+HToSS_MH125_MS1p8_ctauS100
+100.0 100.0
+population mean:  6.437677396848777e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p8_ctauS100
+Total entries: 51599.0
+Skimmed entries: 2036
+Analyzed entries: 91.0
+2.997037720288153e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p8_ctauS10.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p8_ctauS10/output_HToSS_MH125_MS1p8_ctauS10_1-3.root
+Fourth arg: 1
+Fifth arg: 3
+Sixth arg: HToSS_MH125_MS1p8_ctauS10
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134635/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134635/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134635/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134635/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134635/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134635/0000/output_3.root']
+HToSS_MH125_MS1p8_ctauS10
+10.0 10.0
+population mean:  1.837062913394536e-06
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p8_ctauS10
+Total entries: 18082.0
+Skimmed entries: 2752
+Analyzed entries: 650.0
+8.554556382954044e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p8_ctauS1.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p8_ctauS1/output_HToSS_MH125_MS1p8_ctauS1_1-3.root
+Fourth arg: 1
+Fifth arg: 3
+Sixth arg: HToSS_MH125_MS1p8_ctauS1
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134623/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134623/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134623/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134623/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134623/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134623/0000/output_3.root']
+HToSS_MH125_MS1p8_ctauS1
+1.0 1.0
+population mean:  1.8320981523357785e-06
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p8_ctauS1
+Total entries: 18131.0
+Skimmed entries: 8309
+Analyzed entries: 4722.0
+8.528606319469429e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p6_ctauS0.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p6_ctauS0/output_HToSS_MH125_MS1p6_ctauS0_1-5.root
+Fourth arg: 1
+Fifth arg: 5
+Sixth arg: HToSS_MH125_MS1p6_ctauS0
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134659/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134659/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134659/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134659/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134659/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134659/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134659/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134659/0000/output_5.root']
+HToSS_MH125_MS1p6_ctauS0
+0.1 0.0
+population mean:  1.2239571875651991e-06
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p6_ctauS0
+Total entries: 19172.0
+Skimmed entries: 9927
+Analyzed entries: 5644.0
+5.697647252861507e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p6_ctauS100.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p6_ctauS100/output_HToSS_MH125_MS1p6_ctauS100_1-5.root
+Fourth arg: 1
+Fifth arg: 5
+Sixth arg: HToSS_MH125_MS1p6_ctauS100
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134736/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134736/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134736/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134736/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134736/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134736/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134736/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134736/0000/output_5.root']
+HToSS_MH125_MS1p6_ctauS100
+100.0 100.0
+population mean:  5.061737138419724e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p6_ctauS100
+Total entries: 46359.0
+Skimmed entries: 1769
+Analyzed entries: 86.0
+2.356595972901191e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p6_ctauS10.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p6_ctauS10/output_HToSS_MH125_MS1p6_ctauS10_1-2.root
+Fourth arg: 1
+Fifth arg: 2
+Sixth arg: HToSS_MH125_MS1p6_ctauS10
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134724/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134724/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134724/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134724/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134724/0000/output_2.root']
+HToSS_MH125_MS1p6_ctauS10
+10.0 10.0
+population mean:  1.2957320375483158e-06
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p6_ctauS10
+Total entries: 18110.0
+Skimmed entries: 2502
+Analyzed entries: 540.0
+6.033099145688979e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p6_ctauS1.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p6_ctauS1/output_HToSS_MH125_MS1p6_ctauS1_1-2.root
+Fourth arg: 1
+Fifth arg: 2
+Sixth arg: HToSS_MH125_MS1p6_ctauS1
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134711/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134711/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134711/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134711/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p6_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134711/0000/output_2.root']
+HToSS_MH125_MS1p6_ctauS1
+1.0 1.0
+population mean:  1.2845252463323845e-06
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p6_ctauS1
+Total entries: 18268.0
+Skimmed entries: 8335
+Analyzed entries: 4770.0
+5.97959782854468e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p4_ctauS0.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p4_ctauS0/output_HToSS_MH125_MS1p4_ctauS0_1-1.root
+Fourth arg: 1
+Fifth arg: 1
+Sixth arg: HToSS_MH125_MS1p4_ctauS0
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134747/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134747/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134747/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134747/0000/output_1.root']
+HToSS_MH125_MS1p4_ctauS0
+0.1 0.0
+population mean:  9.346485451761104e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p4_ctauS0
+Total entries: 18284.0
+Skimmed entries: 9626
+Analyzed entries: 5521.0
+4.3513615857592915e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p4_ctauS100.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p4_ctauS100/output_HToSS_MH125_MS1p4_ctauS100_1-9.root
+Fourth arg: 1
+Fifth arg: 9
+Sixth arg: HToSS_MH125_MS1p4_ctauS100
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134822/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134822/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134822/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134822/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134822/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134822/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134822/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134822/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134822/0000/output_6.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134822/0000/output_7.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134822/0000/output_8.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134822/0000/output_9.root']
+HToSS_MH125_MS1p4_ctauS100
+100.0 100.0
+population mean:  4.401914893617022e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p4_ctauS100
+Total entries: 38822.0
+Skimmed entries: 1411
+Analyzed entries: 50.0
+2.049136894309007e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p4_ctauS10.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p4_ctauS10/output_HToSS_MH125_MS1p4_ctauS10_1-7.root
+Fourth arg: 1
+Fifth arg: 7
+Sixth arg: HToSS_MH125_MS1p4_ctauS10
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134810/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134810/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134810/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134810/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134810/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134810/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134810/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134810/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134810/0000/output_6.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134810/0000/output_7.root']
+HToSS_MH125_MS1p4_ctauS10
+10.0 10.0
+population mean:  9.376228464830464e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p4_ctauS10
+Total entries: 18226.0
+Skimmed entries: 2381
+Analyzed entries: 453.0
+4.36568941449188e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p4_ctauS1.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p4_ctauS1/output_HToSS_MH125_MS1p4_ctauS1_1-1.root
+Fourth arg: 1
+Fifth arg: 1
+Sixth arg: HToSS_MH125_MS1p4_ctauS1
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134759/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134759/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134759/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p4_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134759/0000/output_1.root']
+HToSS_MH125_MS1p4_ctauS1
+1.0 1.0
+population mean:  9.508214544038281e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p4_ctauS1
+Total entries: 17973.0
+Skimmed entries: 8134
+Analyzed entries: 4648.0
+4.4261721755328326e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p2_ctauS0.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p2_ctauS0/output_HToSS_MH125_MS1p2_ctauS0_1-1.root
+Fourth arg: 1
+Fifth arg: 1
+Sixth arg: HToSS_MH125_MS1p2_ctauS0
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134834/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134834/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134834/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134834/0000/output_1.root']
+HToSS_MH125_MS1p2_ctauS0
+0.1 0.0
+population mean:  7.711819942132206e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p2_ctauS0
+Total entries: 17972.0
+Skimmed entries: 9484
+Analyzed entries: 5766.0
+3.589931915449568e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p2_ctauS100.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p2_ctauS100/output_HToSS_MH125_MS1p2_ctauS100_1-10.root
+Fourth arg: 1
+Fifth arg: 10
+Sixth arg: HToSS_MH125_MS1p2_ctauS100
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134908/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134908/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134908/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134908/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134908/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134908/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134908/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134908/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134908/0000/output_6.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134908/0000/output_7.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134908/0000/output_8.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134908/0000/output_9.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134908/0000/output_10.root']
+HToSS_MH125_MS1p2_ctauS100
+100.0 100.0
+population mean:  3.9557276022490514e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p2_ctauS100
+Total entries: 35037.0
+Skimmed entries: 1221
+Analyzed entries: 30.0
+1.8414320970538095e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p2_ctauS10.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p2_ctauS10/output_HToSS_MH125_MS1p2_ctauS10_1-3.root
+Fourth arg: 1
+Fifth arg: 3
+Sixth arg: HToSS_MH125_MS1p2_ctauS10
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134857/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134857/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134857/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134857/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134857/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134857/0000/output_3.root']
+HToSS_MH125_MS1p2_ctauS10
+10.0 10.0
+population mean:  7.81223313229243e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p2_ctauS10
+Total entries: 17741.0
+Skimmed entries: 1930
+Analyzed entries: 347.0
+3.6366752936405906e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p2_ctauS1.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p2_ctauS1/output_HToSS_MH125_MS1p2_ctauS1_1-2.root
+Fourth arg: 1
+Fifth arg: 2
+Sixth arg: HToSS_MH125_MS1p2_ctauS1
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134846/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134846/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134846/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134846/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p2_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134846/0000/output_2.root']
+HToSS_MH125_MS1p2_ctauS1
+1.0 1.0
+population mean:  7.939781622364802e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p2_ctauS1
+Total entries: 17456.0
+Skimmed entries: 7579
+Analyzed entries: 4224.0
+3.696473953504182e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p1_ctauS0.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p1_ctauS0/output_HToSS_MH125_MS1p1_ctauS0_1-2.root
+Fourth arg: 1
+Fifth arg: 2
+Sixth arg: HToSS_MH125_MS1p1_ctauS0
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134920/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134920/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134920/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134920/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134920/0000/output_2.root']
+HToSS_MH125_MS1p1_ctauS0
+0.1 0.0
+population mean:  4.2228765187906186e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p1_ctauS0
+Total entries: 14156.0
+Skimmed entries: 7335
+Analyzed entries: 4526.0
+1.9657926797524837e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p1_ctauS100.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p1_ctauS100/output_HToSS_MH125_MS1p1_ctauS100_1-7.root
+Fourth arg: 1
+Fifth arg: 7
+Sixth arg: HToSS_MH125_MS1p1_ctauS100
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134956/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134956/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134956/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134956/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134956/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134956/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134956/0000/output_4.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134956/0000/output_5.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134956/0000/output_6.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS100_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134956/0000/output_7.root']
+HToSS_MH125_MS1p1_ctauS100
+100.0 100.0
+population mean:  2.495993319415449e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p1_ctauS100
+Total entries: 23950.0
+Skimmed entries: 785
+Analyzed entries: 18.0
+1.1619106962243054e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p1_ctauS10.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p1_ctauS10/output_HToSS_MH125_MS1p1_ctauS10_1-1.root
+Fourth arg: 1
+Fifth arg: 1
+Sixth arg: HToSS_MH125_MS1p1_ctauS10
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134944/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134944/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134944/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS10_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134944/0000/output_1.root']
+HToSS_MH125_MS1p1_ctauS10
+10.0 10.0
+population mean:  4.337157367771893e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p1_ctauS10
+Total entries: 13783.0
+Skimmed entries: 1318
+Analyzed entries: 229.0
+2.01928460739938e-08
+=========================================
+First arg: configs/2018/datasets/ggH/HToSS_MH125_MS1p1_ctauS1.yaml
+Second arg: configs/2018/cuts/SRCuts_kaonmass.yaml
+Third arg: plots/UL2018/KaonAssumption/IsoScalarHiggsCuts_Category_90pPrompt_SF_240613/ggH/HToSS_MH125_MS1p1_ctauS1/output_HToSS_MH125_MS1p1_ctauS1_1-4.root
+Fourth arg: 1
+Fifth arg: 4
+Sixth arg: HToSS_MH125_MS1p1_ctauS1
+/user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
+CMSSW intialized to 
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134932/
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134932/0000/']
+[]
+/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134932/0000/
+Regions:
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp <= 30
+mumu_lxysign_tmp <= 40 && hh_lxysign_tmp > 30
+mumu_lxysign_tmp > 40 && hh_lxysign_tmp > 30
+Conditions:
+HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0
+Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1
+lv_trk_pt > 5 && abs(lv_trk_eta) < 2.4
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+recohiggs_mass >=122.5 && recohiggs_mass <=127.5
+recohiggs_mass >110 && recohiggs_mass <140
+recohiggs_mass > 120.0 && recohiggs_mass < 130.0
+hh_lv.M() <= 5 && mumu_lv.M() <= 5
+{ -0.020826819, 0.96919712 }
+{ 0.021520640, 1.0320606 }
+avgmass >= 1.98636 && avgmass <= 2.01364
+['/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134932/0000/output_1.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134932/0000/output_2.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134932/0000/output_3.root', '/pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p1_ctauS1_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1_MCUL2018_HToSS_ChargedKaon/240313_134932/0000/output_4.root']
+HToSS_MH125_MS1p1_ctauS1
+1.0 1.0
+population mean:  4.1748055031775963e-07
+Region: prompt
+mu1_iso[0] < 0.3 && mu2_iso[0] < 0.6
+ch1_iso[0] < 0.6 && ch2_iso[0] < 0.8
+Region: displacedmumu
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displacedhh
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+Region: displaced
+mu1_iso[0] < 0.5 && mu2_iso[0] < 0.8
+ch1_iso[0] < 1 && ch2_iso[0] < 1.6
+GETS OUTSIDE KEY LOOP
+HToSS_MH125_MS1p1_ctauS1
+Total entries: 14319.0
+Skimmed entries: 5935
+Analyzed entries: 3185.0
+1.943415124979181e-08

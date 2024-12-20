@@ -1,0 +1,33 @@
+"prompt"
+
+Signal
+TotalEvts 1688.8955861620386
+TriggerSkim 1068.9159379548398
+RemainingSkim 839.5633957184423
+#mu selection 638.7280903997698
+dimuon candidate 637.9437956526033
+h trk selection 635.0007772417191
+dihadron candidate 583.3745270024212
+loose scalar+higgs mass 539.0674938098592
+loose leading isolation 531.1698068981549
+prompt 473.03113938447876
+tight higgs mass 418.4015308650797
+m(#mu#mu) ~ m(hh) 385.1241509858737
+#mu isolation 369.3671129138876
+h isolation 313.68729140789657
+
+Data
+TotalEvts 739073838.0
+TriggerSkim 609324739.0
+RemainingSkim 46617148.0
+#mu selection 3165229.0
+dimuon candidate 2007632.0
+h trk selection 1996563.0
+dihadron candidate 981312.0
+loose scalar+higgs mass 166572.0
+loose leading isolation 52166.0
+prompt 36045.0
+tight higgs mass 6969.0
+m(#mu#mu) ~ m(hh) 269.0
+#mu isolation 187.0
+h isolation 59.0

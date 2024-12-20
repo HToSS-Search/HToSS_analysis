@@ -1,0 +1,6 @@
+configs/2017/datasets/DYJetsToLL_Pt/DYJetsToLL_Pt-0To50.yaml,plots/ZMass_test/zPlusJets.root,zPlusJets,MC
+configs/2017/datasets/data/mumuRun2017F.yaml,plots/ZMass_test/mumuRun2017F.root,mumuRun2017F,2017F
+configs/2017/datasets/data/mumuRun2017E.yaml,plots/ZMass_test/mumuRun2017E.root,mumuRun2017E,2017E
+configs/2017/datasets/data/mumuRun2017D.yaml,plots/ZMass_test/mumuRun2017D.root,mumuRun2017D,2017D
+configs/2017/datasets/data/mumuRun2017C.yaml,plots/ZMass_test/mumuRun2017C.root,mumuRun2017C,2017C
+configs/2017/datasets/data/mumuRun2017B.yaml,plots/ZMass_test/mumuRun2017B.root,mumuRun2017B,2017B

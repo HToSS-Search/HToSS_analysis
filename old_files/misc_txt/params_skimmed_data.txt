@@ -1,0 +1,5 @@
+configs/2017/datasets/data/mumuRun2017B.yaml,configs/2017/cuts/CRCuts_baseline_kaonmass.yaml,plots/KaonMassAssumption/EventPreselection_RefittedTrks_231006/data/mumuRun2017B/output_Run2017B.root,0,0,mumuRun2017B,dummy
+configs/2017/datasets/data/mumuRun2017C.yaml,configs/2017/cuts/CRCuts_baseline_kaonmass.yaml,plots/KaonMassAssumption/EventPreselection_RefittedTrks_231006/data/mumuRun2017C/output_Run2017C.root,0,0,mumuRun2017C,dummy
+configs/2017/datasets/data/mumuRun2017D.yaml,configs/2017/cuts/CRCuts_baseline_kaonmass.yaml,plots/KaonMassAssumption/EventPreselection_RefittedTrks_231006/data/mumuRun2017D/output_Run2017D.root,0,0,mumuRun2017D,dummy
+configs/2017/datasets/data/mumuRun2017E.yaml,configs/2017/cuts/CRCuts_baseline_kaonmass.yaml,plots/KaonMassAssumption/EventPreselection_RefittedTrks_231006/data/mumuRun2017E/output_Run2017E.root,0,0,mumuRun2017E,dummy
+configs/2017/datasets/data/mumuRun2017F.yaml,configs/2017/cuts/CRCuts_baseline_kaonmass.yaml,plots/KaonMassAssumption/EventPreselection_RefittedTrks_231006/data/mumuRun2017F/output_Run2017F.root,0,0,mumuRun2017F,dummy

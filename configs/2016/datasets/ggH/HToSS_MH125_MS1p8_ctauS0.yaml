@@ -1,0 +1,10 @@
+colour: '#fc0303'
+cross_section: 0.0332177716
+histogram: HToSS_MH125_MS1p8_ctauS0
+label: H#rightarrowaa m_{a}=1.8 c_{#tau}=1
+locations: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/HToSSTo2Mu2Hadrons_MH125_MS1p8_ctauS0_TuneCP2_13TeV-powheg-pythia8/RunIISummer20UL16MiniAOD-106X_mcRun2_asymptotic_v13-v2_MCUL2016nonAPV_HToSS_ChargedKaon/240503_095900
+mc: true
+name: HToSS_MH125_MS1p8_ctauS0
+plot_type: l
+sum_weights: 193465.0908000101
+total_events: -1

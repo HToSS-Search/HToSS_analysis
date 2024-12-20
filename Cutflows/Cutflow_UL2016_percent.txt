@@ -1,0 +1,1423 @@
+MS1p1
+displaced
+\begin{table}[tbh!]
+\centering
+\small
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.1$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+Total & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\
+trigger skim & 50.4\% & 48.4\% & 18.2\% & 9.3\% & 63.6\% & 0.1\% \\
+muon skim & 50.1\% & 47.1\% & 17.1\% & 8.7\% & 5.2\% & 0.0\% \\
+hadron skim & 45.3\% & 39.8\% & 10.2\% & 3.7\% & 3.0\% & 0.0\% \\
+reco. higgs skim & 41.6\% & 34.3\% & 7.0\% & 2.0\% & 0.8\% & 0.0\% \\
+\end{tabular}
+\caption{Skim cutflow for UL2016 MS1p1}
+\label{tab:skim_ms1p1}
+\end{table}
+MS1p2
+displaced
+\begin{table}[tbh!]
+\centering
+\small
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+Total & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\
+trigger skim & 50.4\% & 49.7\% & 17.3\% & 8.9\% & 63.6\% & 0.1\% \\
+muon skim & 50.1\% & 48.3\% & 16.2\% & 8.2\% & 5.2\% & 0.0\% \\
+hadron skim & 45.3\% & 41.3\% & 10.4\% & 3.5\% & 3.0\% & 0.0\% \\
+reco. higgs skim & 41.8\% & 36.1\% & 6.7\% & 1.9\% & 0.8\% & 0.0\% \\
+\end{tabular}
+\caption{Skim cutflow for UL2016 MS1p2}
+\label{tab:skim_ms1p2}
+\end{table}
+MS1p4
+displaced
+\begin{table}[tbh!]
+\centering
+\small
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.4$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+Total & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\
+trigger skim & 49.4\% & 48.3\% & 18.2\% & 7.9\% & 63.6\% & 0.1\% \\
+muon skim & 49.2\% & 47.2\% & 17.0\% & 7.2\% & 5.2\% & 0.0\% \\
+hadron skim & 45.0\% & 40.5\% & 11.9\% & 3.3\% & 3.0\% & 0.0\% \\
+reco. higgs skim & 41.6\% & 35.3\% & 8.1\% & 1.6\% & 0.8\% & 0.0\% \\
+\end{tabular}
+\caption{Skim cutflow for UL2016 MS1p4}
+\label{tab:skim_ms1p4}
+\end{table}
+MS1p6
+displaced
+\begin{table}[tbh!]
+\centering
+\small
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.6$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+Total & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\
+trigger skim & 49.8\% & 48.7\% & 17.3\% & 7.1\% & 63.6\% & 0.1\% \\
+muon skim & 49.5\% & 47.7\% & 16.3\% & 6.6\% & 5.2\% & 0.0\% \\
+hadron skim & 44.9\% & 41.6\% & 11.2\% & 3.1\% & 3.0\% & 0.0\% \\
+reco. higgs skim & 41.2\% & 36.4\% & 7.8\% & 1.6\% & 0.8\% & 0.0\% \\
+\end{tabular}
+\caption{Skim cutflow for UL2016 MS1p6}
+\label{tab:skim_ms1p6}
+\end{table}
+MS1p8
+displaced
+\begin{table}[tbh!]
+\centering
+\small
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.8$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+Total & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\
+trigger skim & 49.9\% & 47.2\% & 17.3\% & 6.9\% & 63.6\% & 0.1\% \\
+muon skim & 49.6\% & 46.4\% & 16.4\% & 6.4\% & 5.2\% & 0.0\% \\
+hadron skim & 44.6\% & 40.3\% & 11.6\% & 3.1\% & 3.0\% & 0.0\% \\
+reco. higgs skim & 40.6\% & 34.9\% & 8.0\% & 1.7\% & 0.8\% & 0.0\% \\
+\end{tabular}
+\caption{Skim cutflow for UL2016 MS1p8}
+\label{tab:skim_ms1p8}
+\end{table}
+MS2
+displaced
+\begin{table}[tbh!]
+\centering
+\small
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+Total & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\
+trigger skim & 48.6\% & 48.1\% & 17.5\% & 6.3\% & 63.6\% & 0.1\% \\
+muon skim & 48.4\% & 47.2\% & 16.6\% & 5.9\% & 5.2\% & 0.0\% \\
+hadron skim & 43.6\% & 41.2\% & 12.0\% & 2.9\% & 3.0\% & 0.0\% \\
+reco. higgs skim & 38.9\% & 35.2\% & 8.8\% & 1.6\% & 0.8\% & 0.0\% \\
+\end{tabular}
+\caption{Skim cutflow for UL2016 MS2}
+\label{tab:skim_ms2}
+\end{table}
+MS1p1
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.1$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 99.1\% & 99.6\% & 101.5\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 90.8\% & 84.3\% & 77.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.2\% & 82.3\% & 77.8\% & 29.3\% & 46.5\% \\
+h selection & 93.3\% & 89.8\% & 82.1\% & 77.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.3\% & 79.1\% & 54.0\% & 32.3\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.1\% & 67.7\% & 33.0\% & 9.6\% & 2.2\% & 3.9\% \\
+prompt & 109.8\% & 31.9\% & 7.8\% & 3.5\% & 1.6\% & 4.0\% \\\hline
+tight higgs mass & 96.4\% & 26.5\% & 5.3\% & 1.0\% & 0.6\% & 1.3\% \\
+scalar mass consistency & 93.7\% & 24.4\% & 3.7\% & 0.5\% & 0.0\% & 0.1\% \\
+$\mu$ isolation & 90.5\% & 23.5\% & 2.8\% & 0.5\% & 0.0\% & 0.0\% \\
+h isolation & 84.2\% & 22.4\% & 2.7\% & 0.5\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p1 prompt}
+\label{tab:cutflow_ms1p1}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.1$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 99.1\% & 99.6\% & 101.5\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 90.8\% & 84.3\% & 77.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.2\% & 82.3\% & 77.8\% & 29.3\% & 46.5\% \\
+h selection & 93.3\% & 89.8\% & 82.1\% & 77.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.3\% & 79.1\% & 54.0\% & 32.3\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.1\% & 67.7\% & 33.0\% & 9.6\% & 2.3\% & 4.0\% \\
+prompt & 2.6\% & 34.5\% & 20.9\% & 9.1\% & 0.2\% & 0.6\% \\\hline
+tight higgs mass & 2.2\% & 28.4\% & 13.7\% & 4.0\% & 0.1\% & 0.1\% \\
+scalar mass consistency & 2.2\% & 26.6\% & 11.0\% & 1.0\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 2.1\% & 25.8\% & 10.7\% & 1.0\% & 0.0\% & 0.0\% \\
+h isolation & 2.0\% & 25.6\% & 10.7\% & 1.0\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p1 displacedmumu}
+\label{tab:cutflow_ms1p1}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.1$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 99.1\% & 99.6\% & 101.5\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 90.8\% & 84.3\% & 77.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.2\% & 82.3\% & 77.8\% & 29.3\% & 46.5\% \\
+h selection & 93.3\% & 89.8\% & 82.1\% & 77.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.3\% & 79.1\% & 54.0\% & 32.3\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.1\% & 67.7\% & 33.0\% & 9.6\% & 2.5\% & 4.3\% \\
+prompt & 0.9\% & 5.0\% & 2.7\% & 0.0\% & 0.1\% & 0.2\% \\\hline
+tight higgs mass & 0.5\% & 4.3\% & 2.0\% & 0.0\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.2\% & 3.9\% & 1.9\% & 0.0\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.2\% & 3.8\% & 1.9\% & 0.0\% & 0.0\% & 0.0\% \\
+h isolation & 0.2\% & 3.8\% & 1.9\% & 0.0\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p1 displacedhh}
+\label{tab:cutflow_ms1p1}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.1$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 99.1\% & 99.6\% & 101.5\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 90.8\% & 84.3\% & 77.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.2\% & 82.3\% & 77.8\% & 29.3\% & 46.5\% \\
+h selection & 93.3\% & 89.8\% & 82.1\% & 77.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.3\% & 79.1\% & 54.0\% & 32.3\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.1\% & 67.7\% & 33.0\% & 9.6\% & 2.5\% & 4.3\% \\
+prompt & 0.0\% & 7.1\% & 6.7\% & 0.5\% & 0.0\% & 0.0\% \\\hline
+tight higgs mass & 0.0\% & 6.0\% & 5.4\% & 0.5\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.0\% & 5.4\% & 5.1\% & 0.5\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.0\% & 5.4\% & 5.1\% & 0.5\% & 0.0\% & 0.0\% \\
+h isolation & 0.0\% & 5.4\% & 5.1\% & 0.5\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p1 displaced}
+\label{tab:cutflow_ms1p1}
+\end{table}
+MS1p2
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 98.3\% & 99.3\% & 99.2\% & 99.1\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 91.2\% & 82.9\% & 84.3\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.4\% & 81.7\% & 83.0\% & 29.3\% & 46.5\% \\
+h selection & 93.2\% & 89.9\% & 81.0\% & 82.3\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.0\% & 80.1\% & 55.8\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.5\% & 69.6\% & 32.7\% & 14.6\% & 2.2\% & 3.9\% \\
+prompt & 111.1\% & 27.9\% & 7.6\% & 4.9\% & 1.6\% & 4.0\% \\\hline
+tight higgs mass & 97.5\% & 23.4\% & 6.3\% & 2.2\% & 0.6\% & 1.3\% \\
+scalar mass consistency & 94.4\% & 21.9\% & 4.3\% & 1.1\% & 0.0\% & 0.1\% \\
+$\mu$ isolation & 90.1\% & 21.1\% & 4.0\% & 1.1\% & 0.0\% & 0.0\% \\
+h isolation & 81.7\% & 18.6\% & 2.7\% & 1.1\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p2 prompt}
+\label{tab:cutflow_ms1p2}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 98.3\% & 99.3\% & 99.2\% & 99.1\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 91.2\% & 82.9\% & 84.3\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.4\% & 81.7\% & 83.0\% & 29.3\% & 46.5\% \\
+h selection & 93.2\% & 89.9\% & 81.0\% & 82.3\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.0\% & 80.1\% & 55.8\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.5\% & 69.6\% & 32.7\% & 14.6\% & 2.3\% & 4.0\% \\
+prompt & 2.0\% & 32.0\% & 17.8\% & 9.2\% & 0.2\% & 0.6\% \\\hline
+tight higgs mass & 1.6\% & 26.9\% & 10.2\% & 2.9\% & 0.1\% & 0.1\% \\
+scalar mass consistency & 1.5\% & 25.1\% & 6.6\% & 1.1\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.5\% & 24.8\% & 6.6\% & 1.1\% & 0.0\% & 0.0\% \\
+h isolation & 1.5\% & 24.3\% & 6.6\% & 1.1\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p2 displacedmumu}
+\label{tab:cutflow_ms1p2}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 98.3\% & 99.3\% & 99.2\% & 99.1\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 91.2\% & 82.9\% & 84.3\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.4\% & 81.7\% & 83.0\% & 29.3\% & 46.5\% \\
+h selection & 93.2\% & 89.9\% & 81.0\% & 82.3\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.0\% & 80.1\% & 55.8\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.5\% & 69.6\% & 32.7\% & 14.6\% & 2.5\% & 4.3\% \\
+prompt & 0.9\% & 9.6\% & 3.6\% & 2.0\% & 0.1\% & 0.2\% \\\hline
+tight higgs mass & 0.8\% & 8.7\% & 2.5\% & 1.8\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.5\% & 7.8\% & 2.0\% & 1.3\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.5\% & 7.6\% & 1.8\% & 1.3\% & 0.0\% & 0.0\% \\
+h isolation & 0.5\% & 7.5\% & 1.8\% & 1.3\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p2 displacedhh}
+\label{tab:cutflow_ms1p2}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 98.3\% & 99.3\% & 99.2\% & 99.1\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 91.2\% & 82.9\% & 84.3\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.4\% & 81.7\% & 83.0\% & 29.3\% & 46.5\% \\
+h selection & 93.2\% & 89.9\% & 81.0\% & 82.3\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.0\% & 80.1\% & 55.8\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.5\% & 69.6\% & 32.7\% & 14.6\% & 2.5\% & 4.3\% \\
+prompt & 0.0\% & 11.1\% & 8.7\% & 3.1\% & 0.0\% & 0.0\% \\\hline
+tight higgs mass & 0.0\% & 9.8\% & 6.2\% & 2.5\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.0\% & 9.0\% & 5.5\% & 1.8\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.0\% & 8.9\% & 5.5\% & 1.8\% & 0.0\% & 0.0\% \\
+h isolation & 0.0\% & 8.8\% & 5.4\% & 1.8\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p2 displaced}
+\label{tab:cutflow_ms1p2}
+\end{table}
+MS1p4
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.4$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 100.3\% & 98.9\% & 100.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.1\% & 92.8\% & 82.6\% & 80.2\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.0\% & 92.2\% & 80.7\% & 77.0\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 91.6\% & 80.1\% & 76.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.6\% & 81.6\% & 58.5\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.1\% & 72.0\% & 39.4\% & 13.8\% & 2.2\% & 3.9\% \\
+prompt & 114.0\% & 23.2\% & 5.9\% & 2.2\% & 1.6\% & 4.0\% \\\hline
+tight higgs mass & 99.2\% & 19.6\% & 3.3\% & 0.0\% & 0.6\% & 1.3\% \\
+scalar mass consistency & 95.7\% & 18.3\% & 2.5\% & 0.0\% & 0.0\% & 0.1\% \\
+$\mu$ isolation & 91.5\% & 17.8\% & 2.4\% & 0.0\% & 0.0\% & 0.0\% \\
+h isolation & 80.2\% & 16.0\% & 1.9\% & 0.0\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p4 prompt}
+\label{tab:cutflow_ms1p4}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.4$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 100.3\% & 98.9\% & 100.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.1\% & 92.8\% & 82.6\% & 80.2\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.0\% & 92.2\% & 80.7\% & 77.0\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 91.6\% & 80.1\% & 76.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.6\% & 81.6\% & 58.5\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.1\% & 72.0\% & 39.4\% & 13.8\% & 2.3\% & 4.0\% \\
+prompt & 1.6\% & 29.0\% & 16.4\% & 13.1\% & 0.2\% & 0.6\% \\\hline
+tight higgs mass & 1.4\% & 24.8\% & 12.0\% & 3.2\% & 0.1\% & 0.1\% \\
+scalar mass consistency & 1.3\% & 23.2\% & 8.8\% & 1.5\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.3\% & 22.9\% & 8.8\% & 1.5\% & 0.0\% & 0.0\% \\
+h isolation & 1.3\% & 22.4\% & 7.8\% & 1.5\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p4 displacedmumu}
+\label{tab:cutflow_ms1p4}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.4$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 100.3\% & 98.9\% & 100.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.1\% & 92.8\% & 82.6\% & 80.2\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.0\% & 92.2\% & 80.7\% & 77.0\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 91.6\% & 80.1\% & 76.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.6\% & 81.6\% & 58.5\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.1\% & 72.0\% & 39.4\% & 13.8\% & 2.5\% & 4.3\% \\
+prompt & 1.6\% & 13.2\% & 5.2\% & 0.2\% & 0.1\% & 0.2\% \\\hline
+tight higgs mass & 1.4\% & 11.5\% & 4.2\% & 0.2\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 1.1\% & 10.9\% & 2.2\% & 0.2\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.1\% & 10.7\% & 2.2\% & 0.2\% & 0.0\% & 0.0\% \\
+h isolation & 1.1\% & 10.5\% & 1.9\% & 0.2\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p4 displacedhh}
+\label{tab:cutflow_ms1p4}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.4$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 100.3\% & 98.9\% & 100.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.1\% & 92.8\% & 82.6\% & 80.2\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.0\% & 92.2\% & 80.7\% & 77.0\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 91.6\% & 80.1\% & 76.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.6\% & 81.6\% & 58.5\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.1\% & 72.0\% & 39.4\% & 13.8\% & 2.5\% & 4.3\% \\
+prompt & 0.0\% & 16.5\% & 17.9\% & 4.3\% & 0.0\% & 0.0\% \\\hline
+tight higgs mass & 0.0\% & 14.1\% & 14.9\% & 2.8\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.0\% & 12.9\% & 12.6\% & 2.4\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.0\% & 12.8\% & 11.9\% & 2.4\% & 0.0\% & 0.0\% \\
+h isolation & 0.0\% & 12.5\% & 11.7\% & 2.2\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p4 displaced}
+\label{tab:cutflow_ms1p4}
+\end{table}
+MS1p6
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.6$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.4\% & 98.7\% & 99.4\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.7\% & 91.8\% & 87.2\% & 83.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 94.6\% & 91.4\% & 86.0\% & 82.1\% & 29.3\% & 46.5\% \\
+h selection & 93.7\% & 90.8\% & 85.4\% & 81.2\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.3\% & 81.9\% & 67.0\% & 38.9\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.5\% & 73.1\% & 42.5\% & 12.8\% & 2.2\% & 3.9\% \\
+prompt & 115.6\% & 21.8\% & 5.8\% & 1.5\% & 1.6\% & 4.0\% \\\hline
+tight higgs mass & 100.1\% & 18.4\% & 3.9\% & 0.2\% & 0.6\% & 1.3\% \\
+scalar mass consistency & 95.6\% & 17.2\% & 1.8\% & 0.0\% & 0.0\% & 0.1\% \\
+$\mu$ isolation & 91.6\% & 16.8\% & 1.6\% & 0.0\% & 0.0\% & 0.0\% \\
+h isolation & 78.8\% & 14.1\% & 1.2\% & 0.0\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p6 prompt}
+\label{tab:cutflow_ms1p6}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.6$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.4\% & 98.7\% & 99.4\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.7\% & 91.8\% & 87.2\% & 83.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 94.6\% & 91.4\% & 86.0\% & 82.1\% & 29.3\% & 46.5\% \\
+h selection & 93.7\% & 90.8\% & 85.4\% & 81.2\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.3\% & 81.9\% & 67.0\% & 38.9\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.5\% & 73.1\% & 42.5\% & 12.8\% & 2.3\% & 4.0\% \\
+prompt & 1.7\% & 26.8\% & 16.2\% & 8.6\% & 0.2\% & 0.6\% \\\hline
+tight higgs mass & 1.4\% & 22.4\% & 10.9\% & 2.8\% & 0.1\% & 0.1\% \\
+scalar mass consistency & 1.3\% & 20.6\% & 8.4\% & 2.3\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.3\% & 20.4\% & 8.4\% & 2.2\% & 0.0\% & 0.0\% \\
+h isolation & 1.3\% & 19.7\% & 8.2\% & 1.9\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p6 displacedmumu}
+\label{tab:cutflow_ms1p6}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.6$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.4\% & 98.7\% & 99.4\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.7\% & 91.8\% & 87.2\% & 83.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 94.6\% & 91.4\% & 86.0\% & 82.1\% & 29.3\% & 46.5\% \\
+h selection & 93.7\% & 90.8\% & 85.4\% & 81.2\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.3\% & 81.9\% & 67.0\% & 38.9\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.5\% & 73.1\% & 42.5\% & 12.8\% & 2.5\% & 4.3\% \\
+prompt & 1.6\% & 15.5\% & 9.1\% & 1.1\% & 0.1\% & 0.2\% \\\hline
+tight higgs mass & 1.3\% & 13.5\% & 6.8\% & 0.9\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 1.1\% & 12.7\% & 5.5\% & 0.5\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.1\% & 12.3\% & 5.5\% & 0.5\% & 0.0\% & 0.0\% \\
+h isolation & 1.1\% & 12.0\% & 5.1\% & 0.5\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p6 displacedhh}
+\label{tab:cutflow_ms1p6}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.6$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.4\% & 98.7\% & 99.4\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.7\% & 91.8\% & 87.2\% & 83.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 94.6\% & 91.4\% & 86.0\% & 82.1\% & 29.3\% & 46.5\% \\
+h selection & 93.7\% & 90.8\% & 85.4\% & 81.2\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.3\% & 81.9\% & 67.0\% & 38.9\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.5\% & 73.1\% & 42.5\% & 12.8\% & 2.5\% & 4.3\% \\
+prompt & 0.0\% & 20.2\% & 21.3\% & 4.2\% & 0.0\% & 0.0\% \\\hline
+tight higgs mass & 0.0\% & 17.8\% & 17.7\% & 2.9\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.0\% & 16.8\% & 14.9\% & 2.6\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.0\% & 16.6\% & 14.4\% & 2.6\% & 0.0\% & 0.0\% \\
+h isolation & 0.0\% & 16.0\% & 14.1\% & 2.2\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p6 displaced}
+\label{tab:cutflow_ms1p6}
+\end{table}
+MS1p8
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.8$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.6\% & 99.7\% & 100.9\% & 105.3\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.2\% & 94.1\% & 87.3\% & 87.7\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.2\% & 93.8\% & 86.5\% & 85.2\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 93.2\% & 86.2\% & 84.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 87.9\% & 84.1\% & 65.3\% & 44.4\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.7\% & 76.2\% & 39.6\% & 15.2\% & 2.2\% & 3.9\% \\
+prompt & 113.1\% & 21.1\% & 4.3\% & 3.4\% & 1.6\% & 4.0\% \\\hline
+tight higgs mass & 98.5\% & 17.3\% & 3.3\% & 0.0\% & 0.6\% & 1.3\% \\
+scalar mass consistency & 93.7\% & 16.0\% & 2.8\% & 0.0\% & 0.0\% & 0.1\% \\
+$\mu$ isolation & 90.0\% & 15.5\% & 2.4\% & 0.0\% & 0.0\% & 0.0\% \\
+h isolation & 76.2\% & 12.8\% & 2.1\% & 0.0\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p8 prompt}
+\label{tab:cutflow_ms1p8}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.8$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.6\% & 99.7\% & 100.9\% & 105.3\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.2\% & 94.1\% & 87.3\% & 87.7\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.2\% & 93.8\% & 86.5\% & 85.2\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 93.2\% & 86.2\% & 84.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 87.9\% & 84.1\% & 65.3\% & 44.4\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.7\% & 76.2\% & 39.6\% & 15.2\% & 2.3\% & 4.0\% \\
+prompt & 1.4\% & 25.3\% & 11.1\% & 7.5\% & 0.2\% & 0.6\% \\\hline
+tight higgs mass & 1.2\% & 20.6\% & 6.7\% & 2.2\% & 0.1\% & 0.1\% \\
+scalar mass consistency & 1.2\% & 19.2\% & 5.7\% & 1.0\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.2\% & 19.1\% & 5.5\% & 1.0\% & 0.0\% & 0.0\% \\
+h isolation & 1.2\% & 18.1\% & 5.5\% & 0.5\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p8 displacedmumu}
+\label{tab:cutflow_ms1p8}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.8$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.6\% & 99.7\% & 100.9\% & 105.3\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.2\% & 94.1\% & 87.3\% & 87.7\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.2\% & 93.8\% & 86.5\% & 85.2\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 93.2\% & 86.2\% & 84.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 87.9\% & 84.1\% & 65.3\% & 44.4\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.7\% & 76.2\% & 39.6\% & 15.2\% & 2.5\% & 4.3\% \\
+prompt & 1.6\% & 18.7\% & 5.8\% & 1.9\% & 0.1\% & 0.2\% \\\hline
+tight higgs mass & 1.4\% & 16.6\% & 4.9\% & 1.3\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 1.0\% & 15.6\% & 4.3\% & 0.9\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.0\% & 15.4\% & 4.3\% & 0.9\% & 0.0\% & 0.0\% \\
+h isolation & 0.9\% & 15.0\% & 4.2\% & 0.9\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p8 displacedhh}
+\label{tab:cutflow_ms1p8}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.8$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.6\% & 99.7\% & 100.9\% & 105.3\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.2\% & 94.1\% & 87.3\% & 87.7\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.2\% & 93.8\% & 86.5\% & 85.2\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 93.2\% & 86.2\% & 84.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 87.9\% & 84.1\% & 65.3\% & 44.4\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.7\% & 76.2\% & 39.6\% & 15.2\% & 2.5\% & 4.3\% \\
+prompt & 0.0\% & 23.3\% & 29.0\% & 7.5\% & 0.0\% & 0.0\% \\\hline
+tight higgs mass & 0.0\% & 20.5\% & 23.0\% & 4.2\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.0\% & 19.1\% & 20.4\% & 3.3\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.0\% & 18.7\% & 20.3\% & 3.3\% & 0.0\% & 0.0\% \\
+h isolation & 0.0\% & 18.1\% & 19.9\% & 3.3\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p8 displaced}
+\label{tab:cutflow_ms1p8}
+\end{table}
+MS2
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.1\% & 100.5\% & 101.1\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.2\% & 94.5\% & 89.4\% & 80.4\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.9\% & 94.1\% & 88.7\% & 78.9\% & 29.3\% & 46.5\% \\
+h selection & 93.4\% & 93.7\% & 88.4\% & 78.4\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.6\% & 84.9\% & 69.1\% & 44.2\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.6\% & 76.4\% & 44.4\% & 18.6\% & 2.2\% & 3.9\% \\
+prompt & 111.8\% & 21.1\% & 3.0\% & 3.4\% & 1.6\% & 4.0\% \\\hline
+tight higgs mass & 95.7\% & 17.6\% & 2.3\% & 0.7\% & 0.6\% & 1.3\% \\
+scalar mass consistency & 90.5\% & 16.1\% & 1.8\% & 0.7\% & 0.0\% & 0.1\% \\
+$\mu$ isolation & 86.7\% & 15.9\% & 1.8\% & 0.3\% & 0.0\% & 0.0\% \\
+h isolation & 71.8\% & 13.1\% & 1.4\% & 0.3\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS2 prompt}
+\label{tab:cutflow_ms2}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.1\% & 100.5\% & 101.1\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.2\% & 94.5\% & 89.4\% & 80.4\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.9\% & 94.1\% & 88.7\% & 78.9\% & 29.3\% & 46.5\% \\
+h selection & 93.4\% & 93.7\% & 88.4\% & 78.4\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.6\% & 84.9\% & 69.1\% & 44.2\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.6\% & 76.4\% & 44.4\% & 18.6\% & 2.3\% & 4.0\% \\
+prompt & 1.2\% & 24.0\% & 13.4\% & 10.7\% & 0.2\% & 0.6\% \\\hline
+tight higgs mass & 1.2\% & 19.6\% & 8.0\% & 4.5\% & 0.1\% & 0.1\% \\
+scalar mass consistency & 1.1\% & 18.4\% & 5.4\% & 2.2\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.1\% & 18.2\% & 5.4\% & 2.2\% & 0.0\% & 0.0\% \\
+h isolation & 1.0\% & 17.2\% & 5.3\% & 1.9\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS2 displacedmumu}
+\label{tab:cutflow_ms2}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.1\% & 100.5\% & 101.1\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.2\% & 94.5\% & 89.4\% & 80.4\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.9\% & 94.1\% & 88.7\% & 78.9\% & 29.3\% & 46.5\% \\
+h selection & 93.4\% & 93.7\% & 88.4\% & 78.4\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.6\% & 84.9\% & 69.1\% & 44.2\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.6\% & 76.4\% & 44.4\% & 18.6\% & 2.5\% & 4.3\% \\
+prompt & 1.9\% & 17.9\% & 9.5\% & 1.1\% & 0.1\% & 0.2\% \\\hline
+tight higgs mass & 1.3\% & 16.1\% & 8.2\% & 1.1\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 1.1\% & 14.6\% & 6.8\% & 0.6\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.0\% & 14.4\% & 6.6\% & 0.6\% & 0.0\% & 0.0\% \\
+h isolation & 1.0\% & 13.9\% & 6.0\% & 0.6\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS2 displacedhh}
+\label{tab:cutflow_ms2}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.1\% & 100.5\% & 101.1\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.2\% & 94.5\% & 89.4\% & 80.4\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.9\% & 94.1\% & 88.7\% & 78.9\% & 29.3\% & 46.5\% \\
+h selection & 93.4\% & 93.7\% & 88.4\% & 78.4\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.6\% & 84.9\% & 69.1\% & 44.2\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.6\% & 76.4\% & 44.4\% & 18.6\% & 2.5\% & 4.3\% \\
+prompt & 0.0\% & 26.1\% & 29.6\% & 10.6\% & 0.0\% & 0.0\% \\\hline
+tight higgs mass & 0.0\% & 23.3\% & 24.2\% & 7.8\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.0\% & 21.4\% & 19.7\% & 5.4\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.0\% & 21.0\% & 19.7\% & 5.4\% & 0.0\% & 0.0\% \\
+h isolation & 0.0\% & 20.3\% & 18.1\% & 5.3\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS2 displaced}
+\label{tab:cutflow_ms2}
+\end{table}
+MS1p1
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.1$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 99.1\% & 99.6\% & 101.5\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 90.8\% & 84.3\% & 77.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.2\% & 82.3\% & 77.8\% & 29.3\% & 46.5\% \\
+h selection & 93.3\% & 89.8\% & 82.1\% & 77.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.3\% & 79.1\% & 54.0\% & 32.3\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.1\% & 67.7\% & 33.0\% & 9.6\% & 2.2\% & 3.9\% \\
+prompt & 109.8\% & 31.9\% & 7.8\% & 3.5\% & 1.6\% & 4.0\% \\\hline
+tight higgs mass & 96.4\% & 26.5\% & 5.3\% & 1.0\% & 0.6\% & 1.3\% \\
+scalar mass consistency & 93.7\% & 24.4\% & 3.7\% & 0.5\% & 0.0\% & 0.1\% \\
+$\mu$ isolation & 90.5\% & 23.5\% & 2.8\% & 0.5\% & 0.0\% & 0.0\% \\
+h isolation & 84.2\% & 22.4\% & 2.7\% & 0.5\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p1 prompt}
+\label{tab:cutflow_ms1p1}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.1$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 99.1\% & 99.6\% & 101.5\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 90.8\% & 84.3\% & 77.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.2\% & 82.3\% & 77.8\% & 29.3\% & 46.5\% \\
+h selection & 93.3\% & 89.8\% & 82.1\% & 77.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.3\% & 79.1\% & 54.0\% & 32.3\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.1\% & 67.7\% & 33.0\% & 9.6\% & 2.3\% & 4.0\% \\
+prompt & 2.6\% & 34.5\% & 20.9\% & 9.1\% & 0.2\% & 0.6\% \\\hline
+tight higgs mass & 2.2\% & 28.4\% & 13.7\% & 4.0\% & 0.1\% & 0.1\% \\
+scalar mass consistency & 2.2\% & 26.6\% & 11.0\% & 1.0\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 2.1\% & 25.8\% & 10.7\% & 1.0\% & 0.0\% & 0.0\% \\
+h isolation & 2.0\% & 25.6\% & 10.7\% & 1.0\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p1 displacedmumu}
+\label{tab:cutflow_ms1p1}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.1$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 99.1\% & 99.6\% & 101.5\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 90.8\% & 84.3\% & 77.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.2\% & 82.3\% & 77.8\% & 29.3\% & 46.5\% \\
+h selection & 93.3\% & 89.8\% & 82.1\% & 77.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.3\% & 79.1\% & 54.0\% & 32.3\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.1\% & 67.7\% & 33.0\% & 9.6\% & 2.5\% & 4.3\% \\
+prompt & 0.9\% & 5.0\% & 2.7\% & 0.0\% & 0.1\% & 0.2\% \\\hline
+tight higgs mass & 0.5\% & 4.3\% & 2.0\% & 0.0\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.2\% & 3.9\% & 1.9\% & 0.0\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.2\% & 3.8\% & 1.9\% & 0.0\% & 0.0\% & 0.0\% \\
+h isolation & 0.2\% & 3.8\% & 1.9\% & 0.0\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p1 displacedhh}
+\label{tab:cutflow_ms1p1}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.1$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 99.1\% & 99.6\% & 101.5\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 90.8\% & 84.3\% & 77.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.2\% & 82.3\% & 77.8\% & 29.3\% & 46.5\% \\
+h selection & 93.3\% & 89.8\% & 82.1\% & 77.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.3\% & 79.1\% & 54.0\% & 32.3\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.1\% & 67.7\% & 33.0\% & 9.6\% & 2.5\% & 4.3\% \\
+prompt & 0.0\% & 7.1\% & 6.7\% & 0.5\% & 0.0\% & 0.0\% \\\hline
+tight higgs mass & 0.0\% & 6.0\% & 5.4\% & 0.5\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.0\% & 5.4\% & 5.1\% & 0.5\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.0\% & 5.4\% & 5.1\% & 0.5\% & 0.0\% & 0.0\% \\
+h isolation & 0.0\% & 5.4\% & 5.1\% & 0.5\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p1 displaced}
+\label{tab:cutflow_ms1p1}
+\end{table}
+MS1p2
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 98.3\% & 99.3\% & 99.2\% & 99.1\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 91.2\% & 82.9\% & 84.3\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.4\% & 81.7\% & 83.0\% & 29.3\% & 46.5\% \\
+h selection & 93.2\% & 89.9\% & 81.0\% & 82.3\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.0\% & 80.1\% & 55.8\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.5\% & 69.6\% & 32.7\% & 14.6\% & 2.2\% & 3.9\% \\
+prompt & 111.1\% & 27.9\% & 7.6\% & 4.9\% & 1.6\% & 4.0\% \\\hline
+tight higgs mass & 97.5\% & 23.4\% & 6.3\% & 2.2\% & 0.6\% & 1.3\% \\
+scalar mass consistency & 94.4\% & 21.9\% & 4.3\% & 1.1\% & 0.0\% & 0.1\% \\
+$\mu$ isolation & 90.1\% & 21.1\% & 4.0\% & 1.1\% & 0.0\% & 0.0\% \\
+h isolation & 81.7\% & 18.6\% & 2.7\% & 1.1\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p2 prompt}
+\label{tab:cutflow_ms1p2}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 98.3\% & 99.3\% & 99.2\% & 99.1\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 91.2\% & 82.9\% & 84.3\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.4\% & 81.7\% & 83.0\% & 29.3\% & 46.5\% \\
+h selection & 93.2\% & 89.9\% & 81.0\% & 82.3\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.0\% & 80.1\% & 55.8\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.5\% & 69.6\% & 32.7\% & 14.6\% & 2.3\% & 4.0\% \\
+prompt & 2.0\% & 32.0\% & 17.8\% & 9.2\% & 0.2\% & 0.6\% \\\hline
+tight higgs mass & 1.6\% & 26.9\% & 10.2\% & 2.9\% & 0.1\% & 0.1\% \\
+scalar mass consistency & 1.5\% & 25.1\% & 6.6\% & 1.1\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.5\% & 24.8\% & 6.6\% & 1.1\% & 0.0\% & 0.0\% \\
+h isolation & 1.5\% & 24.3\% & 6.6\% & 1.1\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p2 displacedmumu}
+\label{tab:cutflow_ms1p2}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 98.3\% & 99.3\% & 99.2\% & 99.1\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 91.2\% & 82.9\% & 84.3\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.4\% & 81.7\% & 83.0\% & 29.3\% & 46.5\% \\
+h selection & 93.2\% & 89.9\% & 81.0\% & 82.3\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.0\% & 80.1\% & 55.8\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.5\% & 69.6\% & 32.7\% & 14.6\% & 2.5\% & 4.3\% \\
+prompt & 0.9\% & 9.6\% & 3.6\% & 2.0\% & 0.1\% & 0.2\% \\\hline
+tight higgs mass & 0.8\% & 8.7\% & 2.5\% & 1.8\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.5\% & 7.8\% & 2.0\% & 1.3\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.5\% & 7.6\% & 1.8\% & 1.3\% & 0.0\% & 0.0\% \\
+h isolation & 0.5\% & 7.5\% & 1.8\% & 1.3\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p2 displacedhh}
+\label{tab:cutflow_ms1p2}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 98.3\% & 99.3\% & 99.2\% & 99.1\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 93.7\% & 91.2\% & 82.9\% & 84.3\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.6\% & 90.4\% & 81.7\% & 83.0\% & 29.3\% & 46.5\% \\
+h selection & 93.2\% & 89.9\% & 81.0\% & 82.3\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.0\% & 80.1\% & 55.8\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.5\% & 69.6\% & 32.7\% & 14.6\% & 2.5\% & 4.3\% \\
+prompt & 0.0\% & 11.1\% & 8.7\% & 3.1\% & 0.0\% & 0.0\% \\\hline
+tight higgs mass & 0.0\% & 9.8\% & 6.2\% & 2.5\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.0\% & 9.0\% & 5.5\% & 1.8\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.0\% & 8.9\% & 5.5\% & 1.8\% & 0.0\% & 0.0\% \\
+h isolation & 0.0\% & 8.8\% & 5.4\% & 1.8\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p2 displaced}
+\label{tab:cutflow_ms1p2}
+\end{table}
+MS1p4
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.4$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 100.3\% & 98.9\% & 100.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.1\% & 92.8\% & 82.6\% & 80.2\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.0\% & 92.2\% & 80.7\% & 77.0\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 91.6\% & 80.1\% & 76.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.6\% & 81.6\% & 58.5\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.1\% & 72.0\% & 39.4\% & 13.8\% & 2.2\% & 3.9\% \\
+prompt & 114.0\% & 23.2\% & 5.9\% & 2.2\% & 1.6\% & 4.0\% \\\hline
+tight higgs mass & 99.2\% & 19.6\% & 3.3\% & 0.0\% & 0.6\% & 1.3\% \\
+scalar mass consistency & 95.7\% & 18.3\% & 2.5\% & 0.0\% & 0.0\% & 0.1\% \\
+$\mu$ isolation & 91.5\% & 17.8\% & 2.4\% & 0.0\% & 0.0\% & 0.0\% \\
+h isolation & 80.2\% & 16.0\% & 1.9\% & 0.0\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p4 prompt}
+\label{tab:cutflow_ms1p4}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.4$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 100.3\% & 98.9\% & 100.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.1\% & 92.8\% & 82.6\% & 80.2\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.0\% & 92.2\% & 80.7\% & 77.0\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 91.6\% & 80.1\% & 76.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.6\% & 81.6\% & 58.5\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.1\% & 72.0\% & 39.4\% & 13.8\% & 2.3\% & 4.0\% \\
+prompt & 1.6\% & 29.0\% & 16.4\% & 13.1\% & 0.2\% & 0.6\% \\\hline
+tight higgs mass & 1.4\% & 24.8\% & 12.0\% & 3.2\% & 0.1\% & 0.1\% \\
+scalar mass consistency & 1.3\% & 23.2\% & 8.8\% & 1.5\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.3\% & 22.9\% & 8.8\% & 1.5\% & 0.0\% & 0.0\% \\
+h isolation & 1.3\% & 22.4\% & 7.8\% & 1.5\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p4 displacedmumu}
+\label{tab:cutflow_ms1p4}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.4$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 100.3\% & 98.9\% & 100.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.1\% & 92.8\% & 82.6\% & 80.2\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.0\% & 92.2\% & 80.7\% & 77.0\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 91.6\% & 80.1\% & 76.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.6\% & 81.6\% & 58.5\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.1\% & 72.0\% & 39.4\% & 13.8\% & 2.5\% & 4.3\% \\
+prompt & 1.6\% & 13.2\% & 5.2\% & 0.2\% & 0.1\% & 0.2\% \\\hline
+tight higgs mass & 1.4\% & 11.5\% & 4.2\% & 0.2\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 1.1\% & 10.9\% & 2.2\% & 0.2\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.1\% & 10.7\% & 2.2\% & 0.2\% & 0.0\% & 0.0\% \\
+h isolation & 1.1\% & 10.5\% & 1.9\% & 0.2\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p4 displacedhh}
+\label{tab:cutflow_ms1p4}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.4$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.3\% & 100.3\% & 98.9\% & 100.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.1\% & 92.8\% & 82.6\% & 80.2\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.0\% & 92.2\% & 80.7\% & 77.0\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 91.6\% & 80.1\% & 76.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.6\% & 81.6\% & 58.5\% & 40.6\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.1\% & 72.0\% & 39.4\% & 13.8\% & 2.5\% & 4.3\% \\
+prompt & 0.0\% & 16.5\% & 17.9\% & 4.3\% & 0.0\% & 0.0\% \\\hline
+tight higgs mass & 0.0\% & 14.1\% & 14.9\% & 2.8\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.0\% & 12.9\% & 12.6\% & 2.4\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.0\% & 12.8\% & 11.9\% & 2.4\% & 0.0\% & 0.0\% \\
+h isolation & 0.0\% & 12.5\% & 11.7\% & 2.2\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p4 displaced}
+\label{tab:cutflow_ms1p4}
+\end{table}
+MS1p6
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.6$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.4\% & 98.7\% & 99.4\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.7\% & 91.8\% & 87.2\% & 83.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 94.6\% & 91.4\% & 86.0\% & 82.1\% & 29.3\% & 46.5\% \\
+h selection & 93.7\% & 90.8\% & 85.4\% & 81.2\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.3\% & 81.9\% & 67.0\% & 38.9\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.5\% & 73.1\% & 42.5\% & 12.8\% & 2.2\% & 3.9\% \\
+prompt & 115.6\% & 21.8\% & 5.8\% & 1.5\% & 1.6\% & 4.0\% \\\hline
+tight higgs mass & 100.1\% & 18.4\% & 3.9\% & 0.2\% & 0.6\% & 1.3\% \\
+scalar mass consistency & 95.6\% & 17.2\% & 1.8\% & 0.0\% & 0.0\% & 0.1\% \\
+$\mu$ isolation & 91.6\% & 16.8\% & 1.6\% & 0.0\% & 0.0\% & 0.0\% \\
+h isolation & 78.8\% & 14.1\% & 1.2\% & 0.0\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p6 prompt}
+\label{tab:cutflow_ms1p6}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.6$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.4\% & 98.7\% & 99.4\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.7\% & 91.8\% & 87.2\% & 83.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 94.6\% & 91.4\% & 86.0\% & 82.1\% & 29.3\% & 46.5\% \\
+h selection & 93.7\% & 90.8\% & 85.4\% & 81.2\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.3\% & 81.9\% & 67.0\% & 38.9\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.5\% & 73.1\% & 42.5\% & 12.8\% & 2.3\% & 4.0\% \\
+prompt & 1.7\% & 26.8\% & 16.2\% & 8.6\% & 0.2\% & 0.6\% \\\hline
+tight higgs mass & 1.4\% & 22.4\% & 10.9\% & 2.8\% & 0.1\% & 0.1\% \\
+scalar mass consistency & 1.3\% & 20.6\% & 8.4\% & 2.3\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.3\% & 20.4\% & 8.4\% & 2.2\% & 0.0\% & 0.0\% \\
+h isolation & 1.3\% & 19.7\% & 8.2\% & 1.9\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p6 displacedmumu}
+\label{tab:cutflow_ms1p6}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.6$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.4\% & 98.7\% & 99.4\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.7\% & 91.8\% & 87.2\% & 83.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 94.6\% & 91.4\% & 86.0\% & 82.1\% & 29.3\% & 46.5\% \\
+h selection & 93.7\% & 90.8\% & 85.4\% & 81.2\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.3\% & 81.9\% & 67.0\% & 38.9\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.5\% & 73.1\% & 42.5\% & 12.8\% & 2.5\% & 4.3\% \\
+prompt & 1.6\% & 15.5\% & 9.1\% & 1.1\% & 0.1\% & 0.2\% \\\hline
+tight higgs mass & 1.3\% & 13.5\% & 6.8\% & 0.9\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 1.1\% & 12.7\% & 5.5\% & 0.5\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.1\% & 12.3\% & 5.5\% & 0.5\% & 0.0\% & 0.0\% \\
+h isolation & 1.1\% & 12.0\% & 5.1\% & 0.5\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p6 displacedhh}
+\label{tab:cutflow_ms1p6}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.6$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.4\% & 98.7\% & 99.4\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.7\% & 91.8\% & 87.2\% & 83.8\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 94.6\% & 91.4\% & 86.0\% & 82.1\% & 29.3\% & 46.5\% \\
+h selection & 93.7\% & 90.8\% & 85.4\% & 81.2\% & 29.1\% & 46.1\% \\
+di-h candidate & 88.3\% & 81.9\% & 67.0\% & 38.9\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 82.5\% & 73.1\% & 42.5\% & 12.8\% & 2.5\% & 4.3\% \\
+prompt & 0.0\% & 20.2\% & 21.3\% & 4.2\% & 0.0\% & 0.0\% \\\hline
+tight higgs mass & 0.0\% & 17.8\% & 17.7\% & 2.9\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.0\% & 16.8\% & 14.9\% & 2.6\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.0\% & 16.6\% & 14.4\% & 2.6\% & 0.0\% & 0.0\% \\
+h isolation & 0.0\% & 16.0\% & 14.1\% & 2.2\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p6 displaced}
+\label{tab:cutflow_ms1p6}
+\end{table}
+MS1p8
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.8$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.6\% & 99.7\% & 100.9\% & 105.3\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.2\% & 94.1\% & 87.3\% & 87.7\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.2\% & 93.8\% & 86.5\% & 85.2\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 93.2\% & 86.2\% & 84.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 87.9\% & 84.1\% & 65.3\% & 44.4\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.7\% & 76.2\% & 39.6\% & 15.2\% & 2.2\% & 3.9\% \\
+prompt & 113.1\% & 21.1\% & 4.3\% & 3.4\% & 1.6\% & 4.0\% \\\hline
+tight higgs mass & 98.5\% & 17.3\% & 3.3\% & 0.0\% & 0.6\% & 1.3\% \\
+scalar mass consistency & 93.7\% & 16.0\% & 2.8\% & 0.0\% & 0.0\% & 0.1\% \\
+$\mu$ isolation & 90.0\% & 15.5\% & 2.4\% & 0.0\% & 0.0\% & 0.0\% \\
+h isolation & 76.2\% & 12.8\% & 2.1\% & 0.0\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p8 prompt}
+\label{tab:cutflow_ms1p8}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.8$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.6\% & 99.7\% & 100.9\% & 105.3\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.2\% & 94.1\% & 87.3\% & 87.7\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.2\% & 93.8\% & 86.5\% & 85.2\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 93.2\% & 86.2\% & 84.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 87.9\% & 84.1\% & 65.3\% & 44.4\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.7\% & 76.2\% & 39.6\% & 15.2\% & 2.3\% & 4.0\% \\
+prompt & 1.4\% & 25.3\% & 11.1\% & 7.5\% & 0.2\% & 0.6\% \\\hline
+tight higgs mass & 1.2\% & 20.6\% & 6.7\% & 2.2\% & 0.1\% & 0.1\% \\
+scalar mass consistency & 1.2\% & 19.2\% & 5.7\% & 1.0\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.2\% & 19.1\% & 5.5\% & 1.0\% & 0.0\% & 0.0\% \\
+h isolation & 1.2\% & 18.1\% & 5.5\% & 0.5\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p8 displacedmumu}
+\label{tab:cutflow_ms1p8}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.8$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.6\% & 99.7\% & 100.9\% & 105.3\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.2\% & 94.1\% & 87.3\% & 87.7\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.2\% & 93.8\% & 86.5\% & 85.2\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 93.2\% & 86.2\% & 84.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 87.9\% & 84.1\% & 65.3\% & 44.4\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.7\% & 76.2\% & 39.6\% & 15.2\% & 2.5\% & 4.3\% \\
+prompt & 1.6\% & 18.7\% & 5.8\% & 1.9\% & 0.1\% & 0.2\% \\\hline
+tight higgs mass & 1.4\% & 16.6\% & 4.9\% & 1.3\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 1.0\% & 15.6\% & 4.3\% & 0.9\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.0\% & 15.4\% & 4.3\% & 0.9\% & 0.0\% & 0.0\% \\
+h isolation & 0.9\% & 15.0\% & 4.2\% & 0.9\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p8 displacedhh}
+\label{tab:cutflow_ms1p8}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=1.8$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.6\% & 99.7\% & 100.9\% & 105.3\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 95.2\% & 94.1\% & 87.3\% & 87.7\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 95.2\% & 93.8\% & 86.5\% & 85.2\% & 29.3\% & 46.5\% \\
+h selection & 94.8\% & 93.2\% & 86.2\% & 84.8\% & 29.1\% & 46.1\% \\
+di-h candidate & 87.9\% & 84.1\% & 65.3\% & 44.4\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 80.7\% & 76.2\% & 39.6\% & 15.2\% & 2.5\% & 4.3\% \\
+prompt & 0.0\% & 23.3\% & 29.0\% & 7.5\% & 0.0\% & 0.0\% \\\hline
+tight higgs mass & 0.0\% & 20.5\% & 23.0\% & 4.2\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.0\% & 19.1\% & 20.4\% & 3.3\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.0\% & 18.7\% & 20.3\% & 3.3\% & 0.0\% & 0.0\% \\
+h isolation & 0.0\% & 18.1\% & 19.9\% & 3.3\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS1p8 displaced}
+\label{tab:cutflow_ms1p8}
+\end{table}
+MS2
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.1\% & 100.5\% & 101.1\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.2\% & 94.5\% & 89.4\% & 80.4\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.9\% & 94.1\% & 88.7\% & 78.9\% & 29.3\% & 46.5\% \\
+h selection & 93.4\% & 93.7\% & 88.4\% & 78.4\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.6\% & 84.9\% & 69.1\% & 44.2\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.6\% & 76.4\% & 44.4\% & 18.6\% & 2.2\% & 3.9\% \\
+prompt & 111.8\% & 21.1\% & 3.0\% & 3.4\% & 1.6\% & 4.0\% \\\hline
+tight higgs mass & 95.7\% & 17.6\% & 2.3\% & 0.7\% & 0.6\% & 1.3\% \\
+scalar mass consistency & 90.5\% & 16.1\% & 1.8\% & 0.7\% & 0.0\% & 0.1\% \\
+$\mu$ isolation & 86.7\% & 15.9\% & 1.8\% & 0.3\% & 0.0\% & 0.0\% \\
+h isolation & 71.8\% & 13.1\% & 1.4\% & 0.3\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS2 prompt}
+\label{tab:cutflow_ms2}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.1\% & 100.5\% & 101.1\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.2\% & 94.5\% & 89.4\% & 80.4\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.9\% & 94.1\% & 88.7\% & 78.9\% & 29.3\% & 46.5\% \\
+h selection & 93.4\% & 93.7\% & 88.4\% & 78.4\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.6\% & 84.9\% & 69.1\% & 44.2\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.6\% & 76.4\% & 44.4\% & 18.6\% & 2.3\% & 4.0\% \\
+prompt & 1.2\% & 24.0\% & 13.4\% & 10.7\% & 0.2\% & 0.6\% \\\hline
+tight higgs mass & 1.2\% & 19.6\% & 8.0\% & 4.5\% & 0.1\% & 0.1\% \\
+scalar mass consistency & 1.1\% & 18.4\% & 5.4\% & 2.2\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.1\% & 18.2\% & 5.4\% & 2.2\% & 0.0\% & 0.0\% \\
+h isolation & 1.0\% & 17.2\% & 5.3\% & 1.9\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS2 displacedmumu}
+\label{tab:cutflow_ms2}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.1\% & 100.5\% & 101.1\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.2\% & 94.5\% & 89.4\% & 80.4\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.9\% & 94.1\% & 88.7\% & 78.9\% & 29.3\% & 46.5\% \\
+h selection & 93.4\% & 93.7\% & 88.4\% & 78.4\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.6\% & 84.9\% & 69.1\% & 44.2\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.6\% & 76.4\% & 44.4\% & 18.6\% & 2.5\% & 4.3\% \\
+prompt & 1.9\% & 17.9\% & 9.5\% & 1.1\% & 0.1\% & 0.2\% \\\hline
+tight higgs mass & 1.3\% & 16.1\% & 8.2\% & 1.1\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 1.1\% & 14.6\% & 6.8\% & 0.6\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 1.0\% & 14.4\% & 6.6\% & 0.6\% & 0.0\% & 0.0\% \\
+h isolation & 1.0\% & 13.9\% & 6.0\% & 0.6\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS2 displacedhh}
+\label{tab:cutflow_ms2}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|c|c|}
+\hline
+\multirow{2}{*}{Cut} & \multicolumn{4}{|c|}{$m_{S}=2$ GeV} &  \multirow{2}{*}{Data} & \multirow{2}{*}{QCD} \\ \cline{2-5}
+& $c\tau=0.1$ & $c\tau=1$ & $c\tau=10$ & $c\tau=100$ mm &  &  \\ \hline
+reco. higgs skim & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% & 100.0\% \\\hline
+trigger+MET filter & 99.1\% & 100.5\% & 101.1\% & 99.4\% & 100.0\% & 107.2\% \\
+$\mu$ selection & 94.2\% & 94.5\% & 89.4\% & 80.4\% & 39.5\% & 51.9\% \\
+di-$\mu$ candidate & 93.9\% & 94.1\% & 88.7\% & 78.9\% & 29.3\% & 46.5\% \\
+h selection & 93.4\% & 93.7\% & 88.4\% & 78.4\% & 29.1\% & 46.1\% \\
+di-h candidate & 86.6\% & 84.9\% & 69.1\% & 44.2\% & 13.4\% & 22.5\% \\
+loose scalar+higgs mass & 79.6\% & 76.4\% & 44.4\% & 18.6\% & 2.5\% & 4.3\% \\
+prompt & 0.0\% & 26.1\% & 29.6\% & 10.6\% & 0.0\% & 0.0\% \\\hline
+tight higgs mass & 0.0\% & 23.3\% & 24.2\% & 7.8\% & 0.0\% & 0.0\% \\
+scalar mass consistency & 0.0\% & 21.4\% & 19.7\% & 5.4\% & 0.0\% & 0.0\% \\
+$\mu$ isolation & 0.0\% & 21.0\% & 19.7\% & 5.4\% & 0.0\% & 0.0\% \\
+h isolation & 0.0\% & 20.3\% & 18.1\% & 5.3\% & 0.0\% & 0.0\% \\\hline
+\end{tabular}
+\caption{Cutflow for UL2016 MS2 displaced}
+\label{tab:cutflow_ms2}
+\end{table}
+Mass window
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$m_{S}$/c$\tau$  & 0.1mm & 1mm & 10mm & 100mm \\ \hline
+1.1 GeV & 97.2\% & 92.0\% & 70.3\% & 50.0\%\\ \hline
+1.2 GeV & 96.9\% & 93.3\% & 67.7\% & 50.0\%\\ \hline
+1.4 GeV & 96.5\% & 93.4\% & 75.6\% & 0\%\\ \hline
+1.6 GeV & 95.4\% & 93.3\% & 45.5\% & 0.0\%\\ \hline
+1.8 GeV & 95.1\% & 92.6\% & 86.9\% & 0\%\\ \hline
+2 GeV & 94.6\% & 91.9\% & 81.6\% & 100.0\%\\ \hline
+\end{tabular}
+\caption{Scalar mass consistency prompt}
+\label{tab:cutflow_ms2}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$m_{S}$/c$\tau$  & 0.1mm & 1mm & 10mm & 100mm \\ \hline
+1.1 GeV & 96.8\% & 93.7\% & 80.2\% & 25.0\%\\ \hline
+1.2 GeV & 91.8\% & 93.3\% & 64.6\% & 38.5\%\\ \hline
+1.4 GeV & 98.8\% & 93.3\% & 73.6\% & 46.7\%\\ \hline
+1.6 GeV & 92.3\% & 92.0\% & 77.3\% & 83.3\%\\ \hline
+1.8 GeV & 98.6\% & 93.3\% & 84.0\% & 47.6\%\\ \hline
+2 GeV & 93.1\% & 94.1\% & 67.2\% & 49.0\%\\ \hline
+\end{tabular}
+\caption{Scalar mass consistency displacedmumu}
+\label{tab:cutflow_ms2}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$m_{S}$/c$\tau$  & 0.1mm & 1mm & 10mm & 100mm \\ \hline
+1.1 GeV & 50.0\% & 91.2\% & 92.9\% & 0\%\\ \hline
+1.2 GeV & 60.5\% & 89.4\% & 77.5\% & 75.0\%\\ \hline
+1.4 GeV & 78.0\% & 94.5\% & 52.0\% & 100.0\%\\ \hline
+1.6 GeV & 85.0\% & 93.7\% & 80.9\% & 50.0\%\\ \hline
+1.8 GeV & 72.8\% & 93.6\% & 88.9\% & 69.2\%\\ \hline
+2 GeV & 85.4\% & 90.9\% & 82.7\% & 58.3\%\\ \hline
+\end{tabular}
+\caption{Scalar mass consistency displacedhh}
+\label{tab:cutflow_ms2}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$m_{S}$/c$\tau$  & 0.1mm & 1mm & 10mm & 100mm \\ \hline
+1.1 GeV & 0\% & 91.2\% & 94.7\% & 100.0\%\\ \hline
+1.2 GeV & 0\% & 92.0\% & 89.7\% & 72.7\%\\ \hline
+1.4 GeV & 100.0\% & 91.9\% & 84.5\% & 84.6\%\\ \hline
+1.6 GeV & 100.0\% & 94.6\% & 84.2\% & 89.5\%\\ \hline
+1.8 GeV & 0\% & 93.4\% & 88.5\% & 78.0\%\\ \hline
+2 GeV & 100.0\% & 91.9\% & 81.2\% & 70.1\%\\ \hline
+\end{tabular}
+\caption{Scalar mass consistency displaced}
+\label{tab:cutflow_ms2}
+\end{table}
+Mass window combined in all categories
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$m_{S}$/c$\tau$  & 0.1mm & 1mm & 10mm & 100mm \\ \hline
+1.1 GeV & 0\% & 92.6\% & 82.2\% & 36.4\%\\ \hline
+1.2 GeV & 0\% & 92.6\% & 72.8\% & 57.1\%\\ \hline
+1.4 GeV & 96.3\% & 93.3\% & 75.9\% & 65.5\%\\ \hline
+1.6 GeV & 95.3\% & 93.3\% & 77.8\% & 79.5\%\\ \hline
+1.8 GeV & 0\% & 93.2\% & 87.6\% & 68.0\%\\ \hline
+2 GeV & 94.5\% & 92.2\% & 78.9\% & 63.9\%\\ \hline
+\end{tabular}
+\caption{Scalar mass consistency combined}
+\label{tab:cutflow_ms2}
+\end{table}
+PFIsolation muon
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$m_{S}$/c$\tau$  & 0.1mm & 1mm & 10mm & 100mm \\ \hline
+1.1 GeV & 96.6\% & 96.1\% & 76.9\% & 100.0\%\\ \hline
+1.2 GeV & 95.4\% & 96.5\% & 94.0\% & 100.0\%\\ \hline
+1.4 GeV & 95.6\% & 97.3\% & 94.9\% & 0\%\\ \hline
+1.6 GeV & 95.8\% & 98.2\% & 89.1\% & 0\%\\ \hline
+1.8 GeV & 96.1\% & 97.0\% & 83.3\% & 0\%\\ \hline
+2 GeV & 95.7\% & 98.3\% & 100.0\% & 37.5\%\\ \hline
+\end{tabular}
+\caption{PFIsolation muonprompt}
+\label{tab:cutflow_ms2}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$m_{S}$/c$\tau$  & 0.1mm & 1mm & 10mm & 100mm \\ \hline
+1.1 GeV & 96.7\% & 97.0\% & 97.4\% & 100.0\%\\ \hline
+1.2 GeV & 100.0\% & 98.9\% & 100.0\% & 100.0\%\\ \hline
+1.4 GeV & 96.9\% & 98.8\% & 100.0\% & 100.0\%\\ \hline
+1.6 GeV & 100.0\% & 98.7\% & 100.0\% & 93.3\%\\ \hline
+1.8 GeV & 100.0\% & 99.1\% & 98.0\% & 100.0\%\\ \hline
+2 GeV & 100.0\% & 98.8\% & 100.0\% & 100.0\%\\ \hline
+\end{tabular}
+\caption{PFIsolation muondisplacedmumu}
+\label{tab:cutflow_ms2}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$m_{S}$/c$\tau$  & 0.1mm & 1mm & 10mm & 100mm \\ \hline
+1.1 GeV & 80.0\% & 97.8\% & 100.0\% & 0\%\\ \hline
+1.2 GeV & 100.0\% & 97.9\% & 93.5\% & 100.0\%\\ \hline
+1.4 GeV & 100.0\% & 98.5\% & 100.0\% & 100.0\%\\ \hline
+1.6 GeV & 98.3\% & 97.1\% & 100.0\% & 100.0\%\\ \hline
+1.8 GeV & 100.0\% & 98.9\% & 100.0\% & 100.0\%\\ \hline
+2 GeV & 91.4\% & 98.5\% & 97.1\% & 100.0\%\\ \hline
+\end{tabular}
+\caption{PFIsolation muondisplacedhh}
+\label{tab:cutflow_ms2}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$m_{S}$/c$\tau$  & 0.1mm & 1mm & 10mm & 100mm \\ \hline
+1.1 GeV & 0\% & 99.5\% & 100.0\% & 100.0\%\\ \hline
+1.2 GeV & 0\% & 98.9\% & 100.0\% & 100.0\%\\ \hline
+1.4 GeV & 100.0\% & 99.3\% & 94.6\% & 100.0\%\\ \hline
+1.6 GeV & 100.0\% & 98.7\% & 96.9\% & 100.0\%\\ \hline
+1.8 GeV & 0\% & 97.9\% & 99.6\% & 100.0\%\\ \hline
+2 GeV & 100.0\% & 98.4\% & 100.0\% & 100.0\%\\ \hline
+\end{tabular}
+\caption{PFIsolation muondisplaced}
+\label{tab:cutflow_ms2}
+\end{table}
+PFIsolation hadron
+prompt
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$m_{S}$/c$\tau$  & 0.1mm & 1mm & 10mm & 100mm \\ \hline
+1.1 GeV & 93.0\% & 95.4\% & 95.0\% & 100.0\%\\ \hline
+1.2 GeV & 90.7\% & 88.2\% & 68.3\% & 100.0\%\\ \hline
+1.4 GeV & 87.6\% & 89.7\% & 78.6\% & 0\%\\ \hline
+1.6 GeV & 86.1\% & 83.7\% & 77.6\% & 0\%\\ \hline
+1.8 GeV & 84.7\% & 82.2\% & 88.6\% & 0\%\\ \hline
+2 GeV & 82.9\% & 82.3\% & 77.5\% & 100.0\%\\ \hline
+\end{tabular}
+\caption{PFIsolation hadron prompt}
+\label{tab:cutflow_ms2}
+\end{table}
+displacedmumu
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$m_{S}$/c$\tau$  & 0.1mm & 1mm & 10mm & 100mm \\ \hline
+1.1 GeV & 96.6\% & 99.1\% & 100.0\% & 100.0\%\\ \hline
+1.2 GeV & 100.0\% & 97.9\% & 100.0\% & 100.0\%\\ \hline
+1.4 GeV & 98.1\% & 97.8\% & 88.8\% & 100.0\%\\ \hline
+1.6 GeV & 98.6\% & 96.8\% & 96.9\% & 85.7\%\\ \hline
+1.8 GeV & 98.9\% & 94.8\% & 100.0\% & 50.0\%\\ \hline
+2 GeV & 90.2\% & 94.8\% & 98.8\% & 84.0\%\\ \hline
+\end{tabular}
+\caption{PFIsolation hadron displacedmumu}
+\label{tab:cutflow_ms2}
+\end{table}
+displacedhh
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$m_{S}$/c$\tau$  & 0.1mm & 1mm & 10mm & 100mm \\ \hline
+1.1 GeV & 100.0\% & 99.2\% & 100.0\% & 0\%\\ \hline
+1.2 GeV & 100.0\% & 98.4\% & 100.0\% & 100.0\%\\ \hline
+1.4 GeV & 98.5\% & 98.4\% & 86.3\% & 100.0\%\\ \hline
+1.6 GeV & 99.4\% & 97.2\% & 93.5\% & 100.0\%\\ \hline
+1.8 GeV & 93.4\% & 97.1\% & 97.4\% & 100.0\%\\ \hline
+2 GeV & 100.0\% & 96.9\% & 91.2\% & 100.0\%\\ \hline
+\end{tabular}
+\caption{PFIsolation hadron displacedhh}
+\label{tab:cutflow_ms2}
+\end{table}
+displaced
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$m_{S}$/c$\tau$  & 0.1mm & 1mm & 10mm & 100mm \\ \hline
+1.1 GeV & 0\% & 100.0\% & 100.0\% & 100.0\%\\ \hline
+1.2 GeV & 0\% & 99.5\% & 97.7\% & 100.0\%\\ \hline
+1.4 GeV & 100.0\% & 97.8\% & 98.6\% & 90.9\%\\ \hline
+1.6 GeV & 100.0\% & 96.6\% & 97.7\% & 82.4\%\\ \hline
+1.8 GeV & 0\% & 96.5\% & 98.2\% & 100.0\%\\ \hline
+2 GeV & 100.0\% & 96.8\% & 92.3\% & 96.7\%\\ \hline
+\end{tabular}
+\caption{PFIsolation hadron displaced}
+\label{tab:cutflow_ms2}
+\end{table}

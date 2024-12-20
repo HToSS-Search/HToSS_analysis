@@ -1,0 +1,105 @@
+muon:
+  'UL2016_APV':
+    reco: 
+      'tag': 'NUM_TrackerMuons_DEN_genTracks'
+      'Z': 'scale_factors/UL2016_APV/muon_Z.json'
+      'JPsi': 'scale_factors/UL2016_APV/Efficiency_muon_generalTracks_Run2016preVFP_UL_trackerMuon.root'
+    id:
+      'tag': 'NUM_LooseID_DEN_TrackerMuons'
+      'Z': 'scale_factors/UL2016_APV/muon_Z.json'
+      'JPsi': 'scale_factors/UL2016_APV/muon_JPsi.json'
+    iso:
+      'tag': 'NUM_LooseRelIso_DEN_LooseID'
+      'Z': 'scale_factors/UL2016_APV/muon_Z.json'
+      'JPsi': 'scale_factors/UL2016_APV/muon_Z.json'
+    trg:
+      #'tag': 'NUM_HLT_IsoMu27_DEN_LooseID_Iso040_abseta_pt'
+      'tag': 'NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut'
+      'Z': 'scale_factors/UL2016_APV/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_SingleMuonTriggers_schemaV2.json'
+      'JPsi': 'scale_factors/UL2016_APV/NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut.root'
+  'UL2016':
+    reco: 
+      'tag': 'NUM_TrackerMuons_DEN_genTracks'
+      'Z': 'scale_factors/UL2016/muon_Z.json'
+      'JPsi': 'scale_factors/UL2016/Efficiency_muon_generalTracks_Run2016postVFP_UL_trackerMuon.root'
+    id:
+      'tag': 'NUM_LooseID_DEN_TrackerMuons'
+      'Z': 'scale_factors/UL2016/muon_Z.json'
+      'JPsi': 'scale_factors/UL2016/muon_JPsi.json'
+    iso:
+      'tag': 'NUM_LooseRelIso_DEN_LooseID'
+      'Z': 'scale_factors/UL2016/muon_Z.json'
+      'JPsi': 'scale_factors/UL2016/muon_Z.json'
+    trg:
+      #'tag': 'NUM_HLT_IsoMu27_DEN_LooseID_Iso040_abseta_pt'
+      'tag': 'NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut'
+      'Z': 'scale_factors/UL2016/Efficiencies_muon_generalTracks_Z_Run2016_UL_SingleMuonTriggers_schemaV2.json'
+      'JPsi': 'scale_factors/UL2016/NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut.root'
+  'UL2017':
+    reco: 
+      'tag': 'NUM_TrackerMuons_DEN_genTracks'
+      'Z': 'scale_factors/UL2017/muon_Z.json'
+      'JPsi': 'scale_factors/UL2017/Efficiency_muon_generalTracks_Run2017_UL_trackerMuon.root'
+    id:
+      'tag': 'NUM_LooseID_DEN_TrackerMuons'
+      'Z': 'scale_factors/UL2017/muon_Z.json'
+      'JPsi': 'scale_factors/UL2017/muon_JPsi.json'
+    iso:
+      'tag': 'NUM_LooseRelIso_DEN_LooseID'
+      'Z': 'scale_factors/UL2017/muon_Z.json'
+      'JPsi': 'scale_factors/UL2017/muon_Z.json'
+    trg:
+      #'tag': 'NUM_HLT_IsoMu27_DEN_LooseID_Iso040_abseta_pt'
+      'tag': 'NUM_HLT_IsoMu27_DEN_LooseID_Iso040_pair_dR_pt_cut'
+      'Z': 'scale_factors/UL2017/Efficiencies_muon_generalTracks_Z_Run2017_UL_SingleMuonTriggers_schemaV2.json'
+      'JPsi': 'scale_factors/UL2017/NUM_HLT_IsoMu27_DEN_LooseID_Iso040_pair_dR_pt_cut.root'
+  'UL2018':
+    reco: 
+      'tag': 'NUM_TrackerMuons_DEN_genTracks'
+      'Z': 'scale_factors/UL2018/muon_Z.json'
+      'JPsi': 'scale_factors/UL2018/Efficiency_muon_generalTracks_Run2018_UL_trackerMuon.root'
+    id:
+      'tag': 'NUM_LooseID_DEN_TrackerMuons'
+      'Z': 'scale_factors/UL2018/muon_Z.json'
+      'JPsi': 'scale_factors/UL2018/muon_JPsi.json'
+    iso:
+      'tag': 'NUM_LooseRelIso_DEN_LooseID'
+      'Z': 'scale_factors/UL2018/muon_Z.json'
+      'JPsi': 'scale_factors/UL2018/muon_Z.json'
+    trg:
+      #'tag': 'NUM_HLT_IsoMu27_DEN_LooseID_Iso040_abseta_pt'
+      'tag': 'NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut'
+      'Z': 'scale_factors/UL2018/Efficiencies_muon_generalTracks_Z_Run2018_UL_SingleMuonTriggers_schemaV2.json'
+      'JPsi': 'scale_factors/UL2018/NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut.root'
+hadron: None
+vtx: 
+  'UL2016_APV':
+    'tag': 'histratio'
+    'file': 'scale_factors/UL2016_APV/rpvsig_vs_pt_2016.root'
+  'UL2016':
+    'tag': 'histratio'
+    'file': 'scale_factors/UL2016/rpvsig_vs_pt_2016.root'
+  'UL2017':
+    'tag': 'histratio'
+    'file': 'scale_factors/UL2017/rpvsig_vs_pt_2017.root'
+  'UL2018':
+    'tag': 'histratio'
+    'file': 'scale_factors/UL2018/rpvsig_vs_pt_2018.root'
+massreso: 
+  'UL2016_APV':
+    'tag': 'histratio'
+    'file': 'scale_factors/UL2016_APV/rpvsig_vs_pt_confidence_data_vs_data_2016.root'
+  'UL2016':
+    'tag': 'histratio'
+    'file': 'scale_factors/UL2016/rpvsig_vs_pt_confidence_data_vs_data_2016.root'
+  'UL2017':
+    'tag': 'histratio'
+    'file': 'scale_factors/UL2017/rpvsig_vs_pt_confidence_data_vs_data_2017.root'
+  'UL2018':
+    'tag': 'histratio'
+    'file': 'scale_factors/UL2018/rpvsig_vs_pt_confidence_data_vs_data_2018.root'
+isolation: None
+higgsPtReweight:
+  'tag': 'higgsPtReweight'
+  'file': 'scale_factors/HiggsPtReweighting_tmp/ggH_HiggsPtReweight_NNLOPS.root'
+cs_ggH: None

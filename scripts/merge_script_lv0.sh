@@ -1,14 +1,71 @@
 mkdir -p ggH/HToSS_MH125_MS0p4_ctauS0
+mkdir -p ggH/HToSS_MH125_MS0p4_ctauS0p1
+mkdir -p ggH/HToSS_MH125_MS0p4_ctauS100
+mkdir -p ggH/HToSS_MH125_MS0p4_ctauS10
+mkdir -p ggH/HToSS_MH125_MS0p4_ctauS1
+
 mkdir -p ggH/HToSS_MH125_MS0p6_ctauS0
+mkdir -p ggH/HToSS_MH125_MS0p6_ctauS0p1
+mkdir -p ggH/HToSS_MH125_MS0p6_ctauS100
+mkdir -p ggH/HToSS_MH125_MS0p6_ctauS10
+mkdir -p ggH/HToSS_MH125_MS0p6_ctauS1
+
+
 mkdir -p ggH/HToSS_MH125_MS0p8_ctauS0
+mkdir -p ggH/HToSS_MH125_MS0p8_ctauS0p1
+mkdir -p ggH/HToSS_MH125_MS0p8_ctauS100
+mkdir -p ggH/HToSS_MH125_MS0p8_ctauS10
+mkdir -p ggH/HToSS_MH125_MS0p8_ctauS1
+
+
 mkdir -p ggH/HToSS_MH125_MS0p9_ctauS0
+mkdir -p ggH/HToSS_MH125_MS0p9_ctauS0p1
+mkdir -p ggH/HToSS_MH125_MS0p9_ctauS100
+mkdir -p ggH/HToSS_MH125_MS0p9_ctauS10
+mkdir -p ggH/HToSS_MH125_MS0p9_ctauS1
+
+
 mkdir -p ggH/HToSS_MH125_MS1_ctauS0
+mkdir -p ggH/HToSS_MH125_MS1_ctauS0p1
+mkdir -p ggH/HToSS_MH125_MS1_ctauS100
+mkdir -p ggH/HToSS_MH125_MS1_ctauS10
+mkdir -p ggH/HToSS_MH125_MS1_ctauS1
+
+
 mkdir -p ggH/HToSS_MH125_MS1p1_ctauS0
+mkdir -p ggH/HToSS_MH125_MS1p1_ctauS0p1
+mkdir -p ggH/HToSS_MH125_MS1p1_ctauS100
+mkdir -p ggH/HToSS_MH125_MS1p1_ctauS10
+mkdir -p ggH/HToSS_MH125_MS1p1_ctauS1
+
+
 mkdir -p ggH/HToSS_MH125_MS1p2_ctauS0
+mkdir -p ggH/HToSS_MH125_MS1p2_ctauS0p1
+mkdir -p ggH/HToSS_MH125_MS1p2_ctauS100
+mkdir -p ggH/HToSS_MH125_MS1p2_ctauS10
+mkdir -p ggH/HToSS_MH125_MS1p2_ctauS1
+
+
 mkdir -p ggH/HToSS_MH125_MS1p4_ctauS0
+mkdir -p ggH/HToSS_MH125_MS1p4_ctauS0p1
+mkdir -p ggH/HToSS_MH125_MS1p4_ctauS100
+mkdir -p ggH/HToSS_MH125_MS1p4_ctauS10
+mkdir -p ggH/HToSS_MH125_MS1p4_ctauS1
+
 mkdir -p ggH/HToSS_MH125_MS1p6_ctauS0
+mkdir -p ggH/HToSS_MH125_MS1p6_ctauS0p1
+mkdir -p ggH/HToSS_MH125_MS1p6_ctauS100
+mkdir -p ggH/HToSS_MH125_MS1p6_ctauS10
+mkdir -p ggH/HToSS_MH125_MS1p6_ctauS1
+
 mkdir -p ggH/HToSS_MH125_MS1p8_ctauS0
+mkdir -p ggH/HToSS_MH125_MS1p8_ctauS0p1
+mkdir -p ggH/HToSS_MH125_MS1p8_ctauS100
+mkdir -p ggH/HToSS_MH125_MS1p8_ctauS10
+mkdir -p ggH/HToSS_MH125_MS1p8_ctauS1
+
 mkdir -p ggH/HToSS_MH125_MS2_ctauS0
+mkdir -p ggH/HToSS_MH125_MS2_ctauS0p1
 mkdir -p ggH/HToSS_MH125_MS2_ctauS100
 mkdir -p ggH/HToSS_MH125_MS2_ctauS10
 mkdir -p ggH/HToSS_MH125_MS2_ctauS1

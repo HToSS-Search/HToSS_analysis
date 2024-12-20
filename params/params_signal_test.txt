@@ -1,0 +1,1 @@
+configs/2017/datasets/ggH/HToSS_MH125_MS1_ctauS10.yaml,configs/2017/cuts/SRCuts_pionmass.yaml,plots/PionMassAssumption/IsoScalarHiggsCuts_Category_90pPrompt_240211/ggH/output_HToSS_MH125_MS1_ctauS1_ctauS10.root,1,6,HToSS_MH125_MS1_ctauS1

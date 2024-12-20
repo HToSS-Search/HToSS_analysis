@@ -1,0 +1,16 @@
+configs/2017/datasets/QCD/QCD_Pt-15to20_MuEnrichedPt5.yaml,test_weights.root,1,92,QCD_Pt-15to20_MuEnrichedPt5
+configs/2017/datasets/QCD/QCD_Pt-20to30_MuEnrichedPt5.yaml,test_weights.root,1,988,QCD_Pt-20to30_MuEnrichedPt5
+configs/2017/datasets/QCD/QCD_Pt-20to30_MuEnrichedPt5.yaml,test_weights.root,1,988,QCD_Pt-20to30_MuEnrichedPt5
+configs/2017/datasets/QCD/QCD_Pt-30to50_MuEnrichedPt5.yaml,test_weights.root,1,860,QCD_Pt-30to50_MuEnrichedPt5
+configs/2017/datasets/QCD/QCD_Pt-50to80_MuEnrichedPt5.yaml,test_weights.root,1,720,QCD_Pt-50to80_MuEnrichedPt5
+configs/2017/datasets/QCD/QCD_Pt-80to120_MuEnrichedPt5.yaml,test_weights.root,1,831,QCD_Pt-80to120_MuEnrichedPt5
+configs/2017/datasets/QCD/QCD_Pt-120to170_MuEnrichedPt5.yaml,test_weights.root,1,730,QCD_Pt-120to170_MuEnrichedPt5
+configs/2017/datasets/QCD/QCD_Pt-170to300_MuEnrichedPt5.yaml,test_weights.root,1,1340,QCD_Pt-170to300_MuEnrichedPt5
+configs/2017/datasets/QCD/QCD_Pt-300to470_MuEnrichedPt5.yaml,test_weights.root,1,1079,QCD_Pt-300to470_MuEnrichedPt5
+configs/2017/datasets/QCD/QCD_Pt-470to600_MuEnrichedPt5.yaml,test_weights.root,1,724,QCD_Pt-470to600_MuEnrichedPt5
+configs/2017/datasets/QCD/QCD_Pt-600to800_MuEnrichedPt5.yaml,test_weights.root,1,725,QCD_Pt-600to800_MuEnrichedPt5
+configs/2017/datasets/QCD/QCD_Pt-800to1000_MuEnrichedPt5.yaml,test_weights.root,1,1978,QCD_Pt-800to1000_MuEnrichedPt5
+configs/2017/datasets/QCD/QCD_Pt-1000toInf_MuEnrichedPt5.yaml,test_weights.root,1,515,QCD_Pt-1000toInf_MuEnrichedPt5
+configs/2017/datasets/ttbar/ttbar_2l2nu.yaml,test_weights.root,1,1357,ttbar_2l2nu
+configs/2017/datasets/ttbar/ttbar_hadronic.yaml,test_weights.root,1,2953,ttbar_hadronic
+configs/2017/datasets/ttbar/ttbar_semileptonic.yaml,test_weights.root,1,4355,ttbar_semileptonic

@@ -1,9 +1,12 @@
-name: "QCD_Pt-15to20_MuEnrichedPt5"
-locations:
-    - "/pnfs/iihe/cms/store/user/almorton/MC/skims2018_v5/QCD/QCD_Pt-15to20_MuEnrichedPt5/"
-cross_section: 2799000.0
+colour: '#999999'
+cross_section: 2797000.0
+histogram: QCD_15to20
+label: QCD_15to20
+locations: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/QCD_Pt-15To20_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2_MCUL2018_HToSS/240129_114150
 mc: true
-histogram: "QCD"
-colour: "#993399"
-label: "QCD"
-plot_type: "f"
+name: QCD_Pt-15to20_MuEnrichedPt5
+plot_type: f
+skim_location:
+- /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/2017/QCD/QCD_Pt-15to20_MuEnrichedPt5/
+sum_weights: 3314749.63406496
+total_events: -1

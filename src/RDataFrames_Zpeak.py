@@ -60,16 +60,10 @@ cross_section = 1 if 'Run' in args.config else conf_pars['cross_section']
 sum_wts = 1 if 'Run' in args.config else conf_pars['sum_weights']
 # lumi = 1 if 'Run' in args.config else 41474 #2017 for now
 lumi = 1 if 'Run' in args.config else 4247.682053046 #2017D for now
-# if args.total:
-	# total_fromconfig = 1 if 'Run' in args.config else conf_pars['total_events']
 
 
 if data_loc[-1] != '/':
 	data_loc = data_loc+'/'
-# if ('new' in args.config):
-	# directories = [data_loc+d+"/" for d in os.listdir(data_loc) if os.path.isdir(os.path.join(data_loc, d))]
-# else:
-	# directories = [data_loc] #below only for old ntuples
 directories = [data_loc+d+"/" for d in os.listdir(data_loc) if os.path.isdir(os.path.join(data_loc, d))]
 
 print(directories)
@@ -85,8 +79,7 @@ for dir in directories:
 		if not os.path.exists(fistr):
 			continue
 		list_of_files.append(fistr)
-if not args.total:
-	# sum_wts calculated here
+if not args.total: # calculate sum of weights
 	print("enters sum weights calculation")
 	if not 'Run' in args.config:
 		file = ROOT.TFile(list_of_files[0])
@@ -125,48 +118,27 @@ if not args.total:
 			except Exception as e:
 				print(f"Error processing file {fistr}: {e}")
 				continue  # Continue to the next file in case of an error
-
-			# file = ROOT.TFile(fistr)
-			# if file.IsZombie():
-			# 	file.Close()
-			# 	continue
-			
-			# file.Close()
-
 		totalEvents_ = weightPlot.GetBinContent(1)
-		# if args.total:
-			# sum_wts = total_fromconfig
-		# else:
 		sum_wts = totalEvents_
 sys.stderr.write("sum of weights:"+str(sum_wts)+"\n")
 
 rdf = ROOT.RDataFrame(treeName,list_of_files)
 print('RDF loaded')
 entries_total = rdf.Count()
-# auto myHist2 = myDf.Histo1D<float>({"histName", "histTitle", 64u, 0., 128.}, "myColumn");
 sys.stderr.write("entries total:"+str(entries_total.GetValue())+'\n')
 sys.stderr.flush()
 
-# attempt to make LorentzVector for tracks collection
-
-
-# trigger_cuts = 'HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v1 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v2 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4 > 0'
 trigger_cuts = 'HLT_IsoMu27_v > 0' # for the new ntuples
-# trigger_cuts = 'HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v1 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v2 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v3 > 0 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_v4 > 0'
 muon_cuts = 'abs(muonPF2PATEta) <2.4 && muonPF2PATTightCutId && muonPF2PATPt >= 20'
 iso_cuts = 'muonPF2PATComRelIsodBeta < 0.15'
 leadingmu_cut = 'Max(mu_pt)>20' #ordered collection
 dilepton_cut = 'dilep_mass > 70 && dilep_mass < 110'
 
-chsMass_ = 0.493677 # 0.13957061;//pion mass
-# trk_cuts = 'abs()'
-
-trigger_definitions = rdf.Define('mu_trig',trigger_cuts)\
-				.Define('met_filters', 'Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0')
+trigger_definitions = rdf.Define('mu_trig',trigger_cuts)
 if not '2017B' in args.config:
-	cut_trig = trigger_definitions.Filter('mu_trig')
+	cut_trig = trigger_definitions.Filter('mu_trig') 
 else:
-	cut_trig = trigger_definitions
+	cut_trig = trigger_definitions # there was a filter problem here
 cut_met = cut_trig
 muon_iso_cuts = muon_cuts + ' && ' + iso_cuts
 muon_definitions = cut_met.Define('mu_pt',f'muonPF2PATPt[{muon_iso_cuts}]')\
@@ -175,7 +147,8 @@ muon_definitions = cut_met.Define('mu_pt',f'muonPF2PATPt[{muon_iso_cuts}]')\
 				.Define('mu_py',f'muonPF2PATPY[{muon_iso_cuts}]')\
 				.Define('mu_pz',f'muonPF2PATPZ[{muon_iso_cuts}]')\
 				.Define('mu_sel','mu_pt.size()==2' + ' && ' + leadingmu_cut + ' && mu_ch[0]*mu_ch[1] < 0')
-cut_mu_sel = muon_definitions.Filter('mu_sel')
+cut_mu_sel = muon_definitions.Filter('mu_sel') # selecting events with at least 2 opp. charged muons passing the cuts
+# below, using C++ code defined at the start to access ROOT lorentz vectors
 dimuon_definitions = cut_mu_sel.Define('LVs','makeLVs(mu_ch,mu_px,mu_py,mu_pz,0.105)')\
 				.Define('lv_pt','getKinematics(LVs, "pt")')\
 				.Define('lv_eta','getKinematics(LVs, "eta")')\
@@ -184,7 +157,7 @@ dimuon_definitions = cut_mu_sel.Define('LVs','makeLVs(mu_ch,mu_px,mu_py,mu_pz,0.
 				.Define('dilep_mass','lv_mass[2]')\
 				.Define('dilep_sel',dilepton_cut)\
 				.Define('evt_wt',f'({cross_section}*{lumi}/{sum_wts})*processMCWeight')
-cut_dimuon = dimuon_definitions.Filter('dilep_sel')
+cut_dimuon = dimuon_definitions.Filter('dilep_sel') # selecting events with dilepton mass cuts
 
 entries_trig = cut_trig.Count()
 # entries_met= cut_met.Count()
@@ -194,7 +167,6 @@ entries_dimuon= cut_dimuon.Count()
 
 sys.stderr.write ('total:'+str(entries_total.GetValue())+'\n')
 sys.stderr.write('After trigger cut:'+str(entries_trig.GetValue())+'\n')
-# sys.stderr.write('After MET filters:'+str(entries_met.GetValue())+'\n')
 sys.stderr.write('After muon selection:'+str(entries_mu_sel.GetValue())+'\n')
 sys.stderr.write('After dimuon cut:'+str(entries_dimuon.GetValue())+'\n')
 sys.stderr.flush()

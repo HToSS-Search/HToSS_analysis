@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "CMS_lumi.C": "cpp",
+        "tdrstyle.C": "cpp"
+    }
+}

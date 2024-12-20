@@ -1,0 +1,13 @@
+executable = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/make_plots_new.sh
+arguments = $(indir) $(outdir) $(yhi) $(cuts) $(dataset) $(category) $(year)
+
+should_transfer_files = no
+
+error = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/error/error_$(dataset)_$(category)_p.txt
+output = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/out/out_$(dataset)_$(category)_p.txt
+log = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/log/log_$(dataset)_$(category)_p.txt
+
+#request_cpus=4
++JobFlavour = "espresso"
+max_retries = 5
+queue indir,outdir,yhi,cuts,dataset,category,year from params_plotting_small.txt

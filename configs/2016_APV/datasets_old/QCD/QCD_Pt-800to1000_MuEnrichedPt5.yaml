@@ -1,0 +1,13 @@
+colour: '#e2f9fd'
+cross_section: 3.25
+histogram: QCD_800to1000
+label: QCD_800to1000
+locations:
+- /pnfs/iihe/cms/store/user/almorton/MC/skims2017_v5/QCD/QCD_Pt-800to1000_MuEnrichedPt5/
+mc: true
+name: QCD_Pt-800to1000_MuEnrichedPt5
+plot_type: f
+skim_location:
+- /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/2017/QCD/QCD_Pt-800to1000_MuEnrichedPt5/
+sum_weights: 48693458.0
+total_events: -1

@@ -8,10 +8,13 @@ import yaml
 import ROOT
 import time
 import sys
+# from multiprocessing import Pool
 # import uproot
 from event_selection_helper import gInterpreter_std_map, gInterpreter_Indices, gInterpreter_Kinematics, gInterpreter_ChTrkSelection,\
-	gInterpreter_PFIsolation, gInterpreter_diObjectCandidate, gInterpreter_diObjectMassCheck, gInterpreter_diObjectLxy, gInterpreter_lifetime_reweight
-from sf_helper import get_pileup
+	gInterpreter_PFIsolation, gInterpreter_diObjectCandidate, gInterpreter_diObjectMassCheck, gInterpreter_diObjectLxy, gInterpreter_lifetime_reweight,\
+	gInterpreter_MatchReco
+from sf_helper import get_pileup, gInterpreter_SF
+# from sf_helper import get_pileup
 
 ROOT.gROOT.SetBatch(True)
 
@@ -33,14 +36,37 @@ parser.add_argument("-y","--year", dest="year", help="Year for processing", type
 parser.add_argument("--flow", dest="flow", help="start file number",default=1, type=int)
 parser.add_argument("--fhigh", dest="fhigh", help="end file number", default=100,type=int)
 parser.add_argument("--onlyweights", dest="onlyweights", help="just store MCweights weighted with cs*lumi", action='store_true')
+parser.add_argument("--dname", dest="dname", help="stores the name of dataset - esp. needed for LLP reweighting", type=str)
+
+
 # parser.add_argument("--total", dest="onlyweights", help="just store MCweights weighted with cs*lumi", action='store_true')
 
 args = parser.parse_args()
 ###################### LOADING YAML FOR PHYSICS PROCESS ############################
-
+data_name = args.dname
+directories2=[]
+if (('HToSS' in args.config) and (data_name.count('ctauS') == 3)):
+	old_lt1,old_lt2,new_lt=float(data_name.split('_')[-3].replace('ctauS','').replace('p','.')),float(data_name.split('_')[-2].replace('ctauS','').replace('p','.')),float(data_name.split('_')[-1].replace('ctauS','').replace('p','.'))
+	if old_lt2==0:
+		old_lt2=0.1
+	if old_lt1==0:
+		old_lt1=0.1
+	conf1, conf2 = args.config, args.config.replace(data_name.split('_')[-3],data_name.split('_')[-2])
+	print(conf1, conf2)
+	print(old_lt1, old_lt2, new_lt)
+	fin2=open(conf2,'r')
+	conf_pars2=yaml.safe_load(fin2)
+	data_loc2=conf_pars2['locations']
+	directories2 = [os.path.join(data_loc2,d)+"/" for d in os.listdir(data_loc2) if os.path.isdir(os.path.join(data_loc2, d))]
+	# quit()
 fin = open(args.config,'r')
 # f = open("params.txt",'w')
 conf_pars = yaml.safe_load(fin)
+# data_name = conf_pars['name']
+
+lumi_scale = {'UL2016_APV': 19500, 'UL2016': 16800,'UL2017':  41480,'UL2018': 59830 } #in pb-1
+lumi_factor = lumi_scale[args.year]
+
 
 data_loc = conf_pars['locations']
 cross_section = 1 if 'Run' in args.config else conf_pars['cross_section']
@@ -64,22 +90,36 @@ else:
 	directories = [data_loc+d+"/" for d in os.listdir(data_loc) if os.path.isdir(os.path.join(data_loc, d))]
 
 print(directories)
-data_name = conf_pars['name']
+print(directories2)
+# print(directories+directories2)
+directories=directories+directories2
+# quit()
+# data_name = conf_pars['name']
 treeName = "makeTopologyNtupleMiniAOD/tree"
 list_of_files = []
-for dir in directories:
-	print(dir)
-	flow, fhigh = maxfilenumber(dir)
-	if flow > args.fhigh or fhigh < args.flow:
-		continue
-	if args.flow >= flow: 
-		flow = args.flow
-	if args.fhigh <= fhigh:
-		fhigh = args.fhigh
+for dirtmp in directories:
+	print(dirtmp)
+	flow, fhigh = maxfilenumber(dirtmp)
+	if ('HToSS' not in args.config):
+		if flow > args.fhigh or fhigh < args.flow:
+			continue
+		if args.flow >= flow: 
+			flow = args.flow
+		if args.fhigh <= fhigh:
+			fhigh = args.fhigh
 	for i in range(flow, fhigh+1):
 		fno = str(i)
-		fistr = dir+"output_"+fno+".root"
+		fistr = dirtmp+"output_"+fno+".root"
 		if not os.path.exists(fistr):
+			continue
+		try:
+			root_file = ROOT.TFile.Open(fistr)
+			if not root_file or root_file.IsZombie() or root_file.TestBit(ROOT.TFile.kRecovered):
+				raise Exception(f"Error opening file: {fistr}")
+			# else:
+			# 	continue
+		except Exception as e:
+			print(f"Error processing file {fistr}: {e}")
 			continue
 		list_of_files.append(fistr)
 
@@ -124,38 +164,24 @@ if args.onlyweights:
 				except Exception as e:
 					print(f"Error processing file {fistr}: {e}")
 					continue  # Continue to the next file in case of an error
-		totalEvents_ = weightPlot.GetBinContent(2) - weightPlot.GetBinContent(3)
+		totalEvents_ = weightPlot.GetBinContent(2) - weightPlot.GetBinContent(3) # bins filled from 1, but bins available from 0
 		sum_wts = totalEvents_
 	sys.stderr.write("sum of weights:"+str(sum_wts)+"\n")
-	sys.stderr.write("sum of weights written: "+str(sum_wts)+"\n")
 	fout = ROOT.TFile(args.output,"RECREATE")
 	weightPlot.Write()
 	fout.Close()
 	sys.stderr.write("Time taken: --- %s seconds ---" % (time.time() - start_time)+'\n')
 	quit()
-
-# for accessing the skim cutflow histogram
-# print("enters sum weights calculation")
-# print(list_of_files)
-# cutPlot=[]
-if isData=='false':
+if "scale_var" in args.output:
 	if not isinstance(list_of_files, list):
 		file = ROOT.TFile(list_of_files)
-		cutPlot = file.Get("makeTopologyNtupleMiniAOD/eventFilterAND").Clone()
 		weightPlot = file.Get("makeTopologyNtupleMiniAOD/weightHisto").Clone()
-		eventPlot = file.Get("makeTopologyNtupleMiniAOD/eventcount").Clone()
 		weightPlot.SetDirectory(0)
-		cutPlot.SetDirectory(0)
-		eventPlot.SetDirectory(0)
 		file.Close()
 	else:
 		file = ROOT.TFile(list_of_files[0])
-		cutPlot = file.Get("makeTopologyNtupleMiniAOD/eventFilterAND").Clone()
 		weightPlot = file.Get("makeTopologyNtupleMiniAOD/weightHisto").Clone()
-		eventPlot = file.Get("makeTopologyNtupleMiniAOD/eventcount").Clone()
 		weightPlot.SetDirectory(0)
-		cutPlot.SetDirectory(0)
-		eventPlot.SetDirectory(0)
 		file.Close()
 		for i,fistr in enumerate(list_of_files):
 			if i==0:
@@ -171,19 +197,67 @@ if isData=='false':
 					raise Exception(f"Error opening file: {fistr}")
 
 				# Process the file
-				tmpPlot = file.Get("makeTopologyNtupleMiniAOD/eventFilterAND").Clone()
-				# total_entries=total_entries+tmpPlot.GetEntries()
-				cutPlot.Add(tmpPlot)
-				tmpPlot2 = file.Get("makeTopologyNtupleMiniAOD/weightHisto").Clone()
-				weightPlot.Add(tmpPlot2)
-				tmpPlot3 = file.Get("makeTopologyNtupleMiniAOD/eventcount").Clone()
-				eventPlot.Add(tmpPlot3)
-				# Close the file
+				tmpPlot = file.Get("makeTopologyNtupleMiniAOD/weightHisto").Clone()
+				weightPlot.Add(tmpPlot)
 				file.Close()
-				# continue
 			except Exception as e:
 				print(f"Error processing file {fistr}: {e}")
 				continue  # Continue to the next file in case of an error
+	
+	totalEvents_ = weightPlot.GetBinContent(2) - weightPlot.GetBinContent(3) # bins filled from 1, but bins available from 0
+	sum_wts = totalEvents_
+	print(sum_wts)
+	# quit()
+# for accessing the skim cutflow histogram
+# print("enters sum weights calculation")
+# print(list_of_files)
+# cutPlot=[]
+# if isData=='false':
+if not isinstance(list_of_files, list):
+	file = ROOT.TFile(list_of_files)
+	cutPlot = file.Get("makeTopologyNtupleMiniAOD/eventFilterAND").Clone()
+	weightPlot = file.Get("makeTopologyNtupleMiniAOD/weightHisto").Clone()
+	eventPlot = file.Get("makeTopologyNtupleMiniAOD/eventcount").Clone()
+	weightPlot.SetDirectory(0)
+	cutPlot.SetDirectory(0)
+	eventPlot.SetDirectory(0)
+	file.Close()
+else:
+	file = ROOT.TFile(list_of_files[0])
+	cutPlot = file.Get("makeTopologyNtupleMiniAOD/eventFilterAND").Clone()
+	weightPlot = file.Get("makeTopologyNtupleMiniAOD/weightHisto").Clone()
+	eventPlot = file.Get("makeTopologyNtupleMiniAOD/eventcount").Clone()
+	weightPlot.SetDirectory(0)
+	cutPlot.SetDirectory(0)
+	eventPlot.SetDirectory(0)
+	file.Close()
+	for i,fistr in enumerate(list_of_files):
+		if i==0:
+			continue
+		if not os.path.exists(fistr):
+			continue
+		try:
+			# Open the ROOT file
+			file = ROOT.TFile.Open(fistr)
+
+			# Check if the file was opened successfully
+			if not file or file.IsZombie() or file.TestBit(ROOT.TFile.kRecovered):
+				raise Exception(f"Error opening file: {fistr}")
+
+			# Process the file
+			tmpPlot = file.Get("makeTopologyNtupleMiniAOD/eventFilterAND").Clone()
+			# total_entries=total_entries+tmpPlot.GetEntries()
+			cutPlot.Add(tmpPlot)
+			tmpPlot2 = file.Get("makeTopologyNtupleMiniAOD/weightHisto").Clone()
+			weightPlot.Add(tmpPlot2)
+			tmpPlot3 = file.Get("makeTopologyNtupleMiniAOD/eventcount").Clone()
+			eventPlot.Add(tmpPlot3)
+			# Close the file
+			file.Close()
+			# continue
+		except Exception as e:
+			print(f"Error processing file {fistr}: {e}")
+			continue  # Continue to the next file in case of an error
 
 ###################### LOADING YAML FOR CUTS ############################
 fcuts = open(args.cuts,'r')
@@ -195,13 +269,36 @@ if fcut_pars['hadronType'] == "kaon":
 	chsMass_ = 0.493677 # 0.13957061;//pion mass
 else:
 	chsMass_ = 0.13957061
-
+if '2017' in args.year:
+	singlemu_trig_cut = 'HLT_IsoMu27_v > 0'
+else:
+	singlemu_trig_cut = 'HLT_IsoMu24_v > 0'
+if '2018' in args.year:
+	l2mu_trig_cut = '(HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0) && HLT_IsoMu24_v <= 0 '
+else:
+	l2mu_trig_cut = 'false'
 if fcut_pars['trig']=='single':
-	# if args.newntuples:
-	# 	trigger_cuts = 'HLT_IsoMu27_v > 0'
-	# else:
-	# 	trigger_cuts = 'HLT_IsoMu27_v8 > 0 || HLT_IsoMu27_v9 > 0 || HLT_IsoMu27_v10 > 0 || HLT_IsoMu27_v11 > 0 || HLT_IsoMu27_v12 > 0 || HLT_IsoMu27_v13 > 0 || HLT_IsoMu27_v14 > 0'
-	trigger_cuts = 'HLT_IsoMu27_v > 0' # all ntuples are now new
+	if '2017' in args.year:
+		trigger_cuts = 'HLT_IsoMu27_v > 0' # all ntuples are now new
+	else:
+		trigger_cuts = 'HLT_IsoMu24_v > 0' # all ntuples are now new
+elif fcut_pars['trig']=='double':
+	if '2018' in args.year:
+		trigger_cuts = '(HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0) && HLT_IsoMu24_v <= 0 ' # all ntuples are now new
+	else:
+		print('which dimuon triggers?')
+		quit()
+elif fcut_pars['trig']=='all':
+	if '2016' in args.year:
+		trigger_cuts = 'HLT_IsoMu24_v > 0' # all ntuples are now new
+	elif '2017' in args.year:
+		trigger_cuts = 'HLT_IsoMu27_v > 0' # all ntuples are now new
+	else:
+		trigger_cuts = 'HLT_IsoMu24_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_v > 0 || HLT_DoubleL2Mu23NoVtx_2Cha_CosmicSeed_v > 0' # all ntuples are now new
+else:
+	print('Mention which triggers to use')
+	quit()
+
 
 met_filter_cuts = 'Flag_goodVertices > 0 && Flag_globalTightHalo2016Filter > 0 && Flag_HBHENoiseFilter > 0 && Flag_HBHENoiseIsoFilter > 0 && Flag_EcalDeadCellTriggerPrimitiveFilter > 0 && Flag_BadPFMuonFilter > 0 && Flag_ecalBadCalibFilter > 0'
 
@@ -212,10 +309,9 @@ dihadron_cuts=cut_pars['dihadron']
 recohiggs_cuts=cut_pars['recohiggs']
 recoscalar_cuts=cut_pars['recoscalar']
 
+# singlemu_pt, singlemu_ptLeading = mu_cuts['pt']['single'],mu_cuts['ptLeading']['single']
+# doublemu_pt, doublemu_ptLeading = mu_cuts['pt']['double'],mu_cuts['ptLeading']['double']
 
-muon_cuts = 'abs(muonPF2PATEta) < '+ str(mu_cuts['eta']) + ' && ' + 'muonPF2PATIsPFMuon' + ' && ' + 'muonPF2PAT'+mu_cuts['id']+'CutId'+' && ' + 'muonPF2PATPt > ' + str(mu_cuts['pt'])
-leadingmu_cut = 'Max(mu_pt) > '+str(mu_cuts['ptLeading'])
-nmu = 'mu_pt.size()>=' + str(mu_cuts['number']) + ' && ' + leadingmu_cut
 
 if ch_cuts['id']=='None':
 	ch_trk_cuts_part1 = 'abs(packedCandsPdgId)==211 && packedCandsCharge!=0 && packedCandsHasTrackDetails==1'
@@ -242,6 +338,7 @@ mu_isocuts_loose = 'mu1_iso[0] < ' + str(dihadron_cuts['category']['displaced'][
 ch_isocuts_loose = 'ch1_iso[0] < ' + str(dihadron_cuts['category']['displaced']['relisoLeading'])
 
 
+
 mumuhh_mass_low = recohiggs_cuts['massLow']
 mumuhh_mass_high = recohiggs_cuts['massHigh']
 unblind = recohiggs_cuts['unblind']
@@ -254,7 +351,7 @@ higgs_mass_peak = 'recohiggs_mass >='+str(mumuhh_mass_low)+' && '+'recohiggs_mas
 higgs_mass_peak_blinded = 'recohiggs_mass <'+str(mumuhh_mass_low)+' || '+'recohiggs_mass >'+str(mumuhh_mass_high)
 higgs_mass_peak_loose = f'recohiggs_mass >{hmass_low}'+' && '+f'recohiggs_mass <{hmass_high}'
 higgs_mass_peak_tight = f'recohiggs_mass > {mumuhh_mass_low-sideband}'+' && '+f'recohiggs_mass < {mumuhh_mass_high+sideband}'
-
+# higgs_mass_peak is tighter than higgs_mass_peak_tight
 higgs_mass_cuts = higgs_mass_peak_tight
 higgs_mass_cuts_loose = higgs_mass_peak_loose
 
@@ -284,9 +381,9 @@ print(R3)
 print('Conditions:')
 print(trigger_cuts)
 print(met_filter_cuts)
-print(muon_cuts)
-print(leadingmu_cut)
-print(nmu)
+# print(muon_cuts)
+# print(leadingmu_cut)
+# print(nmu)
 print(mu_isocuts)
 print(ch_trk_cuts_part1)
 print(ch_trk_cuts_part2)
@@ -312,18 +409,51 @@ gInterpreter_diObjectCandidate()
 gInterpreter_diObjectMassCheck()
 gInterpreter_diObjectLxy()
 gInterpreter_lifetime_reweight()
-
+gInterpreter_SF()
+gInterpreter_MatchReco()
+print(list_of_files)
 rdf = ROOT.RDataFrame(treeName,list_of_files)
+if data_name.count('ctauS') >= 1:
+	rdf=rdf.DefinePerSample('lifetimesample','getLifetime(rdfslot_, rdfsampleinfo_)')
+
+# rdf_test=rdf
+#rdf=rdf.Define('ltsample','lifetimesample')
+#problem with RDF DefinePerSample - Book everything, trigger all at once and it should be fine
+# tmp1=rdf.Filter('lifetimesample>5').Sum('lifetimesample')
+# tmp2=rdf.Filter('lifetimesample<5').Sum('lifetimesample')
+# print(tmp1.GetValue(),tmp2.GetValue())
+# print(rdf.Count().GetValue())
+# print(rdf.Filter('lifetimesample>5').Count().GetValue())
+# print(rdf.Filter('lifetimesample<5').Count().GetValue())
+# entries_total = rdf.Count()
+# histtmp = rdf.Histo1D('lifetimesample')
+# c1=ROOT.TCanvas()
+# histtmp.Draw()
+# c1.SaveAs('tmp.root')
+# quit()
+
+# print(rdf.Display('lifetimesample',10).Print())
+# quit()
 # print(data_loc)
 entries_total = rdf.Count()
-sys.stderr.write("entries total:"+str(entries_total.GetValue())+'\n')
-sys.stderr.flush()
+
+# sys.stderr.write("entries total:"+str(entries_total.GetValue())+'\n')
+# sys.stderr.flush()
 dataset_weight = cross_section/sum_wts
+rdf_new = rdf.Define('weightOnlyDataset','processMCWeight*{}'.format(dataset_weight))
+# quit()
+if "PUup" in args.output:
+	shift="up"
+elif "PUdown" in args.output:
+	shift="down"
+else:
+	shift="nominal"
 if (isData=='true'):
-	rdf_new = rdf.Define('weight','1')
+	rdf_new = rdf.Define('weight_noSF','1').Define('weight','1')
+	# rdf_new = rdf_new.Define('weight','1')
 else:
 	gInterpreter_std_map() # Accesses c++ map
-	pileup_ratio,pileup_edges = get_pileup(args.year)
+	pileup_ratio,pileup_edges = get_pileup(args.year,shift)
 	pileupMap = {e: r for e, r in zip(pileup_edges[:-1], pileup_ratio)}
 	pileupMap_c = ROOT.GetTheMap()
 	for key in pileupMap:
@@ -336,48 +466,193 @@ else:
 	# rdf_new.Display(cols,10).Print()
 	# quit()
 
+	std_lt=[0,1,10,100]
 
 	########## LLP lifetime reweighting #########
 	if ('HToSS' in args.config):
 		scalar1_index = 'genParId==9000006'
 		scalar2_index = 'genParId==-9000006'
-		old_lt = float(args.config.split('ctauS')[1].split('.yaml')[0].replace('p','.'))
-		new_lt = 0.1
-
-		rdf_new = rdf_new.Define('scalar1_dau1_idx',f'genParDaughter1Index[{scalar1_index}]')\
+		genpmu_index = 'genParMotherId==9000006 && genParId==13'
+		gennmu_index = 'genParMotherId==9000006 && genParId==-13'
+		# if ((data_name.count('ctauS') == 2)):
+		old_lt = float(data_loc.split('ctauS')[1].split('_')[0].replace('p','.'))
+		if old_lt==0:
+			old_lt=0.1
+		# new_lt = float(data_name.split('ctauS')[1].replace('p','.'))
+		mass=float(data_name.split('MS')[-1].split('_')[0].replace('p','.'))
+		print(data_name)
+		new_lt = float(data_name.split('_')[-1].replace('ctauS','').replace('p','.'))
+		print (mass,old_lt,new_lt)
+		# quit()
+		# .Define('genmu1_pt',f'genParPt[scalar1_dau1_idx[0]] > genParPt[scalar1_dau2_idx[0]] ? genParPt[scalar1_dau1_idx[0]]:genParPt[scalar1_dau2_idx[0]]')\
+		# .Define('genmu2_pt',f'genParPt[scalar1_dau1_idx[0]] < genParPt[scalar1_dau2_idx[0]] ? genParPt[scalar1_dau1_idx[0]]:genParPt[scalar1_dau2_idx[0]]')\
+		# .Define('genmu1_eta',f'genParPt[scalar1_dau1_idx[0]] > genParPt[scalar1_dau2_idx[0]] ? genParEta[scalar1_dau1_idx[0]]:genParEta[scalar1_dau2_idx[0]]')\
+		# .Define('genmu2_eta',f'genParPt[scalar1_dau1_idx[0]] < genParPt[scalar1_dau2_idx[0]] ? genParEta[scalar1_dau1_idx[0]]:genParEta[scalar1_dau2_idx[0]]')\
+		# .Define('genmu1_status',f'genParPt[scalar1_dau1_idx[0]] > genParPt[scalar1_dau2_idx[0]] ? genParStatus[scalar1_dau1_idx[0]]:genParStatus[scalar1_dau2_idx[0]]')\
+		# .Define('genmu2_status',f'genParPt[scalar1_dau1_idx[0]] < genParPt[scalar1_dau2_idx[0]] ? genParStatus[scalar1_dau1_idx[0]]:genParStatus[scalar1_dau2_idx[0]]')\
+		rdf_new = rdf_new.Define('genHiggsStatus','genParStatus[genParId==25]').Define('genHiggsPt_tmp','genParPt[genParId==25]')\
+						.Define('genHiggsPt','genHiggsPt_tmp[genHiggsStatus==22]')\
+						.Define('scalar1_dau1_idx',f'genParDaughter1Index[{scalar1_index}]')\
+						.Define('scalar1_dau2_idx',f'genParDaughter2Index[{scalar1_index}]')\
 						.Define('scalar2_dau1_idx',f'genParDaughter1Index[{scalar2_index}]')\
-						.Define('scalar1_dVx',f'genParVx[scalar1_dau1_idx[0]]-genParVx[{scalar1_index}]')\
-						.Define('scalar1_dVy',f'genParVy[scalar1_dau1_idx[0]]-genParVy[{scalar1_index}]')\
-						.Define('scalar1_dVz',f'genParVz[scalar1_dau1_idx[0]]-genParVz[{scalar1_index}]')\
-						.Define('scalar2_dVx',f'genParVx[scalar2_dau1_idx[0]]-genParVx[{scalar2_index}]')\
-						.Define('scalar2_dVy',f'genParVy[scalar2_dau1_idx[0]]-genParVy[{scalar2_index}]')\
-						.Define('scalar2_dVz',f'genParVz[scalar2_dau1_idx[0]]-genParVz[{scalar2_index}]')\
+						.Define('scalar2_dau2_idx',f'genParDaughter2Index[{scalar2_index}]')\
+						.Define('scalar1_Vx',f'genParVx[{scalar1_index}]')\
+						.Define('dau1_Vx','genParVx[scalar1_dau1_idx[0]]')\
+						.Define('scalar1_Vy',f'genParVy[{scalar1_index}]')\
+						.Define('dau1_Vy','genParVy[scalar1_dau1_idx[0]]')\
+						.Define('scalar1_Vz',f'genParVz[{scalar1_index}]')\
+						.Define('dau1_Vz','genParVz[scalar1_dau1_idx[0]]')\
+						.Define('genpmu_pt',f'genParPt[{genpmu_index}][0]')\
+						.Define('gennmu_pt',f'genParPt[{gennmu_index}][0]')\
+						.Define('genmu1_pt',f'genpmu_pt > gennmu_pt ? genParPt[{genpmu_index}][0]:genParPt[{gennmu_index}][0]')\
+						.Define('genmu2_pt',f'genpmu_pt < gennmu_pt ? genParPt[{genpmu_index}][0]:genParPt[{gennmu_index}][0]')\
+						.Define('genmu1_eta',f'genpmu_pt > gennmu_pt ? genParEta[{genpmu_index}][0]:genParEta[{gennmu_index}][0]')\
+						.Define('genmu2_eta',f'genpmu_pt < gennmu_pt ? genParEta[{genpmu_index}][0]:genParEta[{gennmu_index}][0]')\
+						.Define('genmu1_status',f'genpmu_pt > gennmu_pt ? genParStatus[{genpmu_index}][0]:genParStatus[{gennmu_index}][0]')\
+						.Define('genmu2_status',f'genpmu_pt < gennmu_pt ? genParStatus[{genpmu_index}][0]:genParStatus[{gennmu_index}][0]')\
+						.Define('scalar1_dVx',f'genParVx[{scalar1_index}] - genParVx[scalar1_dau1_idx[0]]')\
+						.Define('scalar1_dVy',f'genParVy[{scalar1_index}] - genParVy[scalar1_dau1_idx[0]]')\
+						.Define('scalar1_dVz',f'genParVz[{scalar1_index}] - genParVz[scalar1_dau1_idx[0]]')\
+						.Define('scalar2_dVx',f'genParVx[{scalar2_index}] - genParVx[scalar2_dau1_idx[0]]')\
+						.Define('scalar2_dVy',f'genParVy[{scalar2_index}] - genParVy[scalar2_dau1_idx[0]]')\
+						.Define('scalar2_dVz',f'genParVz[{scalar2_index}] - genParVz[scalar2_dau1_idx[0]]')\
+						.Define('scalar1_genlxy',f'sqrt(scalar1_dVx*scalar1_dVx + scalar1_dVy*scalar1_dVy)')\
+						.Define('scalar2_genlxy',f'sqrt(scalar2_dVx*scalar2_dVx + scalar2_dVy*scalar2_dVy)')\
 						.Define('scalar1_dist',f'sqrt(scalar1_dVx*scalar1_dVx + scalar1_dVy*scalar1_dVy + scalar1_dVz*scalar1_dVz)')\
 						.Define('scalar2_dist',f'sqrt(scalar2_dVx*scalar2_dVx + scalar2_dVy*scalar2_dVy + scalar2_dVz*scalar2_dVz)')\
 						.Define('scalar1_pt',f'genParPt[{scalar1_index}]').Define('scalar1_eta',f'genParEta[{scalar1_index}]').Define('scalar1_phi',f'genParPhi[{scalar1_index}]').Define('scalar1_E',f'genParE[{scalar1_index}]')\
 						.Define('scalar2_pt',f'genParPt[{scalar2_index}]').Define('scalar2_eta',f'genParEta[{scalar2_index}]').Define('scalar2_phi',f'genParPhi[{scalar2_index}]').Define('scalar2_E',f'genParE[{scalar2_index}]')\
-						.Define('scalar1_vec',f'ROOT::Math::PtEtaPhiEVector(scalar1_pt[0], scalar1_eta[0], scalar1_phi[0], scalar1_E[0])')\
-						.Define('scalar2_vec',f'ROOT::Math::PtEtaPhiEVector(scalar2_pt[0], scalar2_eta[0], scalar2_phi[0], scalar2_E[0])')\
-						.Define('lifetime_weight',f'getLifetimeReweight({old_lt},{new_lt}, scalar1_dist[0], scalar2_dist[0], scalar1_vec, scalar2_vec)')
+						.Define('scalar1_vec',f'ROOT::Math::PtEtaPhiMVector(scalar1_pt[0], scalar1_eta[0], scalar1_phi[0], {mass})')\
+						.Define('scalar2_vec',f'ROOT::Math::PtEtaPhiMVector(scalar2_pt[0], scalar2_eta[0], scalar2_phi[0], {mass})')\
+						.Define('scalar1_mass','scalar1_vec.M()')\
+						.Define('scalar2_mass','scalar2_vec.M()')\
+						.Define('scalar1_bg','scalar1_vec.P()/scalar1_vec.M()')\
+						.Define('scalar2_bg','scalar2_vec.P()/scalar2_vec.M()')\
+						.Define('scalar1_t','10*scalar1_dist[0]/scalar1_bg')\
+						.Define('scalar2_t','10*scalar2_dist[0]/scalar2_bg')\
+						.Define('lifetime_weight',f'getLifetimeReweight(lifetimesample,{new_lt}, scalar1_dist[0], scalar2_dist[0], scalar1_vec, scalar2_vec, {mass})')
+		if data_name.count('ctauS') == 1:
+			rdf_new = rdf_new.Define('weightOnlyDataset_new','weightOnlyDataset')
+			rdf_new = rdf_new.Define('weight_noSF',f'weightOnlyDataset_new*PUReweight_sf')
+			rdf_new = rdf_new.Define('weight_lt','processMCWeight')
+		else:
+			print("ENTERS REWEIGHTING!")
 
-	if 'ctauS0p1' in args.output:
-		rdf_new = rdf_new.Define('weight','weight_tmp*lifetime_weight')
+			# sum_wts_new = sum_wts/eventPlot.Integral()*(old_lt**4/(new_lt-old_lt)**2) # lifetime weight integral only valid when old_lt > new_lt
+			#since old samples (where sum_wts is not stored) - use this:
+
+			# entries_check = rdf_new.Count().GetValue()
+
+			f_ltwts = open('signal_lifetime_reweighting_table'+'_'+args.year.replace('UL','')+'.yaml','r')
+			ltwt_pars = yaml.safe_load(f_ltwts)
+			m_point = data_name.split('_')[2]
+			if ('1p1' in m_point) and fcut_pars['hadronType']=="pion":
+				m_point=m_point+'_pion'
+			if ((data_name.count('ctauS') == 3)):
+				print(old_lt1,old_lt2,new_lt,m_point)
+				sum_lt_wt1,sum_lt_wt2=ltwt_pars[m_point][old_lt1][new_lt][0],ltwt_pars[m_point][old_lt2][new_lt][0]
+				print(m_point,old_lt1,old_lt2,new_lt,sum_lt_wt1,sum_lt_wt2)
+				sum_wts_new=sum_lt_wt1+sum_lt_wt2
+			else:
+				print(old_lt,new_lt,m_point)
+				print(m_point,old_lt,new_lt,ltwt_pars[m_point][old_lt][new_lt])
+				sum_wts_new=ltwt_pars[m_point][old_lt][new_lt][0]
+			# sum_wts_new = sum_wts # TESTING TESTING TESTING
+			# except KeyError:
+			# 	print("No entries in yaml file; using sum_wts_lt")
+			# 	sum_wts_new = sum_wts/entries_check*rdf_new.Sum('lifetime_weight').GetValue() 
+			# except:
+			# 	print("some other issue")
+			# 	quit()
+			# print("check this-",sum_wts,eventPlot.Integral(),eventPlot.GetEntries(), entries_check,sum_wts/eventPlot.Integral(),rdf_new.Sum('processMCWeight').GetValue())
+			# sum_wts_new = rdf_new.Define('weight_lt','processMCWeight*lifetime_weight').Sum('weight_lt')
+			rdf_new = rdf_new.Define('weightOnlyDataset_new',f'processMCWeight*{cross_section}*lifetime_weight/{sum_wts_new}')
+			rdf_new = rdf_new.Define('weight_noSF',f'weightOnlyDataset_new*PUReweight_sf')
+			rdf_new = rdf_new.Define('weight_lt',f'processMCWeight*lifetime_weight')
+			# print(rdf_new.Sum('weight_lt').GetValue(),sum_wts_new)
+			# print(rdf_new.Count().GetValue())
+			# print(rdf.Count().GetValue())
+			# quit()
+			# NOTE: doesn't matter if daughter 1 or daughter 2 used; This is tested with dVx using 2 different daughters
+			# eventRun *  eventNum * eventLumi
+			# rdf_test = rdf_new.Define('selevts','eventRun==1 && ((eventNum == 15341)||(eventNum ==15345)||(eventNum ==15339)||(eventNum ==15337)) && eventLumiblock==13')\
+			# 	.Filter('selevts')
+			# rdf_test.Display({'eventNum','lifetime_weight','scalar1_dist','scalar2_dist'},4).Print()
+			# quit()
+			# rdf_test = rdf_new.Range(entries_total.GetValue()-30,entries_total.GetValue(),1)
+			# rdf_new=rdf_new.Filter('weight_lt>1e3')
+			# rdf_test = rdf_new.Range(1,100,1)
+			# # # rdf_test = rdf_new
+			# rdf_test.Display({'weight_lt','scalar1_t','scalar2_t','scalar1_dist','scalar2_dist','scalar1_bg','scalar2_bg'},40).Print()
+			# quit()
+			# # print(tmp1.GetValue(),tmp2.GetValue())
+			# # rdf_test.Display({'scalar1_Vx','dau1_Vx','scalar1_Vy','dau1_Vy','scalar1_Vz','dau1_Vz','scalar1_dist'},20).Print()
+			# # rdf_test.Display({'scalar1_mass','scalar2_mass'},20).Print()
+			# sum_wts_small = rdf_new.Sum('processMCWeight').GetValue()
+			# totentries_small = entries_total.GetValue()
+			# print(sum_wts_small)
+			# print()
+			# print(sum_wts_small)
+			# print(sum_wts)
+			# quit()
 	else:
-		rdf_new = rdf_new.Define('weight','weight_tmp')
+		rdf_new = rdf_new.Define('weight_noSF','weight_tmp') #still has pu reweighting applied though
 
-	# NOTE: doesn't matter if daughter 1 or daughter 2 used; This is tested with dVx using 2 different daughters
-	# rdf_test = rdf_new.Range(0,30,1)
-	# rdf_test.Display({'scalar1_dVx','scalar1_dist','scalar2_dist','weight','weight_tmp'},20).Print()
-	# quit()
+
 ###########################################
+# rdf_new = rdf_new.Range(0,30,1)
+del rdf
+# if '2017' in args.year:
+# 	trigger_definitions = rdf_new.Define('singlemu_trig',singlemu_trig_cut_2017)
+# else:
+# 	trigger_definitions = rdf_new.Define('singlemu_trig',singlemu_trig_cut)
+# 	trigger_definitions = trigger_definitions.Define('l2mu_trig',l2mu_trig_cut)
+# trigger_definitions = rdf_new.Define('singlemu_trig',singlemu_trig_cut)
+# trigger_definitions = rdf_new.Define('mu_trig',)
+
+# singlemu_trig_cut
+# l2mu_trig_cut)
+
+# singlemu_trig_cut
+# l2mu_trig_cut
 trigger_definitions = rdf_new.Define('mu_trig',trigger_cuts)\
+				.Define('singlemu_trig_cut',singlemu_trig_cut)\
+				.Define('l2mu_trig_cut',l2mu_trig_cut)\
 				.Define('met_filters', met_filter_cuts)
 
 ############## TRIGGERS + MET FILTERS ########################
-cut_trig = trigger_definitions.Filter('mu_trig','Trigger')
+if fcut_pars['trig']=='single':
+	cut_trig = trigger_definitions.Filter('singlemu_trig_cut','Trigger')
+elif fcut_pars['trig']=='double':
+	cut_trig = trigger_definitions.Filter('l2mu_trig_cut','Trigger')
+elif fcut_pars['trig']=='all':
+	cut_trig = trigger_definitions.Filter('mu_trig','Trigger')
+
 cut_met = cut_trig.Filter('met_filters','MET filter')
 
 ############## MUON SEL + DIMUON ########################
+single_muon_cuts = singlemu_trig_cut+' && '+'abs(muonPF2PATEta) < '+ str(mu_cuts['eta']) + ' && ' + 'muonPF2PATIsPFMuon' + ' && ' + 'muonPF2PAT'+mu_cuts['id']+'CutId'+' && ' + 'muonPF2PATPt > ' + str(mu_cuts['pt']['single'])
+single_leadingmu_cut = 'Max(mu_pt) > '+str(mu_cuts['ptLeading']['single'])
+single_nmu = 'mu_pt.size()>=' + str(mu_cuts['number']) + ' && ' + single_leadingmu_cut
+
+if '2018' in args.year:
+	l2mu_muon_cuts = l2mu_trig_cut+' && '+'abs(muonPF2PATEta) < '+ str(mu_cuts['eta']) + ' && ' + 'muonPF2PATIsPFMuon' + ' && ' + 'muonPF2PAT'+mu_cuts['id']+'CutId'+' && ' + 'muonPF2PATPt > ' + str(mu_cuts['pt']['double'])
+	l2mu_leadingmu_cut = 'Max(mu_pt) > '+str(mu_cuts['ptLeading']['double'])
+	l2mu_nmu = 'mu_pt.size()>=' + str(mu_cuts['number']) + ' && ' + l2mu_leadingmu_cut
+else:
+	l2mu_muon_cuts = 'false'
+	l2mu_leadingmu_cut = '0'
+	l2mu_nmu = 'false'
+if fcut_pars['trig']=='single':
+	muon_cuts = single_muon_cuts
+	nmu = single_nmu
+elif fcut_pars['trig']=='double':
+	muon_cuts = l2mu_muon_cuts
+	nmu = l2mu_nmu
+elif fcut_pars['trig']=='all':
+	muon_cuts = '('+single_muon_cuts+')' + ' || ' + '(' + l2mu_muon_cuts+ ')'
+	nmu = '(' + single_nmu +')' + ' || ' + '(' + l2mu_nmu+ ')'
+
 muon_definitions = cut_met.Define('mu_pt',f'muonPF2PATPt[{muon_cuts}]')\
 				.Define('mu_sel',nmu)
 cut_mu_sel = muon_definitions.Filter('mu_sel','mu selection')
@@ -394,8 +669,9 @@ dimuon_definitions = cut_mu_sel.Define('mu_globalidx',f'getIndices(numMuonPF2PAT
            packedCandsCharge, packedCandsPdgId, packedCandsFromPV, numPackedCands, 
 		   mu1_lv, mu2_lv, {diMuPt_},{diMudR_})''')\
 		    .Define('mu_pair_check','mu_pair_idx[0]>=0 && mu_pair_idx[1]>=0')
-#note: mu_pair_idx has 3 things - leading, subleading & track pair index
 
+#note: mu_pair_idx has 3 things - leading, subleading & track pair index
+#note: getDileptonCand does not need packed cands anymore because PFIsolation is not calculated there anymore!!! Make the modification eventually
 ############## HADRON SEL + DIHADRON SEL########################
 cut_dimuon = dimuon_definitions.Filter('mu_pair_check','dimuon candidate')
 hadron_definitions = cut_dimuon.Define('mumu_lv', 'mu1_lv + mu2_lv')\
@@ -429,14 +705,6 @@ dihadron_definitions = cut_hadron_sel.Define('cand_globalidx_hadronsonly',f'getI
 						.Define('ch_pair_check','ch_pair_idx[0]>=0 && ch_pair_idx[1]>=0')
 cut_dihadron = dihadron_definitions.Filter('ch_pair_check','dihadron candidate')
 cut_dihadron = cut_dihadron.Define('hh_lv','ch1_lv+ch2_lv')\
-						.Define('mu1_dz_tmp','muonPF2PATDZPV[mu_pair_idx[0]]')\
-						.Define('mu2_dz_tmp','muonPF2PATDZPV[mu_pair_idx[1]]')\
-						.Define('ch1_dz_tmp','packedCandsDz[ch_pair_idx[0]]')\
-						.Define('ch2_dz_tmp','packedCandsDz[ch_pair_idx[1]]')\
-						.Define('mu1_vz_tmp','muonPF2PATVertZ[mu_pair_idx[0]]')\
-						.Define('mu2_vz_tmp','muonPF2PATVertZ[mu_pair_idx[1]]')\
-						.Define('ch1_vz_tmp','packedCandsVz[ch_pair_idx[0]]')\
-						.Define('ch2_vz_tmp','packedCandsVz[ch_pair_idx[1]]')\
 						.Define('mumu_dR_tmp','ROOT::Math::VectorUtil::DeltaR(mu1_lv,mu2_lv)')\
 						.Define('hh_dR_tmp','ROOT::Math::VectorUtil::DeltaR(ch1_lv,ch2_lv)')\
 						.Define('mu1_nhits_tmp','muonPF2PATTrackNHits[mu_pair_idx[0]]')\
@@ -444,10 +712,27 @@ cut_dihadron = cut_dihadron.Define('hh_lv','ch1_lv+ch2_lv')\
 						.Define('ch1_nhits_tmp','packedCandsPseudoTrkNumberOfHits[ch_pair_idx[0]]')\
 						.Define('ch2_nhits_tmp','packedCandsPseudoTrkNumberOfHits[ch_pair_idx[1]]')\
 						.Define('mu1_pixhits_tmp','muonPF2PATVldPixHits[mu_pair_idx[0]]')\
-						.Define('mu2_pixhits_tmp','muonPF2PATVldPixHits[mu_pair_idx[1]]')\
-						.Define('ch1_pixhits_tmp','packedCandsPseudoTrkNumberOfPixelHits.packedCandsPseudoTrkNumberOfHits[ch_pair_idx[0]]')\
-						.Define('ch2_pixhits_tmp','packedCandsPseudoTrkNumberOfPixelHits.packedCandsPseudoTrkNumberOfHits[ch_pair_idx[1]]')
+						.Define('mu2_pixhits_tmp','muonPF2PATVldPixHits[mu_pair_idx[1]]')
+						# .Define('mu1_dz_tmp','muonPF2PATDZPV[mu_pair_idx[0]]')\
+						# .Define('mu2_dz_tmp','muonPF2PATDZPV[mu_pair_idx[1]]')\
+						# .Define('ch1_dz_tmp','packedCandsDz[ch_pair_idx[0]]')\
+						# .Define('ch2_dz_tmp','packedCandsDz[ch_pair_idx[1]]')\
+						# .Define('mu1_vz_tmp','muonPF2PATVertZ[mu_pair_idx[0]]')\
+						# .Define('mu2_vz_tmp','muonPF2PATVertZ[mu_pair_idx[1]]')\
+						# .Define('ch1_vz_tmp','packedCandsVz[ch_pair_idx[0]]')\
+						# .Define('ch2_vz_tmp','packedCandsVz[ch_pair_idx[1]]')\
 
+#### checking ntuple version ### 
+date = int(data_loc.split('/')[-2].split('_')[0])
+# print(date)
+# quit()
+if date < 240100:
+	cut_dihadron = cut_dihadron.Define('ch1_pixhits_tmp','packedCandsPseudoTrkNumberOfPixelHits.packedCandsPseudoTrkNumberOfHits[ch_pair_idx[0]]')\
+						.Define('ch2_pixhits_tmp','packedCandsPseudoTrkNumberOfPixelHits.packedCandsPseudoTrkNumberOfHits[ch_pair_idx[1]]')
+else:
+	cut_dihadron = cut_dihadron.Define('ch1_pixhits_tmp','packedCandsPseudoTrkNumberOfPixelHits[ch_pair_idx[0]]')\
+						.Define('ch2_pixhits_tmp','packedCandsPseudoTrkNumberOfPixelHits[ch_pair_idx[1]]')
+############### CAREFUL - NAMING CONVENTION FIXED FOR HITS IN NEW NTUPLES (2024) ###################
 ############## LXY CALCULATION FOR SCALARS ########################
 pv_sel = 'pvChi2!=0 && pvNdof!=0'
 vtx_definitions = cut_dihadron.Define('PVCov00',f'pvCov00[{pv_sel}][0]').Define('PVCov01',f'pvCov01[{pv_sel}][0]').Define('PVCov02',f'pvCov02[{pv_sel}][0]').Define('PVCov10',f'pvCov10[{pv_sel}][0]').Define('PVCov11',f'pvCov11[{pv_sel}][0]').Define('PVCov12',f'pvCov12[{pv_sel}][0]').Define('PVCov20',f'pvCov20[{pv_sel}][0]').Define('PVCov21',f'pvCov21[{pv_sel}][0]').Define('PVCov22',f'pvCov22[{pv_sel}][0]').Define('PVX',f'pvX[{pv_sel}][0]').Define('PVY',f'pvY[{pv_sel}][0]').Define('PVZ',f'pvZ[{pv_sel}][0]')\
@@ -500,8 +785,6 @@ higgs_definitions_preblinding = mass_definitions.Define('recohiggs_lv','mu1_lv +
 					.Define('recohiggs_mass_check', higgs_mass_cuts)
 
 ############### MAKE CHANGES BELOW TO BLIND THE PEAK ACC TO DATA or MC; MAKE THE CUTS AFTER #########################
-higgs_definitions_blinded = higgs_definitions_preblinding.Filter('recohiggs_mass_blinded',f'm(mumuhh) blinded in [122.5,127.5]')
-
 # if (unblind):
 # 	if isData=='true':
 # 		print("MANUALLY UNBLIND THE PEAK IN DATA - COMMENT OUT ABOVE")
@@ -513,6 +796,7 @@ higgs_definitions_blinded = higgs_definitions_preblinding.Filter('recohiggs_mass
 
 # higgs_definitions_loose = higgs_definitions_blinded.Filter('recohiggs_mass_check_loose',f'm(mumuhh) in [{hmass_low},{hmass_high}]')
 higgs_definitions_preblinding_loose = higgs_definitions_preblinding.Filter('recohiggs_mass_check_loose',f'm(mumuhh) in [{hmass_low},{hmass_high}]')
+# higgs_definitions_preblinding_loose = higgs_definitions_preblinding ##### TESTING TESTING TESTING
 #### add loose isolation cuts? these would then go into displaced categories too so use LOOSE AF ####
 higgs_definitions_preblinding_loose = higgs_definitions_preblinding_loose.Define('mu1_iso','''PFIsolation("muon", mu1_lv, mu_pair_idx[0], mu_pair_idx[1], packedCandsPx, packedCandsPy, packedCandsPz,packedCandsE, 
 							packedCandsCharge, packedCandsPdgId, packedCandsFromPV, numPackedCands, 0.4)''')\
@@ -525,17 +809,168 @@ higgs_definitions_preblinding_loose = higgs_definitions_preblinding_loose.Define
 							.Define('ch_iso_check_loose',ch_isocuts_loose)\
 							.Define('mu_iso_check_loose',mu_isocuts_loose)
 
-# higgs_definitions -> blinded, full
-# higgs_definitions_preblinding -> unblinded, full
-# higgs_definitions_preblinding_loose -> unblinded, loose
-# higgs_definitions_loose -> blinded, loose
 #### Remove unphysical events with incorrect covariance matrices!!! ####
-higgs_definitions_preblinding_loose = higgs_definitions_preblinding_loose.Filter('mumu_sim_val > 0 && hh_sim_val > 0')
+# rdf_test = higgs_definitions_preblinding_loose.Range(0,5000,1)
+# rdf_testing = rdf_test.Filter('mumu_sim_val < 0 || hh_sim_val < 0')
+# print(rdf_test.Count().GetValue(),rdf_testing.Count().GetValue())
 
+# rdf_test.Display({'weight','weight_tmp','lifetime_weight','scalar1_dist','scalar2_dist'},20).Print()
+# quit()
+
+higgs_definitions_preblinding_loose = higgs_definitions_preblinding_loose.Filter('mumu_sim_val > 0 && hh_sim_val > 0')
 ####### adding loose isolation ##########
-higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose.Filter('ch_iso_check_loose').Filter('mu_iso_check_loose')
+# higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose.Filter('ch_iso_check_loose').Filter('mu_iso_check_loose')
+higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose
+
 # print('SEE THIS:',higgs_definitions_preblinding_loose.Filter('ch1_iso[0] > 1' ).Sum('weight').GetValue())
 # quit()
+
+######## ADD ALL DEFINE'S HERE! ENSURE LEAST FILTER & DEFINE IN LOOP ###############
+######## OR THE MEMORY BLOWS UP!!! #################################################
+objects = {'mu1':'leadingMuon', 'mu2':'subleadingMuon', 'ch1':'leadingChHad', 'ch2':'subleadingChHad'}
+kinematics = {
+	'pt':{'var':'lv.Pt()','nameSuf':'Pt','titleSuf':'','nbins':5000,'minX':0.,'maxX':150.},
+	'eta':{'var':'lv.Eta()','nameSuf':'Eta','titleSuf':'','nbins':5000,'minX':-3.,'maxX':3.},
+	'phi':{'var':'lv.Phi()','nameSuf':'Phi','titleSuf':'','nbins':5000,'minX':-4.,'maxX':4.},
+	'reliso':{'var':'iso[0]','nameSuf':'RelIso','titleSuf':'','nbins': 5000,'minX': 0.,'maxX': 10},
+	# 'trackiso':{'var':'iso[]','nameSuf':'TrackIso','titleSuf':'','nbins': 5000,'minX': 0.,'maxX': 100},
+	'sumpt_ch':{'var':'iso[1]','nameSuf':'SumPtCh','titleSuf':'','nbins':5000,'minX': 0.,'maxX': 100.},
+	# 'sumpt_chRel':{'var':'iso[1]','nameSuf':'SumPtChRel','titleSuf':'','nbins':5000,'minX': 0.,'maxX': 10.},
+	'sumpt_nh':{'var':'iso[2]','nameSuf':'SumPtNh','titleSuf':'','nbins':5000,'minX': 0.,'maxX': 100.},
+	'sumpt_ph':{'var':'iso[3]','nameSuf':'SumPtPh','titleSuf':'','nbins':5000,'minX': 0.,'maxX': 100.},
+	'sumpt_pu':{'var':'iso[4]','nameSuf':'SumPtPU','titleSuf':'','nbins':5000,'minX': 0.,'maxX': 100.},
+	# 'dz':{'var':'dz_tmp','nameSuf':'Dz','titleSuf':'','nbins':5000, 'minX':-500., 'maxX': 500.},
+	# 'vz':{'var':'vz_tmp','nameSuf':'Vz','titleSuf':'','nbins':5000, 'minX':-500., 'maxX': 500.},
+	# 'nhits':{'var':'nhits_tmp','nameSuf':'TrkHits','titleSuf':'','nbins':61,'minX':-0.5,'maxX':60.5},
+	# 'pixhits':{'var':'pixhits_tmp','nameSuf':'PixHits','titleSuf':'','nbins':61,'minX':-0.5,'maxX':60.5}
+}
+for obj in objects:
+	for kin in kinematics:
+		# if kin == 'pixhits' and 'ch' in obj:
+		# 	continue
+		higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define(obj+'_'+kin,obj+'_'+kinematics[kin]['var'])
+
+
+diobjects = {'mumu':'DiMuon','hh':'DiChHad'}
+dikinematics = {
+	'pt':{'var':'lv.Pt()','nameSuf':'Pt','titleSuf':'','nbins':1000,'minX':0.,'maxX':150.},
+	'mass':{'var':'lv.M()','nameSuf':'Mass','titleSuf':'','nbins':5000,'minX':0.,'maxX':5.},
+	'dR':{'var':'dR_tmp','nameSuf':'DeltaR','titleSuf':'','nbins':1000,'minX':0.,'maxX':2.},
+	'lxy':{'var':'lxyInfo[0]','nameSuf':'VtxLxy','titleSuf':'','nbins':5000,'minX':0.,'maxX':1000.},
+	'lxysigma':{'var':'lxyInfo[1]','nameSuf':'VtxSigma','titleSuf':'','nbins':1000,'minX':0.,'maxX':10.},
+	'lxysign':{'var':'lxysign_tmp','nameSuf':'VtxSignificance','titleSuf':'','nbins':2000,'minX':0.,'maxX':1000.},
+	# 'vz':{'var':'vz_tmp','nameSuf':'VtxVz','titleSuf':'','nbins':5000,'minX':-500.,'maxX':500.},
+	# 'dz':{'var':'dz_tmp','nameSuf':'VtxDz','titleSuf':'','nbins':5000,'minX':-500.,'maxX':500.},
+	# 'chi2':{'var':'chi2_tmp','nameSuf':'VtxChi2','titleSuf':'','nbins':5000,'minX':0.,'maxX':100.},
+	# 'chi2ndof':{'var':'chi2ndof_tmp','nameSuf':'VtxChi2Ndof','titleSuf':'','nbins':5000,'minX':0.,'maxX':100.},
+	# 'nhits':{'var':'nhits_tmp','nameSuf':'DeltaTrkHits','titleSuf':'','nbins':61,'minX':-0.5,'maxX':60.5},
+	# 'pixhits':{'var':'pixhits_tmp','nameSuf':'DeltaPixHits','titleSuf':'','nbins':61,'minX':-0.5,'maxX':60.5}
+}
+for obj in diobjects:
+	for kin in dikinematics:
+		# if kin == 'pixhits' and obj=='hh':
+		# 	continue
+		# print(obj+'_'+dikinematics[kin]['var'])
+		higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define(obj+'_'+kin,obj+'_'+dikinematics[kin]['var'])
+
+higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('avgmass','0.5*(mumu_lv.M()+hh_lv.M())')
+if isData=='false':
+	# if "2017" in args.year or "2018" in args.year:
+	fsf = open('scale_factors/scale_factors_config.yaml','r')
+	conf_sf = yaml.safe_load(fsf)
+	mu_sf=conf_sf['muon'][args.year]
+	if "2017" in args.year:
+		mu_trg_sf_tag_Z = 'NUM_IsoMu27_DEN_CutBasedIdMedium_and_PFIsoMedium' 
+	if "2016" in args.year:
+		mu_trg_sf_tag_Z='NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdMedium_and_PFIsoMedium'
+	if "2018" in args.year:
+		mu_trg_sf_tag_Z = 'NUM_IsoMu24_DEN_CutBasedIdMedium_and_PFIsoMedium'
+	# mu_trg_sf_tag_Z = 'NUM_IsoMu27_DEN_CutBasedIdMedium_and_PFIsoMedium' if "2017" in args.year else 'NUM_IsoMu24_DEN_CutBasedIdMedium_and_PFIsoMedium'
+	# mu_sf_Z_id=mu_sf['id']['Z'];mu_sf_JPsi_id=mu_sf['id']['JPsi'];mu_sf_tag_id=mu_sf['id']['tag'];
+	ROOT.gInterpreter.Declare('TFile *trg_file = new TFile("'+mu_sf['trg']['JPsi']+'","READ");TH2D* h2_trg_sf=(TH2D*)trg_file->Get("'+mu_sf['trg']['tag']+'");')
+	ROOT.gInterpreter.Declare('auto m_SF_map_Z_'+'trg'+' = correction::CorrectionSet::from_file("'+mu_sf['trg']['Z']+'");')
+	ROOT.gInterpreter.Declare(f'auto m_SF_map_Z_tag_'+'trg'+' =  m_SF_map_Z_'+'trg'+'->at("'+mu_trg_sf_tag_Z+'");')
+	sf_list=['reco','id','iso']
+	for sf_type in sf_list:
+		mu_sf_Z = mu_sf[sf_type]['Z']
+		mu_sf_JPsi = mu_sf[sf_type]['JPsi']
+		mu_sf_tag = mu_sf[sf_type]['tag']
+		if '.json' in mu_sf_Z:
+			ROOT.gInterpreter.Declare('auto m_SF_map_Z_'+sf_type+' = correction::CorrectionSet::from_file("'+mu_sf_Z+'");')
+			ROOT.gInterpreter.Declare(f'auto m_SF_map_Z_tag_'+sf_type+' =  m_SF_map_Z_'+sf_type+'->at("'+mu_sf_tag+'");')
+		if '.json' in mu_sf_JPsi:
+			ROOT.gInterpreter.Declare(f'auto m_SF_map_JPsi_'+sf_type+' = correction::CorrectionSet::from_file("'+mu_sf_JPsi+'");')
+			ROOT.gInterpreter.Declare(f'auto m_SF_map_JPsi_tag_'+sf_type+' =  m_SF_map_JPsi_'+sf_type+'->at("'+mu_sf_tag+'");')
+		if '.root' in mu_sf_JPsi:
+			ROOT.gInterpreter.Declare('TFile *reco_file = new TFile("'+mu_sf_JPsi+'","READ");TH2D* h2_reco_sf=(TH2D*)reco_file->Get("'+mu_sf['reco']['tag']+'");')
+			higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
+							.Define('muSF_'+sf_type,f'getSF(m_SF_map_Z_tag_{sf_type},h2_reco_sf,"'+sf_type+'",mu1_pt,mu1_eta,mu2_pt,mu2_eta)')
+		else:
+			higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
+							.Define('muSF_'+sf_type,f'getSF(m_SF_map_Z_tag_{sf_type},m_SF_map_JPsi_tag_{sf_type},"'+sf_type+'",mu1_pt,mu1_eta,mu2_pt,mu2_eta)')
+
+	# higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
+	# 					.Define('muSF_trg','getSF(h2_trg_sf,"'+mu_sf['trg']['tag']+'",std::abs(mu1_eta),mu1_pt)')
+	if ('HToSS' in args.config):
+		higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
+							.Define('muSF_trg','getSF(h2_trg_sf,"'+mu_sf['trg']['tag']+'",mumu_dR,mu1_pt)')
+	else:
+		higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
+							.Define('muSF_trg',f'getSF(m_SF_map_Z_tag_trg,m_SF_map_Z_tag_trg,"{args.year}_trg",mu1_pt,mu1_eta,mu2_pt,mu2_eta)')
+
+	higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('muSF','muSF_reco*muSF_id*muSF_iso*muSF_trg')
+
+	# Remaining SFs
+	# vtx_sf=
+	# massreso_sf=
+	sf_list_oth=['vtx','massreso']
+	ROOT.gInterpreter.Declare('TFile *vtx_file = new TFile("'+conf_sf['vtx'][args.year]['file']+'","READ");TH2D* h2_vtx_sf=(TH2D*)vtx_file->Get("'+conf_sf['vtx'][args.year]['tag']+'");')
+	higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
+						.Define('vtxSF','getSF(h2_vtx_sf,"'+conf_sf['vtx'][args.year]['tag']+'",mumu_lxysign,mumu_pt)\
+			  			*getSF(h2_vtx_sf,"'+conf_sf['vtx'][args.year]['tag']+'",hh_lxysign,hh_pt)')
+	ROOT.gInterpreter.Declare('TFile *massreso_file = new TFile("'+conf_sf['massreso'][args.year]['file']+'","READ");TH2D* h2_massreso_sf=(TH2D*)massreso_file->Get("'+conf_sf['massreso'][args.year]['tag']+'");')
+	higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
+						.Define('massresoSF','getSF(h2_massreso_sf,"'+conf_sf['massreso'][args.year]['tag']+'",mumu_lxysign,mumu_pt)\
+			  	  			*getSF(h2_massreso_sf,"'+conf_sf['massreso'][args.year]['tag']+'",hh_lxysign,hh_pt)')
+	### NO MASS RESO SF BECAUSE SMEARING WOULD BE NEEDED, JUST CORRECTION WON'T WORK
+	if ('HToSS' in args.config):
+		ROOT.gInterpreter.Declare('TFile *higgsPt_file = new TFile("'+conf_sf['higgsPtReweight']['file']+'","READ");TH1D* h_higgspt_sf=(TH1D*)higgsPt_file->Get("'+conf_sf['higgsPtReweight']['tag']+'");')
+		higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
+							.Define('higgsptSF','getSF(h_higgspt_sf,"'+conf_sf['higgsPtReweight']['tag']+'",genHiggsPt[0])')
+		higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('othSF','vtxSF*higgsptSF')
+		# higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('othSF','vtxSF')
+	else:
+		higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('othSF','vtxSF')
+	# rdf_issue = higgs_definitions_preblinding_loose_iso.Range(1,20,1)
+	# rdf_issue=higgs_definitions_preblinding_loose_iso.Define('issue','genHiggsPt<=0').Filter('issue')
+	# rdf_issue.Display({'higgsptSF','genHiggsPt'}).Print()
+	# quit()
+	higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('weight','weight_noSF*muSF*othSF')
+	# higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('weight','weight_noSF*muSF')
+	# higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('weight','weight_noSF')
+higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso.Define('prompt_check',R1)\
+	.Define('displacedmumu_check',R2mumu)\
+	.Define('displacedhh_check',R2hh)\
+	.Define('displaced_check',R3)
+	# higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('weight','weight_noSF')
+#else:
+#	higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('weight','weight_noSF')
+
+
+											# .Define('weight','weight_noSF*muSF')
+											# .Define('weight','weight_noSF')
+	
+	# rdf_test = higgs_definitions_preblinding_loose_iso.Range(1,100,1)
+	# rdf_test.Display({'weight','weight_noSF','muSF','muSF_id','muSF_iso','muSF_trg'},5).Print()
+	# rdf_test.Display({'weight_noSF','muSF','muSF_id','muSF_iso'},5).Print()
+	# rdf_test.Display({'weight_noSF','muSF_id','muSF_iso'},10).Print()
+	# print('testing')
+	# quit()
+# else:
+# 	higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('weight','weight_noSF')
+
+
+######## PRESELECTION UNTIL HERE #####################
 
 ############## CATEGORIZATION ########################
 if (unblind):
@@ -543,44 +978,277 @@ if (unblind):
 		print("MANUALLY UNBLIND THE PEAK IN DATA - COMMENT OUT ABOVE")
 		quit()
 	else:
-		higgs_definitions_precat = higgs_definitions_preblinding_loose
+		higgs_definitions_precat = higgs_definitions_preblinding_loose_iso
+		higgs_definitions_precat_4test = higgs_definitions_preblinding_loose_iso
 else:
-	higgs_definitions_precat = higgs_definitions_preblinding_loose.Filter('recohiggs_mass_blinded',f'm(mumuhh) blinded in [122.5,127.5]')
+	higgs_definitions_precat = higgs_definitions_preblinding_loose_iso.Filter('recohiggs_mass_blinded',f'm(mumuhh) blinded in [122.5,127.5]')
+	higgs_definitions_precat_4test = higgs_definitions_preblinding_loose_iso.Filter('recohiggs_mass_blinded',f'm(mumuhh) blinded in [122.5,127.5]')
 
 if (unblind):
 	higgs_definitions_precat = higgs_definitions_precat.Filter('recohiggs_mass_peak','m(mumuhh) in [122.5,127.5] peak')
 else:
 	higgs_definitions_precat = higgs_definitions_precat.Filter('recohiggs_mass_check','m(mumuhh) in [120,130] sidebands')
+	#tight CR condition
+if isData=='false':
+		# final_status = 
+		gen_test=higgs_definitions_precat.Define('mumu_genParId',"abs(genParId[MatchReco(mumu_lv,genParPt,genParEta,genParPhi,genParE,genParId,genParMotherId)])")\
+								 .Define('mu1_genParIndex',"MatchReco(mu1_lv,genParPt,genParEta,genParPhi,genParE,genParId,genParMotherId)")\
+								 .Define('mu2_genParIndex',"MatchReco(mu2_lv,genParPt,genParEta,genParPhi,genParE,genParId,genParMotherId)")\
+								 .Define('mu1_genParAncestorId',"AncestryCheck(mu1_genParIndex, 13, genParId,genParMotherId,genParMotherIndex)")\
+								 .Define('mu2_genParAncestorId',"AncestryCheck(mu2_genParIndex, 13, genParId,genParMotherId,genParMotherIndex)")\
+								 .Define('mu1_genParAncestorIndex',"AncestryCheckIdx(mu1_genParIndex, 13, genParId,genParMotherId,genParMotherIndex)")\
+								 .Define('mu2_genParAncestorIndex',"AncestryCheckIdx(mu2_genParIndex, 13, genParId,genParMotherId,genParMotherIndex)")\
+								 .Define('mu1_genParId',"abs(genParMotherId[mu1_genParIndex])")\
+								 .Define('mu2_genParId',"abs(genParMotherId[mu2_genParIndex])")\
+								 .Define('mumu_lowM',"mumu_lv.M()<=0.5")\
+								 .Define('mumu_M','mumu_lv.M()')\
+								 .Define('trk_genParId',"MatchReco(mu1_lv,mu2_lv,genParPt,genParEta,genParPhi,genParE,genParId,genParStatus,genParMotherId,genParMotherIndex)")\
+								 .Filter('mumu_lowM')
+		gen_test2=gen_test.Filter('mumu_lowM')
+		gen_test3=gen_test2.Define('mumu_genmatch',"mu1_genParAncestorIndex==mu2_genParAncestorIndex && mu1_genParAncestorIndex > 0").Filter('mumu_genmatch')
+		# gen_test2.Display({'mu1_genParAncestorIndex','mu2_genParAncestorIndex','mu1_genParAncestorId','mu2_genParAncestorId'},100).Print()
+		# rdf_test = gen_test.Range(entries_total.GetValue()-30,entries_total.GetValue(),1)
+		# rdf_test = gen_test.Range(1,1000,1)
+		# rdf_test.Display({'mumu_M','mumu_genParId'},20).Print()
+		# quit()
+# higgs_definitions_preblinding_loose_iso -> unblinded, loose higgs, loose iso
+# higgs_definitions_precat -> blinded (SR or CR), loose iso
+
+
+outFile = ROOT.TFile(args.output, "RECREATE")
+outFile.SetBit(ROOT.TFile.k630forwardCompatibility)
+outFile.cd()
+
+hists_1d_precat = {}
+hists_2d_precat = {}
+
+diobjects = {'mumu':'DiMuon','hh':'DiChHad'}
+dikinematics = {
+	'mass':{'var':'lv.M()','nameSuf':'Mass','titleSuf':'','nbins':4000,'minX':0.,'maxX':4.},
+	'lxy':{'var':'lxyInfo[0]','nameSuf':'VtxLxy','titleSuf':'','nbins':5000,'minX':0.,'maxX':1000.},
+	'lxysigma':{'var':'lxyInfo[1]','nameSuf':'VtxSigma','titleSuf':'','nbins':1000,'minX':0.,'maxX':10.},
+	'lxysign':{'var':'lxysign_tmp','nameSuf':'VtxSignificance','titleSuf':'','nbins':2000,'minX':0.,'maxX':1000.},
+}
+for obj in diobjects:
+	for kin in dikinematics:
+		hists_1d_precat['h_'+diobjects[obj]+dikinematics[kin]['nameSuf']]=\
+			higgs_definitions_precat\
+			.Histo1D(('h_'+diobjects[obj]+dikinematics[kin]['nameSuf'],'',\
+			dikinematics[kin]['nbins'],dikinematics[kin]['minX'],dikinematics[kin]['maxX']), obj+'_'+kin, 'weight')
+hists_2d_precat["h_DiMuonVtxSignificance_DiChHadVtxSignificance"] = higgs_definitions_precat\
+				.Histo2D(("h_DiMuonVtxSignificance_DiChHadVtxSignificance", "", dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'],dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'])\
+				,'mumu_lxysign','hh_lxysign','weight')
+
+hists_2d_precat["h_DiMuonVtxSignificance_DiMuonMass"] = higgs_definitions_precat\
+				.Histo2D(("h_DiMuonVtxSignificance_DiMuonMass", "", dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
+				,'mumu_lxysign','mumu_mass','weight')
+
+# hists_2d_precat["h_DiMuonVtxSignificance_AvgMass_mumu_hh"] = higgs_definitions_precat\
+# 				.Histo2D(("h_DiMuonVtxSignificance_AvgMass_mumu_hh", "", dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
+# 				,'mumu_lxysign','avgmass','weight')
+
+hists_2d_precat["h_DiChHadVtxSignificance_DiChHadMass"] = higgs_definitions_precat\
+				.Histo2D(("h_DiChHadVtxSignificance_DiChHadMass", "", dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
+				,'hh_lxysign','hh_mass','weight')
+
+# hists_2d_precat["h_DiChHadVtxSignificance_AvgMass_mumu_hh"] = higgs_definitions_precat\
+# 				.Histo2D(("h_DiChHadVtxSignificance_AvgMass_mumu_hh", "", dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
+# 				,'hh_lxysign','avgmass','weight')
+
+####### Selecting around the J/Psi #########
+higgs_definitions_precat_Jpsimass = higgs_definitions_precat_4test.Define('Jpsi_mass_peak','mumu_mass>=2.9 && mumu_mass<=3.3').Filter('Jpsi_mass_peak')
+hists_1d_precat["h_DiMuonMass_MHMSIso_BC_jpsi"] = higgs_definitions_precat_Jpsimass.Histo1D(("h_DiMuonMass_MHIso_BC_jpsi","",5000,0.,5.), 'mumu_mass','weight')
+hists_1d_precat["h_DiChHadMass_MHMSIso_BC_jpsi"] = higgs_definitions_precat_Jpsimass.Histo1D(("h_DiChHadMass_MHIso_BC_jpsi","",5000,0.,5.), 'hh_mass','weight')
+hists_1d_precat["h_leadingMuonRelIso_MHMSIso_BC_jpsi"] = higgs_definitions_precat_Jpsimass\
+										.Histo1D(("h_leadingMuonRelIso_MHMSIso_BC_jpsi", "", kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'])\
+										,'mu1_reliso','weight')
+hists_1d_precat["h_subleadingMuonRelIso_MHMSIso_BC_jpsi"] = higgs_definitions_precat_Jpsimass\
+										.Histo1D(("h_subleadingMuonRelIso_MHMSIso_BC_jpsi", "", kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'])\
+										,'mu2_reliso','weight')
+hists_1d_precat["h_leadingChHadRelIso_MHMSIso_BC_jpsi"] = higgs_definitions_precat_Jpsimass\
+										.Histo1D(("h_leadingChHadRelIso_MHMSIso_BC_jpsi", "", kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'])\
+										,'ch1_reliso','weight')
+hists_1d_precat["h_subleadingChHadRelIso_MHMSIso_BC_jpsi"] = higgs_definitions_precat_Jpsimass\
+										.Histo1D(("h_subleadingChHadRelIso_MHMSIso_BC_jpsi", "", kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'])\
+										,'ch2_reliso','weight')
+
+higgs_definitions_precat_scalarwindow = higgs_definitions_precat_4test.Filter('mass_window_check') #loose CR
+
+hists_2d_precat["h_DiMuonVtxSignificance_DiMuonMass_MHIso_BC"] = higgs_definitions_precat_scalarwindow\
+				.Histo2D(("h_DiMuonVtxSignificance_DiMuonMass_MHIso_BC", "", dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
+				,'mumu_lxysign','mumu_mass','weight')
+
+hists_2d_precat["h_DiMuonVtxSignificance_AvgMass_mumu_hh_MHIso_BC"] = higgs_definitions_precat_scalarwindow\
+				.Histo2D(("h_DiMuonVtxSignificance_AvgMass_mumu_hh_MHIso_BC", "", dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
+				,'mumu_lxysign','avgmass','weight')
+
+hists_2d_precat["h_DiChHadVtxSignificance_DiChHadMass_MHIso_BC"] = higgs_definitions_precat_scalarwindow\
+				.Histo2D(("h_DiChHadVtxSignificance_DiChHadMass_MHIso_BC", "", dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
+				,'hh_lxysign','hh_mass','weight')
+
+hists_2d_precat["h_DiChHadVtxSignificance_AvgMass_mumu_hh_MHIso_BC"] = higgs_definitions_precat_scalarwindow\
+				.Histo2D(("h_DiChHadVtxSignificance_AvgMass_mumu_hh_MHIso_BC", "", dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
+				,'hh_lxysign','avgmass','weight')
+
+
+hists_2d_precat["h_DiMuonMass_DiChHadMass"] = higgs_definitions_precat\
+										.Histo2D(("h_DiMuonMass_DiChHadMass", "", dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
+										,'mumu_mass','hh_mass','weight')
+hists_1d_precat["h_AvgMass_mumu_hh"] = higgs_definitions_precat.Histo1D(("h_AvgMass_mumu_hh_SMassBC","",5000,0.,5.), 'avgmass','weight')
+
+if ('HToSS' in args.config):
+
+	rdf_new=rdf_new\
+			.Define('higgsptSF','getSF(h_higgspt_sf,"'+conf_sf['higgsPtReweight']['tag']+'",genHiggsPt[0])')\
+			.Define('weightOnlyDataset_new_wtd','weightOnlyDataset_new*higgsptSF')
+	hists_1d_precat["h_genHiggsPt"] = rdf_new.Histo1D(("h_genHiggsPt","",320,0,1600),\
+														'genHiggsPt','weightOnlyDataset_new')
+	hists_1d_precat["h_genHiggsPt_nominal"] = rdf_new.Define('weightOnly_new',f'processMCWeight*higgsptSF')\
+													.Histo1D(("h_genHiggsPt_nominal","",320,0,1600),\
+														'genHiggsPt','weightOnly_new')
+	if 'scale_var' in args.output:
+		weightID_dict={\
+			"muF2":7,"muF0p5":13,"muR2":3,"muF2muR2":9,"muF0p5muR2":15,"muR0p5":5,"muF2muR0p5":11,"muF0p5muR0p5":17\
+		} #bin center, bin content(1) is bin content centered at 0
+		# wt_id = weightID_dict["muF2"]+1
+		totalEvents_={}
+		for ktmp in weightID_dict:
+			print(ktmp)
+			totalEvents_[ktmp] = weightPlot.GetBinContent(weightID_dict[ktmp]+1) - weightPlot.GetBinContent(weightID_dict[ktmp]+2) # bins filled from 1, but bins available from 0
+			# rdf_new = rdf_new
+			hists_1d_precat["h_genHiggsPt_"+ktmp] = rdf_new.Define('weightOnly_'+ktmp,f'weight_{ktmp}_*higgsptSF')\
+													.Histo1D(("h_genHiggsPt_"+ktmp,"",320,0,1600),\
+																'genHiggsPt','weightOnly_'+ktmp)
+	
+	hists_1d_precat["h_genScalar1Lxy"] = rdf_new.Histo1D(("h_genScalar1Lxy","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_genlxy','weightOnlyDataset_new')
+	hists_1d_precat["h_genScalar2Lxy"] = rdf_new.Histo1D(("h_genScalar2Lxy","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar2_genlxy','weightOnlyDataset_new')
+	hists_1d_precat["h_genScalar1L"] = rdf_new.Histo1D(("h_genScalar1L","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_dist','weightOnlyDataset_new')
+	hists_1d_precat["h_genScalar2L"] = rdf_new.Histo1D(("h_genScalar2L","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar2_dist','weightOnlyDataset_new')
+	hists_1d_precat["h_scalar1_mass"] = rdf_new.Histo1D(("h_scalar1_mass","",100,0,2.5),\
+														'scalar1_mass','weightOnlyDataset_new')
+	hists_1d_precat["h_scalar2_mass"] = rdf_new.Histo1D(("h_scalar2_mass","",100,0,2.5),\
+														'scalar2_mass','weightOnlyDataset_new')
+
+	########## TESTING TESTING TESTING #############
+	# trigger_definitions.Define('mu_pt_basic','')
+	rdf_den = trigger_definitions.Define('trg_den','abs(genmu1_eta)<2.4 && abs(genmu2_eta)<2.4').Filter('trg_den')
+	# rdf_test = rdf_den.Define('test','scalar1_dau1_idx.size()==1 && scalar1_dau2_idx.size()==1').Filter('test')
+	# print('See here-',rdf_test.Count().GetValue())
+	print('See here-',rdf_den.Count().GetValue())
+	rdf_singlemu = rdf_den.Filter('singlemu_trig_cut','Trigger')
+	rdf_l2mu = rdf_den.Filter('l2mu_trig_cut','Trigger')
+	rdf_mu = rdf_den.Filter('mu_trig','Trigger')
+	hists_1d_precat["h_genScalar1L_den"] = rdf_den.Histo1D(("h_genScalar1L_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_dist','weightOnlyDataset_new')
+	hists_1d_precat["h_genScalar2L_den"] = rdf_den.Histo1D(("h_genScalar2L_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar2_dist','weightOnlyDataset_new')
+	hists_1d_precat["h_genScalar2L_singlemutrg"] = rdf_singlemu.Histo1D(("h_genScalar2L_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar2_dist','weightOnlyDataset_new')
+	hists_1d_precat["h_genScalar1L_singlemutrg"] = rdf_singlemu.Histo1D(("h_genScalar1L_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_dist','weightOnlyDataset_new')
+	hists_1d_precat["h_genScalar2L_l2mutrg"] = rdf_l2mu.Histo1D(("h_genScalar2L_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar2_dist','weightOnlyDataset_new')
+	hists_1d_precat["h_genScalar1L_l2mutrg"] = rdf_l2mu.Histo1D(("h_genScalar1L_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_dist','weightOnlyDataset_new')
+	hists_1d_precat["h_genScalar2L_mutrg"] = rdf_mu.Histo1D(("h_genScalar2L_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar2_dist','weightOnlyDataset_new')
+	hists_1d_precat["h_genScalar1L_mutrg"] = rdf_mu.Histo1D(("h_genScalar1L_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_dist','weightOnlyDataset_new')
+
+	
+	hists_1d_precat["h_genLeadingMuPt"] = rdf_den.Histo1D(("h_genLeadingMuPt","",kinematics['pt']['nbins'],kinematics['pt']['minX'],kinematics['pt']['maxX']),\
+														'genmu1_pt','weightOnlyDataset_new')
+	hists_1d_precat["h_genLeadingMuPt_singlemutrg"] = rdf_singlemu.Histo1D(("h_genLeadingMuPt_singlemutrg","",kinematics['pt']['nbins'],kinematics['pt']['minX'],kinematics['pt']['maxX']),\
+														'genmu1_pt','weightOnlyDataset_new')
+	hists_1d_precat["h_genLeadingMuPt_l2mutrg"] = rdf_l2mu.Histo1D(("h_genLeadingMuPt_l2mutrg","",kinematics['pt']['nbins'],kinematics['pt']['minX'],kinematics['pt']['maxX']),\
+														'genmu1_pt','weightOnlyDataset_new')
+	hists_1d_precat["h_genLeadingMuPt_mutrg"] = rdf_mu.Histo1D(("h_genLeadingMuPt_mutrg","",kinematics['pt']['nbins'],kinematics['pt']['minX'],kinematics['pt']['maxX']),\
+														'genmu1_pt','weightOnlyDataset_new')
+	
+	hists_1d_precat["h_gensubLeadingMuPt"] = rdf_den.Histo1D(("h_gensubLeadingMuPt","",kinematics['pt']['nbins'],kinematics['pt']['minX'],kinematics['pt']['maxX']),\
+														'genmu2_pt','weightOnlyDataset_new')
+	hists_1d_precat["h_gensubLeadingMuPt_singlemutrg"] = rdf_singlemu.Histo1D(("h_gensubLeadingMuPt_singlemutrg","",kinematics['pt']['nbins'],kinematics['pt']['minX'],kinematics['pt']['maxX']),\
+														'genmu2_pt','weightOnlyDataset_new')
+	hists_1d_precat["h_gensubLeadingMuPt_l2mutrg"] = rdf_l2mu.Histo1D(("h_gensubLeadingMuPt_l2mutrg","",kinematics['pt']['nbins'],kinematics['pt']['minX'],kinematics['pt']['maxX']),\
+														'genmu2_pt','weightOnlyDataset_new')
+	hists_1d_precat["h_gensubLeadingMuPt_mutrg"] = rdf_mu.Histo1D(("h_gensubLeadingMuPt_mutrg","",kinematics['pt']['nbins'],kinematics['pt']['minX'],kinematics['pt']['maxX']),\
+														'genmu2_pt','weightOnlyDataset_new')
+	# hists_1d_precat["h_genScalar2L"] = rdf_new.Histo1D(("h_genScalar2L","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+	# 													'scalar2_dist','weight_lt')
+	# hists_2d_precat["h_genScalar1L_weight"] = rdf_new.Histo2D(("h_genScalar1L_weight","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+	# 													'scalar1_dist','weight_lt')
+	# hists_2d_precat["h_genScalar2L_weight"] = rdf_new.Histo2D(("h_genScalar2L_weight","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+	# 													'scalar2_dist','weight_lt')
+if isData=="false":
+	hists_1d_precat["h_RecoMatch_genParId_mumuall"] = gen_test.Histo1D(("h_RecoMatch_genParId_mumuall","",10000001,-0.5,10000000),'mumu_genParId','weight')
+	hists_1d_precat["h_RecoMatch_genParId_mumulowM"] = gen_test2.Histo1D(("h_RecoMatch_genParId_mumulowM","",10000001,-0.5,10000000),'mumu_genParId','weight')
+	hists_1d_precat["h_RecoMatch_genParCustomId_mumuall"] = gen_test.Histo1D(("h_RecoMatch_genParCustomId_mumuall","",2001,-1000.5,1000.5),'trk_genParId','weight')
+	hists_1d_precat["h_RecoMatch_genParCustomId_mumulowM"] = gen_test2.Histo1D(("h_RecoMatch_genParCustomId_mumulowM","",2001,-1000.5,1000.5),'trk_genParId','weight')
+	hists_1d_precat["h_RecoMatch_genParIdmu1_mumulowM"] = gen_test2.Histo1D(("h_RecoMatch_genParIdmu1_mumulowM","",1002,-1.5,1000.5),'mu1_genParId','weight')
+	hists_1d_precat["h_RecoMatch_genParIdmu2_mumulowM"] = gen_test2.Histo1D(("h_RecoMatch_genParIdmu2_mumulowM","",1002,-1.5,1000.5),'mu2_genParId','weight')
+	hists_2d_precat["h_RecoMatch_genParIdmu1_genParIdmu2_mumulowM"] = gen_test2.Histo2D(("h_RecoMatch_genParIdmu1_genParIdmu2_mumulowM","",1002,-1.5,1000.5,1001,-1.5,1000.5),'mu1_genParId','mu2_genParId','weight')
+
+	hists_1d_precat["h_RecoMatch_genParAncIdmu1_mumulowM"] = gen_test2.Histo1D(("h_RecoMatch_genParAncIdmu1_mumulowM","",3002,-1.5,3000.5),'mu1_genParAncestorId','weight')
+	hists_1d_precat["h_RecoMatch_genParAncIdmu2_mumulowM"] = gen_test2.Histo1D(("h_RecoMatch_genParAncIdmu2_mumulowM","",3002,-1.5,3000.5),'mu2_genParAncestorId','weight')
+	hists_2d_precat["h_RecoMatch_genParAncIdmu1_genParAncIdmu2_mumulowM"] = gen_test2.Histo2D(("h_RecoMatch_genParAncIdmu1_genParAncIdmu2_mumulowM","",1002,-1.5,1000.5,1002,-1.5,1000.5),'mu1_genParAncestorId','mu2_genParAncestorId','weight')
+	hists_2d_precat["h_RecoMatch_genParAncIdmu1_genParAncIdmu2_match_mumulowM"] = gen_test3.Histo2D(("h_RecoMatch_genParAncIdmu1_genParAncIdmu2_match_mumulowM","",1002,-1.5,1000.5,1002,-1.5,1000.5),'mu1_genParAncestorId','mu2_genParAncestorId','weight')
+
+
+if (('HToSS' in args.config) and (data_name.count('ctauS') > 1)):
+	hists_1d_precat['h_genScalar1Lxy'].Write()
+	hists_1d_precat['h_genScalar2Lxy'].Write()
+	hists_1d_precat['h_genScalar1L'].Write()
+	hists_1d_precat['h_genScalar2L'].Write()
+	# hists_2d_precat[hist].Write()
+else:
+	for hist in hists_1d_precat:
+		hists_1d_precat[hist].Write()
+	for hist in hists_2d_precat:
+		hists_2d_precat[hist].Write()
+# for hist in hists_1d_precat:
+# 	hists_1d_precat[hist].Delete()
+# for hist in hists_2d_precat:
+# 	hists_2d_precat[hist].Delete()
+# del rdf_new
+
+# TESTING TESTING TESTING
+# outFile.Close()
+# quit() 
+
+if (unblind): # blinding
+	if isData=='true':
+		print("MANUALLY UNBLIND THE PEAK IN DATA - COMMENT OUT ABOVE")
+		quit()
+	else:
+		higgs_definitions_blinded_loose_iso = higgs_definitions_preblinding_loose_iso
+else:
+	higgs_definitions_blinded_loose_iso = higgs_definitions_preblinding_loose_iso.Filter('recohiggs_mass_blinded',f'm(mumuhh) blinded in [122.5,127.5]')
 
 reg_={}
-reg_['prompt'] = higgs_definitions_preblinding_loose.Define('prompt_check',R1).Filter('prompt_check','only prompt region')
-reg_['displacedmumu'] = higgs_definitions_preblinding_loose.Define('displacedmumu_check',R2mumu).Filter('displacedmumu_check','only displaced mumu region')
-reg_['displacedhh'] = higgs_definitions_preblinding_loose.Define('displacedhh_check',R2hh).Filter('displacedhh_check','only displaced hh region')
-reg_['displaced'] = higgs_definitions_preblinding_loose.Define('displaced_check',R3).Filter('displaced_check','both displaced region')
-
-# if isData=="false":
-# 	reg_unblind_={}
-# 	reg_unblind_['prompt'] = higgs_definitions_preblinding_loose.Define('prompt_check',R1).Filter('prompt_check','only prompt region')
-# 	reg_unblind_['displacedmumu'] = higgs_definitions_preblinding_loose.Define('displacedmumu_check',R2mumu).Filter('displacedmumu_check','only displaced mumu region')
-# 	reg_unblind_['displacedhh'] = higgs_definitions_preblinding_loose.Define('displacedhh_check',R2hh).Filter('displacedhh_check','only displaced hh region')
-# 	reg_unblind_['displaced'] = higgs_definitions_preblinding_loose.Define('displaced_check',R3).Filter('displaced_check','both displaced region')
-
+reg_['prompt'] = higgs_definitions_blinded_loose_iso.Filter('prompt_check','only prompt region')
+reg_['displacedmumu'] = higgs_definitions_blinded_loose_iso.Filter('displacedmumu_check','only displaced mumu region')
+reg_['displacedhh'] = higgs_definitions_blinded_loose_iso.Filter('displacedhh_check','only displaced hh region')
+reg_['displaced'] = higgs_definitions_blinded_loose_iso.Filter('displaced_check','both displaced region')
 
 ###testing number of events after prompt###
 # print('Pairs selected:',vtx_definitions.Count().GetValue())
 # print('Loose mass cut selected:',mass_definitions.Count().GetValue())
 # print('Loose higgs mass selected:',higgs_definitions_loose.Count().GetValue())
-print('Loose higgs SR selected:',higgs_definitions_preblinding_loose.Count().GetValue())
+# print('Loose higgs SR selected:',higgs_definitions_preblinding_loose_iso.Count().GetValue())
 
-print('Region prompt:',reg_['prompt'].Count().GetValue())
-print('Region displacedmumu:',reg_['displacedmumu'].Count().GetValue())
-print('Region displacedhh:',reg_['displacedhh'].Count().GetValue())
-print('Region displaced:',reg_['displaced'].Count().GetValue())
+# print('Region prompt:',reg_['prompt'].Count().GetValue())
+# print('Region displacedmumu:',reg_['displacedmumu'].Count().GetValue())
+# print('Region displacedhh:',reg_['displacedhh'].Count().GetValue())
+# print('Region displaced:',reg_['displaced'].Count().GetValue())
 
 
 ############# BUG CHECKING FOR LARGE LXY SIGNIFICANCE - NAN error related to negative variance along Lxy vector #############
 ##### SOLVED NOW #####
-# weird_evts = higgs_definitions_preblinding_loose\
+# weird_evts = higgs_definitions_preblinding_loose_iso\
 # 	.Define('mumu_lxy','mumu_lxyInfo[0]').Define('hh_lxy','hh_lxyInfo[0]')\
 # 	.Define('mumu_lxysigma','mumu_lxyInfo[1]').Define('hh_lxysigma','hh_lxyInfo[1]')\
 # 	.Define('mumu_lxysign','mumu_lxyInfo[2]').Define('hh_lxysign','hh_lxyInfo[2]')\
@@ -635,215 +1303,227 @@ print('Region displaced:',reg_['displaced'].Count().GetValue())
 
 hists_1d_={}
 hists_2d_={}
+ncut_cat = {}
+ncut_th = {}
+ncut_ts = {}
+ncut_tmi = {}
+ncut_thi = {}
+
+if (isData=='false'):
+	w_mean = dataset_weight*(weightPlot.GetBinContent(2)-weightPlot.GetBinContent(3))/(eventPlot.GetBinContent(1))
+	total_evts = dataset_weight*(weightPlot.GetBinContent(2)-weightPlot.GetBinContent(3))
+
+else:
+	w_mean = 1.
+	total_evts = eventPlot.GetBinContent(1)
+print('population mean: ', w_mean)
+	# print('sample mean: ',w_mean_alt)
+
+total_skim = cutPlot.GetBinContent(1)*w_mean
+trig_skim = cutPlot.GetBinContent(2)*w_mean
+metfilter_skim = cutPlot.GetBinContent(3)*w_mean
+mu_skim = cutPlot.GetBinContent(5)*w_mean
+ch_skim = cutPlot.GetBinContent(7)*w_mean
+higgs_skim = cutPlot.GetBinContent(8)*w_mean
+rem_skim = higgs_skim
+ncut_trig = cut_trig.Sum('weight_noSF').GetValue()
+# ncut_trig = cut_trig.Sum('weight').GetValue()
+# trig_skim = trig_skim+(higgs_skim-ncut_trig)
+ncut_met = cut_met.Sum('weight_noSF')
+ncut_mu = cut_mu_sel.Sum('weight_noSF')
+ncut_dimu = cut_dimuon.Sum('weight_noSF')
+ncut_h = cut_hadron_sel.Sum('weight_noSF')
+ncut_dih = cut_dihadron.Sum('weight_noSF')
+ncut_lsh = higgs_definitions_preblinding_loose.Sum('weight_noSF')
+ncut_li = higgs_definitions_preblinding_loose_iso.Sum('weight')
+
+
+# print('trg:',ncut_trig)
+# print('mu:',ncut_mu.GetValue())
+# print('mumu:',ncut_dimu.GetValue())
+
+# quit()
+
+ROOT.gInterpreter.Declare("""
+	ROOT::RDF::RNode ApplyMuIsoFilter(ROOT::RDF::RNode df, float leading_iso, float subleading_iso) {
+		return df.Filter([leading_iso, subleading_iso](float a, float b) { return a < leading_iso && b < subleading_iso; }, {"mu1_reliso_tmp","mu2_reliso_tmp"});
+	}
+	ROOT::RDF::RNode ApplyChIsoFilter(ROOT::RDF::RNode df, float leading_iso, float subleading_iso) {
+		return df.Filter([leading_iso, subleading_iso](float a, float b) { return a < leading_iso && b < subleading_iso; }, {"ch1_reliso_tmp","ch2_reliso_tmp"});
+	}
+	ROOT::RDF::RNode ApplyHiggsFilter(ROOT::RDF::RNode df, float mumuhh_mass_low, float mumuhh_mass_high) {
+		return df.Filter([mumuhh_mass_low, mumuhh_mass_high](double a) { return a >= mumuhh_mass_low && a <= mumuhh_mass_high; }, {"recohiggs_mass"});
+	}
+	""")
 
 for key in reg_:
-	print('Region:', key)
+	###### Trying to use lambda function in C++ as much as possible within loop to stop memory usage from blowing up - it gets blown up due to JIT everytime Filter is called
+	###### NOTE: Using too many bins in 2D histograms BLOWS UP memory by GB -> Use as less bins as possible -> There is always some memory leak from Histo2D (it looks like like)
 	hists_1d_[key]={}
 	hists_2d_[key]={}
-
-	if (unblind):
-		if isData=='true':
-			print("MANUALLY UNBLIND THE PEAK IN DATA - COMMENT OUT ABOVE")
-			quit()
-		else:
-			higgs_definitions = reg_[key]
-	else:
-		higgs_definitions = reg_[key].Filter('recohiggs_mass_blinded',f'm(mumuhh) blinded in [122.5,127.5]')
-
-	if recoscalar_cuts['flag']:
-		cut_mass_compatibility = higgs_definitions.Filter('mass_window_check','m(mumu)~m(hh)') 
-		if isData=='false': # full higgs distribution
-			higgs_preblinding_scalarcut = reg_[key].Filter('mass_window_check')
-		else:
-			higgs_blinded_scalarcut = higgs_definitions.Filter('mass_window_check') # full higgs distribution but blinded
-	else:
-		cut_mass_compatibility = higgs_definitions
-		if isData=='false':
-			higgs_preblinding_scalarcut = reg_[key]
-		else:
-			higgs_blinded_scalarcut = higgs_definitions
-	# cut_mass_compatibility -> blinded, loose, mass window
-	# higgs_preblinding_scalarcut -> unblinded, full, mass window
-	# higgs_blinded_scalarcut -> blinded, full, mass window
-
-	if recohiggs_cuts['flag']:
-		if (unblind):
-			cut_higgsmass = cut_mass_compatibility.Filter('recohiggs_mass_peak','m(mumuhh) in [120,130] peak')
-			cut_higgsmass_noscalarmass = reg_[key].Filter('recohiggs_mass_peak','m(mumuhh) in [120,130] peak')
-		else:
-			cut_higgsmass = cut_mass_compatibility.Filter('recohiggs_mass_check','m(mumuhh) in [120,130] sidebands')
-			cut_higgsmass_noscalarmass = reg_[key].Filter('recohiggs_mass_check','m(mumuhh) in [120,130] sidebands')
-	else:
-		cut_higgsmass = cut_mass_compatibility
-		if (unblind):
-			cut_higgsmass_noscalarmass = reg_[key]
-		else:
-			cut_higgsmass_noscalarmass = higgs_definitions
-
-	############## ISOLATION CUTS ########################
+	
 
 	mu_isocuts = 'mu1_iso[0] < ' + str(dimuon_cuts['category'][key]['relisoLeading']) + ' && ' + 'mu2_iso[0] < ' + str(dimuon_cuts['category'][key]['reliso'])
 	ch_isocuts = 'ch1_iso[0] < ' + str(dihadron_cuts['category'][key]['relisoLeading']) + ' && ' + 'ch2_iso[0] < ' + str(dihadron_cuts['category'][key]['reliso'])
+	print('Region:', key)
+	higgs_definitions = reg_[key].Define('mu_iso_check',mu_isocuts).Define('ch_iso_check',ch_isocuts)\
+						.Define('mu1_reliso_tmp','mu1_iso[0]').Define('mu2_reliso_tmp','mu2_iso[0]')\
+						.Define('ch1_reliso_tmp','ch1_iso[0]').Define('ch2_reliso_tmp','ch2_iso[0]')
+
+	# higgs_mass_peak = 'recohiggs_mass >='+str(mumuhh_mass_low)+' && '+'recohiggs_mass <='+str(mumuhh_mass_high)
+	# higgs_mass_peak_tight = f'recohiggs_mass > {mumuhh_mass_low-sideband}'+' && '+f'recohiggs_mass < {mumuhh_mass_high+sideband}'
+
+	if recohiggs_cuts['flag']:
+		if (unblind):
+			higgs_definitions_SRCR = ROOT.ApplyHiggsFilter(ROOT.RDF.AsRNode(higgs_definitions),mumuhh_mass_low,mumuhh_mass_high)
+		else:
+			higgs_definitions_SRCR = ROOT.ApplyHiggsFilter(ROOT.RDF.AsRNode(higgs_definitions),mumuhh_mass_low-sideband,mumuhh_mass_high+sideband)
+	else:
+		higgs_definitions_SRCR = higgs_definitions
+
+	if recoscalar_cuts['flag']:
+		cut_mass_compatibility = higgs_definitions_SRCR.Filter('mass_window_check','m(mumu)~m(hh)') 
+	else:
+		cut_mass_compatibility = higgs_definitions_SRCR
+	
+	
+	higgs_definitions_masswindow = higgs_definitions.Filter('mass_window_check')
+	higgs_definitions_iso = ROOT.ApplyMuIsoFilter(ROOT.RDF.AsRNode(higgs_definitions),dimuon_cuts['category'][key]['relisoLeading'],dimuon_cuts['category'][key]['reliso'])
+	higgs_definitions_iso = ROOT.ApplyChIsoFilter(ROOT.RDF.AsRNode(higgs_definitions_iso),dihadron_cuts['category'][key]['relisoLeading'],dihadron_cuts['category'][key]['reliso'])
+	higgs_definitions_masswindow_iso = higgs_definitions_iso.Filter('mass_window_check')
+	higgs_definitions_SRCR_iso = ROOT.ApplyMuIsoFilter(ROOT.RDF.AsRNode(higgs_definitions_SRCR),dimuon_cuts['category'][key]['relisoLeading'],dimuon_cuts['category'][key]['reliso'])
+	higgs_definitions_SRCR_iso = ROOT.ApplyChIsoFilter(ROOT.RDF.AsRNode(higgs_definitions_SRCR_iso),dihadron_cuts['category'][key]['relisoLeading'],dihadron_cuts['category'][key]['reliso'])
+	# cut_mass_compatibility -> blinded, loose higgs, loose iso, mass window
+	# higgs_preblinding_scalarcut -> unblinded, full, mass window
+	# higgs_definitions -> blinded, loose higgs, loose iso
+	# higgs_blinded_scalarcut -> blinded, full, mass window
+
+	############## ISOLATION CUTS ########################
+
 	print(mu_isocuts)
 	print(ch_isocuts)
-	cut_dimuon_iso = cut_higgsmass
 	if diMuFlag_:
-		cut_dimuon_iso = cut_dimuon_iso.Define('mu_iso_check',mu_isocuts).Filter('mu_iso_check','muon isolation cuts')
-
-
-	cut_dihadron_iso = cut_dimuon_iso
-	if diChFlag_:
-		cut_dihadron_iso = cut_dihadron_iso.Define('ch_iso_check',ch_isocuts).Filter('ch_iso_check','ch isolation cuts')
-
-	# cut_higgsmass -> SR or CR, mass window
-	# cut_higgsmass_noscalarmass -> SR or CR
-	if isData=='false':
-		cut_scalar_mass_assumption = higgs_preblinding_scalarcut.Define('avgmass','0.5*(mumu_lv.M()+hh_lv.M())')\
-								.Define('scalar_mass_assumption_check',scalar_mass_assumption_cuts)\
-								.Filter('scalar_mass_assumption_check')
+		cut_dimuon_iso = ROOT.ApplyMuIsoFilter(ROOT.RDF.AsRNode(cut_mass_compatibility),dimuon_cuts['category'][key]['relisoLeading'],dimuon_cuts['category'][key]['reliso'])
 	else:
-		cut_scalar_mass_assumption = higgs_blinded_scalarcut.Define('avgmass','0.5*(mumu_lv.M()+hh_lv.M())')\
-								.Define('scalar_mass_assumption_check',scalar_mass_assumption_cuts)\
-								.Filter('scalar_mass_assumption_check')
+		cut_dimuon_iso = cut_mass_compatibility
 
+
+	if diChFlag_:
+		cut_dihadron_iso = ROOT.ApplyChIsoFilter(ROOT.RDF.AsRNode(cut_dimuon_iso),dihadron_cuts['category'][key]['relisoLeading'],dihadron_cuts['category'][key]['reliso'])
+	else:
+		cut_dihadron_iso = cut_dimuon_iso
+
+	# print(cut_mass_compatibility.Count().GetValue(),higgs_definitions_SRCR.Count().GetValue(),higgs_definitions_SRCR_iso.Count().GetValue())
+	# quit()
 	# pfiso[0]=RelIso;  pfiso[1]=ch_iso;  pfiso[2]=nh_iso;  pfiso[3]=ph_iso;  pfiso[4]=pu_iso
 
+	################### TESTING TESTING TESTING ###########################
+
+	# diobjects = {'mumu':'DiMuon','hh':'DiChHad'}
+	# dikinematics = {
+	# 	'mass':{'var':'lv.M()','nameSuf':'Mass','titleSuf':'','nbins':4000,'minX':0.,'maxX':4.},
+	# 	'lxy':{'var':'lxyInfo[0]','nameSuf':'VtxLxy','titleSuf':'','nbins':5000,'minX':0.,'maxX':1000.},
+	# 	'lxysigma':{'var':'lxyInfo[1]','nameSuf':'VtxSigma','titleSuf':'','nbins':1000,'minX':0.,'maxX':500.},
+	# 	'lxysign':{'var':'lxysign_tmp','nameSuf':'VtxSignificance','titleSuf':'','nbins':2000,'minX':0.,'maxX':1000.},
+	# }
+	
+
+
+
+
+
 	############## DEFINITION OF HISTOGRAMS 1D + 2D ########################
-		
-	objects = {'mu1':'leadingMuon', 'mu2':'subleadingMuon', 'ch1':'leadingChHad', 'ch2':'subleadingChHad'}
-	kinematics = {
-		'pt':{'var':'lv.Pt()','nameSuf':'Pt','titleSuf':'','nbins':5000,'minX':0.,'maxX':150.},
-		'eta':{'var':'lv.Eta()','nameSuf':'Eta','titleSuf':'','nbins':5000,'minX':-3.,'maxX':3.},
-		'phi':{'var':'lv.Phi()','nameSuf':'Phi','titleSuf':'','nbins':5000,'minX':-4.,'maxX':4.},
-		'reliso':{'var':'iso[0]','nameSuf':'RelIso','titleSuf':'','nbins': 5000,'minX': 0.,'maxX': 10},
-		# 'trackiso':{'var':'iso[]','nameSuf':'TrackIso','titleSuf':'','nbins': 5000,'minX': 0.,'maxX': 100},
-		'sumpt_ch':{'var':'iso[1]','nameSuf':'SumPtCh','titleSuf':'','nbins':5000,'minX': 0.,'maxX': 100.},
-		# 'sumpt_chRel':{'var':'iso[1]','nameSuf':'SumPtChRel','titleSuf':'','nbins':5000,'minX': 0.,'maxX': 10.},
-		'sumpt_nh':{'var':'iso[2]','nameSuf':'SumPtNh','titleSuf':'','nbins':5000,'minX': 0.,'maxX': 100.},
-		'sumpt_ph':{'var':'iso[3]','nameSuf':'SumPtPh','titleSuf':'','nbins':5000,'minX': 0.,'maxX': 100.},
-		'sumpt_pu':{'var':'iso[4]','nameSuf':'SumPtPU','titleSuf':'','nbins':5000,'minX': 0.,'maxX': 100.},
-		# 'dz':{'var':'dz_tmp','nameSuf':'Dz','titleSuf':'','nbins':5000, 'minX':-500., 'maxX': 500.},
-		# 'vz':{'var':'vz_tmp','nameSuf':'Vz','titleSuf':'','nbins':5000, 'minX':-500., 'maxX': 500.},
-		'nhits':{'var':'nhits_tmp','nameSuf':'TrkHits','titleSuf':'','nbins':61,'minX':-0.5,'maxX':60.5},
-		'pixhits':{'var':'pixhits_tmp','nameSuf':'PixHits','titleSuf':'','nbins':61,'minX':-0.5,'maxX':60.5}
-	}
+
 	for obj in objects:
 		for kin in kinematics:
 			# if kin == 'pixhits' and 'ch' in obj:
 			# 	continue
+			# cut_dihadron_iso = cut_dihadron_iso.Define(obj+'_'+kin,obj+'_'+kinematics[kin]['var'])
 			hists_1d_[key]['h_'+objects[obj]+kinematics[kin]['nameSuf']]=\
-				cut_dihadron_iso.Define(obj+'_'+kin,obj+'_'+kinematics[kin]['var'])\
+				cut_dihadron_iso\
 				.Histo1D(('h_'+objects[obj]+kinematics[kin]['nameSuf'],'',\
 				kinematics[kin]['nbins'],kinematics[kin]['minX'],kinematics[kin]['maxX']), obj+'_'+kin, 'weight')
 
-
-	diobjects = {'mumu':'DiMuon','hh':'DiChHad'}
-	dikinematics = {
-		'pt':{'var':'lv.Pt()','nameSuf':'Pt','titleSuf':'','nbins':1000,'minX':0.,'maxX':150.},
-		'mass':{'var':'lv.M()','nameSuf':'Mass','titleSuf':'','nbins':5000,'minX':0.,'maxX':5.},
-		'dR':{'var':'dR_tmp','nameSuf':'DeltaR','titleSuf':'','nbins':1000,'minX':0.,'maxX':10.},
-		'lxy':{'var':'lxyInfo[0]','nameSuf':'VtxLxy','titleSuf':'','nbins':5000,'minX':0.,'maxX':1000.},
-		'lxysigma':{'var':'lxyInfo[1]','nameSuf':'VtxSigma','titleSuf':'','nbins':1000,'minX':0.,'maxX':500.},
-		'lxysign':{'var':'lxysign_tmp','nameSuf':'VtxSignificance','titleSuf':'','nbins':2000,'minX':0.,'maxX':1000.},
-		# 'vz':{'var':'vz_tmp','nameSuf':'VtxVz','titleSuf':'','nbins':5000,'minX':-500.,'maxX':500.},
-		# 'dz':{'var':'dz_tmp','nameSuf':'VtxDz','titleSuf':'','nbins':5000,'minX':-500.,'maxX':500.},
-		# 'chi2':{'var':'chi2_tmp','nameSuf':'VtxChi2','titleSuf':'','nbins':5000,'minX':0.,'maxX':100.},
-		'chi2ndof':{'var':'chi2ndof_tmp','nameSuf':'VtxChi2Ndof','titleSuf':'','nbins':5000,'minX':0.,'maxX':100.},
-		'nhits':{'var':'nhits_tmp','nameSuf':'DeltaTrkHits','titleSuf':'','nbins':61,'minX':-0.5,'maxX':60.5},
-		'pixhits':{'var':'pixhits_tmp','nameSuf':'DeltaPixHits','titleSuf':'','nbins':61,'minX':-0.5,'maxX':60.5}
-	}
 	for obj in diobjects:
 		for kin in dikinematics:
 			# if kin == 'pixhits' and obj=='hh':
 			# 	continue
 			# print(obj+'_'+dikinematics[kin]['var'])
+			# cut_dihadron_iso = cut_dihadron_iso.Define(obj+'_'+kin,obj+'_'+dikinematics[kin]['var'])
 			hists_1d_[key]['h_'+diobjects[obj]+dikinematics[kin]['nameSuf']]=\
-				cut_dihadron_iso.Define(obj+'_'+kin,obj+'_'+dikinematics[kin]['var'])\
+				cut_dihadron_iso\
 				.Histo1D(('h_'+diobjects[obj]+dikinematics[kin]['nameSuf'],'',\
 				dikinematics[kin]['nbins'],dikinematics[kin]['minX'],dikinematics[kin]['maxX']), obj+'_'+kin, 'weight')
 
-	hists_1d_[key]["h_AvgMass_mumu_hh"] = cut_dihadron_iso.Define('avgmass','0.5*(mumu_lv.M()+hh_lv.M())').Histo1D(("h_AvgMass_mumu_hh","",5000,0.,5.), 'avgmass','weight')
+	hists_1d_[key]["h_AvgMass_mumu_hh"] = cut_dihadron_iso.Histo1D(("h_AvgMass_mumu_hh","",5000,0.,5.), 'avgmass','weight')
 	hists_1d_[key]["h_recoHiggsMass"] = cut_dihadron_iso.Histo1D(("h_recoHiggsMass", "", 5000, 0., 500.), 'recohiggs_mass','weight')
-	# hists_1d_[key]['MCweight']=cut_dihadron.Histo1D('processMCWeight')
-	# hists_1d_[key]['weight']=cut_dihadron.Histo1D('weight')
-
-	hists_2d_[key]["h_DiMuonMass_DiChHadMass"] = cut_dihadron_iso.Define('mumu_mass','mumu_lv.M()').Define('hh_mass','hh_lv.M()')\
-											.Histo2D(("h_DiMuonMass_DiChHadMass", "", dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
-											,'mumu_mass','hh_mass','weight')
-	hists_2d_[key]["h_DiMuonVtxSignificance_DiChHadVtxSignificance"] = cut_dihadron_iso.Define('mumu_lxysign','mumu_lxyInfo[2]').Define('hh_lxysign','hh_lxyInfo[2]')\
-											.Histo2D(("h_DiMuonVtxSignificance_DiChHadVtxSignificance", "", dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'],dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'])\
-											,'mumu_lxysign','hh_lxysign','weight')
-	hists_2d_[key]["h_leadingMuonRelIso_subleadingMuonRelIso"] = cut_dihadron_iso.Define('mu1_reliso','mu1_iso[0]').Define('mu2_reliso','mu2_iso[0]')\
-											.Histo2D(("h_leadingMuonRelIso_subleadingMuonRelIso", "", kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'], kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'])\
-											,'mu1_reliso','mu2_reliso','weight')
-	hists_2d_[key]["h_leadingChHadRelIso_subleadingChHadRelIso"] = cut_dihadron_iso.Define('ch1_reliso','ch1_iso[0]').Define('ch2_reliso','ch2_iso[0]')\
-											.Histo2D(("h_leadingChHadRelIso_subleadingChHadRelIso", "", kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'], kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'])\
-											,'ch1_reliso','ch2_reliso','weight')
-	hists_2d_[key]["h_DiMuonVtxLxy_DiChHadVtxLxy"] = cut_dihadron_iso.Define('mumu_lxy','mumu_lxyInfo[0]').Define('hh_lxy','hh_lxyInfo[0]')\
-											.Histo2D(("h_DiMuonVtxLxy_DiChHadVtxLxy", "", dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX'],dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX'])\
-											,'mumu_lxy','hh_lxy','weight')
-	hists_2d_[key]["h_DiMuonVtxLxy_DiMuonVtxSigma"] = cut_dihadron_iso.Define('mumu_lxy','mumu_lxyInfo[0]').Define('mumu_lxysigma','mumu_lxyInfo[1]')\
-											.Histo2D(("h_DiMuonVtxLxy_DiMuonVtxSigma", "", dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX'],dikinematics['lxysigma']['nbins'],dikinematics['lxysigma']['minX'],dikinematics['lxysigma']['maxX'])\
-											,'mumu_lxy','mumu_lxysigma','weight')
-	hists_2d_[key]["h_DiChHadVtxLxy_DiChHadVtxSigma"] = cut_dihadron_iso.Define('hh_lxy','hh_lxyInfo[0]').Define('hh_lxysigma','hh_lxyInfo[1]')\
-											.Histo2D(("h_DiChHadVtxLxy_DiChHadVtxSigma", "", dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX'],dikinematics['lxysigma']['nbins'],dikinematics['lxysigma']['minX'],dikinematics['lxysigma']['maxX'])\
-											,'hh_lxy','hh_lxysigma','weight')
 	hists_1d_[key]["h_DiMuonDiChHad_DeltaPhi"] = cut_dihadron_iso.Histo1D(("h_DiMuonDiChHad_DeltaPhi", "", 1000, -3.2, 3.2), 'pt_dphi','weight')
 
-	hists_2d_[key]["h_leadingMuonRelIso_leadingChHadRelIso"] = cut_dihadron_iso.Define('mu1_reliso','mu1_iso[0]').Define('ch1_reliso','ch1_iso[0]')\
-											.Histo2D(("h_leadingMuonRelIso_leadingChHadRelIso", "", kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'], kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'])\
-											,'mu1_reliso','ch1_reliso','weight')
+	# hists_2d_[key]["h_DiMuonMass_DiChHadMass"] = cut_dihadron_iso\
+	# 										.Histo2D(("h_DiMuonMass_DiChHadMass", "", dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
+	# 										,'mumu_mass','hh_mass','weight')
+	hists_2d_[key]["h_DiMuonVtxLxy_DiChHadVtxLxy"] = cut_dihadron_iso\
+											.Histo2D(("h_DiMuonVtxLxy_DiChHadVtxLxy", "", dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX'],dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX'])\
+											,'mumu_lxy','hh_lxy','weight')
+
+	# hists_2d_[key]["h_leadingMuonRelIso_leadingChHadRelIso"] = cut_dihadron_iso\
+	# 										.Histo2D(("h_leadingMuonRelIso_leadingChHadRelIso", "", kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'], kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'])\
+	# 										,'mu1_reliso','ch1_reliso','weight')
+	hists_2d_[key]["h_leadingMuonRelIso_subleadingMuonRelIso"] = cut_dihadron_iso\
+											.Histo2D(("h_leadingMuonRelIso_subleadingMuonRelIso", "", kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'], kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'])\
+											,'mu1_reliso','mu2_reliso','weight')
+	hists_2d_[key]["h_leadingChHadRelIso_subleadingChHadRelIso"] = cut_dihadron_iso\
+											.Histo2D(("h_leadingChHadRelIso_subleadingChHadRelIso", "", kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'], kinematics['reliso']['nbins'],kinematics['reliso']['minX'],kinematics['reliso']['maxX'])\
+											,'ch1_reliso','ch2_reliso','weight')
 
 	# hists_2d_["h_DiChHadVtxLxy_DiChHadVtxSigma"] = new TH2F("h_DiChHadVtxLxy_DiChHadVtxSigma", "", 5000, 0., 1000., 1000, 0., 500.);
-
-	# higgs_definitions -> blinded, full
-	# higgs_definitions_preblinding -> unblinded, full
-	# higgs_definitions_loose -> blinded, loose
-	# cut_mass_compatibility -> blinded, loose, mass window
-	# higgs_preblinding_scalarcut -> unblinded, full, mass window
-	# higgs_blinded_scalarcut -> blinded, full, mass window
-	# cut_higgsmass -> SR or CR, mass window
-	# cut_higgsmass_noscalarmass -> SR or CR
-
-	hists_1d_[key]["h_recoHiggsMass_HMassSMassBC"] = higgs_definitions.Histo1D(("h_recoHiggsMass_HMassSMassBC", "", 5000, 0., 500.), 'recohiggs_mass','weight')
-	hists_1d_[key]["h_recoHiggsMass_HMassBC"] = cut_mass_compatibility.Histo1D(("h_recoHiggsMass_HMassBC", "", 5000, 0., 500.), 'recohiggs_mass','weight')
-	# hists_1d_["h_recoHiggsMass_SMassBC"] = cut_higgsmass_noscalarmass.Histo1D(("h_recoHiggsMass_SMassBC", "", 5000, 0., 500.), 'recohiggs_mass','weight')
-	# hists_1d_["h_recoHiggsMass_Blinded"] = higgs_peak_blinded_scalarcut.Histo1D(("h_recoHiggsMass_Blinded", "", 5000, 0., 500.), 'recohiggs_mass','weight')
-	# hists_1d_["h_recoHiggsMass_Blinded_SMassBC"] = higgs_definitions_blinded.Histo1D(("h_recoHiggsMass_Blinded_SMassBC", "", 5000, 0., 500.), 'recohiggs_mass','weight')
-
-
-	hists_2d_[key]["h_DiMuonMass_DiChHadMass_HMassSMassBC"] = higgs_definitions.Define('mumu_mass','mumu_lv.M()').Define('hh_mass','hh_lv.M()')\
-											.Histo2D(("h_DiMuonMass_DiChHadMass_HMassSMassBC", "", dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
-											,'mumu_mass','hh_mass','weight')
-	hists_2d_[key]["h_DiMuonMass_DiChHadMass_HMassBC"] = cut_mass_compatibility.Define('mumu_mass','mumu_lv.M()').Define('hh_mass','hh_lv.M()')\
-											.Histo2D(("h_DiMuonMass_DiChHadMass_HMassBC", "", dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
-											,'mumu_mass','hh_mass','weight')
-	hists_2d_[key]["h_DiMuonMass_DiChHadMass_SMassBC"] = cut_higgsmass_noscalarmass.Define('mumu_mass','mumu_lv.M()').Define('hh_mass','hh_lv.M()')\
-											.Histo2D(("h_DiMuonMass_DiChHadMass_SMassBC", "", dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
-											,'mumu_mass','hh_mass','weight')
-
-	hists_1d_[key]["h_AvgMass_mumu_hh_HMassSMassBC"] = higgs_definitions.Define('avgmass','0.5*(mumu_lv.M()+hh_lv.M())').Histo1D(("h_AvgMass_mumu_hh_HMassSMassBC","",5000,0.,5.), 'avgmass','weight')
-	hists_1d_[key]["h_AvgMass_mumu_hh_HMassBC"] = cut_mass_compatibility.Define('avgmass','0.5*(mumu_lv.M()+hh_lv.M())').Histo1D(("h_AvgMass_mumu_hh_HMassBC","",5000,0.,5.), 'avgmass','weight')
-	hists_1d_[key]["h_AvgMass_mumu_hh_SMassBC"] = cut_higgsmass_noscalarmass.Define('avgmass','0.5*(mumu_lv.M()+hh_lv.M())').Histo1D(("h_AvgMass_mumu_hh_SMassBC","",5000,0.,5.), 'avgmass','weight')
-
-
 	if isData=='false':
-		hists_1d_[key]["h_recoHiggsMass_All_WithPeak"] = reg_[key].Histo1D(("h_recoHiggsMass_All_WithPeak", "", 5000, 0., 500.), 'recohiggs_mass','weight')
-		# hists_1d_["h_recoHiggsMass_WithPeak"] = higgs_peak_loose.Histo1D(("h_recoHiggsMass_WithPeak", "", 5000, 0., 500.), 'recohiggs_mass','weight')
-		if recoscalar_cuts['flag']:
-			hists_1d_[key]["h_recoHiggsMass_All_WithPeak_ScalarCut"] = higgs_preblinding_scalarcut.Histo1D(("h_recoHiggsMass_All_WithPeak_ScalarCut", "", 5000, 0., 500.), 'recohiggs_mass','weight')
+		higgs_definitions_unblinded = higgs_definitions_preblinding_loose_iso.Filter(key+'_check')
+		hists_1d_[key]["h_recoHiggsMass_MHMSIso_BC"] = higgs_definitions_unblinded.Histo1D(("h_recoHiggsMass_MHMSIso_BC", "", 5000, 0., 500.), 'recohiggs_mass','weight')
+		hists_1d_[key]["h_recoHiggsMass_MHIso_BC"] = higgs_definitions_unblinded.Filter('mass_window_check').Histo1D(("h_recoHiggsMass_MHIso_BC", "", 5000, 0., 500.), 'recohiggs_mass','weight')
+		hists_1d_[key]["h_recoHiggsMass_MHMS_BC"] = higgs_definitions_unblinded.Define('mu_iso_check',mu_isocuts).Define('ch_iso_check',ch_isocuts).Filter('mu_iso_check').Filter('ch_iso_check').Histo1D(("h_recoHiggsMass_MHMS_BC", "", 5000, 0., 500.), 'recohiggs_mass','weight')
+		hists_1d_[key]["h_recoHiggsMass_MH_BC"] = higgs_definitions_unblinded.Define('mu_iso_check',mu_isocuts).Define('ch_iso_check',ch_isocuts).Filter('mass_window_check').Filter('mu_iso_check').Filter('ch_iso_check').Histo1D(("h_recoHiggsMass_MH_BC", "", 5000, 0., 500.), 'recohiggs_mass','weight')
 	else:
-		hists_1d_[key]["h_recoHiggsMass_All"] = higgs_definitions.Histo1D(("h_recoHiggsMass_All", "", 5000, 0., 500.), 'recohiggs_mass','weight')
-		if recoscalar_cuts['flag']:
-			hists_1d_[key]["h_recoHiggsMass_All_ScalarCut"] = higgs_blinded_scalarcut.Histo1D(("h_recoHiggsMass_All_ScalarCut", "", 5000, 0., 500.), 'recohiggs_mass','weight')
+		hists_1d_[key]["h_recoHiggsMass_MHMSIso_BC"] = higgs_definitions.Histo1D(("h_recoHiggsMass_MHMSIso_BC", "", 5000, 0., 500.), 'recohiggs_mass','weight')
+		hists_1d_[key]["h_recoHiggsMass_MHIso_BC"] = higgs_definitions_masswindow.Histo1D(("h_recoHiggsMass_MHIso_BC", "", 5000, 0., 500.), 'recohiggs_mass','weight')
+		hists_1d_[key]["h_recoHiggsMass_MHMS_BC"] = higgs_definitions_iso.Histo1D(("h_recoHiggsMass_MHMS_BC", "", 5000, 0., 500.), 'recohiggs_mass','weight')
+		hists_1d_[key]["h_recoHiggsMass_MH_BC"] = higgs_definitions_masswindow_iso.Histo1D(("h_recoHiggsMass_MH_BC", "", 5000, 0., 500.), 'recohiggs_mass','weight')
 
-	if unblind:
-		hists_1d_[key]["h_AvgMass_mumu_hh_AtScalarMass2"] = cut_scalar_mass_assumption.Histo1D(("h_AvgMass_mumu_hh_AtScalarMass2", "", 5000, 0., 5.), 'avgmass','weight')
+	hists_2d_[key]["h_recoHiggsMass_AvgMass_mumu_hh_MHMSIso_BC"] = higgs_definitions\
+		.Histo2D(("h_recoHiggsMass_AvgMass_mumu_hh_MHMSIso_BC", "", 1000, 100., 200.,4000,0.,4.), 'recohiggs_mass','avgmass','weight')
+	hists_2d_[key]["h_recoHiggsMass_AvgMass_mumu_hh_MHIso_BC"] = higgs_definitions_masswindow\
+		.Histo2D(("h_recoHiggsMass_AvgMass_mumu_hh_MHIso_BC", "", 1000, 100., 200.,4000,0.,4.), 'recohiggs_mass','avgmass','weight')
+	hists_2d_[key]["h_recoHiggsMass_AvgMass_mumu_hh_MHMS_BC"] = higgs_definitions_iso\
+		.Histo2D(("h_recoHiggsMass_AvgMass_mumu_hh_MHMS_BC", "", 1000, 100., 200.,4000,0.,4.), 'recohiggs_mass','avgmass','weight')
+	hists_2d_[key]["h_recoHiggsMass_AvgMass_mumu_hh_MH_BC"] = higgs_definitions_masswindow_iso\
+		.Histo2D(("h_recoHiggsMass_AvgMass_mumu_hh_MH_BC", "", 1000, 100., 200.,4000,0.,4.), 'recohiggs_mass','avgmass','weight')
 
-	if isData=='false':
-		hists_1d_[key]["h_recoHiggsMass_All_WithPeak_AtScalarMass2"] = cut_scalar_mass_assumption.Histo1D(("h_recoHiggsMass_All_WithPeak_AtScalarMass2", "", 5000, 0., 500.), 'recohiggs_mass','weight')
-	else:
-		hists_1d_[key]["h_recoHiggsMass_All_AtScalarMass2"] = cut_scalar_mass_assumption.Histo1D(("h_recoHiggsMass_All_AtScalarMass2", "", 5000, 0., 500.), 'recohiggs_mass','weight')
+	# hists_2d_[key]["h_DiMuonMass_DiChHadMass_MSIso_BC"] = higgs_definitions_SRCR\
+	# 										.Histo2D(("h_DiMuonMass_DiChHadMass_MSIso_BC", "", dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
+	# 										,'mumu_mass','hh_mass','weight')
+	hists_2d_[key]["h_DiMuonMass_DiChHadMass_MS_BC"] = higgs_definitions_SRCR_iso\
+											.Histo2D(("h_DiMuonMass_DiChHadMass_MS_BC", "", dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
+											,'mumu_mass','hh_mass','weight')
+	# hists_2d_[key]["h_DiMuonMass_DiChHadMass_Iso_BC"] = cut_mass_compatibility\
+	# 										.Histo2D(("h_DiMuonMass_DiChHadMass_Iso_BC", "", dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
+	# 										,'mumu_mass','hh_mass','weight')
+
+	hists_1d_[key]["h_AvgMass_mumu_hh_MSIso_BC"] = higgs_definitions_SRCR.Histo1D(("h_AvgMass_mumu_hh_MSIso_BC","",5000,0.,5.), 'avgmass','weight')
+	hists_1d_[key]["h_AvgMass_mumu_hh_MS_BC"] = higgs_definitions_SRCR_iso.Histo1D(("h_AvgMass_mumu_hh_MS_BC","",5000,0.,5.), 'avgmass','weight')
+	hists_1d_[key]["h_AvgMass_mumu_hh_Iso_BC"] = cut_mass_compatibility.Histo1D(("h_AvgMass_mumu_hh_Iso_BC","",5000,0.,5.), 'avgmass','weight')
+	hists_1d_[key]["h_Weights"]=cut_dihadron_iso.Define('weight_lumi',f'weight*{lumi_factor}').Histo1D(("h_Weights", "", 5000, 0., 10.), 'weight_lumi')
+	hists_1d_[key]["h_Weights_lt_nolumi"]=cut_dihadron_iso.Define('weight_lt_lumi',f'weight_lt*{lumi_factor}').Histo1D(("h_Weights_bare", "", 5000, 0., 10000.), 'weight_lt')
+	hists_1d_[key]["h_Weights_noSF"]=cut_dihadron_iso.Define('weight_noSF_lumi',f'weight_noSF*{lumi_factor}').Histo1D(("h_Weights_noSF", "", 5000, 0., 10.), 'weight_noSF_lumi')
+
+	if ('HToSS' in args.config):
+		hists_1d_[key]["h_genScalar1Lxy"] = cut_dihadron_iso.Histo1D(("h_genScalar1Lxy","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+															'scalar1_genlxy','weightOnlyDataset_new')
+		hists_1d_[key]["h_genScalar2Lxy"] = cut_dihadron_iso.Histo1D(("h_genScalar2Lxy","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+															'scalar2_genlxy','weightOnlyDataset_new')
+		hists_1d_[key]["h_genScalar1L"] = cut_dihadron_iso.Histo1D(("h_genScalar1L","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+															'scalar1_dist','weightOnlyDataset_new')
+		hists_1d_[key]["h_genScalar2L"] = cut_dihadron_iso.Histo1D(("h_genScalar2L","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+															'scalar2_dist','weightOnlyDataset_new')
 
 	# hists_1d_["h_DiMuonDeltaR_weird"]=weird_evts.Histo1D(("h_DiMuonDeltaR_weird","",1000,0.,10.),'mumu_dR_tmp','weight')
 	# hists_1d_["h_DiMuonVtxLxy_weird"]=weird_evts.Define('mumu_lxy','mumu_lxyInfo[0]').Histo1D(("h_DiMuonVtxLxy_weird","",5000,0.,1000.),'mumu_lxy','weight')
@@ -859,70 +1539,47 @@ for key in reg_:
 	# hists_2d_["h_DiChHadVtxLxy_DiChHadVtxSigma_weird"] = weird_evts.Define('hh_lxy','hh_lxyInfo[0]').Define('hh_lxysigma','hh_lxyInfo[1]')\
 	# 		        						.Histo2D(("h_DiChHadVtxLxy_DiChHadVtxSigma_weird", "", dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX'],dikinematics['lxysigma']['nbins'],dikinematics['lxysigma']['minX'],dikinematics['lxysigma']['maxX'])\
 	# 										,'hh_lxy','hh_lxysigma','weight')
+	# # print('GETS BEFORE CUTFLOW DEF')
+	hists_1d_[key]["Cutflow"] = ROOT.TH1D(key+"_"+"Cutflow", "Cutflow distribution", 19, 0.5, 19.5)
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(1, "TotalEvts")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(2, "TriggerSkim")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(3, "METFilterSkim")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(4, "muSkim")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(5, "chSkim")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(6, "higgsSkim")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(7, "Trigger")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(8, "MET filters")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(9, "#mu selection")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(10, "dimuon candidate")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(11, "h trk selection")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(12, "dihadron candidate")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(13, "loose scalar+higgs mass")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(14, "loose leading isolation")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(15, key)
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(16, "tight higgs mass")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(17, "m(#mu#mu) ~ m(hh)")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(18, "#mu isolation")
+	hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(19, "h isolation")
 
+	# # print('GETS AFTER CUTFLOW DEF')
 
-
-	# hists_1d_[key]["Cutflow"] = ROOT.TH1D("Cutflow", "Cutflow distribution", 13, 0.5, 13.5)
-	# hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(1, "TotalEvts")
-	# hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(2, "TriggerSkim")
-	# hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(3, "RemainingSkim")
-	# hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(4, "#mu selection")
-	# hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(5, "dimuon candidate")
-	# hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(6, "h trk selection")
-	# hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(7, "dihadron candidate")
-	# hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(8, "loose scalar+higgs mass")
-	# hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(9, "loose leading isolation")
-	# hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(10, "m(#mu#mu) ~ m(hh)")
-	# hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(11, "tight higgs mass")
-	# hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(12, "#mu isolation")
-	# hists_1d_[key]["Cutflow"].GetXaxis().SetBinLabel(13, "h isolation")
-
-
-	# # print('test',cutPlot.GetBinContent(1))
-	# if (isData=='false'):
-	# 	w_mean = dataset_weight*(weightPlot.GetBinContent(2)-weightPlot.GetBinContent(3))/(eventPlot.GetBinContent(1))
-	# 	# w_mean_alt = rdf_new.Mean('weight').GetValue()
-	# 	print('population mean: ', w_mean)
-	# 	# print('sample mean: ',w_mean_alt)
-	# 	total_skim = cutPlot.GetBinContent(1)*w_mean
-	# 	total_evts = dataset_weight*(weightPlot.GetBinContent(2)-weightPlot.GetBinContent(3))
-
-	# 	total_skim = cutPlot.GetBinContent(1)*w_mean
-	# 	trig_skim = cutPlot.GetBinContent(2)*w_mean
-	# 	metfilter_skim = cutPlot.GetBinContent(3)*w_mean
-	# 	mu_skim = cutPlot.GetBinContent(4)*w_mean
-	# 	ch_skim = cutPlot.GetBinContent(5)*w_mean
-	# 	higgs_skim = cutPlot.GetBinContent(6)*w_mean
-	# 	rem_skim = metfilter_skim+mu_skim+ch_skim+higgs_skim
-
-	# 	ncut_trig = cut_trig.Sum('weight').GetValue()
-	# 	trig_skim = trig_skim+(higgs_skim-ncut_trig)
-	# 	ncut_mu = cut_mu_sel.Sum('weight').GetValue()
-	# 	ncut_dimu = cut_dimuon.Sum('weight').GetValue()
-	# 	ncut_h = cut_hadron_sel.Sum('weight').GetValue()
-	# 	ncut_dih = cut_dihadron.Sum('weight').GetValue()
-	# 	ncut_lsh = higgs_definitions_preblinding_loose.Sum('weight').GetValue()
-	# 	ncut_li = higgs_definitions_preblinding_loose_iso.Sum('weight').GetValue()
-	# 	ncut_ts = cut_mass_compatibility.Sum('weight').GetValue()
-	# 	ncut_th = cut_higgsmass.Sum('weight').GetValue()
-	# 	ncut_tmi = cut_dimuon_iso.Sum('weight').GetValue()
-	# 	ncut_thi = cut_dihadron_iso.Sum('weight').GetValue()
-		
-	# 	hists_1d_[key]["Cutflow"].Fill(1, total_skim)
-	# 	hists_1d_[key]["Cutflow"].Fill(2, trig_skim)
-	# 	hists_1d_[key]["Cutflow"].Fill(3, rem_skim)
-	# 	hists_1d_[key]["Cutflow"].Fill(4, ncut_mu)
-	# 	hists_1d_[key]["Cutflow"].Fill(5, ncut_dimu)
-	# 	hists_1d_[key]["Cutflow"].Fill(6, ncut_h)
-	# 	hists_1d_[key]["Cutflow"].Fill(7, ncut_dih)
-	# 	hists_1d_[key]["Cutflow"].Fill(8,ncut_lsh)
-	# 	hists_1d_[key]["Cutflow"].Fill(9,ncut_li)
-	# 	hists_1d_[key]["Cutflow"].Fill(10,ncut_ts)
-	# 	hists_1d_[key]["Cutflow"].Fill(11,ncut_th)
-	# 	hists_1d_[key]["Cutflow"].Fill(12,ncut_tmi)
-	# 	hists_1d_[key]["Cutflow"].Fill(13,ncut_thi)
-
-	############## WRITING REPORT MANUALLY ########################
+	ncut_cat[key]=higgs_definitions.Sum('weight')
+	ncut_th[key]=higgs_definitions_SRCR.Sum('weight')
+	ncut_ts[key]=cut_mass_compatibility.Sum('weight')
+	ncut_tmi[key]=cut_dimuon_iso.Sum('weight')
+	ncut_thi[key]=cut_dihadron_iso.Sum('weight')
+	# outFile.mkdir(key)
+	# outFile.cd(key)
+	# for hist in hists_1d_[key]:
+	# 	hists_1d_[key][hist].Write()
+	# for hist in hists_2d_[key]:
+	# 	hists_2d_[key][hist].Write()
+	# for hist in hists_1d_[key]:
+	# 	hists_1d_[key][hist].Delete()
+	# for hist in hists_2d_[key]:
+	# 	hists_2d_[key][hist].Delete()
+	# del higgs_definitions;del higgs_definitions_SRCR;del cut_mass_compatibility;del cut_dimuon_iso;del cut_dihadron_iso;
+############## WRITING REPORT MANUALLY ########################
 	# if (isData=='false'):
 	# 	report=cut_dihadron.Report()
 	# 	report.Print()
@@ -960,48 +1617,87 @@ for key in reg_:
 # sys.stderr.write('After 2d mass cut:'+str(entries_2dmass.GetValue())+'\n')
 # sys.stderr.flush()
 
-hists_1d_precat = {}
-hists_2d_precat = {}
-
-diobjects = {'mumu':'DiMuon','hh':'DiChHad'}
-dikinematics = {
-	'mass':{'var':'lv.M()','nameSuf':'Mass','titleSuf':'','nbins':5000,'minX':0.,'maxX':5.},
-	'lxy':{'var':'lxyInfo[0]','nameSuf':'VtxLxy','titleSuf':'','nbins':5000,'minX':0.,'maxX':1000.},
-	'lxysigma':{'var':'lxyInfo[1]','nameSuf':'VtxSigma','titleSuf':'','nbins':1000,'minX':0.,'maxX':500.},
-	'lxysign':{'var':'lxysign_tmp','nameSuf':'VtxSignificance','titleSuf':'','nbins':2000,'minX':0.,'maxX':1000.},
-}
-for obj in diobjects:
-	for kin in dikinematics:
-		hists_1d_precat['h_'+diobjects[obj]+dikinematics[kin]['nameSuf']]=\
-			higgs_definitions_precat.Define(obj+'_'+kin,obj+'_'+dikinematics[kin]['var'])\
-			.Histo1D(('h_'+diobjects[obj]+dikinematics[kin]['nameSuf'],'',\
-			dikinematics[kin]['nbins'],dikinematics[kin]['minX'],dikinematics[kin]['maxX']), obj+'_'+kin, 'weight')
-hists_2d_precat["h_DiMuonVtxSignificance_DiChHadVtxSignificance"] = higgs_definitions_precat.Define('mumu_lxysign','mumu_lxyInfo[2]').Define('hh_lxysign','hh_lxyInfo[2]')\
-				.Histo2D(("h_DiMuonVtxSignificance_DiChHadVtxSignificance", "", dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'],dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'])\
-				,'mumu_lxysign','hh_lxysign','weight')
-
-hists_2d_precat["h_DiMuonMass_DiChHadMass"] = higgs_definitions_precat.Define('mumu_mass','mumu_lv.M()').Define('hh_mass','hh_lv.M()')\
-										.Histo2D(("h_DiMuonMass_DiChHadMass", "", dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
-										,'mumu_mass','hh_mass','weight')
-hists_1d_precat["h_AvgMass_mumu_hh"] = higgs_definitions_precat.Define('avgmass','0.5*(mumu_lv.M()+hh_lv.M())').Histo1D(("h_AvgMass_mumu_hh_SMassBC","",5000,0.,5.), 'avgmass','weight')
-
-
 ############## WRITING HISTOS ########################
 # print(hists_1d_)
 # quit()
-outFile = ROOT.TFile(args.output, "RECREATE")
-outFile.cd()
-for hist in hists_1d_precat:
-	hists_1d_precat[hist].Write()
-for hist in hists_2d_precat:
-	hists_2d_precat[hist].Write()
+print('GETS OUTSIDE KEY LOOP')
+tot_entries_after = hists_1d_['prompt']["h_recoHiggsMass"].GetEntries()+hists_1d_['displacedhh']["h_recoHiggsMass"].GetEntries()+hists_1d_['displacedmumu']["h_recoHiggsMass"].GetEntries()+hists_1d_['displaced']["h_recoHiggsMass"].GetEntries()
+print(data_name)
+print('Total entries:',eventPlot.GetBinContent(1))
+print('Skimmed entries:',entries_total.GetValue())
+print('Analyzed entries:',tot_entries_after)
+print(dataset_weight)
+# quit()
+
+total_skim_vals = total_skim
+trig_skim_vals = trig_skim
+rem_skim_vals = rem_skim
+ncut_met_vals=ncut_met.GetValue()
+ncut_mu_vals = ncut_mu.GetValue()
+
+ncut_dimu_vals = ncut_dimu.GetValue()
+ncut_h_vals = ncut_h.GetValue()
+ncut_dih_vals = ncut_dih.GetValue()
+ncut_lsh_vals = ncut_lsh.GetValue()
+ncut_li_vals = ncut_li.GetValue()
+
+# total_skim
+# trig_skim
+# metfilter_skim
+# mu_skim
+# ch_skim
+# higgs_skim
+# ncut_trig
+
 for key in reg_:
-	outFile.mkdir(key)
-	outFile.cd(key)
-	for hist in hists_1d_[key]:
-		hists_1d_[key][hist].Write()
-	for hist in hists_2d_[key]:
-		hists_2d_[key][hist].Write()
+	hists_1d_[key]["Cutflow"].Fill(1, total_skim)
+	hists_1d_[key]["Cutflow"].Fill(2, trig_skim)
+	hists_1d_[key]["Cutflow"].Fill(3, metfilter_skim)
+	hists_1d_[key]["Cutflow"].Fill(4, mu_skim)
+	hists_1d_[key]["Cutflow"].Fill(5, ch_skim)
+	hists_1d_[key]["Cutflow"].Fill(6, higgs_skim)
+	hists_1d_[key]["Cutflow"].Fill(7, ncut_trig)
+	hists_1d_[key]["Cutflow"].Fill(8, ncut_met_vals)
+	hists_1d_[key]["Cutflow"].Fill(9, ncut_mu_vals)
+	hists_1d_[key]["Cutflow"].Fill(10, ncut_dimu_vals)
+	hists_1d_[key]["Cutflow"].Fill(11, ncut_h_vals)
+	hists_1d_[key]["Cutflow"].Fill(12, ncut_dih_vals)
+	hists_1d_[key]["Cutflow"].Fill(13, ncut_lsh_vals)
+	hists_1d_[key]["Cutflow"].Fill(14, ncut_li_vals)
+	hists_1d_[key]["Cutflow"].Fill(15, ncut_cat[key].GetValue())
+	hists_1d_[key]["Cutflow"].Fill(16, ncut_th[key].GetValue())
+	hists_1d_[key]["Cutflow"].Fill(17, ncut_ts[key].GetValue())
+	hists_1d_[key]["Cutflow"].Fill(18, ncut_tmi[key].GetValue())
+	hists_1d_[key]["Cutflow"].Fill(19, ncut_thi[key].GetValue())
+print('DONE WITH CUTFLOW')
+
+if isData=='false':
+	cutPlot.Scale(w_mean)
+cutPlot.Write()
+
+if (('HToSS' in args.config) and (data_name.count('ctauS') > 1)):
+	for key in reg_:
+		outFile.mkdir(key)
+		outFile.cd(key)
+		hists_2d_[key]["h_recoHiggsMass_AvgMass_mumu_hh_MHMSIso_BC"].Write()
+		hists_2d_[key]["h_recoHiggsMass_AvgMass_mumu_hh_MHIso_BC"].Write()
+		hists_2d_[key]["h_recoHiggsMass_AvgMass_mumu_hh_MHMS_BC"].Write()
+		hists_2d_[key]["h_recoHiggsMass_AvgMass_mumu_hh_MH_BC"].Write()
+		hists_1d_[key]["h_genScalar1Lxy"].Write()
+		hists_1d_[key]["h_genScalar2Lxy"].Write()
+		hists_1d_[key]["h_genScalar1L"].Write()
+		hists_1d_[key]["h_genScalar2L"].Write()
+		hists_1d_[key]["h_Weights"].Write()
+		hists_1d_[key]["h_Weights_lt_nolumi"].Write()
+		hists_1d_[key]["h_Weights_noSF"].Write()
+else:
+	for key in reg_:
+		outFile.mkdir(key)
+		outFile.cd(key)
+		for hist in hists_1d_[key]:
+			hists_1d_[key][hist].Write()
+		for hist in hists_2d_[key]:
+			hists_2d_[key][hist].Write()
 outFile.Close()
 
 sys.stderr.write("Time taken: --- %s seconds ---" % (time.time() - start_time)+'\n')

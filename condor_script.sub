@@ -1,5 +1,7 @@
-executable = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/JobTemplate_new.sh
-arguments = $(cfg) $(cuts) $(output) $(flow) $(fhigh) $(dataset)
+executable = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/AnalyzeJob.sh
+#executable = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/WeightsJob.sh
+
+arguments = $(cfg) $(cuts) $(output) $(flow) $(fhigh) $(dataset) $(year)
 
 should_transfer_files = no
 
@@ -7,5 +9,9 @@ error = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/error/error_$(dataset)_$
 output = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/out/out_$(dataset)_$(flow)-$(fhigh).txt
 log = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/log/log_$(dataset)_$(flow)-$(fhigh).txt
 
-+JobFlavour = "microcentury"
-queue cfg,cuts,output,flow,fhigh,dataset from params_signal.txt
+#request_cpus=4
+#request_memory=10000
++JobFlavour = "longlunch"
+#+JobFlavour = "espresso"
+max_retries = 5
+queue cfg,cuts,output,flow,fhigh,dataset,year from params_data_UL2017.txt 

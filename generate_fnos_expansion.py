@@ -23,12 +23,39 @@ parser.add_argument("-j","--justWeights",dest="justWeights", help="Measure just 
 
 args = parser.parse_args()
 
+cwd = os.getcwd()
 fin = open(args.config,'r')
 f = open(args.fname,'w')
 pars = yaml.safe_load(fin)
 for conf in pars['datasets']:
+	# print(conf.split("/")[-2])
+	#print(conf)
+	# quit()
+	conf_og=conf
+	if conf.count('ctauS') == 2:
+		# print(new_lt)
+		if 'pion' in conf:
+			new_lt = conf.split('/')[-1].split('_')[-2].replace('.yaml','')
+			conf=conf.replace('_'+new_lt+'_pion.','_pion.')
+		else:
+			new_lt = conf.split('/')[-1].split('_')[-1].replace('.yaml','')
+			conf=conf.replace('_'+new_lt+'.','.')
+		print('ENTERS')
+		# print(conf_og)
+		# print(conf)
+		# quit()
+	if conf.count('ctauS') == 3:
+		if 'pion' in conf:
+			old_lt2, new_lt = conf.split('/')[-1].split('_')[-3],conf.split('/')[-1].split('_')[-2].replace('.yaml','')
+			conf=conf.replace('_'+old_lt2+'_','').replace(new_lt+'_pion.','_pion.')
+		else:
+			old_lt2, new_lt = conf.split('/')[-1].split('_')[-2],conf.split('/')[-1].split('_')[-1].replace('.yaml','')
+			# new_lt=conf.split('/')[-1].split('.')[0].split('_')[-1]
+			conf=conf.replace('_'+old_lt2+'_','').replace(new_lt+'.','.')
+		# print(conf)
+		# quit()
 	f_conf = open(conf,'r')
-	conf_pars = yaml.safe_load(f_conf) 
+	conf_pars = yaml.safe_load(f_conf)
 	data_loc = conf_pars['locations']
 	if isinstance(data_loc,list):
 		loc=data_loc[0]
@@ -39,26 +66,32 @@ for conf in pars['datasets']:
 		directories = [loc+"/"+d+"/" for d in os.listdir(data_loc) if os.path.isdir(os.path.join(data_loc, d))]
 		# print(directories)
 		nmax = maxfilenumber(directories[-1])
-		out_name = conf.split("/")[-1].split(".yaml")[0]
+		out_name = conf_og.split("/")[-1].split(".yaml")[0].replace('_pion','')
 
-
-	data_name = conf_pars['name']
-	# for loc in data_loc:
+	# print(out_name)
+	if conf_og.count('ctauS') > 1:
+		# data_name = conf_pars['name']+'_'+new_lt
+		data_name = conf_og.split('/')[-1].replace('.yaml','').replace('_pion','')
+		# data_name = conf_pars['name']+'_'+new_lt
+	else:
+		data_name = conf_pars['name']
 	sample_string = loc.split("/")
-	sample_string_2 = conf.split("/")
-	sample_type = sample_string_2[len(sample_string_2)-2] if ".yaml" in sample_string_2[len(sample_string_2)-1] else sample_string_2[len(sample_string_2)-1]
-	outdir_extra = conf.split("/datasets/")[1].split(".yaml")[0]
+	# sample_string_2 = conf.split("/")
+	# sample_type = sample_string_2[len(sample_string_2)-2] if ".yaml" in sample_string_2[len(sample_string_2)-1] else sample_string_2[len(sample_string_2)-1]
+	outdir_extra = conf_og.split("/datasets/")[1].split(".yaml")[0]
+
+	mk_dir = cwd +'/'+ args.outdir +'/'+outdir_extra
+	# print(mk_dir)
+	if (args.justWeights): # generating only weight distribution
+			if conf_og.count('ctauS') <= 1:
+				os.makedirs(mk_dir, exist_ok=True)
+	else:
+		if 'HToSS' not in data_name:
+			os.makedirs(mk_dir, exist_ok=True)
+		else:
+			os.makedirs(cwd+'/'+args.outdir+'/'+'ggH', exist_ok=True)
+
 	start, end = str(0),str(0) #dummy values
-	# if (args.justWeights):
-	# 	print (conf + "," +"test_weights" +".root" + "," + str(1) + "," + str(maxfilenumber(loc)) + "," + data_name)
-	# 	line = conf + "," +"test_weights" + ".root" + "," + str(1) + "," + str(maxfilenumber(loc)) + "," + data_name
-	# 	f.write("\n"+line)
-	# 	continue
-	# if (args.withSkim):
-	# 	print (conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name + ".root" + "," + start + "," + end + "," + data_name + "," + "dummy")
-	# 	line = conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +  ".root" + "," + start + "," + end + "," + data_name + "," + "dummy"
-	# 	f.write("\n"+line)
-	# 	continue
 	if 'DYJetsToLL_Pt-650ToInf' in data_name or 'DYJetsToLL_Pt-400To650' in data_name:
 		njobs = 2
 	else:
@@ -66,25 +99,21 @@ for conf in pars['datasets']:
 	for i in range(1, nmax+1, njobs):
 		start = str(i)
 		end = str(min(nmax,i+njobs-1))
-		if (args.isData):
-			# print (conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + data_name + "," + "dummy")
-			# line = conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + data_name + "," + "dummy"
-			print (conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + data_name)
-			line = conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + data_name
-
-		elif (args.justWeights): # generating only weight distribution
-			print (conf + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + data_name)
-			line = conf + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + data_name
-		# elif (args.justSkim):
-		# 	print (conf + "," +args.outdir+"/"+outdir_extra+"/output_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + data_name)
-		# 	line = conf + "," +args.outdir+"/"+outdir_extra+"/output_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + data_name
+		if (args.justWeights): # generating only weight distribution
+			if conf_og.count('ctauS') <= 1:
+				#print (conf + "," + "dummy" +"," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + data_name + ','+ args.year)
+				line = conf + "," + "dummy" +"," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + data_name + ','+ args.year
+			# else:
+			# 	print('problem')
 		else:
-			# $(cfg) $(output) $(flow) $(fhigh) $(dataset) $(weight)
-			weightFile = "plots/weightDistributions/"+sample_type+"/output_"+data_name+".root"
-			# print (conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + data_name + "," + weightFile)
-			# line = conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + data_name + "," + weightFile
-			print (conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + data_name)
-			line = conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + data_name
+			# $(cfg) $(output) $(flow) $(fhigh) $(dataset) $(year)
+			#print (conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end + ".root" + "," + start + "," + end + "," + data_name + ','+ args.year)
+			if 'HToSS' in out_name:
+				line = conf + "," + args.cuts + "," +args.outdir+"/"+"ggH"+"/output_"+out_name + ".root" + "," + start + "," + end + "," + data_name + ','+ args.year
+			else:
+				line = conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name +"_" + start +"-"+ end +  ".root" + "," + start + "," + end + "," + data_name + ','+ args.year
+			#line = conf + "," + args.cuts + "," +args.outdir+"/"+outdir_extra+"/output_"+out_name + ".root" + "," + start + "," + end + "," + data_name + ','+ args.year
+		print(line)
 		f.write("\n"+line)
 f.close()
 

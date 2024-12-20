@@ -1,0 +1,45 @@
+cuts:
+  dihadron:
+    charge: OS
+    dR: 0.4
+    flag: true
+    pt: 20
+    sumptch: 200.0
+    sumptchLeading: 10.0
+  dimuon:
+    charge: OS
+    dR: 0.4
+    flag: true
+    pt: 0
+    reliso: 10
+    relisoLeading: 0.4
+  hadrons:
+    eta: 2.4
+    flag: true
+    id: None
+    number: 2
+    pt: 5
+  muons:
+    eta: 2.4
+    flag: true
+    id: Loose
+    number: 2
+    pt: 5
+    ptLeading: 30
+  recohiggs:
+    flag: true
+    massHigh: 127.5
+    massLow: 122.5
+    region: SB
+    sideband: 2.5
+  recoscalar:
+    flag: true
+    higherbound:
+    - 0.026485280999108046
+    - 1.023290217068094
+    lowerbound:
+    - -0.026002304147464867
+    - 0.9774409562211976
+hadronType: kaon
+metfilters: true
+trig: single

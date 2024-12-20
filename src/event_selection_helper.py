@@ -16,19 +16,43 @@ struct Isolation
 def gInterpreter_lifetime_reweight():
     getLifetimeReweight_code = '''
         using FourVectorPtEtaPhiEVector = ROOT::Math::PtEtaPhiEVector;
-        Float_t getLifetimeReweight(float old_lt, float new_lt, float L_scalar1, float L_scalar2, FourVectorPtEtaPhiEVector& vec_scalar1, FourVectorPtEtaPhiEVector& vec_scalar2){
+        using FourVectorPtEtaPhiMVector = ROOT::Math::PtEtaPhiMVector;
+        Float_t getLifetimeReweight(float old_lt, float new_lt, float L_scalar1, float L_scalar2, FourVectorPtEtaPhiMVector& vec_scalar1, FourVectorPtEtaPhiMVector& vec_scalar2, float mass){
             /* MULTIPLIED BY 10 BECAUSE TYPICALLY UNITS OF VTX ARE IN CM */
             float beta1 = vec_scalar1.Beta();
-            float gamma1 = 1/(sqrt(1-beta1*beta1));
-            float t1 = 10*L_scalar1/(beta1*gamma1); 
+            //float gamma1 = 1/(sqrt(1-beta1*beta1));
+            float gamma1 = vec_scalar1.Gamma();
+            float betagamma_1 = vec_scalar1.P()/mass;
+            float t1 = 10*L_scalar1/(betagamma_1); 
             float beta2 = vec_scalar2.Beta();
-            float gamma2 = 1/(sqrt(1-beta2*beta2));
-            float t2 = 10*L_scalar2/(beta2*gamma2);
+            //float gamma2 = 1/(sqrt(1-beta2*beta2));
+            float gamma2 = vec_scalar2.Gamma();
+            float betagamma_2 = vec_scalar2.P()/mass;
+            // std::cout<<"betagamma1,M,P,beta*gamma:"<<betagamma_1<<","<<vec_scalar1.M()<<","<<vec_scalar1.P()<<","<<(beta1*gamma1)<<std::endl;
+            // std::cout<<"betagamma2,M,P,beta*gamma:"<<betagamma_2<<","<<vec_scalar2.M()<<","<<vec_scalar2.P()<<","<<(beta2*gamma2)<<std::endl;
+            // std::cout<<"old_lt,new_lt:"<<old_lt<<","<<new_lt<<std::endl;
+            float t2 = 10*L_scalar2/(betagamma_2);
             Float_t weight = pow((old_lt/new_lt),2)*exp((t1+t2)*((1/old_lt) - (1/new_lt)));
+            // Float_t weight = old_lt/new_lt*exp((t2)*((1/old_lt) - (1/new_lt)));
+            // std::cout<<"L_scalar1,beta1,gamma1,t1:"<<L_scalar1<<","<<beta1<<","<<gamma1<<","<<t1<<std::endl;
+            // std::cout<<"L_scalar2,beta2,gamma2,t2:"<<L_scalar2<<","<<beta2<<","<<gamma2<<","<<t2<<std::endl;
             return weight;
         }
     '''
+    getLifetime_code = '''
+        float getLifetime(unsigned int slot, const ROOT::RDF::RSampleInfo &id) {
+            
+            //std::cout<<id.AsString()<<std::endl;
+            //std::cout<<id.Contains("_ctauS1_")<<","<<id.Contains("_ctauS10_")<<std::endl;
+            if (id.Contains("_ctauS0_")) return 0.1;
+            else if (id.Contains("_ctauS100_")) return 100;
+            else if (id.Contains("_ctauS10_")) return 10;
+            else if (id.Contains("_ctauS1_")) return 1;
+            else return -99;
+        }
+    '''
     ROOT.gInterpreter.Declare(getLifetimeReweight_code)
+    ROOT.gInterpreter.Declare(getLifetime_code)
 
 # getEvtWeight_code = '''
 # Float_t getEvtWt(float cs, float sum_wts, float MCweight, bool isData=false) {
@@ -213,10 +237,10 @@ def gInterpreter_diObjectCandidate():
 
                     double pT { (lepton1_refit+lepton2_refit).Pt() };
                     if (pT < diMuonPt_) continue;
-                    RVec<Float_t> leadingMuonIso;
-                    RVec<Float_t> subleadingMuonIso;
-                    leadingMuonIso = PFIsolation(ptype, lepton1_refit, leadingidx, subleadingidx, packedCandsPx, packedCandsPy, packedCandsPz, packedCandsE, packedCandsCharge,packedCandsPdgId, packedCandsFromPV, numPackedCands, 0.4);
-                    subleadingMuonIso = PFIsolation(ptype, lepton2_refit, subleadingidx, leadingidx, packedCandsPx, packedCandsPy, packedCandsPz, packedCandsE, packedCandsCharge,packedCandsPdgId, packedCandsFromPV, numPackedCands, 0.4);
+                    // RVec<Float_t> leadingMuonIso;
+                    // RVec<Float_t> subleadingMuonIso;
+                    // leadingMuonIso = PFIsolation(ptype, lepton1_refit, leadingidx, subleadingidx, packedCandsPx, packedCandsPy, packedCandsPz, packedCandsE, packedCandsCharge,packedCandsPdgId, packedCandsFromPV, numPackedCands, 0.4);
+                    // subleadingMuonIso = PFIsolation(ptype, lepton2_refit, subleadingidx, leadingidx, packedCandsPx, packedCandsPy, packedCandsPz, packedCandsE, packedCandsCharge,packedCandsPdgId, packedCandsFromPV, numPackedCands, 0.4);
                     // if (flag) {
                         // std::cout<<"enters isolation check"<<std::endl;
                         // if ( leadingMuonIso[0] >  leadingRelIso ) continue;
@@ -277,43 +301,86 @@ def gInterpreter_diObjectLxy():
             bool flag = true;
             bool use_ij = true;
             
+            // std::cout<<"New event"<<std::endl;
+            // checking if symmetric or not
+            for (int i=0;i<3;i++) {
+                for (int j=i+1;j<3;j++){
+                    ij_elem = totalCov(i,j);
+                    ji_elem = totalCov(j,i);
+                    if (abs(ij_elem-ji_elem) > 1e-8) {
+                        //std::cout<<"not symmetric(i,j):"<<i<<","<<j<<std::endl;
+                        flag=false;
+                        break;
+                    }
+                }
+            if (!flag) break;
+            }
+            //if (!flag) std::cout<<"not symmetric"<<std::endl;
+            // if ((flag)&&(similarity_val_orig<0)) std::cout<<"Comes from positive semi-definite"<<std::endl;
+            // std::cout<<"Stuck in loop?"<<std::endl;
+            
             ROOT::Math::SMatrix<double,3> totalCov_dummy, totalCov_dummy1, totalCov_dummy2;
             double similarity_val1, similarity_val2;
             totalCov_dummy = totalCov;
-            while ((similarity_val < 0) && (ctr < 3)) {
-                totalCov_dummy1 = totalCov;
-                totalCov_dummy2 = totalCov;
+            while ((ctr < 3) && (!flag)) {
+                totalCov_dummy1 = totalCov_dummy;
+                totalCov_dummy2 = totalCov_dummy;
                 // std::cout<<"Stuck in loop?"<<std::endl;
 
-                for (int i=ctr;i<2;i++) {
-                    for (int j=i+1;j<2;j++){
-                        ij_elem = totalCov(i,j);
-                        ji_elem = totalCov(j,i);
+                for (int i=ctr;i<3;i++) {
+                    for (int j=i+1;j<3;j++){
+                        ij_elem = totalCov_dummy(i,j);
+                        ji_elem = totalCov_dummy(j,i);
                         if (abs(ij_elem-ji_elem) > 1e-8) {
-                            totalCov_dummy1(i,j) = totalCov(j,i);
-                            totalCov_dummy2(j,i) = totalCov(i,j);
+                            totalCov_dummy1(i,j) = totalCov_dummy(j,i);
+                            totalCov_dummy2(j,i) = totalCov_dummy(i,j);
                             similarity_val1 = ROOT::Math::Similarity(totalCov_dummy1, distVecXY/distMagXY);
                             similarity_val2 = ROOT::Math::Similarity(totalCov_dummy2, distVecXY/distMagXY);
                             if (similarity_val1 > similarity_val2)
                                 use_ij = true;
                             else
                                 use_ij = false;
-                            // std::cout<<"In nested loop similarity values:"<<similarity_val1<<","<<similarity_val2<<std::endl;
                         }
                     }
                     if (use_ij) totalCov_dummy = totalCov_dummy1;
                     else totalCov_dummy = totalCov_dummy2;
                 }
                 similarity_val = ROOT::Math::Similarity(totalCov_dummy, distVecXY/distMagXY);
-                // std::cout<<"In loop similarity value:"<<similarity_val<<std::endl;
-
                 ctr++;
             }
+            // flag=true;
+            if (!flag) {
+                for (int i=0;i<3;i++) {
+                    for (int j=i+1;j<3;j++){
+                        ij_elem = totalCov_dummy(i,j);
+                        ji_elem = totalCov_dummy(j,i);
+                        if (abs(ij_elem-ji_elem) > 1e-8) {
+                            std::cout<<"After procedure, not symmetric(i,j):"<<i<<","<<j<<std::endl;
+                            flag=false;
+                            // break;
+                        }
+                    }
+                // if (!flag) break;
+                }
+            }
+            /*if (!flag){    
+                std::cout<<"Before"<<std::endl;
+                std::cout<<totalCov<<std::endl;
+                std::cout<<pvCov<<std::endl;
+                std::cout<<svCov<<std::endl;
+                std::cout<<"similarity value original:"<<similarity_val_orig<<std::endl;
+                std::cout<<"After"<<std::endl;
+                std::cout<<totalCov_dummy<<std::endl;
+                std::cout<<"similarity value:"<<similarity_val<<std::endl;
+            }*/
+
+            // if (flag) std::cout<<"Comes from positive semi-definite"<<std::endl;
+            // std::cout<<"Stuck in loop?"<<std::endl;
             /*if (similarity_val<0) {
                 // std::cout<<"Covariance Matrix PV:"<<std::endl;
                 // std::cout<<pvCov<<std::endl;
-                std::cout<<"Covariance Matrix SV:"<<std::endl;
-                std::cout<<svCov<<std::endl;
+                //std::cout<<"Covariance Matrix SV:"<<std::endl;
+                //std::cout<<svCov<<std::endl;
                 std::cout<<"Similarity value:"<<similarity_val_orig<<std::endl;
                 std::cout<<"Covariance Matrix Original:"<<std::endl;
                 std::cout<<totalCov<<std::endl;
@@ -329,18 +396,19 @@ def gInterpreter_diObjectLxy():
             double sigmaDistMagXY = sqrt(similarity_val);
             double significance = distMagXY/sigmaDistMagXY;
             
-            //if (similarity_val > 0) {
-            //    std::cout<<"Covariance Matrix:"<<std::endl;
-            //    std::cout<<totalCov<<std::endl;
-            //    //bool ret = totalCov.Det2(dummy) ;
-            //    if (totalCov.Det2(dummy))
-            //        std::cout<<"Determinant:"<<dummy<<std::endl;
-            //    else
-            //        std::cout<<"Determinant cannot be calculated"<<std::endl;
-            //    std::cout<<"Displacement Vector(svX-pvX,svY-pvY,0):"<<distVecXY<<std::endl;
-            //    std::cout<<"Lxy:"<< distMagXY<<std::endl;
-            //    std::cout<<"distVecXY^T * totalCov * distVecXY (similarity value):"<< similarity_val<<std::endl;
-            //}
+            
+            /*if (similarity_val < 0) {
+                std::cout<<"Covariance Matrix:"<<std::endl;
+                std::cout<<totalCov<<std::endl;
+                //bool ret = totalCov.Det2(dummy) ;
+                if (totalCov.Det2(dummy))
+                    std::cout<<"Determinant:"<<dummy<<std::endl;
+                else
+                    std::cout<<"Determinant cannot be calculated"<<std::endl;
+                std::cout<<"Displacement Vector(svX-pvX,svY-pvY,0):"<<distVecXY<<std::endl;
+                std::cout<<"Lxy:"<< distMagXY<<std::endl;
+                std::cout<<"distVecXY^T * totalCov * distVecXY (similarity value):"<< similarity_val<<std::endl;
+            }*/
 
             RVec<double> lxy_vec(4);
             lxy_vec[0]=distMagXY;
@@ -352,3 +420,140 @@ def gInterpreter_diObjectLxy():
         '''
     ROOT.gInterpreter.Declare(getLxy_code)
 # ROOT.gInterpreter.Declare(getEvtWeight_code)
+
+def gInterpreter_MatchReco():
+    getMatchReco_code='''
+        using FourVectorPtEtaPhiM = ROOT::Math::PtEtaPhiMVector;
+        using FourVectorPtEtaPhiE = ROOT::Math::PtEtaPhiEVector;
+        using FourVectorPxPyPzM = ROOT::Math::PxPyPzMVector;
+        using namespace ROOT::VecOps;
+
+        Int_t AncestryCheck(Int_t k, const Int_t& parId, RVec<Int_t>& genParId, RVec<Int_t>& genParMotherId, RVec<Int_t>& genParMotherIndex) {
+            Int_t NGENPARMAX=1000;
+            Int_t pdgId        { abs(genParId[k]) };
+            Int_t motherId     { abs(genParMotherId[k]) };
+            Int_t motherIndex  { abs(genParMotherIndex[k]) };
+            // if (verbose) std::cout << "Going up the ladder ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
+            if (motherId == 0 || motherIndex == -1) return -1; // if no parent, then mother Id is null and there's no index, quit search
+            else if (motherId != parId) return motherId; // if parent is not particle excited, return motherId
+            else if (motherIndex >= NGENPARMAX) return -1; // index exceeds stored genParticle range, return false for safety
+            else {
+                
+        //        debugCounter++;
+        //        std::cout << "debugCounter: " << debugCounter << std::endl;
+                        
+                    //if (verbose) std::cout << "Enters right condition ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
+                return AncestryCheck(motherIndex, parId, genParId, genParMotherId, genParMotherIndex); // otherwise check mother's mother ...
+            }
+        }
+        Int_t AncestryCheckIdx(Int_t k, const Int_t parId, RVec<Int_t>& genParId, RVec<Int_t>& genParMotherId, RVec<Int_t>& genParMotherIndex) {
+            Int_t NGENPARMAX=1000;
+            Int_t pdgId        { abs(genParId[k]) };
+            Int_t motherId     { abs(genParMotherId[k]) };
+            Int_t motherIndex  { abs(genParMotherIndex[k]) };
+            //std::cout << "Going up the ladder ... k = " << k << " : pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
+            if (motherId == 0 || motherIndex == -1) return -1; // if no parent, then mother Id is null and there's no index, quit search
+            else if (motherId != parId) return motherIndex; // if parent is not particle excited, return motherId
+            else if (motherIndex >= NGENPARMAX) return -1; // index exceeds stored genParticle range, return false for safety
+            else {
+                
+        //        debugCounter++;
+        //        std::cout << "debugCounter: " << debugCounter << std::endl;
+                        
+                //std::cout << "Enters right condition ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
+                return AncestryCheckIdx(motherIndex, parId, genParId, genParMotherId, genParMotherIndex); // otherwise check mother's mother ...
+            }
+        }
+        Int_t MatchReco(FourVectorPxPyPzM &reco_lv,RVec<Float_t>& genParPt,RVec<Float_t>& genParEta,RVec<Float_t>& genParPhi,RVec<Float_t>& genParE,RVec<Int_t>& genParId,RVec<Int_t>& genParMotherId) {
+            double minDR = 100;
+            unsigned index = 0;
+            double dr_max = 0.03;
+            double delR=minDR;
+            //std::cout<<"Stuck at index:"<<gen_ind<<std::endl;
+            for (int i=0; i<genParPt.size(); i++) {
+                FourVectorPtEtaPhiE genP {genParPt[i],genParEta[i],genParPhi[i],genParE[i]};
+                delR = ROOT::Math::VectorUtil::DeltaR(reco_lv,genP);
+                //std::cout<<"GenIndex, Pt, Charge, ID: "<<gen_ind<<", "<<event.genParPt[gen_ind]<<", "<<event.genParCharge[gen_ind]<<", "<<event.genParId[gen_ind]<<";"<<std::endl;
+                //std::cout<<"PCdIndex, Pt, Charge, ID: "<<j<<", "<<packedCand.Pt()<<",  "<<event.packedCandsCharge[j]<<", "<<event.packedCandsPdgId[j]<<";"<<std::endl;
+                //std::cout<<"Check the dR on this: "<<delR<<std::endl;
+                //std::cout<<"GenIndex: "<<gen_ind<<", PackedCandIndex: "<<j<<std::endl;
+                if (minDR < delR) continue;
+                minDR = delR;
+                index = i;
+            }
+            //std::cout<<"Index, PDGID, MPDGID: "<<index<<", "<<genParId[index]<<", "<<genParMotherId[index]<<";"<<std::endl;
+
+            if (minDR < dr_max) 
+                return index; //abs(genParId[index])
+            else
+                return 0;
+        }
+        Int_t MatchReco(FourVectorPxPyPzM &reco_lv1,FourVectorPxPyPzM &reco_lv2,RVec<Float_t>& genParPt,RVec<Float_t>& genParEta,RVec<Float_t>& genParPhi,RVec<Float_t>& genParE,RVec<Int_t>& genParId,RVec<Int_t>& genParStatus,RVec<Int_t>& genParMotherId,RVec<Int_t>& genParMotherIndex) {
+            double minDR = 100;
+            unsigned index = 0;
+            double dr_max = 0.03;
+            double delR=minDR;
+            int idx1=-1;
+            int idx2=-1;
+            int pdgID_idx1=-1;
+            int pdgID_idx2=-1;
+            //std::cout<<"Stuck at index:"<<gen_ind<<std::endl;
+            for (int i=0; i<genParPt.size(); i++) {
+                if (genParStatus[i]!=1) continue;
+                FourVectorPtEtaPhiE genP {genParPt[i],genParEta[i],genParPhi[i],genParE[i]};
+                delR = ROOT::Math::VectorUtil::DeltaR(reco_lv1,genP);
+                //std::cout<<"GenIndex, Pt, Charge, ID: "<<gen_ind<<", "<<event.genParPt[gen_ind]<<", "<<event.genParCharge[gen_ind]<<", "<<event.genParId[gen_ind]<<";"<<std::endl;
+                //std::cout<<"PCdIndex, Pt, Charge, ID: "<<j<<", "<<packedCand.Pt()<<",  "<<event.packedCandsCharge[j]<<", "<<event.packedCandsPdgId[j]<<";"<<std::endl;
+                //std::cout<<"Check the dR on this: "<<delR<<std::endl;
+                //std::cout<<"GenIndex: "<<gen_ind<<", PackedCandIndex: "<<j<<std::endl;
+                if (minDR < delR) continue;
+                minDR = delR;
+                index = i;
+            }
+            if (minDR < dr_max) {
+                idx1=index;
+                pdgID_idx1=abs(genParId[index]);
+            }
+            delR=minDR;
+            minDR = 100;
+            index=0;
+            for (int i=0; i<genParPt.size(); i++) {
+                if (genParStatus[i]!=1) continue;
+                FourVectorPtEtaPhiE genP {genParPt[i],genParEta[i],genParPhi[i],genParE[i]};
+                delR = ROOT::Math::VectorUtil::DeltaR(reco_lv2,genP);
+                if (minDR < delR) continue;
+                minDR = delR;
+                index = i;
+            }
+            if (minDR < dr_max) {
+                idx2=index;
+                pdgID_idx2=abs(genParId[index]);
+            }
+            pdgID_idx1 = pdgID_idx1==9000006 ? 500 : pdgID_idx1;
+            pdgID_idx2 = pdgID_idx2==9000006 ? 500 : pdgID_idx2;
+            if ((idx1==-1) && (idx2==-1)) {
+                return -399;
+            }
+            else if ((idx1==-1) || (idx2==-1)) {
+                return pdgID_idx2*pdgID_idx1;
+            }
+            else if (idx1==idx2){
+                //Int_t mu_motherIndex=AncestryCheckIdx(idx1,13,genParId,genParMotherId,genParMotherIndex);
+                return -pdgID_idx1-400;
+            }
+            else {
+                Int_t mu1_motherIndex=AncestryCheckIdx(idx1,13,genParId,genParMotherId,genParMotherIndex);
+                Int_t mu2_motherIndex=AncestryCheckIdx(idx2,13,genParId,genParMotherId,genParMotherIndex);
+                //Int_t mu1_motherIndex=-1;
+                //Int_t mu2_motherIndex=-1;
+                //std::cout<<"GenIndex1, GenIndex2, PDGID1, PDGID2, MPDGID1, MPDGID2: "<<idx1<<", "<<idx2<<", "<<pdgID_idx1<<", "<<pdgID_idx2<<", "<<genParMotherId[mu1_motherIndex]<<", "<<genParMotherId[mu2_motherIndex]<<";"<<std::endl;
+
+
+                if ((mu1_motherIndex==mu2_motherIndex) && (mu1_motherIndex!=-1)) return abs(genParMotherId[mu1_motherIndex]);
+                //if (genParMotherId[idx1]==genParMotherId[idx2]) return abs(genParMotherId[idx1]);
+                else return 400;
+            }
+        }
+    '''
+    ROOT.gInterpreter.Declare(getMatchReco_code)
+

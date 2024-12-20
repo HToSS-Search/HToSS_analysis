@@ -1,0 +1,12 @@
+colour: '#a65628'
+cross_section: 3.222
+histogram: VV
+label: VV
+locations:
+- /pnfs/iihe/cms/store/user/almorton/MC/skims2017_v4/VV/ZZ_2l2q/
+mc: true
+name: ZZ_2l2q
+plot_type: f
+skim_location:
+- /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/2017/VV/ZZ_2l2q/
+sum_weights: 4893721.47473779

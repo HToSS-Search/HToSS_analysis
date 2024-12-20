@@ -1,0 +1,12 @@
+colour: '#339933'
+cross_section: 622.6
+histogram: QCD_300to470
+label: QCD_300to470
+locations: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/QCD_Pt-300To470_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v2_MCUL2016APV_HToSS/240503_110531
+mc: true
+name: QCD_Pt-300to470_MuEnrichedPt5
+plot_type: f
+skim_location:
+- /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/postNTupleSkims/2017/QCD/QCD_Pt-300to470_MuEnrichedPt5/
+sum_weights: 27553954.72629008
+total_events: -1

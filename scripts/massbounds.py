@@ -15,6 +15,8 @@ ROOT.gROOT.SetBatch(True)
 ReducedBinning = False
 correctforMCPU = False
 tdrstyle.setTDRStyle()
+ROOT.gStyle.SetPadTickX(1)
+ROOT.gStyle.SetPadTickY(1)
 # RooFit
 ROOT.gSystem.Load("libRooFit.so")
 ROOT.gSystem.Load("libRooFitCore.so")
@@ -23,6 +25,8 @@ ROOT.gSystem.SetIncludePath( "-I$ROOFITSYS/include/" )
 # colors = [ROOT.kBlack,  ROOT.kRed, ROOT.kBlue,ROOT.kGreen+2,ROOT.kMagenta+1, ROOT.kOrange+1, ROOT.kTeal-1,ROOT.kRed-3, ROOT.kCyan+2]
 colors = [45, 85]
 markers = [20, 21, 22, 33, 47]
+lumi_scale = {'UL2016_APV': 19500, 'UL2016': 16800,'UL2017':  41480,'UL2018': 59830 } #in pb-1
+
 
 def XPercentInterval(hist, alpha, verbose=False):
     bin1, binN = hist.FindFirstBinAbove(), hist.FindLastBinAbove() #default is 0
@@ -50,30 +54,69 @@ def XPercentInterval(hist, alpha, verbose=False):
         print (minX, maxX,hist.Integral(bin1,bin_low)/norm,hist.Integral(bin_high,binN)/norm)
     return minX, maxX
 
-def GaussFit(hist, masspoint, ctau, output):
+def GaussFit(hist, masspoint, ctau, output, year,suffix=""):
     print("Performing a fit using a gaussian to get the mean and the width for mass assumption")
     # Declare the observable mean, and import the histogram to a RooDataHist
 
     tmp_sigma, tmp_mean = hist.GetRMS(), hist.GetMean()
-    xlabel = "0.5*(m_{hh}+m_{#mu#mu}) (GeV)"
+    if "hadron" in suffix:
+        xlabel = "m_{hh} (GeV)"
+    elif "muon" in suffix:
+        xlabel = "m_{#mu#mu} (GeV)"
+    else:
+        xlabel = "0.5*(m_{hh}+m_{#mu#mu}) (GeV)"
     mass = ROOT.RooRealVar("mass", xlabel, 0., 3.);
     dh_hist = ROOT.RooDataHist("dh_hist", "dh_hist", ROOT.RooArgList(mass),
                                     ROOT.RooFit.Import(hist));
 
     # plot the data hist with error from sum of weighted events
     frame = mass.frame(ROOT.RooFit.Title("AvgMass"))
-    dh_hist.plotOn(frame, ROOT.RooFit.DataError(ROOT.RooAbsData.SumW2), ROOT.RooFit.MarkerColor(8), ROOT.RooFit.Name("hist"))
+    dh_hist.plotOn(frame, ROOT.RooFit.DataError(ROOT.RooAbsData.SumW2), ROOT.RooFit.MarkerSize(2), ROOT.RooFit.MarkerColor(ROOT.kGray+3),ROOT.RooFit.LineColor(ROOT.kGray+3), ROOT.RooFit.Name("hist"))
     
     # Convert them to pdf
 
     # create a simple gaussian pdf
     gauss_mean = ROOT.RooRealVar("mean", "mean", tmp_mean, tmp_mean-0.5, tmp_mean+0.5)
-    gauss_sigma = ROOT.RooRealVar("sigma jer", "sigma gauss", tmp_sigma, 0.001, 0.1)
+    gauss_sigma = ROOT.RooRealVar("sigma jer", "sigma gauss", 0.004, 0.004, 0.03)
     gauss = ROOT.RooGaussian("gauss", "gauss", mass, gauss_mean, gauss_sigma)
 
-    alp=0.20
-    minX, maxX = XPercentInterval(hist,alp/2,verbose=True) #removing x% from each side
-    width = maxX - minX
+    alp=0.3
+    # minX, maxX = XPercentInterval(hist,alp/2,verbose=True) #removing x% from each side
+    # width = maxX - minX
+    if "hadron" in suffix:
+        if float(masspoint) >1.4:
+            minX, maxX = float(masspoint)-0.03, float(masspoint)+0.03
+        elif float(masspoint) ==1.4:
+            minX, maxX = float(masspoint)-0.02, float(masspoint)+0.02
+        elif float(masspoint) >= 1.1:
+            minX, maxX = float(masspoint)-0.01, float(masspoint)+0.01
+        elif float(masspoint) >= 0.9:
+            minX, maxX = float(masspoint)-0.02, float(masspoint)+0.02
+        elif float(masspoint) > 0.4:
+            minX, maxX = float(masspoint)-0.015, float(masspoint)+0.015
+        else: # 0.4 GeV
+            minX, maxX = float(masspoint)-0.01, float(masspoint)+0.01
+
+    elif "muon" in suffix:
+        if float(masspoint) >=1.1:
+            minX, maxX = float(masspoint)-0.04, float(masspoint)+0.04
+        elif float(masspoint) >= 0.8:
+            minX, maxX = float(masspoint)-0.03, float(masspoint)+0.03
+        elif float(masspoint) > 0.4:
+            minX, maxX = float(masspoint)-0.015, float(masspoint)+0.015
+        else: # 0.4 GeV
+            minX, maxX = float(masspoint)-0.01, float(masspoint)+0.01
+    else:
+        if float(masspoint) in [2,1.8,1.6]:
+            minX, maxX = float(masspoint)-0.25*tmp_sigma, float(masspoint)+0.25*tmp_sigma
+        elif float(masspoint) == 1.1:
+            minX, maxX = float(masspoint)-0.4*tmp_sigma, float(masspoint)+0.4*tmp_sigma
+        elif float(masspoint) in [1.2,1]:
+            minX, maxX = float(masspoint)-0.2*tmp_sigma, float(masspoint)+0.2*tmp_sigma
+        else:
+            minX, maxX = float(masspoint)-0.1*tmp_sigma, float(masspoint)+0.1*tmp_sigma
+
+    print("SEE THIS-",minX,maxX)
 
     gauss.fitTo(dh_hist,ROOT.RooFit.Save(),ROOT.RooFit.SumW2Error(True) ,ROOT.RooFit.Range(minX,maxX))
     gauss.plotOn(frame, ROOT.RooFit.Name("fit"))
@@ -114,22 +157,34 @@ def GaussFit(hist, masspoint, ctau, output):
     frame.GetXaxis().SetRangeUser(tmp_mean-0.1,tmp_mean+0.1)
     frame.Draw()
 
+    ymax=frame.GetMaximum()
+    minXt,maxX=float(masspoint)-2.5*gauss_sigma.getVal(),float(masspoint)+2.5*gauss_sigma.getVal()
+    l1 = ROOT.TLine(minXt,0,minXt,ymax)
+    l2 = ROOT.TLine(maxX,0,maxX,ymax)
+    l1.SetLineWidth(2)
+    l2.SetLineWidth(2)
+    l1.Draw("same")
+    l2.Draw("same")
+    
+
     legxlow, legxhigh = 0.75,0.9
-    legend = ROOT.TLegend(legxlow,0.7,legxhigh,0.9)
+    legend = ROOT.TLegend(legxlow,0.75,legxhigh,0.9)
     legend.AddEntry(frame.findObject("hist"),"ggH","lep")
     legend.AddEntry(frame.findObject("fit"),"gauss","l")
+    legend.AddEntry(l1,"bounds","l")
     legend.SetFillColor(0)
     legend.SetLineColor(0)
     legend.SetTextSize(0.03)
     legend.Draw("same")
-    
-    rtext = "#splitline{m_{a} ="+str(masspoint)+" GeV}{c#tau = "+str(ctau)+"mm}"
+
+    if ctau=='0':
+        ctau='0p1'
+    rtext = "#splitline{m_{S} ="+str(masspoint)+" GeV}{c#tau = "+ctau.replace('p','.')+"mm}"
     additional_text = []
     additional_text += [rtext]
     if additional_text:
         nother = len(additional_text)
-        dims = [legxlow, 0.65 - nother * 0.04 - 0.02, 0.83, 0.65]
-        dims = [legxlow-0.05, legxhigh - nother * 0.04 - 0.02, 0.85, 0.65]
+        dims = [legxlow-0.05, 0.7 - nother * 0.04 - 0.02, 0.85, 0.7]
 
         text = ROOT.TPaveText(*dims + ['NDC'])
         text.SetTextFont(42)
@@ -140,11 +195,11 @@ def GaussFit(hist, masspoint, ctau, output):
         # text.SetTextColor(46)
         for rtext in additional_text:
             text.AddText(rtext)
-        text.Draw()
+        text.Draw("same")
     CMS_lumi.cmsText = 'CMS'
     CMS_lumi.writeExtraText = True
     CMS_lumi.extraText = 'Work in Progress'
-    CMS_lumi.lumi_13TeV = "UL2017MC"
+    CMS_lumi.lumi_13TeV = year+" MC"
     CMS_lumi.cmsTextSize = 0.6
     CMS_lumi.lumiTextSize = 0.55
     # CMS_lumi.relPosX = 0.05
@@ -166,7 +221,7 @@ def GaussFit(hist, masspoint, ctau, output):
     frame3.GetYaxis().SetTitleOffset(0.6)
     frame3.GetXaxis().SetRangeUser(tmp_mean-0.1,tmp_mean+0.1)
     frame3.Draw()
-    fit_filename = "fit_MS" + str(masspoint).replace(".","p") + "_ctauS" + ctau
+    fit_filename = "fit_MS" + str(masspoint).replace(".","p") + "_ctau" + ctau + suffix
     # if not os.path.exists(fit_plot_directory): os.makedirs(fit_plot_directory)
     cfit.SaveAs(os.path.join(output, fit_filename + ".pdf"))
     cfit.SaveAs(os.path.join(output, fit_filename + ".png"))
@@ -202,58 +257,6 @@ def createCanvasPads(savename, boundary=0.25):
 
     return c, pad1, pad2
 
-def createRatio(h1, h2):
-    npts = h1.GetN()
-    sfx=[None]*npts
-    sfx_err=[None]*npts
-    sfy=[None]*npts
-    sfy_err=[None]*npts
-
-    for i in range(npts):
-        # mcEff, dataEff = 0., 0.
-        # h2.GetPoint(i,mcEff,sfx[i])
-        # h1.GetPoint(i,dataEff,sfx[i])
-        # mcErr, dataErr = h2.GetErrorY(i), h1.GetErrorY(i)
-        # sfx[i] = h2.GetPointX(i)
-        mcEff, mcErr, dataEff, dataErr = h2.GetY()[i], h2.GetErrorY(i), h1.GetY()[i], h1.GetErrorY(i)
-        sfx[i] = h2.GetX()[i]
-        sfx_err[i] = h2.GetErrorX(i)
-        sfy[i] = dataEff/mcEff if mcEff else 0.0
-        sfy_err[i] = 0.0
-        if dataEff and mcEff:
-            sfy_err[i] = sfy[i] * ((dataErr / dataEff)**2 + (mcErr / mcEff)**2)**0.5
-    h3 = ROOT.TGraphErrors(npts,array('d',sfx),array('d',sfy),array('d',sfx_err),array('d',sfy_err))
-    h3.SetLineColor(kBlack)
-    h3.SetMarkerStyle(21)
-    h3.SetTitle("Data/MC")
-    # h3.SetMinimum(0.)
-    h3.SetMaximum(2.)
-    # Set up plot for markers and errors
-    #h3.Sumw2()
-    #h3.SetStats(0)
-    #for i in range(npts):
-    #    h3.SetBinContent(i+1,sfy[i])
-    #    h3.SetBinError(i+1,sfy_err[i])
-    # Adjust y-axis settings
-    y = h3.GetYaxis()
-    y.SetTitle("Data/MC")
-    y.SetNdivisions(505)
-    y.SetTitleSize(0.15)
-    y.SetTitleFont(42)
-    y.SetTitleOffset(0.5)
-    y.SetLabelFont(42)
-    #y.SetLabelOffset(0.007)
-    y.SetLabelSize(0.14)
-
-    # Adjust x-axis settings
-    x = h3.GetXaxis()
-    x.SetTitleSize(40)
-    x.SetTitleFont(42)
-    x.SetTitleOffset(4.0)
-    x.SetLabelFont(42)
-    x.SetLabelSize(0.)
-    #x.SetLimits(0.,105.)
-    return h3
 def txt_to_pts(f_in):
     next(f_in)
     # print(f_in.readlines())
@@ -291,20 +294,26 @@ def main():
     parser.add_argument("-r","--rebinfactor", dest="rfactor", help="Rebin Factor", type=int)
     parser.add_argument("--xlow", dest="xlow", help="Set xaxis range", type=float)
     parser.add_argument("--xhigh", dest="xhigh", help="Set xaxis range", type=float)
-    parser.add_argument("-y","--setlogY", dest="log", help="Set log Y or not", default=0, type=int)
     parser.add_argument("--log", dest="log", help="Set log Y or not", default=0, type=int)
     parser.add_argument("--yhigh", dest="yhigh", help="Set yaxis high (in terms of frac/out of 1)", type=float)
-    parser.add_argument("-n","--normalize",dest="norm", help="To norm or not to norm",  default=1,type=int)
+    parser.add_argument("--norm",dest="norm", help="To norm or not to norm",  action='store_true')
     parser.add_argument("--updatecuts", dest="updatecuts",   help="update cuts with mass bounds derived here", action='store_true')
+    parser.add_argument("--cutdir", dest="cutdir", help="Cutsdir to update cuts", type=str)
+    parser.add_argument("-y", "--year",   dest="year",   help="data year", type=str)
+
+    
+
 
     args = parser.parse_args()
+    lumi_factor = lumi_scale[args.year]
+
     # create required parts
     cwd = os.getcwd()
     # Get the list of all files and directories
     path1 = args.fin1
     path2 = args.fin2
-    dir_path1 = cwd+"/"+path1
-    dir_path2 = cwd+"/"+path2
+    dir_path1 = cwd+"/"+path1+"/ggH"
+    dir_path2 = cwd+"/"+path2+"/ggH"
     dir_list1 = os.listdir(dir_path1)
     dir_list2 = os.listdir(dir_path2)
     
@@ -315,11 +324,15 @@ def main():
             continue
         if "ctauS0" not in fname:
             continue
+        if (fname.count('ctauS') >= 2):
+            continue
         fpaths.append(dir_path1+"/"+fname)
     for fname in dir_list2:
         if ".root" not in fname:
             continue
         if "ctauS0" not in fname:
+            continue
+        if (fname.count('ctauS') >= 2):
             continue
         fpaths.append(dir_path2+"/"+fname)
     print(fpaths)
@@ -338,16 +351,17 @@ def main():
             ctau=fname.split("ctauS")[1].split(".root")[0]
             m_size = 1.5
             hname = hlist[h1]
-            print(hname)
+            print(fname)
+            print("WTF:",hname)
             h_1 = f_in.Get(hname)
             if args.rfactor != 0: 
                 h_1.Rebin(args.rfactor)
             if (args.norm):
                 h_1.Scale(1./h_1.Integral())
             if "avgmass" in h1:
-                sigma,sigma_err,mean,mean_err= GaussFit(h_1,mass,ctau,args.out)
+                sigma,sigma_err,mean,mean_err= GaussFit(h_1,mass,ctau,args.out,args.year)
                 txtfile.write("\n")
-                txtfile.write(mass+"\t"+str(sigma*3)+"\t"+str(mean-1.5*sigma)+"\t"+str(mean+1.5*sigma))
+                txtfile.write(mass+"\t"+str(sigma*2.5)+"\t"+str(mean-3*sigma)+"\t"+str(mean+2.5*sigma))
             else:
                 c = ROOT.TCanvas("c", "stacked hists", 1200, 1000)
                 if args.log: 
@@ -358,7 +372,6 @@ def main():
                     ROOT.gPad.SetLogy(0)
                     c.SetLogy(0)
 
-                c.cd()
                 xleg,yleg = 0.7, 0.8
                 leg = ROOT.TLegend(xleg, yleg, 0.9, 0.9)
 
@@ -367,13 +380,15 @@ def main():
                 alphas = [0.01, 0.02, 0.05, 0.13, 0.32]
                 conversions = [2.576, 2.326, 1.960, 1.514, 0.9945]
                 # Exclusion from graph below
-                minXt, maxX = XPercentInterval(h_1,alp/2,verbose=True) #removing x% from each side
+                # minXt, maxX = XPercentInterval(h_1,alp/2,verbose=True) #removing x% from each side
+                sigma,sigma_err,mean,mean_err= GaussFit(h_1,mass,ctau,args.out,args.year,"_"+h1)
+                minXt, maxX = float(mass)-2.5*sigma, float(mass)+2.5*sigma
                 width = maxX - minXt
                 print("Check selected interval:",minXt, maxX, width)
 
                 txtfile.write("\n")
                 txtfile.write(mass+"\t"+str(width)+"\t"+str(minXt)+"\t"+str(maxX))
-
+                # h_1.Rebin(2)
                 h_1.SetMarkerColor(colors[0])
                 h_1.SetLineColor(colors[0])
                 h_1.SetMarkerStyle(markers[0])
@@ -408,14 +423,16 @@ def main():
 
                 # leg.AddEntry(h_1, args.l1, "lep")
                 # c1.SetLogy()
+                c.cd()
 
-                h_1.Draw("pe1 PLC PMC")
+                h_1.Draw("pe1")
                 leg.Draw("same")
                 l1.Draw("same")
                 l2.Draw("same")
                 c.Update()
-
-                rtext = "#splitline{m_{a} ="+mass+" GeV}{c#tau = "+ctau+"mm}"
+                if ctau=='0':
+                    ctau='0.1'
+                rtext = "#splitline{m_{S} ="+mass+" GeV}{c#tau = "+ctau+"mm}"
                 additional_text = []
                 additional_text += [rtext]
                 if additional_text:
@@ -434,13 +451,15 @@ def main():
                 CMS_lumi.cmsText = 'CMS'
                 CMS_lumi.writeExtraText = True
                 CMS_lumi.extraText = 'Simulation'
-                CMS_lumi.lumi_13TeV = "UL2017 MC"
+                CMS_lumi.lumi_13TeV = args.year+" MC"
                 # CMS_lumi.lumiTextSize = 0.5
                 CMS_lumi.cmsTextSize=1.
                 CMS_lumi.CMS_lumi(c, 4, 11)
                 c.Modified()
                 c.Update()
 
+                if ctau=='0':
+                    ctau='0p1'
                 frtext = "MS"+mass.replace('.','p')+"_"+"ctau"+ctau.replace('.','p')+"_"+h1
                 if args.log:
                     frtext+="_"+"log"
@@ -449,6 +468,7 @@ def main():
                 # c.SaveAs(savename+'.pdf')
                 # c.SaveAs(savename+'.root')
                 c.Clear()
+            # quit()
         txtfile.close()
 
 
@@ -503,9 +523,20 @@ def main():
     if args.updatecuts:
         # cwd = os.getcwd()
         # Get the list of all files and directories
-        path_cuts = "configs/2017/cuts"
+        if "2017" in args.year:
+            cutsdir = "configs/2017/cuts"
+        elif "2018" in args.year:
+            cutsdir = "configs/2018/cuts"
+        elif "2016_APV" in args.year:
+            cutsdir = "configs/2016_APV/cuts"
+        elif "2016" in args.year:
+            cutsdir = "configs/2016/cuts"
+        else:
+            print("mention cuts directory")
+            quit()
+        path_cuts = cutsdir
         dir_path_cuts = cwd+"/"+path_cuts
-        dir_list_cuts = os.listdir(dir_path_cuts)        
+        dir_list_cuts = os.listdir(dir_path_cuts)
         # print(dir_list1)
         fcuts = []
         for fname_cuts in dir_list_cuts:
@@ -546,7 +577,7 @@ def main():
 
         print("file open:",f_in.GetName())
         h_2 = f_in.Get("h_DiMuonMass_DiChHadMass")
-        h_2.Scale(41474.989603894)
+        h_2.Scale(lumi_factor)
         h_2.Rebin2D(20,20)
         h_2.GetXaxis().SetTitle("m_{#mu#mu} (GeV)")
         h_2.GetYaxis().SetTitle("m_{h^{+}h^{-}} (GeV)")
@@ -555,7 +586,7 @@ def main():
         h_2.GetZaxis().SetTitleOffset(1.)
         h_2.GetXaxis().SetRangeUser(0.,3.)
         h_2.GetYaxis().SetRangeUser(0.,3.)
-        h_2.GetZaxis().SetRangeUser(9*1e-2,300.)
+        h_2.GetZaxis().SetRangeUser(9*1e-3,300.)
 
         h_2.GetXaxis().SetLabelSize(0.04)
         h_2.GetYaxis().SetLabelSize(0.04)
@@ -583,7 +614,9 @@ def main():
         # gr_up_hh.Draw("p same")
         # leg.Draw("same")
 
-        rtext = "#splitline{m_{a} ="+m_scalar+" GeV}{c#tau = "+ctau+"mm}"
+        if ctau=='0':
+            ctau='0.1'
+        rtext = "#splitline{m_{S} ="+m_scalar+" GeV}{c#tau = "+ctau+"mm}"
         additional_text = []
         additional_text += [rtext]
         if additional_text:
@@ -606,15 +639,19 @@ def main():
 
         CMS_lumi.cmsText = 'CMS'
         CMS_lumi.writeExtraText = True
-        CMS_lumi.extraText = 'Work in progress'
-        CMS_lumi.lumi_13TeV = "UL2017 MC"
+        # if args.withdata:
+        #     CMS_lumi.extraText = 'Work in Progress'
+        #     CMS_lumi.lumi_13TeV = str(lumi_factor/1000) + " fb^{-1}"
+        # else:
+        CMS_lumi.extraText = 'Work in Progress'
+        CMS_lumi.lumi_13TeV = args.year+" MC"
         # CMS_lumi.lumiTextSize = 0.5
         CMS_lumi.cmsTextSize=1.
         CMS_lumi.CMS_lumi(c2, 4, 11)
         c2.Modified()
         c2.Update()
     
-        c2.SaveAs(args.out+"/"+"Mass2d_dist_MS"+m_scalar+"_"+"ctau"+ctau+'.png')
+        c2.SaveAs(args.out+"/"+"Mass2d_dist_MS"+str(m_scalar).replace(".","p")+"_"+"ctau"+ctau.replace('.','p')+'.png')
         # c2.SaveAs("Mass2d_dist_MS"+m_scalar+'.pdf')
         # c2.SaveAs("Mass2d_dist_MS"+m_scalar+'.root')
         c2.Clear()

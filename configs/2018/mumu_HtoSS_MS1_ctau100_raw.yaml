@@ -1,8 +1,0 @@
-cuts: "configs/2018/cuts/SRCuts.yaml"
-plots: "configs/plots/plotDileptonConf.yaml"
-outputFolder: "plots/2018/HToSS_MH125_MS1_ctauS100_raw/"
-outputPostfix: "mumu"
-channelName: "mumu"
-datasets:
-# HToSS
-  - "configs/2018/datasets/ggH/ggH_HToSS_MH125_MS1_ctauS100_raw.yaml"

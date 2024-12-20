@@ -17,6 +17,8 @@ ROOT.gROOT.SetBatch(True)
 ReducedBinning = False
 correctforMCPU = False
 tdrstyle.setTDRStyle()
+ROOT.gStyle.SetPadTickX(1)
+ROOT.gStyle.SetPadTickY(1)
 '''
 Still to do 
 merge bins at high pt high eta
@@ -32,6 +34,7 @@ ROOT.gSystem.SetIncludePath( "-I$ROOFITSYS/include/" )
 # colors = [ROOT.kBlack,  ROOT.kRed, ROOT.kBlue,ROOT.kGreen+2,ROOT.kMagenta+1, ROOT.kOrange+1, ROOT.kTeal-1,ROOT.kRed-3, ROOT.kCyan+2]
 colors = [45, 85]
 markers = [20, 21, 22, 33, 47]
+lumi_scale = {'UL2016_APV': 19500, 'UL2016': 16800,'UL2017':  41480,'UL2018': 59830 } #in pb-1
 
 def createCanvasPads(savename):
     c = TCanvas(savename, savename, 800, 1000)
@@ -58,9 +61,14 @@ def main():
     parser.add_argument("--cuts",  dest="cuts",   help="cuts file used", type=str)
     parser.add_argument("-o", "--out",  dest="out",   help="output folder", type=str)
     parser.add_argument("-d", "--dataset",  dest="dataset",   help="name of dataset", type=str)
+    parser.add_argument("-c","--category", dest="category",help="prompt/displacedmumu/displacedhh/displaced/nocategory", type=str)
+    parser.add_argument("-y", "--year",   dest="year",   help="data year", type=str)
+
     # parser.add_argument("-b","--bkg",dest="bkg", help="draw with bkg process, specify file",  default="None",type=str)
 
     args = parser.parse_args()
+    lumi_factor = lumi_scale[args.year]
+
     # create required parts
     fcuts = open(args.cuts,'r')
     fcut_pars = yaml.safe_load(fcuts)
@@ -68,11 +76,12 @@ def main():
     params_higher = ROOT.VecOps.RVec('double')(fcut_pars['cuts']['recoscalar']['higherbound'])
 
     histo_dict = {
-        'DiMuonMass_DiChHadMass': {'hname':'h_DiMuonMass_DiChHadMass','xlabel': "m_{#mu#mu} (GeV)", 'ylabel': "m_{h^{+}h^{-}}(GeV)", 'xlow':0.,'xhigh':3., 'ylow':0.,'yhigh':3., 'hrebinx':20, 'hrebiny':20,'zlow':9*1e-2,'zhigh':300},
+        # 'DiMuonMass_DiChHadMass': {'hname':'h_DiMuonMass_DiChHadMass','xlabel': "m_{#mu#mu} (GeV)", 'ylabel': "m_{h^{+}h^{-}}(GeV)", 'xlow':0.,'xhigh':3., 'ylow':0.,'yhigh':3., 'hrebinx':20, 'hrebiny':20,'zlow':9*1e-2,'zhigh':300},
+        'DiMuonMass_DiChHadMass': {'hname':'h_DiMuonMass_DiChHadMass_MS_BC','xlabel': "m_{#mu#mu} (GeV)", 'ylabel': "m_{h^{+}h^{-}}(GeV)", 'xlow':0.,'xhigh':3., 'ylow':0.,'yhigh':3., 'hrebinx':20, 'hrebiny':20,'zlow':9*1e-3,'zhigh':300},
         # 'DiMuonMass_DiChHadMass_HMassSMassBC': {'hname':'h_DiMuonMass_DiChHadMass_HMassSMassBC','xlabel': "m_{#mu#mu} (GeV)", 'ylabel': "m_{h^{+}h^{-}}(GeV)", 'xlow':0.,'xhigh':3., 'ylow':0.,'yhigh':3., 'hrebinx':20, 'hrebiny':20,'zlow':9*1e-1,'zhigh':300},
         # 'DiMuonMass_DiChHadMass_HMassBC': {'hname':'h_DiMuonMass_DiChHadMass_HMassBC','xlabel': "m_{#mu#mu} (GeV)", 'ylabel': "m_{h^{+}h^{-}} (GeV)", 'xlow':0.,'xhigh':3., 'ylow':0.,'yhigh':3., 'hrebinx':20, 'hrebiny':20,'zlow':9*1e-1,'zhigh':300},
         # 'DiMuonMass_DiChHadMass_SMassBC': {'hname':'h_DiMuonMass_DiChHadMass_SMassBC','xlabel': "m_{#mu#mu} (GeV)", 'ylabel': "m_{h^{+}h^{-}} (GeV)", 'xlow':0.,'xhigh':3., 'ylow':0.,'yhigh':3., 'hrebinx':20, 'hrebiny':20,'zlow':9*1e-1,'zhigh':300},
-        'DiMuonVtxSignificance_DiChHadVtxSignificance': {'hname':'h_DiMuonVtxSignificance_DiChHadVtxSignificance','xlabel': "L_{xy}^{#mu^{+}#mu^{-}}/#Delta L_{xy}^{#mu^{+}#mu^{-}}", 'ylabel': "L_{xy}^{h^{+}h^{-}}/#Delta L_{xy}^{h^{+}h^{-}}", 'xlow':0.,'xhigh':1000., 'ylow':0.,'yhigh':1000., 'hrebinx':20, 'hrebiny':20,'zlow':1e-2,'zhigh':300},
+        # 'DiMuonVtxSignificance_DiChHadVtxSignificance': {'hname':'h_DiMuonVtxSignificance_DiChHadVtxSignificance','xlabel': "L_{xy}^{#mu^{+}#mu^{-}}/#Delta L_{xy}^{#mu^{+}#mu^{-}}", 'ylabel': "L_{xy}^{h^{+}h^{-}}/#Delta L_{xy}^{h^{+}h^{-}}", 'xlow':0.,'xhigh':1000., 'ylow':0.,'yhigh':1000., 'hrebinx':20, 'hrebiny':20,'zlow':1e-2,'zhigh':300},
         # 'DiMuonVtxLxy_DiChHadVtxLxy': {'hname':'h_DiMuonVtxLxy_DiChHadVtxLxy','xlabel': "L_{xy}^{#mu^{+}#mu^{-}} (cm)", 'ylabel': "L_{xy}^{h^{+}h^{-}} (cm)", 'xlow':0.,'xhigh':60., 'ylow':0.,'yhigh':60., 'hrebinx':2, 'hrebiny':2,'zlow':1e-2,'zhigh':300},
         # 'DiMuonVtxLxy_DiMuonVtxSigma': {'hname':'h_DiMuonVtxLxy_DiMuonVtxSigma', 'xlabel': "L_{xy}^{#mu^{+}#mu^{-}} (cm)",'ylabel': "#Delta L_{xy}^{#mu^{+}#mu^{-}} (cm)", 'xlow':0.,'xhigh':60., 'ylow':0.,'yhigh':10., 'hrebinx':5, 'hrebiny':1,'zlow':1e-2,'zhigh':300},
         # 'DiChHadVtxLxy_DiChHadVtxSigma': {'hname':'h_DiChHadVtxLxy_DiChHadVtxSigma', 'xlabel': "L_{xy}^{h^{+}h^{-}} (cm)",'ylabel': "#Delta L_{xy}^{h^{+}h^{-}} (cm)", 'xlow':0.,'xhigh':60., 'ylow':0.,'yhigh':10., 'hrebinx':5, 'hrebiny':1,'zlow':1e-2,'zhigh':300}
@@ -87,11 +96,51 @@ def main():
         'singleTop':{'type':'MC_bkg','label':"Single top"},
         'ttV':{'type':'MC_bkg','label':"t#bar{t}V"},
         'VVV':{'type':'MC_bkg','label':"VVV"},
-        'HToSS_MH125_MS2_ctau0':{'type':'signal','label':"#splitline{m_{a}=2 GeV}{c#tau = 0mm}"},
-        'HToSS_MH125_MS2_ctau1':{'type':'signal','label':"#splitline{m_{a}=2 GeV}{c#tau = 1mm}"},
-        'HToSS_MH125_MS2_ctau10':{'type':'signal','label':"#splitline{m_{a}=2 GeV}{c#tau = 10mm}"},
-        'HToSS_MH125_MS2_ctau100':{'type':'signal','label':"#splitline{m_{a}=2 GeV}{c#tau = 100mm}"},
-        'Run2017':{'type':'blinded_data','label':'Run2017'}
+        'HToSS_MH125_MS2_ctau0':{'type':'signal','label':"#splitline{m_{S}=2 GeV}{c#tau = 0.1mm}"},
+        'HToSS_MH125_MS2_ctau1':{'type':'signal','label':"#splitline{m_{S}=2 GeV}{c#tau = 1mm}"},
+        'HToSS_MH125_MS2_ctau10':{'type':'signal','label':"#splitline{m_{S}=2 GeV}{c#tau = 10mm}"},
+        'HToSS_MH125_MS2_ctau100':{'type':'signal','label':"#splitline{m_{S}=2 GeV}{c#tau = 100mm}"},
+        'HToSS_MH125_MS1p8_ctau0':{'type':'signal','label':"#splitline{m_{S}=1.8 GeV}{c#tau = 0.1mm}"},
+        'HToSS_MH125_MS1p8_ctau1':{'type':'signal','label':"#splitline{m_{S}=1.8 GeV}{c#tau = 1mm}"},
+        'HToSS_MH125_MS1p8_ctau10':{'type':'signal','label':"#splitline{m_{S}=1.8 GeV}{c#tau = 10mm}"},
+        'HToSS_MH125_MS1p8_ctau100':{'type':'signal','label':"#splitline{m_{S}=1.8 GeV}{c#tau = 100mm}"},
+        'HToSS_MH125_MS1p6_ctau0':{'type':'signal','label':"#splitline{m_{S}=1.6 GeV}{c#tau = 0.1mm}"},
+        'HToSS_MH125_MS1p6_ctau1':{'type':'signal','label':"#splitline{m_{S}=1.6 GeV}{c#tau = 1mm}"},
+        'HToSS_MH125_MS1p6_ctau10':{'type':'signal','label':"#splitline{m_{S}=1.6 GeV}{c#tau = 10mm}"},
+        'HToSS_MH125_MS1p6_ctau100':{'type':'signal','label':"#splitline{m_{S}=1.6 GeV}{c#tau = 100mm}"},
+        'HToSS_MH125_MS1p4_ctau0':{'type':'signal','label':"#splitline{m_{S}=1.4 GeV}{c#tau = 0.1mm}"},
+        'HToSS_MH125_MS1p4_ctau1':{'type':'signal','label':"#splitline{m_{S}=1.4 GeV}{c#tau = 1mm}"},
+        'HToSS_MH125_MS1p4_ctau10':{'type':'signal','label':"#splitline{m_{S}=1.4 GeV}{c#tau = 10mm}"},
+        'HToSS_MH125_MS1p4_ctau100':{'type':'signal','label':"#splitline{m_{S}=1.4 GeV}{c#tau = 100mm}"},
+        'HToSS_MH125_MS1p2_ctau0':{'type':'signal','label':"#splitline{m_{S}=1.2 GeV}{c#tau = 0.1mm}"},
+        'HToSS_MH125_MS1p2_ctau1':{'type':'signal','label':"#splitline{m_{S}=1.2 GeV}{c#tau = 1mm}"},
+        'HToSS_MH125_MS1p2_ctau10':{'type':'signal','label':"#splitline{m_{S}=1.2 GeV}{c#tau = 10mm}"},
+        'HToSS_MH125_MS1p2_ctau100':{'type':'signal','label':"#splitline{m_{S}=1.2 GeV}{c#tau = 100mm}"},
+        'HToSS_MH125_MS1p1_ctau0':{'type':'signal','label':"#splitline{m_{S}=1.1 GeV}{c#tau = 0.1mm}"},
+        'HToSS_MH125_MS1p1_ctau1':{'type':'signal','label':"#splitline{m_{S}=1.1 GeV}{c#tau = 1mm}"},
+        'HToSS_MH125_MS1p1_ctau10':{'type':'signal','label':"#splitline{m_{S}=1.1 GeV}{c#tau = 10mm}"},
+        'HToSS_MH125_MS1p1_ctau100':{'type':'signal','label':"#splitline{m_{S}=1.1 GeV}{c#tau = 100mm}"},
+        'HToSS_MH125_MS1_ctau0':{'type':'signal','label':"#splitline{m_{S}=1 GeV}{c#tau = 0.1mm}"},
+        'HToSS_MH125_MS1_ctau1':{'type':'signal','label':"#splitline{m_{S}=1 GeV}{c#tau = 1mm}"},
+        'HToSS_MH125_MS1_ctau10':{'type':'signal','label':"#splitline{m_{S}=1 GeV}{c#tau = 10mm}"},
+        'HToSS_MH125_MS1_ctau100':{'type':'signal','label':"#splitline{m_{S}=1 GeV}{c#tau = 100mm}"},
+        'HToSS_MH125_MS0p9_ctau0':{'type':'signal','label':"#splitline{m_{S}=0.9 GeV}{c#tau = 0.1mm}"},
+        'HToSS_MH125_MS0p9_ctau1':{'type':'signal','label':"#splitline{m_{S}=0.9 GeV}{c#tau = 1mm}"},
+        'HToSS_MH125_MS0p9_ctau10':{'type':'signal','label':"#splitline{m_{S}=0.9 GeV}{c#tau = 10mm}"},
+        'HToSS_MH125_MS0p9_ctau100':{'type':'signal','label':"#splitline{m_{S}=0.9 GeV}{c#tau = 100mm}"},
+        'HToSS_MH125_MS0p8_ctau0':{'type':'signal','label':"#splitline{m_{S}=0.8 GeV}{c#tau = 0.1mm}"},
+        'HToSS_MH125_MS0p8_ctau1':{'type':'signal','label':"#splitline{m_{S}=0.8 GeV}{c#tau = 1mm}"},
+        'HToSS_MH125_MS0p8_ctau10':{'type':'signal','label':"#splitline{m_{S}=0.8 GeV}{c#tau = 10mm}"},
+        'HToSS_MH125_MS0p8_ctau100':{'type':'signal','label':"#splitline{m_{S}=0.8 GeV}{c#tau = 100mm}"},
+        'HToSS_MH125_MS0p6_ctau0':{'type':'signal','label':"#splitline{m_{S}=0.6 GeV}{c#tau = 0.1mm}"},
+        'HToSS_MH125_MS0p6_ctau1':{'type':'signal','label':"#splitline{m_{S}=0.6 GeV}{c#tau = 1mm}"},
+        'HToSS_MH125_MS0p6_ctau10':{'type':'signal','label':"#splitline{m_{S}=0.6 GeV}{c#tau = 10mm}"},
+        'HToSS_MH125_MS0p6_ctau100':{'type':'signal','label':"#splitline{m_{S}=0.6 GeV}{c#tau = 100mm}"},
+        'HToSS_MH125_MS0p4_ctau0':{'type':'signal','label':"#splitline{m_{S}=0.4 GeV}{c#tau = 0.1mm}"},
+        'HToSS_MH125_MS0p4_ctau1':{'type':'signal','label':"#splitline{m_{S}=0.4 GeV}{c#tau = 1mm}"},
+        'HToSS_MH125_MS0p4_ctau10':{'type':'signal','label':"#splitline{m_{S}=0.4 GeV}{c#tau = 10mm}"},
+        'HToSS_MH125_MS0p4_ctau100':{'type':'signal','label':"#splitline{m_{S}=0.4 GeV}{c#tau = 100mm}"},
+        'Data':{'type':'blinded_data','label':'Data'}
     }
 
 
@@ -104,8 +153,8 @@ def main():
     # higherbound=[0.0733982700792378, 1.006827105815873]
     # params_lower = ROOT.VecOps.RVec('double')(fit_rb.GetParameters())
     # params_higher = ROOT.VecOps.RVec('double')(fit_lt.GetParameters())
-    func_l = ROOT.TF1("func_l","[1]*x+[0]",0.,5.)
-    func_h = ROOT.TF1("func_h","[1]*x+[0]",0.,5.)
+    func_l = ROOT.TF1("func_l","[1]*x+[0]",0.,4.)
+    func_h = ROOT.TF1("func_h","[1]*x+[0]",0.,4.)
     func_l.FixParameter(0,params_lower[0])
     func_l.FixParameter(1,params_lower[1])
     func_h.FixParameter(0,params_higher[0])
@@ -116,7 +165,12 @@ def main():
 
     f_in = ROOT.TFile(args.fin,"READ")
     # dirname = {'prompt', 'displacedmumu', 'displacedhh', 'displaced'}
-
+    
+    if 'nocategory' in args.category:
+        dirn=''
+    else:
+        dirn = args.category+'/'
+    tf_tightCR = 0.997 #approx taken from other plots
     # for dirn in dirname:
     for key in histo_dict:
         c2 = ROOT.TCanvas("c2", "c2", 1400, 1200)
@@ -125,10 +179,16 @@ def main():
         
 
         print("file open:",f_in.GetName())
-        print(histo_dict[key]['hname'])
-        h_2 = f_in.Get(histo_dict[key]['hname'])
-        if 'Run' not in args.dataset:
-            h_2.Scale(41474.989603894)
+        if "nocategory" in args.category:
+            hname = "h_DiMuonMass_DiChHadMass"
+        else:
+            hname = histo_dict[key]['hname']
+        print(hname)
+        h_2 = f_in.Get(dirn+hname)
+        if 'Run' not in args.dataset and 'Data' not in args.dataset:
+            h_2.Scale(lumi_factor)
+        if 'HToSS' not in key:
+            h_2.Scale(tf_tightCR)
         h_2.Rebin2D(histo_dict[key]['hrebinx'],histo_dict[key]['hrebiny'])
         h_2.GetXaxis().SetTitle(histo_dict[key]['xlabel'])
         h_2.GetYaxis().SetTitle(histo_dict[key]['ylabel'])
@@ -183,17 +243,19 @@ def main():
         CMS_lumi.cmsText = 'CMS'
         CMS_lumi.writeExtraText = True
         CMS_lumi.extraText = 'Work in progress'
-        if 'Run' in args.dataset:
-            CMS_lumi.lumi_13TeV = "41.4 fb^{-1}"
+        if 'Run' not in args.dataset and 'Data' not in args.dataset:
+            CMS_lumi.lumi_13TeV = args.year + " MC"
         else:
-            CMS_lumi.lumi_13TeV = "UL2017 MC"
+            CMS_lumi.lumi_13TeV = str(round(lumi_factor/1000,1)) + " fb^{-1}"
+
+
         # CMS_lumi.lumiTextSize = 0.5
         CMS_lumi.cmsTextSize=1.
         CMS_lumi.CMS_lumi(c2, 4, 11)
         c2.Modified()
         c2.Update()
-        # c2.SaveAs(args.out+'/'+dirn+'/'+key+'_'+args.dataset+".png")
-        c2.SaveAs(args.out+'/'+key+'_'+args.dataset+".png")
+        c2.SaveAs(args.out+'/'+dirn.replace('/','_')+key+'_'+args.dataset+".png")
+        # c2.SaveAs(args.out+'/'+key+'_'+args.dataset+".png")
         # c2.SaveAs("Mass2d_dist_MS"+m_scalar+'.pdf')
         # c2.SaveAs("Mass2d_dist_MS"+m_scalar+'.root')
         c2.Clear()

@@ -27,4 +27,3 @@ echo "CMSSW intialized to "$CMSSW_BASE
 source ./setup.sh
 
 python3 src/RDataFrames_skimmer.py -c $cfg -o $output -y 2017 --flow $flow --fhigh $fhigh --onlyweights
-
