@@ -227,6 +227,7 @@ def main():
     f_src=ROOT.TFile(cwd+"/"+ args.input, "READ")
     # htmp=f_src.Get('h_genHiggsPt_nominal').Clone()
     htmp=f_src.Get('h_genHiggsPt').Clone()
+    # htmp=f_src.Get('h_genHiggsPt_wtd').Clone()
     # h_src=f_src.Get('h_genHiggsPt').Clone()
     htmp=htmp.Rebin(len(custom_bins)-1,"rebinned",array('d',custom_bins))
     htmp.Scale(1/htmp.Integral())
@@ -359,8 +360,8 @@ def main():
 
     c1.Modified()
     c1.Update()
-    c1.SaveAs(args.out+'/'+savename+'.png')
-    c1.SaveAs(args.out+'/'+savename+'.pdf')
+    c1.SaveAs(args.out+'/'+savename+'_test'+'.png')
+    c1.SaveAs(args.out+'/'+savename+'_test'+'.pdf')
     
 
 

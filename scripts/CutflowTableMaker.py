@@ -40,9 +40,20 @@ def main():
     if args.pion:
         m_points=['0p4','0p6','0p8','0p9','1']
     else:
-        m_points=['1p1','1p2','1p4','1p6','1p8','2']
+        #m_points=['1p1','1p2','1p4','1p6','1p8','2']
         #m_points=['1p2','1p6','2']
-        #m_points=['2']
+        m_points=['2']
+    if args.pion:
+        htype='pion'
+    else:
+        htype='kaon'
+    #### TESTING TESTING TESTING ####
+    feff_fit_dict={}
+    feff_fit=open("gen_eff_fit_"+htype+".txt","r")
+    geneff=1
+    for line in feff_fit:
+        # print(ctau,float(line.split('\t')[0].strip()))
+        feff_fit_dict[float(line.split('\t')[0].strip())]=float(line.split('\t')[1].replace('\n',''))
 
 
     ctau_points=['0','1','10','100']
@@ -73,6 +84,9 @@ def main():
         tot_qcd_count=0;skim_qcd_count=0
         net_qcd_count=0
         for k,ctau in enumerate(ctau_points):
+            ctau_f=float(ctau)
+            if ctau_f==0:
+                ctau_f=0.1
             net_sig_count=0
             tot_sig_count=0;skim_sig_count=0
             for i,category in enumerate(categories):
@@ -90,6 +104,8 @@ def main():
                     print(fl)
                     print(c,nrows,m,ctau)
                     sig_count=float(fl[c].split('&')[1].strip())
+                    sig_count=sig_count*feff_fit_dict[ctau_f] #### TESTING TESTING TESTING
+                    sig_count=np.round(sig_count,2)
                     # print(i,j,k,c-2)
                     # print(sig_counts.shape)
                     sig_counts[i][j][k][c-2]=float(sig_count)
@@ -124,7 +140,8 @@ def main():
             print(m,ctau,':',net_sig_count,',',skim_sig_count,',',np.round(net_sig_count/skim_sig_count*100,3))
             print('Data',':',net_bkg_count,',',skim_bkg_count,',',np.round(net_bkg_count/skim_bkg_count*100,3))
             print('QCD',':',net_qcd_count,',',skim_qcd_count,',',np.round(net_qcd_count/skim_qcd_count*100,3))
-    
+    # print(sig_counts)
+    # quit()
                 # except:
                 #     print("some issue")
                 #     quit()

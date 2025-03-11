@@ -211,9 +211,7 @@ def gInterpreter_diObjectCandidate():
         Float_t num, const RVec<Float_t>& mu1_idx, const RVec<Float_t>& mu2_idx, 
         const RVec<Float_t>& mu1_px, const RVec<Float_t>& mu1_py, const RVec<Float_t>& mu1_pz, 
         const RVec<Float_t>& mu2_px, const RVec<Float_t>& mu2_py, const RVec<Float_t>& mu2_pz,
-        TString ptype, const RVec<Float_t>& packedCandsPx, const RVec<Float_t>& packedCandsPy, const RVec<Float_t>& packedCandsPz, const RVec<Float_t>& packedCandsE, 
-        const RVec<Int_t>& packedCandsCharge, const RVec<Int_t>& packedCandsPdgId, const RVec<Int_t>& packedCandsFromPV, Int_t numPackedCands,
-        ROOT::Math::PxPyPzMVector& leadinglv, ROOT::Math::PxPyPzMVector& subleadinglv, Float_t diMuonPt_=0, double dr_max = 0.4) {
+        TString ptype, ROOT::Math::PxPyPzMVector& leadinglv, ROOT::Math::PxPyPzMVector& subleadinglv, Float_t diMuonPt_=0, double dr_max = 0.4) {
             std::vector<Int_t> objidx(3);
             objidx[0]=-1;
             objidx[1]=-1;
@@ -426,6 +424,7 @@ def gInterpreter_MatchReco():
         using FourVectorPtEtaPhiM = ROOT::Math::PtEtaPhiMVector;
         using FourVectorPtEtaPhiE = ROOT::Math::PtEtaPhiEVector;
         using FourVectorPxPyPzM = ROOT::Math::PxPyPzMVector;
+        using FourVectorPxPyPzE = ROOT::Math::PxPyPzEVector;
         using namespace ROOT::VecOps;
 
         Int_t AncestryCheck(Int_t k, const Int_t& parId, RVec<Int_t>& genParId, RVec<Int_t>& genParMotherId, RVec<Int_t>& genParMotherIndex) {
@@ -463,6 +462,32 @@ def gInterpreter_MatchReco():
                 //std::cout << "Enters right condition ... pdgId = " << pdgId << " : motherIndex = " << motherIndex << " : motherId = " << motherId << std::endl;
                 return AncestryCheckIdx(motherIndex, parId, genParId, genParMotherId, genParMotherIndex); // otherwise check mother's mother ...
             }
+        }
+        Int_t MatchGen(FourVectorPtEtaPhiM &gen_lv,RVec<Float_t>& packedCandsPx,RVec<Float_t>& packedCandsPy,RVec<Float_t>& packedCandsPz,Double_t mass,RVec<Int_t>& packedCandsCharge,Int_t genPCharge) {
+            double minDR = 100;
+            unsigned index = 0;
+            double dr_max = 0.03;
+            double delR=minDR;
+            //std::cout<<"Stuck at index:"<<gen_ind<<std::endl;
+            for (int i=0; i<packedCandsPx.size(); i++) {
+                FourVectorPxPyPzM recoP {packedCandsPx[i],packedCandsPy[i],packedCandsPz[i],mass}; //packedCandsE[i]
+                delR = ROOT::Math::VectorUtil::DeltaR(gen_lv,recoP);
+                //std::cout<<"GenIndex, Pt, Charge, ID: "<<gen_ind<<", "<<event.genParPt[gen_ind]<<", "<<event.genParCharge[gen_ind]<<", "<<event.genParId[gen_ind]<<";"<<std::endl;
+                //std::cout<<"PCdIndex, Pt, Charge, ID: "<<j<<", "<<packedCand.Pt()<<",  "<<event.packedCandsCharge[j]<<", "<<event.packedCandsPdgId[j]<<";"<<std::endl;
+                //std::cout<<"Check the dR on this: "<<delR<<std::endl;
+                //std::cout<<"GenIndex: "<<gen_ind<<", PackedCandIndex: "<<j<<std::endl;
+                if (genPCharge!=packedCandsCharge[i]) continue;
+                // if (abs(packedCandsPdgId[i])==13) continue;
+                if (minDR < delR) continue;
+                minDR = delR;
+                index = i;
+            }
+            //std::cout<<"Index, PDGID, MPDGID: "<<index<<", "<<genParId[index]<<", "<<genParMotherId[index]<<";"<<std::endl;
+
+            if (minDR < dr_max) 
+                return index; //abs(genParId[index])
+            else
+                return 0;
         }
         Int_t MatchReco(FourVectorPxPyPzM &reco_lv,RVec<Float_t>& genParPt,RVec<Float_t>& genParEta,RVec<Float_t>& genParPhi,RVec<Float_t>& genParE,RVec<Int_t>& genParId,RVec<Int_t>& genParMotherId) {
             double minDR = 100;

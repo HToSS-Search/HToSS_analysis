@@ -152,8 +152,8 @@ def main():
         # 'leadingChHadSumPtNh': {'hname':'h_leadingChHadSumPtNh','label': "leading h^{#pm} #Sigma p_{T}(nt. had.) (GeV)", 'xlow':0.,'xhigh':100.,'hrebin':40},
         # 'subleadingChHadSumPtNh': {'hname':'h_subleadingChHadSumPtNh','label': "subleading h^{#pm} #Sigma p_{T}(nt. had.) (GeV)", 'xlow':0.,'xhigh':100.,'hrebin':40},
 
-        # 'leadingMuonSumPtPh': {'hname':'h_leadingMuonSumPtPh','label': "leading #mu #Sigma p_{T}(#gamma) (GeV)", 'xlow':0.,'xhigh':100.,'hrebin':40},
-        # 'subleadingMuonSumPtPh': {'hname':'h_subleadingMuonSumPtPh','label': "subleading #mu #Sigma p_{T}(#gamma) (GeV)", 'xlow':0.,'xhigh':100.,'hrebin':40},
+        'leadingMuonSumPtPh': {'hname':'h_leadingMuonSumPtPh','label': "leading #mu #Sigma p_{T}(#gamma) (GeV)", 'xlow':0.,'xhigh':10.,'hrebin':10},
+        'subleadingMuonSumPtPh': {'hname':'h_subleadingMuonSumPtPh','label': "subleading #mu #Sigma p_{T}(#gamma) (GeV)", 'xlow':0.,'xhigh':10.,'hrebin':10},
         # 'leadingChHadSumPtPh': {'hname':'h_leadingChHadSumPtPh','label': "leading h^{#pm} #Sigma p_{T}(#gamma) (GeV)", 'xlow':0.,'xhigh':100.,'hrebin':40},
         # 'subleadingChHadSumPtPh': {'hname':'h_subleadingChHadSumPtPh','label': "subleading h^{#pm} #Sigma p_{T}(#gamma) (GeV)", 'xlow':0.,'xhigh':100.,'hrebin':40},
 
@@ -255,7 +255,7 @@ def main():
         # 'HToSS_MH125_MS1p2_ctauS100':{'type':'signal','label':"#splitline{m_{S}=1.2 GeV,}{c#tau = 100mm}",'color':ROOT.kOrange+1,'integral':-1},
         'HToSS_MH125_MS0p6_ctauS0':{'type':'signal','label':"#splitline{m_{S}=0.6 GeV,}{c#tau = 0.1mm}",'color':ROOT.kBlue-7,'integral':-1},
         'HToSS_MH125_MS0p6_ctauS10':{'type':'signal','label':"#splitline{m_{S}=0.6 GeV,}{c#tau = 10mm}",'color':ROOT.kBlue-7,'integral':-1},
-        'Data':{'type':'data','label':"J/#Psi data (UL2017)",'color':ROOT.kGreen+3,'integral':-1},
+        #'Data':{'type':'data','label':"J/#Psi data (UL2017)",'color':ROOT.kGreen+3,'integral':-1},
         # 'HToSS_MH125_MS1p6_ctauS100':{'type':'signal','label':"#splitline{m_{S}=1.6 GeV,}{c#tau = 100mm}",'color':ROOT.kBlue-7,'integral':-1}
     }
     ctau_style_map = {'ctauS0':1,'ctauS1':5,'ctauS10':9,'ctauS100':10, 'Data':3}
@@ -275,7 +275,8 @@ def main():
         leg.SetNColumns(2)
         leg.SetTextSize(0.022)
         # hsig=[]
-        savename=key+"_OnlySignal"+"_JPsi"
+        #savename=key+"_OnlySignal"+"_JPsi"
+        savename=key+"_OnlySignal"
         boundary_percent = 0.35
         ylength_c = int(2400*(1-boundary_percent+0.15))
         c1 = TCanvas(savename, savename, 2200, ylength_c)

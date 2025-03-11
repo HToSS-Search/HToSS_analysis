@@ -189,6 +189,8 @@ def main():
         # 'DiMuonVtxLxy': {'hname':'h_DiMuonVtxLxy','label':"L_{xy}^{#mu^{+}#mu^{-}} (cm)", 'xlow':0,'xhigh':100,'hrebin':5},
         'genScalar1Lxy': {'hname':'h_genScalar1Lxy','label':"L_{xy}^{S} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
         'genScalar2Lxy': {'hname':'h_genScalar2Lxy','label':"L_{xy}^{\\bar{S}} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
+        'genScalar1Lxy_singlemutrg': {'hname':'h_genScalar1Lxy_singlemutrg','label':"L_{xy}^{S} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
+
         # 'DiChVtxLxy': {'hname':'h_DiChHadVtxLxy','label':"L_{xy}^{h^{+}h^{-}} (cm)", 'xlow':0,'xhigh':100,'hrebin':5},
         'genScalar1L': {'hname':'h_genScalar1L','label':"L_{xyz}^{S} (cm)", 'xlow':0,'xhigh':100,'hrebin':5},
         'genScalar2L': {'hname':'h_genScalar2L','label':"L_{xyz}^{\\bar{S}} (cm)", 'xlow':0,'xhigh':100,'hrebin':5},

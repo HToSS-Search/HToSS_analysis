@@ -11,7 +11,8 @@ export TQZ_TOOLS_PATH='.'
 # source cvmfs from centos7 since HTCondor is set up for that -> Check and see if it works after jobs get over
 # modify maybe the condor script to reflect and select same architecture
 # source /cvmfs/sft.cern.ch/lcg/views/LCG_96/x86_64-slc6-gcc8-opt/setup.sh 
-source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-centos7-gcc11-opt/setup.sh 
+#source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-centos7-gcc11-opt/setup.sh 
+source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-centos9-gcc11-opt/setup.sh 
 #### above causes issues with TList::Clear() etc but have to stick with it until recommended LCG release on m-machine changes
 #### 105 causes seg fault or JIT error
 #source /cvmfs/sft.cern.ch/lcg/views/LCG_105/x86_64-centos7-gcc11-opt/setup.sh 

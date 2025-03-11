@@ -9,6 +9,7 @@ from ROOT import TCanvas, TColor, TGaxis, TH1F, TPad
 from ROOT import kBlack, kBlue, kRed
 import tdrstyle
 import CMS_lumi
+import yaml
 from BackgroundEstimation import transfer_factor, gInterpreter_transferfactor
 
 ROOT.gROOT.SetBatch(True)
@@ -394,6 +395,19 @@ def main():
     # quit()
     sig_color = ROOT.kRed
 
+    #### TESTING TESTING TESTING ####
+    feff_fit_dict={}
+    if float(sig_mass)<1.05:
+        htype='pion'
+    else:
+        htype='kaon'
+    feff_fit=open("gen_eff_fit_"+htype+".txt","r")
+    geneff=1
+    for line in feff_fit:
+        # print(ctau,float(line.split('\t')[0].strip()))
+        feff_fit_dict[float(line.split('\t')[0].strip())]=float(line.split('\t')[1].replace('\n',''))
+
+
     # custom_a, custom_b, custom_c = np.arange(0.,122.52,0.48), np.arange(122.52,127.5,0.48), np.arange(127.5,300.,0.48) # change accordingly when higgs hist is modified
     custom_a, custom_b, custom_c = np.arange(0.,122.5,0.5), np.arange(122.5,127.5,0.5), np.arange(127.5,500.,0.5) # change accordingly when higgs hist is modified
     custom_bins = np.unique(np.append(np.append(custom_a,custom_b),custom_c))
@@ -509,7 +523,12 @@ def main():
     hs_skim_list = []
     
     ######### all plots below ##########
-    lo_bound,hi_bound=1.98,2.02
+    # lo_bound,hi_bound=1.98,2.02
+
+    mass_b_f=open("bounds_2sigma.yaml",'r')
+    mass_bounds_d=yaml.safe_load(mass_b_f)
+    lo_bound,hi_bound=mass_bounds_d['MS'+str(sig_mass).replace('.','p')][args.year]
+    # lo_bound,hi_bound=1.582,1.618
     for key in histo_dict:
         folder = args.category
         hprop = histo_dict[key]
@@ -773,6 +792,15 @@ def main():
                 # hs_clone.Add(histo) #IDEALLY, calculate this sf and scale all histograms with this sf
             
             hs_clone = ROOT.THStack("hs_clone","stacked hist")
+            if sig_ctau=="0":
+                sig_ctau_f=0.1
+            else:
+                sig_ctau_f=float(sig_ctau)
+            # print("CHECK THIS - ",h_1.Integral())
+            if 'Cutflow' not in histname: # this gets gen efficiency'ed in Cutflow table maker
+                h_1.Scale(feff_fit_dict[sig_ctau_f]) #### TESTING TESTING TESTING ####
+            # print("CHECK THIS - ",h_1.Integral())
+            # quit()
             h_1.Scale(lumi_factor) # NOTE: Do only when NEWNTUPLE for signal sample is used
             if ("Cutflow" in histname): # to be modified to include trigger separately from met filters
                 print(hs_skim_list)
@@ -882,6 +910,11 @@ def main():
                 ymax = max(hs.GetMaximum(),h_1.GetMaximum())
 
                 if 'AvgMass' in key:
+                    hs.SetMaximum(2*1e3)
+                    h_1.SetMaximum(2*1e3)
+                elif 'recoHiggsMass_MH_BC' in key:
+                    hs.SetMinimum(1)
+                    h_1.SetMinimum(1)
                     hs.SetMaximum(2*1e3)
                     h_1.SetMaximum(2*1e3)
                 else:

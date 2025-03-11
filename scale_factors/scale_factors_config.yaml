@@ -16,7 +16,7 @@ muon:
       #'tag': 'NUM_HLT_IsoMu27_DEN_LooseID_Iso040_abseta_pt'
       'tag': 'NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut'
       'Z': 'scale_factors/UL2016_APV/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_SingleMuonTriggers_schemaV2.json'
-      'JPsi': 'scale_factors/UL2016_APV/NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut.root'
+      'JPsi': 'scale_factors/UL2016_APV/NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut_dRFineBins.root'
   'UL2016':
     reco: 
       'tag': 'NUM_TrackerMuons_DEN_genTracks'
@@ -34,7 +34,7 @@ muon:
       #'tag': 'NUM_HLT_IsoMu27_DEN_LooseID_Iso040_abseta_pt'
       'tag': 'NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut'
       'Z': 'scale_factors/UL2016/Efficiencies_muon_generalTracks_Z_Run2016_UL_SingleMuonTriggers_schemaV2.json'
-      'JPsi': 'scale_factors/UL2016/NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut.root'
+      'JPsi': 'scale_factors/UL2016_APV/NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut_dRFineBins.root'
   'UL2017':
     reco: 
       'tag': 'NUM_TrackerMuons_DEN_genTracks'
@@ -52,7 +52,7 @@ muon:
       #'tag': 'NUM_HLT_IsoMu27_DEN_LooseID_Iso040_abseta_pt'
       'tag': 'NUM_HLT_IsoMu27_DEN_LooseID_Iso040_pair_dR_pt_cut'
       'Z': 'scale_factors/UL2017/Efficiencies_muon_generalTracks_Z_Run2017_UL_SingleMuonTriggers_schemaV2.json'
-      'JPsi': 'scale_factors/UL2017/NUM_HLT_IsoMu27_DEN_LooseID_Iso040_pair_dR_pt_cut.root'
+      'JPsi': 'scale_factors/UL2017/NUM_HLT_IsoMu27_DEN_LooseID_Iso040_pair_dR_pt_cut_dRFineBins.root'
   'UL2018':
     reco: 
       'tag': 'NUM_TrackerMuons_DEN_genTracks'
@@ -70,7 +70,7 @@ muon:
       #'tag': 'NUM_HLT_IsoMu27_DEN_LooseID_Iso040_abseta_pt'
       'tag': 'NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut'
       'Z': 'scale_factors/UL2018/Efficiencies_muon_generalTracks_Z_Run2018_UL_SingleMuonTriggers_schemaV2.json'
-      'JPsi': 'scale_factors/UL2018/NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut.root'
+      'JPsi': 'scale_factors/UL2018/NUM_HLT_IsoMu24_DEN_LooseID_Iso040_pair_dR_pt_cut_dRFineBins.root'
 hadron: None
 vtx: 
   'UL2016_APV':

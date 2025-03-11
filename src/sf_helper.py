@@ -68,19 +68,19 @@ def gInterpreter_SF():
 			if (mu1_x < h2_sf->GetXaxis()->GetBinLowEdge(1)) x_bin=1;
 			return h2_sf->GetBinContent(x_bin);
         }
-		Float_t getSF(TH2D* h2_sf, TString tag, Float_t mu1_x=-99, Float_t mu1_y=-99)
+		Float_t getSF(TH2D* h2_sf, TString tag, Float_t mu1_x=-99, Float_t mu1_y=-99, TString shift="nominal")
         {
 			// for getting entries from histogram
-			//std::cout<<"Looking at: "<<tag.Data()<<std::endl;
-			//std::cout<<"mu1_x,mu1_y:"<<mu1_x<<","<<mu1_y<<std::endl;
+			// std::cout<<"Looking at: "<<tag.Data()<<std::endl;
+			// std::cout<<"mu1_x,mu1_y:"<<mu1_x<<","<<mu1_y<<std::endl;
 
 			
 			int x_bin=-1;int y_bin=-1;
 			int nbins=h2_sf->GetNbinsX();
-			//std::cout<<"outside; y_bin,x_bin:"<<y_bin<<","<<x_bin<<std::endl;
+			// std::cout<<"outside; y_bin,x_bin,nbins:"<<y_bin<<","<<x_bin<<","<<nbins<<std::endl;
 
 			for (int i=1;i<=nbins;i++) {
-				//std::cout<<"in x; y_bin,x_bin,lo_bin:"<<y_bin<<","<<x_bin<<","<<h2_sf->GetYaxis()->GetBinLowEdge(i+1)<<std::endl;
+				// std::cout<<"in x; y_bin,x_bin,lo_bin:"<<y_bin<<","<<x_bin<<","<<h2_sf->GetYaxis()->GetBinLowEdge(i+1)<<std::endl;
 				if (mu1_x < h2_sf->GetXaxis()->GetBinLowEdge(i+1)) {
 					x_bin = i;
 					break;
@@ -90,7 +90,7 @@ def gInterpreter_SF():
 			if (mu1_x < h2_sf->GetXaxis()->GetBinLowEdge(1)) x_bin=1;
 			nbins=h2_sf->GetNbinsY();
 			for (int i=1;i<=nbins;i++) {
-				//std::cout<<"in eta; y_bin,x_bin:"<<y_bin<<","<<x_bin<<std::endl;
+				// std::cout<<"in eta; y_bin,x_bin:"<<y_bin<<","<<x_bin<<std::endl;
 				if (mu1_y < h2_sf->GetYaxis()->GetBinLowEdge(i+1)) {
 					y_bin = i;
 					break;
@@ -98,10 +98,19 @@ def gInterpreter_SF():
 			}
 			if (mu1_y > h2_sf->GetYaxis()->GetBinLowEdge(nbins+1)) y_bin=nbins;
 			if (mu1_y < h2_sf->GetYaxis()->GetBinLowEdge(1)) y_bin=1;
-			//std::cout<<"y_bin,x_bin:"<<y_bin<<","<<x_bin<<std::endl;
-			//std::cout<<"SF-"<<h2_sf->GetBinContent(x_bin,y_bin)<<std::endl;
-			if (tag.Contains("dR")) x_bin=1;
-			return h2_sf->GetBinContent(x_bin,y_bin);
+			// std::cout<<"y_bin,x_bin:"<<y_bin<<","<<x_bin<<std::endl;
+			// std::cout<<"SF-"<<h2_sf->GetBinContent(x_bin,y_bin)<<std::endl;
+			// if (tag.Contains("dR")) x_bin=1;
+			if (h2_sf->GetBinContent(x_bin,y_bin)==0) {
+				if (x_bin==1) x_bin=x_bin+1;
+				else x_bin=x_bin-1;
+			}
+			if (shift.Contains("up")) 
+				return h2_sf->GetBinContent(x_bin,y_bin)+h2_sf->GetBinError(x_bin,y_bin);
+			else if (shift.Contains("down"))
+				return h2_sf->GetBinContent(x_bin,y_bin)-h2_sf->GetBinError(x_bin,y_bin);
+			else
+				return h2_sf->GetBinContent(x_bin,y_bin);
         }
         Float_t getSF(std::shared_ptr<const correction::Correction> m_SF_map_Z_tag, std::shared_ptr<const correction::Correction> m_SF_map_JPsi_tag,  TString type, Float_t mu1_pt=-99, Float_t mu1_eta=-99, Float_t mu2_pt=-99,Float_t mu2_eta=-99)
         {
@@ -152,6 +161,8 @@ def gInterpreter_SF():
 			if (type.Contains("trg")) return mu1_sf;
 			else return mu1_sf*mu2_sf;
         }
+		
+
 		Float_t getSF(std::shared_ptr<const correction::Correction> m_SF_map_Z_tag, TH2D* h2_sf, TString type, Float_t mu1_pt=-99, Float_t mu1_eta=-99, Float_t mu2_pt=-99,Float_t mu2_eta=-99)
         {
 			//std::cout<<"Looking at: "<<type.Data()<<std::endl;

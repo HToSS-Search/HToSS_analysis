@@ -127,6 +127,8 @@ def main():
     # parser.add_argument("--yhigh", dest="yhigh", default=500,help="y-axis multiplicative factor for ymax", type=float)
     parser.add_argument("--log", dest="log", help="true for plotting with logY, false by default", action="store_true")
     parser.add_argument("--dividebywidth", dest="dividebywidth", help="true for dividing with bin width, false by default", action="store_true")
+    parser.add_argument("--analysis", dest="analysis", help="true for plotting after analysis, false by default", action="store_true")
+
     # parser.add_argument("--noratio", dest="noratio", help="true for not plotting with ratio, false by default", action="store_true")
     # add an option to plot just one plot accessible name in histo_dict; change savename accordingly
     args = parser.parse_args()
@@ -212,9 +214,18 @@ def main():
     }
     h_src={} #dict of hist
     for key in weightID_dict:
-        htmp=f_src.Get('h_genHiggsPt_'+key).Clone()
+        if args.analysis:
+            htmp=f_src.Get('prompt/h_genHiggsPt_'+key).Clone()
+            htmp.Add(f_src.Get('displacedmumu/h_genHiggsPt_'+key).Clone())
+            htmp.Add(f_src.Get('displacedhh/h_genHiggsPt_'+key).Clone())
+            htmp.Add(f_src.Get('displaced/h_genHiggsPt_'+key).Clone())
+        else:
+            if key=='nominal':
+                htmp=f_src.Get('h_genHiggsPt_'+key).Clone()
+            else:
+                htmp=f_src.Get('h_genHiggsPt_'+key).Clone()
         htmp=htmp.Rebin(len(custom_bins)-1,"rebinned",array('d',custom_bins))
-        # htmp.Scale(1/htmp.Integral())
+        htmp.Scale(1/htmp.Integral())
         hclone = htmp.Clone()
         for bin_idx in range(1, htmp.GetNbinsX() + 1):
             # Get the bin content and bin width
@@ -244,7 +255,7 @@ def main():
         leg.AddEntry(h_src[key], weightID_dict[key]['label'], "pel")
     
 
-    savename='GenHiggsPt_unc'
+    savename='GenHiggsPt_unc'+'_test'
     if args.dividebywidth:
         savename=savename+"_dividebywidth"
     boundary_percent = 0.35
@@ -295,6 +306,7 @@ def main():
 
     pad2.cd()
     h_ratio={}
+
     for key in h_src:
         h_ratio[key]=h_src[key].Clone()
         h_ratio[key].Divide(h_src['nominal'])
@@ -310,8 +322,8 @@ def main():
         # hd_src_ref.GetYaxis().SetLabelOffset(hs.GetYaxis().GetLabelOffset())
         h_ratio[key].GetYaxis().SetTitle("Ratio with nominal")
         h_ratio[key].GetXaxis().SetTitle(xlabel)
-        h_ratio[key].SetMinimum(0.5)
-        h_ratio[key].SetMaximum(1.5)
+        h_ratio[key].SetMinimum(0.7)
+        h_ratio[key].SetMaximum(1.3)
     pad2.Modified()
     pad2.Update()
     h_ratio['nominal'].Draw('pe')
@@ -330,7 +342,14 @@ def main():
     c1.SaveAs(args.out+'/'+savename+'.png')
     c1.SaveAs(args.out+'/'+savename+'.pdf')
     
-
+    #### save to file ####
+    f_ratio=ROOT.TFile("scale_factors/HiggsPtReweighting_tmp/ggH_HiggsPtReweight_shape.root", "RECREATE")
+    for key in weightID_dict:
+        print(key)
+        h_ratio[key].SetName(key)
+        h_ratio[key].SetTitle(key)
+        h_ratio[key].Write()
+    f_ratio.Close()
 
     #c.Print(args.out+savename+'.root')
 if __name__ == '__main__':

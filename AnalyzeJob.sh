@@ -19,6 +19,7 @@ wd="/user/sdansana"
 rel="CMSSW_10_6_27/src/HToSS_analysis"
 reldir=$wd/$rel
 cd $reldir
+#cd /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis
 echo ""$reldir
 
 

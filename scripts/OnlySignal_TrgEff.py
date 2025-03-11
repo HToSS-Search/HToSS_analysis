@@ -56,28 +56,29 @@ def createCanvasPads(savename,boundary=0.25):
     return c, pad1, pad2
 
 def createRatio(h1, h2):
-    # npts = h1.GetNbinsX()
-    # sfx=[None]*npts
-    # sfx_err=[None]*npts
-    # sfy=[None]*npts
-    # sfy_err=[None]*npts
+    print(h1.GetNbinsX(),h2.GetNbinsX())
+    npts_1 = h1.GetNbinsX()
+    npts_2 = h2.GetNbinsX()
+    npts=npts_1
+    sfx=[0]*npts
+    sfx_err=[0]*npts
+    sfy=[0]*npts
+    sfy_err=[0]*npts
 
-    # for i in range(npts):
-    #     # mcEff, dataEff = 0., 0.
-    #     # h2.GetPoint(i,mcEff,sfx[i])
-    #     # h1.GetPoint(i,dataEff,sfx[i])
-    #     # mcErr, dataErr = h2.GetErrorY(i), h1.GetErrorY(i)
-    #     # sfx[i] = h2.GetPointX(i)
-    #     mcEff, mcErr, dataEff, dataErr = h2.GetY()[i], h2.GetErrorY(i), h1.GetY()[i], h1.GetErrorY(i)
-    #     sfx[i] = h2.GetX()[i]
-    #     sfx_err[i] = h2.GetErrorX(i)
-    #     sfy[i] = dataEff/mcEff if mcEff else 0.0
-    #     sfy_err[i] = 0.0
-    #     if dataEff and mcEff:
-    #         sfy_err[i] = sfy[i] * ((dataErr / dataEff)**2 + (mcErr / mcEff)**2)**0.5
-    # h3 = ROOT.TGraphErrors(npts,array('d',sfx),array('d',sfy),array('d',sfx_err),array('d',sfy_err))
-    h3 = h1.Clone()
-    h3.Divide(h2)
+    for i in range(1,npts):
+        mcEff, mcErr, dataEff, dataErr = h2.GetBinContent(i), h2.GetBinError(i), h1.GetBinContent(i), h1.GetBinError(i)
+        sfx[i] = h2.GetBinCenter(i)
+        sfx_err[i] = h2.GetBinWidth(i)*0.5
+        sfy[i] = dataEff/mcEff if mcEff else 0.0
+        sfy_err[i] = 0.0
+        if sfy[i]==1:
+            print(dataEff,mcEff,sfx[i])
+        if dataEff and mcEff:
+            sfy_err[i] = sfy[i] * ((dataErr / dataEff)**2 + (mcErr / mcEff)**2)**0.5
+    # print(sfx,sfx_err,sfy,sfy_err)
+    h3 = ROOT.TGraphErrors(npts-1,array('d',sfx[1:]),array('d',sfy[1:]),array('d',sfx_err[1:]),array('d',sfy_err[1:]))
+    # h3 = h1.Clone()
+    # h3.Divide(h2)
     h3.SetLineColor(kBlack)
     h3.SetMarkerStyle(21)
     h3.SetTitle("Data/MC")
@@ -189,7 +190,19 @@ def main():
         # 'genScalar1Lxy': {'hname':'h_genScalar1Lxy','label':"L_{xy}^{S} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
         # 'genScalar2Lxy': {'hname':'h_genScalar2Lxy','label':"L_{xy}^{\\bar{S}} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
         # 'DiChVtxLxy': {'hname':'h_DiChHadVtxLxy','label':"L_{xy}^{h^{+}h^{-}} (cm)", 'xlow':0,'xhigh':100,'hrebin':5},
-        'genScalar1L': {'hname':'h_genScalar1L','label':"gen. L_{xyz}^{S} (cm)", 'xlow':0,'xhigh':60,'hrebin':6},
+        'genScalar1L': {'hname':'h_genScalar1L','label':"gen. L_{xyz}^{S} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
+        'genScalar1Lxy': {'hname':'h_genScalar1Lxy','label':"gen. L_{xy}^{S} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
+        'genScalar1Lxy_Lzcut': {'hname':'h_genScalar1Lxy_Lzcut','label':"gen. L_{xy}^{S} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
+        'genScalar1Lz': {'hname':'h_genScalar1Lz','label':"gen. L_{z}^{S} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
+        'genLeadingMuDxy': {'hname':'h_genLeadingMuDxy','label':"leading #mu gen. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
+        'gensubLeadingMuDxy': {'hname':'h_gensubLeadingMuDxy','label':"subleading #mu gen. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
+        # 'gensubLeadingMuDxy_LeadDxyBin1': {'hname':'h_gensubLeadingMuDxy_LeadDxyBin1','label':"subleading #mu gen. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':10},
+        # 'genScalar1L': {'hname':'h_genScalar1L','label':"gen. L_{xyz}^{S} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
+        'recoScalar1Lxy': {'hname':'h_recoScalar1Lxy','label':"reco. L_{xy}^{S} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
+        'recoLeadingMuDxy': {'hname':'h_recoLeadingMuDxy','label':"leading #mu reco. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
+        'recosubLeadingMuDxy': {'hname':'h_recosubLeadingMuDxy','label':"subleading #mu reco. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
+        'genLeadingMuDxy_PromptLxy': {'hname':'h_genLeadingMuDxy_PromptLxy','label':"leading #mu gen. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
+        'gensubLeadingMuDxy_PromptLxy': {'hname':'h_gensubLeadingMuDxy_PromptLxy','label':"subleading #mu gen. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
         # 'genScalar2L': {'hname':'h_genScalar2L','label':"L_{xyz}^{\\bar{S}} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
 
         # 'DiMuonVtxSignificance': {'hname':'h_DiMuonVtxSignificance','label':"L_{xy}^{#mu^{+}#mu^{-}}/#Delta L_{xy}^{#mu^{+}#mu^{-}}", 'xlow':0,'xhigh':1000,'hrebin':40},
@@ -247,11 +260,15 @@ def main():
         # 'leadingChHadPt':{'hname':"h_leadingChHadPt",'label':"leading h^{#pm} p_{T} (GeV)",'xlow':0,'xhigh':100,'hrebin':60}
 
     }
+
+    histo_dict_2d = {
+        'genLeadingMuDxy_gensubLeadingMuDxy': {'hname':'h_genLeadingMuDxy_gensubLeadingMuDxy','labelx':"subleading #mu gen. d_{xy} (cm)",'labely':"leading #mu gen. d_{xy} (cm)", 'xlow':0.001,'xhigh':60,'ylow':0.001,'yhigh':60,'hrebin':10},        
+    }
     datasets_dict = {
-        'HToSS_MH125_MS'+args.mass+'_ctauS0':{'type':'signal','label':"c#tau = 0.1mm",'style': 34,'color':2,'integral':-1},
-        'HToSS_MH125_MS'+args.mass+'_ctauS1':{'type':'signal','label':"c#tau = 1mm",'style': 47,'color':3,'integral':-1},
-        'HToSS_MH125_MS'+args.mass+'_ctauS10':{'type':'signal','label':"c#tau = 10mm",'style': 22,'color':4,'integral':-1},
-        'HToSS_MH125_MS'+args.mass+'_ctauS100':{'type':'signal','label':"c#tau = 100mm",'style': 33,'color':6,'integral':-1},
+        'HToSS_MH125_MS'+args.mass+'_ctauS0':{'type':'signal','label':"m_{S}="+args.mass.replace('p','.')+" GeV, c#tau = 0.1mm",'style': 34,'color':2,'integral':-1},
+        'HToSS_MH125_MS'+args.mass+'_ctauS1':{'type':'signal','label':"m_{S}="+args.mass.replace('p','.')+" GeV, c#tau = 1mm",'style': 47,'color':3,'integral':-1},
+        'HToSS_MH125_MS'+args.mass+'_ctauS10':{'type':'signal','label':"m_{S}="+args.mass.replace('p','.')+" GeV, c#tau = 10mm",'style': 22,'color':4,'integral':-1},
+        'HToSS_MH125_MS'+args.mass+'_ctauS100':{'type':'signal','label':"m_{S}="+args.mass.replace('p','.')+" GeV, c#tau = 100mm",'style': 33,'color':6,'integral':-1},
         # 'HToSS_MH125_MS'+args.mass+'_ctauS0':{'type':'signal','label':"#splitline{m_{S}="+args.mass.replace('p','.')+" GeV,}{c#tau = 0.1mm}",'style': 34,'color':2,'integral':-1},
         # 'HToSS_MH125_MS'+args.mass+'_ctauS1':{'type':'signal','label':"#splitline{m_{S}="+args.mass.replace('p','.')+" GeV,}{c#tau = 1mm}",'style': 47,'color':3,'integral':-1},
         # 'HToSS_MH125_MS'+args.mass+'_ctauS10':{'type':'signal','label':"#splitline{m_{S}="+args.mass.replace('p','.')+" GeV,}{c#tau = 10mm}",'style': 22,'color':4,'integral':-1},
@@ -282,7 +299,14 @@ def main():
         for key in histo_dict:
             print(key)
             fsig=[]
-            leg = ROOT.TLegend(0.7, 0.7, 0.95, 0.92)
+            # if "Dxy" in key and trg!="singlemutrg":
+            #     continue
+            if "Pt" in key:
+                xini,xfin=0.2,0.35
+                leg = ROOT.TLegend(xini, 0.4, xfin, 0.62)
+            else:
+                xini,xfin=0.65, 0.9
+                leg = ROOT.TLegend(xini, 0.7, xfin, 0.92)
             leg.SetBorderSize(0)
             leg.SetFillStyle(0)
             # leg.SetNColumns(2)
@@ -305,11 +329,14 @@ def main():
             # Lower ratio plot is pad2
             c1.cd()
             pad1.cd()
+            if "Dxy" in key:
+                pad1.SetLogx()
+                # pad1.SetLogy()
             # if args.log:
             #     # c1.SetLogy()
             #     pad1.SetLogy()
                 # pad1.SetLogx()
-
+            h_ratios=[]
             for dno,dname in enumerate(datasets_dict):
                 # print(dname)
                 hprop = histo_dict[key]
@@ -323,61 +350,97 @@ def main():
                     h_1.Add(fsig.Get('displacedhh'+'/'+histname))
                 else:
                     h_1 = fsig.Get(histname+"_"+trg).Clone()
+                h_1.Sumw2()
                 h_1.Rebin(hprop['hrebin'])
-                h_1.Scale(lumi_factor)
+                # h_1.Scale(lumi_factor)
                 # if args.norm:
                 #     h_1.Scale(1/h_1.Integral())
                 if "Pt" in key:
                     h_den = fsig.Get(histname).Clone()
                 else:
                     h_den = fsig.Get(histname+"_den").Clone()
+                h_den.Sumw2()
                 h_den.Rebin(hprop['hrebin'])
-                h_den.Scale(lumi_factor)
-                h_1.Divide(h_den)
-                datasets_dict[dname]['integral']=h_1.Integral()
+                # h_den.Scale(lumi_factor)
+                h_ratio = createRatio(h_1,h_den)
+                # if "Dxy" in key:
+                #     print("PRINT-",h_den.GetBinContent(9),h_1.GetBinContent(9),h_ratio.GetY()[8])
+                # h_ratio=h_1.Clone()
+                # h_ratio.Divide(h_den)
+                datasets_dict[dname]['integral']=h_ratio.Integral()
                 color_ = datasets_dict[dname]['color']
-                h_1.SetFillColor(color_)
-                h_1.SetFillStyle(0) # hollow hist
-                h_1.SetMarkerColor(color_)
-                h_1.SetLineColor(color_)
-                h_1.SetMarkerStyle(datasets_dict[dname]['style'])
-                h_1.SetMarkerSize(m_size)
+                h_ratio.SetFillColor(color_)
+                h_ratio.SetFillStyle(0) # hollow hist
+                h_ratio.SetMarkerColor(color_)
+                h_ratio.SetLineColor(color_)
+                h_ratio.SetMarkerStyle(datasets_dict[dname]['style'])
+                h_ratio.SetMarkerSize(m_size)
                 # h_1.SetLineWidth(m_size)
-                h_1.GetXaxis().SetRangeUser(hprop['xlow'],hprop['xhigh'])
+                h_ratio.GetXaxis().SetRangeUser(hprop['xlow'],hprop['xhigh'])
+                # h_1.GetYaxis().SetRangeUser(0,1.1)
                 # if args.log:
                 #     h_1.GetXaxis().SetLimits(1e-2,1e2)
-                h_1.GetXaxis().SetTitle(hprop['label'])
+                h_ratio.GetXaxis().SetTitle(hprop['label'])
                 # h_1.GetYaxis().SetTitle("Normalized Events / "+str(h_1.GetXaxis().GetBinWidth(1)))
                 # h_1.GetYaxis().SetTitle("Events/#Sigma(wts) / "+str(h_1.GetXaxis().GetBinWidth(1)))
                 # h_1.GetYaxis().SetTitle("Events / "+str(h_1.GetXaxis().GetBinWidth(1)))
-                h_1.GetYaxis().SetTitle("Signal Efficiency")
-                h_1.GetYaxis().SetTitle(trg_eff_ylabel[num])
-                leg.AddEntry(h_1, datasets_dict[dname]['label'], "l")
-                h_1.SetMinimum(0.)
-                h_1.SetMaximum(1.)
+                h_ratio.GetYaxis().SetTitle("Signal Efficiency")
+                h_ratio.GetYaxis().SetTitle(trg_eff_ylabel[num])
+                leg.AddEntry(h_ratio, datasets_dict[dname]['label'], "p")
+                h_ratio.SetMinimum(0.)
+                h_ratio.SetMaximum(1.1)
                 # ymax = args.yhigh*h_1.GetMaximum()
-                h_1.GetXaxis().SetTitleSize(0.05)
-                h_1.GetYaxis().SetTitleSize(0.05)
-                h_1.GetXaxis().SetLabelSize(0.045)
-                h_1.GetYaxis().SetLabelSize(0.045)
-                h_1.GetXaxis().SetTitleOffset(1.1)
-                h_1.GetYaxis().SetTitleOffset(1.4)
+                h_ratio.GetXaxis().SetTitleSize(0.05)
+                h_ratio.GetYaxis().SetTitleSize(0.05)
+                h_ratio.GetXaxis().SetLabelSize(0.045)
+                h_ratio.GetYaxis().SetLabelSize(0.045)
+                h_ratio.GetXaxis().SetTitleOffset(1.1)
+                h_ratio.GetYaxis().SetTitleOffset(1.4)
 
                 if dname.count('ctauS')==2:
-                    h_1.SetLineStyle(9)
-                    h_1.SetLineWidth(8)
+                    h_ratio.SetLineStyle(9)
+                    h_ratio.SetLineWidth(8)
                 else:
-                    h_1.SetLineStyle(1)
-                    h_1.SetLineWidth(7)
+                    h_ratio.SetLineStyle(1)
+                    h_ratio.SetLineWidth(7)
 
                 if dno==0:
-                    h_1.Draw("hist p")
+                    # h_ratio.Draw("hist p0")
+                    h_ratios.append(h_ratio)
                 else:
-                    h_1.Draw("hist p same")
+                    # h_ratio.Draw("hist p0 same")
+                    h_ratios.append(h_ratio)
                 # pad1.Modified()
                 # pad1.Update()
                 fsig.Close()
+            for i in range(4):
+                if i==0:
+                    h_ratios[i].Draw("ap0")
+                else:
+                    h_ratios[i].Draw("p0 same")
             leg.Draw("same")
+
+            rtext1="m_{S}="+args.mass.replace('p','.')+" GeV"
+            additional_text = []
+            additional_text += [rtext1]
+            if additional_text:
+                nother = len(additional_text)
+                # dims = [xleg-0.05, yleg - nother * 0.04 - 0.02, 0.85, 0.65]
+                dims = [xini, 0.6 - nother * 0.04 - 0.02, xini, 0.6]
+                text = ROOT.TPaveText(*dims + ['NB NDC'])
+                text.SetTextFont(42)
+                text.SetBorderSize(0)
+                text.SetFillColor(0)
+                text.SetTextAlign(11)
+                # if args.noratio:
+                text.SetTextSize(0.02)
+                # else:
+                    # text.SetTextSize(0.04)
+                for rtext in additional_text:
+                    text.AddText(rtext)
+                # text.Draw()
+
+            
             # print("WTF")
             pad1.Modified()
             pad1.Update()
@@ -396,6 +459,135 @@ def main():
             c1.Update()
             c1.SaveAs(args.out+'/'+savename+'.png')
             c1.SaveAs(args.out+'/'+savename+'.pdf')
+
+    for num,trg in enumerate(trg_eff):
+        for key in histo_dict_2d:
+            print(key)
+            fsig=[]
+            if "LeadDxyBin1" in key and trg!="singlemutrg":
+                continue
+            # hsig=[]
+            
+            # if args.log:
+            #     # c1.SetLogy()
+            #     pad1.SetLogy()
+                # pad1.SetLogx()
+            h_ratios=[]
+            for dno,dname in enumerate(datasets_dict):
+                hists={}
+                # print(dname)
+                hprop = histo_dict_2d[key]
+                histname = hprop['hname']
+                print(args.input+"/"+ "output_" + dname + ".root")
+                fsig=ROOT.TFile(args.input+"/"+ "output_" + dname + ".root", "READ")
+                if args.analysis:
+                    h_1 = fsig.Get('prompt'+'/'+histname)
+                    h_1.Add(fsig.Get('displaced'+'/'+histname))
+                    h_1.Add(fsig.Get('displacedmumu'+'/'+histname))
+                    h_1.Add(fsig.Get('displacedhh'+'/'+histname))
+                else:
+                    h_1 = fsig.Get(histname+"_"+trg).Clone()
+                h_1.Sumw2()
+                h_1.Rebin2D(hprop['hrebin'],hprop['hrebin'])
+                # h_1.Scale(lumi_factor)
+                # if args.norm:
+                #     h_1.Scale(1/h_1.Integral())
+                if "Pt" in key:
+                    h_den = fsig.Get(histname).Clone()
+                else:
+                    h_den = fsig.Get(histname+"_den").Clone()
+                h_den.Sumw2()
+                h_den.Rebin2D(hprop['hrebin'],hprop['hrebin'])
+                # h_den.Scale(lumi_factor)
+                h_ratio=h_1.Clone()
+                h_ratio.Divide(h_den)
+                # h_ratio = createRatio(h_1,h_den)
+                datasets_dict[dname]['integral']=h_ratio.Integral()
+                color_ = datasets_dict[dname]['color']
+                
+                hists['singlemutrg']=h_1
+                hists['den']=h_den
+                hists['eff']=h_ratio
+
+                for ktmp in hists:
+
+                    
+                    boundary_percent = 0.35
+                    ylength_c = int(2400*(1-boundary_percent+0.15))
+                    c1 = TCanvas(savename, savename, 2200, ylength_c)
+                    pad1 = ROOT.TPad("pad1", "pad1", 0, 0, 1, 1)
+                    pad1.SetTopMargin(0.06)
+                    pad1.SetBottomMargin(0.15)
+                    pad1.SetLeftMargin(0.16)
+                    pad1.SetRightMargin(0.1)
+                    #pad1.SetGridx()
+                    pad1.Draw()
+                    # Lower ratio plot is pad2
+                    c1.cd()
+                    pad1.cd()
+
+                    if "Dxy" in key:
+                        pad1.SetLogx()
+                        pad1.SetLogy()
+                    hists[ktmp].GetXaxis().SetRangeUser(hprop['xlow'],hprop['xhigh'])
+                    hists[ktmp].GetXaxis().SetLimits(hprop['xlow'],hprop['xhigh'])
+                    hists[ktmp].GetYaxis().SetRangeUser(hprop['ylow'],hprop['yhigh'])
+                    hists[ktmp].GetYaxis().SetLimits(hprop['ylow'],hprop['yhigh'])
+                    hists[ktmp].GetXaxis().SetTitle(hprop['labelx'])
+                    hists[ktmp].GetYaxis().SetTitle(hprop['labely'])
+                    hists[ktmp].GetXaxis().SetTitleSize(0.05)
+                    hists[ktmp].GetYaxis().SetTitleSize(0.05)
+                    hists[ktmp].GetXaxis().SetLabelSize(0.045)
+                    hists[ktmp].GetYaxis().SetLabelSize(0.045)
+                    hists[ktmp].GetXaxis().SetTitleOffset(1.1)
+                    hists[ktmp].GetYaxis().SetTitleOffset(1.4)
+                    if args.analysis:   
+                        savename=key+'_'+dname+"_"+ktmp+"_analysis"
+                    else:
+                        savename=key+'_'+dname+"_"+ktmp
+                    
+                    hists[ktmp].Draw("COLZ same")
+
+                    rtext1=datasets_dict[dname]['label']
+                    additional_text = []
+                    additional_text += [rtext1]
+                    if additional_text:
+                        nother = len(additional_text)
+                        # dims = [xleg-0.05, yleg - nother * 0.04 - 0.02, 0.85, 0.65]
+                        dims = [0.6, 0.6 - nother * 0.04 - 0.02, 0.6, 0.6]
+                        text = ROOT.TPaveText(*dims + ['NB NDC'])
+                        text.SetTextFont(42)
+                        text.SetBorderSize(0)
+                        text.SetFillColor(0)
+                        text.SetTextAlign(11)
+                        # if args.noratio:
+                        text.SetTextSize(0.02)
+                        # else:
+                            # text.SetTextSize(0.04)
+                        for rtext in additional_text:
+                            text.AddText(rtext)
+                        text.Draw()
+
+                    pad1.Modified()
+                    pad1.Update()
+
+                    CMS_lumi.cmsText = 'CMS'
+                    CMS_lumi.writeExtraText = True
+                    CMS_lumi.extraText = 'Work in Progress'
+                    CMS_lumi.lumi_13TeV = args.year+" MC"
+                    CMS_lumi.lumiTextSize = 0.5
+                    CMS_lumi.cmsTextSize=1.
+                    CMS_lumi.CMS_lumi(pad1, 4, 11)
+
+                    pad1.Modified()
+                    pad1.Update()
+                    c1.Modified()
+                    c1.Update()
+                    c1.SaveAs(args.out+'/'+savename+'.png')
+                    c1.SaveAs(args.out+'/'+savename+'.pdf')
+                # pad1.Modified()
+                # pad1.Update()
+                fsig.Close()
         # c1.SaveAs(args.out+'/'+dirn+savename+'.root')
         # c1.Clear()
         # c1.Delete()

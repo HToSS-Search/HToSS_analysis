@@ -11,6 +11,7 @@ def maxfilenumber(path):
 parser = argparse.ArgumentParser(description='arguments')
 parser.add_argument("-i", "--input", dest="input",   help="Enter params file to process", type=str)
 parser.add_argument("-s", "--suffix", dest="suf",   help="Enter suffix for output file", type=str)
+parser.add_argument("-y","--year", dest="year", help="Year for processing", type=str)
 # parser.add_argument("-d", "--data", dest="isData",   help="Special mod for data", action='store_true')
 # parser.add_argument("--skim", dest="isSkim",   help="Special mod for skim", action='store_true')
 args = parser.parse_args()
@@ -28,7 +29,7 @@ for l_no, line in enumerate(fparams):
 	arguments = line.split(',')
 	root_fname = [i for i in arguments if ".root" in i and "weight" not in i][0]
 	# print(root_fname)
-	error_fname = 'error/error_'+arguments[-2].replace('\n','')+'_'+arguments[-4]+'-'+arguments[-3]+'.txt'
+	error_fname = 'error/error_'+arguments[-2].replace('\n','')+'_'+args.year+'_'+arguments[-4]+'-'+arguments[-3]+'.txt'
 	#error_fname = [i.split('/')[-1].replace('output_','error/error_').replace('.root','.txt') for i in arguments if ".root" in i and "weight" not in i][0]
 
 	if ('tWz' in error_fname):

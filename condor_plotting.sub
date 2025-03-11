@@ -10,4 +10,4 @@ log = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/log/log_$(dataset)_$(categ
 #request_cpus=4
 +JobFlavour = "espresso"
 max_retries = 5
-queue indir,outdir,yhi,cuts,dataset,category,year from params_plotting_small.txt
+queue indir,outdir,yhi,cuts,dataset,category,year from params_plotting_presel.txt

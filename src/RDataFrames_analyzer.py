@@ -425,7 +425,7 @@ if data_name.count('ctauS') >= 1:
 # print(rdf.Count().GetValue())
 # print(rdf.Filter('lifetimesample>5').Count().GetValue())
 # print(rdf.Filter('lifetimesample<5').Count().GetValue())
-# entries_total = rdf.Count()
+# entries_total = rdf.Count()Display
 # histtmp = rdf.Histo1D('lifetimesample')
 # c1=ROOT.TCanvas()
 # histtmp.Draw()
@@ -440,7 +440,11 @@ entries_total = rdf.Count()
 # sys.stderr.write("entries total:"+str(entries_total.GetValue())+'\n')
 # sys.stderr.flush()
 dataset_weight = cross_section/sum_wts
-rdf_new = rdf.Define('weightOnlyDataset','processMCWeight*{}'.format(dataset_weight))
+weightID_dict={\
+				"muF2":7,"muF0p5":13,"muR2":3,"muF2muR2":9,"muF0p5muR2":15,"muR0p5":5,"muF2muR0p5":11,"muF0p5muR0p5":17\
+			} #bin center, bin content(1) is bin content centered at 0
+rdf=rdf.Define('weight_','processMCWeight')
+rdf_new = rdf.Define('weightOnlyDataset','weight_*{}'.format(dataset_weight))
 # quit()
 if "PUup" in args.output:
 	shift="up"
@@ -458,7 +462,7 @@ else:
 	pileupMap_c = ROOT.GetTheMap()
 	for key in pileupMap:
 		pileupMap_c[key]=pileupMap[key]
-	rdf_new = rdf.Define('weightOnlyDataset','processMCWeight*{}'.format(dataset_weight))
+	rdf_new = rdf.Define('weightOnlyDataset','weight_*{}'.format(dataset_weight))
 	rdf_new = rdf_new.Define('PUReweight_sf','GetTheMap()[floor(numVert)]')
 	rdf_new = rdf_new.Define('weight_tmp','weightOnlyDataset*PUReweight_sf')
 	# print(pileupMap)
@@ -467,7 +471,7 @@ else:
 	# quit()
 
 	std_lt=[0,1,10,100]
-
+	pv_sel = 'pvChi2!=0 && pvNdof!=0'
 	########## LLP lifetime reweighting #########
 	if ('HToSS' in args.config):
 		scalar1_index = 'genParId==9000006'
@@ -483,7 +487,10 @@ else:
 		print(data_name)
 		new_lt = float(data_name.split('_')[-1].replace('ctauS','').replace('p','.'))
 		print (mass,old_lt,new_lt)
+		mu_mass=0.1056583745
 		# quit()
+		#pvX[{pv_sel}][0]
+		# (-(vtx.x()-PV.x())*p4.py()+(vtx.y()-PV.y())*p4.px())/p4.pt();
 		# .Define('genmu1_pt',f'genParPt[scalar1_dau1_idx[0]] > genParPt[scalar1_dau2_idx[0]] ? genParPt[scalar1_dau1_idx[0]]:genParPt[scalar1_dau2_idx[0]]')\
 		# .Define('genmu2_pt',f'genParPt[scalar1_dau1_idx[0]] < genParPt[scalar1_dau2_idx[0]] ? genParPt[scalar1_dau1_idx[0]]:genParPt[scalar1_dau2_idx[0]]')\
 		# .Define('genmu1_eta',f'genParPt[scalar1_dau1_idx[0]] > genParPt[scalar1_dau2_idx[0]] ? genParEta[scalar1_dau1_idx[0]]:genParEta[scalar1_dau2_idx[0]]')\
@@ -503,7 +510,21 @@ else:
 						.Define('scalar1_Vz',f'genParVz[{scalar1_index}]')\
 						.Define('dau1_Vz','genParVz[scalar1_dau1_idx[0]]')\
 						.Define('genpmu_pt',f'genParPt[{genpmu_index}][0]')\
+						.Define('genpmu_eta',f'genParEta[{genpmu_index}][0]')\
+						.Define('genpmu_phi',f'genParPhi[{genpmu_index}][0]')\
+						.Define('genpmu_vx',f'genParVx[{genpmu_index}][0]')\
+						.Define('genpmu_vy',f'genParVy[{genpmu_index}][0]')\
 						.Define('gennmu_pt',f'genParPt[{gennmu_index}][0]')\
+						.Define('gennmu_eta',f'genParEta[{gennmu_index}][0]')\
+						.Define('gennmu_phi',f'genParPhi[{gennmu_index}][0]')\
+						.Define('gennmu_vx',f'genParVx[{gennmu_index}][0]')\
+						.Define('gennmu_vy',f'genParVy[{gennmu_index}][0]')\
+						.Define('genpmu_vec',f'ROOT::Math::PtEtaPhiMVector(genpmu_pt, genpmu_eta, genpmu_phi, {mu_mass})')\
+						.Define('gennmu_vec',f'ROOT::Math::PtEtaPhiMVector(gennmu_pt, gennmu_eta, gennmu_phi, {mu_mass})')\
+						.Define('gennmu_dxy',f'(-(gennmu_vx-pvX[{pv_sel}][0])*gennmu_vec.Py()+(gennmu_vy-pvY[{pv_sel}][0])*gennmu_vec.Px())/gennmu_pt')\
+						.Define('genpmu_dxy',f'(-(genpmu_vx-pvX[{pv_sel}][0])*genpmu_vec.Py()+(genpmu_vy-pvY[{pv_sel}][0])*genpmu_vec.Px())/genpmu_pt')\
+						.Define('genmu1_dxy',f'genpmu_pt > gennmu_pt ? genpmu_dxy:gennmu_dxy')\
+						.Define('genmu2_dxy',f'genpmu_pt < gennmu_pt ? genpmu_dxy:gennmu_dxy')\
 						.Define('genmu1_pt',f'genpmu_pt > gennmu_pt ? genParPt[{genpmu_index}][0]:genParPt[{gennmu_index}][0]')\
 						.Define('genmu2_pt',f'genpmu_pt < gennmu_pt ? genParPt[{genpmu_index}][0]:genParPt[{gennmu_index}][0]')\
 						.Define('genmu1_eta',f'genpmu_pt > gennmu_pt ? genParEta[{genpmu_index}][0]:genParEta[{gennmu_index}][0]')\
@@ -516,25 +537,27 @@ else:
 						.Define('scalar2_dVx',f'genParVx[{scalar2_index}] - genParVx[scalar2_dau1_idx[0]]')\
 						.Define('scalar2_dVy',f'genParVy[{scalar2_index}] - genParVy[scalar2_dau1_idx[0]]')\
 						.Define('scalar2_dVz',f'genParVz[{scalar2_index}] - genParVz[scalar2_dau1_idx[0]]')\
-						.Define('scalar1_genlxy',f'sqrt(scalar1_dVx*scalar1_dVx + scalar1_dVy*scalar1_dVy)')\
-						.Define('scalar2_genlxy',f'sqrt(scalar2_dVx*scalar2_dVx + scalar2_dVy*scalar2_dVy)')\
-						.Define('scalar1_dist',f'sqrt(scalar1_dVx*scalar1_dVx + scalar1_dVy*scalar1_dVy + scalar1_dVz*scalar1_dVz)')\
-						.Define('scalar2_dist',f'sqrt(scalar2_dVx*scalar2_dVx + scalar2_dVy*scalar2_dVy + scalar2_dVz*scalar2_dVz)')\
-						.Define('scalar1_pt',f'genParPt[{scalar1_index}]').Define('scalar1_eta',f'genParEta[{scalar1_index}]').Define('scalar1_phi',f'genParPhi[{scalar1_index}]').Define('scalar1_E',f'genParE[{scalar1_index}]')\
-						.Define('scalar2_pt',f'genParPt[{scalar2_index}]').Define('scalar2_eta',f'genParEta[{scalar2_index}]').Define('scalar2_phi',f'genParPhi[{scalar2_index}]').Define('scalar2_E',f'genParE[{scalar2_index}]')\
-						.Define('scalar1_vec',f'ROOT::Math::PtEtaPhiMVector(scalar1_pt[0], scalar1_eta[0], scalar1_phi[0], {mass})')\
-						.Define('scalar2_vec',f'ROOT::Math::PtEtaPhiMVector(scalar2_pt[0], scalar2_eta[0], scalar2_phi[0], {mass})')\
+						.Define('scalar1_genlxy',f'sqrt(scalar1_dVx*scalar1_dVx + scalar1_dVy*scalar1_dVy)[0]')\
+						.Define('scalar1_genlz',f'abs(scalar1_dVz)[0]')\
+						.Define('scalar2_genlxy',f'sqrt(scalar2_dVx*scalar2_dVx + scalar2_dVy*scalar2_dVy)[0]')\
+						.Define('scalar2_genlz',f'scalar2_dVz[0]')\
+						.Define('scalar1_dist',f'sqrt(scalar1_dVx*scalar1_dVx + scalar1_dVy*scalar1_dVy + scalar1_dVz*scalar1_dVz)[0]')\
+						.Define('scalar2_dist',f'sqrt(scalar2_dVx*scalar2_dVx + scalar2_dVy*scalar2_dVy + scalar2_dVz*scalar2_dVz)[0]')\
+						.Define('scalar1_pt',f'genParPt[{scalar1_index}][0]').Define('scalar1_eta',f'genParEta[{scalar1_index}][0]').Define('scalar1_phi',f'genParPhi[{scalar1_index}][0]').Define('scalar1_E',f'genParE[{scalar1_index}][0]')\
+						.Define('scalar2_pt',f'genParPt[{scalar2_index}][0]').Define('scalar2_eta',f'genParEta[{scalar2_index}][0]').Define('scalar2_phi',f'genParPhi[{scalar2_index}][0]').Define('scalar2_E',f'genParE[{scalar2_index}][0]')\
+						.Define('scalar1_vec',f'ROOT::Math::PtEtaPhiMVector(scalar1_pt, scalar1_eta, scalar1_phi, {mass})')\
+						.Define('scalar2_vec',f'ROOT::Math::PtEtaPhiMVector(scalar2_pt, scalar2_eta, scalar2_phi, {mass})')\
 						.Define('scalar1_mass','scalar1_vec.M()')\
 						.Define('scalar2_mass','scalar2_vec.M()')\
 						.Define('scalar1_bg','scalar1_vec.P()/scalar1_vec.M()')\
 						.Define('scalar2_bg','scalar2_vec.P()/scalar2_vec.M()')\
-						.Define('scalar1_t','10*scalar1_dist[0]/scalar1_bg')\
-						.Define('scalar2_t','10*scalar2_dist[0]/scalar2_bg')\
-						.Define('lifetime_weight',f'getLifetimeReweight(lifetimesample,{new_lt}, scalar1_dist[0], scalar2_dist[0], scalar1_vec, scalar2_vec, {mass})')
+						.Define('scalar1_t','10*scalar1_dist/scalar1_bg')\
+						.Define('scalar2_t','10*scalar2_dist/scalar2_bg')\
+						.Define('lifetime_weight',f'getLifetimeReweight(lifetimesample,{new_lt}, scalar1_dist, scalar2_dist, scalar1_vec, scalar2_vec, {mass})')
 		if data_name.count('ctauS') == 1:
 			rdf_new = rdf_new.Define('weightOnlyDataset_new','weightOnlyDataset')
 			rdf_new = rdf_new.Define('weight_noSF',f'weightOnlyDataset_new*PUReweight_sf')
-			rdf_new = rdf_new.Define('weight_lt','processMCWeight')
+			rdf_new = rdf_new.Define('weight_lt','weight_')
 		else:
 			print("ENTERS REWEIGHTING!")
 
@@ -564,11 +587,11 @@ else:
 			# except:
 			# 	print("some other issue")
 			# 	quit()
-			# print("check this-",sum_wts,eventPlot.Integral(),eventPlot.GetEntries(), entries_check,sum_wts/eventPlot.Integral(),rdf_new.Sum('processMCWeight').GetValue())
-			# sum_wts_new = rdf_new.Define('weight_lt','processMCWeight*lifetime_weight').Sum('weight_lt')
-			rdf_new = rdf_new.Define('weightOnlyDataset_new',f'processMCWeight*{cross_section}*lifetime_weight/{sum_wts_new}')
+			# print("check this-",sum_wts,eventPlot.Integral(),eventPlot.GetEntries(), entries_check,sum_wts/eventPlot.Integral(),rdf_new.Sum('weight_').GetValue())
+			# sum_wts_new = rdf_new.Define('weight_lt','weight_*lifetime_weight').Sum('weight_lt')
+			rdf_new = rdf_new.Define('weightOnlyDataset_new',f'weight_*{cross_section}*lifetime_weight/{sum_wts_new}')
 			rdf_new = rdf_new.Define('weight_noSF',f'weightOnlyDataset_new*PUReweight_sf')
-			rdf_new = rdf_new.Define('weight_lt',f'processMCWeight*lifetime_weight')
+			rdf_new = rdf_new.Define('weight_lt',f'weight_*lifetime_weight')
 			# print(rdf_new.Sum('weight_lt').GetValue(),sum_wts_new)
 			# print(rdf_new.Count().GetValue())
 			# print(rdf.Count().GetValue())
@@ -588,7 +611,7 @@ else:
 			# # print(tmp1.GetValue(),tmp2.GetValue())
 			# # rdf_test.Display({'scalar1_Vx','dau1_Vx','scalar1_Vy','dau1_Vy','scalar1_Vz','dau1_Vz','scalar1_dist'},20).Print()
 			# # rdf_test.Display({'scalar1_mass','scalar2_mass'},20).Print()
-			# sum_wts_small = rdf_new.Sum('processMCWeight').GetValue()
+			# sum_wts_small = rdf_new.Sum('weight_').GetValue()
 			# totentries_small = entries_total.GetValue()
 			# print(sum_wts_small)
 			# print()
@@ -598,7 +621,11 @@ else:
 	else:
 		rdf_new = rdf_new.Define('weight_noSF','weight_tmp') #still has pu reweighting applied though
 
-
+# TESTING TESTING TESTING # 
+# if isData=='true':
+# 	rdf_new = rdf_new.Filter('numPVs<25')
+# else:
+# 	rdf_new = rdf_new.Filter('numVert<25')
 ###########################################
 # rdf_new = rdf_new.Range(0,30,1)
 del rdf
@@ -665,9 +692,7 @@ dimuon_definitions = cut_mu_sel.Define('mu_globalidx',f'getIndices(numMuonPF2PAT
 			.Define('mu2_lv','ROOT::Math::PxPyPzMVector(0.,0.,0.,0.)')\
 			.Define('mu_pair_idx',f'''getDileptonCand(mu_pt_sorted_globalidx, muonPF2PATCharge, muonPF2PATPX, muonPF2PATPY, muonPF2PATPZ, 0.1056583745, 
 		   numMuonTrackPairsPF2PAT,muonTkPairPF2PATIndex1,muonTkPairPF2PATIndex2,muonTkPairPF2PATTk1Px,muonTkPairPF2PATTk1Py,muonTkPairPF2PATTk1Pz,
-		   muonTkPairPF2PATTk2Px,muonTkPairPF2PATTk2Py,muonTkPairPF2PATTk2Pz, "muon", packedCandsPx, packedCandsPy, packedCandsPz, packedCandsE, 
-           packedCandsCharge, packedCandsPdgId, packedCandsFromPV, numPackedCands, 
-		   mu1_lv, mu2_lv, {diMuPt_},{diMudR_})''')\
+		   muonTkPairPF2PATTk2Px,muonTkPairPF2PATTk2Py,muonTkPairPF2PATTk2Pz, "muon", mu1_lv, mu2_lv, {diMuPt_},{diMudR_})''')\
 		    .Define('mu_pair_check','mu_pair_idx[0]>=0 && mu_pair_idx[1]>=0')
 
 #note: mu_pair_idx has 3 things - leading, subleading & track pair index
@@ -699,9 +724,7 @@ dihadron_definitions = cut_hadron_sel.Define('cand_globalidx_hadronsonly',f'getI
 						.Define('ch2_lv','ROOT::Math::PxPyPzMVector(0.,0.,0.,0.)')\
 						.Define('ch_pair_idx',f'''getDileptonCand(ch_globalidx, packedCandsCharge, packedCandsPx, packedCandsPy, packedCandsPz, {chsMass_},  
 			  			numChsTrackPairs,chsTkPairIndex1,chsTkPairIndex2,chsTkPairTk1Px,chsTkPairTk1Py,chsTkPairTk1Pz,chsTkPairTk2Px,chsTkPairTk2Py,chsTkPairTk2Pz,
-			  			"hadron", packedCandsPx, packedCandsPy, packedCandsPz, packedCandsE, 
-						packedCandsCharge, packedCandsPdgId, packedCandsFromPV, numPackedCands, 
-			  			ch1_lv, ch2_lv, {diChPt_}, {diChdR_})''')\
+			  			"hadron", ch1_lv, ch2_lv, {diChPt_}, {diChdR_})''')\
 						.Define('ch_pair_check','ch_pair_idx[0]>=0 && ch_pair_idx[1]>=0')
 cut_dihadron = dihadron_definitions.Filter('ch_pair_check','dihadron candidate')
 cut_dihadron = cut_dihadron.Define('hh_lv','ch1_lv+ch2_lv')\
@@ -911,9 +934,15 @@ if isData=='false':
 
 	# higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
 	# 					.Define('muSF_trg','getSF(h2_trg_sf,"'+mu_sf['trg']['tag']+'",std::abs(mu1_eta),mu1_pt)')
-	if ('HToSS' in args.config):
+	if ('HToSS' in args.config):  # TESTING TESTING TESTING
+		if "trgup" in args.output:
+			shift="up"
+		elif "trgdown" in args.output:
+			shift="down"
+		else:
+			shift="nominal"
 		higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
-							.Define('muSF_trg','getSF(h2_trg_sf,"'+mu_sf['trg']['tag']+'",mumu_dR,mu1_pt)')
+							.Define('muSF_trg','getSF(h2_trg_sf,"'+mu_sf['trg']['tag']+'",mumu_dR,mu1_pt,"'+shift+'")')
 	else:
 		higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
 							.Define('muSF_trg',f'getSF(m_SF_map_Z_tag_trg,m_SF_map_Z_tag_trg,"{args.year}_trg",mu1_pt,mu1_eta,mu2_pt,mu2_eta)')
@@ -937,7 +966,20 @@ if isData=='false':
 		ROOT.gInterpreter.Declare('TFile *higgsPt_file = new TFile("'+conf_sf['higgsPtReweight']['file']+'","READ");TH1D* h_higgspt_sf=(TH1D*)higgsPt_file->Get("'+conf_sf['higgsPtReweight']['tag']+'");')
 		higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
 							.Define('higgsptSF','getSF(h_higgspt_sf,"'+conf_sf['higgsPtReweight']['tag']+'",genHiggsPt[0])')
-		higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('othSF','vtxSF*higgsptSF')
+		if 'muRmuF' in args.output:
+			if 'up' in args.output:
+				upshift="muF2muR2"
+				ROOT.gInterpreter.Declare('TFile *higgsPtShape_file = new TFile("scale_factors/HiggsPtReweighting_tmp/ggH_HiggsPtReweight_shape.root","READ");TH1D* h_higgsptshape_sf=(TH1D*)higgsPtShape_file->Get("'+upshift+'");')
+				higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
+									.Define('higgsptshapeSF','getSF(h_higgsptshape_sf,"HiggsPtShape",genHiggsPt[0])')
+			elif 'down' in args.output:
+				downshift="muF0p5muR0p5"
+				ROOT.gInterpreter.Declare('TFile *higgsPtShape_file = new TFile("scale_factors/HiggsPtReweighting_tmp/ggH_HiggsPtReweight_shape.root","READ");TH1D* h_higgsptshape_sf=(TH1D*)higgsPtShape_file->Get("'+downshift+'");')
+				higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
+									.Define('higgsptshapeSF','getSF(h_higgsptshape_sf,"HiggsPtShape",genHiggsPt[0])')
+			else:
+				higgs_definitions_preblinding_loose_iso.Define('higgsptshapeSF','1')
+		higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('othSF','vtxSF*higgsptSF*higgsptshapeSF')
 		# higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('othSF','vtxSF')
 	else:
 		higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('othSF','vtxSF')
@@ -1016,7 +1058,7 @@ if isData=='false':
 
 
 outFile = ROOT.TFile(args.output, "RECREATE")
-outFile.SetBit(ROOT.TFile.k630forwardCompatibility)
+# outFile.SetBit(ROOT.TFile.k630forwardCompatibility)
 outFile.cd()
 
 hists_1d_precat = {}
@@ -1025,6 +1067,7 @@ hists_2d_precat = {}
 diobjects = {'mumu':'DiMuon','hh':'DiChHad'}
 dikinematics = {
 	'mass':{'var':'lv.M()','nameSuf':'Mass','titleSuf':'','nbins':4000,'minX':0.,'maxX':4.},
+	'dR':{'var':'dR','nameSuf':'DeltaR','titleSuf':'','nbins':1000,'minX':0.,'maxX':0.4},
 	'lxy':{'var':'lxyInfo[0]','nameSuf':'VtxLxy','titleSuf':'','nbins':5000,'minX':0.,'maxX':1000.},
 	'lxysigma':{'var':'lxyInfo[1]','nameSuf':'VtxSigma','titleSuf':'','nbins':1000,'minX':0.,'maxX':10.},
 	'lxysign':{'var':'lxysign_tmp','nameSuf':'VtxSignificance','titleSuf':'','nbins':2000,'minX':0.,'maxX':1000.},
@@ -1054,6 +1097,7 @@ hists_2d_precat["h_DiChHadVtxSignificance_DiChHadMass"] = higgs_definitions_prec
 # hists_2d_precat["h_DiChHadVtxSignificance_AvgMass_mumu_hh"] = higgs_definitions_precat\
 # 				.Histo2D(("h_DiChHadVtxSignificance_AvgMass_mumu_hh", "", dikinematics['lxysign']['nbins'],dikinematics['lxysign']['minX'],dikinematics['lxysign']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
 # 				,'hh_lxysign','avgmass','weight')
+
 
 ####### Selecting around the J/Psi #########
 higgs_definitions_precat_Jpsimass = higgs_definitions_precat_4test.Define('Jpsi_mass_peak','mumu_mass>=2.9 && mumu_mass<=3.3').Filter('Jpsi_mass_peak')
@@ -1095,6 +1139,11 @@ hists_2d_precat["h_DiMuonMass_DiChHadMass"] = higgs_definitions_precat\
 										.Histo2D(("h_DiMuonMass_DiChHadMass", "", dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'],dikinematics['mass']['nbins'],dikinematics['mass']['minX'],dikinematics['mass']['maxX'])\
 										,'mumu_mass','hh_mass','weight')
 hists_1d_precat["h_AvgMass_mumu_hh"] = higgs_definitions_precat.Histo1D(("h_AvgMass_mumu_hh_SMassBC","",5000,0.,5.), 'avgmass','weight')
+if isData=="false":
+	hists_1d_precat["h_numVert_presel"]=higgs_definitions_precat.Histo1D(("h_numVert_presel", "", 100, -0.5, 99.5), 'numVert','weight')
+else:
+	hists_1d_precat["h_numVert_presel"]=higgs_definitions_precat.Histo1D(("h_numVert_presel", "", 100, -0.5, 99.5), 'numPVs','weight')
+
 
 if ('HToSS' in args.config):
 
@@ -1103,13 +1152,16 @@ if ('HToSS' in args.config):
 			.Define('weightOnlyDataset_new_wtd','weightOnlyDataset_new*higgsptSF')
 	hists_1d_precat["h_genHiggsPt"] = rdf_new.Histo1D(("h_genHiggsPt","",320,0,1600),\
 														'genHiggsPt','weightOnlyDataset_new')
-	hists_1d_precat["h_genHiggsPt_nominal"] = rdf_new.Define('weightOnly_new',f'processMCWeight*higgsptSF')\
+	hists_1d_precat["h_genHiggsPt_wtd"] = rdf_new.Histo1D(("h_genHiggsPt_wtd","",320,0,1600),\
+														'genHiggsPt','weightOnlyDataset_new_wtd')
+	hists_1d_precat["h_genHiggsPt_nominal"] = rdf_new.Define('weightOnly_new',f'weight_*higgsptSF')\
 													.Histo1D(("h_genHiggsPt_nominal","",320,0,1600),\
 														'genHiggsPt','weightOnly_new')
+	hists_1d_precat["h_genHiggsPt_nominal_wtd"] = rdf_new.Define('weightOnly_new',f'weight_*higgsptSF')\
+													.Histo1D(("h_genHiggsPt_nominal_wtd","",320,0,1600),\
+														'genHiggsPt','weightOnly_new')
+
 	if 'scale_var' in args.output:
-		weightID_dict={\
-			"muF2":7,"muF0p5":13,"muR2":3,"muF2muR2":9,"muF0p5muR2":15,"muR0p5":5,"muF2muR0p5":11,"muF0p5muR0p5":17\
-		} #bin center, bin content(1) is bin content centered at 0
 		# wt_id = weightID_dict["muF2"]+1
 		totalEvents_={}
 		for ktmp in weightID_dict:
@@ -1119,6 +1171,9 @@ if ('HToSS' in args.config):
 			hists_1d_precat["h_genHiggsPt_"+ktmp] = rdf_new.Define('weightOnly_'+ktmp,f'weight_{ktmp}_*higgsptSF')\
 													.Histo1D(("h_genHiggsPt_"+ktmp,"",320,0,1600),\
 																'genHiggsPt','weightOnly_'+ktmp)
+	
+	hists_1d_precat["h_genHiggsPt_SFdist"] = higgs_definitions_precat.Histo1D(("h_genHiggsPt_SFdist","",320,0,1600),\
+																'genHiggsPt','higgsptshapeSF')
 	
 	hists_1d_precat["h_genScalar1Lxy"] = rdf_new.Histo1D(("h_genScalar1Lxy","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
 														'scalar1_genlxy','weightOnlyDataset_new')
@@ -1135,29 +1190,173 @@ if ('HToSS' in args.config):
 
 	########## TESTING TESTING TESTING #############
 	# trigger_definitions.Define('mu_pt_basic','')
-	rdf_den = trigger_definitions.Define('trg_den','abs(genmu1_eta)<2.4 && abs(genmu2_eta)<2.4').Filter('trg_den')
+	rdf_den = trigger_definitions.Define('trg_den','abs(genmu1_eta)<2.4 && abs(genmu2_eta)<2.4 && numMuonPF2PAT>=2').Filter('trg_den')
 	# rdf_test = rdf_den.Define('test','scalar1_dau1_idx.size()==1 && scalar1_dau2_idx.size()==1').Filter('test')
 	# print('See here-',rdf_test.Count().GetValue())
 	print('See here-',rdf_den.Count().GetValue())
+
+	# reco quantities
+	rdf_den=rdf_den.Define('recopmu_idx',"MatchGen(genpmu_vec,muonPF2PATPX,muonPF2PATPY,muonPF2PATPZ,0.1056583745,muonPF2PATCharge,1)")\
+			.Define('reconmu_idx',"MatchGen(gennmu_vec,muonPF2PATPX,muonPF2PATPY,muonPF2PATPZ,0.1056583745,muonPF2PATCharge,1)")\
+			.Define('recopmu_lv',"ROOT::Math::PxPyPzMVector(muonPF2PATPX[recopmu_idx],muonPF2PATPY[recopmu_idx],muonPF2PATPZ[recopmu_idx],0.1056583745)")\
+			.Define('reconmu_lv',"ROOT::Math::PxPyPzMVector(muonPF2PATPX[reconmu_idx],muonPF2PATPY[reconmu_idx],muonPF2PATPZ[reconmu_idx],0.1056583745)")\
+			.Define('recorefitmu_lv',"std::vector<ROOT::Math::PxPyPzMVector> refittedTrks_m(2); return refittedTrks_m;")\
+			.Define('mu_pair_idx_matched',f'''getMuonTrackPairIndex(recopmu_idx, reconmu_idx, numMuonTrackPairsPF2PAT, muonTkPairPF2PATIndex1, muonTkPairPF2PATIndex2, muonPF2PATPX, muonPF2PATPY, muonPF2PATPZ, muonPF2PATPX, muonPF2PATPY, muonPF2PATPZ, 0.1056583745,recorefitmu_lv)''')\
+			.Define('PVCov00',f'pvCov00[{pv_sel}][0]').Define('PVCov01',f'pvCov01[{pv_sel}][0]').Define('PVCov02',f'pvCov02[{pv_sel}][0]').Define('PVCov10',f'pvCov10[{pv_sel}][0]').Define('PVCov11',f'pvCov11[{pv_sel}][0]').Define('PVCov12',f'pvCov12[{pv_sel}][0]').Define('PVCov20',f'pvCov20[{pv_sel}][0]').Define('PVCov21',f'pvCov21[{pv_sel}][0]').Define('PVCov22',f'pvCov22[{pv_sel}][0]').Define('PVX',f'pvX[{pv_sel}][0]').Define('PVY',f'pvY[{pv_sel}][0]').Define('PVZ',f'pvZ[{pv_sel}][0]')\
+			.Define('mumu_lxyInfo_matched','''getLxy(PVCov00,PVCov01,PVCov02,PVCov10,PVCov11,PVCov12,PVCov20,PVCov21,PVCov22,PVX,PVY,
+			muonTkPairPF2PATTkVtxCov00[mu_pair_idx_matched],muonTkPairPF2PATTkVtxCov01[mu_pair_idx_matched],muonTkPairPF2PATTkVtxCov02[mu_pair_idx_matched],
+			muonTkPairPF2PATTkVtxCov10[mu_pair_idx_matched],muonTkPairPF2PATTkVtxCov11[mu_pair_idx_matched],muonTkPairPF2PATTkVtxCov12[mu_pair_idx_matched],
+			muonTkPairPF2PATTkVtxCov20[mu_pair_idx_matched],muonTkPairPF2PATTkVtxCov21[mu_pair_idx_matched],muonTkPairPF2PATTkVtxCov22[mu_pair_idx_matched],
+			muonTkPairPF2PATTkVx[mu_pair_idx_matched],muonTkPairPF2PATTkVy[mu_pair_idx_matched])''')\
+			.Define('mumu_lxy_matched','mumu_lxyInfo_matched[0]')\
+			.Define('recopmu_dxy',f'(-(muonPF2PATVertX[recopmu_idx]-pvX[{pv_sel}][0])*recopmu_lv.Py()+(muonPF2PATVertY[recopmu_idx]-pvY[{pv_sel}][0])*recopmu_lv.Px())/recopmu_lv.Pt()')\
+			.Define('reconmu_dxy',f'(-(muonPF2PATVertX[reconmu_idx]-pvX[{pv_sel}][0])*reconmu_lv.Py()+(muonPF2PATVertY[reconmu_idx]-pvY[{pv_sel}][0])*reconmu_lv.Px())/reconmu_lv.Pt()')\
+			.Define('recomu1_dxy',f'genpmu_pt > gennmu_pt ? recopmu_dxy:reconmu_dxy')\
+			.Define('recomu2_dxy',f'genpmu_pt < gennmu_pt ? recopmu_dxy:reconmu_dxy')\
+			.Define('genmumu_2d',f'ROOT::Math::XYZVector(recopmu_lv.Px()+reconmu_lv.Px(),recopmu_lv.Py()+reconmu_lv.Py(),0)')\
+			.Define('genlxy_2d',f'ROOT::Math::XYZVector(scalar1_dVx[0],0,0)')\
+			.Define('genmumu_Alpha',f'ROOT::Math::VectorUtil::Angle(genmumu_2d,genlxy_2d)')
+	rdf_den=rdf_den.Define('reco_check','mu_pair_idx_matched>=0').Filter('reco_check')
+	# rdf_dxyBin0=rdf_den.Filter('genmu1_dxy < 0.4')
+	print('See here 2-',rdf_den.Count().GetValue())
+	
+# .Define('recopmu_dxy',f'(-(muonTkPairPF2PATTkVx[2]-pvX[{pv_sel}][0])*recorefitmu_lv[0].Py()+(muonTkPairPF2PATTkVy[2]-pvY[{pv_sel}][0])*recorefitmu_lv[0].Px())/recorefitmu_lv[0].Pt()')\
+# 			.Define('reconmu_dxy',f'(-(muonTkPairPF2PATTkVx[2]-pvX[{pv_sel}][0])*recorefitmu_lv[1].Py()+(muonTkPairPF2PATTkVy[2]-pvY[{pv_sel}][0])*recorefitmu_lv[1].Px())/recorefitmu_lv[1].Pt()')\
+
 	rdf_singlemu = rdf_den.Filter('singlemu_trig_cut','Trigger')
 	rdf_l2mu = rdf_den.Filter('l2mu_trig_cut','Trigger')
 	rdf_mu = rdf_den.Filter('mu_trig','Trigger')
+		   # .Define('reconmu_dxy',f'(-(gennmu_vx-pvX[{pv_sel}][0])*gennmu_vec.Py()+(gennmu_vy-pvY[{pv_sel}][0])*gennmu_vec.Px())/gennmu_pt')\
+			# .Define('recopmu_dxy',f'(-(genpmu_vx-pvX[{pv_sel}][0])*genpmu_vec.Py()+(genpmu_vy-pvY[{pv_sel}][0])*genpmu_vec.Px())/genpmu_pt')\
+
+	# 'mumu_genParId',"abs(genParId[MatchReco(mumu_lv,genParPt,genParEta,genParPhi,genParE,genParId,genParMotherId)])"
+	# MatchGen
+
+	hists_1d_precat["h_recoLeadingMuDxy_den"] = rdf_den.Histo1D(("h_recoLeadingMuDxy_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'recomu1_dxy')
+	hists_1d_precat["h_recosubLeadingMuDxy_den"] = rdf_den.Histo1D(("h_recosubLeadingMuDxy_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'recomu2_dxy')
+	hists_1d_precat["h_recoLeadingMuDxy_mutrg"] = rdf_mu.Histo1D(("h_recoLeadingMuDxy_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'recomu1_dxy')
+	hists_1d_precat["h_recosubLeadingMuDxy_mutrg"] = rdf_mu.Histo1D(("h_recosubLeadingMuDxy_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'recomu2_dxy')
+	hists_1d_precat["h_recoLeadingMuDxy_l2mutrg"] = rdf_l2mu.Histo1D(("h_recoLeadingMuDxy_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'recomu1_dxy')
+	hists_1d_precat["h_recosubLeadingMuDxy_l2mutrg"] = rdf_l2mu.Histo1D(("h_recosubLeadingMuDxy_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),'recomu2_dxy')
+	hists_1d_precat["h_recoLeadingMuDxy_singlemutrg"] = rdf_singlemu.Histo1D(("h_recoLeadingMuDxy_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),'recomu1_dxy')
+	hists_1d_precat["h_recosubLeadingMuDxy_singlemutrg"] = rdf_singlemu.Histo1D(("h_recosubLeadingMuDxy_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),'recomu2_dxy')
+
+	# dxybins=np.sort(np.array(set(np.geomspace(0.001,100,num=1000).tolist())))
+	dxybins=np.round(np.geomspace(0.001,100,num=1001),6)
+	ndxybins=len(dxybins)-1
+	print(len(dxybins))
+	# for j,tmp in enumerate(dxybins[1:]):
+	# 	if tmp <= dxybins[j-1]:
+	# 		print(dxybins[j-1],tmp)
+	# print(dxybins)
+	hists_1d_precat["h_gensubLeadingMuDxy_PromptLxy_den"] = rdf_den.Filter('scalar1_genlxy<5').Histo1D(("h_gensubLeadingMuDxy_PromptLxy_den","",ndxybins,dxybins),\
+														'genmu2_dxy')
+	hists_1d_precat["h_genLeadingMuDxy_PromptLxy_den"] = rdf_den.Filter('scalar1_genlxy<5').Histo1D(("h_genLeadingMuDxy_PromptLxy_den","",ndxybins,dxybins),\
+														'genmu1_dxy')
+	hists_1d_precat["h_gensubLeadingMuDxy_PromptLxy_singlemutrg"] = rdf_singlemu.Filter('scalar1_genlxy<5').Histo1D(("h_gensubLeadingMuDxy_PromptLxy_singlemutrg","",ndxybins,dxybins),\
+														'genmu2_dxy')
+	hists_1d_precat["h_genLeadingMuDxy_PromptLxy_singlemutrg"] = rdf_singlemu.Filter('scalar1_genlxy<5').Histo1D(("h_genLeadingMuDxy_PromptLxy_singlemutrg","",ndxybins,dxybins),\
+														'genmu1_dxy')
+	hists_1d_precat["h_gensubLeadingMuDxy_PromptLxy_l2mutrg"] = rdf_l2mu.Filter('scalar1_genlxy<5').Histo1D(("h_gensubLeadingMuDxy_PromptLxy_l2mutrg","",ndxybins,dxybins),\
+														'genmu2_dxy')
+	hists_1d_precat["h_genLeadingMuDxy_PromptLxy_l2mutrg"] = rdf_l2mu.Filter('scalar1_genlxy<5').Histo1D(("h_genLeadingMuDxy_PromptLxy_l2mutrg","",ndxybins,dxybins),\
+														'genmu1_dxy')
+	hists_1d_precat["h_gensubLeadingMuDxy_PromptLxy_mutrg"] = rdf_mu.Filter('scalar1_genlxy<5').Histo1D(("h_gensubLeadingMuDxy_PromptLxy_mutrg","",ndxybins,dxybins),\
+														'genmu2_dxy')
+	hists_1d_precat["h_genLeadingMuDxy_PromptLxy_mutrg"] = rdf_mu.Filter('scalar1_genlxy<5').Histo1D(("h_genLeadingMuDxy_PromptLxy_mutrg","",ndxybins,dxybins),\
+														'genmu1_dxy')
+	hists_1d_precat["h_gensubLeadingMuDxy_LeadDxyBin1_singlemutrg"] = rdf_singlemu.Filter('genmu1_dxy<0.4').Histo1D(("h_gensubLeadingMuDxy_LeadDxyBin1_singlemutrg","",ndxybins,dxybins),\
+														'genmu2_dxy')
+
+	hists_1d_precat["h_genLeadingMuDxy_den"] = rdf_den.Histo1D(("h_genLeadingMuDxy_den","",ndxybins,dxybins),\
+														'genmu1_dxy')
+	hists_1d_precat["h_gensubLeadingMuDxy_den"] = rdf_den.Histo1D(("h_gensubLeadingMuDxy_den","",ndxybins,dxybins),\
+														'genmu2_dxy')
+	hists_1d_precat["h_genLeadingMuDxy_mutrg"] = rdf_mu.Histo1D(("h_genLeadingMuDxy_mutrg","",ndxybins,dxybins),\
+														'genmu1_dxy')
+	hists_1d_precat["h_gensubLeadingMuDxy_mutrg"] = rdf_mu.Histo1D(("h_gensubLeadingMuDxy_mutrg","",ndxybins,dxybins),\
+														'genmu2_dxy')
+	hists_1d_precat["h_genLeadingMuDxy_l2mutrg"] = rdf_l2mu.Histo1D(("h_genLeadingMuDxy_l2mutrg","",ndxybins,dxybins),\
+														'genmu1_dxy')
+	hists_1d_precat["h_gensubLeadingMuDxy_l2mutrg"] = rdf_l2mu.Histo1D(("h_gensubLeadingMuDxy_l2mutrg","",ndxybins,dxybins),\
+														'genmu2_dxy')
+	hists_1d_precat["h_genLeadingMuDxy_singlemutrg"] = rdf_singlemu.Histo1D(("h_genLeadingMuDxy_singlemutrg","",ndxybins,dxybins),\
+														'genmu1_dxy')
+	hists_1d_precat["h_gensubLeadingMuDxy_singlemutrg"] = rdf_singlemu.Histo1D(("h_gensubLeadingMuDxy_singlemutrg","",ndxybins,dxybins),\
+														'genmu2_dxy')
+	
+	# hists_2d_precat["h_genLeadingMuDxy_gensubLeadingMuDxy_den"] = rdf_den.Histo2D(("h_genLeadingMuDxy_gensubLeadingMuDxy_den","",ndxybins,dxybins,ndxybins,dxybins),\
+	# 													'genmu1_dxy','genmu2_dxy')
+	# hists_2d_precat["h_genLeadingMuDxy_gensubLeadingMuDxy_singlemutrg"] = rdf_singlemu.Histo2D(("h_genLeadingMuDxy_gensubLeadingMuDxy_singlemutrg","",ndxybins,dxybins,ndxybins,dxybins),\
+	# 													'genmu1_dxy','genmu2_dxy')
+	
+
+	# hists_1d_precat["h_gensubLeadingMuDxy_den_leadingDxyGtr0p4"] = rdf_den.Filter('genmu1_dxy > 0.4').Histo1D(("h_gensubLeadingMuDxy_den_leadingDxyGtr0p4","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+	# 													'genmu2_dxy')
+	# hists_1d_precat["h_gensubLeadingMuDxy_singlemutrg"] = rdf_singlemu.Histo1D(("h_gensubLeadingMuDxy_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+	# 													'genmu2_dxy')
+
+
+	hists_1d_precat["h_recoScalar1Lxy_den"] = rdf_den.Histo1D(("h_recoScalar1Lxy_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'mumu_lxy_matched')
+	hists_1d_precat["h_recoScalar1Lxy_singlemutrg"] = rdf_singlemu.Histo1D(("h_recoScalar1Lxy_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'mumu_lxy_matched')
+	hists_1d_precat["h_recoScalar1Lxy_l2mutrg"] = rdf_l2mu.Histo1D(("h_recoScalar1Lxy_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'mumu_lxy_matched')
+	hists_1d_precat["h_recoScalar1Lxy_mutrg"] = rdf_mu.Histo1D(("h_recoScalar1Lxy_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'mumu_lxy_matched')
+
+
+
+	hists_1d_precat["h_genScalar1Lxy_Lzcut_den"] = rdf_den.Filter('scalar1_genlz<10').Histo1D(("h_genScalar1Lxy_Lzcut_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_genlxy')
+	hists_1d_precat["h_genScalar1Lxy_Lzcut_singlemutrg"] = rdf_singlemu.Filter('scalar1_genlz<10').Histo1D(("h_genScalar1Lxy_Lzcut_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_genlxy')
+	hists_1d_precat["h_genScalar1Lxy_Lzcut_l2mutrg"] = rdf_l2mu.Filter('scalar1_genlz<10').Histo1D(("h_genScalar1Lxy_Lzcut_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_genlxy')
+	hists_1d_precat["h_genScalar1Lxy_Lzcut_mutrg"] = rdf_mu.Filter('scalar1_genlz<10').Histo1D(("h_genScalar1Lxy_Lzcut_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_genlxy')
+
+
+	hists_1d_precat["h_genScalar1Lxy_den"] = rdf_den.Histo1D(("h_genScalar1Lxy_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_genlxy')
+	hists_1d_precat["h_genScalar1Lxy_singlemutrg"] = rdf_singlemu.Histo1D(("h_genScalar1Lxy_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_genlxy')
+	hists_1d_precat["h_genScalar1Lxy_l2mutrg"] = rdf_l2mu.Histo1D(("h_genScalar1Lxy_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_genlxy')
+	hists_1d_precat["h_genScalar1Lxy_mutrg"] = rdf_mu.Histo1D(("h_genScalar1Lxy_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_genlxy')
+
+	hists_1d_precat["h_genScalar1Lz_den"] = rdf_den.Histo1D(("h_genScalar1Lz_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_genlz')
+	hists_1d_precat["h_genScalar1Lz_singlemutrg"] = rdf_singlemu.Histo1D(("h_genScalar1Lz_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_genlz')
+	hists_1d_precat["h_genScalar1Lz_l2mutrg"] = rdf_l2mu.Histo1D(("h_genScalar1Lz_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_genlz')
+	hists_1d_precat["h_genScalar1Lz_mutrg"] = rdf_mu.Histo1D(("h_genScalar1Lz_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+														'scalar1_genlz')
+
 	hists_1d_precat["h_genScalar1L_den"] = rdf_den.Histo1D(("h_genScalar1L_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'scalar1_dist','weightOnlyDataset_new')
+														'scalar1_dist')
 	hists_1d_precat["h_genScalar2L_den"] = rdf_den.Histo1D(("h_genScalar2L_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'scalar2_dist','weightOnlyDataset_new')
+														'scalar2_dist')
 	hists_1d_precat["h_genScalar2L_singlemutrg"] = rdf_singlemu.Histo1D(("h_genScalar2L_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'scalar2_dist','weightOnlyDataset_new')
+														'scalar2_dist')
 	hists_1d_precat["h_genScalar1L_singlemutrg"] = rdf_singlemu.Histo1D(("h_genScalar1L_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'scalar1_dist','weightOnlyDataset_new')
+														'scalar1_dist')
 	hists_1d_precat["h_genScalar2L_l2mutrg"] = rdf_l2mu.Histo1D(("h_genScalar2L_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'scalar2_dist','weightOnlyDataset_new')
+														'scalar2_dist')
 	hists_1d_precat["h_genScalar1L_l2mutrg"] = rdf_l2mu.Histo1D(("h_genScalar1L_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'scalar1_dist','weightOnlyDataset_new')
+														'scalar1_dist')
 	hists_1d_precat["h_genScalar2L_mutrg"] = rdf_mu.Histo1D(("h_genScalar2L_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'scalar2_dist','weightOnlyDataset_new')
+														'scalar2_dist')
 	hists_1d_precat["h_genScalar1L_mutrg"] = rdf_mu.Histo1D(("h_genScalar1L_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'scalar1_dist','weightOnlyDataset_new')
+														'scalar1_dist')
 
 	
 	hists_1d_precat["h_genLeadingMuPt"] = rdf_den.Histo1D(("h_genLeadingMuPt","",kinematics['pt']['nbins'],kinematics['pt']['minX'],kinematics['pt']['maxX']),\
@@ -1198,17 +1397,26 @@ if isData=="false":
 	hists_2d_precat["h_RecoMatch_genParAncIdmu1_genParAncIdmu2_match_mumulowM"] = gen_test3.Histo2D(("h_RecoMatch_genParAncIdmu1_genParAncIdmu2_match_mumulowM","",1002,-1.5,1000.5,1002,-1.5,1000.5),'mu1_genParAncestorId','mu2_genParAncestorId','weight')
 
 
+	
+	# rdf_test = higgs_definitions_precat.Range(1,10,1)
+	# rdf_test.Display({'genHiggsPt','higgsptshapeSF','higgsptSF','weight'},10).Print()
+	# quit()
+	# rdf_test.
+	# print('See error - ',N,muSF_trg_err2_avg,np.sqrt(muSF_trg_err2_avg),muSF_trg_err,muSF_trg_avg)
+
 if (('HToSS' in args.config) and (data_name.count('ctauS') > 1)):
 	hists_1d_precat['h_genScalar1Lxy'].Write()
 	hists_1d_precat['h_genScalar2Lxy'].Write()
 	hists_1d_precat['h_genScalar1L'].Write()
 	hists_1d_precat['h_genScalar2L'].Write()
+
 	# hists_2d_precat[hist].Write()
 else:
 	for hist in hists_1d_precat:
 		hists_1d_precat[hist].Write()
 	for hist in hists_2d_precat:
 		hists_2d_precat[hist].Write()
+
 # for hist in hists_1d_precat:
 # 	hists_1d_precat[hist].Delete()
 # for hist in hists_2d_precat:
@@ -1432,6 +1640,8 @@ for key in reg_:
 
 
 
+
+
 	############## DEFINITION OF HISTOGRAMS 1D + 2D ########################
 
 	for obj in objects:
@@ -1511,11 +1721,16 @@ for key in reg_:
 	hists_1d_[key]["h_AvgMass_mumu_hh_MSIso_BC"] = higgs_definitions_SRCR.Histo1D(("h_AvgMass_mumu_hh_MSIso_BC","",5000,0.,5.), 'avgmass','weight')
 	hists_1d_[key]["h_AvgMass_mumu_hh_MS_BC"] = higgs_definitions_SRCR_iso.Histo1D(("h_AvgMass_mumu_hh_MS_BC","",5000,0.,5.), 'avgmass','weight')
 	hists_1d_[key]["h_AvgMass_mumu_hh_Iso_BC"] = cut_mass_compatibility.Histo1D(("h_AvgMass_mumu_hh_Iso_BC","",5000,0.,5.), 'avgmass','weight')
-	hists_1d_[key]["h_Weights"]=cut_dihadron_iso.Define('weight_lumi',f'weight*{lumi_factor}').Histo1D(("h_Weights", "", 5000, 0., 10.), 'weight_lumi')
-	hists_1d_[key]["h_Weights_lt_nolumi"]=cut_dihadron_iso.Define('weight_lt_lumi',f'weight_lt*{lumi_factor}').Histo1D(("h_Weights_bare", "", 5000, 0., 10000.), 'weight_lt')
-	hists_1d_[key]["h_Weights_noSF"]=cut_dihadron_iso.Define('weight_noSF_lumi',f'weight_noSF*{lumi_factor}').Histo1D(("h_Weights_noSF", "", 5000, 0., 10.), 'weight_noSF_lumi')
+	if isData=="false":
+		hists_1d_[key]["h_numVert"]=cut_dihadron_iso.Histo1D(("h_numVert", "", 100, -0.5, 99.5), 'numVert','weight')
+	else:
+		hists_1d_[key]["h_numVert"]=cut_dihadron_iso.Histo1D(("h_numVert", "", 100, -0.5, 99.5), 'numPVs','weight')
 
 	if ('HToSS' in args.config):
+		hists_1d_[key]["h_Weights"]=cut_dihadron_iso.Define('weight_lumi',f'weight*{lumi_factor}').Histo1D(("h_Weights", "", 5000, 0., 10.), 'weight_lumi')
+		hists_1d_[key]["h_Weights_lt_nolumi"]=cut_dihadron_iso.Define('weight_lt_lumi',f'weight_lt*{lumi_factor}').Histo1D(("h_Weights_bare", "", 5000, 0., 10000.), 'weight_lt')
+		hists_1d_[key]["h_Weights_noSF"]=cut_dihadron_iso.Define('weight_noSF_lumi',f'weight_noSF*{lumi_factor}').Histo1D(("h_Weights_noSF", "", 5000, 0., 10.), 'weight_noSF_lumi')
+		
 		hists_1d_[key]["h_genScalar1Lxy"] = cut_dihadron_iso.Histo1D(("h_genScalar1Lxy","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
 															'scalar1_genlxy','weightOnlyDataset_new')
 		hists_1d_[key]["h_genScalar2Lxy"] = cut_dihadron_iso.Histo1D(("h_genScalar2Lxy","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
@@ -1525,6 +1740,20 @@ for key in reg_:
 		hists_1d_[key]["h_genScalar2L"] = cut_dihadron_iso.Histo1D(("h_genScalar2L","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
 															'scalar2_dist','weightOnlyDataset_new')
 
+		hists_1d_[key]["h_genHiggsPt_nominal"] = cut_dihadron_iso.Define('weightOnly_new',f'weight_*higgsptSF')\
+													.Histo1D(("h_genHiggsPt_nominal","",320,0,1600),\
+														'genHiggsPt','weightOnly_new')
+		if 'scale_var' in args.output:
+			
+			# wt_id = weightID_dict["muF2"]+1
+			totalEvents_={}
+			for ktmp in weightID_dict:
+				print(ktmp)
+				totalEvents_[ktmp] = weightPlot.GetBinContent(weightID_dict[ktmp]+1) - weightPlot.GetBinContent(weightID_dict[ktmp]+2) # bins filled from 1, but bins available from 0
+				# rdf_new = rdf_new
+				hists_1d_[key]["h_genHiggsPt_"+ktmp] = cut_dihadron_iso.Define('weightOnly_'+ktmp,f'weight_{ktmp}_*higgsptSF')\
+														.Histo1D(("h_genHiggsPt_"+ktmp,"",320,0,1600),\
+																	'genHiggsPt','weightOnly_'+ktmp)
 	# hists_1d_["h_DiMuonDeltaR_weird"]=weird_evts.Histo1D(("h_DiMuonDeltaR_weird","",1000,0.,10.),'mumu_dR_tmp','weight')
 	# hists_1d_["h_DiMuonVtxLxy_weird"]=weird_evts.Define('mumu_lxy','mumu_lxyInfo[0]').Histo1D(("h_DiMuonVtxLxy_weird","",5000,0.,1000.),'mumu_lxy','weight')
 	# hists_1d_["h_DiMuonVtxSigma_weird"]=weird_evts.Define('mumu_lxysigma','mumu_lxyInfo[1]').Histo1D(("h_DiMuonVtxSigma_weird","",1000,0.,500.),'mumu_lxysigma','weight')
