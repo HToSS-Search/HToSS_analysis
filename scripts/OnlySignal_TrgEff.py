@@ -198,11 +198,11 @@ def main():
         'gensubLeadingMuDxy': {'hname':'h_gensubLeadingMuDxy','label':"subleading #mu gen. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
         # 'gensubLeadingMuDxy_LeadDxyBin1': {'hname':'h_gensubLeadingMuDxy_LeadDxyBin1','label':"subleading #mu gen. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':10},
         # 'genScalar1L': {'hname':'h_genScalar1L','label':"gen. L_{xyz}^{S} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
-        'recoScalar1Lxy': {'hname':'h_recoScalar1Lxy','label':"reco. L_{xy}^{S} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
-        'recoLeadingMuDxy': {'hname':'h_recoLeadingMuDxy','label':"leading #mu reco. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
-        'recosubLeadingMuDxy': {'hname':'h_recosubLeadingMuDxy','label':"subleading #mu reco. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
-        'genLeadingMuDxy_PromptLxy': {'hname':'h_genLeadingMuDxy_PromptLxy','label':"leading #mu gen. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
-        'gensubLeadingMuDxy_PromptLxy': {'hname':'h_gensubLeadingMuDxy_PromptLxy','label':"subleading #mu gen. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
+        # 'recoScalar1Lxy': {'hname':'h_recoScalar1Lxy','label':"reco. L_{xy}^{S} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
+        # 'recoLeadingMuDxy': {'hname':'h_recoLeadingMuDxy','label':"leading #mu reco. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
+        # 'recosubLeadingMuDxy': {'hname':'h_recosubLeadingMuDxy','label':"subleading #mu reco. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
+        # 'genLeadingMuDxy_PromptLxy': {'hname':'h_genLeadingMuDxy_PromptLxy','label':"leading #mu gen. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
+        # 'gensubLeadingMuDxy_PromptLxy': {'hname':'h_gensubLeadingMuDxy_PromptLxy','label':"subleading #mu gen. d_{xy} (cm)", 'xlow':0,'xhigh':60,'hrebin':50},
         # 'genScalar2L': {'hname':'h_genScalar2L','label':"L_{xyz}^{\\bar{S}} (cm)", 'xlow':0,'xhigh':60,'hrebin':5},
 
         # 'DiMuonVtxSignificance': {'hname':'h_DiMuonVtxSignificance','label':"L_{xy}^{#mu^{+}#mu^{-}}/#Delta L_{xy}^{#mu^{+}#mu^{-}}", 'xlow':0,'xhigh':1000,'hrebin':40},
@@ -414,10 +414,17 @@ def main():
                 # pad1.Update()
                 fsig.Close()
             for i in range(4):
-                if i==0:
-                    h_ratios[i].Draw("ap0")
+                if "Dxy" in key:
+
+                    if i==0:
+                        h_ratios[i].Draw("a p")
+                    else:
+                        h_ratios[i].Draw(" p same")
                 else:
-                    h_ratios[i].Draw("p0 same")
+                    if i==0:
+                        h_ratios[i].Draw("a p x")
+                    else:
+                        h_ratios[i].Draw(" p x same")
             leg.Draw("same")
 
             rtext1="m_{S}="+args.mass.replace('p','.')+" GeV"

@@ -40,9 +40,9 @@ def main():
     if args.pion:
         m_points=['0p4','0p6','0p8','0p9','1']
     else:
-        #m_points=['1p1','1p2','1p4','1p6','1p8','2']
+        m_points=['1p1','1p2','1p4','1p6','1p8','2']
         #m_points=['1p2','1p6','2']
-        m_points=['2']
+        #m_points=['2']
     if args.pion:
         htype='pion'
     else:

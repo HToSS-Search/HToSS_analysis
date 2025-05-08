@@ -183,6 +183,18 @@ def makeCutflow(histo_skim,histo,category,fill=True):
 
 
     return dummy_cutflow.Clone(),xlow,xhigh,skim_binno,table_labels
+def copy_axis_properties(from_hist, to_hist):
+    to_hist.GetXaxis().SetTitle(from_hist.GetXaxis().GetTitle())
+    to_hist.GetXaxis().SetTitleSize(from_hist.GetXaxis().GetTitleSize())
+    to_hist.GetXaxis().SetTitleOffset(from_hist.GetXaxis().GetTitleOffset())
+    to_hist.GetXaxis().SetLabelSize(from_hist.GetXaxis().GetLabelSize())
+    to_hist.GetXaxis().SetLabelOffset(from_hist.GetXaxis().GetLabelOffset())
+
+    to_hist.GetYaxis().SetTitle(from_hist.GetYaxis().GetTitle())
+    to_hist.GetYaxis().SetTitleSize(from_hist.GetYaxis().GetTitleSize())
+    to_hist.GetYaxis().SetTitleOffset(from_hist.GetYaxis().GetTitleOffset())
+    to_hist.GetYaxis().SetLabelSize(from_hist.GetYaxis().GetLabelSize())
+    to_hist.GetYaxis().SetLabelOffset(from_hist.GetYaxis().GetLabelOffset())
 
 def main():
     ROOT.TH1.AddDirectory(ROOT.kFALSE)
@@ -200,6 +212,7 @@ def main():
     parser.add_argument("-b","--bkg", dest="withbkg", help="true for plotting with bkg MC, false by default", action="store_true")
     parser.add_argument("--log", dest="log", help="true for plotting with logY, false by default", action="store_true")
     parser.add_argument("--noratio", dest="noratio", help="true for not plotting with ratio, false by default", action="store_true")
+    parser.add_argument("--unblind", dest="unblind", help="true for unblinding, false by default", action="store_true")
     # add an option to plot just one plot accessible name in histo_dict; change savename accordingly
     args = parser.parse_args()
     # create required parts
@@ -329,6 +342,36 @@ def main():
         # 'leadingChHadPt':{'hname':"h_leadingChHadPt",'label':"leading h^{#pm} p_{T} (GeV)",'xlow':0,'xhigh':100,'hrebin':60}
 
     }
+    #### URGENT PLOTS ####
+    histo_dict = {
+        # 'DiChHadPt': {'hname':'h_DiChHadPt','label': "p_{T,h^{+}h^{-}} (GeV)", 'xlow':0.,'xhigh':100.,'hrebin':40},
+        'DiChHadMass': {'hname':'h_DiChHadMass','label': "m_{h^{+}h^{-}} (GeV)", 'xlow':0.2,'xhigh':2.5,'hrebin':40},
+        # 'DiMuonPt': {'hname':'h_DiMuonPt','label': "p_{T,#mu#mu} (GeV)", 'xlow':0.,'xhigh':100.,'hrebin':40},
+        'DiMuonMass': {'hname':'h_DiMuonMass','label': "m_{#mu#mu} (GeV)", 'xlow':0.2,'xhigh':2.5,'hrebin':20},
+        'recoHiggsMass': {'hname':'h_recoHiggsMass','label':"m_{h^{+}h^{-}#mu^{+}#mu^{-}} (GeV)",'xlow':110,'xhigh':140,'hrebin':5},
+        'AvgMass_mumu_hh':{'hname':'h_AvgMass_mumu_hh','label':"0.5*(m_{hh}+m_{#mu#mu}) (GeV)",'xlow':0.2,'xhigh':2.5,'hrebin':40},
+
+        'recoHiggsMass_MHMSIso_BC': {'hname':'h_recoHiggsMass_MHMSIso_BC','label':"m_{h^{+}h^{-}#mu^{+}#mu^{-}} (GeV)",'xlow':110,'xhigh':140,'hrebin':5},
+        'recoHiggsMass_MHIso_BC': {'hname':'h_recoHiggsMass_MHIso_BC','label':"m_{h^{+}h^{-}#mu^{+}#mu^{-}} (GeV)",'xlow':110,'xhigh':140,'hrebin':5},        
+        # 'recoHiggsMass_All_WithPeak_ScalarCut': {'hname':'h_recoHiggsMass_All_WithPeak_ScalarCut','label':"m_{h^{+}h^{-}#mu^{+}#mu^{-}} (GeV)",'xlow':110,'xhigh':140,'hrebin':5},        
+        # 'recoHiggsMass_All_WithPeak_AtScalarMass2': {'hname':'h_recoHiggsMass_All_WithPeak_AtScalarMass2','label':"m_{h^{+}h^{-}#mu^{+}#mu^{-}} (GeV)",'xlow':110,'xhigh':140,'hrebin':5},        
+        # 'recoHiggsMass_WithPeak_ScalarCut': {'hname':'h_recoHiggsMass_WithPeak_ScalarCut','label':"m_{h^{+}h^{-}#mu^{+}#mu^{-}} (GeV)",'xlow':115,'xhigh':135,'hrebin':5},        
+        # 'recoHiggsMass_HMassSMassBC': {'hname':'h_recoHiggsMass_HMassSMassBC','label':"m_{h^{+}h^{-}#mu^{+}#mu^{-}} (GeV)",'xlow':115,'xhigh':135,'hrebin':5},
+        #'recoHiggsMass_MHMS_BC': {'hname':'h_recoHiggsMass_MHMS_BC','label':"m_{h^{+}h^{-}#mu^{+}#mu^{-}} (GeV)",'xlow':110,'xhigh':140,'hrebin':5},
+        'recoHiggsMass_MH_BC': {'hname':'h_recoHiggsMass_MH_BC','label':"m_{h^{+}h^{-}#mu^{+}#mu^{-}} (GeV)",'xlow':110,'xhigh':140,'hrebin':5},        
+        'recoHiggsMass_MH_BC_MassAssumption': {'hname':'h_recoHiggsMass_AvgMass_mumu_hh_MH_BC','label':"m_{h^{+}h^{-}#mu^{+}#mu^{-}} (GeV)",'xlow':110,'xhigh':140,'hrebin':5},        
+        'AvgMass_mumu_hh_MHMSIso_BC':{'hname':'h_recoHiggsMass_AvgMass_mumu_hh_MHMSIso_BC','label':"0.5*(m_{hh}+m_{#mu#mu}) (GeV)",'xlow':0.2,'xhigh':2.5,'hrebin':40},
+        'AvgMass_mumu_hh_MHIso_BC':{'hname':'h_recoHiggsMass_AvgMass_mumu_hh_MHIso_BC','label':"0.5*(m_{hh}+m_{#mu#mu}) (GeV)",'xlow':0.2,'xhigh':2.5,'hrebin':40},
+        'AvgMass_mumu_hh_MHMS_BC':{'hname':'h_recoHiggsMass_AvgMass_mumu_hh_MHMS_BC','label':"0.5*(m_{hh}+m_{#mu#mu}) (GeV)",'xlow':0.2,'xhigh':2.5,'hrebin':40},
+        'AvgMass_mumu_hh_MH_BC':{'hname':'h_recoHiggsMass_AvgMass_mumu_hh_MH_BC','label':"0.5*(m_{hh}+m_{#mu#mu}) (GeV)",'xlow':0.2,'xhigh':2.5,'hrebin':40},
+        'recoHiggsMass_NoCategory_MHMSIso_BC': {'hname':'h_recoHiggsMass_AvgMass_mumu_hh_MHMSIso_BC','label':"m_{h^{+}h^{-}#mu^{+}#mu^{-}} (GeV)",'xlow':110,'xhigh':140,'hrebin':5},
+        'recoHiggsMass_NoCategory_MHIso_BC': {'hname':'h_recoHiggsMass_AvgMass_mumu_hh_MHIso_BC','label':"m_{h^{+}h^{-}#mu^{+}#mu^{-}} (GeV)",'xlow':110,'xhigh':140,'hrebin':5},        
+        'recoHiggsMass_NoCategory_MHMS_BC': {'hname':'h_recoHiggsMass_AvgMass_mumu_hh_MHMS_BC','label':"m_{h^{+}h^{-}#mu^{+}#mu^{-}} (GeV)",'xlow':110,'xhigh':140,'hrebin':5},
+        'recoHiggsMass_NoCategory_MH_BC': {'hname':'h_recoHiggsMass_AvgMass_mumu_hh_MH_BC','label':"m_{h^{+}h^{-}#mu^{+}#mu^{-}} (GeV)",'xlow':110,'xhigh':140,'hrebin':5},        
+
+        'DiChHadMass_NoCategory': {'hname':'h_DiChHadMass','label': "m_{h^{+}h^{-}} (GeV)", 'xlow':0.2,'xhigh':2.5,'hrebin':40},
+        'DiMuonMass_NoCategory': {'hname':'h_DiMuonMass','label': "m_{#mu#mu} (GeV)", 'xlow':0.2,'xhigh':2.5,'hrebin':40},
+    }
     datasets_dict = {
         'QCD':{'type':'MC_bkg','label':"QCD"},
         'wPlusJets':{'type':'MC_bkg','label':"W+jets"},
@@ -358,12 +401,6 @@ def main():
         }
     else:
         datasets_bkg = {
-            # 'VVV':{'fname':'VVV','label':'VVV','color':ROOT.kOrange+8},
-            # 'ttV':{'fname':'ttV','label':'t#bar{t}V','color':ROOT.kPink-4},
-            # 'singleTop':{'fname':'singleTop','label':'Single top','color':ROOT.kAzure-5},
-            # 'VV':{'fname':'VV','label':'VV','color':ROOT.kCyan-5},
-            # 'wPlusJets':{'fname':'wPlusJets','label':'W+jets','color':ROOT.kYellow+2},
-            # 'DYJetsToLL':{'fname':'DYJetsToLL','label':'Z+jets','color':ROOT.kOrange-7},
             'ttbar':{'fname':'ttbar','label':'t#bar{t}','color':ROOT.kGreen-6},
             'QCD':{'fname':'QCD','label':'QCD','color':ROOT.kOrange-2}
         }
@@ -502,34 +539,28 @@ def main():
                     'recoHiggsMass_NoCategory_MHMSIso_BC','recoHiggsMass_NoCategory_MHIso_BC','recoHiggsMass_NoCategory_MHMS_BC',\
                     'recoHiggsMass_NoCategory_MH_BC',\
                     'DiChHadMass_NoCategory','DiMuonMass_NoCategory'] # for nocategory
+
+    ##### URGENT #####
+    list_of_hist = ['recoHiggsMass_MHMSIso_BC','recoHiggsMass_MHIso_BC','recoHiggsMass_MHMS_BC',\
+                    'recoHiggsMass_MH_BC',\
+                    'recoHiggsMass_NoCategory_MHMSIso_BC','recoHiggsMass_NoCategory_MHIso_BC','recoHiggsMass_NoCategory_MHMS_BC',\
+                    'recoHiggsMass_NoCategory_MH_BC',\
+                    'DiChHadMass_NoCategory','DiMuonMass_NoCategory'] # for nocategory
     
-
-    ########## Skim table ##############
-    # hs_skim = ROOT.THStack("hs_skim","stacked hist")
-    # hskim_sig = fsig.Get(histo_dict['Skim']['hname'])
-    # hskim_data = fdata.Get(histo_dict['Skim']['hname'])
-    # for i, dataset in enumerate(datasets_bkg):
-    #     fh = ROOT.TFile(args.input+"/"+"output_" + datasets_bkg[dataset]['fname'] + ".root", "READ")
-    #     hskim_bkg_tmp=fh.Get(histo_dict['Skim']['hname'])
-    # if args.withbkg:
-    #     h_0.SetLineColor(datasets_bkg[dataset]['color'])
-    #     h_0.SetMarkerColor(datasets_bkg[dataset]['color'])
-    #     h_0.SetFillColor(datasets_bkg[dataset]['color'])
-    #     hs.Add(h_0)
-    #     leg.AddEntry(h_0, datasets_bkg[dataset]['label'], "f")
-    # hs_skim = ROOT.THStack()
-
     
     hs_skim_list = []
     
     ######### all plots below ##########
     # lo_bound,hi_bound=1.98,2.02
 
-    mass_b_f=open("bounds_2sigma.yaml",'r')
+    mass_b_f=open("bounds.yaml",'r')
     mass_bounds_d=yaml.safe_load(mass_b_f)
     lo_bound,hi_bound=mass_bounds_d['MS'+str(sig_mass).replace('.','p')][args.year]
     # lo_bound,hi_bound=1.582,1.618
     for key in histo_dict:
+        # if "recoHiggsMass_MHMSIso" not in key:
+        #     continue
+
         folder = args.category
         hprop = histo_dict[key]
         histname = hprop['hname']
@@ -574,11 +605,6 @@ def main():
         hs = ROOT.THStack("hs","stacked hist")
         # hs_normed = ROOT.THStack("hs_normed","stacked hist")
         savename = key
-        # if "TF" in key:
-        #     savename = savename + "_TF"
-
-        #c1.Range(0,10,10.,10000)
-        #print(i)
         if args.withbkg:
             for i, dataset in enumerate(datasets_bkg):
                 fh = ROOT.TFile(args.input+"/"+"output_" + datasets_bkg[dataset]['fname'] + ".root", "READ")
@@ -607,27 +633,16 @@ def main():
                 else:
                     h_0 = h_test.Clone()
 
-
                 if 'Cutflow' not in histname and 'Skim' not in key:
-                    if ('TF' in key):
-                        h_0.Scale(tf_loose_list[cuts])
-                    elif ('recoHiggsMass' not in key):
-                        # if ('BC' in key):
-                        if ('MH' in key):
+                    if not args.unblind:
+                        if ('TF' in key):
                             h_0.Scale(tf_loose_list[cuts])
-                        else:
-                            h_0.Scale(tf_CR_list[cuts])
-                        # else:
-                        #     h_0.Scale(tf_CR_list['MH'])
-
-
-                # h_tmp = TH2Check(histname,key,h_test)
-                # h_0.Delete()
-                # h_0=h_tmp.Clone();h_tmp.Delete();
-                # quit()
-                # nBins = h_0.GetNbinsX()
-                # h_0.SetBinContent(nBins,h_0.GetBinContent(nBins)+h_0.GetBinContent(nBins+1))
-                # h_0.SetBinContent(1,h_0.GetBinContent(nBins)+h_0.GetBinContent(nBins+1))
+                        elif ('recoHiggsMass' not in key):
+                            # if ('BC' in key):
+                            if ('MH' in key):
+                                h_0.Scale(tf_loose_list[cuts])
+                            else:
+                                h_0.Scale(tf_CR_list[cuts])
                 if ("Higgs" not in key):
                     h_0.Rebin(hprop['hrebin'])
                 else:
@@ -638,7 +653,6 @@ def main():
                     print("Current bin width: ",lowestBinEdge, highestBinEdge, binWidth)
                     # h_0 = h_0.Rebin(len(custom_bins)-1,"h_recoHiggsMass_rebinned",custom_bins)
                     h_0.Rebin(hprop['hrebin'])
-                
 
                 h_0.SetName(dataset)
                 # if key == "AvgMass_mumu_hh_HMassBC_TF":
@@ -672,7 +686,10 @@ def main():
         if args.mult != 1:
             h_1.Scale(args.mult)
         if ("Higgs" not in key):
-            h_1.Rebin(hprop['hrebin'])
+            if "Sigma" in key and "2017" in args.year:
+                h_1.Rebin(50) # hardcoded for newer files with finer binning
+            else:
+                h_1.Rebin(hprop['hrebin'])
         else:
             # h_1 = h_1.Rebin(len(custom_bins)-1,"h_recoHiggsMass_rebinned",custom_bins)
             h_1.Rebin(hprop['hrebin'])
@@ -719,18 +736,22 @@ def main():
             else:
                 h_2 = h_test.Clone()
             if 'Cutflow' not in histname and 'Skim' not in key:
-                if ('TF' in key):
-                    h_2.Scale(tf_loose_list[cuts])
-                elif ('recoHiggsMass' not in key):
-                    # if ('BC' in key):
-                    if ('MH' in key):
+                if not args.unblind:
+                    if ('TF' in key):
                         h_2.Scale(tf_loose_list[cuts])
-                    else:
-                        h_2.Scale(tf_CR_list[cuts])
-                    # else:
-                        # h_2.Scale(tf_CR_list['MH'])
+                    elif ('recoHiggsMass' not in key):
+                        # if ('BC' in key):
+                        if ('MH' in key):
+                            h_2.Scale(tf_loose_list[cuts])
+                        else:
+                            h_2.Scale(tf_CR_list[cuts])
+                        # else:
+                            # h_2.Scale(tf_CR_list['MH'])
             if ("Higgs" not in key):
-                h_2.Rebin(hprop['hrebin'])
+                if "Sigma" in key and htype=='kaon' and "2017" in args.year:
+                    h_2.Rebin(50) # hardcoded for newer files with finer binning
+                else:
+                    h_2.Rebin(hprop['hrebin'])
             else:
                 print('random')
                 # h_2 = h_2.Rebin(len(custom_bins)-1,"h_recoHiggsMass_rebinned",custom_bins)
@@ -746,21 +767,78 @@ def main():
             h_2.SetLineColor(ROOT.kBlack)
             h_2.SetMarkerStyle(8)
             h_2.SetMarkerSize(m_size)
-            print(h_0.GetNbinsX(),h_1.GetNbinsX(),h_2.GetNbinsX())
+            # print(h_0.GetNbinsX(),h_1.GetNbinsX(),h_2.GetNbinsX())
             leg.AddEntry(h_2, 'data',"ep")
             f_expo = ROOT.TF1("f1","expo",110,140)
             f_expo.SetParLimits(0,0,-100)
             f_expo.SetParLimits(1,0,-100)
             if ('recoHiggs' in key):
-                h_2.Fit("f1","B")
-                f1=h_2.GetFunction("f1")
-                # print(f1)
+                # htmp=h_2.Clone()
+                # for i in range(1, h_2.GetNbinsX() + 1):  # Bin index starts at 1 in ROOT
+                #     if h_2.GetBinLowEdge(i)>=122.5 and h_2.GetBinLowEdge(i)<127.5:
+                #         continue
+                #     if h_2.GetBinContent(i) == 0:
+                #         h_2.SetBinError(i, 1.0)  # Assign a small but nonzero error
+                mass = ROOT.RooRealVar("CMS_hgg_mass", "CMS_hgg_mass", 125, 110, 140)
+                bin_lo,bin_lomid,bin_himid,bin_hi=h_2.FindBin(110),h_2.FindBin(122.5),h_2.FindBin(127.5),h_2.FindBin(140)
+                # Fit Gaussian to MC events and plot
+                mass.setRange("loM", 110, 122.5 )
+                mass.setRange("hiM", 127.5, 140 )
+                mass.setRange("loSB", 120, 122.5 )
+                mass.setRange("hiSB", 127.5, 130 )
+                mass.setRange("peak", 122.5, 127.5 )
+                mass.setRange("peakcore", 124.2, 125.8 )
+                mass.setRange("full", 110, 140 )
+                mass.setBins(int(bin_lomid-bin_lo),"loM")
+                mass.setBins(int(bin_hi-bin_himid),"hiM")
+                # fit_range = "loSB,hiSB"
+                fit_range = "loM,hiM"
+                data = ROOT.RooDataHist("data","data", ROOT.RooArgList(mass),ROOT.RooFit.Import(h_2) )
+                alp_ini = -0.5
+                alpha = ROOT.RooRealVar("alpha", "alpha", alp_ini, -1, 0.)
+                model_bkg = ROOT.RooExponential("model_bkg", "model_bkg", mass, alpha )
+                N=ROOT.RooRealVar("N", "N", 0, h_2.Integral());
+                extmodel_bkg=ROOT.RooExtendPdf("extmodel_bkg", "extmodel_bkg", model_bkg, N, "full");
+                set_mass = ROOT.RooArgSet(mass)
+                plot = mass.frame()
+                data.plotOn( plot,ROOT.RooFit.Name("dist"), ROOT.RooFit.MarkerSize(0), ROOT.RooFit.MarkerColor(0), ROOT.RooFit.LineWidth(0), ROOT.RooFit.LineColor(0) )
+                extmodel_bkg.fitTo(data, ROOT.RooFit.Range(fit_range),ROOT.RooFit.Extended(True))
+                extmodel_bkg.plotOn( plot, ROOT.RooFit.NormRange(fit_range), ROOT.RooFit.Range("full"), ROOT.RooFit.LineColor(ROOT.kViolet), ROOT.RooFit.Name("extfit"), ROOT.RooFit.LineStyle(10),ROOT.RooFit.LineWidth(4))
+                integral_sb = extmodel_bkg.createIntegral(mass,ROOT.RooFit.NormSet(set_mass),ROOT.RooFit.Range(fit_range)).getVal()
+                # n_bkg_exp = n_bkg_sb/integral_sb
+                integral_bkg_peak = extmodel_bkg.createIntegral(mass,ROOT.RooFit.NormSet(set_mass),ROOT.RooFit.Range("peak")).getVal()
+
                 if h_2.Integral()>0:
-                    f1.SetLineColor(ROOT.kViolet)
-                    # f1.SetLineColorAlpha(ROOT.kOrange+7)
-                    f1.SetLineWidth(4)
-                    f1.SetLineStyle(10)
-                    leg.AddEntry(f1,'exponential fit','l')
+                    leg.AddEntry(plot.findObject("extfit"),"exponential fit","l")
+                # norm_fact=h_2.Integral(110,140)*N.getVal()/integral_sb
+                # quit()
+                # f1 = extmodel_bkg.asTF(ROOT.RooArgList(mass))
+                # # Compute normalization factor for TF1 to match the extended fit
+                # fitted_lambda = alpha.getVal()
+                # fitted_N = N.getVal()  # Total number of events from fit
+                # x_min,x_max=110,140
+                # if fitted_lambda != 0:
+                #     integral = (ROOT.TMath.Exp(fitted_lambda * x_min) - ROOT.TMath.Exp(fitted_lambda * x_max)) / abs(fitted_lambda)
+                # else:
+                #     integral = (x_max - x_min)  # If lambda = 0, it's a flat function
+
+                # norm_factor = fitted_N / integral  # Properly normalize TF1
+                # def expo_func(xx, params):
+                #     return params[0]*ROOT.TMath.Exp(params[1] * xx[0])  # Exponential function e^(lambda*x)
+                # f1 = ROOT.TF1("f1", expo_func, 110, 140, 2)
+                # integral_exp=h_2.Integral(h_2.FindBin(110),h_2.FindBin(122.5))+h_2.Integral(h_2.FindBin(120),h_2.FindBin(122.5))+h_2.Integral(h_2.FindBin(127.5),h_2.FindBin(130))+h_2.Integral(h_2.FindBin(127.5),h_2.FindBin(140))
+                # # f1.SetParameters(norm_fact,alpha.getVal())
+                # # f1.SetParameters(N.getVal(),alpha.getVal())
+                # f1.SetParameters(norm_factor,fitted_lambda)
+                # print('check:',norm_factor,f1.Integral(110,140),h_2.Integral(),integral_sb*N.getVal(),N.getVal())
+                # quit()
+                # quit()
+
+                # f1.SetRange(110, 140)
+                # h_2.Fit("f1","W")
+                # f1=h_2.GetFunction("f1")
+                # print(f1)
+                # quit()
 
             # quit()
             # if key == "AvgMass_mumu_hh_HMassBC_TF":
@@ -769,8 +847,19 @@ def main():
             # print(hs.GetNhists())
         if not args.withbkg:
             hdummy = h_1.Clone()
-            hdummy.Reset()
+            # hdummy.Reset()
             hs.Add(hdummy)
+            hs_clone = ROOT.THStack("hs_clone","stacked hist")
+        
+        if sig_ctau=="0":
+            sig_ctau_f=0.1
+        else:
+            sig_ctau_f=float(sig_ctau)
+        if 'Cutflow' not in histname: # this gets gen efficiency'ed in Cutflow table maker
+            h_1.Scale(feff_fit_dict[sig_ctau_f]) #### TESTING TESTING TESTING ####
+        # # print("CHECK THIS - ",h_1.Integral())
+        # # quit()
+        h_1.Scale(lumi_factor) # NOTE: Do only when NEWNTUPLE for signal sample is used
         if args.withbkg:
             # sum_histogram = None
             # for histo in hs.GetHists():
@@ -790,18 +879,8 @@ def main():
             # print("data/MC: ",sf)
                 # histo.Scale(sf)
                 # hs_clone.Add(histo) #IDEALLY, calculate this sf and scale all histograms with this sf
-            
             hs_clone = ROOT.THStack("hs_clone","stacked hist")
-            if sig_ctau=="0":
-                sig_ctau_f=0.1
-            else:
-                sig_ctau_f=float(sig_ctau)
             # print("CHECK THIS - ",h_1.Integral())
-            if 'Cutflow' not in histname: # this gets gen efficiency'ed in Cutflow table maker
-                h_1.Scale(feff_fit_dict[sig_ctau_f]) #### TESTING TESTING TESTING ####
-            # print("CHECK THIS - ",h_1.Integral())
-            # quit()
-            h_1.Scale(lumi_factor) # NOTE: Do only when NEWNTUPLE for signal sample is used
             if ("Cutflow" in histname): # to be modified to include trigger separately from met filters
                 print(hs_skim_list)
                 h_1_tmp,histo_dict[key]['xlow'],histo_dict[key]['xhigh'],skim_last,_ = makeCutflow(hs_skim_list[-1],h_1,categories[args.category]['label'],False)
@@ -840,7 +919,22 @@ def main():
             # h3 = createRatio(h_2, sum_histogram)
             # h_2.GetXaxis().SetLimits(histos_xlow[j],histos_xhigh[j])
             h3=h_2.Clone()
-            h3.Divide(sum_histogram_tmp)
+            if "Sigma" in key and htype=='kaon' and "2017" in args.year:
+                for t in range(1, h_2.GetNbinsX() + 1):
+                    num = h_2.GetBinContent(t)
+                    denom = sum_histogram_tmp.GetBinContent(t)
+
+                    if denom != 0:
+                        ratio = num / denom
+                        error = ratio * ((h_2.GetBinError(t) / num) ** 2 + (sum_histogram_tmp.GetBinError(t) / denom) ** 2) ** 0.5 if num > 0 and denom > 0 else 0
+                    else:
+                        ratio = 0  # Or set to some default value, like 1
+                        error = 0
+
+                    h3.SetBinContent(t, ratio)
+                    h3.SetBinError(t, error)
+            else:
+                h3.Divide(sum_histogram_tmp)
 
         boundary_percent = 0.35
         
@@ -865,117 +959,257 @@ def main():
 
         # c1 = ROOT.TCanvas("c1", "stacked hists", 1600, 1000)
         
+
         pad1.cd()
         if args.log:
             # c1.SetLogy()
             pad1.SetLogy()
         #     hs.Clear()
-        hs = hs_clone
-        print("GETS HERE")
-        hs.Draw("HIST")
-        hs.GetXaxis().SetRangeUser(hprop['xlow'],hprop['xhigh'])
-        hs.GetXaxis().SetTitle(hprop['label'])
-        hs.GetYaxis().SetTitle("Events / "+str(h_1.GetXaxis().GetBinWidth(1)))
+
+        # h_dummy=h_1.Clone()
+        h_dummy = ROOT.TH1F(h_1.GetName() + "_dummy", h_1.GetTitle(), h_1.GetNbinsX(), h_1.GetXaxis().GetXmin(), h_1.GetXaxis().GetXmax())
+        # h_dummy=ROOT.TH1F()
+        # h_dummy.Reset()
         if ("Cutflow" in histname): # to be modified to include trigger separately from met filters
             for k in range(1,h_1.GetNbinsX()+1):
-                hs.GetXaxis().ChangeLabel(k,45,-1,-1,-1,-1,h_1.GetXaxis().GetBinLabel(k))
+                h_dummy.GetXaxis().ChangeLabel(k,45,-1,-1,-1,-1,h_1.GetXaxis().GetBinLabel(k))
                 h_2.GetXaxis().ChangeLabel(k,45,-1,-1,-1,-1,h_1.GetXaxis().GetBinLabel(k))
-                h_1.GetXaxis().ChangeLabel(k,45,-1,-1,-1,-1,h_1.GetXaxis().GetBinLabel(k))
-            hs.GetXaxis().LabelsOption("v")
-            h_1.GetXaxis().LabelsOption("v")
+                # h_1.GetXaxis().ChangeLabel(k,45,-1,-1,-1,-1,h_1.GetXaxis().GetBinLabel(k))
+            h_dummy.GetXaxis().LabelsOption("v")
+            # h_1.GetXaxis().LabelsOption("v")
             h_2.GetXaxis().LabelsOption("v")
-
         if ("Skim" in key): # to be modified to include trigger separately from met filters
-            hs.GetXaxis().ChangeLabel(1,45,-1,-1,-1,-1,"Total")
-            hs.GetXaxis().ChangeLabel(2,45,-1,-1,-1,-1,"trigger")
-            hs.GetXaxis().ChangeLabel(3,45,-1,-1,-1,-1,"MET filter")
-            hs.GetXaxis().ChangeLabel(4,45,-1,-1,-1,-1,"#mu p_{T},#eta")
-            hs.GetXaxis().ChangeLabel(5,45,-1,-1,-1,-1,"m(#mu#mu)#leq5")
-            hs.GetXaxis().ChangeLabel(6,45,-1,-1,-1,-1,"h p_{T},#eta")
-            hs.GetXaxis().ChangeLabel(7,45,-1,-1,-1,-1,"m(hh)#leq5")
-            hs.GetXaxis().ChangeLabel(8,45,-1,-1,-1,-1,"m(#mu#muhh)>50")
-            hs.GetXaxis().LabelsOption("v")
-            h_1.GetXaxis().LabelsOption("v")
-            h_2.GetXaxis().LabelsOption("v")
-            hs_skim_ls = hs.GetHists()
-            for h in hs_skim_ls:
-                hs_skim_list.append(h.Clone())
-            hs_skim_list.append(h_2.Clone())
-            hs_skim_list.append(h_1.Clone())
-            
+        
+            h_dummy.GetXaxis().ChangeLabel(1,45,-1,-1,-1,-1,"Total")
+            h_dummy.GetXaxis().ChangeLabel(2,45,-1,-1,-1,-1,"trigger")
+            h_dummy.GetXaxis().ChangeLabel(3,45,-1,-1,-1,-1,"MET filter")
+            h_dummy.GetXaxis().ChangeLabel(4,45,-1,-1,-1,-1,"#mu p_{T},#eta")
+            h_dummy.GetXaxis().ChangeLabel(5,45,-1,-1,-1,-1,"m(#mu#mu)#leq5")
+            h_dummy.GetXaxis().ChangeLabel(6,45,-1,-1,-1,-1,"h p_{T},#eta")
+            h_dummy.GetXaxis().ChangeLabel(7,45,-1,-1,-1,-1,"m(hh)#leq5")
+            h_dummy.GetXaxis().ChangeLabel(8,45,-1,-1,-1,-1,"m(#mu#muhh)>50")
+            h_dummy.GetXaxis().LabelsOption("v")
+        
         if ("Cutflow" not in histname and 'Skim' not in key):
             if args.log:
-                hs.SetMinimum(1)
-                h_1.SetMinimum(1)
-                ymax = max(hs.GetMaximum(),h_1.GetMaximum())
+                h_dummy.SetMinimum(0.4)
+                # h_1.SetMinimum(0.4)
+                ymax = max(h_dummy.GetMaximum(),h_1.GetMaximum(),h_2.GetMaximum())
 
                 if 'AvgMass' in key:
-                    hs.SetMaximum(2*1e3)
-                    h_1.SetMaximum(2*1e3)
+                    h_dummy.SetMaximum(2*1e3)
+                    # h_1.SetMaximum(2*1e3)
                 elif 'recoHiggsMass_MH_BC' in key:
-                    hs.SetMinimum(1)
-                    h_1.SetMinimum(1)
-                    hs.SetMaximum(2*1e3)
-                    h_1.SetMaximum(2*1e3)
+                    h_dummy.SetMinimum(0.4)
+                    # h_1.SetMinimum(0.4)
+                    h_dummy.SetMaximum(2*1e3)
+                    # h_1.SetMaximum(2*1e3)
                 else:
-                    hs.SetMaximum(1e2*ymax)   
-                    h_1.SetMaximum(1e2*ymax)  
+                    h_dummy.SetMaximum(1e2*ymax)   
+                    # h_1.SetMaximum(1e2*ymax)  
             else:
-                hs.SetMinimum(0.)
-                h_1.SetMinimum(0.)
-                ymax = max(hs.GetMaximum(),h_1.GetMaximum())
+                h_dummy.SetMinimum(0.)
+                # h_1.SetMinimum(0.)
+                ymax = max(h_dummy.GetMaximum(),h_1.GetMaximum(),h_2.GetMaximum())
                 if "FineBinning" in key:
-                    hs.SetMaximum(20)
-                    h_1.SetMaximum(20)
+                    h_dummy.SetMaximum(20)
+                    # h_1.SetMaximum(20)
                 elif "AvgMass_mumu_hh" in key:
                     ymax_special = h_1.GetMaximum()
-                    hs.SetMaximum(350)
-                    h_1.SetMaximum(350)
+                    h_dummy.SetMaximum(350)
+                    # h_1.SetMaximum(350)
                 else:
-                    hs.SetMaximum(args.yhigh*ymax)
-                    h_1.SetMaximum(args.yhigh*ymax)
+                    h_dummy.SetMaximum(args.yhigh*ymax)
+                    # h_1.SetMaximum(args.yhigh*ymax)
         else:
             if args.log:
-                hs.SetMinimum(1)
-                h_1.SetMinimum(1)
-                ymax = max(hs.GetMaximum(),h_1.GetMaximum())
-                hs.SetMaximum(args.yhigh*ymax)
-                h_1.SetMaximum(args.yhigh*ymax)
+                h_dummy.SetMinimum(0.4)
+                # h_1.SetMinimum(0.4)
+                ymax = max(h_dummy.GetMaximum(),h_1.GetMaximum(),h_2.GetMaximum())
+                h_dummy.SetMaximum(args.yhigh*ymax)
+                # h_1.SetMaximum(args.yhigh*ymax)
                 
 
             else:
-                hs.SetMinimum(0.)
-                h_1.SetMinimum(0.)
-                ymax = max(hs.GetMaximum(),h_1.GetMaximum())
-                hs.SetMaximum(args.yhigh*h_1.GetMaximum())
-                h_1.SetMaximum(args.yhigh*h_1.GetMaximum())
+                h_dummy.SetMinimum(0.)
+                # h_1.SetMinimum(0.)
+                ymax = max(h_dummy.GetMaximum(),h_1.GetMaximum(),h_2.GetMaximum())
+                h_dummy.SetMaximum(args.yhigh*h_1.GetMaximum())
+                # h_1.SetMaximum(args.yhigh*h_1.GetMaximum())
         
         if args.noratio:
-            hs.GetXaxis().SetLabelSize(0.045)
-            # hs.GetXaxis().SetTitleSize(0.)
-            h_1.GetXaxis().SetLabelSize(0.045)
+            h_dummy.GetXaxis().SetLabelSize(0.045)
+            # h_dummy.GetXaxis().SetTitleSize(0.)
+            # h_1.GetXaxis().SetLabelSize(0.045)
             # h_1.GetXaxis().SetTitleSize(0.)
-            hs.GetYaxis().SetLabelSize(0.045)
-            h_1.GetYaxis().SetLabelSize(0.045)
+            h_dummy.GetYaxis().SetLabelSize(0.045)
+            # h_1.GetYaxis().SetLabelSize(0.045)
+            h_dummy.GetXaxis().SetTitleSize(0.06)
+            h_dummy.GetYaxis().SetTitleSize(0.06)
+        # print(hs.GetYaxis().GetLabelOffset(),hs.GetYaxis().GetTitleSize(),hs.GetYaxis().GetTitleOffset(),hs.GetXaxis().GetLabelOffset(),hs.GetXaxis().GetTitleSize(),hs.GetXaxis().GetTitleOffset())
 
-            hs.GetXaxis().SetTitleOffset(1.)
-            h_1.GetXaxis().SetTitleOffset(1.)
-            hs.GetYaxis().SetTitleOffset(1.2)
-            h_1.GetYaxis().SetTitleOffset(1.2)
+
+
+            h_dummy.GetXaxis().SetTitleOffset(0.9)
+            h_dummy.GetXaxis().SetLabelOffset(0.007)
+            # h_1.GetXaxis().SetTitleOffset(1.)
+            h_dummy.GetYaxis().SetTitleOffset(1.25)
+            h_dummy.GetYaxis().SetLabelOffset(0.007)
+            # h_1.GetYaxis().SetTitleOffset(1.2)
         else:
-            hs.GetXaxis().SetLabelSize(0.)
-            hs.GetXaxis().SetTitleSize(0.)
-            h_1.GetXaxis().SetLabelSize(0.)
-            h_1.GetXaxis().SetTitleSize(0.)
+            h_dummy.GetXaxis().SetLabelSize(0.)
+            h_dummy.GetXaxis().SetTitleSize(0.)
+            # h_1.GetXaxis().SetLabelSize(0.)
+            # h_1.GetXaxis().SetTitleSize(0.)
 
-            hs.GetYaxis().SetLabelSize(0.055)
-            h_1.GetYaxis().SetLabelSize(0.055)
+            h_dummy.GetYaxis().SetLabelSize(0.055)
+            # h_1.GetYaxis().SetLabelSize(0.055)
 
-            hs.GetYaxis().SetTitleOffset(1.1)
-            h_1.GetYaxis().SetTitleOffset(1.1)
+            h_dummy.GetYaxis().SetTitleOffset(1.1)
+            # h_1.GetYaxis().SetTitleOffset(1.1)
+        
+        h_dummy.GetXaxis().SetRangeUser(hprop['xlow'],hprop['xhigh'])
+        h_dummy.GetXaxis().SetTitle(hprop['label'])
+        h_dummy.GetYaxis().SetTitle("Events / "+str(h_1.GetXaxis().GetBinWidth(1)))
+        print("CHECK-",h_1.GetBinContent(h_1.GetXaxis().FindBin(1.6)))
+        # quit()
+        h_dummy.Draw("AXIS")
+        # Apply the style settings from h_dummy to h_1
+        # copy_axis_properties(h_dummy, h_1)
+        # copy_axis_properties(h_dummy, h_2)
+        # if args.withbkg:
+        #     hs = hs_clone
+        print("GETS HERE")
+        # hs.Draw("HIST")
+        if args.withbkg:
+            hs = hs_clone
+            hs.Draw("noclear hist same")
+        # print(hs.GetYaxis().GetLabelOffset(),hs.GetYaxis().GetTitleSize(),hs.GetYaxis().GetTitleOffset(),hs.GetXaxis().GetLabelOffset(),hs.GetXaxis().GetTitleSize(),hs.GetXaxis().GetTitleOffset())
+        # quit()
+        # h_1.GetXaxis().SetRangeUser(hprop['xlow'],hprop['xhigh'])
+        # h_1.GetXaxis().SetTitle(hprop['label'])
+        # h_1.GetYaxis().SetTitle("Events / "+str(h_1.GetXaxis().GetBinWidth(1)))
+        # if ("Cutflow" in histname): # to be modified to include trigger separately from met filters
+        #     for k in range(1,h_1.GetNbinsX()+1):
+        #         if args.withbkg:
+        #             hs.GetXaxis().ChangeLabel(k,45,-1,-1,-1,-1,h_1.GetXaxis().GetBinLabel(k))
+        #         h_2.GetXaxis().ChangeLabel(k,45,-1,-1,-1,-1,h_1.GetXaxis().GetBinLabel(k))
+        #         h_1.GetXaxis().ChangeLabel(k,45,-1,-1,-1,-1,h_1.GetXaxis().GetBinLabel(k))
+        #     if args.withbkg:
+        #         hs.GetXaxis().LabelsOption("v")
+        #     h_1.GetXaxis().LabelsOption("v")
+        #     h_2.GetXaxis().LabelsOption("v")
+
+        # if ("Skim" in key): # to be modified to include trigger separately from met filters
+            # hs.GetXaxis().ChangeLabel(1,45,-1,-1,-1,-1,"Total")
+            # hs.GetXaxis().ChangeLabel(2,45,-1,-1,-1,-1,"trigger")
+            # hs.GetXaxis().ChangeLabel(3,45,-1,-1,-1,-1,"MET filter")
+            # hs.GetXaxis().ChangeLabel(4,45,-1,-1,-1,-1,"#mu p_{T},#eta")
+            # hs.GetXaxis().ChangeLabel(5,45,-1,-1,-1,-1,"m(#mu#mu)#leq5")
+            # hs.GetXaxis().ChangeLabel(6,45,-1,-1,-1,-1,"h p_{T},#eta")
+            # hs.GetXaxis().ChangeLabel(7,45,-1,-1,-1,-1,"m(hh)#leq5")
+            # hs.GetXaxis().ChangeLabel(8,45,-1,-1,-1,-1,"m(#mu#muhh)>50")
+            # hs.GetXaxis().LabelsOption("v")
+            # h_1.GetXaxis().LabelsOption("v")
+            # h_2.GetXaxis().LabelsOption("v")
+            # hs_skim_ls = hs.GetHists()
+            # for h in hs_skim_ls:
+            #     hs_skim_list.append(h.Clone())
+            # hs_skim_list.append(h_2.Clone())
+            # hs_skim_list.append(h_1.Clone())
+            
+        # if ("Cutflow" not in histname and 'Skim' not in key):
+        #     if args.log:
+        #         if args.withbkg:
+        #             hs.SetMinimum(1)
+        #         h_1.SetMinimum(1)
+        #         ymax = max(hs.GetMaximum(),h_1.GetMaximum())
+
+        #         if 'AvgMass' in key:
+        #             if args.withbkg:
+        #                 hs.SetMaximum(2*1e3)
+        #             h_1.SetMaximum(2*1e3)
+        #         elif 'recoHiggsMass_MH_BC' in key:
+        #             if args.withbkg:
+        #                 hs.SetMinimum(1)
+        #                 hs.SetMaximum(2*1e3)
+        #             h_1.SetMinimum(1)
+        #             h_1.SetMaximum(2*1e3)
+        #         else:
+        #             if args.withbkg:
+        #                 hs.SetMaximum(1e2*ymax)   
+        #             h_1.SetMaximum(1e2*ymax)  
+        #     else:
+        #         if args.withbkg:
+        #             hs.SetMinimum(0.)
+        #             ymax = max(hs.GetMaximum(),h_1.GetMaximum())
+        #         else:
+        #             ymax=h_1.GetMaximum()
+
+        #         h_1.SetMinimum(0.)
+        #         if "FineBinning" in key:
+        #             if args.withbkg:
+        #                 hs.SetMaximum(20)
+        #             h_1.SetMaximum(20)
+        #         elif "AvgMass_mumu_hh" in key:
+        #             ymax_special = h_1.GetMaximum()
+        #             if args.withbkg:
+        #                 hs.SetMaximum(350)
+        #             h_1.SetMaximum(350)
+        #         else:
+        #             if args.withbkg:
+        #                 hs.SetMaximum(args.yhigh*ymax)
+        #             h_1.SetMaximum(args.yhigh*ymax)
+        # else:
+        #     if args.log:
+        #         if args.withbkg:
+        #             ymax = max(hs.GetMaximum(),h_1.GetMaximum())
+        #             hs.SetMinimum(1)
+        #             hs.SetMaximum(args.yhigh*ymax)
+        #         else:
+        #             ymax=h_1.GetMaximum()
+        #         h_1.SetMinimum(1)
+        #         h_1.SetMaximum(args.yhigh*ymax)
+                
+
+        #     else:
+        #         if args.withbkg:
+        #             ymax = max(hs.GetMaximum(),h_1.GetMaximum())
+        #             hs.SetMinimum(0.)
+        #             hs.SetMaximum(args.yhigh*h_1.GetMaximum())
+        #         ymax=h_1.GetMaximum()
+        #         h_1.SetMinimum(0.)                
+        #         h_1.SetMaximum(args.yhigh*h_1.GetMaximum())
+        
+        # if args.noratio:
+        #     hs.GetXaxis().SetLabelSize(0.045)
+        #     # hs.GetXaxis().SetTitleSize(0.)
+        #     h_1.GetXaxis().SetLabelSize(0.045)
+        #     # h_1.GetXaxis().SetTitleSize(0.)
+        #     hs.GetYaxis().SetLabelSize(0.045)
+        #     h_1.GetYaxis().SetLabelSize(0.045)
+
+        #     hs.GetXaxis().SetTitleOffset(1.)
+        #     h_1.GetXaxis().SetTitleOffset(1.)
+        #     hs.GetYaxis().SetTitleOffset(1.2)
+        #     h_1.GetYaxis().SetTitleOffset(1.2)
+        # else:
+        #     hs.GetXaxis().SetLabelSize(0.)
+        #     hs.GetXaxis().SetTitleSize(0.)
+        #     h_1.GetXaxis().SetLabelSize(0.)
+        #     h_1.GetXaxis().SetTitleSize(0.)
+
+        #     hs.GetYaxis().SetLabelSize(0.055)
+        #     h_1.GetYaxis().SetLabelSize(0.055)
+
+        #     hs.GetYaxis().SetTitleOffset(1.1)
+        #     h_1.GetYaxis().SetTitleOffset(1.1)
 
         if args.withdata:
             h_2.Draw("EPSAME")
+            if ("recoHiggsMass" in histname):
+                # f1.Draw("same")
+                plot.Draw("same")
         # f.write("Now the file has more content!")
         if 'Cutflow' in histname:
             f = open(args.out+'/'+dirn+"Cutflow.txt", "w")
@@ -1015,15 +1249,17 @@ def main():
             
         h_1.SetLineWidth(5)
         h_1.Draw("HIST SAME")
+        # h_1.Draw("HIST")
         # sum_histogram_tmp.Rebin()
         # sum_histogram_tmp.SetMarkerStyle(20)
-        ex = np.array([sum_histogram_tmp.GetBinWidth(i)/2 for i in range(1,sum_histogram_tmp.GetNbinsX()+1)])
-        ey = np.array([sum_histogram_tmp.GetBinError(i)/2 for i in range(1,sum_histogram_tmp.GetNbinsX()+1)])
-        y = np.array([sum_histogram_tmp.GetBinContent(i) for i in range(1,sum_histogram_tmp.GetNbinsX()+1)])
-        x = np.array([sum_histogram_tmp.GetBinCenter(i) for i in range(1,sum_histogram_tmp.GetNbinsX()+1)])
-        gr_bounds=ROOT.TGraphErrors(len(x),x,y,ex,ey)
-        # gr_bounds.SetMarkerStyle(21);gr_bounds.SetMarkerSize(1.25);gr_bounds.SetLineStyle(2);
-        gr_bounds.SetFillColor(ROOT.kGray+3);gr_bounds.SetFillStyle(3244);gr_bounds.SetLineWidth(0);gr_bounds.SetLineColor(2);
+        if args.withbkg:
+            ex = np.array([sum_histogram_tmp.GetBinWidth(i)/2 for i in range(1,sum_histogram_tmp.GetNbinsX()+1)])
+            ey = np.array([sum_histogram_tmp.GetBinError(i)/2 for i in range(1,sum_histogram_tmp.GetNbinsX()+1)])
+            y = np.array([sum_histogram_tmp.GetBinContent(i) for i in range(1,sum_histogram_tmp.GetNbinsX()+1)])
+            x = np.array([sum_histogram_tmp.GetBinCenter(i) for i in range(1,sum_histogram_tmp.GetNbinsX()+1)])
+            gr_bounds=ROOT.TGraphErrors(len(x),x,y,ex,ey)
+            # gr_bounds.SetMarkerStyle(21);gr_bounds.SetMarkerSize(1.25);gr_bounds.SetLineStyle(2);
+            gr_bounds.SetFillColor(ROOT.kGray+3);gr_bounds.SetFillStyle(3244);gr_bounds.SetLineWidth(0);gr_bounds.SetLineColor(2);
         ################ UNCOMMENT BELOW TO ADD STAT UNC. ##############
         # gr_bounds.Draw("5 same")
         # leg.AddEntry(gr_bounds,"Stat. Unc. MC","f")
@@ -1124,6 +1360,7 @@ def main():
         c1.SaveAs(args.out+'/'+dirn+savename+'.pdf')
         # c1.SaveAs(args.out+'/'+dirn+savename+'.root')
         c1.Clear()
+        # quit()
     # for i, dataset in enumerate(datasets_bkg):
     #     fdatasets_bkg[i].Close()
     fsig.Close()

@@ -476,8 +476,8 @@ else:
 	if ('HToSS' in args.config):
 		scalar1_index = 'genParId==9000006'
 		scalar2_index = 'genParId==-9000006'
-		genpmu_index = 'genParMotherId==9000006 && genParId==13'
-		gennmu_index = 'genParMotherId==9000006 && genParId==-13'
+		genpmu_index = 'genParMotherId==9000006 && genParId==13 && genParStatus==1'
+		gennmu_index = 'genParMotherId==9000006 && genParId==-13 && genParStatus==1'
 		# if ((data_name.count('ctauS') == 2)):
 		old_lt = float(data_loc.split('ctauS')[1].split('_')[0].replace('p','.'))
 		if old_lt==0:
@@ -977,8 +977,8 @@ if isData=='false':
 				ROOT.gInterpreter.Declare('TFile *higgsPtShape_file = new TFile("scale_factors/HiggsPtReweighting_tmp/ggH_HiggsPtReweight_shape.root","READ");TH1D* h_higgsptshape_sf=(TH1D*)higgsPtShape_file->Get("'+downshift+'");')
 				higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso\
 									.Define('higgsptshapeSF','getSF(h_higgsptshape_sf,"HiggsPtShape",genHiggsPt[0])')
-			else:
-				higgs_definitions_preblinding_loose_iso.Define('higgsptshapeSF','1')
+		else:
+			higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso.Define('higgsptshapeSF','1')
 		higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('othSF','vtxSF*higgsptSF*higgsptshapeSF')
 		# higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('othSF','vtxSF')
 	else:
@@ -1016,12 +1016,12 @@ higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso.
 
 ############## CATEGORIZATION ########################
 if (unblind):
-	if isData=='true':
-		print("MANUALLY UNBLIND THE PEAK IN DATA - COMMENT OUT ABOVE")
-		quit()
-	else:
-		higgs_definitions_precat = higgs_definitions_preblinding_loose_iso
-		higgs_definitions_precat_4test = higgs_definitions_preblinding_loose_iso
+	# if isData=='true':
+	# 	print("MANUALLY UNBLIND THE PEAK IN DATA - COMMENT OUT ABOVE")
+	# 	quit()
+	# else:
+	higgs_definitions_precat = higgs_definitions_preblinding_loose_iso
+	higgs_definitions_precat_4test = higgs_definitions_preblinding_loose_iso
 else:
 	higgs_definitions_precat = higgs_definitions_preblinding_loose_iso.Filter('recohiggs_mass_blinded',f'm(mumuhh) blinded in [122.5,127.5]')
 	higgs_definitions_precat_4test = higgs_definitions_preblinding_loose_iso.Filter('recohiggs_mass_blinded',f'm(mumuhh) blinded in [122.5,127.5]')
@@ -1216,8 +1216,7 @@ if ('HToSS' in args.config):
 			.Define('genmumu_2d',f'ROOT::Math::XYZVector(recopmu_lv.Px()+reconmu_lv.Px(),recopmu_lv.Py()+reconmu_lv.Py(),0)')\
 			.Define('genlxy_2d',f'ROOT::Math::XYZVector(scalar1_dVx[0],0,0)')\
 			.Define('genmumu_Alpha',f'ROOT::Math::VectorUtil::Angle(genmumu_2d,genlxy_2d)')
-	rdf_den=rdf_den.Define('reco_check','mu_pair_idx_matched>=0').Filter('reco_check')
-	# rdf_dxyBin0=rdf_den.Filter('genmu1_dxy < 0.4')
+	#rdf_den=rdf_den.Define('reco_check','mu_pair_idx_matched>=0').Filter('reco_check')
 	print('See here 2-',rdf_den.Count().GetValue())
 	
 # .Define('recopmu_dxy',f'(-(muonTkPairPF2PATTkVx[2]-pvX[{pv_sel}][0])*recorefitmu_lv[0].Py()+(muonTkPairPF2PATTkVy[2]-pvY[{pv_sel}][0])*recorefitmu_lv[0].Px())/recorefitmu_lv[0].Pt()')\
@@ -1232,22 +1231,22 @@ if ('HToSS' in args.config):
 	# 'mumu_genParId',"abs(genParId[MatchReco(mumu_lv,genParPt,genParEta,genParPhi,genParE,genParId,genParMotherId)])"
 	# MatchGen
 
-	hists_1d_precat["h_recoLeadingMuDxy_den"] = rdf_den.Histo1D(("h_recoLeadingMuDxy_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'recomu1_dxy')
-	hists_1d_precat["h_recosubLeadingMuDxy_den"] = rdf_den.Histo1D(("h_recosubLeadingMuDxy_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'recomu2_dxy')
-	hists_1d_precat["h_recoLeadingMuDxy_mutrg"] = rdf_mu.Histo1D(("h_recoLeadingMuDxy_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'recomu1_dxy')
-	hists_1d_precat["h_recosubLeadingMuDxy_mutrg"] = rdf_mu.Histo1D(("h_recosubLeadingMuDxy_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'recomu2_dxy')
-	hists_1d_precat["h_recoLeadingMuDxy_l2mutrg"] = rdf_l2mu.Histo1D(("h_recoLeadingMuDxy_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'recomu1_dxy')
-	hists_1d_precat["h_recosubLeadingMuDxy_l2mutrg"] = rdf_l2mu.Histo1D(("h_recosubLeadingMuDxy_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),'recomu2_dxy')
-	hists_1d_precat["h_recoLeadingMuDxy_singlemutrg"] = rdf_singlemu.Histo1D(("h_recoLeadingMuDxy_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),'recomu1_dxy')
-	hists_1d_precat["h_recosubLeadingMuDxy_singlemutrg"] = rdf_singlemu.Histo1D(("h_recosubLeadingMuDxy_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),'recomu2_dxy')
+	# hists_1d_precat["h_recoLeadingMuDxy_den"] = rdf_den.Histo1D(("h_recoLeadingMuDxy_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+	# 													'recomu1_dxy')
+	# hists_1d_precat["h_recosubLeadingMuDxy_den"] = rdf_den.Histo1D(("h_recosubLeadingMuDxy_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+	# 													'recomu2_dxy')
+	# hists_1d_precat["h_recoLeadingMuDxy_mutrg"] = rdf_mu.Histo1D(("h_recoLeadingMuDxy_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+	# 													'recomu1_dxy')
+	# hists_1d_precat["h_recosubLeadingMuDxy_mutrg"] = rdf_mu.Histo1D(("h_recosubLeadingMuDxy_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+	# 													'recomu2_dxy')
+	# hists_1d_precat["h_recoLeadingMuDxy_l2mutrg"] = rdf_l2mu.Histo1D(("h_recoLeadingMuDxy_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+	# 													'recomu1_dxy')
+	# hists_1d_precat["h_recosubLeadingMuDxy_l2mutrg"] = rdf_l2mu.Histo1D(("h_recosubLeadingMuDxy_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),'recomu2_dxy')
+	# hists_1d_precat["h_recoLeadingMuDxy_singlemutrg"] = rdf_singlemu.Histo1D(("h_recoLeadingMuDxy_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),'recomu1_dxy')
+	# hists_1d_precat["h_recosubLeadingMuDxy_singlemutrg"] = rdf_singlemu.Histo1D(("h_recosubLeadingMuDxy_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),'recomu2_dxy')
 
 	# dxybins=np.sort(np.array(set(np.geomspace(0.001,100,num=1000).tolist())))
-	dxybins=np.round(np.geomspace(0.001,100,num=1001),6)
+	dxybins=np.round(np.geomspace(0.0001,100,num=10001),6)
 	ndxybins=len(dxybins)-1
 	print(len(dxybins))
 	# for j,tmp in enumerate(dxybins[1:]):
@@ -1302,14 +1301,14 @@ if ('HToSS' in args.config):
 	# 													'genmu2_dxy')
 
 
-	hists_1d_precat["h_recoScalar1Lxy_den"] = rdf_den.Histo1D(("h_recoScalar1Lxy_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'mumu_lxy_matched')
-	hists_1d_precat["h_recoScalar1Lxy_singlemutrg"] = rdf_singlemu.Histo1D(("h_recoScalar1Lxy_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'mumu_lxy_matched')
-	hists_1d_precat["h_recoScalar1Lxy_l2mutrg"] = rdf_l2mu.Histo1D(("h_recoScalar1Lxy_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'mumu_lxy_matched')
-	hists_1d_precat["h_recoScalar1Lxy_mutrg"] = rdf_mu.Histo1D(("h_recoScalar1Lxy_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
-														'mumu_lxy_matched')
+	# hists_1d_precat["h_recoScalar1Lxy_den"] = rdf_den.Histo1D(("h_recoScalar1Lxy_den","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+	# 													'mumu_lxy_matched')
+	# hists_1d_precat["h_recoScalar1Lxy_singlemutrg"] = rdf_singlemu.Histo1D(("h_recoScalar1Lxy_singlemutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+	# 													'mumu_lxy_matched')
+	# hists_1d_precat["h_recoScalar1Lxy_l2mutrg"] = rdf_l2mu.Histo1D(("h_recoScalar1Lxy_l2mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+	# 													'mumu_lxy_matched')
+	# hists_1d_precat["h_recoScalar1Lxy_mutrg"] = rdf_mu.Histo1D(("h_recoScalar1Lxy_mutrg","",dikinematics['lxy']['nbins'],dikinematics['lxy']['minX'],dikinematics['lxy']['maxX']),\
+	# 													'mumu_lxy_matched')
 
 
 
@@ -1428,11 +1427,11 @@ else:
 # quit() 
 
 if (unblind): # blinding
-	if isData=='true':
-		print("MANUALLY UNBLIND THE PEAK IN DATA - COMMENT OUT ABOVE")
-		quit()
-	else:
-		higgs_definitions_blinded_loose_iso = higgs_definitions_preblinding_loose_iso
+	# if isData=='true':
+	# 	print("MANUALLY UNBLIND THE PEAK IN DATA - COMMENT OUT ABOVE")
+	# 	quit()
+	# else:
+	higgs_definitions_blinded_loose_iso = higgs_definitions_preblinding_loose_iso
 else:
 	higgs_definitions_blinded_loose_iso = higgs_definitions_preblinding_loose_iso.Filter('recohiggs_mass_blinded',f'm(mumuhh) blinded in [122.5,127.5]')
 
@@ -1687,7 +1686,7 @@ for key in reg_:
 											,'ch1_reliso','ch2_reliso','weight')
 
 	# hists_2d_["h_DiChHadVtxLxy_DiChHadVtxSigma"] = new TH2F("h_DiChHadVtxLxy_DiChHadVtxSigma", "", 5000, 0., 1000., 1000, 0., 500.);
-	if isData=='false':
+	if isData=='false' or unblind:
 		higgs_definitions_unblinded = higgs_definitions_preblinding_loose_iso.Filter(key+'_check')
 		hists_1d_[key]["h_recoHiggsMass_MHMSIso_BC"] = higgs_definitions_unblinded.Histo1D(("h_recoHiggsMass_MHMSIso_BC", "", 5000, 0., 500.), 'recohiggs_mass','weight')
 		hists_1d_[key]["h_recoHiggsMass_MHIso_BC"] = higgs_definitions_unblinded.Filter('mass_window_check').Histo1D(("h_recoHiggsMass_MHIso_BC", "", 5000, 0., 500.), 'recohiggs_mass','weight')
