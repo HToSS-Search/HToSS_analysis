@@ -16,4 +16,4 @@ log = /user/sdansana/CMSSW_10_6_27/src/HToSS_analysis/log/log_$(dataset)_$(year)
 +JobFlavour = "longlunch"
 #+JobFlavour = "espresso"
 max_retries = 5
-queue cfg,cuts,output,flow,fhigh,dataset,year from params_signal_kaon_UL2016_APV.txt 
+queue cfg,cuts,output,flow,fhigh,dataset,year from params_signal_pion_vbf.txt 

@@ -37,99 +37,132 @@ parser.add_argument("--flow", dest="flow", help="start file number",default=1, t
 parser.add_argument("--fhigh", dest="fhigh", help="end file number", default=100,type=int)
 parser.add_argument("--onlyweights", dest="onlyweights", help="just store MCweights weighted with cs*lumi", action='store_true')
 parser.add_argument("--dname", dest="dname", help="stores the name of dataset - esp. needed for LLP reweighting", type=str)
+parser.add_argument("--vbf", dest="vbf", help="Extension to vbf", action='store_true')
+parser.add_argument("--prefire", dest="prefire", help="prefire test", action='store_true')
 
 
 # parser.add_argument("--total", dest="onlyweights", help="just store MCweights weighted with cs*lumi", action='store_true')
 
 args = parser.parse_args()
-###################### LOADING YAML FOR PHYSICS PROCESS ############################
-data_name = args.dname
-directories2=[]
-if (('HToSS' in args.config) and (data_name.count('ctauS') == 3)):
-	old_lt1,old_lt2,new_lt=float(data_name.split('_')[-3].replace('ctauS','').replace('p','.')),float(data_name.split('_')[-2].replace('ctauS','').replace('p','.')),float(data_name.split('_')[-1].replace('ctauS','').replace('p','.'))
-	if old_lt2==0:
-		old_lt2=0.1
-	if old_lt1==0:
-		old_lt1=0.1
-	conf1, conf2 = args.config, args.config.replace(data_name.split('_')[-3],data_name.split('_')[-2])
-	print(conf1, conf2)
-	print(old_lt1, old_lt2, new_lt)
-	fin2=open(conf2,'r')
-	conf_pars2=yaml.safe_load(fin2)
-	data_loc2=conf_pars2['locations']
-	directories2 = [os.path.join(data_loc2,d)+"/" for d in os.listdir(data_loc2) if os.path.isdir(os.path.join(data_loc2, d))]
-	# quit()
-fin = open(args.config,'r')
-# f = open("params.txt",'w')
-conf_pars = yaml.safe_load(fin)
-# data_name = conf_pars['name']
 
 lumi_scale = {'UL2016_APV': 19500, 'UL2016': 16800,'UL2017':  41480,'UL2018': 59830 } #in pb-1
 lumi_factor = lumi_scale[args.year]
 
-
-data_loc = conf_pars['locations']
-cross_section = 1 if 'Run' in args.config else conf_pars['cross_section']
-sum_wts = 1 if 'Run' in args.config else conf_pars['sum_weights']
-# lumi = 1 if 'Run' in args.config else 41474 #2017 for now
-lumi = 1 if 'Run' in args.config else 4247.682053046 #2017D for now
-isData = 'true' if 'Run' in args.config else 'false'
-
-###################### LOADING ALL FILES FOR PROCESSING ############################
-
-isOldNtuple = False
-if 'almorton' in data_loc:
-	isOldNtuple = True
-# data_loc = data_loc[0]
-if data_loc[-1] != '/':
-	data_loc = data_loc+'/'
-print(data_loc)
-if isOldNtuple:
-	directories = [data_loc] #below only for old ntuples
-else:
-	directories = [data_loc+d+"/" for d in os.listdir(data_loc) if os.path.isdir(os.path.join(data_loc, d))]
-
-print(directories)
-print(directories2)
-# print(directories+directories2)
-directories=directories+directories2
-# quit()
-# data_name = conf_pars['name']
+###################### LOADING YAML FOR PHYSICS PROCESS ############################
+data_name = args.dname
 treeName = "makeTopologyNtupleMiniAOD/tree"
-list_of_files = []
-for dirtmp in directories:
-	print(dirtmp)
-	flow, fhigh = maxfilenumber(dirtmp)
-	if ('HToSS' not in args.config):
-		if flow > args.fhigh or fhigh < args.flow:
+
+
+print(args.vbf)
+if 'HToSS' in data_name and args.vbf:
+	fin=open(args.config,'r')
+	conf_pars=yaml.safe_load(fin)
+	mS=data_name.split('MS')[-1].split('_')[0]
+	lt=data_name.split('_')[-1].replace('ctauS','')
+	if data_name.count('ctauS') == 3:
+		old_lt2, new_lt = data_name.split('_')[-3],data_name.split('_')[-2]
+		lt=old_lt2
+	elif data_name.count('ctauS') == 2:
+		old_lt = data_name.split('_')[-2].replace('ctauS','')
+		lt=old_lt
+	directories = conf_pars['MS'+mS]['dir']
+	data_loc = directories
+	cross_section = 1 if 'Run' in args.config else conf_pars['MS'+mS]['cs']
+	sum_wts = 1 if 'Run' in args.config else -1
+	# lumi = 1 if 'Run' in args.config else 41474 #2017 for now
+	# lumi = 1 if 'Run' in args.config else 4247.682053046 #2017D for now
+	isData = 'true' if 'Run' in args.config else 'false'
+	list_of_files = []
+	all_files = os.listdir(data_loc)
+	for ftmp in all_files:
+		if ('_mS'+mS.replace('p','.')+'_' not in ftmp) or ('_ctauS'+lt+'_' not in ftmp):
+			# print("enters")
 			continue
-		if args.flow >= flow: 
-			flow = args.flow
-		if args.fhigh <= fhigh:
-			fhigh = args.fhigh
-	for i in range(flow, fhigh+1):
-		fno = str(i)
-		fistr = dirtmp+"output_"+fno+".root"
-		if not os.path.exists(fistr):
-			continue
-		try:
-			root_file = ROOT.TFile.Open(fistr)
-			if not root_file or root_file.IsZombie() or root_file.TestBit(ROOT.TFile.kRecovered):
-				raise Exception(f"Error opening file: {fistr}")
-			# else:
-			# 	continue
-		except Exception as e:
-			print(f"Error processing file {fistr}: {e}")
-			continue
-		list_of_files.append(fistr)
+		full_path = os.path.join(data_loc, ftmp)
+		# print(full_path)
+		if os.path.isfile(full_path):
+			list_of_files.append(full_path)
+else:
+	directories2=[]
+	# VBF_HToSS_MH125_MS2_ctauS100_ctauS1000
+	if (('HToSS' in args.config) and (data_name.count('ctauS') == 3)):
+		old_lt1,old_lt2,new_lt=float(data_name.split('_')[-3].replace('ctauS','').replace('p','.')),float(data_name.split('_')[-2].replace('ctauS','').replace('p','.')),float(data_name.split('_')[-1].replace('ctauS','').replace('p','.'))
+		if old_lt2==0:
+			old_lt2=0.1
+		if old_lt1==0:
+			old_lt1=0.1
+		conf1, conf2 = args.config, args.config.replace(data_name.split('_')[-3],data_name.split('_')[-2])
+		print(conf1, conf2)
+		print(old_lt1, old_lt2, new_lt)
+		fin2=open(conf2,'r')
+		conf_pars2=yaml.safe_load(fin2)
+		data_loc2=conf_pars2['locations']
+		directories2 = [os.path.join(data_loc2,d)+"/" for d in os.listdir(data_loc2) if os.path.isdir(os.path.join(data_loc2, d))]
+		# quit()
+	fin = open(args.config,'r')
+	conf_pars = yaml.safe_load(fin)
+
+	data_loc = conf_pars['locations']
+	cross_section = 1 if 'Run' in args.config else conf_pars['cross_section']
+	sum_wts = 1 if 'Run' in args.config else conf_pars['sum_weights']
+	# lumi = 1 if 'Run' in args.config else 41474 #2017 for now
+	# lumi = 1 if 'Run' in args.config else 4247.682053046 #2017D for now
+	isData = 'true' if 'Run' in args.config else 'false'
+
+	###################### LOADING ALL FILES FOR PROCESSING ############################
+
+	isOldNtuple = False
+	if 'almorton' in data_loc:
+		isOldNtuple = True
+	# data_loc = data_loc[0]
+	if data_loc[-1] != '/':
+		data_loc = data_loc+'/'
+	print(data_loc)
+	if isOldNtuple:
+		directories = [data_loc] #below only for old ntuples
+	else:
+		directories = [data_loc+d+"/" for d in os.listdir(data_loc) if os.path.isdir(os.path.join(data_loc, d))]
+
+	print(directories)
+	print(directories2)
+	# print(directories+directories2)
+	directories=directories+directories2
+	# quit()
+	# data_name = conf_pars['name']
+	list_of_files = []
+	for dirtmp in directories:
+		print(dirtmp)
+		flow, fhigh = maxfilenumber(dirtmp)
+		if ('HToSS' not in args.config):
+			if flow > args.fhigh or fhigh < args.flow:
+				continue
+			if args.flow >= flow: 
+				flow = args.flow
+			if args.fhigh <= fhigh:
+				fhigh = args.fhigh
+		for i in range(flow, fhigh+1):
+			fno = str(i)
+			fistr = dirtmp+"output_"+fno+".root"
+			if not os.path.exists(fistr):
+				continue
+			try:
+				root_file = ROOT.TFile.Open(fistr)
+				if not root_file or root_file.IsZombie() or root_file.TestBit(ROOT.TFile.kRecovered):
+					raise Exception(f"Error opening file: {fistr}")
+				# else:
+				# 	continue
+			except Exception as e:
+				print(f"Error processing file {fistr}: {e}")
+				continue
+			list_of_files.append(fistr)
 
 # print(list_of_files)
 
 ###################### CALCULATION OF SUM OF WEIGHTS ####################
-if args.onlyweights:
+if args.onlyweights or args.vbf or args.prefire:
 	# sum_wts calculated here
 	print("enters sum weights calculation")
-	print(list_of_files)
+	# print(list_of_files)
 	if not 'Run' in args.config:
 		if not isinstance(list_of_files, list):
 			file = ROOT.TFile(list_of_files)
@@ -171,7 +204,8 @@ if args.onlyweights:
 	weightPlot.Write()
 	fout.Close()
 	sys.stderr.write("Time taken: --- %s seconds ---" % (time.time() - start_time)+'\n')
-	quit()
+	if args.onlyweights:
+		quit()
 if "scale_var" in args.output:
 	if not isinstance(list_of_files, list):
 		file = ROOT.TFile(list_of_files)
@@ -213,6 +247,7 @@ if "scale_var" in args.output:
 # print(list_of_files)
 # cutPlot=[]
 # if isData=='false':
+print(list_of_files)
 if not isinstance(list_of_files, list):
 	file = ROOT.TFile(list_of_files)
 	cutPlot = file.Get("makeTopologyNtupleMiniAOD/eventFilterAND").Clone()
@@ -411,7 +446,7 @@ gInterpreter_diObjectLxy()
 gInterpreter_lifetime_reweight()
 gInterpreter_SF()
 gInterpreter_MatchReco()
-print(list_of_files)
+# print(list_of_files)
 rdf = ROOT.RDataFrame(treeName,list_of_files)
 if data_name.count('ctauS') >= 1:
 	rdf=rdf.DefinePerSample('lifetimesample','getLifetime(rdfslot_, rdfsampleinfo_)')
@@ -434,7 +469,6 @@ if data_name.count('ctauS') >= 1:
 
 # print(rdf.Display('lifetimesample',10).Print())
 # quit()
-# print(data_loc)
 entries_total = rdf.Count()
 
 # sys.stderr.write("entries total:"+str(entries_total.GetValue())+'\n')
@@ -465,6 +499,7 @@ else:
 	rdf_new = rdf.Define('weightOnlyDataset','weight_*{}'.format(dataset_weight))
 	rdf_new = rdf_new.Define('PUReweight_sf','GetTheMap()[floor(numVert)]')
 	rdf_new = rdf_new.Define('weight_tmp','weightOnlyDataset*PUReweight_sf')
+		
 	# print(pileupMap)
 	# cols = ROOT.vector('string')(); cols.push_back("PUReweight_sf"); cols.push_back("numVert"); cols.push_back("weightOnlyDataset"); cols.push_back("weight")
 	# rdf_new.Display(cols,10).Print()
@@ -479,7 +514,11 @@ else:
 		genpmu_index = 'genParMotherId==9000006 && genParId==13 && genParStatus==1'
 		gennmu_index = 'genParMotherId==9000006 && genParId==-13 && genParStatus==1'
 		# if ((data_name.count('ctauS') == 2)):
-		old_lt = float(data_loc.split('ctauS')[1].split('_')[0].replace('p','.'))
+		if args.vbf:
+			old_lt = float(old_lt)
+		else:
+			old_lt = float(data_loc.split('ctauS')[1].split('_')[0].replace('p','.'))
+			
 		if old_lt==0:
 			old_lt=0.1
 		# new_lt = float(data_name.split('ctauS')[1].replace('p','.'))
@@ -746,9 +785,10 @@ cut_dihadron = cut_dihadron.Define('hh_lv','ch1_lv+ch2_lv')\
 						# .Define('ch2_vz_tmp','packedCandsVz[ch_pair_idx[1]]')\
 
 #### checking ntuple version ### 
-date = int(data_loc.split('/')[-2].split('_')[0])
-# print(date)
-# quit()
+if args.vbf:
+	date=250701
+else:
+	date = int(data_loc.split('/')[-2].split('_')[0])
 if date < 240100:
 	cut_dihadron = cut_dihadron.Define('ch1_pixhits_tmp','packedCandsPseudoTrkNumberOfPixelHits.packedCandsPseudoTrkNumberOfHits[ch_pair_idx[0]]')\
 						.Define('ch2_pixhits_tmp','packedCandsPseudoTrkNumberOfPixelHits.packedCandsPseudoTrkNumberOfHits[ch_pair_idx[1]]')
@@ -987,7 +1027,11 @@ if isData=='false':
 	# rdf_issue=higgs_definitions_preblinding_loose_iso.Define('issue','genHiggsPt<=0').Filter('issue')
 	# rdf_issue.Display({'higgsptSF','genHiggsPt'}).Print()
 	# quit()
-	higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('weight','weight_noSF*muSF*othSF')
+	if args.prefire:
+		higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso.Define('weight','weight_noSF*muSF*othSF*prefiringweightMuon_')
+	else:
+		higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('weight','weight_noSF*muSF*othSF')
+
 	# higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('weight','weight_noSF*muSF')
 	# higgs_definitions_preblinding_loose_iso = higgs_definitions_preblinding_loose_iso.Define('weight','weight_noSF')
 higgs_definitions_preblinding_loose_iso=higgs_definitions_preblinding_loose_iso.Define('prompt_check',R1)\

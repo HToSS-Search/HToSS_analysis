@@ -29,4 +29,6 @@ echo ""$reldir
 echo "CMSSW intialized to "$CMSSW_BASE
 source ./setup.sh
 
-python src/RDataFrames_analyzer.py -c $cfg --cuts $cuts -o $output -y $year --flow $flow --fhigh $fhigh --dname $dname
+#python src/RDataFrames_analyzer.py -c $cfg --cuts $cuts -o $output -y $year --flow $flow --fhigh $fhigh --dname $dname
+python src/RDataFrames_analyzer.py -c $cfg --cuts $cuts -o $output -y $year --flow $flow --fhigh $fhigh --dname $dname --prefire
+#python src/RDataFrames_analyzer.py -c $cfg --cuts $cuts -o $output -y $year --flow $flow --fhigh $fhigh --dname $dname --vbf

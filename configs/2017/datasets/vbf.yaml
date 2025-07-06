@@ -1,0 +1,33 @@
+MS0p4:
+  cs: 0.00310971168
+  dir: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/VBF_HToSSTo2Mu2Hadrons_MH125_TuneCP2_13TeV-powheg-pythia8
+MS0p6:
+  cs: 0.0021665187
+  dir: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/VBF_HToSSTo2Mu2Hadrons_MH125_TuneCP2_13TeV-powheg-pythia8
+MS0p8:
+  cs: 0.00144419452
+  dir: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/VBF_HToSSTo2Mu2Hadrons_MH125_TuneCP2_13TeV-powheg-pythia8
+MS0p9:
+  cs: 0.00082810672
+  dir: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/VBF_HToSSTo2Mu2Hadrons_MH125_TuneCP2_13TeV-powheg-pythia8
+MS1:
+  cs: 0.0002473428
+  dir: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/VBF_HToSSTo2Mu2Hadrons_MH125_TuneCP2_13TeV-powheg-pythia8
+MS1p1:
+  cs: 0.0004644296
+  dir: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/VBF_HToSSTo2Mu2Hadrons_MH125_TuneCP2_13TeV-powheg-pythia8
+MS1p2:
+  cs: 0.00107677322
+  dir: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/VBF_HToSSTo2Mu2Hadrons_MH125_TuneCP2_13TeV-powheg-pythia8
+MS1p4:
+  cs: 0.0013276711
+  dir: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/VBF_HToSSTo2Mu2Hadrons_MH125_TuneCP2_13TeV-powheg-pythia8
+MS1p6:
+  cs: 0.00182307528
+  dir: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/VBF_HToSSTo2Mu2Hadrons_MH125_TuneCP2_13TeV-powheg-pythia8
+MS1p8:
+  cs: 0.00258072334
+  dir: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/VBF_HToSSTo2Mu2Hadrons_MH125_TuneCP2_13TeV-powheg-pythia8
+MS2:
+  cs: 0.003163643
+  dir: /pnfs/iihe/cms/store/user/sdansana/HToSS/MC/nTuples/VBF_HToSSTo2Mu2Hadrons_MH125_TuneCP2_13TeV-powheg-pythia8

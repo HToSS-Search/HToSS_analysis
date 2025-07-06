@@ -1,0 +1,4 @@
+sh make_plots_new.sh plots/UL2017/KaonAssumption/Preselection_Category_90pPrompt_SF_240805 UL2017/KaonAssumption/Preselection_Category_90pPrompt_SF_240805 1.5 configs/2017/cuts/SRCuts_kaonmass.yaml MS2_ctau0 prompt UL2017
+sh make_plots_new.sh plots/UL2017/KaonAssumption/Preselection_Category_90pPrompt_SF_240805 UL2017/KaonAssumption/Preselection_Category_90pPrompt_SF_240805 1.5 configs/2017/cuts/SRCuts_kaonmass.yaml MS2_ctau10 prompt UL2017
+sh make_plots_new.sh plots/UL2017/PionAssumption/Preselection_Category_90pPrompt_SF_240805 UL2017/PionAssumption/Preselection_Category_90pPrompt_SF_240805 1.5 configs/2017/cuts/SRCuts_pionmass.yaml MS0p6_ctau0 prompt UL2017
+sh make_plots_new.sh plots/UL2017/PionAssumption/Preselection_Category_90pPrompt_SF_240805 UL2017/PionAssumption/Preselection_Category_90pPrompt_SF_240805 1.5 configs/2017/cuts/SRCuts_pionmass.yaml MS0p6_ctau1 prompt UL2017

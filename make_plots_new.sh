@@ -32,14 +32,26 @@ mkdir -p $wd/public_html/HToSS_plots/Stacked/$outname/LinearYaxis/$item/$cat
 cp $wd/index.php $wd/public_html/HToSS_plots/Stacked/$outname/LogYaxis/$item/$cat/.
 cp $wd/index.php $wd/public_html/HToSS_plots/Stacked/$outname/LinearYaxis/$item/$cat/.
 # done
-if [[ $cat == *"no"* ]]; then
-# Loop over the list
-	python scripts/StackedHistograms.py -y $year -i $inname/total -o $wd/public_html/HToSS_plots/Stacked/$outname/LogYaxis/$item -s "HToSS_MH125_$item" --log --bkg --data --category $cat 
-	python scripts/StackedHistograms.py -y $year -i $inname/total -o $wd/public_html/HToSS_plots/Stacked/$outname/LinearYaxis/$item -s "HToSS_MH125_$item" --yhigh $yhigh --bkg --data --category $cat 
+if [[ $outname == *"unblind"* ]]; then
+	if [[ $cat == *"no"* ]]; then
+	# Loop over the list
+		python scripts/StackedHistograms.py -y $year -i $inname/total -o $wd/public_html/HToSS_plots/Stacked/$outname/LogYaxis/$item -s "HToSS_MH125_$item" --log  --data --category $cat --unblind --bkg 
+		python scripts/StackedHistograms.py -y $year -i $inname/total -o $wd/public_html/HToSS_plots/Stacked/$outname/LinearYaxis/$item -s "HToSS_MH125_$item" --yhigh $yhigh  --data --category $cat --unblind --bkg 
+	else
+	## below for without ratio ##
+		python scripts/StackedHistograms.py -y $year -i $inname/total -o $wd/public_html/HToSS_plots/Stacked/$outname/LogYaxis/$item -s "HToSS_MH125_$item" --log  --data --noratio --category $cat --unblind 
+	  python scripts/StackedHistograms.py -y $year -i $inname/total -o $wd/public_html/HToSS_plots/Stacked/$outname/LinearYaxis/$item -s "HToSS_MH125_$item" --yhigh $yhigh  --data --noratio --category $cat --unblind 
+	fi
 else
-## below for without ratio ##
-	python scripts/StackedHistograms.py -y $year -i $inname/total -o $wd/public_html/HToSS_plots/Stacked/$outname/LogYaxis/$item -s "HToSS_MH125_$item" --log --bkg --data --noratio --category $cat 
-	python scripts/StackedHistograms.py -y $year -i $inname/total -o $wd/public_html/HToSS_plots/Stacked/$outname/LinearYaxis/$item -s "HToSS_MH125_$item" --yhigh $yhigh --bkg --data --noratio --category $cat
+	if [[ $cat == *"no"* ]]; then
+	# Loop over the list
+		python scripts/StackedHistograms.py -y $year -i $inname/total -o $wd/public_html/HToSS_plots/Stacked/$outname/LogYaxis/$item -s "HToSS_MH125_$item" --log  --data --category $cat --bkg 
+		python scripts/StackedHistograms.py -y $year -i $inname/total -o $wd/public_html/HToSS_plots/Stacked/$outname/LinearYaxis/$item -s "HToSS_MH125_$item" --yhigh $yhigh  --data --category $cat --bkg 
+	else
+	## below for without ratio ##
+		python scripts/StackedHistograms.py -y $year -i $inname/total -o $wd/public_html/HToSS_plots/Stacked/$outname/LogYaxis/$item -s "HToSS_MH125_$item" --log  --data --noratio --category $cat --bkg
+		python scripts/StackedHistograms.py -y $year -i $inname/total -o $wd/public_html/HToSS_plots/Stacked/$outname/LinearYaxis/$item -s "HToSS_MH125_$item" --yhigh $yhigh  --data --noratio --category $cat --bkg 
+	fi
 fi
 ######python3 scripts/mass2dplotter.py -i $inname/total/HToSS_MH125_MS2_ctauS0.root --cuts configs/2017/cuts/SRCuts_kaonmass.yaml -o ~/public_html/HToSS_plots/Stacked/KaonMassAssumption/IsolationAndScalarMassCut_withRefitted_231116/LinearYaxis/MS2_ctau0 -d HToSS_MH125_MS2_ctau0
 #python3 scripts/mass2dplotter.py -i $inname/total/output_HToSS_MH125_MS2_ctauS0.root --cuts $fcuts -o ~/public_html/HToSS_plots/Stacked/$outname/LinearYaxis/MS2_ctau0 -d HToSS_MH125_MS2_ctau0
